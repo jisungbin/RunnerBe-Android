@@ -30,6 +30,7 @@ object Versions {
     object Compose {
         const val Lottie = "4.2.2"
         const val Activity = "1.4.0"
+        const val Landscapist = "1.4.5"
         const val Insets = "0.24.0-alpha"
         const val Master = "1.2.0-alpha01"
         const val Material = "1.2.0-alpha01"
@@ -49,7 +50,7 @@ object Versions {
 
     object Util {
         const val Erratum = "1.0.0"
-        const val Logeukes = "1.0.1"
+        const val Logeukes = "1.0.0"
         const val Jackson = "2.13.1"
         const val LeakCanary = "2.8.1"
         const val CheckDependencyUpdates = "1.5.0"
@@ -87,6 +88,7 @@ object Dependencies {
         "androidx.activity:activity-compose:${Versions.Compose.Activity}",
         "androidx.compose.material:material:${Versions.Compose.Material}",
         "com.google.accompanist:accompanist-insets:${Versions.Compose.Insets}",
+        "com.github.skydoves:landscapist-glide:${Versions.Compose.Landscapist}",
         "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.Compose.LifecycleViewModel}",
         "androidx.constraintlayout:constraintlayout-compose:${Versions.Compose.ConstraintLayout}"
     )
@@ -112,7 +114,7 @@ object Dependencies {
 
     val Util = listOf(
         "land.sungbin:erratum:${Versions.Util.Erratum}",
-        // "io.github.jisungbin:logeukes:${Versions.Util.Logeukes}",
+        "land.sungbin:logeukes:${Versions.Util.Logeukes}",
     )
 
     val Debug = listOf(
