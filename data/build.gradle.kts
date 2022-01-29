@@ -2,6 +2,7 @@ plugins {
     id("com.android.library")
     id("kotlin-android")
     id("kotlin-kapt")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -31,8 +32,10 @@ android {
 
 dependencies {
     implementation(projects.domain)
+    implementation(platform(Dependencies.Firebase.Bom))
     implementation(Dependencies.Coroutine)
+    implementation(Dependencies.Firebase.Analytics)
+
     Dependencies.Jackson.forEach(::implementation)
     Dependencies.Network.forEach(::implementation)
-    // Dependencies.Firebase.forEach(::implementation)
 }

@@ -67,7 +67,6 @@ object Versions {
 
 object Dependencies {
     const val Hilt = "com.google.dagger:hilt-android:${Versions.Jetpack.Hilt}"
-    const val FirebaseBom = "com.google.firebase:firebase-bom:${Versions.FirebaseBom}"
 
     const val Coroutine =
         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.Essential.Coroutines}"
@@ -76,6 +75,11 @@ object Dependencies {
         "androidx.core:core-ktx:${Versions.Ktx.Core}",
         "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.Ktx.LifeCycle}",
     )
+
+    object Firebase {
+        const val Bom = "com.google.firebase:firebase-bom:${Versions.FirebaseBom}"
+        const val Analytics = "com.google.firebase:firebase-analytics"
+    }
 
     val Compose = listOf(
         "androidx.compose.ui:ui-tooling:${Versions.Compose.Master}",

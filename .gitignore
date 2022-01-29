@@ -8,3 +8,5 @@ local.properties
 /domain/build
 /presentation/build
 /presentation/release
+/data/google-services.json
+/secret/
