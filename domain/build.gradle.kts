@@ -30,5 +30,5 @@ android {
 }
 
 dependencies {
-    Dependencies.Essential.forEach(::implementation)
+    // Nothing. 100% DOMAIN!
 }

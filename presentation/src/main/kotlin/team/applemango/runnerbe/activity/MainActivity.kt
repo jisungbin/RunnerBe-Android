@@ -1,4 +1,4 @@
-package io.github.jisungbin.composetemplate
+package team.applemango.runnerbe.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

@@ -30,6 +30,9 @@ android {
 }
 
 dependencies {
-    implementation(project(":domain"))
-    Dependencies.Essential.forEach(::implementation)
+    implementation(projects.domain)
+    implementation(Dependencies.Coroutine)
+    Dependencies.Jackson.forEach(::implementation)
+    Dependencies.Network.forEach(::implementation)
+    // Dependencies.Firebase.forEach(::implementation)
 }

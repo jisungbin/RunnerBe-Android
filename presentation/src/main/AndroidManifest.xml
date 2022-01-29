@@ -11,7 +11,7 @@
         android:theme="@style/Theme.ComposeTemplate" >
 
         <activity
-            android:name=".MainActivity"
+            android:name="team.applemango.runnerbe.activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
