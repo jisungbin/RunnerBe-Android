@@ -1,6 +1,7 @@
-<h1 align="center">RunnerBe 🐝</h1></br>
-<p align="center">직장인 타겟 러닝 모임 O2O 플랫폼</p></br>
+<h1 align="center">RunnerBe</h1>
+<p align="center">직장인 타겟 러닝 모임 O2O 플랫폼 🐝</p>
 <p align="center">
   <a href="https://github.com/jisungbin/RunnerBe/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/badge/License-MIT-blue"/></a>
   <a href="https://developer.android.com/about/versions/lollipop"><img alt="API 21+" src="https://img.shields.io/badge/API-21%2B-brightgreen.svg"/></a>
-</p><br>
+  <a href="https://github.com/applemango-runnerbe/RunnerBe-Android/actions/workflows/android-ci.yml"> <img alt="CI" src="https://github.com/applemango-runnerbe/RunnerBe-Android/actions/workflows/android-ci.yml/badge.svg"/></a>
+</p>
