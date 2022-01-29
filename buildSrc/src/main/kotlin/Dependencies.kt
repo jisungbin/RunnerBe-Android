@@ -5,15 +5,15 @@ object Application {
     const val targetSdk = 31
     const val compileSdk = 31
     const val jvmTarget = "11"
-    const val versionCode = 1
-    const val versionName = "0.0.1-dev01"
+    const val versionCode = 2
+    const val versionName = "0.0.1-dev02"
 
     val targetCompat = JavaVersion.VERSION_11
     val sourceCompat = JavaVersion.VERSION_11
 }
 
 object Versions {
-    const val FirebaseBom = "29.0.3"
+    const val FirebaseBom = "29.0.4"
 
     object Essential {
         const val Gradle = "7.1.0"
@@ -48,7 +48,7 @@ object Versions {
     }
 
     object Util {
-        const val Erratum = "1.0.1"
+        const val Erratum = "1.0.0"
         const val Logeukes = "1.0.1"
         const val Jackson = "2.13.1"
         const val LeakCanary = "2.8.1"
@@ -111,7 +111,7 @@ object Dependencies {
     )
 
     val Util = listOf(
-        "io.github.jisungbin:erratum:${Versions.Util.Erratum}",
+        "land.sungbin:erratum:${Versions.Util.Erratum}",
         "io.github.jisungbin:logeukes:${Versions.Util.Logeukes}",
     )
 
