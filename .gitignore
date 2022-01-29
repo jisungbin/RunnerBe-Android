@@ -1,0 +1,10 @@
+.gradle
+local.properties
+/.idea
+/build
+/buildSrc/.gradle/
+/buildSrc/build/
+/data/build
+/domain/build
+/presentation/build
+/presentation/release
