@@ -34,5 +34,5 @@ allprojects {
 }
 
 tasks.register("clean", Delete::class) {
-    allprojects.forEach { delete(it.buildDir) }
+    delete(rootProject.buildDir)
 }
