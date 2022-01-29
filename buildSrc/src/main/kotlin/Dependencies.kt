@@ -112,7 +112,7 @@ object Dependencies {
 
     val Util = listOf(
         "land.sungbin:erratum:${Versions.Util.Erratum}",
-        "io.github.jisungbin:logeukes:${Versions.Util.Logeukes}",
+        // "io.github.jisungbin:logeukes:${Versions.Util.Logeukes}",
     )
 
     val Debug = listOf(
