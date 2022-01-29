@@ -4,6 +4,7 @@ plugins {
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
     id("com.google.android.gms.oss-licenses-plugin")
+    id("com.google.gms.google-services")
     id("name.remal.check-dependency-updates") version Versions.Util.CheckDependencyUpdates
 }
 
@@ -55,6 +56,8 @@ dependencies {
     implementation(projects.domain)
     implementation(Dependencies.Hilt)
     implementation(Dependencies.Coroutine)
+    implementation(Dependencies.Firebase.Analytics)
+    implementation(platform(Dependencies.Firebase.Bom))
 
     Dependencies.Ui.forEach(::implementation)
     Dependencies.Ktx.forEach(::implementation)

@@ -8,6 +8,6 @@ local.properties
 /domain/build
 /presentation/build
 /presentation/release
-/data/google-services.json
+/presentation/google-services.json
 /secret/
 /fastlane/
