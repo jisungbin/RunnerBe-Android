@@ -9,5 +9,4 @@ local.properties
 /presentation/build
 /presentation/release
 /presentation/google-services.json
-/secret/
 /fastlane/
