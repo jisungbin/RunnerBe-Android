@@ -1,3 +1,3 @@
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-rootProject.name = "ComposeTemplate"
+rootProject.name = "RunnerBe"
 include(":data", ":domain", ":presentation")
