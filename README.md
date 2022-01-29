@@ -3,4 +3,5 @@
 <p align="center">
   <a href="https://github.com/jisungbin/RunnerBe/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/badge/License-MIT-blue"/></a>
   <a href="https://developer.android.com/about/versions/lollipop"><img alt="API 21+" src="https://img.shields.io/badge/API-21%2B-brightgreen.svg"/></a>
+  <img alt="CI" src="https://github.com/applemango-runnerbe/RunnerBe-Android/actions/workflows/android-ci.yml/badge.svg" />
 </p><br>
