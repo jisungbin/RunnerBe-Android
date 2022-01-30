@@ -10,3 +10,4 @@ local.properties
 /presentation/release
 /presentation/google-services.json
 /fastlane
+/secrets.tar
