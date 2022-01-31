@@ -8,9 +8,9 @@
  */
 
 plugins {
-    installLibraryKotlinKaptHiltJUnit5()
+    installCommonPlugins()
 }
 
 dependencies {
-    installSharedHiltComposeJUnit5()
+    installCommonDependencies()
 }

@@ -8,7 +8,7 @@
  */
 
 plugins {
-    installLibraryKotlinKaptHiltJUnit5()
+    installCommonPlugins()
 }
 
 dependencies {
@@ -18,5 +18,5 @@ dependencies {
     Dependencies.Ktx.forEach(::api)
     Dependencies.Util.forEach(::api)
 
-    installSharedHiltComposeJUnit5(isSharedModule = true, excludeCompose = true)
+    installCommonDependencies(isSharedModule = true, excludeCompose = true)
 }

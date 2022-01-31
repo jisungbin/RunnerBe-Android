@@ -11,7 +11,8 @@ import org.gradle.api.artifacts.ProjectDependency
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.plugin.use.PluginDependenciesSpec
 
-fun PluginDependenciesSpec.installLibraryKotlinKaptHiltJUnit5(
+// plugin
+fun PluginDependenciesSpec.installCommonPlugins(
     isLibrary: Boolean = true,
     isDFM: Boolean = false,
 ) {
@@ -25,9 +26,11 @@ fun PluginDependenciesSpec.installLibraryKotlinKaptHiltJUnit5(
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
     id("de.mannodermaus.android-junit5")
+    id("scabbard.gradle")
 }
 
-fun DependencyHandler.installSharedHiltComposeJUnit5(
+// dependencies
+fun DependencyHandler.installCommonDependencies(
     isSharedModule: Boolean = false,
     excludeCompose: Boolean = false,
 ) {

@@ -3,7 +3,7 @@ plugins {
     id("com.google.android.gms.oss-licenses-plugin")
     id("com.google.gms.google-services")
     id("name.remal.check-dependency-updates") version Versions.Util.CheckDependencyUpdates
-    installLibraryKotlinKaptHiltJUnit5(isLibrary = false)
+    installCommonPlugins(isLibrary = false)
 }
 
 android {
@@ -44,5 +44,5 @@ dependencies {
     Dependencies.Ui.forEach(::implementation)
     Dependencies.Debug.forEach(::debugImplementation)
 
-    installSharedHiltComposeJUnit5(excludeCompose = true)
+    installCommonDependencies(excludeCompose = true)
 }

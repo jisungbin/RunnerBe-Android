@@ -48,6 +48,7 @@ object Versions {
         const val Erratum = "1.0.1"
         const val Logeukes = "1.0.0"
         const val Jackson = "2.13.1"
+        const val Scabbard = "0.5.0"
         const val LeakCanary = "2.8.1"
         const val CheckDependencyUpdates = "1.5.0"
     }

@@ -8,11 +8,11 @@
  */
 
 plugins {
-    installLibraryKotlinKaptHiltJUnit5()
+    installCommonPlugins()
 }
 
 dependencies {
-    installSharedHiltComposeJUnit5()
+    installCommonDependencies()
     implementationProject(ProjectConstants.HomeWrite)
     implementationProject(ProjectConstants.HomeNotification)
 }

@@ -8,10 +8,10 @@
  */
 
 plugins {
-    installLibraryKotlinKaptHiltJUnit5(isDFM = true)
+    installCommonPlugins(isDFM = true)
 }
 
 dependencies {
     implementationProject(ProjectConstants.Presentation)
-    installSharedHiltComposeJUnit5()
+    installCommonDependencies()
 }

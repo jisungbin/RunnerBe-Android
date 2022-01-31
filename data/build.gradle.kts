@@ -8,12 +8,12 @@
  */
 
 plugins {
-    installLibraryKotlinKaptHiltJUnit5()
+    installCommonPlugins()
 }
 
 dependencies {
     Dependencies.Jackson.forEach(::implementation)
     Dependencies.Network.forEach(::implementation)
 
-    installSharedHiltComposeJUnit5(excludeCompose = true)
+    installCommonDependencies(excludeCompose = true)
 }
