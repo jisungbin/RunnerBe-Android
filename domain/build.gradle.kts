@@ -1,36 +1,14 @@
+/*
+ * RunnerBe © 2022 Team AppleMango. all rights reserved.
+ * RunnerBe license is under the MIT.
+ *
+ * [build.gradle.kts] created by Ji Sungbin on 22. 1. 31. 오후 4:14
+ *
+ * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
+ */
+
 plugins {
     id("com.android.library")
     id("kotlin-android")
     id("kotlin-kapt")
-}
-
-android { }
-
-/*android {
-    compileSdk = ApplicationConstants.compileSdk
-
-    defaultConfig {
-        minSdk = ApplicationConstants.minSdk
-        targetSdk = ApplicationConstants.targetSdk
-        multiDexEnabled = true
-    }
-
-    sourceSets {
-        getByName("main").run {
-            java.srcDirs("src/main/kotlin")
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility = ApplicationConstants.sourceCompat
-        targetCompatibility = ApplicationConstants.targetCompat
-    }
-
-    kotlinOptions {
-        jvmTarget = ApplicationConstants.jvmTarget
-    }
-}*/
-
-dependencies {
-    // Nothing. 100% DOMAIN!
 }

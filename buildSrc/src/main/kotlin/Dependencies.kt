@@ -121,5 +121,6 @@ object Dependencies {
 
     object Compiler {
         const val Hilt = "com.google.dagger:hilt-android-compiler:${Versions.Jetpack.Hilt}"
+        // Room
     }
 }

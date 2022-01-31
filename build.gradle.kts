@@ -1,3 +1,12 @@
+/*
+ * RunnerBe © 2022 Team AppleMango. all rights reserved.
+ * RunnerBe license is under the MIT.
+ *
+ * [build.gradle.kts] created by Ji Sungbin on 22. 1. 31. 오후 4:14
+ *
+ * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
+ */
+
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
@@ -10,7 +19,7 @@ buildscript {
         classpath("com.android.tools.build:gradle:${Versions.Essential.Gradle}")
         classpath("com.google.gms:google-services:${Versions.Essential.GoogleService}")
         classpath("com.google.dagger:hilt-android-gradle-plugin:${Versions.Jetpack.Hilt}")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.Essential.Kotlin}")
         classpath("com.google.android.gms:oss-licenses-plugin:${Versions.OssLicense.Classpath}")
     }
 }

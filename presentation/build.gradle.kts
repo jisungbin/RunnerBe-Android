@@ -30,6 +30,7 @@ android {
 dependencies {
     implementation(projects.data)
     implementation(projects.domain)
+    implementation(projects.shared)
     implementation(Dependencies.Hilt)
     implementation(Dependencies.Coroutine)
     implementation(Dependencies.Firebase.Analytics)
