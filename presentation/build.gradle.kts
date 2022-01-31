@@ -30,7 +30,7 @@ dependencies {
         ProjectConstants.Mail,
         ProjectConstants.MyPage,
         ProjectConstants.HomeBoard,
-        ProjectConstants.RegisterSnsLogin
+        // ProjectConstants.RegisterSnsLogin
     )
 
     features.forEach(::implementationProject)

@@ -9,7 +9,10 @@ if (hasLibraryPlugin || hasApplicationPlugin || hasDFMPlugin) {
         defaultConfig {
             minSdk = ApplicationConstants.minSdk
             targetSdk = ApplicationConstants.targetSdk
-            multiDexEnabled = true
+
+            if (!hasDFMPlugin) {
+                multiDexEnabled = true
+            }
         }
 
         sourceSets {
