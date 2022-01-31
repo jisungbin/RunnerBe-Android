@@ -14,7 +14,6 @@ plugins {
 }
 
 dependencies {
-    implementation(projects.domain)
     implementation(projects.shared)
 
     Dependencies.Jackson.forEach(::implementation)

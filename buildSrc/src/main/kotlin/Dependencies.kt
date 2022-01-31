@@ -148,6 +148,7 @@ fun DependencyHandler.installHiltJUnit5() {
     add("implementation", Dependencies.Hilt)
     add("testDebugImplementation", Dependencies.Test.JunitApi)
     add("testDebugRuntimeOnly", Dependencies.Test.JunitEngine)
+    add("testDebugImplementation", Dependencies.Test.Hamcrest)
     add("testDebugImplementation", Dependencies.Test.Coroutine)
     add("kapt", Dependencies.Compiler.Hilt)
 }
