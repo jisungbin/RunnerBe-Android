@@ -18,6 +18,9 @@ fun PluginDependenciesSpec.installLibraryKotlinKaptHiltJUnit5(
     if (isLibrary && !isDFM) {
         id("com.android.library")
     }
+    if (isDFM) {
+        id("com.android.dynamic-feature")
+    }
     id("kotlin-android")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")

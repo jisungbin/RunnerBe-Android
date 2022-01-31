@@ -11,9 +11,14 @@ plugins {
     installLibraryKotlinKaptHiltJUnit5()
 }
 
+android {
+    /*dynamicFeatures {
+
+    }*/
+}
+
 dependencies {
     installSharedHiltComposeJUnit5()
     implementationProject(ProjectConstants.HomeWrite)
     implementationProject(ProjectConstants.HomeNotification)
-    implementationProject(ProjectConstants.RegisterInformation)
 }

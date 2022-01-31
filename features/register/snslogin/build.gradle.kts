@@ -8,7 +8,6 @@
  */
 
 plugins {
-    id("com.android.dynamic-feature")
     installLibraryKotlinKaptHiltJUnit5(isDFM = true)
 }
 

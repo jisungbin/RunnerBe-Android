@@ -8,11 +8,10 @@
  */
 
 plugins {
-    id("com.android.dynamic-feature")
     installLibraryKotlinKaptHiltJUnit5(isDFM = true)
 }
 
 dependencies {
-    implementationProject(ProjectConstants.Presentation)
+    implementationProject(ProjectConstants.HomeBoard)
     installSharedHiltComposeJUnit5()
 }
