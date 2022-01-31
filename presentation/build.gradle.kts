@@ -8,7 +8,6 @@ plugins {
 
 android {
     defaultConfig {
-        applicationId = "team.applemango.runnerbe"
         versionCode = ApplicationConstants.versionCode
         versionName = ApplicationConstants.versionName
     }
