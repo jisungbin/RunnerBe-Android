@@ -1,0 +1,40 @@
+digraph {
+  graph [label="RunnerBe\n ",labelloc=t,fontsize=30,ranksep=1.4];
+  node [style=filled, fillcolor="#bbbbbb"];
+  rankdir=TB;
+
+  # Projects
+
+  ":data" [fillcolor="#baffc9"];
+  ":domain" [fillcolor="#baffc9"];
+  ":features:home:board" [fillcolor="#baffc9"];
+  ":features:home:notification" [fillcolor="#baffc9"];
+  ":features:home:write" [fillcolor="#baffc9"];
+  ":features:mail" [fillcolor="#baffc9"];
+  ":features:mypage" [fillcolor="#baffc9"];
+  ":features:register:information" [fillcolor="#baffc9"];
+  ":features:register:snslogin" [fillcolor="#baffc9"];
+  ":presentation" [fillcolor="#baffc9"];
+  ":shared" [fillcolor="#baffc9"];
+
+  {rank = same;}
+
+  # Dependencies
+
+  ":data" -> ":shared" [style=dotted]
+  ":presentation" -> ":features:mail" [style=dotted]
+  ":presentation" -> ":features:mypage" [style=dotted]
+  ":presentation" -> ":features:home:board" [style=dotted]
+  ":presentation" -> ":features:register:snslogin" [style=dotted]
+  ":presentation" -> ":shared" [style=dotted]
+  ":shared" -> ":domain"
+  ":features:mail" -> ":shared" [style=dotted]
+  ":features:mypage" -> ":shared" [style=dotted]
+  ":features:home:board" -> ":shared" [style=dotted]
+  ":features:home:board" -> ":features:home:write" [style=dotted]
+  ":features:home:board" -> ":features:home:notification" [style=dotted]
+  ":features:home:notification" -> ":shared" [style=dotted]
+  ":features:home:write" -> ":shared" [style=dotted]
+  ":features:register:information" -> ":shared" [style=dotted]
+  ":features:register:snslogin" -> ":shared" [style=dotted]
+}

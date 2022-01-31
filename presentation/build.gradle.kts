@@ -26,6 +26,14 @@ android {
 }
 
 dependencies {
+    val features = listOf(
+        ProjectConstants.Mail,
+        ProjectConstants.MyPage,
+        ProjectConstants.HomeBoard,
+        ProjectConstants.RegisterSnsLogin
+    )
+
+    features.forEach(::implementationProject)
     implementation(Dependencies.Firebase.Analytics)
     implementation(platform(Dependencies.Firebase.Bom))
 
