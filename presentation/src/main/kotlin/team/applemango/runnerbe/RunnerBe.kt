@@ -18,9 +18,7 @@ import io.github.jisungbin.logeukes.Logeukes
 class RunnerBe : Application() {
     override fun onCreate() {
         super.onCreate()
-
-        // TODO: Set Exception Activity
-        Erratum.setup(application = this)
+        Erratum.setup(application = this) // TODO: Set Exception Activity
 
         if (BuildConfig.DEBUG) {
             Logeukes.setup()
