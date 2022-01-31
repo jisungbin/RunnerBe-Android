@@ -12,6 +12,7 @@ object ProjectConstants {
     const val Data = ":data"
     const val Domain = ":domain"
     const val Shared = ":shared"
+    const val Presentation = ":presentation"
     const val Mail = ":features:mail"
     const val MyPage = ":features:mypage"
     const val HomeWrite = ":features:home:write"

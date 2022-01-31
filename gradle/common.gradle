@@ -1,7 +1,8 @@
 def hasLibraryPlugin = pluginManager.hasPlugin("com.android.library")
 def hasApplicationPlugin = pluginManager.hasPlugin("com.android.application")
+def hasDFMPlugin = pluginManager.hasPlugin("com.android.dynamic-feature")
 
-if (hasLibraryPlugin || hasApplicationPlugin) {
+if (hasLibraryPlugin || hasApplicationPlugin || hasDFMPlugin) {
     android {
         compileSdk = ApplicationConstants.compileSdk
 
