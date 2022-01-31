@@ -1,4 +1,4 @@
-// https://github.com/JakeWharton/SdkSearch/blob/3351cad9bfacb0a364858e843774147143f58c7a/gradle/projectDependencyGraph.gradle
+// https://github.com/droidknights/DroidKnights2021_App/blob/main/gradle/dependencyGraph.gradle
 task projectDependencyGraph {
     doLast {
         def dot = new File(rootProject.rootDir, 'art/project-graph.dot')

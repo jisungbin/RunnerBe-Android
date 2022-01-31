@@ -9,6 +9,7 @@
 
 plugins {
     installLibraryKotlinKaptHiltJUnit5()
+    id("com.android.dynamic-feature")
 }
 
 dependencies {

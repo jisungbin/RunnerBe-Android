@@ -16,7 +16,9 @@ import team.applemango.runnerbe.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen() // TODO: Splash Theme
+
+        // TODO: Splash Theme
+        installSplashScreen()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
     }

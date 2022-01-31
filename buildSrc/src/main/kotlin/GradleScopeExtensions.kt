@@ -11,6 +11,16 @@ import org.gradle.api.artifacts.ProjectDependency
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.plugin.use.PluginDependenciesSpec
 
+fun PluginDependenciesSpec.installLibraryKotlinKaptHiltJUnit5(isLibrary: Boolean = true) {
+    if (isLibrary) {
+        id("com.android.library")
+    }
+    id("kotlin-android")
+    id("kotlin-kapt")
+    // id("dagger.hilt.android.plugin")
+    id("de.mannodermaus.android-junit5")
+}
+
 fun DependencyHandler.installSharedHiltComposeJUnit5(
     isSharedModule: Boolean = false,
     excludeCompose: Boolean = false,
@@ -21,22 +31,12 @@ fun DependencyHandler.installSharedHiltComposeJUnit5(
     if (!excludeCompose) {
         Dependencies.Compose.forEach(::implementation)
     }
-    implementation(Dependencies.Hilt)
+    // implementation(Dependencies.Hilt)
     add("testDebugImplementation", Dependencies.Test.JunitApi)
     add("testDebugRuntimeOnly", Dependencies.Test.JunitEngine)
     add("testDebugImplementation", Dependencies.Test.Hamcrest)
     add("testDebugImplementation", Dependencies.Test.Coroutine)
     add("kapt", Dependencies.Compiler.Hilt)
-}
-
-fun PluginDependenciesSpec.installLibraryKotlinKaptHiltJUnit5(isLibrary: Boolean = true) {
-    if (isLibrary) {
-        id("com.android.library")
-    }
-    id("kotlin-android")
-    id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
-    id("de.mannodermaus.android-junit5")
 }
 
 fun DependencyHandler.implementationProject(path: String) {
