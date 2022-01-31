@@ -6,8 +6,15 @@ local.properties
 /buildSrc/build
 /data/build
 /domain/build
-/presentation/build
+/features/alarm/build
+/features/extrainformation/build
+/features/mail/build
+/features/mypage/build
+/features/snslogin/build
+/features/writing/build
+/shared/build
 /presentation/release
+/presentation/build
 /presentation/google-services.json
 /fastlane
 /secrets.tar
