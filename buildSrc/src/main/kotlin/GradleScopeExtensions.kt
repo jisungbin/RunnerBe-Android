@@ -11,11 +11,17 @@ import org.gradle.api.artifacts.ProjectDependency
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.plugin.use.PluginDependenciesSpec
 
-fun DependencyHandler.installSharedHiltJUnit5(isSharedModule: Boolean = false) {
+fun DependencyHandler.installSharedHiltComposeJUnit5(
+    isSharedModule: Boolean = false,
+    excludeCompose: Boolean = false,
+) {
     if (!isSharedModule) {
         implementationProject(ProjectConstants.Shared)
     }
-    add("implementation", Dependencies.Hilt)
+    if (!excludeCompose) {
+        Dependencies.Compose.forEach(::implementation)
+    }
+    implementation(Dependencies.Hilt)
     add("testDebugImplementation", Dependencies.Test.JunitApi)
     add("testDebugRuntimeOnly", Dependencies.Test.JunitEngine)
     add("testDebugImplementation", Dependencies.Test.Hamcrest)
@@ -35,6 +41,10 @@ fun PluginDependenciesSpec.installLibraryKotlinKaptHiltJUnit5(isLibrary: Boolean
 
 fun DependencyHandler.implementationProject(path: String) {
     add("implementation", project(path))
+}
+
+private fun DependencyHandler.implementation(dependency: Any) {
+    add("implementation", dependency)
 }
 
 private fun DependencyHandler.project(path: String): ProjectDependency =

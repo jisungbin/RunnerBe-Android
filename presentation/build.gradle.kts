@@ -32,5 +32,5 @@ dependencies {
     Dependencies.Ui.forEach(::implementation)
     Dependencies.Debug.forEach(::debugImplementation)
 
-    installSharedHiltJUnit5()
+    installSharedHiltComposeJUnit5(excludeCompose = true)
 }

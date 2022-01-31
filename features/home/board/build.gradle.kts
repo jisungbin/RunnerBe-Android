@@ -12,6 +12,7 @@ plugins {
 }
 
 dependencies {
-    Dependencies.Compose.forEach(::implementation)
-    installSharedHiltJUnit5()
+    installSharedHiltComposeJUnit5()
+    implementationProject(ProjectConstants.HomeWrite)
+    implementationProject(ProjectConstants.HomeNotification)
 }

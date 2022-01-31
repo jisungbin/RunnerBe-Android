@@ -18,5 +18,5 @@ dependencies {
     Dependencies.Ktx.forEach(::api)
     Dependencies.Util.forEach(::api)
 
-    installSharedHiltJUnit5(isSharedModule = true)
+    installSharedHiltComposeJUnit5(isSharedModule = true, excludeCompose = true)
 }

@@ -12,5 +12,5 @@ plugins {
 }
 
 dependencies {
-    installSharedHiltJUnit5()
+    installSharedHiltComposeJUnit5()
 }

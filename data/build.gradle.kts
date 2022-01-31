@@ -15,5 +15,5 @@ dependencies {
     Dependencies.Jackson.forEach(::implementation)
     Dependencies.Network.forEach(::implementation)
 
-    installSharedHiltJUnit5()
+    installSharedHiltComposeJUnit5(excludeCompose = true)
 }
