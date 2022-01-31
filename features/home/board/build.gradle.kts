@@ -12,10 +12,16 @@ plugins {
 }
 
 android {
-    /*dynamicFeatures {
 
-    }*/
 }
+
+/*android {
+    defaultConfig {
+        applicationId = "team.applemango.runnerbe.feature.home.board"
+    }
+
+    dynamicFeatures += setOf(ProjectConstants.RegisterInformation)
+}*/
 
 dependencies {
     installSharedHiltComposeJUnit5()
