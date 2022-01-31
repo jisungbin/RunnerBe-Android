@@ -10,12 +10,11 @@ local.properties
 /buildSrc/build
 /presentation/build
 /presentation/release
-/features/alarm/build
 /features/mail/build
-/features/board/build
 /features/mypage/build
-/features/snslogin/build
-/features/writing/build
-/features/favorite/build
-/features/extrainformation/build
+/features/home/write/build
+/features/home/board/build
+/features/home/notification/build
+/features/register/snslogin/build
+/features/register/information/build
 /presentation/google-services.json

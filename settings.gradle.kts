@@ -18,6 +18,7 @@ include(
     ":features:mypage",
     ":features:home:write",
     ":features:home:board",
+    ":features:home:notification",
     ":features:register:snslogin",
     ":features:register:information"
 )
