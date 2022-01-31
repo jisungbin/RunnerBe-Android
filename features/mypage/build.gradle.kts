@@ -14,6 +14,8 @@ plugins {
 }
 
 dependencies {
+    implementation(projects.data)
     implementation(projects.shared)
+    Dependencies.Compose.forEach(::implementation)
     installHilt()
 }

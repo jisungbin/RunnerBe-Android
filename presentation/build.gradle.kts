@@ -27,6 +27,18 @@ android {
 }
 
 dependencies {
+    val features = listOf(
+        projects.features.alarm,
+        projects.features.board,
+        projects.features.extrainformation,
+        projects.features.favorite,
+        projects.features.mail,
+        projects.features.mypage,
+        projects.features.snslogin,
+        projects.features.writing,
+    )
+
+    features.forEach(::implementation)
     implementation(projects.shared)
     implementation(Dependencies.Firebase.Analytics)
     implementation(platform(Dependencies.Firebase.Bom))

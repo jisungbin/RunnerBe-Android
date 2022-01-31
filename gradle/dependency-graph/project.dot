@@ -8,6 +8,7 @@ digraph {
   ":data" [fillcolor="#baffc9"];
   ":domain" [fillcolor="#baffc9"];
   ":features:alarm" [fillcolor="#baffc9"];
+  ":features:board" [fillcolor="#baffc9"];
   ":features:extrainformation" [fillcolor="#baffc9"];
   ":features:favorite" [fillcolor="#baffc9"];
   ":features:mail" [fillcolor="#baffc9"];
@@ -15,12 +16,37 @@ digraph {
   ":features:snslogin" [fillcolor="#baffc9"];
   ":features:writing" [fillcolor="#baffc9"];
   ":presentation" [fillcolor="#baffc9"];
+  ":shared" [fillcolor="#baffc9"];
 
   {rank = same;}
 
   # Dependencies
 
   ":data" -> ":domain" [style=dotted]
-  ":presentation" -> ":data" [style=dotted]
-  ":presentation" -> ":domain" [style=dotted]
+  ":data" -> ":shared" [style=dotted]
+  ":presentation" -> ":features:alarm" [style=dotted]
+  ":presentation" -> ":features:board" [style=dotted]
+  ":presentation" -> ":features:extrainformation" [style=dotted]
+  ":presentation" -> ":features:favorite" [style=dotted]
+  ":presentation" -> ":features:mail" [style=dotted]
+  ":presentation" -> ":features:mypage" [style=dotted]
+  ":presentation" -> ":features:snslogin" [style=dotted]
+  ":presentation" -> ":features:writing" [style=dotted]
+  ":presentation" -> ":shared" [style=dotted]
+  ":features:alarm" -> ":data" [style=dotted]
+  ":features:alarm" -> ":shared" [style=dotted]
+  ":features:board" -> ":data" [style=dotted]
+  ":features:board" -> ":shared" [style=dotted]
+  ":features:extrainformation" -> ":data" [style=dotted]
+  ":features:extrainformation" -> ":shared" [style=dotted]
+  ":features:favorite" -> ":data" [style=dotted]
+  ":features:favorite" -> ":shared" [style=dotted]
+  ":features:mail" -> ":data" [style=dotted]
+  ":features:mail" -> ":shared" [style=dotted]
+  ":features:mypage" -> ":data" [style=dotted]
+  ":features:mypage" -> ":shared" [style=dotted]
+  ":features:snslogin" -> ":data" [style=dotted]
+  ":features:snslogin" -> ":shared" [style=dotted]
+  ":features:writing" -> ":data" [style=dotted]
+  ":features:writing" -> ":shared" [style=dotted]
 }

@@ -14,7 +14,9 @@ plugins {
 }
 
 dependencies {
+    implementation(projects.data)
     implementation(projects.shared)
+    Dependencies.Compose.forEach(::implementation)
     // TODO: SNS 로그인 (카카오, 네이버, 애플)
 
     installHilt()
