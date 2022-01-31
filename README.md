@@ -52,13 +52,21 @@
 
 ## Layer
 
+#### Project Dependencies
+
+![](https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/art/project-graph.dot.png?raw=true)
+
+#### Dependeny Injection Graph
+
 TODO
 
 ## Developer
 
-|     [@jisungbin](https://github.com/jisungbin) - Android     |   [@kimeunseo](https://github.com/plannermango) - Planner    |
-| :----------------------------------------------------------: | :----------------------------------------------------------: |
-| <img src="https://avatars.githubusercontent.com/u/40740128?v=4" width="50%" /> | <img src="https://cdn.discordapp.com/attachments/934391249329340427/937387276642701322/unknown.png" width="60%" /> |
+|     [@jisungbin](https://github.com/jisungbin) - Android     | [@kimeunseo](https://github.com/plannermango) - Planner |
+| :----------------------------------------------------------: | :-----------------------------------------------------: |
+| <img src="https://avatars.githubusercontent.com/u/40740128?v=4" width="50%" /> |  <img src="art/developer/kimeunseo.png" width="60%" />  |
+|    [@parkchanho](https://github.com/great-park) - Server     |                  @kimseojeong - Design                  |
+|    <img src="art/developer/parkchanho.png" width="70%" />    | <img src="art/developer/kimseojeong.png" width="70%" /> |
 
 ---
 
