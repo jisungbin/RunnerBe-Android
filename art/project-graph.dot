@@ -5,19 +5,19 @@ digraph {
 
   # Projects
 
-  ":data" [fillcolor="#baffc9"];
-  ":domain" [fillcolor="#baffc9"];
-  ":features:home:board" [fillcolor="#baffc9"];
-  ":features:home:notification" [fillcolor="#baffc9"];
-  ":features:home:write" [fillcolor="#baffc9"];
-  ":features:mail" [fillcolor="#baffc9"];
-  ":features:mypage" [fillcolor="#baffc9"];
-  ":features:register:information" [fillcolor="#baffc9"];
-  ":features:register:snslogin" [fillcolor="#baffc9"];
-  ":presentation" [fillcolor="#baffc9"];
-  ":shared" [fillcolor="#baffc9"];
+  ":data" [shape=box, fillcolor="#81D4FA"];
+  ":domain" [fillcolor="#81D4FA"];
+  ":features:home:board" [fillcolor="#81D4FA"];
+  ":features:home:notification" [fillcolor="#81D4FA"];
+  ":features:home:write" [fillcolor="#81D4FA"];
+  ":features:mail" [fillcolor="#81D4FA"];
+  ":features:mypage" [fillcolor="#81D4FA"];
+  ":features:register:information" [fillcolor="#81D4FA"];
+  ":features:register:snslogin" [fillcolor="#81D4FA"];
+  ":presentation" [shape=box, fillcolor="#baffc9"];
+  ":shared" [fillcolor="#81D4FA"];
 
-  {rank = same;}
+  {rank = same; ":data"; ":presentation";}
 
   # Dependencies
 
@@ -33,6 +33,7 @@ digraph {
   ":features:home:board" -> ":shared" [style=dotted]
   ":features:home:board" -> ":features:home:write" [style=dotted]
   ":features:home:board" -> ":features:home:notification" [style=dotted]
+  ":features:home:board" -> ":features:register:information" [style=dotted]
   ":features:home:notification" -> ":shared" [style=dotted]
   ":features:home:write" -> ":shared" [style=dotted]
   ":features:register:information" -> ":shared" [style=dotted]

@@ -23,6 +23,8 @@ task projectDependencyGraph {
         def multiplatformProjects = []
         def jsProjects = []
         def androidProjects = []
+        def androidLibraryProjects = []
+        def androidDynamicFeatureProjects = []
         def javaProjects = []
 
         queue = [rootProject]
@@ -33,17 +35,24 @@ task projectDependencyGraph {
             if (project.plugins.hasPlugin('org.jetbrains.kotlin.multiplatform')) {
                 multiplatformProjects.add(project)
             }
-            if (project.plugins.hasPlugin('org.jetbrains.kotlin.js')) {
+            if (project.plugins.hasPlugin('kotlin2js')) {
                 jsProjects.add(project)
             }
-            if (project.plugins.hasPlugin('com.android.library') || project.plugins.hasPlugin('com.android.application')) {
+            if (project.plugins.hasPlugin('com.android.application')) {
                 androidProjects.add(project)
+            }
+            if (project.plugins.hasPlugin('com.android.library')) {
+                androidLibraryProjects.add(project)
+            }
+            if (project.plugins.hasPlugin('com.android.dynamic-feature')) {
+                androidDynamicFeatureProjects.add(project)
             }
             if (project.plugins.hasPlugin('java-library') || project.plugins.hasPlugin('java')) {
                 javaProjects.add(project)
             }
 
             project.configurations.all { config ->
+                if (config.name.toLowerCase().contains("test")) return
                 config.dependencies
                         .withType(ProjectDependency)
                         .collect { it.dependencyProject }
@@ -78,6 +87,10 @@ task projectDependencyGraph {
                 traits.add('fillcolor="#ffffba"')
             } else if (androidProjects.contains(project)) {
                 traits.add('fillcolor="#baffc9"')
+            } else if (androidLibraryProjects.contains(project)) {
+                traits.add('fillcolor="#81D4FA"')
+            } else if (androidDynamicFeatureProjects.contains(project)) {
+                traits.add('fillcolor="#c9baff"')
             } else if (javaProjects.contains(project)) {
                 traits.add('fillcolor="#ffb3ba"')
             } else {
@@ -97,8 +110,7 @@ task projectDependencyGraph {
 
         dot << '\n  # Dependencies\n\n'
         dependencies.forEach { key, traits ->
-            if (key.v1.path == key.v2.path) return
-            dot << "  \"${key.v1.path}\" -> \"${key.v2.path}\""
+            dot << "  \"${key.first.path}\" -> \"${key.second.path}\""
             if (!traits.isEmpty()) {
                 dot << " [${traits.join(", ")}]"
             }
