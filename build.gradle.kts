@@ -13,7 +13,7 @@ buildscript {
     repositories {
         google()
         mavenCentral()
-        maven { setUrl("https://plugins.gradle.org/m2/") }
+        // maven { setUrl("https://plugins.gradle.org/m2/") }
     }
 
     dependencies {
@@ -23,9 +23,9 @@ buildscript {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.Essential.Kotlin}")
         classpath("de.mannodermaus.gradle.plugins:android-junit5:${Versions.Test.JUnitGradle}")
         classpath("com.google.android.gms:oss-licenses-plugin:${Versions.OssLicense.Classpath}")
-        classpath("gradle.plugin.dev.arunkumar:scabbard-gradle-plugin:${Versions.Util.Scabbard}") {
+        /*classpath("gradle.plugin.dev.arunkumar:scabbard-gradle-plugin:${Versions.Util.Scabbard}") {
             exclude(group = "com.github.kittinunf.result", module = "result")
-        }
+        }*/
     }
 }
 
@@ -65,6 +65,6 @@ tasks.register("clean", Delete::class) {
 }
 
 apply {
-    plugin("scabbard.gradle")
+    // plugin("scabbard.gradle")
     from("gradle/dependencyGraph.gradle")
 }
