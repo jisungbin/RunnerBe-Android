@@ -1,6 +1,5 @@
 plugins {
     id("com.android.application")
-    id("kotlin-android")
     id("com.google.android.gms.oss-licenses-plugin")
     id("com.google.gms.google-services")
     id("name.remal.check-dependency-updates") version Versions.Util.CheckDependencyUpdates

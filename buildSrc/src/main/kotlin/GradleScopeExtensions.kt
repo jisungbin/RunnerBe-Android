@@ -11,8 +11,10 @@ import org.gradle.api.artifacts.ProjectDependency
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.plugin.use.PluginDependenciesSpec
 
-fun DependencyHandler.installSharedHiltJUnit5() {
-    implementationProject(ProjectConstants.Shared)
+fun DependencyHandler.installSharedHiltJUnit5(isSharedModule: Boolean = false) {
+    if (!isSharedModule) {
+        implementationProject(ProjectConstants.Shared)
+    }
     add("implementation", Dependencies.Hilt)
     add("testDebugImplementation", Dependencies.Test.JunitApi)
     add("testDebugRuntimeOnly", Dependencies.Test.JunitEngine)
