@@ -10,8 +10,10 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    installKaptWithHiltPlugin()
 }
 
 dependencies {
     implementation(projects.shared)
+    installHilt()
 }

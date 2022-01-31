@@ -10,8 +10,8 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
-    id("kotlin-kapt")
     id("de.mannodermaus.android-junit5")
+    installKaptWithHiltPlugin()
 }
 
 dependencies {
@@ -20,4 +20,6 @@ dependencies {
 
     Dependencies.Jackson.forEach(::implementation)
     Dependencies.Network.forEach(::implementation)
+
+    installHilt()
 }
