@@ -44,6 +44,18 @@ allprojects {
     }
 }
 
+subprojects {
+    // https://github.com/gradle/gradle/issues/4823#issuecomment-715615422
+    @Suppress("UnstableApiUsage")
+    if (gradle.startParameter.isConfigureOnDemand &&
+        buildscript.sourceFile?.extension?.toLowerCase() == "kts" &&
+        parent != rootProject
+    ) {
+        generateSequence(parent) { project -> project.parent.takeIf { it != rootProject } }
+            .forEach { evaluationDependsOn(it.path) }
+    }
+}
+
 tasks.register("clean", Delete::class) {
     allprojects.map { it.buildDir }.forEach(::delete)
 }

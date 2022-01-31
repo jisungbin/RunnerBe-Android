@@ -15,4 +15,5 @@ dependencies {
     installSharedHiltComposeJUnit5()
     implementationProject(ProjectConstants.HomeWrite)
     implementationProject(ProjectConstants.HomeNotification)
+    implementationProject(ProjectConstants.RegisterInformation)
 }
