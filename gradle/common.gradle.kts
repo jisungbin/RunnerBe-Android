@@ -1,12 +1,4 @@
-plugins {
-    id("com.android.library")
-    id("kotlin-android")
-    id("kotlin-kapt")
-}
-
-android { }
-
-/*android {
+android {
     compileSdk = ApplicationConstants.compileSdk
 
     defaultConfig {
@@ -22,15 +14,11 @@ android { }
     }
 
     compileOptions {
-        sourceCompatibility = ApplicationConstants.sourceCompat
-        targetCompatibility = ApplicationConstants.targetCompat
+        sourceCompatibility = ApplicationConstants.javaVersion
+        targetCompatibility = ApplicationConstants.javaVersion
     }
 
     kotlinOptions {
         jvmTarget = ApplicationConstants.jvmTarget
     }
-}*/
-
-dependencies {
-    // Nothing. 100% DOMAIN!
 }

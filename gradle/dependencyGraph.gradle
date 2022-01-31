@@ -107,12 +107,6 @@ task projectDependencyGraph {
 
         dot << '}\n'
 
-        def p = 'dot -Tpng -O project.dot'.execute([], dot.parentFile)
-        p.waitFor()
-        if (p.exitValue() != 0) {
-            throw new RuntimeException(p.errorStream.text)
-        }
-
-        println("Project module dependency graph created at ${dot.absolutePath}.png")
+        println("project.dot is created. Run: dot -Tpng -O gradle/dependency-graph/project.dot")
     }
 }

@@ -9,14 +9,9 @@ plugins {
 }
 
 android {
-    compileSdk = Application.compileSdk
-
     defaultConfig {
-        minSdk = Application.minSdk
-        targetSdk = Application.targetSdk
-        versionCode = Application.versionCode
-        versionName = Application.versionName
-        multiDexEnabled = true
+        versionCode = ApplicationConstants.versionCode
+        versionName = ApplicationConstants.versionName
     }
 
     buildTypes {
@@ -27,27 +22,8 @@ android {
         }
     }
 
-    sourceSets {
-        getByName("main").run {
-            java.srcDirs("src/main/kotlin")
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility = Application.sourceCompat
-        targetCompatibility = Application.targetCompat
-    }
-
-    kotlinOptions {
-        jvmTarget = Application.jvmTarget
-    }
-
     buildFeatures {
-        compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = Versions.Compose.Master
+        dataBinding = true
     }
 }
 

@@ -4,12 +4,14 @@ plugins {
     id("kotlin-kapt")
 }
 
-android {
-    compileSdk = Application.compileSdk
+android { }
+
+/*android {
+    compileSdk = ApplicationConstants.compileSdk
 
     defaultConfig {
-        minSdk = Application.minSdk
-        targetSdk = Application.targetSdk
+        minSdk = ApplicationConstants.minSdk
+        targetSdk = ApplicationConstants.targetSdk
         multiDexEnabled = true
     }
 
@@ -20,15 +22,16 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = Application.sourceCompat
-        targetCompatibility = Application.targetCompat
+        sourceCompatibility = ApplicationConstants.sourceCompat
+        targetCompatibility = ApplicationConstants.targetCompat
     }
 
     kotlinOptions {
-        jvmTarget = Application.jvmTarget
+        jvmTarget = ApplicationConstants.jvmTarget
     }
-}
+}*/
 
+/*
 dependencies {
     implementation(projects.domain)
     implementation(Dependencies.Coroutine)
@@ -36,3 +39,4 @@ dependencies {
     Dependencies.Jackson.forEach(::implementation)
     Dependencies.Network.forEach(::implementation)
 }
+*/
