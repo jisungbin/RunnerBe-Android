@@ -23,7 +23,7 @@ android {
     }
 
     buildFeatures {
-        dataBinding = true
+        viewBinding = true
     }
 }
 
@@ -32,7 +32,6 @@ dependencies {
     implementation(projects.domain)
     implementation(projects.shared)
     implementation(Dependencies.Hilt)
-    implementation(Dependencies.Coroutine)
     implementation(Dependencies.Firebase.Analytics)
     implementation(platform(Dependencies.Firebase.Bom))
 
