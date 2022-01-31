@@ -11,6 +11,7 @@ plugins {
     id("com.android.library")
     id("kotlin-android")
     id("kotlin-kapt")
+    id("de.mannodermaus.android-junit5")
 }
 
 dependencies {

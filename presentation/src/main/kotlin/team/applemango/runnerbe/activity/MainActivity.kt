@@ -11,9 +11,13 @@ package team.applemango.runnerbe.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import team.applemango.runnerbe.shared.util.extension.toast
+import team.applemango.runnerbe.shared.util.NetworkUtil
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        toast()
     }
 }

@@ -12,6 +12,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
+    id("de.mannodermaus.android-junit5")
 }
 
 dependencies {
@@ -20,7 +21,8 @@ dependencies {
 
     Dependencies.Ktx.forEach(::api)
     Dependencies.Util.forEach(::api)
-    Dependencies.Test.forEach(::testImplementation)
-
+    //  Dependencies.Test.forEach(::testImplementation)
+    testDebugApi("org.junit.jupiter:junit-jupiter-api:5.8.2")
+    testDebugApi("org.junit.jupiter:junit-jupiter-engine:5.8.2")
     kapt(Dependencies.Compiler.Hilt)
 }
