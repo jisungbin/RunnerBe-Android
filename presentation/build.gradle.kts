@@ -46,7 +46,5 @@ dependencies {
     Dependencies.Ui.forEach(::implementation)
     Dependencies.Debug.forEach(::debugImplementation)
 
-    Dependencies.Test.forEach(::testImplementation)
-
     installHiltJUnit5()
 }
