@@ -20,8 +20,8 @@ buildscript {
         classpath("com.google.gms:google-services:${Versions.Essential.GoogleService}")
         classpath("com.google.dagger:hilt-android-gradle-plugin:${Versions.Jetpack.Hilt}")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.Essential.Kotlin}")
+        classpath("de.mannodermaus.gradle.plugins:android-junit5:${Versions.Test.JUnitGradle}")
         classpath("com.google.android.gms:oss-licenses-plugin:${Versions.OssLicense.Classpath}")
-        classpath("de.mannodermaus.gradle.plugins:android-junit5:1.8.2.0")
     }
 }
 

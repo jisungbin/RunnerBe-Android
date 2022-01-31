@@ -4,13 +4,5 @@ include(
     ":data",
     ":domain",
     ":shared",
-    ":presentation",
-    ":features:mail",
-    ":features:alarm",
-    ":features:board",
-    ":features:mypage",
-    ":features:writing",
-    ":features:snslogin",
-    ":features:favorite",
-    ":features:extrainformation"
+    ":presentation"
 )

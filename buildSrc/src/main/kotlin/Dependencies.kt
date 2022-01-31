@@ -69,6 +69,8 @@ object Versions {
     object Test {
         const val JUnit = "5.8.2"
         const val Hamcrest = "2.2"
+        const val Coroutine = "1.6.0"
+        const val JUnitGradle = "1.8.2.0"
     }
 }
 
@@ -133,18 +135,25 @@ object Dependencies {
         // Room
     }
 
-    val Test = listOf(
-        "org.hamcrest:hamcrest:${Versions.Test.Hamcrest}",
-        "org.junit.jupiter:junit-jupiter-engine:${Versions.Test.JUnit}"
-    )
+    object Test {
+        const val Hamcrest = "org.hamcrest:hamcrest:${Versions.Test.Hamcrest}"
+        const val JunitApi = "org.junit.jupiter:junit-jupiter-api:${Versions.Test.JUnit}"
+        const val JunitEngine = "org.junit.jupiter:junit-jupiter-engine:${Versions.Test.JUnit}"
+        const val Coroutine =
+            "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.Test.Coroutine}"
+    }
 }
 
-fun DependencyHandler.installHilt() {
+fun DependencyHandler.installHiltJUnit5() {
     add("implementation", Dependencies.Hilt)
+    add("testDebugImplementation", Dependencies.Test.JunitApi)
+    add("testDebugRuntimeOnly", Dependencies.Test.JunitEngine)
+    add("testDebugImplementation", Dependencies.Test.Coroutine)
     add("kapt", Dependencies.Compiler.Hilt)
 }
 
-fun PluginDependenciesSpec.installKaptWithHiltPlugin() {
+fun PluginDependenciesSpec.installKaptHiltJUnit5() {
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
+    id("de.mannodermaus.android-junit5")
 }

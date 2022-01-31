@@ -10,18 +10,15 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
-    id("de.mannodermaus.android-junit5")
-    installKaptWithHiltPlugin()
+    installKaptHiltJUnit5()
 }
 
 dependencies {
+    api(projects.domain)
     api(Dependencies.Coroutine)
 
     Dependencies.Ktx.forEach(::api)
     Dependencies.Util.forEach(::api)
-    //  Dependencies.Test.forEach(::testImplementation)
-    testDebugApi("org.junit.jupiter:junit-jupiter-api:5.8.2")
-    testDebugApi("org.junit.jupiter:junit-jupiter-engine:5.8.2")
 
-    installHilt()
+    installHiltJUnit5()
 }
