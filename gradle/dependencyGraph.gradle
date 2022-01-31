@@ -77,10 +77,6 @@ task projectDependencyGraph {
         for (project in projects) {
             def traits = []
 
-            if (rootProjects.contains(project)) {
-                traits.add('shape=box')
-            }
-
             if (multiplatformProjects.contains(project)) {
                 traits.add('fillcolor="#ffd2b3"')
             } else if (jsProjects.contains(project)) {

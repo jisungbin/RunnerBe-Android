@@ -5,7 +5,7 @@ digraph {
 
   # Projects
 
-  ":data" [shape=box, fillcolor="#81D4FA"];
+  ":data" [fillcolor="#81D4FA"];
   ":domain" [fillcolor="#81D4FA"];
   ":features:home:board" [fillcolor="#81D4FA"];
   ":features:home:notification" [fillcolor="#81D4FA"];
