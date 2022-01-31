@@ -20,6 +20,7 @@ dependencies {
 
     Dependencies.Ktx.forEach(::api)
     Dependencies.Util.forEach(::api)
+    Dependencies.Test.forEach(::testImplementation)
 
     kapt(Dependencies.Compiler.Hilt)
 }

@@ -62,6 +62,11 @@ object Versions {
         const val Master = "17.0.0"
         const val Classpath = "0.10.4"
     }
+
+    object Test {
+        const val JUnit = "5.8.2"
+        const val Hamcrest = "2.2"
+    }
 }
 
 object Dependencies {
@@ -123,4 +128,9 @@ object Dependencies {
         const val Hilt = "com.google.dagger:hilt-android-compiler:${Versions.Jetpack.Hilt}"
         // Room
     }
+
+    val Test = listOf(
+        "org.hamcrest:hamcrest:${Versions.Test.Hamcrest}",
+        "org.junit.jupiter:junit-jupiter-engine:${Versions.Test.JUnit}"
+    )
 }

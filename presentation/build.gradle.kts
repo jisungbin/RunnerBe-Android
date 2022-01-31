@@ -28,21 +28,14 @@ android {
 }
 
 dependencies {
-    implementation(projects.data)
-    implementation(projects.domain)
     implementation(projects.shared)
     implementation(Dependencies.Hilt)
     implementation(Dependencies.Firebase.Analytics)
     implementation(platform(Dependencies.Firebase.Bom))
 
     Dependencies.Ui.forEach(::implementation)
-    Dependencies.Ktx.forEach(::implementation)
-    Dependencies.Util.forEach(::implementation)
-    Dependencies.Compose.forEach(::implementation)
-    Dependencies.Jackson.forEach(::implementation)
-    Dependencies.Network.forEach(::implementation)
-
     Dependencies.Debug.forEach(::debugImplementation)
 
     kapt(Dependencies.Compiler.Hilt)
+    Dependencies.Test.forEach(::testImplementation)
 }
