@@ -11,18 +11,6 @@ plugins {
     installLibraryKotlinKaptHiltJUnit5()
 }
 
-android {
-
-}
-
-/*android {
-    defaultConfig {
-        applicationId = "team.applemango.runnerbe.feature.home.board"
-    }
-
-    dynamicFeatures += setOf(ProjectConstants.RegisterInformation)
-}*/
-
 dependencies {
     installSharedHiltComposeJUnit5()
     implementationProject(ProjectConstants.HomeWrite)

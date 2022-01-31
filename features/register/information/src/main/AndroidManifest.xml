@@ -7,6 +7,15 @@
   ~ Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
   -->
 
-<manifest package="team.applemango.runnerbe.feature.register.information">
+<manifest xmlns:dist="http://schemas.android.com/apk/distribution"
+    package="team.applemango.runnerbe.feature.register.information">
+
+    <dist:module dist:title="@string/dist_dfm_register_information">
+        <dist:fusing dist:include="true" />
+        <dist:delivery>
+            <dist:install-time />
+            <dist:removable value="true" />
+        </dist:delivery>
+    </dist:module>
 
 </manifest>

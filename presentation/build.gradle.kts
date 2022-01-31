@@ -25,15 +25,17 @@ android {
         viewBinding = true
     }
 
-    dynamicFeatures += setOf(ProjectConstants.RegisterSnsLogin)
+    dynamicFeatures += setOf(
+        ProjectConstants.RegisterSnsLogin,
+        ProjectConstants.RegisterInformation
+    )
 }
 
 dependencies {
     val features = listOf(
         ProjectConstants.Mail,
         ProjectConstants.MyPage,
-        ProjectConstants.HomeBoard,
-        // ProjectConstants.RegisterSnsLogin
+        ProjectConstants.HomeBoard
     )
 
     features.forEach(::implementationProject)

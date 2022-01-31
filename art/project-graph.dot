@@ -12,16 +12,17 @@ digraph {
   ":features:home:write" [fillcolor="#81D4FA"];
   ":features:mail" [fillcolor="#81D4FA"];
   ":features:mypage" [fillcolor="#81D4FA"];
-  ":features:register:information" [fillcolor="#c9baff"];
-  ":features:register:snslogin" [shape=box, fillcolor="#c9baff"];
+  ":features:register:information" [shape=box, fillcolor="#c9baff"];
+  ":features:register:snslogin" [fillcolor="#c9baff"];
   ":presentation" [fillcolor="#baffc9"];
   ":shared" [fillcolor="#81D4FA"];
 
-  {rank = same; ":data"; ":features:register:snslogin";}
+  {rank = same; ":data"; ":features:register:information";}
 
   # Dependencies
 
   ":data" -> ":shared" [style=dotted]
+  ":presentation" -> ":features:register:snslogin"
   ":presentation" -> ":features:mail" [style=dotted]
   ":presentation" -> ":features:mypage" [style=dotted]
   ":presentation" -> ":features:home:board" [style=dotted]
@@ -32,10 +33,9 @@ digraph {
   ":features:home:board" -> ":shared" [style=dotted]
   ":features:home:board" -> ":features:home:write" [style=dotted]
   ":features:home:board" -> ":features:home:notification" [style=dotted]
-  ":features:home:board" -> ":features:register:information" [style=dotted]
   ":features:home:notification" -> ":shared" [style=dotted]
   ":features:home:write" -> ":shared" [style=dotted]
-  ":features:register:information" -> ":presentation" [style=dotted]
+  ":features:register:information" -> ":features:home:board" [style=dotted]
   ":features:register:information" -> ":shared" [style=dotted]
   ":features:register:snslogin" -> ":presentation" [style=dotted]
   ":features:register:snslogin" -> ":shared" [style=dotted]

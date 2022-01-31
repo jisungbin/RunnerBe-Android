@@ -12,6 +12,6 @@ plugins {
 }
 
 dependencies {
-    implementationProject(ProjectConstants.HomeBoard)
+    implementationProject(ProjectConstants.Presentation)
     installSharedHiltComposeJUnit5()
 }
