@@ -40,6 +40,7 @@ fun DependencyHandler.installCommonDependencies(
     if (!excludeCompose) {
         Dependencies.Compose.forEach(::implementation)
     }
+    implementation("com.github.kittinunf.result:result-jvm:5.2.1")
     implementation(Dependencies.Hilt)
     add("testDebugImplementation", Dependencies.Test.JunitApi)
     add("testDebugRuntimeOnly", Dependencies.Test.JunitEngine)
