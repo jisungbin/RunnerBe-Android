@@ -11,5 +11,6 @@ include(
     ":features:mypage",
     ":features:writing",
     ":features:snslogin",
+    ":features:favorite",
     ":features:extrainformation"
 )

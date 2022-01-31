@@ -9,7 +9,7 @@
 
 plugins {
     id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    id("kotlin-android")
     id("de.mannodermaus.android-junit5")
     installKaptWithHiltPlugin()
 }
