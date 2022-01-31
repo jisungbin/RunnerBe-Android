@@ -3,6 +3,8 @@ local.properties
 /.idea
 /build
 /secrets.tar
+/fastlane/Fastfile
+/fastlane/service-key.json
 /data/build
 /domain/build
 /shared/build
@@ -17,5 +19,3 @@ local.properties
 /features/register/snslogin/build
 /features/register/information/build
 /presentation/google-services.json
-/fastlane/Fastfile
-/fastlane/service-key.json
