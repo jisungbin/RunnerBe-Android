@@ -41,6 +41,7 @@
 
 - JUnit5
 - Hamcrest
+- kotlinx-coroutines-test
 
 #### Etc
 
