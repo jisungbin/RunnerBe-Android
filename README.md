@@ -7,7 +7,6 @@
   <a href="https://www.codefactor.io/repository/github/applemango-runnerbe/runnerbe-android/overview/develop"><img src="https://www.codefactor.io/repository/github/applemango-runnerbe/runnerbe-android/badge/develop" alt="CodeFactor" /></a>
 </p>
 
-
 ---
 
 ## Tech Skill
