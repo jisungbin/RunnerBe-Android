@@ -1,3 +1,10 @@
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 rootProject.name = "RunnerBe"
 include(":data", ":domain", ":presentation")
+include(":features:snslogin")
+include(":features:extrainformation")
+include(":features:writing")
+include(":features:favorite")
+include(":features:mail")
+include(":features:alarm")
+include(":features:mypage")

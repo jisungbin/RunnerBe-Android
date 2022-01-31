@@ -1,0 +1,19 @@
+digraph {
+  graph [label="RunnerBe\n ",labelloc=t,fontsize=30,ranksep=1.4];
+  node [style=filled, fillcolor="#bbbbbb"];
+  rankdir=TB;
+
+  # Projects
+
+  ":data" [fillcolor="#baffc9"];
+  ":domain" [fillcolor="#baffc9"];
+  ":presentation" [fillcolor="#baffc9"];
+
+  {rank = same;}
+
+  # Dependencies
+
+  ":data" -> ":domain" [style=dotted]
+  ":presentation" -> ":data" [style=dotted]
+  ":presentation" -> ":domain" [style=dotted]
+}
