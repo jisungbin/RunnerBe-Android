@@ -10,11 +10,14 @@
 package team.applemango.runnerbe.activity
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import team.applemango.runnerbe.shared.util.extension.toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import team.applemango.runnerbe.R
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen() // TODO: Splash Theme
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
     }
 }

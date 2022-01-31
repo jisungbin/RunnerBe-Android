@@ -1,3 +1,12 @@
+/*
+ * RunnerBe © 2022 Team AppleMango. all rights reserved.
+ * RunnerBe license is under the MIT.
+ *
+ * [RunnerBe.kt] created by Ji Sungbin on 22. 1. 31. 오후 6:56
+ *
+ * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
+ */
+
 package team.applemango.runnerbe
 
 import android.app.Application
@@ -9,7 +18,7 @@ import io.github.jisungbin.logeukes.Logeukes
 class RunnerBe : Application() {
     override fun onCreate() {
         super.onCreate()
-        Erratum.setup(application = this)
+        Erratum.setup(application = this) // TODO: Set Exception Activity
 
         if (BuildConfig.DEBUG) {
             Logeukes.setup()

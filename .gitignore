@@ -16,5 +16,6 @@ local.properties
 /features/mypage/build
 /features/snslogin/build
 /features/writing/build
+/features/favorite/build
 /features/extrainformation/build
 /presentation/google-services.json
