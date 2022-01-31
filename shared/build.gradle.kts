@@ -10,13 +10,11 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
     id("de.mannodermaus.android-junit5")
+    installKaptWithHiltPlugin()
 }
 
 dependencies {
-    implementation(Dependencies.Hilt)
     api(Dependencies.Coroutine)
 
     Dependencies.Ktx.forEach(::api)
@@ -24,5 +22,6 @@ dependencies {
     //  Dependencies.Test.forEach(::testImplementation)
     testDebugApi("org.junit.jupiter:junit-jupiter-api:5.8.2")
     testDebugApi("org.junit.jupiter:junit-jupiter-engine:5.8.2")
-    kapt(Dependencies.Compiler.Hilt)
+
+    installHilt()
 }

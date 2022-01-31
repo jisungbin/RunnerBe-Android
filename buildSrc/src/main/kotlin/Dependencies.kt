@@ -1,4 +1,6 @@
 import org.gradle.api.JavaVersion
+import org.gradle.api.artifacts.dsl.DependencyHandler
+import org.gradle.plugin.use.PluginDependenciesSpec
 
 object ApplicationConstants {
     const val minSdk = 21
@@ -133,4 +135,14 @@ object Dependencies {
         "org.hamcrest:hamcrest:${Versions.Test.Hamcrest}",
         "org.junit.jupiter:junit-jupiter-engine:${Versions.Test.JUnit}"
     )
+}
+
+fun DependencyHandler.installHilt() {
+    add("implementation", Dependencies.Hilt)
+    add("kapt", Dependencies.Compiler.Hilt)
+}
+
+fun PluginDependenciesSpec.installKaptWithHiltPlugin() {
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
