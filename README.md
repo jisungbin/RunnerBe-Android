@@ -13,7 +13,7 @@
 
 #### Architecture
 
-- Layered/Clean Architecture
+- Layered Architecture
 - MVW Pattern
 - Dynamic Feature Module
 - TDD
