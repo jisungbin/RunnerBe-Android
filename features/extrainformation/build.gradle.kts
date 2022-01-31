@@ -3,13 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
-android {
-    sourceSets {
-        getByName("main").run {
-            java.srcDirs("src/main/kotlin")
-        }
-    }
-}
+android {}
 
 /*dependencies {
 

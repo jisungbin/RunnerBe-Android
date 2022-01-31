@@ -11,3 +11,4 @@ include(
     ":features:snslogin",
     ":features:extrainformation"
 )
+include(":shared")
