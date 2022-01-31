@@ -12,6 +12,7 @@ local.properties
 /presentation/release
 /features/alarm/build
 /features/mail/build
+/features/board/build
 /features/mypage/build
 /features/snslogin/build
 /features/writing/build
