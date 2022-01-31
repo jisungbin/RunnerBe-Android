@@ -8,16 +8,12 @@
  */
 
 plugins {
-    id("com.android.library")
-    id("kotlin-android")
-    installKaptHiltJUnit5()
+    installLibraryKotlinKaptHiltJUnit5()
 }
 
 dependencies {
-    implementation(projects.shared)
-
     Dependencies.Jackson.forEach(::implementation)
     Dependencies.Network.forEach(::implementation)
 
-    installHiltJUnit5()
+    installSharedHiltJUnit5()
 }

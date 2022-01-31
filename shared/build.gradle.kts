@@ -10,7 +10,7 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
-    installKaptHiltJUnit5()
+    installLibraryKotlinKaptHiltJUnit5()
 }
 
 dependencies {
@@ -20,5 +20,5 @@ dependencies {
     Dependencies.Ktx.forEach(::api)
     Dependencies.Util.forEach(::api)
 
-    installHiltJUnit5()
+    installSharedHiltJUnit5()
 }

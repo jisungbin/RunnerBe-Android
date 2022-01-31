@@ -4,7 +4,7 @@ plugins {
     id("com.google.android.gms.oss-licenses-plugin")
     id("com.google.gms.google-services")
     id("name.remal.check-dependency-updates") version Versions.Util.CheckDependencyUpdates
-    installKaptHiltJUnit5()
+    installLibraryKotlinKaptHiltJUnit5(isLibrary = false)
 }
 
 android {
@@ -27,24 +27,11 @@ android {
 }
 
 dependencies {
-    /*val features = listOf(
-        projects.features.alarm,
-        projects.features.board,
-        projects.features.extrainformation,
-        projects.features.favorite,
-        projects.features.mail,
-        projects.features.mypage,
-        projects.features.snslogin,
-        projects.features.writing,
-    )
-
-    features.forEach(::implementation)*/
-    implementation(projects.shared)
     implementation(Dependencies.Firebase.Analytics)
     implementation(platform(Dependencies.Firebase.Bom))
 
     Dependencies.Ui.forEach(::implementation)
     Dependencies.Debug.forEach(::debugImplementation)
 
-    installHiltJUnit5()
+    installSharedHiltJUnit5()
 }

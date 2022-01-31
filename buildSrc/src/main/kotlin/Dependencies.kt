@@ -1,16 +1,11 @@
-import org.gradle.api.JavaVersion
-import org.gradle.api.artifacts.dsl.DependencyHandler
-import org.gradle.plugin.use.PluginDependenciesSpec
-
-object ApplicationConstants {
-    const val minSdk = 21
-    const val targetSdk = 31
-    const val compileSdk = 31
-    const val jvmTarget = "11"
-    const val versionCode = 2
-    const val versionName = "0.0.1-dev02"
-    val javaVersion = JavaVersion.VERSION_11
-}
+/*
+ * RunnerBe © 2022 Team AppleMango. all rights reserved.
+ * RunnerBe license is under the MIT.
+ *
+ * [Dependencies.kt] created by Ji Sungbin on 22. 1. 31. 오후 10:01
+ *
+ * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
+ */
 
 object Versions {
     const val FirebaseBom = "29.0.4"
@@ -142,19 +137,4 @@ object Dependencies {
         const val Coroutine =
             "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.Test.Coroutine}"
     }
-}
-
-fun DependencyHandler.installHiltJUnit5() {
-    add("implementation", Dependencies.Hilt)
-    add("testDebugImplementation", Dependencies.Test.JunitApi)
-    add("testDebugRuntimeOnly", Dependencies.Test.JunitEngine)
-    add("testDebugImplementation", Dependencies.Test.Hamcrest)
-    add("testDebugImplementation", Dependencies.Test.Coroutine)
-    add("kapt", Dependencies.Compiler.Hilt)
-}
-
-fun PluginDependenciesSpec.installKaptHiltJUnit5() {
-    id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
-    id("de.mannodermaus.android-junit5")
 }
