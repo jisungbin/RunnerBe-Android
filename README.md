@@ -57,7 +57,7 @@
 
 #### Project Dependencies
 
-![](https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/art/project-graph.dot.png?raw=true)
+![](https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/art/graph/project-dependencies-graph.dot.png?raw=true)
 
 #### Dependeny Injection Graph
 
