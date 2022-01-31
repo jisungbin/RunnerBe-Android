@@ -21,5 +21,5 @@ dependencies {
     Dependencies.Ktx.forEach(::api)
     Dependencies.Util.forEach(::api)
 
-    // kapt(Dependencies.Compiler.Hilt)
+    kapt(Dependencies.Compiler.Hilt)
 }
