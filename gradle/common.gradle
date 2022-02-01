@@ -1,11 +1,14 @@
 def hasLibraryPlugin = pluginManager.hasPlugin("com.android.library")
 def hasApplicationPlugin = pluginManager.hasPlugin("com.android.application")
 def hasDFMPlugin = pluginManager.hasPlugin("com.android.dynamic-feature")
+def hasScabbardPlugin = pluginManager.hasPlugin("scabbard.gradle")
 
 if (hasLibraryPlugin || hasApplicationPlugin || hasDFMPlugin) {
-    /*scabbard {
-        enabled = true
-    }*/
+    if (hasScabbardPlugin) {
+        scabbard {
+            enabled = true
+        }
+    }
 
     android {
         compileSdk = ApplicationConstants.compileSdk

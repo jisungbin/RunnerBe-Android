@@ -9,6 +9,7 @@
 
 import org.gradle.api.artifacts.ProjectDependency
 import org.gradle.api.artifacts.dsl.DependencyHandler
+import org.gradle.kotlin.dsl.version
 import org.gradle.plugin.use.PluginDependenciesSpec
 
 // plugin
@@ -26,7 +27,7 @@ fun PluginDependenciesSpec.installCommonPlugins(
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
     id("de.mannodermaus.android-junit5")
-    // id("scabbard.gradle")
+    id("scabbard.gradle") version Versions.Util.Scabbard
 }
 
 // dependencies
