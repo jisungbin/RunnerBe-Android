@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.shared.util.di.qualifier
+package team.applemango.runnerbe.shared.di.qualifier
 
 import javax.inject.Qualifier
 
