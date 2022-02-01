@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import dagger.hilt.android.AndroidEntryPoint
 import team.applemango.runnerbe.R
+import team.applemango.runnerbe.shared.di.test.TestRepo
 import team.applemango.runnerbe.shared.util.extension.get
 import team.applemango.runnerbe.shared.util.extension.set
 import team.applemango.runnerbe.shared.util.extension.toast
@@ -25,6 +26,9 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var testPref: SharedPreferences
+
+    @Inject
+    lateinit var testRepo: TestRepo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen() // TODO: Splash Theme
@@ -37,5 +41,7 @@ class MainActivity : AppCompatActivity() {
         } else {
             toast(testPref["TEST"].orEmpty())
         }
+
+        testRepo.print()
     }
 }
