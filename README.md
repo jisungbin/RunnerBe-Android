@@ -36,12 +36,10 @@
 - WorkManager
 - CameraX
 - DataStore
-- DataBinding
 
 #### Design System
 
 - [Honeycomb](https://github.com/applemango-runnerbe/honeycomb)
-- Jetpack Compose
 
 #### Test
 
