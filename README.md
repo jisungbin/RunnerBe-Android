@@ -59,13 +59,13 @@
 
 ![](art/project-dependency-graph/graph.dot.png)
 
-#### Dependency Injection Graph (TEST MODULE)
+#### Dependency Injection Graph **(TEST MODULE)**
 
-![art/di-graph/SharedPreferencesModule.dot.png]
-![art/di-graph/TestBindModule.dot.png]
-![art/di-graph/ViewModelDispatcherModule.dot.png]
+![](art/di-graph/SharedPreferencesModule.dot.png)
+![](art/di-graph/TestBindModule.dot.png)
+![](art/di-graph/ViewModelDispatcherModule.dot.png)
 
-TODO
+> TODO
 
 ## Developer
 
