@@ -1,7 +1,7 @@
 // https://github.com/droidknights/DroidKnights2021_App/blob/main/gradle/dependencyGraph.gradle
 task projectDependencyGraph {
     doLast {
-        def dot = new File(rootProject.rootDir, 'art/graph/project-dependencies-graph.dot')
+        def dot = new File(rootProject.rootDir, 'art/project-dependency-graph/graph.dot')
         dot.parentFile.mkdirs()
         dot.delete()
 
@@ -115,6 +115,6 @@ task projectDependencyGraph {
 
         dot << '}\n'
 
-        println("project-dependencies-graph.dot is created. Run below command:\ndot -Tpng -O art/graph/project-dependencies-graph.dot")
+        println("graph.dot is created. Run below command:\ndot -Tpng -O art/project-dependency-graph/graph.dot")
     }
 }

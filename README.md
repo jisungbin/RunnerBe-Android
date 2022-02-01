@@ -57,9 +57,13 @@
 
 #### Project Dependencies
 
-![](https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/art/graph/project-dependencies-graph.dot.png?raw=true)
+![](art/project-dependency-graph/graph.dot.png)
 
-#### Dependeny Injection Graph
+#### Dependency Injection Graph (TEST MODULE)
+
+![art/di-graph/SharedPreferencesModule.dot.png]
+![art/di-graph/TestBindModule.dot.png]
+![art/di-graph/ViewModelDispatcherModule.dot.png]
 
 TODO
 
@@ -75,4 +79,6 @@ TODO
 
 ## License
 
-RunnerBe는 MIT 라이선스를 따릅니다. 자세한 내용은 [LICENSE](https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE) 파일을 확인해 주세요.
+RunnerBe는 MIT 라이선스를 따릅니다. 자세한
+내용은 [LICENSE](https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE) 파일을 확인해
+주세요.
