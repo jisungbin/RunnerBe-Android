@@ -62,9 +62,11 @@
 
 ![](art/project-dependency-graph/graph.dot.png)
 
-- `#c9baff`: `Dynamic Feature Project`
-- `#81D4FA`: `Android Library Project`
-- `#baffc9`: `Android Project`
+<p align="center" >
+  <img src="https://img.shields.io/badge/Module-Android-%23baffc9" />
+  <img src="https://img.shields.io/badge/Module-Dynamic%20Feature-%23c9baff" /> 
+  <img src="https://img.shields.io/badge/Module-Android%20Library-%2381D4FA" />
+</p>
 
 #### Dependency Injection Graph **(TEST MODULE)**
 
