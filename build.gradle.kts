@@ -75,5 +75,5 @@ tasks.register("clean", Delete::class) {
 
 apply {
     // plugin("scabbard.gradle")
-    from("gradle/dependencyGraph.gradle")
+    from("gradle/projectDependencyGraph.gradle")
 }
