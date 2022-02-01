@@ -7,6 +7,7 @@
   <a href="https://www.codefactor.io/repository/github/applemango-runnerbe/runnerbe-android/overview"><img src="https://www.codefactor.io/repository/github/applemango-runnerbe/runnerbe-android/badge" alt="CodeFactor" /></a>
   <br/>
   <a href="https://github.com/applemango-runnerbe/RunnerBe-Android"><img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/applemango-runnerbe/RunnerBe-Android" /></a>
+  <a href="https://github.com/applemango-runnerbe/RunnerBe-Android"><img alt="Lines of code" src="https://img.shields.io/tokei/lines/github/applemango-runnerbe/RunnerBe-Android" /></a>
   <a href="https://kotlin.link"><img src="https://kotlin.link/awesome-kotlin.svg" alt="awesome-kotlin" /></a>
   <a href="https://ktlint.github.io/"><img src="https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg" alt="ktlint" /></a>
 </p>
