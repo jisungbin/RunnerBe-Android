@@ -23,7 +23,7 @@
 #### Architecture
 
 - Layered Architecture
-- MVI Pattern (use framework: [meteor](https://github.com/jisungbin/meteor))
+- MVI Pattern (use framework: [orbit](https://github.com/orbit-mvi/orbit-mvi))
 - Dynamic Feature Module
 - TDD
 
