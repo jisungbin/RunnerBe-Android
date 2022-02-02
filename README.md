@@ -23,7 +23,7 @@
 #### Architecture
 
 - Layered Architecture
-- MVW Pattern
+- MVI Pattern (use framework: [meteor](https://github.com/jisungbin/meteor))
 - Dynamic Feature Module
 - TDD
 
