@@ -43,7 +43,7 @@
 
 #### Design System
 
-- [Honeycomb](https://github.com/applemango-runnerbe/honeycomb)
+- [Honeycomb-core](https://github.com/applemango-runnerbe/honeycomb)
 
 #### Test
 
