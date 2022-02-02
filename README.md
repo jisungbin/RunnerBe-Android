@@ -23,7 +23,7 @@
 #### Architecture
 
 - Layered Architecture
-- MVI Pattern (use framework: [orbit](https://github.com/orbit-mvi/orbit-mvi))
+- MVI Pattern (use framework: [honeycomb-meteor](https://github.com/applemango-runnerbe/honeycomb))
 - Dynamic Feature Module
 - TDD
 
