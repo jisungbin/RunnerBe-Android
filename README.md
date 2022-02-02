@@ -23,7 +23,7 @@
 
 #### Architecture
 
-- Layered Architecture
+- Layered Architecture (Presentation/Domain/Data)
 - MVI Pattern (use framework: [honeycomb-meteor](https://github.com/applemango-runnerbe/honeycomb))
 - Dynamic Feature Module
 - TDD
