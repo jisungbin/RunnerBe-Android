@@ -1,3 +1,6 @@
+<p align="center">
+  <img src="https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/art/preview-logo.png?raw=true" />
+</p>
 <h1 align="center">RunnerBe</h1>
 <p align="center">직장인 타겟 러닝 모임 O2O 플랫폼 🐝</p>
 <p align="center">
