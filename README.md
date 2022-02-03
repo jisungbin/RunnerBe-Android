@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="art/logo/signature_transparent.png" width="15%" />
+  <img src="https://github.com/applemango-runnerbe/.github/blob/main/art/logo/signature_transparent.png?raw=true" width="15%" />
 </p>
 <p align="center">직장인 타겟 러닝 모임 O2O 플랫폼 🐝</p>
 <p align="center">
