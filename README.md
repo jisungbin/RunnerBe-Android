@@ -1,3 +1,6 @@
+<p align="center">
+  <img src="https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/art/preview-logo.png?raw=true" width="15%" />
+</p>
 <h1 align="center">RunnerBe</h1>
 <p align="center">직장인 타겟 러닝 모임 O2O 플랫폼 🐝</p>
 <p align="center">
@@ -13,14 +16,15 @@
 </p>
 
 
+
 ---
 
 ## Tech Skill
 
 #### Architecture
 
-- Layered Architecture
-- MVW Pattern
+- Layered Architecture (Presentation/Domain/Data)
+- MVI Pattern (use framework: [honeycomb-meteor](https://github.com/applemango-runnerbe/honeycomb))
 - Dynamic Feature Module
 - TDD
 
@@ -39,7 +43,7 @@
 
 #### Design System
 
-- [Honeycomb](https://github.com/applemango-runnerbe/honeycomb)
+- [Honeycomb-core](https://github.com/applemango-runnerbe/honeycomb)
 
 #### Test
 
@@ -66,6 +70,7 @@
   <img src="https://img.shields.io/badge/Module-Android%20Library-%2381D4FA" />
 </p>
 
+
 #### Dependency Injection Graph **(TEST MODULE)**
 
 ![](art/di-graph/SharedPreferencesModule.dot.png)
@@ -76,7 +81,7 @@
 
 ## Developer
 
-|     [@jisungbin](https://github.com/jisungbin) - Android     |  [@parkchanho](https://github.com/great-park) - Server  |
+|  [PM] [@jisungbin](https://github.com/jisungbin) - Android   |  [@parkchanho](https://github.com/great-park) - Server  |
 | :----------------------------------------------------------: | :-----------------------------------------------------: |
 | <img src="https://avatars.githubusercontent.com/u/40740128?v=4" width="50%" /> | <img src="art/developer/parkchanho.png" width="40%" />  |
 | **[@kimeunseo](https://github.com/plannermango) - Planner**  |         **[@kimseojeong](README.md) - Design**          |
