@@ -1,7 +1,6 @@
 <p align="center">
-  <img src="art/logo/symbol_transparent.png" width="15%" />
+  <img src="art/logo/signature_transparent.png" width="15%" />
 </p>
-<h1 align="center">RunnerBe</h1>
 <p align="center">직장인 타겟 러닝 모임 O2O 플랫폼 🐝</p>
 <p align="center">
   <a href="https://github.com/jisungbin/RunnerBe/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/badge/License-MIT-blue"/></a>
@@ -14,8 +13,6 @@
   <a href="https://kotlin.link"><img src="https://kotlin.link/awesome-kotlin.svg" alt="awesome-kotlin" /></a>
   <a href="https://ktlint.github.io/"><img src="https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg" alt="ktlint" /></a>
 </p>
-
-
 
 ---
 
