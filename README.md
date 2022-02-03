@@ -78,7 +78,7 @@
 
 ## Developer
 
-- [PM] [@jisungbin](https://github.com/jisungbin)
+- **[PM]** [@jisungbin](https://github.com/jisungbin)
 
 ---
 
