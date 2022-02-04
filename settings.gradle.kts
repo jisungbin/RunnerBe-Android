@@ -10,6 +10,7 @@
 rootProject.name = "RunnerBe"
 include(
     ":data",
+    ":theme",
     ":domain",
     ":shared",
     ":presentation",

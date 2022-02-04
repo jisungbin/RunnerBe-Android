@@ -6,6 +6,7 @@ local.properties
 /fastlane/Fastfile
 /fastlane/service-key.json
 /data/build
+/theme/build
 /domain/build
 /shared/build
 /buildSrc/build

@@ -39,6 +39,7 @@ fun DependencyHandler.installSharedComposeHiltTest(
         implementationProject(ProjectConstants.Shared)
     }
     if (!excludeCompose) {
+        implementationProject(ProjectConstants.Theme)
         Dependencies.Compose.forEach(::implementation)
     }
     implementation(Dependencies.Hilt)
