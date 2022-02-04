@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="art/logo/signature_transparent.png" width="15%" />
+  <img src="https://github.com/applemango-runnerbe/.github/blob/main/art/logo/signature_transparent.png?raw=true" width="15%" />
 </p>
 <p align="center">직장인 타겟 러닝 모임 O2O 플랫폼 🐝</p>
 <p align="center">
@@ -21,7 +21,7 @@
 #### Architecture
 
 - Layered Architecture (Presentation/Domain/Data)
-- MVI Pattern (use framework: [honeycomb-meteor](https://github.com/applemango-runnerbe/honeycomb))
+- MVI Pattern (use framework: [orbit](https://github.com/orbit-mvi/orbit-mvi))
 - Dynamic Feature Module
 - TDD
 
@@ -40,7 +40,8 @@
 
 #### Design System
 
-- [Honeycomb-core](https://github.com/applemango-runnerbe/honeycomb)
+- ~~[Honeycomb-core](https://github.com/applemango-runnerbe/honeycomb)~~
+- Jetpack Compose
 
 #### Test
 
@@ -78,11 +79,7 @@
 
 ## Developer
 
-|  [PM] [@jisungbin](https://github.com/jisungbin) - Android   |  [@parkchanho](https://github.com/great-park) - Server  |
-| :----------------------------------------------------------: | :-----------------------------------------------------: |
-| <img src="https://avatars.githubusercontent.com/u/40740128?v=4" width="50%" /> | <img src="art/developer/parkchanho.png" width="40%" />  |
-| **[@kimeunseo](https://github.com/plannermango) - Planner**  |         **[@kimseojeong](README.md) - Design**          |
-|    <img src="art/developer/kimeunseo.png" width="40%" />     | <img src="art/developer/kimseojeong.png" width="55%" /> |
+- **[PM]** [@jisungbin](https://github.com/jisungbin)
 
 ---
 
