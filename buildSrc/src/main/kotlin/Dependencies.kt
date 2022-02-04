@@ -53,6 +53,7 @@ object Versions {
         const val Scabbard = "0.5.0"
         const val LeakCanary = "2.8.1"
         const val CheckDependencyUpdates = "1.5.0"
+        const val DependencyGraphGenerator = "0.7.0"
     }
 
     object Jetpack {
