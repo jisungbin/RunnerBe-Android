@@ -22,7 +22,7 @@
 
 - Layered Architecture (Presentation/Domain/Data)
 - MVI Pattern (use framework: [orbit](https://github.com/orbit-mvi/orbit-mvi))
-- Dynamic Feature Module
+- Dynamic Feature Module (:features:register)
 - TDD
 
 #### CI/CD
