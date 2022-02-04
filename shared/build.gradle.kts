@@ -14,11 +14,14 @@ plugins {
     id("dagger.hilt.android.plugin")
 }
 
+// data 로 부터 의존성 주입 받아서 domain 으로 Provides 해줌
 dependencies {
-    api(Dependencies.Coroutine)
     api(Dependencies.Util.Logeukes)
     api(project(ProjectConstants.Domain))
-    Dependencies.SharedKtx.forEach(::api)
+
     implementation(Dependencies.Hilt)
+    implementationProject(ProjectConstants.Data)
+
     kapt(Dependencies.Compiler.Hilt)
+    Dependencies.SharedKtx.forEach(::api)
 }

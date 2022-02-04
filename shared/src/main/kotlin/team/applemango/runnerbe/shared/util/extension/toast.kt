@@ -14,7 +14,7 @@ import android.content.Context
 import android.widget.Toast
 
 fun Activity.toast(message: String) {
-    toast(this) { message }
+    toast(applicationContext) { message }
 }
 
 fun toast(context: Context, message: Context.() -> String) {

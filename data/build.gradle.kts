@@ -7,11 +7,8 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-// Network, Test 의존성만 필요함
 plugins {
-    id("com.android.library")
-    id("kotlin-android")
-    id("de.mannodermaus.android-junit5")
+    installLibraryDfmHiltTestScabbard()
 }
 
 dependencies {
@@ -19,11 +16,9 @@ dependencies {
     Dependencies.Network.forEach(::implementation)
 
     implementation(Dependencies.Coroutine)
+    implementation(Dependencies.Hilt)
     implementation(Dependencies.Util.Logeukes)
-    implementationProject(ProjectConstants.Domain)
+    implementation(project(ProjectConstants.Domain))
 
-    testDebugImplementation(Dependencies.Test.JunitApi)
-    testDebugRuntimeOnly(Dependencies.Test.JunitEngine)
-    testDebugImplementation(Dependencies.Test.Hamcrest)
-    testDebugImplementation(Dependencies.Test.Coroutine)
+    kapt(Dependencies.Compiler.Hilt)
 }

@@ -13,11 +13,10 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import team.applemango.runnerbe.R
-import team.applemango.runnerbe.shared.di.test.TestRepo
-import team.applemango.runnerbe.shared.util.extension.get
-import team.applemango.runnerbe.shared.util.extension.set
+import team.applemango.runnerbe.domain.Test
 import team.applemango.runnerbe.shared.util.extension.toast
 import javax.inject.Inject
 
@@ -28,20 +27,15 @@ class MainActivity : AppCompatActivity() {
     lateinit var testPref: SharedPreferences
 
     @Inject
-    lateinit var testRepo: TestRepo
+    lateinit var test: Test
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen() // TODO: Splash Theme
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (testPref["TEST"] == null) {
-            toast("EMPTY!")
-            testPref["TEST"] = "BYE"
-        } else {
-            toast(testPref["TEST"].orEmpty())
+        lifecycleScope.launchWhenCreated {
+            toast(test.testRequest().toString())
         }
-
-        testRepo.print()
     }
 }

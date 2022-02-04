@@ -48,6 +48,7 @@ dependencies {
     )
 
     features.forEach(::implementationProject)
+    implementation(Dependencies.Util.Erratum)
     implementation(Dependencies.Firebase.Analytics)
     implementation(platform(Dependencies.Firebase.Bom))
 
