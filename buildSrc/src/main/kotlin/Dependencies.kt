@@ -19,6 +19,7 @@ object Versions {
 
     object Ktx {
         const val Core = "1.7.0"
+        const val PlayCore = "1.8.1"
         const val LifeCycle = "2.4.0"
     }
 
@@ -78,6 +79,7 @@ object Dependencies {
 
     val Ktx = listOf(
         "androidx.core:core-ktx:${Versions.Ktx.Core}",
+        "com.google.android.play:core-ktx:${Versions.Ktx.PlayCore}",
         "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.Ktx.LifeCycle}",
     )
 

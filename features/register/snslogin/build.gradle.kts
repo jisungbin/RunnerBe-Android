@@ -8,10 +8,10 @@
  */
 
 plugins {
-    installCommonPlugins(isDFM = true)
+    installLibraryDfmHiltTestScabbard(isDFM = true)
 }
 
 dependencies {
     implementationProject(ProjectConstants.Presentation)
-    installCommonDependencies()
+    installSharedComposeHiltTest()
 }

@@ -8,12 +8,12 @@
  */
 
 plugins {
-    installCommonPlugins()
+    installLibraryDfmHiltTestScabbard()
 }
 
 dependencies {
     Dependencies.Jackson.forEach(::implementation)
     Dependencies.Network.forEach(::implementation)
 
-    installCommonDependencies(excludeCompose = true)
+    installSharedComposeHiltTest(excludeCompose = true)
 }

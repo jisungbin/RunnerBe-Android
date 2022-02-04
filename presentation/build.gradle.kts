@@ -12,7 +12,7 @@ plugins {
     id("com.google.android.gms.oss-licenses-plugin")
     id("com.google.gms.google-services")
     id("name.remal.check-dependency-updates") version Versions.Util.CheckDependencyUpdates
-    installCommonPlugins(isLibrary = false)
+    installLibraryDfmHiltTestScabbard(isLibrary = false)
 }
 
 android {
@@ -53,5 +53,5 @@ dependencies {
     Dependencies.Ui.forEach(::implementation)
     Dependencies.Debug.forEach(::debugImplementation)
 
-    installCommonDependencies(excludeCompose = true)
+    installSharedComposeHiltTest()
 }

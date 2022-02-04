@@ -13,7 +13,7 @@ import org.gradle.kotlin.dsl.version
 import org.gradle.plugin.use.PluginDependenciesSpec
 
 // plugin
-fun PluginDependenciesSpec.installCommonPlugins(
+fun PluginDependenciesSpec.installLibraryDfmHiltTestScabbard(
     isLibrary: Boolean = true,
     isDFM: Boolean = false,
 ) {
@@ -31,7 +31,7 @@ fun PluginDependenciesSpec.installCommonPlugins(
 }
 
 // dependencies
-fun DependencyHandler.installCommonDependencies(
+fun DependencyHandler.installSharedComposeHiltTest(
     isSharedModule: Boolean = false,
     excludeCompose: Boolean = false,
 ) {

@@ -8,11 +8,11 @@
  */
 
 plugins {
-    installCommonPlugins()
+    installLibraryDfmHiltTestScabbard()
 }
 
 dependencies {
-    installCommonDependencies()
+    installSharedComposeHiltTest()
     implementationProject(ProjectConstants.HomeWrite)
     implementationProject(ProjectConstants.HomeNotification)
 }

@@ -8,9 +8,9 @@
  */
 
 plugins {
-    installCommonPlugins()
+    installLibraryDfmHiltTestScabbard()
 }
 
 dependencies {
-    installCommonDependencies()
+    installSharedComposeHiltTest()
 }

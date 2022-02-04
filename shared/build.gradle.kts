@@ -8,7 +8,7 @@
  */
 
 plugins {
-    installCommonPlugins()
+    installLibraryDfmHiltTestScabbard()
 }
 
 dependencies {
@@ -18,5 +18,5 @@ dependencies {
     Dependencies.Ktx.forEach(::api)
     Dependencies.Util.forEach(::api)
 
-    installCommonDependencies(isSharedModule = true, excludeCompose = true)
+    installSharedComposeHiltTest(isSharedModule = true, excludeCompose = true)
 }
