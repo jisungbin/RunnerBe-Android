@@ -21,7 +21,7 @@
 #### Architecture
 
 - Layered Architecture (Presentation/Domain/Data)
-- MVI Pattern (use framework: [honeycomb-meteor](https://github.com/applemango-runnerbe/honeycomb))
+- MVI Pattern
 - Dynamic Feature Module
 - TDD
 
@@ -40,7 +40,8 @@
 
 #### Design System
 
-- [Honeycomb-core](https://github.com/applemango-runnerbe/honeycomb)
+- ~~[Honeycomb-core](https://github.com/applemango-runnerbe/honeycomb)~~
+- Jetpack Compose
 
 #### Test
 
