@@ -7,6 +7,8 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
+@file:Suppress("unused")
+
 package team.applemango.runnerbe.theme
 
 import androidx.compose.ui.text.TextStyle
@@ -97,5 +99,28 @@ object Typography {
         fontSize = 12.sp,
         letterSpacing = (-0.2).sp
     )
-
+    val Body12M = TextStyle(
+        fontFamily = FontAsset.NotoSans.M,
+        fontSize = 12.sp,
+        letterSpacing = (-0.2).sp
+    )
+    val EngBody12M = TextStyle(
+        fontFamily = FontAsset.Roboto.M,
+        fontSize = 12.sp,
+        lineHeight = 15.sp
+    )
+    val Body12R = TextStyle(
+        fontFamily = FontAsset.NotoSans.R,
+        fontSize = 12.sp,
+        letterSpacing = (-0.3).sp
+    )
+    val Caption10B = TextStyle(
+        fontFamily = FontAsset.NotoSans.B,
+        fontSize = 10.sp
+    )
+    val Caption10R = TextStyle(
+        fontFamily = FontAsset.NotoSans.R,
+        fontSize = 10.sp,
+        letterSpacing = (-0.2).sp
+    )
 }
