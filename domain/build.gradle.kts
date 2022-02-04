@@ -7,6 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
+// 아무런 의존성도 필요 없음
 plugins {
     id("com.android.library")
     id("kotlin-android")

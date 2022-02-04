@@ -42,6 +42,7 @@ android {
 dependencies {
     val features = listOf(
         ProjectConstants.Mail,
+        ProjectConstants.Shared,
         ProjectConstants.MyPage,
         ProjectConstants.HomeBoard
     )
@@ -51,7 +52,7 @@ dependencies {
     implementation(platform(Dependencies.Firebase.Bom))
 
     Dependencies.Ui.forEach(::implementation)
-    Dependencies.PresentationKtx.forEach(::implementation)
+    Dependencies.PresentationOnlyKtx.forEach(::implementation)
 
     Dependencies.Debug.forEach(::debugImplementation)
     installSharedComposeHiltTest(excludeCompose = true)

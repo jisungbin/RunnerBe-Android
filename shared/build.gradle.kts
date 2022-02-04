@@ -8,15 +8,17 @@
  */
 
 plugins {
-    installLibraryDfmHiltTestScabbard()
+    id("com.android.library")
+    id("kotlin-android")
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 dependencies {
     api(Dependencies.Coroutine)
+    api(Dependencies.Util.Logeukes)
     api(project(ProjectConstants.Domain))
-
-    Dependencies.Util.forEach(::api)
     Dependencies.SharedKtx.forEach(::api)
-
-    installSharedComposeHiltTest(isSharedModule = true, excludeCompose = true)
+    implementation(Dependencies.Hilt)
+    kapt(Dependencies.Compiler.Hilt)
 }

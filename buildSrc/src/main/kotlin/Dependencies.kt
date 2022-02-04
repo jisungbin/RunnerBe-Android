@@ -83,7 +83,7 @@ object Dependencies {
         "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.Ktx.LifeCycle}"
     )
 
-    val PresentationKtx = listOf(
+    val PresentationOnlyKtx = listOf(
         "com.google.android.play:core-ktx:${Versions.Ktx.PlayCore}",
         "androidx.navigation:navigation-ui-ktx:${Versions.Ktx.Navigation}",
         "androidx.navigation:navigation-fragment-ktx:${Versions.Ktx.Navigation}",
@@ -125,10 +125,10 @@ object Dependencies {
         "com.squareup.retrofit2:converter-jackson:${Versions.Network.Retrofit}"
     )
 
-    val Util = listOf(
-        "land.sungbin:erratum:${Versions.Util.Erratum}",
-        "land.sungbin:logeukes:${Versions.Util.Logeukes}",
-    )
+    object Util {
+        const val Erratum = "land.sungbin:erratum:${Versions.Util.Erratum}"
+        const val Logeukes = "land.sungbin:logeukes:${Versions.Util.Logeukes}"
+    }
 
     val Debug = listOf(
         "com.squareup.leakcanary:leakcanary-android:${Versions.Util.LeakCanary}"
