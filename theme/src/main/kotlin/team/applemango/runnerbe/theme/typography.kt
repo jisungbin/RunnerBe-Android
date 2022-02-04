@@ -24,8 +24,8 @@ object FontAsset {
     val Aggro = font.aggro_l.toFontFamily()
 
     object NotoSans {
-        val M = font.notosans_m.toFontFamily()
         val R = font.notosans_r.toFontFamily()
+        val M = font.notosans_m.toFontFamily()
         val B = font.notosans_b.toFontFamily()
     }
 
