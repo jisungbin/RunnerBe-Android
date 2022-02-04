@@ -15,8 +15,8 @@ dependencies {
     api(Dependencies.Coroutine)
     api(project(ProjectConstants.Domain))
 
-    Dependencies.Ktx.forEach(::api)
     Dependencies.Util.forEach(::api)
+    Dependencies.SharedKtx.forEach(::api)
 
     installSharedComposeHiltTest(isSharedModule = true, excludeCompose = true)
 }

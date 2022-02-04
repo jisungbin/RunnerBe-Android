@@ -9,8 +9,8 @@
 
 plugins {
     id("com.android.application")
-    id("com.google.android.gms.oss-licenses-plugin")
     id("com.google.gms.google-services")
+    id("com.google.android.gms.oss-licenses-plugin")
     id("name.remal.check-dependency-updates") version Versions.Util.CheckDependencyUpdates
     installLibraryDfmHiltTestScabbard(isLibrary = false)
 }
@@ -51,7 +51,8 @@ dependencies {
     implementation(platform(Dependencies.Firebase.Bom))
 
     Dependencies.Ui.forEach(::implementation)
-    Dependencies.Debug.forEach(::debugImplementation)
+    Dependencies.PresentationKtx.forEach(::implementation)
 
-    installSharedComposeHiltTest()
+    Dependencies.Debug.forEach(::debugImplementation)
+    installSharedComposeHiltTest(excludeCompose = true)
 }

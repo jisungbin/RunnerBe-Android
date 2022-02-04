@@ -21,6 +21,7 @@ object Versions {
         const val Core = "1.7.0"
         const val PlayCore = "1.8.1"
         const val LifeCycle = "2.4.0"
+        const val Navigation = "2.4.0"
     }
 
     object Compose {
@@ -77,10 +78,15 @@ object Dependencies {
     const val Coroutine =
         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.Essential.Coroutines}"
 
-    val Ktx = listOf(
+    val SharedKtx = listOf(
         "androidx.core:core-ktx:${Versions.Ktx.Core}",
+        "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.Ktx.LifeCycle}"
+    )
+
+    val PresentationKtx = listOf(
         "com.google.android.play:core-ktx:${Versions.Ktx.PlayCore}",
-        "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.Ktx.LifeCycle}",
+        "androidx.navigation:navigation-ui-ktx:${Versions.Ktx.Navigation}",
+        "androidx.navigation:navigation-fragment-ktx:${Versions.Ktx.Navigation}",
     )
 
     object Firebase {
