@@ -9,6 +9,6 @@
 
 package team.applemango.runnerbe.domain.repository
 
-interface NaverLoginRepository {
+interface LoginRepository {
     suspend fun getAccessToken(): String
 }

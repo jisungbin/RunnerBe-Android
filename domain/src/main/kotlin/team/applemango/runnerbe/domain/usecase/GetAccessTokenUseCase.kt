@@ -18,9 +18,9 @@
 
 package team.applemango.runnerbe.domain.usecase
 
-import team.applemango.runnerbe.domain.repository.KakaoLoginRepository
+import team.applemango.runnerbe.domain.repository.LoginRepository
 
-class GetKakaoAccessTokenUseCase(private val repo: KakaoLoginRepository) {
+class GetAccessTokenUseCase(private val repo: LoginRepository) {
     suspend operator fun invoke() = runCatching {
         repo.getAccessToken()
     }

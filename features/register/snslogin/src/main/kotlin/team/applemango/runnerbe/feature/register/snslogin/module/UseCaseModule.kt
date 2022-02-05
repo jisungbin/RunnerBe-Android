@@ -14,21 +14,23 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
-import team.applemango.runnerbe.domain.repository.KakaoLoginRepository
-import team.applemango.runnerbe.domain.repository.NaverLoginRepository
-import team.applemango.runnerbe.domain.usecase.GetKakaoAccessTokenUseCase
-import team.applemango.runnerbe.domain.usecase.GetNaverAccessTokenUseCase
+import team.applemango.runnerbe.domain.repository.LoginRepository
+import team.applemango.runnerbe.domain.usecase.GetAccessTokenUseCase
+import team.applemango.runnerbe.feature.register.snslogin.qualifier.Kakao
+import team.applemango.runnerbe.feature.register.snslogin.qualifier.Naver
 
 @Module
 @InstallIn(ViewModelComponent::class)
 internal object UseCaseModule {
     @Provides
+    @Kakao
     @ViewModelScoped
-    fun provideGetKakaoAccessTokenUseCase(repo: KakaoLoginRepository): GetKakaoAccessTokenUseCase =
-        GetKakaoAccessTokenUseCase(repo)
+    fun provideGetKakaoAccessTokenUseCase(@Kakao repo: LoginRepository): GetAccessTokenUseCase =
+        GetAccessTokenUseCase(repo)
 
     @Provides
+    @Naver
     @ViewModelScoped
-    fun provideGetNaverAccessTokenUseCase(repo: NaverLoginRepository): GetNaverAccessTokenUseCase =
-        GetNaverAccessTokenUseCase(repo)
+    fun provideGetNaverAccessTokenUseCase(@Naver repo: LoginRepository): GetAccessTokenUseCase =
+        GetAccessTokenUseCase(repo)
 }

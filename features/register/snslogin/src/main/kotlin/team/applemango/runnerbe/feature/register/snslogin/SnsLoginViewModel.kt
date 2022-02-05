@@ -14,27 +14,31 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
-import team.applemango.runnerbe.domain.usecase.GetKakaoAccessTokenUseCase
-import team.applemango.runnerbe.domain.usecase.GetNaverAccessTokenUseCase
+import team.applemango.runnerbe.domain.usecase.GetAccessTokenUseCase
+import team.applemango.runnerbe.feature.register.snslogin.constant.LoginType
+import team.applemango.runnerbe.feature.register.snslogin.qualifier.Kakao
+import team.applemango.runnerbe.feature.register.snslogin.qualifier.Naver
 import team.applemango.runnerbe.shared.base.BaseViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 internal class SnsLoginViewModel @Inject constructor(
-    private val getKakaoAccessTokenUseCase: GetKakaoAccessTokenUseCase,
-    private val getNaverAccessTokenUseCase: GetNaverAccessTokenUseCase,
+    @Kakao private val getKakaoAccessTokenUseCase: GetAccessTokenUseCase,
+    @Naver private val getNaverAccessTokenUseCase: GetAccessTokenUseCase,
 ) : BaseViewModel() {
 
     private val _accessToken = MutableSharedFlow<String>()
     val accessToken = _accessToken.asSharedFlow()
 
-    fun getKakaoAccessToken() = viewModelScope.launch {
-        getKakaoAccessTokenUseCase()
-            .onSuccess { token ->
-                _accessToken.emit(token)
-            }
-            .onFailure { throwable ->
-                emitException(throwable)
-            }
+    fun getAccessToken(loginType: LoginType) = viewModelScope.launch {
+        when (loginType) {
+            LoginType.Kakao -> getKakaoAccessTokenUseCase()
+            LoginType.Naver -> getNaverAccessTokenUseCase()
+            LoginType.Apple -> throw NotImplementedError()
+        }.onSuccess { token ->
+            _accessToken.emit(token)
+        }.onFailure { throwable ->
+            emitException(throwable)
+        }
     }
 }

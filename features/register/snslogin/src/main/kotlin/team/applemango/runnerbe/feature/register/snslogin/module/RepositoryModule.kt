@@ -18,21 +18,24 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ViewModelScoped
 import team.applemango.runnerbe.data.login.repository.KakaoLoginRepositoryImpl
 import team.applemango.runnerbe.data.login.repository.NaverLoginRepositoryImpl
-import team.applemango.runnerbe.domain.repository.KakaoLoginRepository
-import team.applemango.runnerbe.domain.repository.NaverLoginRepository
+import team.applemango.runnerbe.domain.repository.LoginRepository
+import team.applemango.runnerbe.feature.register.snslogin.qualifier.Kakao
+import team.applemango.runnerbe.feature.register.snslogin.qualifier.Naver
 
 @Module
 @InstallIn(ViewModelComponent::class)
 internal object RepositoryModule {
     @Provides
+    @Kakao
     @ViewModelScoped
     fun provideKakaoLoginRepository(
         @ApplicationContext context: Context,
-    ): KakaoLoginRepository = KakaoLoginRepositoryImpl(context)
+    ): LoginRepository = KakaoLoginRepositoryImpl(context)
 
     @Provides
+    @Naver
     @ViewModelScoped
     fun provideNaverLoginRepository(
         @ApplicationContext context: Context,
-    ): NaverLoginRepository = NaverLoginRepositoryImpl(context)
+    ): LoginRepository = NaverLoginRepositoryImpl(context)
 }
