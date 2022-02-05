@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import team.applemango.runnerbe.feature.register.snslogin.R
@@ -39,7 +40,7 @@ internal fun KakaoLoginButton(onClick: () -> Unit) {
     Button(
         modifier = Modifier
             .fillMaxWidth()
-            .height(90.dp),
+            .height(60.dp),
         onClick = { onClick() },
         elevation = ButtonDefaults.elevation(0.dp, 0.dp, 0.dp, 0.dp),
         shape = RoundedCornerShape(12.dp),
@@ -55,8 +56,12 @@ internal fun KakaoLoginButton(onClick: () -> Unit) {
                 tint = KakaoSymbolColor
             )
             Text(
+                modifier = Modifier.align(Alignment.Center),
                 text = stringResource(R.string.component_button_kakao_login),
-                style = Typography.Body12M.copy(color = KakaoLabelColor)
+                style = Typography.Body16R.copy(
+                    color = KakaoLabelColor,
+                    fontWeight = FontWeight.Bold
+                )
             )
         }
     }
