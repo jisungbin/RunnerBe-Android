@@ -9,14 +9,13 @@
 
 package team.applemango.runnerbe.data.login.usecase
 
-import android.content.Context
 import dagger.hilt.android.scopes.ViewModelScoped
 import team.applemango.runnerbe.data.login.repository.KakaoLogin
 import javax.inject.Inject
 
 @ViewModelScoped
 internal class GetKakaoAccessTokenUseCase @Inject constructor(private val kakaoLogin: KakaoLogin) {
-    suspend operator fun invoke(context: Context) = runCatching {
-        kakaoLogin(context)
+    suspend operator fun invoke() = runCatching {
+        kakaoLogin()
     }
 }

@@ -23,7 +23,12 @@ class RunnerBe : Application() {
     override fun onCreate() {
         super.onCreate()
         Erratum.setup(application = this) // TODO: Set Exception Activity
-        NaverIdLoginSDK.initialize(applicationContext, {OAUTH_CLIENT_ID}, {OAUTH_CLIENT_SECRET},getString(R.string.app_name))
+        NaverIdLoginSDK.initialize(
+            applicationContext,
+            BuildConfig.NAVER_CLIENT_ID,
+            BuildConfig.NAVER_CLIENT_SECRET,
+            getString(R.string.app_name)
+        )
         KakaoSdk.init(applicationContext, BuildConfig.KAKAO_API_KEY)
         if (BuildConfig.DEBUG) {
             Logeukes.setup()
