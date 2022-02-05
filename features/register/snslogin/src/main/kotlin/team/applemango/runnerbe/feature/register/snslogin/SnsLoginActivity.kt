@@ -113,21 +113,21 @@ class SnsLoginActivity : ComponentActivity() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(50.dp),
-                    painter = painterResource(R.drawable.kakao_login),
+                    painter = painterResource(drawable.kakao_login),
                     contentDescription = null
                 )
                 Image(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(50.dp),
-                    painter = painterResource(R.drawable.naver_login),
+                    painter = painterResource(drawable.naver_login),
                     contentDescription = null
                 )
                 Image(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(50.dp),
-                    painter = painterResource(R.drawable.apple_login),
+                    painter = painterResource(drawable.apple_login),
                     contentDescription = null
                 )
             }

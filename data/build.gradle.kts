@@ -8,7 +8,8 @@
  */
 
 plugins {
-    installLibraryDfmHiltTestScabbard()
+    id("com.android.library")
+    id("kotlin-android")
 }
 
 dependencies {
@@ -16,10 +17,7 @@ dependencies {
     Dependencies.Network.forEach(::implementation)
     Dependencies.Login.All.forEach(::implementation)
 
-    implementation(Dependencies.Hilt)
     implementation(Dependencies.Coroutine)
     implementation(Dependencies.Util.Logeukes)
     implementation(project(ProjectConstants.Domain))
-
-    kapt(Dependencies.Compiler.Hilt)
 }

@@ -17,6 +17,7 @@ plugins {
 // data 로 부터 의존성 주입 받아서 domain 으로 Provides 해줌
 dependencies {
     api(Dependencies.Util.Logeukes)
+    api(project(ProjectConstants.Data))
     api(project(ProjectConstants.Domain))
 
     implementation(Dependencies.Hilt)
