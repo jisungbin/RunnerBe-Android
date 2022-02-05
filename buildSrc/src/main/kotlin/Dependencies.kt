@@ -65,6 +65,7 @@ object Versions {
 
     object Login {
         const val Kakao = "2.8.5"
+        const val Naver = "5.0.0"
     }
 
     object OssLicense {
@@ -80,6 +81,7 @@ object Versions {
     }
 }
 
+@Suppress("MemberVisibilityCanBePrivate")
 object Dependencies {
     const val Hilt = "com.google.dagger:hilt-android:${Versions.Jetpack.Hilt}"
 
@@ -151,7 +153,8 @@ object Dependencies {
 
     object Login {
         const val Kakao = "com.kakao.sdk:v2-user:${Versions.Login.Kakao}"
-        val All = listOf(Kakao)
+        const val Naver = "com.navercorp.nid:oauth:${Versions.Login.Naver}"
+        val All = listOf(Kakao, Naver)
     }
 
     object Test {

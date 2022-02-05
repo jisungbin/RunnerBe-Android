@@ -49,12 +49,12 @@ dependencies {
     )
 
     features.forEach(::implementationProject)
-    implementation(Dependencies.Login.Kakao)
     implementation(Dependencies.Util.Erratum)
     implementation(Dependencies.Firebase.Analytics)
     implementation(platform(Dependencies.Firebase.Bom))
 
     Dependencies.Ui.forEach(::implementation)
+    Dependencies.Login.All.forEach(::implementation)
     Dependencies.PresentationOnlyKtx.forEach(::implementation)
 
     Dependencies.Debug.forEach(::debugImplementation)

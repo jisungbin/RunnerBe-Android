@@ -23,6 +23,5 @@ android {
 
 dependencies {
     implementationProject(ProjectConstants.Presentation)
-    Dependencies.Login.All.forEach(::implementation)
     installSharedComposeHiltTest()
 }

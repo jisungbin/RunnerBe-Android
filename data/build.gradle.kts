@@ -14,9 +14,10 @@ plugins {
 dependencies {
     Dependencies.Jackson.forEach(::implementation)
     Dependencies.Network.forEach(::implementation)
+    Dependencies.Login.All.forEach(::implementation)
 
-    implementation(Dependencies.Coroutine)
     implementation(Dependencies.Hilt)
+    implementation(Dependencies.Coroutine)
     implementation(Dependencies.Util.Logeukes)
     implementation(project(ProjectConstants.Domain))
 
