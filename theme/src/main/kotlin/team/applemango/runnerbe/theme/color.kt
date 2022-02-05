@@ -11,7 +11,7 @@ package team.applemango.runnerbe.theme
 
 import androidx.compose.ui.graphics.Color
 
-object Color {
+object ColorAsset {
     val Primary = Color(0xFFFFE082)
     val PrimaryDark = Color(0xFFEED484)
     val PrimaryDarker = Color(0xFFC0AC75)

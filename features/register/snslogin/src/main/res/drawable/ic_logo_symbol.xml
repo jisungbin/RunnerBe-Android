@@ -1,0 +1,51 @@
+<!--
+  ~ RunnerBe © 2022 Team AppleMango. all rights reserved.
+  ~ RunnerBe license is under the MIT.
+  ~
+  ~ [ic_logo_symbol.xml] created by Ji Sungbin on 22. 2. 5. 오후 8:03
+  ~
+  ~ Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="100dp"
+    android:height="100dp"
+    android:viewportWidth="136"
+    android:viewportHeight="136">
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M43,36L71,36"
+        android:strokeWidth="24"
+        android:strokeColor="#7F7047"
+        android:strokeLineCap="round" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M43,100L71,100"
+        android:strokeWidth="24"
+        android:strokeColor="#7F7047"
+        android:strokeLineCap="round" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M25,68L89,68"
+        android:strokeWidth="24"
+        android:strokeColor="#7F7047"
+        android:strokeLineCap="round" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M63,36L91,36"
+        android:strokeWidth="24"
+        android:strokeColor="#FFE082"
+        android:strokeLineCap="round" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M63,100L91,100"
+        android:strokeWidth="24"
+        android:strokeColor="#FFE082"
+        android:strokeLineCap="round" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M45,68L109,68"
+        android:strokeWidth="24"
+        android:strokeColor="#FFE082"
+        android:strokeLineCap="round" />
+</vector>

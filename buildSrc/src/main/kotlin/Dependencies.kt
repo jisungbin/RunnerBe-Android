@@ -33,6 +33,7 @@ object Versions {
         const val Material = "1.2.0-alpha01"
         const val ConstraintLayout = "1.0.0"
         const val LifecycleViewModel = "2.4.0"
+        const val Accompanist = "0.24.1-alpha"
     }
 
     object Ui {
@@ -102,8 +103,10 @@ object Dependencies {
         "androidx.compose.material:material:${Versions.Compose.Material}",
         "com.google.accompanist:accompanist-insets:${Versions.Compose.Insets}",
         "com.github.skydoves:landscapist-glide:${Versions.Compose.Landscapist}",
+        "com.google.accompanist:accompanist-insets:${Versions.Compose.Accompanist}",
+        "com.google.accompanist:accompanist-systemuicontroller:${Versions.Compose.Accompanist}",
         "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.Compose.LifecycleViewModel}",
-        "androidx.constraintlayout:constraintlayout-compose:${Versions.Compose.ConstraintLayout}"
+        "androidx.constraintlayout:constraintlayout-compose:${Versions.Compose.ConstraintLayout}",
     )
 
     val Ui = listOf(

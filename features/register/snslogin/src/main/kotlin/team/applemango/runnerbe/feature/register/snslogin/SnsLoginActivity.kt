@@ -23,8 +23,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -33,15 +36,23 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.core.view.WindowCompat
-import team.applemango.runnerbe.shared.R
-import team.applemango.runnerbe.theme.Color
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import team.applemango.runnerbe.theme.ColorAsset
 import team.applemango.runnerbe.theme.FontAsset
+
+private typealias string = team.applemango.runnerbe.shared.R.string
+private typealias drawable = R.drawable
 
 class SnsLoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
+            val systemUiController = rememberSystemUiController()
+            LaunchedEffect(Unit) {
+                systemUiController.setSystemBarsColor(Color.Transparent)
+            }
             SnsLoginScreen()
         }
     }
@@ -51,7 +62,7 @@ class SnsLoginActivity : ComponentActivity() {
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxSize()
-                .background(brush = Brush.linearGradient(listOf(Color.G5_5, Color.G6)))
+                .background(brush = Brush.linearGradient(listOf(ColorAsset.G5_5, ColorAsset.G6)))
                 .padding(horizontal = 16.dp)
         ) {
             val (logo, buttons) = createRefs()
@@ -62,18 +73,19 @@ class SnsLoginActivity : ComponentActivity() {
                     bottom.linkTo(buttons.top)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
-                }
+                },
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Image(
                     modifier = Modifier.size(110.dp),
-                    painter = painterResource(R.mipmap.ic_launcher),
+                    painter = painterResource(drawable.ic_logo_symbol),
                     contentDescription = null
                 )
                 Text(
                     modifier = Modifier.padding(top = 10.dp),
-                    text = stringResource(R.string.app_name),
+                    text = stringResource(string.app_name),
                     style = TextStyle(
-                        color = Color.Primary,
+                        color = ColorAsset.Primary,
                         fontSize = 50.sp,
                         fontFamily = FontAsset.Aggro
                     )
