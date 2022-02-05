@@ -11,7 +11,7 @@ object Versions {
     const val FirebaseBom = "29.0.4"
 
     object Essential {
-        const val Gradle = "7.1.0"
+        const val Gradle = "7.1.1"
         const val Kotlin = "1.6.10"
         const val Coroutines = "1.6.0"
         const val GoogleService = "4.3.3"
