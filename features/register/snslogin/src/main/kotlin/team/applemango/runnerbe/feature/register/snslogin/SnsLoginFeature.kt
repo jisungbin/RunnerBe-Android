@@ -11,10 +11,8 @@ package team.applemango.runnerbe.feature.register.snslogin
 
 import android.app.Application
 import com.kakao.sdk.common.KakaoSdk
-import dagger.hilt.android.HiltAndroidApp
 import team.applemango.runnerbe.BuildConfig
 
-@HiltAndroidApp
 internal class SnsLoginFeature : Application() {
     override fun onCreate() {
         super.onCreate()
