@@ -10,6 +10,7 @@
 package team.applemango.runnerbe.feature.register.snslogin
 
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -36,6 +37,8 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.core.view.WindowCompat
+import com.google.accompanist.insets.ProvideWindowInsets
+import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import team.applemango.runnerbe.theme.ColorAsset
 import team.applemango.runnerbe.theme.FontAsset
@@ -47,13 +50,19 @@ class SnsLoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
-            val systemUiController = rememberSystemUiController()
-            LaunchedEffect(Unit) {
-                systemUiController.setSystemBarsColor(Color.Transparent)
+            ProvideWindowInsets {
+                val systemUiController = rememberSystemUiController()
+                LaunchedEffect(Unit) {
+                    systemUiController.setSystemBarsColor(Color.Transparent)
+                }
+                SnsLoginScreen()
             }
-            SnsLoginScreen()
         }
     }
 
@@ -63,6 +72,7 @@ class SnsLoginActivity : ComponentActivity() {
             modifier = Modifier
                 .fillMaxSize()
                 .background(brush = Brush.linearGradient(listOf(ColorAsset.G5_5, ColorAsset.G6)))
+                .systemBarsPadding()
                 .padding(horizontal = 16.dp)
         ) {
             val (logo, buttons) = createRefs()
