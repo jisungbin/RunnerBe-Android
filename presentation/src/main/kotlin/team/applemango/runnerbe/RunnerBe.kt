@@ -21,7 +21,6 @@ class RunnerBe : Application() {
     override fun onCreate() {
         super.onCreate()
         Erratum.setup(application = this) // TODO: Set Exception Activity
-
         if (BuildConfig.DEBUG) {
             Logeukes.setup()
         }

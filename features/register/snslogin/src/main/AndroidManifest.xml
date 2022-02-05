@@ -12,6 +12,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="team.applemango.runnerbe.feature.register.snslogin">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <dist:module
         dist:instant="false"
         dist:title="@string/dist_dfm_register_snslogin">
@@ -26,8 +28,7 @@
         <activity android:name=".SnsLoginActivity" />
 
         <activity-alias
-            android:name="team.applemango.runnerbe.util.DynamicFeatureActivityAlias"
-
+            android:name="team.applemango.runnerbe.util.DFMLoginActivityAlias"
             android:targetActivity=".SnsLoginActivity" />
     </application>
 

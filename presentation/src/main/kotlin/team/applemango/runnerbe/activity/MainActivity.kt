@@ -17,7 +17,7 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import team.applemango.runnerbe.R
 import team.applemango.runnerbe.shared.util.extension.toast
-import team.applemango.runnerbe.util.DynamicFeatureActivityAlias
+import team.applemango.runnerbe.util.DFMLoginActivityAlias
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        startActivity(Intent(this, DynamicFeatureActivityAlias::class.java))
+        startActivity(Intent(this, DFMLoginActivityAlias::class.java))
         lifecycleScope.launchWhenCreated {
             toast("test.testRequest().toString()")
         }

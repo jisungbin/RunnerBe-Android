@@ -12,4 +12,4 @@ package team.applemango.runnerbe.util
 import android.app.Activity
 
 sealed class ActivityAlias : Activity()
-sealed class DynamicFeatureActivityAlias : ActivityAlias()
+sealed class DFMLoginActivityAlias : ActivityAlias()

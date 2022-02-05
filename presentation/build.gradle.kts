@@ -12,6 +12,7 @@ plugins {
     id("com.google.gms.google-services")
     id("com.google.android.gms.oss-licenses-plugin")
     id("name.remal.check-dependency-updates") version Versions.Util.CheckDependencyUpdates
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
     installLibraryDfmHiltTestScabbard(isLibrary = false)
 }
 
@@ -48,6 +49,7 @@ dependencies {
     )
 
     features.forEach(::implementationProject)
+    implementation(Dependencies.Login.Kakao)
     implementation(Dependencies.Util.Erratum)
     implementation(Dependencies.Firebase.Analytics)
     implementation(platform(Dependencies.Firebase.Bom))

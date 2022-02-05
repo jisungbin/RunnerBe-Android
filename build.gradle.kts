@@ -23,6 +23,7 @@ buildscript {
         classpath("de.mannodermaus.gradle.plugins:android-junit5:${Versions.Test.JUnitGradle}")
         classpath("com.google.android.gms:oss-licenses-plugin:${Versions.OssLicense.Classpath}")
         classpath("com.vanniktech:gradle-dependency-graph-generator-plugin:${Versions.Util.DependencyGraphGenerator}")
+        classpath("com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:${Versions.Util.SecretsGradlePlugin}")
     }
 }
 
@@ -30,6 +31,7 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        maven { setUrl("https://devrepo.kakao.com/nexus/content/groups/public/") }
     }
 
     afterEvaluate {

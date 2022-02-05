@@ -53,12 +53,18 @@ object Versions {
         const val Jackson = "2.13.1"
         const val Scabbard = "0.5.0"
         const val LeakCanary = "2.8.1"
+        const val SecretsGradlePlugin = "2.0.0"
         const val CheckDependencyUpdates = "1.5.0"
         const val DependencyGraphGenerator = "0.7.0"
     }
 
     object Jetpack {
         const val Hilt = "2.40.5"
+        // TODO: room (offline-mode support)
+    }
+
+    object Login {
+        const val Kakao = "2.8.5"
     }
 
     object OssLicense {
@@ -140,7 +146,12 @@ object Dependencies {
 
     object Compiler {
         const val Hilt = "com.google.dagger:hilt-android-compiler:${Versions.Jetpack.Hilt}"
-        // Room
+        // TODO: room (offline-mode support)
+    }
+
+    object Login {
+        const val Kakao = "com.kakao.sdk:v2-user:${Versions.Login.Kakao}"
+        val All = listOf(Kakao)
     }
 
     object Test {
