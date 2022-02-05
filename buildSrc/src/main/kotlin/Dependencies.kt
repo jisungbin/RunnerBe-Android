@@ -60,6 +60,7 @@ object Versions {
 
     object Jetpack {
         const val Hilt = "2.40.5"
+        const val DataStore = "1.0.0"
         // TODO: room (offline-mode support)
     }
 
@@ -90,7 +91,8 @@ object Dependencies {
 
     val SharedKtx = listOf(
         "androidx.core:core-ktx:${Versions.Ktx.Core}",
-        "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.Ktx.LifeCycle}"
+        "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.Ktx.LifeCycle}",
+        "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.Ktx.LifeCycle}"
     )
 
     val PresentationOnlyKtx = listOf(
@@ -145,6 +147,11 @@ object Dependencies {
     val Debug = listOf(
         "com.squareup.leakcanary:leakcanary-android:${Versions.Util.LeakCanary}"
     )
+
+    object Jetpack {
+        const val DataStore =
+            "androidx.datastore:datastore-preferences:${Versions.Jetpack.DataStore}"
+    }
 
     object Compiler {
         const val Hilt = "com.google.dagger:hilt-android-compiler:${Versions.Jetpack.Hilt}"

@@ -23,7 +23,7 @@ import team.applemango.runnerbe.domain.repository.NaverLoginRepository
 
 @Module
 @InstallIn(ViewModelComponent::class)
-object RepositoryModule {
+internal object RepositoryModule {
     @Provides
     @ViewModelScoped
     fun provideKakaoLoginRepository(

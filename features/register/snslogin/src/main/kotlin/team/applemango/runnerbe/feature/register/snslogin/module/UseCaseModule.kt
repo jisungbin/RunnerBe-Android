@@ -21,7 +21,7 @@ import team.applemango.runnerbe.domain.usecase.GetNaverAccessTokenUseCase
 
 @Module
 @InstallIn(ViewModelComponent::class)
-object UseCaseModule {
+internal object UseCaseModule {
     @Provides
     @ViewModelScoped
     fun provideGetKakaoAccessTokenUseCase(repo: KakaoLoginRepository): GetKakaoAccessTokenUseCase =
