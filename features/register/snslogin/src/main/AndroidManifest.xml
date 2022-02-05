@@ -11,7 +11,9 @@
     xmlns:dist="http://schemas.android.com/apk/distribution"
     package="team.applemango.runnerbe.feature.register.snslogin">
 
-    <dist:module dist:title="@string/dist_dfm_register_snslogin">
+    <dist:module
+        dist:instant="false"
+        dist:title="@string/dist_dfm_register_snslogin">
         <dist:fusing dist:include="true" />
         <dist:delivery>
             <dist:install-time />

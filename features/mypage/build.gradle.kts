@@ -11,6 +11,16 @@ plugins {
     installLibraryDfmHiltTestScabbard()
 }
 
+android {
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.Compose.Master
+    }
+}
+
 dependencies {
     installSharedComposeHiltTest()
 }
