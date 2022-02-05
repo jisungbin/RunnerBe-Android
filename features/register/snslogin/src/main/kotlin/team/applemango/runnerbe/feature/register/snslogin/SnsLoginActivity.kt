@@ -41,9 +41,12 @@ import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import team.applemango.runnerbe.feature.register.snslogin.module.A
+import team.applemango.runnerbe.feature.register.snslogin.module.DaggerRepositoryComponent
+import team.applemango.runnerbe.feature.register.snslogin.module.RepositoryModule
 import team.applemango.runnerbe.theme.ColorAsset
 import team.applemango.runnerbe.theme.FontAsset
 import javax.inject.Inject
+import team.applemango.runnerbe.shared.util.extension.toast
 
 private typealias string = team.applemango.runnerbe.shared.R.string
 private typealias drawable = R.drawable
@@ -58,6 +61,9 @@ class SnsLoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        DaggerRepositoryComponent.builder().repositoryModule(RepositoryModule()).build()
+            .inject(this)
+        toast(a.b)
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
