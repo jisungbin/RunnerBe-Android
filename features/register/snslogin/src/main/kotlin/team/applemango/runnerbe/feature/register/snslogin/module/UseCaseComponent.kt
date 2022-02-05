@@ -11,7 +11,7 @@ package team.applemango.runnerbe.feature.register.snslogin.module
 import dagger.Component
 import team.applemango.runnerbe.feature.register.snslogin.SnsLoginActivity
 
-@Component(modules = [RepositoryModule::class])
-internal interface RepositoryComponent {
+@Component(modules = [UseCaseModule::class])
+internal interface UseCaseComponent {
     fun inject(activity: SnsLoginActivity)
 }

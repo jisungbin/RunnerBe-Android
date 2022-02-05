@@ -9,28 +9,22 @@
 
 package team.applemango.runnerbe.feature.register.snslogin.module
 
+import android.content.Context
 import dagger.Module
 import dagger.Provides
+import team.applemango.runnerbe.data.login.repository.KakaoLoginRepositoryImpl
+import team.applemango.runnerbe.data.login.repository.NaverLoginRepositoryImpl
+import team.applemango.runnerbe.domain.repository.LoginRepository
+import team.applemango.runnerbe.feature.register.snslogin.qualifier.Kakao
+import team.applemango.runnerbe.feature.register.snslogin.qualifier.Naver
 
-/*@Module
-class RepositoryModule {
+@Module
+class RepositoryModule(private val context: Context) {
     @Provides
     @Kakao
-    fun provideKakaoLoginRepository(
-        @ApplicationContext context: Context,
-    ): LoginRepository = KakaoLoginRepositoryImpl(context)
+    fun provideKakaoLoginRepository(): LoginRepository = KakaoLoginRepositoryImpl(context)
 
     @Provides
     @Naver
-    fun provideNaverLoginRepository(
-        @ApplicationContext context: Context,
-    ): LoginRepository = NaverLoginRepositoryImpl(context)
-}*/
-
-@Module
-class RepositoryModule {
-    @Provides
-    fun provideA(): A = A()
+    fun provideNaverLoginRepository(): LoginRepository = NaverLoginRepositoryImpl(context)
 }
-
-class A(val b: String = "b")

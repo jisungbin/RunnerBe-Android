@@ -21,7 +21,7 @@ dependencies {
     api(project(ProjectConstants.Data))
     api(project(ProjectConstants.Domain))
 
-    implementation(Dependencies.Hilt)
+    implementation(Dependencies.Di.Hilt)
     implementationProject(ProjectConstants.Data)
 
     kapt(Dependencies.Compiler.Hilt)

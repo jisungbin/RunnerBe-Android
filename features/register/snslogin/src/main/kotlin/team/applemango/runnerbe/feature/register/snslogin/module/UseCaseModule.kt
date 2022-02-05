@@ -9,18 +9,22 @@
 
 package team.applemango.runnerbe.feature.register.snslogin.module
 
-/*@Module
-@InstallIn(ViewModelComponent::class)
-internal object UseCaseModule {
+import dagger.Module
+import dagger.Provides
+import team.applemango.runnerbe.domain.repository.LoginRepository
+import team.applemango.runnerbe.domain.usecase.GetAccessTokenUseCase
+import team.applemango.runnerbe.feature.register.snslogin.qualifier.Kakao
+import team.applemango.runnerbe.feature.register.snslogin.qualifier.Naver
+
+@Module
+class UseCaseModule {
     @Provides
     @Kakao
-    @ViewModelScoped
     fun provideGetKakaoAccessTokenUseCase(@Kakao repo: LoginRepository): GetAccessTokenUseCase =
         GetAccessTokenUseCase(repo)
 
     @Provides
     @Naver
-    @ViewModelScoped
     fun provideGetNaverAccessTokenUseCase(@Naver repo: LoginRepository): GetAccessTokenUseCase =
         GetAccessTokenUseCase(repo)
-}*/
+}

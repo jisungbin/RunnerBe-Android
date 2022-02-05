@@ -40,13 +40,15 @@ import androidx.core.view.WindowCompat
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import team.applemango.runnerbe.feature.register.snslogin.module.A
+import team.applemango.runnerbe.domain.usecase.GetAccessTokenUseCase
 import team.applemango.runnerbe.feature.register.snslogin.module.DaggerRepositoryComponent
 import team.applemango.runnerbe.feature.register.snslogin.module.RepositoryModule
+import team.applemango.runnerbe.feature.register.snslogin.qualifier.Kakao
+import team.applemango.runnerbe.feature.register.snslogin.qualifier.Naver
+import team.applemango.runnerbe.shared.util.extension.toast
 import team.applemango.runnerbe.theme.ColorAsset
 import team.applemango.runnerbe.theme.FontAsset
 import javax.inject.Inject
-import team.applemango.runnerbe.shared.util.extension.toast
 
 private typealias string = team.applemango.runnerbe.shared.R.string
 private typealias drawable = R.drawable
@@ -56,14 +58,23 @@ class SnsLoginActivity : ComponentActivity() {
     // private val vm: SnsLoginViewModel by viewModels()
 
     @Inject
-    lateinit var a: A
+    @Kakao
+    lateinit var getKakaoAccessTokenUseCase: GetAccessTokenUseCase
+
+    @Inject
+    @Naver
+    lateinit var getNaverAccessTokenUseCase: GetAccessTokenUseCase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        DaggerRepositoryComponent.builder().repositoryModule(RepositoryModule()).build()
+        DaggerRepositoryComponent
+            .builder()
+            .repositoryModule(RepositoryModule(applicationContext))
+            .build()
             .inject(this)
-        toast(a.b)
+        toast(getKakaoAccessTokenUseCase.toString())
+        toast(getNaverAccessTokenUseCase.toString())
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS

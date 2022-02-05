@@ -8,6 +8,7 @@
  */
 
 object Versions {
+    const val Dagger = "2.40.5"
     const val FirebaseBom = "29.0.4"
 
     object Essential {
@@ -84,10 +85,13 @@ object Versions {
 
 @Suppress("MemberVisibilityCanBePrivate")
 object Dependencies {
-    const val Hilt = "com.google.dagger:hilt-android:${Versions.Jetpack.Hilt}"
-
     const val Coroutine =
         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.Essential.Coroutines}"
+
+    object Di {
+        const val Dagger = "com.google.dagger:dagger:${Versions.Dagger}"
+        const val Hilt = "com.google.dagger:hilt-android:${Versions.Jetpack.Hilt}"
+    }
 
     val SharedKtx = listOf(
         "androidx.core:core-ktx:${Versions.Ktx.Core}",
@@ -154,6 +158,7 @@ object Dependencies {
     }
 
     object Compiler {
+        const val Dagger = "com.google.dagger:dagger-compiler:${Versions.Dagger}"
         const val Hilt = "com.google.dagger:hilt-android-compiler:${Versions.Jetpack.Hilt}"
         // TODO: room (offline-mode support)
     }

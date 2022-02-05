@@ -25,7 +25,9 @@ fun PluginDependenciesSpec.installLibraryDfmHiltTestScabbard(
     }
     id("kotlin-android")
     id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
+    if (!isDFM) {
+        id("dagger.hilt.android.plugin")
+    }
     id("de.mannodermaus.android-junit5")
     id("scabbard.gradle") version Versions.Util.Scabbard
 }
@@ -33,6 +35,7 @@ fun PluginDependenciesSpec.installLibraryDfmHiltTestScabbard(
 // dependencies
 fun DependencyHandler.installSharedComposeHiltTest(
     isSharedModule: Boolean = false,
+    useDagger: Boolean = false,
     excludeCompose: Boolean = false,
 ) {
     if (!isSharedModule) {
@@ -42,12 +45,17 @@ fun DependencyHandler.installSharedComposeHiltTest(
         implementationProject(ProjectConstants.Theme)
         Dependencies.Compose.forEach(::implementation)
     }
-    implementation(Dependencies.Hilt)
     add("testDebugImplementation", Dependencies.Test.JunitApi)
     add("testDebugRuntimeOnly", Dependencies.Test.JunitEngine)
     add("testDebugImplementation", Dependencies.Test.Hamcrest)
     add("testDebugImplementation", Dependencies.Test.Coroutine)
-    add("kapt", Dependencies.Compiler.Hilt)
+    if (!useDagger) {
+        implementation(Dependencies.Di.Hilt)
+        add("kapt", Dependencies.Compiler.Hilt)
+    } else {
+        implementation(Dependencies.Di.Dagger)
+        add("kapt", Dependencies.Compiler.Dagger)
+    }
 }
 
 fun DependencyHandler.implementationProject(path: String) {
