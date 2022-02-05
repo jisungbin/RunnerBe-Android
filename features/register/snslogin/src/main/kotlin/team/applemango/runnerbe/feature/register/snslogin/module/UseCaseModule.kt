@@ -9,17 +9,7 @@
 
 package team.applemango.runnerbe.feature.register.snslogin.module
 
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
-import dagger.hilt.android.scopes.ViewModelScoped
-import team.applemango.runnerbe.domain.repository.LoginRepository
-import team.applemango.runnerbe.domain.usecase.GetAccessTokenUseCase
-import team.applemango.runnerbe.feature.register.snslogin.qualifier.Kakao
-import team.applemango.runnerbe.feature.register.snslogin.qualifier.Naver
-
-@Module
+/*@Module
 @InstallIn(ViewModelComponent::class)
 internal object UseCaseModule {
     @Provides
@@ -33,4 +23,4 @@ internal object UseCaseModule {
     @ViewModelScoped
     fun provideGetNaverAccessTokenUseCase(@Naver repo: LoginRepository): GetAccessTokenUseCase =
         GetAccessTokenUseCase(repo)
-}
+}*/

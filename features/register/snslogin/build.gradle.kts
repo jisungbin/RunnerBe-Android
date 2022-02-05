@@ -8,7 +8,10 @@
  */
 
 plugins {
-    installLibraryDfmHiltTestScabbard(isDFM = true)
+    // installLibraryDfmHiltTestScabbard(isDFM = true)
+    id("com.android.dynamic-feature")
+    id("kotlin-android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -23,5 +26,9 @@ android {
 
 dependencies {
     implementationProject(ProjectConstants.Presentation)
-    installSharedComposeHiltTest()
+    implementationProject(ProjectConstants.Shared)
+    implementationProject(ProjectConstants.Theme)
+    Dependencies.Compose.forEach(::implementation)
+    implementation("com.google.dagger:dagger:2.40.5")
+    kapt("com.google.dagger:dagger-compiler:2.40.5")
 }

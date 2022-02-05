@@ -9,33 +9,28 @@
 
 package team.applemango.runnerbe.feature.register.snslogin.module
 
-import android.content.Context
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.android.scopes.ViewModelScoped
-import team.applemango.runnerbe.data.login.repository.KakaoLoginRepositoryImpl
-import team.applemango.runnerbe.data.login.repository.NaverLoginRepositoryImpl
-import team.applemango.runnerbe.domain.repository.LoginRepository
-import team.applemango.runnerbe.feature.register.snslogin.qualifier.Kakao
-import team.applemango.runnerbe.feature.register.snslogin.qualifier.Naver
 
-@Module
-@InstallIn(ViewModelComponent::class)
-internal object RepositoryModule {
+/*@Module
+class RepositoryModule {
     @Provides
     @Kakao
-    @ViewModelScoped
     fun provideKakaoLoginRepository(
         @ApplicationContext context: Context,
     ): LoginRepository = KakaoLoginRepositoryImpl(context)
 
     @Provides
     @Naver
-    @ViewModelScoped
     fun provideNaverLoginRepository(
         @ApplicationContext context: Context,
     ): LoginRepository = NaverLoginRepositoryImpl(context)
+}*/
+
+@Module
+class RepositoryModule {
+    @Provides
+    fun provideA(): A = A()
 }
+
+class A(val b: String = "b")
