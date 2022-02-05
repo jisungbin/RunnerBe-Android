@@ -1,4 +1,4 @@
-package team.applemango.runnerbe.features.register.snslogin
+package team.applemango.runnerbe.feature.register.snslogin
 
 import org.junit.Test
 

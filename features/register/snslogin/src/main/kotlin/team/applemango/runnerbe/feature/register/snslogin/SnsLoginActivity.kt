@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.features.register.snslogin
+package team.applemango.runnerbe.feature.register.snslogin
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

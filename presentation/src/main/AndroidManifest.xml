@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="team.applemango.runnerbe.features.register.snslogin" />
+        <activity android:name="team.applemango.runnerbe.feature.register.snslogin" />
 
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
