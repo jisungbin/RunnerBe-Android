@@ -7,7 +7,8 @@
   ~ Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
   -->
 
-<manifest xmlns:dist="http://schemas.android.com/apk/distribution"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
     package="team.applemango.runnerbe.feature.register.snslogin">
 
     <dist:module dist:title="@string/dist_dfm_register_snslogin">
@@ -17,5 +18,9 @@
             <dist:removable value="true" />
         </dist:delivery>
     </dist:module>
+
+    <application>
+        <activity android:name=".SnsLoginActivity" />
+    </application>
 
 </manifest>
