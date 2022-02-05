@@ -9,6 +9,7 @@
 
 package team.applemango.runnerbe.activity
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import team.applemango.runnerbe.R
 import team.applemango.runnerbe.domain.Test
 import team.applemango.runnerbe.shared.util.extension.toast
+import team.applemango.runnerbe.util.DynamicFeatureActivityAlias
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -34,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        startActivity(Intent(this, DynamicFeatureActivityAlias::class.java))
         lifecycleScope.launchWhenCreated {
             toast(test.testRequest().toString())
         }

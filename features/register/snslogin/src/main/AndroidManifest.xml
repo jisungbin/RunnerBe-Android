@@ -23,6 +23,11 @@
 
     <application>
         <activity android:name=".SnsLoginActivity" />
+
+        <activity-alias
+            android:name="team.applemango.runnerbe.util.DynamicFeatureActivityAlias"
+
+            android:targetActivity=".SnsLoginActivity" />
     </application>
 
 </manifest>
