@@ -9,6 +9,7 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
+    xmlns:tools="http://schemas.android.com/tools"
     package="team.applemango.runnerbe.feature.register.snslogin">
 
     <dist:module
@@ -21,7 +22,7 @@
         </dist:delivery>
     </dist:module>
 
-    <application>
+    <application tools:ignore="MissingApplicationIcon">
         <activity android:name=".SnsLoginActivity" />
 
         <activity-alias
