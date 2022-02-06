@@ -13,10 +13,9 @@ import androidx.lifecycle.ViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
-import team.applemango.runnerbe.domain.usecase.GetAccessTokenUseCase
+import team.applemango.runnerbe.domain.usecase.GetKakaoAccessTokenUseCase
+import team.applemango.runnerbe.domain.usecase.GetNaverAccessTokenUseCase
 import team.applemango.runnerbe.feature.register.snslogin.SnsLoginViewModel
-import team.applemango.runnerbe.feature.register.snslogin.di.qualifier.Kakao
-import team.applemango.runnerbe.feature.register.snslogin.di.qualifier.Naver
 import team.applemango.runnerbe.feature.register.snslogin.di.qualifier.ViewModelKey
 
 @Module
@@ -25,12 +24,12 @@ class ViewModelModule {
     @IntoMap
     @ViewModelKey(SnsLoginViewModel::class)
     fun provideSnsLoginViewModel(
-        @Kakao getKakaoAccessTokenUseCase: GetAccessTokenUseCase,
-        @Naver getNaverAccessTokenUseCase: GetAccessTokenUseCase,
+        getKakaoKakaoAccessTokenUseCase: GetKakaoAccessTokenUseCase,
+        getNaverKakaoAccessTokenUseCase: GetNaverAccessTokenUseCase,
     ): ViewModel {
         return SnsLoginViewModel(
-            getKakaoAccessTokenUseCase = getKakaoAccessTokenUseCase,
-            getNaverAccessTokenUseCase = getNaverAccessTokenUseCase
+            getKakaoKakaoAccessTokenUseCase = getKakaoKakaoAccessTokenUseCase,
+            getNaverKakaoAccessTokenUseCase = getNaverKakaoAccessTokenUseCase
         )
     }
 }

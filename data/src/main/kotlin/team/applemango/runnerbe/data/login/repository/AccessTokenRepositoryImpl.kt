@@ -11,14 +11,19 @@ package team.applemango.runnerbe.data.login.repository
 
 import android.content.Context
 import com.kakao.sdk.user.UserApiClient
+import com.navercorp.nid.NaverIdLoginSDK
+import com.navercorp.nid.oauth.OAuthLoginCallback
+import io.github.jisungbin.logeukes.LoggerType
+import io.github.jisungbin.logeukes.logeukes
 import kotlinx.coroutines.suspendCancellableCoroutine
 import team.applemango.runnerbe.domain.repository.AccessTokenRepository
 import kotlin.coroutines.resume
 
+private const val NAVER_ACCESS_TOKEN_NULL = "Naver access token is null."
 private const val RESPONSE_NOTHING = "Kakao API response is nothing."
 
 class KakaoAccessTokenRepositoryImpl(private val context: Context) : AccessTokenRepository {
-    override suspend fun getAccessToken(): String {
+    override suspend fun getKakao(): String {
         return if (UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
             loginWithKakaoTalk(context)
         } else {
@@ -51,4 +56,28 @@ class KakaoAccessTokenRepositoryImpl(private val context: Context) : AccessToken
                 )
             }
         }
+
+    override suspend fun getNaver(): String = suspendCancellableCoroutine { continuation ->
+        NaverIdLoginSDK.authenticate(
+            context,
+            object : OAuthLoginCallback {
+                override fun onSuccess() {
+                    continuation.resume(
+                        NaverIdLoginSDK.getAccessToken() ?: throw Exception(NAVER_ACCESS_TOKEN_NULL)
+                    )
+                }
+
+                override fun onFailure(httpStatus: Int, message: String) {
+                    val errorCode = NaverIdLoginSDK.getLastErrorCode().code
+                    val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
+                    logeukes(type = LoggerType.E) { listOf(errorCode, errorDescription) }
+                    throw Exception(errorDescription)
+                }
+
+                override fun onError(errorCode: Int, message: String) {
+                    onFailure(errorCode, message)
+                }
+            }
+        )
+    }
 }

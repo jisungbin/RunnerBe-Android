@@ -20,8 +20,8 @@ package team.applemango.runnerbe.domain.usecase
 
 import team.applemango.runnerbe.domain.repository.AccessTokenRepository
 
-class GetAccessTokenUseCase(private val repo: AccessTokenRepository) {
+class GetKakaoAccessTokenUseCase(private val repo: AccessTokenRepository) {
     suspend operator fun invoke() = runCatching {
-        repo.getAccessToken()
+        repo.getKakao()
     }
 }

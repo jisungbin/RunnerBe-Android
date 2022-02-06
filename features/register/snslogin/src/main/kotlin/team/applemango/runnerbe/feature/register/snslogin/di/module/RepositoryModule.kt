@@ -13,18 +13,13 @@ import android.content.Context
 import dagger.Module
 import dagger.Provides
 import team.applemango.runnerbe.data.login.repository.KakaoAccessTokenRepositoryImpl
-import team.applemango.runnerbe.data.login.repository.NaverAccessTokenRepositoryImpl
 import team.applemango.runnerbe.domain.repository.AccessTokenRepository
-import team.applemango.runnerbe.feature.register.snslogin.di.qualifier.Kakao
-import team.applemango.runnerbe.feature.register.snslogin.di.qualifier.Naver
+import javax.inject.Singleton
 
 @Module
 internal class RepositoryModule(private val context: Context) {
     @Provides
-    @Kakao
-    fun provideKakaoAccessTokenRepository(): AccessTokenRepository = KakaoAccessTokenRepositoryImpl(context)
-
-    @Provides
-    @Naver
-    fun provideNaverAccessTokenRepository(): AccessTokenRepository = NaverAccessTokenRepositoryImpl(context)
+    @Singleton
+    fun provideAccessTokenRepository(): AccessTokenRepository =
+        KakaoAccessTokenRepositoryImpl(context)
 }

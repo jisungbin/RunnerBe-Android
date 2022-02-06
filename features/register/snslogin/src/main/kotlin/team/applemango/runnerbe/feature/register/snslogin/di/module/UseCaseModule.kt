@@ -12,19 +12,16 @@ package team.applemango.runnerbe.feature.register.snslogin.di.module
 import dagger.Module
 import dagger.Provides
 import team.applemango.runnerbe.domain.repository.AccessTokenRepository
-import team.applemango.runnerbe.domain.usecase.GetAccessTokenUseCase
-import team.applemango.runnerbe.feature.register.snslogin.di.qualifier.Kakao
-import team.applemango.runnerbe.feature.register.snslogin.di.qualifier.Naver
+import team.applemango.runnerbe.domain.usecase.GetKakaoAccessTokenUseCase
+import team.applemango.runnerbe.domain.usecase.GetNaverAccessTokenUseCase
 
 @Module
 internal class UseCaseModule {
     @Provides
-    @Kakao
-    fun provideGetKakaoAccessTokenUseCase(@Kakao repo: AccessTokenRepository): GetAccessTokenUseCase =
-        GetAccessTokenUseCase(repo)
+    fun provideGetKakaoAccessTokenUseCase(repo: AccessTokenRepository): GetKakaoAccessTokenUseCase =
+        GetKakaoAccessTokenUseCase(repo)
 
     @Provides
-    @Naver
-    fun provideGetNaverAccessTokenUseCase(@Naver repo: AccessTokenRepository): GetAccessTokenUseCase =
-        GetAccessTokenUseCase(repo)
+    fun provideGetNaverAccessTokenUseCase(repo: AccessTokenRepository): GetNaverAccessTokenUseCase =
+        GetNaverAccessTokenUseCase(repo)
 }

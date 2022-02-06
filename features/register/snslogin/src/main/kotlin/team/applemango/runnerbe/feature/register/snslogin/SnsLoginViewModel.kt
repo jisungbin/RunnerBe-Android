@@ -13,14 +13,15 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
-import team.applemango.runnerbe.domain.usecase.GetAccessTokenUseCase
+import team.applemango.runnerbe.domain.usecase.GetKakaoAccessTokenUseCase
+import team.applemango.runnerbe.domain.usecase.GetNaverAccessTokenUseCase
 import team.applemango.runnerbe.feature.register.snslogin.constant.LoginType
 import team.applemango.runnerbe.shared.base.BaseViewModel
 import javax.inject.Inject
 
 internal class SnsLoginViewModel @Inject constructor(
-    private val getKakaoAccessTokenUseCase: GetAccessTokenUseCase,
-    private val getNaverAccessTokenUseCase: GetAccessTokenUseCase,
+    private val getKakaoKakaoAccessTokenUseCase: GetKakaoAccessTokenUseCase,
+    private val getNaverKakaoAccessTokenUseCase: GetNaverAccessTokenUseCase,
 ) : BaseViewModel() {
 
     private val _accessToken = MutableSharedFlow<String>()
@@ -28,8 +29,8 @@ internal class SnsLoginViewModel @Inject constructor(
 
     fun getAccessToken(loginType: LoginType) = viewModelScope.launch {
         when (loginType) {
-            LoginType.Kakao -> getKakaoAccessTokenUseCase()
-            LoginType.Naver -> getNaverAccessTokenUseCase()
+            LoginType.Kakao -> getKakaoKakaoAccessTokenUseCase()
+            LoginType.Naver -> getNaverKakaoAccessTokenUseCase()
             LoginType.Apple -> throw NotImplementedError()
         }.onSuccess { token ->
             _accessToken.emit(token)
