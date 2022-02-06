@@ -6,12 +6,13 @@
  *
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
+
 package team.applemango.runnerbe.feature.register.snslogin.module
 
 import dagger.Component
 import team.applemango.runnerbe.feature.register.snslogin.SnsLoginActivity
 
-@Component(modules = [UseCaseModule::class])
+@Component(modules = [UseCaseModule::class, RepositoryModule::class])
 internal interface UseCaseComponent {
     fun inject(activity: SnsLoginActivity)
 }

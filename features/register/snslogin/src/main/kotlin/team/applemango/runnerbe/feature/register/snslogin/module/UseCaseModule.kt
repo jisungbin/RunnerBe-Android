@@ -17,7 +17,7 @@ import team.applemango.runnerbe.feature.register.snslogin.qualifier.Kakao
 import team.applemango.runnerbe.feature.register.snslogin.qualifier.Naver
 
 @Module
-class UseCaseModule {
+internal class UseCaseModule {
     @Provides
     @Kakao
     fun provideGetKakaoAccessTokenUseCase(@Kakao repo: LoginRepository): GetAccessTokenUseCase =

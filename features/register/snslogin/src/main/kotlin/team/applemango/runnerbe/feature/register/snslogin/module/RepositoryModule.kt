@@ -19,7 +19,7 @@ import team.applemango.runnerbe.feature.register.snslogin.qualifier.Kakao
 import team.applemango.runnerbe.feature.register.snslogin.qualifier.Naver
 
 @Module
-class RepositoryModule(private val context: Context) {
+internal class RepositoryModule(private val context: Context) {
     @Provides
     @Kakao
     fun provideKakaoLoginRepository(): LoginRepository = KakaoLoginRepositoryImpl(context)
