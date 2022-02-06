@@ -15,14 +15,16 @@ import android.os.Bundle
 import android.view.animation.AnticipateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import team.applemango.runnerbe.R
 import team.applemango.runnerbe.util.DFMLoginActivityAlias
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
-        // setContentView(R.layout.activity_main)
-        finish()
+        setContentView(R.layout.activity_main)
+
+        // finish()
         startActivity(Intent(this, DFMLoginActivityAlias::class.java))
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
