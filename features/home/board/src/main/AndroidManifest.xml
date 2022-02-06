@@ -7,6 +7,11 @@
   ~ Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
   -->
 
-<manifest package="team.applemango.runnerbe.feature.home.board">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="team.applemango.runnerbe.feature.home.board">
+
+    <application>
+        <activity android:name=".BoardActivity" />
+    </application>
 
 </manifest>
