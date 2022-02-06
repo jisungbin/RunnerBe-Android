@@ -140,7 +140,7 @@ class SnsLoginActivity : ComponentActivity() {
                         .height(49.dp),
                     painter = painterResource(drawable.login_kakao),
                     contentDescription = null,
-                    contentScale = ContentScale.Fit
+                    contentScale = ContentScale.FillBounds
                 )
                 Image(
                     modifier = Modifier
@@ -148,7 +148,7 @@ class SnsLoginActivity : ComponentActivity() {
                         .height(49.dp),
                     painter = painterResource(drawable.login_naver),
                     contentDescription = null,
-                    contentScale = ContentScale.FillWidth
+                    contentScale = ContentScale.FillBounds
                 )
                 Image(
                     modifier = Modifier
