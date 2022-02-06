@@ -18,9 +18,9 @@
 
 package team.applemango.runnerbe.domain.usecase
 
-import team.applemango.runnerbe.domain.repository.LoginRepository
+import team.applemango.runnerbe.domain.repository.AccessTokenRepository
 
-class GetAccessTokenUseCase(private val repo: LoginRepository) {
+class GetAccessTokenUseCase(private val repo: AccessTokenRepository) {
     suspend operator fun invoke() = runCatching {
         repo.getAccessToken()
     }

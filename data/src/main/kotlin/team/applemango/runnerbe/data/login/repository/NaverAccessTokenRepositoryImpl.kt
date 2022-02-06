@@ -15,12 +15,12 @@ import com.navercorp.nid.oauth.OAuthLoginCallback
 import io.github.jisungbin.logeukes.LoggerType
 import io.github.jisungbin.logeukes.logeukes
 import kotlinx.coroutines.suspendCancellableCoroutine
-import team.applemango.runnerbe.domain.repository.LoginRepository
+import team.applemango.runnerbe.domain.repository.AccessTokenRepository
 import kotlin.coroutines.resume
 
 private const val TOKEN_NULL = "Response is null."
 
-class NaverLoginRepositoryImpl(private val context: Context) : LoginRepository {
+class NaverAccessTokenRepositoryImpl(private val context: Context) : AccessTokenRepository {
     override suspend fun getAccessToken(): String = suspendCancellableCoroutine { continuation ->
         NaverIdLoginSDK.authenticate(
             context,

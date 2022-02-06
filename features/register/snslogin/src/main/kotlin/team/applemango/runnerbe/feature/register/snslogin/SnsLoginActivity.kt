@@ -42,7 +42,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import io.github.jisungbin.logeukes.logeukes
 import team.applemango.runnerbe.feature.register.snslogin.di.ViewModelFactory
 import team.applemango.runnerbe.feature.register.snslogin.di.component.DaggerViewModelComponent
 import team.applemango.runnerbe.feature.register.snslogin.di.module.RepositoryModule
@@ -60,6 +59,8 @@ class SnsLoginActivity : ComponentActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
+    private lateinit var vm: SnsLoginViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -71,8 +72,7 @@ class SnsLoginActivity : ComponentActivity() {
             .build()
             .inject(this)
 
-        val viewModel = ViewModelProvider(this, viewModelFactory)[SnsLoginViewModel::class.java]
-        logeukes { viewModel }
+        vm = ViewModelProvider(this, viewModelFactory)[SnsLoginViewModel::class.java]
 
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,

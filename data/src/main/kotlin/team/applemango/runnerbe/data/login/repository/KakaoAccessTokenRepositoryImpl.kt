@@ -12,12 +12,12 @@ package team.applemango.runnerbe.data.login.repository
 import android.content.Context
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.coroutines.suspendCancellableCoroutine
-import team.applemango.runnerbe.domain.repository.LoginRepository
+import team.applemango.runnerbe.domain.repository.AccessTokenRepository
 import kotlin.coroutines.resume
 
 private const val RESPONSE_NOTHING = "Kakao API response is nothing."
 
-class KakaoLoginRepositoryImpl(private val context: Context) : LoginRepository {
+class KakaoAccessTokenRepositoryImpl(private val context: Context) : AccessTokenRepository {
     override suspend fun getAccessToken(): String {
         return if (UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
             loginWithKakaoTalk(context)

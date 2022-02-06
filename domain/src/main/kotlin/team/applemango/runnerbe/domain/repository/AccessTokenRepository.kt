@@ -9,6 +9,6 @@
 
 package team.applemango.runnerbe.domain.repository
 
-interface LoginRepository {
+interface AccessTokenRepository {
     suspend fun getAccessToken(): String
 }
