@@ -14,12 +14,10 @@ import dagger.Module
 import dagger.Provides
 import team.applemango.runnerbe.data.login.repository.KakaoAccessTokenRepositoryImpl
 import team.applemango.runnerbe.domain.repository.AccessTokenRepository
-import javax.inject.Singleton
 
 @Module
 internal class RepositoryModule(private val context: Context) {
     @Provides
-    @Singleton
     fun provideAccessTokenRepository(): AccessTokenRepository =
         KakaoAccessTokenRepositoryImpl(context)
 }
