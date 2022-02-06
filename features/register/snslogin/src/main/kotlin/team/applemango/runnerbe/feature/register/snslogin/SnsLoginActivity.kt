@@ -40,8 +40,16 @@ import androidx.core.view.WindowCompat
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import io.github.jisungbin.logeukes.logeukes
+import team.applemango.runnerbe.domain.usecase.GetAccessTokenUseCase
+import team.applemango.runnerbe.feature.register.snslogin.module.DaggerUseCaseComponent
+import team.applemango.runnerbe.feature.register.snslogin.module.RepositoryModule
+import team.applemango.runnerbe.feature.register.snslogin.module.UseCaseModule
+import team.applemango.runnerbe.feature.register.snslogin.qualifier.Kakao
+import team.applemango.runnerbe.feature.register.snslogin.qualifier.Naver
 import team.applemango.runnerbe.theme.ColorAsset
 import team.applemango.runnerbe.theme.FontAsset
+import javax.inject.Inject
 
 private typealias string = team.applemango.runnerbe.shared.R.string
 private typealias drawable = R.drawable
@@ -50,8 +58,23 @@ class SnsLoginActivity : ComponentActivity() {
 
     // private val vm: SnsLoginViewModel by viewModels()
 
+    @Inject
+    @Kakao
+    lateinit var getKakaoAccessTokenUseCase: GetAccessTokenUseCase
+
+    @Inject
+    @Naver
+    lateinit var getNaverAccessTokenUseCase: GetAccessTokenUseCase
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        DaggerUseCaseComponent
+            .builder()
+            .repositoryModule(RepositoryModule(applicationContext))
+            .useCaseModule(UseCaseModule())
+            .build()
+            .inject(this)
+        logeukes { listOf(getKakaoAccessTokenUseCase, getNaverAccessTokenUseCase) }
 
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
