@@ -13,22 +13,14 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.lifecycle.lifecycleScope
-import dagger.hilt.android.AndroidEntryPoint
-import team.applemango.runnerbe.R
-import team.applemango.runnerbe.shared.util.extension.toast
 import team.applemango.runnerbe.util.DFMLoginActivityAlias
 
-@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen() // TODO: Splash Theme
+        installSplashScreen()
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
+        // setContentView(R.layout.activity_main)
+        finish()
         startActivity(Intent(this, DFMLoginActivityAlias::class.java))
-        lifecycleScope.launchWhenCreated {
-            toast("test.testRequest().toString()")
-        }
     }
 }
