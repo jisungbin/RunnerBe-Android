@@ -7,14 +7,14 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.feature.register.snslogin.module
+package team.applemango.runnerbe.feature.register.snslogin.di.module
 
 import dagger.Module
 import dagger.Provides
 import team.applemango.runnerbe.domain.repository.LoginRepository
 import team.applemango.runnerbe.domain.usecase.GetAccessTokenUseCase
-import team.applemango.runnerbe.feature.register.snslogin.qualifier.Kakao
-import team.applemango.runnerbe.feature.register.snslogin.qualifier.Naver
+import team.applemango.runnerbe.feature.register.snslogin.di.qualifier.Kakao
+import team.applemango.runnerbe.feature.register.snslogin.di.qualifier.Naver
 
 @Module
 internal class UseCaseModule {

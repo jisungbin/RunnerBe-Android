@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.feature.register.snslogin.qualifier
+package team.applemango.runnerbe.feature.register.snslogin.di.qualifier
 
 import javax.inject.Scope
 

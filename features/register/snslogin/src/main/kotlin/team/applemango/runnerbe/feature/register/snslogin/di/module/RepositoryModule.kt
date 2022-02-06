@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.feature.register.snslogin.module
+package team.applemango.runnerbe.feature.register.snslogin.di.module
 
 import android.content.Context
 import dagger.Module
@@ -15,8 +15,8 @@ import dagger.Provides
 import team.applemango.runnerbe.data.login.repository.KakaoLoginRepositoryImpl
 import team.applemango.runnerbe.data.login.repository.NaverLoginRepositoryImpl
 import team.applemango.runnerbe.domain.repository.LoginRepository
-import team.applemango.runnerbe.feature.register.snslogin.qualifier.Kakao
-import team.applemango.runnerbe.feature.register.snslogin.qualifier.Naver
+import team.applemango.runnerbe.feature.register.snslogin.di.qualifier.Kakao
+import team.applemango.runnerbe.feature.register.snslogin.di.qualifier.Naver
 
 @Module
 internal class RepositoryModule(private val context: Context) {

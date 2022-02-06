@@ -16,8 +16,9 @@ import kotlinx.coroutines.launch
 import team.applemango.runnerbe.domain.usecase.GetAccessTokenUseCase
 import team.applemango.runnerbe.feature.register.snslogin.constant.LoginType
 import team.applemango.runnerbe.shared.base.BaseViewModel
+import javax.inject.Inject
 
-internal class SnsLoginViewModel(
+internal class SnsLoginViewModel @Inject constructor(
     private val getKakaoAccessTokenUseCase: GetAccessTokenUseCase,
     private val getNaverAccessTokenUseCase: GetAccessTokenUseCase,
 ) : BaseViewModel() {
