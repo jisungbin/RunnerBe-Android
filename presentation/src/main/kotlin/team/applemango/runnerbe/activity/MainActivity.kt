@@ -17,7 +17,6 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import team.applemango.runnerbe.R
-import team.applemango.runnerbe.feature.home.board.BoardActivity
 import team.applemango.runnerbe.util.DFMLoginActivityAlias
 
 class MainActivity : AppCompatActivity() {
@@ -46,9 +45,6 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.btn_open_login_activity).setOnClickListener {
             startActivity(Intent(this, DFMLoginActivityAlias::class.java))
-        }
-        findViewById<Button>(R.id.btn_open_test_activity).setOnClickListener {
-            startActivity(Intent(this, BoardActivity::class.java))
         }
     }
 }

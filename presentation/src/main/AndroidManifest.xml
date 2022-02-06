@@ -24,10 +24,6 @@
         </activity>
 
         <activity
-            android:name="team.applemango.runnerbe.feature.home.board.BoardActivity"
-            android:theme="@style/Theme.RunnerBe" />
-
-        <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
             android:theme="@style/Theme.RunnerBe" />
 

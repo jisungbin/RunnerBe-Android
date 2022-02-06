@@ -25,14 +25,11 @@
     </dist:module>
 
     <application tools:ignore="MissingApplicationIcon">
-        <activity
-            android:name=".SnsLoginActivity"
-            android:theme="@style/Theme.RunnerBe" />
+        <activity android:name=".SnsLoginActivity" />
 
         <activity-alias
             android:name="team.applemango.runnerbe.util.DFMLoginActivityAlias"
-            android:targetActivity=".SnsLoginActivity"
-            android:theme="@style/Theme.RunnerBe" />
+            android:targetActivity=".SnsLoginActivity" />
     </application>
 
 </manifest>
