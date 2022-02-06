@@ -2,9 +2,12 @@
   ~ RunnerBe © 2022 Team AppleMango. all rights reserved.
   ~ RunnerBe license is under the MIT.
   ~
-  ~ [AndroidManifest.xml] created by Ji Sungbin on 22. 1. 31. 오후 9:30
+  ~ [themes.xml] created by Ji Sungbin on 22. 2. 6. 오후 6:25
   ~
   ~ Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
   -->
 
-<manifest package="team.applemango.runnerbe.feature.home.board" />
+<resources>
+
+    <style name="Theme.RunnerBe.Material" parent="Theme.MaterialComponents.DayNight.NoActionBar" />
+</resources>
