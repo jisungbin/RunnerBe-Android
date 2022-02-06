@@ -37,10 +37,16 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.ViewModelProvider
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import io.github.jisungbin.logeukes.logeukes
 import team.applemango.runnerbe.feature.register.snslogin.di.ViewModelFactory
+import team.applemango.runnerbe.feature.register.snslogin.di.component.DaggerViewModelComponent
+import team.applemango.runnerbe.feature.register.snslogin.di.module.RepositoryModule
+import team.applemango.runnerbe.feature.register.snslogin.di.module.UseCaseModule
+import team.applemango.runnerbe.feature.register.snslogin.di.module.ViewModelModule
 import team.applemango.runnerbe.theme.ColorAsset
 import team.applemango.runnerbe.theme.FontAsset
 import javax.inject.Inject
@@ -55,6 +61,17 @@ class SnsLoginActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        DaggerViewModelComponent
+            .builder()
+            .repositoryModule(RepositoryModule(applicationContext))
+            .useCaseModule(UseCaseModule())
+            .viewModelModule(ViewModelModule())
+            .build()
+            .inject(this)
+
+        val viewModel = ViewModelProvider(this, viewModelFactory)[SnsLoginViewModel::class.java]
+        logeukes { viewModel }
 
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
