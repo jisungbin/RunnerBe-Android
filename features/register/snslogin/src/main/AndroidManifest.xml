@@ -12,16 +12,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="team.applemango.runnerbe.feature.register.snslogin">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <dist:module
         dist:instant="false"
         dist:title="@string/dist_dfm_register_snslogin">
         <dist:fusing dist:include="true" />
         <dist:delivery>
             <dist:install-time />
-            <dist:removable value="true" />
         </dist:delivery>
+        <dist:removable value="true" />
     </dist:module>
 
     <application tools:ignore="MissingApplicationIcon">

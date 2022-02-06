@@ -17,6 +17,15 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        create("release") {
+            storeFile = file(SecretConstant.StoreFilePath)
+            storePassword = SecretConstant.StorePassword
+            keyAlias = SecretConstant.KeyAlias
+            keyPassword = SecretConstant.KeyPassword
+        }
+    }
+
     defaultConfig {
         versionCode = ApplicationConstants.versionCode
         versionName = ApplicationConstants.versionName
@@ -24,9 +33,10 @@ android {
 
     buildTypes {
         release {
-            isDebuggable = false
-            isMinifyEnabled = true
-            isShrinkResources = true
+            // isDebuggable = true
+//            isMinifyEnabled = true
+//            isShrinkResources = true
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 

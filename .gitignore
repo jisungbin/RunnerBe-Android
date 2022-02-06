@@ -21,3 +21,4 @@ local.properties
 /features/register/information/build
 /presentation/google-services.json
 /data/src/main/kotlin/team/applemango/runnerbe/data/secret/
+/buildSrc/src/main/kotlin/SecretConstant.kt
