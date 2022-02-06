@@ -13,7 +13,7 @@
 
     <style name="Theme.RunnerBe.Splash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/G5_5</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/playstore</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/img</item>
         <item name="postSplashScreenTheme">@style/Theme.RunnerBe</item>
 
         <item name="android:statusBarColor">@color/G5_5</item>
