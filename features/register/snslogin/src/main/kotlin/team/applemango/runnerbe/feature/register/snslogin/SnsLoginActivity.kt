@@ -28,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -96,7 +97,7 @@ class SnsLoginActivity : ComponentActivity() {
             modifier = Modifier
                 .fillMaxSize()
                 .background(brush = Brush.linearGradient(listOf(ColorAsset.G5_5, ColorAsset.G6)))
-                .systemBarsPadding()
+                .systemBarsPadding(start = false, end = false)
                 .padding(horizontal = 16.dp)
         ) {
             val (logo, buttons) = createRefs()
@@ -126,32 +127,36 @@ class SnsLoginActivity : ComponentActivity() {
             }
 
             Column(
-                modifier = Modifier.constrainAs(buttons) {
-                    width = Dimension.matchParent
-                    bottom.linkTo(parent.bottom, 76.dp)
-                },
+                modifier = Modifier
+                    .constrainAs(buttons) {
+                        width = Dimension.matchParent
+                        bottom.linkTo(parent.bottom, 76.dp)
+                    },
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Image(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(50.dp),
-                    painter = painterResource(drawable.kakao_login),
-                    contentDescription = null
+                        .height(49.dp),
+                    painter = painterResource(drawable.login_kakao),
+                    contentDescription = null,
+                    contentScale = ContentScale.Fit
                 )
                 Image(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(50.dp),
-                    painter = painterResource(drawable.naver_login),
-                    contentDescription = null
+                        .height(49.dp),
+                    painter = painterResource(drawable.login_naver),
+                    contentDescription = null,
+                    contentScale = ContentScale.FillWidth
                 )
                 Image(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(50.dp),
-                    painter = painterResource(drawable.apple_login),
-                    contentDescription = null
+                        .height(49.dp),
+                    painter = painterResource(drawable.login_apple),
+                    contentDescription = null,
+                    contentScale = ContentScale.FillBounds
                 )
             }
         }
