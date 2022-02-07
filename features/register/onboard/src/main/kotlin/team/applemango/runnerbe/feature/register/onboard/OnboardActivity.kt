@@ -60,6 +60,7 @@ class OnboardActivity : ComponentActivity() {
                     systemUiController.setSystemBarsColor(Color.Transparent)
                 }
                 BackHandler(step != Step.Terms) {
+                    navController.popBackStack()
                     step = Step.values()[step.index - 1]
                 }
                 OnboardContent(
