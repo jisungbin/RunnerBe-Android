@@ -30,3 +30,7 @@ object ColorAsset {
     val G2 = Color(0xFFCDCDC9)
     val G1 = Color(0xFFF5F5F5)
 }
+
+object GradientAsset {
+    val RegisterCommonBackground = listOf(Color(18, 18, 18), Color(27, 26, 23))
+}

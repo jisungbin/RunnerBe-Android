@@ -62,6 +62,7 @@ import team.applemango.runnerbe.shared.util.extension.launchedWhenCreated
 import team.applemango.runnerbe.shared.util.extension.toast
 import team.applemango.runnerbe.theme.ColorAsset
 import team.applemango.runnerbe.theme.FontAsset
+import team.applemango.runnerbe.theme.GradientAsset
 import javax.inject.Inject
 
 private typealias string = team.applemango.runnerbe.shared.R.string
@@ -109,12 +110,10 @@ class SnsLoginActivity : ComponentActivity() {
     @Preview
     @Composable
     private fun SnsLoginScreen() {
-        val colorGradientEnd = Color(27, 26, 23)
-
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxSize()
-                .background(brush = Brush.linearGradient(listOf(ColorAsset.G5_5, colorGradientEnd)))
+                .background(brush = Brush.linearGradient(GradientAsset.RegisterCommonBackground))
                 .systemBarsPadding(start = false, end = false)
                 .padding(horizontal = 16.dp)
         ) {
