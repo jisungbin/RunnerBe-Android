@@ -9,6 +9,9 @@
 
 package team.applemango.runnerbe.domain.repository
 
+import team.applemango.runnerbe.domain.model.User
+
 interface LoginRepository {
-    suspend fun kakao()
+    suspend fun requestKakao(): User
+    suspend fun requestNaver(): User
 }
