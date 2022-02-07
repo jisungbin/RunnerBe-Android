@@ -20,5 +20,5 @@ include(
     ":features:home:board",
     ":features:home:notification",
     ":features:register:snslogin",
-    ":features:register:information"
+    ":features:register:onboard"
 )

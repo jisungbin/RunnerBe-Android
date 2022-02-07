@@ -10,9 +10,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
     xmlns:tools="http://schemas.android.com/tools"
-    package="team.applemango.runnerbe.feature.register.information">
+    package="team.applemango.runnerbe.feature.register.onboard">
 
-    <dist:module dist:title="@string/dist_dfm_register_information">
+    <dist:module dist:title="@string/dist_dfm_register_onboard">
         <dist:fusing dist:include="true" />
         <dist:delivery>
             <dist:install-time />

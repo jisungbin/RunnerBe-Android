@@ -18,7 +18,7 @@ local.properties
 /features/home/board/build
 /features/home/notification/build
 /features/register/snslogin/build
-/features/register/information/build
+/features/register/onboard/build
 /presentation/google-services.json
 /data/src/main/kotlin/team/applemango/runnerbe/data/secret/
 /buildSrc/src/main/kotlin/SecretConstant.kt
