@@ -20,4 +20,7 @@ data class Result(
 
     @field:JsonProperty("userId")
     val userId: Int? = null,
+
+    @field:JsonProperty("uuid")
+    val uuid: String? = null,
 )

@@ -93,10 +93,12 @@ class SnsLoginActivity : ComponentActivity() {
     @Preview
     @Composable
     private fun SnsLoginScreen() {
+        val colorGradientEnd = Color(27, 26, 23)
+
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxSize()
-                .background(brush = Brush.linearGradient(listOf(ColorAsset.G5_5, ColorAsset.G6)))
+                .background(brush = Brush.linearGradient(listOf(ColorAsset.G5_5, colorGradientEnd)))
                 .systemBarsPadding(start = false, end = false)
                 .padding(horizontal = 16.dp)
         ) {
@@ -116,7 +118,7 @@ class SnsLoginActivity : ComponentActivity() {
                     contentDescription = null
                 )
                 Text(
-                    modifier = Modifier.padding(top = 10.dp),
+                    modifier = Modifier.padding(top = 11.dp),
                     text = stringResource(string.app_name),
                     style = TextStyle(
                         color = ColorAsset.Primary,
@@ -137,7 +139,7 @@ class SnsLoginActivity : ComponentActivity() {
                 Image(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(49.dp),
+                        .height(48.dp),
                     painter = painterResource(drawable.login_kakao),
                     contentDescription = null,
                     contentScale = ContentScale.FillBounds
@@ -145,7 +147,7 @@ class SnsLoginActivity : ComponentActivity() {
                 Image(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(49.dp),
+                        .height(48.dp),
                     painter = painterResource(drawable.login_naver),
                     contentDescription = null,
                     contentScale = ContentScale.FillBounds
@@ -153,7 +155,7 @@ class SnsLoginActivity : ComponentActivity() {
                 Image(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(49.dp),
+                        .height(48.dp),
                     painter = painterResource(drawable.login_apple),
                     contentDescription = null,
                     contentScale = ContentScale.FillBounds

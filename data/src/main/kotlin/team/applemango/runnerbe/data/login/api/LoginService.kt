@@ -15,5 +15,8 @@ import team.applemango.runnerbe.data.login.model.LoginRequestResponse
 
 interface LoginService {
     @POST("/users/kakao-login")
-    suspend fun requestKakaoLogin(): Response<LoginRequestResponse>
+    suspend fun kakao(): Response<LoginRequestResponse>
+
+    @POST("/users/naver-login")
+    suspend fun naver(): Response<LoginRequestResponse>
 }
