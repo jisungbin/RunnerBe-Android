@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.domain.repository
+package team.applemango.runnerbe.domain.login.repository
 
 interface AccessTokenRepository {
     suspend fun getKakao(): String

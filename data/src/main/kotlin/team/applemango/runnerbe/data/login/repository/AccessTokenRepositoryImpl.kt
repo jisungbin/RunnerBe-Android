@@ -18,7 +18,7 @@ import io.github.jisungbin.logeukes.logeukes
 import kotlinx.coroutines.suspendCancellableCoroutine
 import team.applemango.runnerbe.data.util.extension.failure
 import team.applemango.runnerbe.data.util.extension.success
-import team.applemango.runnerbe.domain.repository.AccessTokenRepository
+import team.applemango.runnerbe.domain.login.repository.AccessTokenRepository
 import kotlin.coroutines.resume
 
 private const val NAVER_ACCESS_TOKEN_NULL = "Naver access token is null."

@@ -13,8 +13,8 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
-import team.applemango.runnerbe.domain.usecase.GetKakaoAccessTokenUseCase
-import team.applemango.runnerbe.domain.usecase.GetNaverAccessTokenUseCase
+import team.applemango.runnerbe.domain.login.usecase.GetKakaoAccessTokenUseCase
+import team.applemango.runnerbe.domain.login.usecase.GetNaverAccessTokenUseCase
 import team.applemango.runnerbe.feature.register.snslogin.constant.LoginType
 import team.applemango.runnerbe.shared.base.BaseViewModel
 import javax.inject.Inject

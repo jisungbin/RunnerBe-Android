@@ -10,7 +10,7 @@
 package team.applemango.runnerbe.data.login.mapper
 
 import team.applemango.runnerbe.data.login.model.LoginRequestResponse
-import team.applemango.runnerbe.domain.model.User
+import team.applemango.runnerbe.domain.login.model.User
 
 internal fun LoginRequestResponse.toDomain(): User {
     return when (code!!) { // must 1001..1002

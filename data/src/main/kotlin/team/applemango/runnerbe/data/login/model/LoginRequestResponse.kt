@@ -11,7 +11,7 @@ package team.applemango.runnerbe.data.login.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class LoginRequestResponse(
+internal data class LoginRequestResponse(
     @field:JsonProperty("result")
     val result: Result? = null,
 

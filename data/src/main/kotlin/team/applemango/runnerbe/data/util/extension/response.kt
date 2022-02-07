@@ -15,7 +15,7 @@ import team.applemango.runnerbe.data.login.model.LoginRequestResponse
 internal const val REQUEST_EXCEPTION =
     "The request is a success, but the server execution is failed. (or result field is null)"
 
-internal fun Response<LoginRequestResponse>.requireResponse(requestName: String): LoginRequestResponse {
+internal fun Response<LoginRequestResponse>.requireResponse(platformName: String): LoginRequestResponse {
     val body = body()
     if (isSuccessful && body != null) {
         if (body.isSuccess == true && body.code in 1001..1002 && body.result != null) {
@@ -24,6 +24,6 @@ internal fun Response<LoginRequestResponse>.requireResponse(requestName: String)
             throw Exception(body.message ?: REQUEST_EXCEPTION)
         }
     } else {
-        throw throw Exception("Request $requestName is fail. (${errorBody()?.use { it.string() }})")
+        throw throw Exception("Request $platformName login is fail. (${errorBody()?.use { it.string() }})")
     }
 }
