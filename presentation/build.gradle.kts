@@ -43,7 +43,7 @@ android {
 
     dynamicFeatures += setOf(
         ProjectConstants.RegisterSnsLogin,
-        ProjectConstants.RegisterInformation
+        ProjectConstants.RegisterOnboard
     )
 }
 
