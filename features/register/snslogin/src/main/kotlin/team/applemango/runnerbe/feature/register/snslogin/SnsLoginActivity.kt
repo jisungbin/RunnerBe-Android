@@ -15,6 +15,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -38,15 +39,27 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.core.view.WindowCompat
+import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.ViewModelProvider
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import io.github.jisungbin.logeukes.LoggerType
+import io.github.jisungbin.logeukes.logeukes
+import org.orbitmvi.orbit.viewmodel.observe
+import team.applemango.runnerbe.domain.login.constant.PlatformType
 import team.applemango.runnerbe.feature.register.snslogin.di.ViewModelFactory
 import team.applemango.runnerbe.feature.register.snslogin.di.component.DaggerViewModelComponent
 import team.applemango.runnerbe.feature.register.snslogin.di.module.RepositoryModule
 import team.applemango.runnerbe.feature.register.snslogin.di.module.UseCaseModule
 import team.applemango.runnerbe.feature.register.snslogin.di.module.ViewModelModule
+import team.applemango.runnerbe.feature.register.snslogin.mvi.LoginSideEffect
+import team.applemango.runnerbe.feature.register.snslogin.mvi.LoginState
+import team.applemango.runnerbe.shared.constant.DataStoreKey
+import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
+import team.applemango.runnerbe.shared.util.extension.dataStore
+import team.applemango.runnerbe.shared.util.extension.launchedWhenCreated
+import team.applemango.runnerbe.shared.util.extension.toast
 import team.applemango.runnerbe.theme.ColorAsset
 import team.applemango.runnerbe.theme.FontAsset
 import javax.inject.Inject
@@ -57,7 +70,7 @@ private typealias drawable = R.drawable
 class SnsLoginActivity : ComponentActivity() {
 
     @Inject
-    lateinit var viewModelFactory: ViewModelFactory
+    internal lateinit var viewModelFactory: ViewModelFactory
 
     private lateinit var vm: SnsLoginViewModel
 
@@ -66,19 +79,22 @@ class SnsLoginActivity : ComponentActivity() {
 
         DaggerViewModelComponent
             .builder()
-            .repositoryModule(RepositoryModule(applicationContext))
+            .repositoryModule(RepositoryModule(this)) // must activity context (startActivity calling)
             .useCaseModule(UseCaseModule())
             .viewModelModule(ViewModelModule())
             .build()
             .inject(this)
 
         vm = ViewModelProvider(this, viewModelFactory)[SnsLoginViewModel::class.java]
+        vm.observe(lifecycleOwner = this, state = ::handleState, sideEffect = ::handleSideEffect)
+        vm.exceptionFlow.collectWithLifecycle(this, ::handleException)
 
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
         WindowCompat.setDecorFitsSystemWindows(window, false)
+
         setContent {
             ProvideWindowInsets {
                 val systemUiController = rememberSystemUiController()
@@ -93,10 +109,12 @@ class SnsLoginActivity : ComponentActivity() {
     @Preview
     @Composable
     private fun SnsLoginScreen() {
+        val colorGradientEnd = Color(27, 26, 23)
+
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxSize()
-                .background(brush = Brush.linearGradient(listOf(ColorAsset.G5_5, ColorAsset.G6)))
+                .background(brush = Brush.linearGradient(listOf(ColorAsset.G5_5, colorGradientEnd)))
                 .systemBarsPadding(start = false, end = false)
                 .padding(horizontal = 16.dp)
         ) {
@@ -116,7 +134,7 @@ class SnsLoginActivity : ComponentActivity() {
                     contentDescription = null
                 )
                 Text(
-                    modifier = Modifier.padding(top = 10.dp),
+                    modifier = Modifier.padding(top = 11.dp),
                     text = stringResource(string.app_name),
                     style = TextStyle(
                         color = ColorAsset.Primary,
@@ -137,7 +155,10 @@ class SnsLoginActivity : ComponentActivity() {
                 Image(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(49.dp),
+                        .height(48.dp)
+                        .clickable {
+                            vm.login(PlatformType.Kakao)
+                        },
                     painter = painterResource(drawable.login_kakao),
                     contentDescription = null,
                     contentScale = ContentScale.FillBounds
@@ -145,7 +166,10 @@ class SnsLoginActivity : ComponentActivity() {
                 Image(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(49.dp),
+                        .height(48.dp)
+                        .clickable {
+                            vm.login(PlatformType.Naver)
+                        },
                     painter = painterResource(drawable.login_naver),
                     contentDescription = null,
                     contentScale = ContentScale.FillBounds
@@ -153,12 +177,39 @@ class SnsLoginActivity : ComponentActivity() {
                 Image(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(49.dp),
+                        .height(48.dp)
+                        .clickable {
+                            vm.login(PlatformType.Apple)
+                        },
                     painter = painterResource(drawable.login_apple),
                     contentDescription = null,
                     contentScale = ContentScale.FillBounds
                 )
             }
         }
+    }
+
+    private fun handleState(state: LoginState) {
+        if (state.success) {
+            toast(state.toString())
+        }
+    }
+
+    private fun handleSideEffect(sideEffect: LoginSideEffect) {
+        when (sideEffect) {
+            is LoginSideEffect.SaveUuid -> {
+                launchedWhenCreated {
+                    applicationContext.dataStore.edit { preference ->
+                        preference[DataStoreKey.Login.Uuid] = sideEffect.uuid
+                    }
+                }
+            }
+        }
+    }
+
+    // TODO: handle exception in debug mode
+    private fun handleException(exception: Throwable) {
+        toast(exception.toString())
+        logeukes(type = LoggerType.E) { exception }
     }
 }

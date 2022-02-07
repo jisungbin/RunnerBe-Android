@@ -11,7 +11,7 @@ package team.applemango.runnerbe.data.login.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class Result(
+internal data class Result(
     @field:JsonProperty("jwt")
     val jwt: String? = null,
 
@@ -20,4 +20,7 @@ data class Result(
 
     @field:JsonProperty("userId")
     val userId: Int? = null,
+
+    @field:JsonProperty("uuid")
+    val uuid: String? = null,
 )
