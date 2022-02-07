@@ -70,11 +70,7 @@
 </p>
 
 
-#### Dependency Injection Graph **(TEST MODULE)**
-
-![](art/di-graph/SharedPreferencesModule.dot.png)
-![](art/di-graph/TestBindModule.dot.png)
-![](art/di-graph/ViewModelDispatcherModule.dot.png)
+#### Dependency Injection Graph
 
 > TODO
 
