@@ -9,19 +9,21 @@
 
 package team.applemango.runnerbe.data.login.repository
 
+import team.applemango.runnerbe.data.login.mapper.toDomain
 import team.applemango.runnerbe.data.login.model.AccessToken
+import team.applemango.runnerbe.data.util.extension.requireResponse
 import team.applemango.runnerbe.data.util.loginApi
+import team.applemango.runnerbe.domain.login.constant.PlatformType
 import team.applemango.runnerbe.domain.login.model.User
 import team.applemango.runnerbe.domain.login.repository.LoginRepository
 
 class LoginRepositoryImpl : LoginRepository {
-    override suspend fun requestKakao(accessToken: String): User {
-        val request = loginApi.requestKakao(AccessToken(accessToken))
-        return request.requireResponse("kakao").toDomain()
-    }
-
-    override suspend fun requestNaver(accessToken: String): User {
-        val request = loginApi.requestNaver(AccessToken(accessToken))
-        return request.requireResponse("naver").toDomain()
+    override suspend fun request(platformType: PlatformType, accessToken: String): User {
+        val platformName = platformType.name
+        val request = loginApi.request(
+            platformName = platformName,
+            accessToken = AccessToken(accessToken)
+        )
+        return request.requireResponse(platformName).toDomain()
     }
 }

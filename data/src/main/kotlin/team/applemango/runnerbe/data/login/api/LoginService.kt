@@ -19,7 +19,7 @@ import team.applemango.runnerbe.data.login.model.LoginRequestResponse
 internal interface LoginService {
     @POST("/users/{platformName}-login")
     suspend fun request(
-        @Path("platformName") platformType: String,
+        @Path("platformName") platformName: String,
         @Body accessToken: AccessToken,
     ): Response<LoginRequestResponse>
 }
