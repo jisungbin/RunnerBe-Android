@@ -178,7 +178,8 @@ class SnsLoginActivity : ComponentActivity() {
 
     private fun handleState(state: LoginState) {
         if (state.success) {
-
+            toast(state.toString())
+            logeukes { state }
         }
     }
 
@@ -188,6 +189,7 @@ class SnsLoginActivity : ComponentActivity() {
                 launchedWhenCreated {
                     applicationContext.dataStore.edit { preference ->
                         preference[DataStoreKey.Login.Uuid] = sideEffect.uuid
+                        logeukes { sideEffect }
                     }
                 }
             }
