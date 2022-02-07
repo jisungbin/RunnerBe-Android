@@ -15,8 +15,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -35,6 +33,7 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import io.github.jisungbin.logeukes.logeukes
 import team.applemango.runnerbe.feature.register.component.OnboardContent
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.theme.GradientAsset
@@ -53,6 +52,7 @@ class OnboardActivity : ComponentActivity() {
         setContent {
             ProvideWindowInsets {
                 var step by remember { mutableStateOf(Step.Terms) }
+                logeukes { step }
                 var stepIndex by remember { mutableStateOf(0) }
                 val navController = rememberAnimatedNavController()
                 val systemUiController = rememberSystemUiController()
@@ -88,6 +88,7 @@ class OnboardActivity : ComponentActivity() {
                     onBottomCTAButtonAction = {
                         if (step != Step.EmployeeDone && step != Step.EmailDone) {
                             step = Step.values()[step.index + 1]
+                            logeukes { listOf(step, step.name) }
                             navController.navigate(step.name)
                         } else {
                             // TODO
@@ -100,12 +101,6 @@ class OnboardActivity : ComponentActivity() {
                         modifier = modifier,
                         navController = navController,
                         startDestination = Step.Terms.name,
-                        enterTransition = {
-                            slideInHorizontally(initialOffsetX = { it })
-                        },
-                        exitTransition = {
-                            slideOutHorizontally(targetOffsetX = { -it })
-                        }
                     ) {
                         composable(route = Step.Terms.name) {
                             Box(

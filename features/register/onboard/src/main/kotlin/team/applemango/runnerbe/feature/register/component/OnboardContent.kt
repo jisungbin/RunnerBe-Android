@@ -11,6 +11,10 @@ package team.applemango.runnerbe.feature.register.component
 
 import android.app.Activity
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -37,6 +41,7 @@ import team.applemango.runnerbe.feature.register.onboard.constant.ButtonType
 import team.applemango.runnerbe.theme.ColorAsset
 import team.applemango.runnerbe.theme.Typography
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 internal fun Activity.OnboardContent(
     modifier: Modifier,
@@ -108,7 +113,9 @@ internal fun Activity.OnboardContent(
             )
             AnimatedVisibility(
                 modifier = Modifier.padding(top = 12.dp, start = 16.dp),
-                visible = subtitle.isNotEmpty()
+                visible = subtitle.isNotEmpty(),
+                enter = fadeIn(tween(500)),
+                exit = fadeOut(tween(500))
             ) {
                 Text(
                     text = subtitle,
