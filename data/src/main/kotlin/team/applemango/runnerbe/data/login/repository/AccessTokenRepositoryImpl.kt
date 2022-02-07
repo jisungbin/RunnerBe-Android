@@ -9,7 +9,7 @@
 
 package team.applemango.runnerbe.data.login.repository
 
-import android.content.Context
+import android.app.Activity
 import com.kakao.sdk.user.UserApiClient
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.OAuthLoginCallback
@@ -24,18 +24,20 @@ import kotlin.coroutines.resume
 private const val NAVER_ACCESS_TOKEN_NULL = "Naver access token is null."
 private const val RESPONSE_NOTHING = "Kakao API response is nothing."
 
-class KakaoAccessTokenRepositoryImpl(private val context: Context) : AccessTokenRepository {
+// must be activity context
+class AccessTokenRepositoryImpl(private val activityContext: Activity) :
+    AccessTokenRepository {
     override suspend fun getKakao(): String {
-        return if (UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
-            loginWithKakaoTalk(context)
+        return if (UserApiClient.instance.isKakaoTalkLoginAvailable(activityContext)) {
+            loginWithKakaoTalk(activityContext)
         } else {
-            loginWithWebView(context)
+            loginWithWebView(activityContext)
         }
     }
 
-    private suspend fun loginWithKakaoTalk(context: Context): String {
+    private suspend fun loginWithKakaoTalk(activityContext: Activity): String {
         return suspendCancellableCoroutine<Result<String>> { continuation ->
-            UserApiClient.instance.loginWithKakaoTalk(context) { token, error ->
+            UserApiClient.instance.loginWithKakaoTalk(activityContext) { token, error ->
                 logeukes { listOf("카카오", token, error) }
                 continuation.resume(
                     when {
@@ -48,9 +50,9 @@ class KakaoAccessTokenRepositoryImpl(private val context: Context) : AccessToken
         }.getOrThrow()
     }
 
-    private suspend fun loginWithWebView(context: Context): String {
+    private suspend fun loginWithWebView(activityContext: Activity): String {
         return suspendCancellableCoroutine<Result<String>> { continuation ->
-            UserApiClient.instance.loginWithKakaoAccount(context) { token, error ->
+            UserApiClient.instance.loginWithKakaoAccount(activityContext) { token, error ->
                 logeukes { listOf("카카오", token, error) }
                 continuation.resume(
                     when {
@@ -66,7 +68,7 @@ class KakaoAccessTokenRepositoryImpl(private val context: Context) : AccessToken
     override suspend fun getNaver(): String {
         return suspendCancellableCoroutine<Result<String>> { continuation ->
             NaverIdLoginSDK.authenticate(
-                context,
+                activitpeContext,
                 object : OAuthLoginCallback {
                     override fun onSuccess() {
                         val token = NaverIdLoginSDK.getAccessToken()
