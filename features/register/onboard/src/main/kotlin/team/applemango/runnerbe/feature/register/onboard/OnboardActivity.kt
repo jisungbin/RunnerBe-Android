@@ -10,73 +10,78 @@
 package team.applemango.runnerbe.feature.register.onboard
 
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import team.applemango.runnerbe.theme.ColorAsset
-import team.applemango.runnerbe.theme.Typography
+import androidx.core.view.WindowCompat
+import com.google.accompanist.insets.ProvideWindowInsets
+import com.google.accompanist.insets.systemBarsPadding
+import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.animation.composable
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import team.applemango.runnerbe.feature.register.component.OnboardContent
+import team.applemango.runnerbe.feature.register.onboard.constant.Step
+import team.applemango.runnerbe.theme.GradientAsset
 
+@ExperimentalAnimationApi
 class OnboardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
         setContent {
-            var stepIndex by remember { mutableStateOf(0) }
-        }
-    }
-
-    @Composable
-    private fun TopBar(
-        stepIndex: Int,
-        stepIndexUpdate: (step: Int) -> Unit,
-        onBackAction: () -> Unit,
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(32.dp)
-                .padding(horizontal = 16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Image(
-                modifier = Modifier.clickable {
-                    onBackAction()
-                },
-                painter = painterResource(R.drawable.ic_round_arrow_left_24),
-                contentDescription = null
-            )
-            AnimatedVisibility(visible = stepIndex != 0) {
-                Text(text = "$stepIndex/4", style = Typography.Body16R.copy(color = ColorAsset.G3))
+            ProvideWindowInsets {
+                var step by remember { mutableStateOf(Step.Terms) }
+                var stepIndex by remember { mutableStateOf(0) }
+                val navController = rememberAnimatedNavController()
+                val systemUiController = rememberSystemUiController()
+                LaunchedEffect(Unit) {
+                    systemUiController.setSystemBarsColor(Color.Transparent)
+                }
+                AnimatedNavHost(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(brush = Brush.linearGradient(GradientAsset.RegisterCommonBackground))
+                        .systemBarsPadding(start = false, end = false)
+                        .padding(horizontal = 16.dp),
+                    navController = navController,
+                    startDestination = Step.Terms.name,
+                    enterTransition = { slideInHorizontally(animationSpec = tween(500)) },
+                    exitTransition = { slideOutHorizontally(animationSpec = tween(500)) }
+                ) {
+                    composable(route = Step.Terms.name) {
+                        OnboardContent(
+                            stepIndex = 0,
+                            stepIndexUpdate = {},
+                            onBackAction = {},
+                            title = "",
+                            description = ""
+                        )
+                    }
+                }
             }
-            Image(
-                modifier = Modifier.clickable {
-                    finish() // TODO: goto main activity
-                },
-                painter = painterResource(R.drawable.ic_round_close_24),
-                contentDescription = null
-            )
         }
-    }
-
-    @Composable
-    private fun BottomCTAButton() {
     }
 }

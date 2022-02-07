@@ -124,6 +124,7 @@ object Dependencies {
         "com.google.accompanist:accompanist-insets:${Versions.Compose.Accompanist}",
         "com.google.accompanist:accompanist-systemuicontroller:${Versions.Compose.Accompanist}",
         "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.Compose.LifecycleViewModel}",
+        "com.google.accompanist:accompanist-navigation-animation:${Versions.Compose.Accompanist}",
         "androidx.constraintlayout:constraintlayout-compose:${Versions.Compose.ConstraintLayout}",
     )
 

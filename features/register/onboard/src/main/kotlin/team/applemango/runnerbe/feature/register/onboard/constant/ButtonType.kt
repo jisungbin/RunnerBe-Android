@@ -10,5 +10,5 @@
 package team.applemango.runnerbe.feature.register.onboard.constant
 
 internal enum class ButtonType {
-    Next, NoEmail, Verify, Start, Main
+    Normal, NoEmail
 }
