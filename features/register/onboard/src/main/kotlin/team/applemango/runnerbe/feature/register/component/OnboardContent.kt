@@ -10,6 +10,7 @@
 package team.applemango.runnerbe.feature.register.component
 
 import android.app.Activity
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -27,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
@@ -43,7 +45,7 @@ internal fun Activity.OnboardContent(
     stepIndex: Int = 0,
     bottomCTAButtonEnabled: Boolean = true,
     bottomCTAButtonType: ButtonType = ButtonType.Normal,
-    bottomCTAButtonText: String = "다음",
+    bottomCTAButtonText: String = stringResource(R.string.feature_onboard_button_next),
     onBottomCTAButtonAction: () -> Unit,
     onBackAction: () -> Unit = { finish() },
     content: @Composable (modifier: Modifier) -> Unit,
@@ -100,13 +102,15 @@ internal fun Activity.OnboardContent(
                 )
             }
             Text(
-                modifier = Modifier.padding(top = 26.dp),
+                modifier = Modifier.padding(top = 26.dp, start = 16.dp),
                 text = title,
                 style = Typography.Header28M.copy(color = ColorAsset.Primary)
             )
-            if (subtitle.isNotEmpty()) {
+            AnimatedVisibility(
+                modifier = Modifier.padding(top = 12.dp, start = 16.dp),
+                visible = subtitle.isNotEmpty()
+            ) {
                 Text(
-                    modifier = Modifier.padding(top = 12.dp),
                     text = subtitle,
                     style = Typography.Body14R.copy(color = ColorAsset.G2_5)
                 )

@@ -12,6 +12,7 @@ package team.applemango.runnerbe.feature.register.onboard
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.slideInHorizontally
@@ -58,6 +59,9 @@ class OnboardActivity : ComponentActivity() {
                 LaunchedEffect(Unit) {
                     systemUiController.setSystemBarsColor(Color.Transparent)
                 }
+                BackHandler(step != Step.Terms) {
+                    step = Step.values()[step.index - 1]
+                }
                 OnboardContent(
                     modifier = Modifier
                         .fillMaxSize()
@@ -70,19 +74,26 @@ class OnboardActivity : ComponentActivity() {
                             Step.Gender -> R.string.feature_onboard_title_select_gender
                             Step.Job -> R.string.feature_onboard_title_question_job
                             Step.Email -> R.string.feature_onboard_title_verify_with_job_email
-                            else -> throw NotImplementedError()
+                            else -> R.string.todo
                         }
                     ),
                     subtitle = stringResource(
                         when (step) {
-                            Step.Birthday -> R.string.feature_onboard_age_show_description
-                            Step.Job -> R.string.feature_onboard_can_edit_on_mypage
+                            Step.Birthday -> R.string.feature_onboard_subtitle_age_show_description
+                            Step.Job -> R.string.feature_onboard_subtitle_can_edit_on_mypage
                             else -> R.string.empty
                         }
                     ),
                     onBottomCTAButtonAction = {
-                        navController.navigate(Step.Birthday.name)
-                    }
+                        if (step != Step.EmployeeDone && step != Step.EmailDone) {
+                            step = Step.values()[step.index + 1]
+                            navController.navigate(step.name)
+                        } else {
+                            // TODO
+                            // 메인 화면 이동
+                        }
+                    },
+                    stepIndex = stepIndex
                 ) { modifier ->
                     AnimatedNavHost(
                         modifier = modifier,
@@ -128,6 +139,27 @@ class OnboardActivity : ComponentActivity() {
                                 modifier = Modifier
                                     .fillMaxSize()
                                     .background(color = Color.White)
+                            )
+                        }
+                        composable(route = Step.EmployeeID.name) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(color = Color.Magenta)
+                            )
+                        }
+                        composable(route = Step.EmailDone.name) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(color = Color.Red)
+                            )
+                        }
+                        composable(route = Step.EmployeeDone.name) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(color = Color.Yellow)
                             )
                         }
                     }
