@@ -45,6 +45,7 @@ fun DependencyHandler.installSharedComposeHiltTest(
         implementationProject(ProjectConstants.Theme)
         Dependencies.Compose.forEach(::implementation)
     }
+    implementation(Dependencies.Orbit)
     add("testDebugImplementation", Dependencies.Test.JunitApi)
     add("testDebugRuntimeOnly", Dependencies.Test.JunitEngine)
     add("testDebugImplementation", Dependencies.Test.Hamcrest)

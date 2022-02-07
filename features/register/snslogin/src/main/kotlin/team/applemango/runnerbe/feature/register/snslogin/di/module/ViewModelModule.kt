@@ -19,7 +19,7 @@ import team.applemango.runnerbe.feature.register.snslogin.SnsLoginViewModel
 import team.applemango.runnerbe.feature.register.snslogin.di.qualifier.ViewModelKey
 
 @Module
-class ViewModelModule {
+internal class ViewModelModule {
     @Provides
     @IntoMap
     @ViewModelKey(SnsLoginViewModel::class)

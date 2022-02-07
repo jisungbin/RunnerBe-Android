@@ -57,7 +57,7 @@ private typealias drawable = R.drawable
 class SnsLoginActivity : ComponentActivity() {
 
     @Inject
-    lateinit var viewModelFactory: ViewModelFactory
+    internal lateinit var viewModelFactory: ViewModelFactory
 
     private lateinit var vm: SnsLoginViewModel
 
