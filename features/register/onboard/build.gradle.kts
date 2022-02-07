@@ -22,6 +22,7 @@ android {
 }
 
 dependencies {
+    implementation(Dependencies.Browser)
     implementationProject(ProjectConstants.Presentation)
     installSharedComposeHiltTest()
 }

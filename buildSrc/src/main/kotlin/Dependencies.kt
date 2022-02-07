@@ -39,6 +39,7 @@ object Versions {
     }
 
     object Ui {
+        const val Browser = "1.3.0"
         const val Material = "1.5.0"
         const val AppCompat = "1.4.1"
         const val Splash = "1.0.0-beta01"
@@ -87,6 +88,7 @@ object Versions {
 @Suppress("MemberVisibilityCanBePrivate")
 object Dependencies {
     const val Orbit = "org.orbit-mvi:orbit-viewmodel:${Versions.Orbit}"
+    const val Browser = "androidx.browser:browser:${Versions.Ui.Browser}"
     const val Coroutine =
         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.Essential.Coroutines}"
 
