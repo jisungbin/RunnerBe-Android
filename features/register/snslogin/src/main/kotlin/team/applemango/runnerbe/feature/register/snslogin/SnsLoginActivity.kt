@@ -15,6 +15,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -46,6 +47,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import io.github.jisungbin.logeukes.LoggerType
 import io.github.jisungbin.logeukes.logeukes
 import org.orbitmvi.orbit.viewmodel.observe
+import team.applemango.runnerbe.domain.login.constant.PlatformType
 import team.applemango.runnerbe.feature.register.snslogin.di.ViewModelFactory
 import team.applemango.runnerbe.feature.register.snslogin.di.component.DaggerViewModelComponent
 import team.applemango.runnerbe.feature.register.snslogin.di.module.RepositoryModule
@@ -151,7 +153,10 @@ class SnsLoginActivity : ComponentActivity() {
                 Image(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(48.dp),
+                        .height(48.dp)
+                        .clickable {
+                            vm.login(PlatformType.Kakao)
+                        },
                     painter = painterResource(drawable.login_kakao),
                     contentDescription = null,
                     contentScale = ContentScale.FillBounds
@@ -159,7 +164,10 @@ class SnsLoginActivity : ComponentActivity() {
                 Image(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(48.dp),
+                        .height(48.dp)
+                        .clickable {
+                            vm.login(PlatformType.Naver)
+                        },
                     painter = painterResource(drawable.login_naver),
                     contentDescription = null,
                     contentScale = ContentScale.FillBounds
@@ -167,7 +175,10 @@ class SnsLoginActivity : ComponentActivity() {
                 Image(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(48.dp),
+                        .height(48.dp)
+                        .clickable {
+                            vm.login(PlatformType.Apple)
+                        },
                     painter = painterResource(drawable.login_apple),
                     contentDescription = null,
                     contentScale = ContentScale.FillBounds
