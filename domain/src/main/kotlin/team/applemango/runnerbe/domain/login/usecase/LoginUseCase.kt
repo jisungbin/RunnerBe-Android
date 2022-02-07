@@ -15,6 +15,9 @@ import team.applemango.runnerbe.domain.login.repository.LoginRepository
 
 class LoginUseCase(private val repo: LoginRepository) {
     suspend operator fun invoke(platformType: PlatformType, accessToken: String) = runCatching {
-        repo.request(platformName = platformType.name, accessToken = AccessToken(accessToken))
+        repo.request(
+            platformName = platformType.name.lowercase(),
+            accessToken = AccessToken(accessToken)
+        )
     }
 }

@@ -9,7 +9,6 @@
 
 package team.applemango.runnerbe.domain.login.constant
 
-@Suppress("UNUSED_PARAMETER")
-enum class PlatformType(name: String) {
-    Kakao("kakao"), Naver("naver"), Apple("apple"), RunnerBe("RunnerBe")
+enum class PlatformType {
+    Kakao, Naver, Apple, RunnerBe
 }

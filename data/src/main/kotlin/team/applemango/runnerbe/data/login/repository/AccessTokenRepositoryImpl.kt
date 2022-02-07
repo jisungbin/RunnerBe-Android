@@ -36,6 +36,7 @@ class KakaoAccessTokenRepositoryImpl(private val context: Context) : AccessToken
     private suspend fun loginWithKakaoTalk(context: Context): String {
         return suspendCancellableCoroutine<Result<String>> { continuation ->
             UserApiClient.instance.loginWithKakaoTalk(context) { token, error ->
+                logeukes { listOf("카카오", token, error) }
                 continuation.resume(
                     when {
                         error != null -> failure(error)
@@ -50,6 +51,7 @@ class KakaoAccessTokenRepositoryImpl(private val context: Context) : AccessToken
     private suspend fun loginWithWebView(context: Context): String {
         return suspendCancellableCoroutine<Result<String>> { continuation ->
             UserApiClient.instance.loginWithKakaoAccount(context) { token, error ->
+                logeukes { listOf("카카오", token, error) }
                 continuation.resume(
                     when {
                         error != null -> failure(error)
@@ -67,8 +69,10 @@ class KakaoAccessTokenRepositoryImpl(private val context: Context) : AccessToken
                 context,
                 object : OAuthLoginCallback {
                     override fun onSuccess() {
+                        val token = NaverIdLoginSDK.getAccessToken()
+                        logeukes { listOf("네이버", token) }
                         continuation.resume(
-                            NaverIdLoginSDK.getAccessToken()?.let { success(it) }
+                            token?.let { success(it) }
                                 ?: failure(NAVER_ACCESS_TOKEN_NULL)
                         )
                     }
