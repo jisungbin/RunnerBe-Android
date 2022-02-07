@@ -10,19 +10,17 @@
 package team.applemango.runnerbe.data.login.repository
 
 import team.applemango.runnerbe.data.login.mapper.toDomain
-import team.applemango.runnerbe.data.login.model.AccessToken
 import team.applemango.runnerbe.data.util.extension.requireResponse
 import team.applemango.runnerbe.data.util.loginApi
-import team.applemango.runnerbe.domain.login.constant.PlatformType
+import team.applemango.runnerbe.domain.login.model.AccessToken
 import team.applemango.runnerbe.domain.login.model.User
 import team.applemango.runnerbe.domain.login.repository.LoginRepository
 
 class LoginRepositoryImpl : LoginRepository {
-    override suspend fun request(platformType: PlatformType, accessToken: String): User {
-        val platformName = platformType.name
+    override suspend fun request(platformName: String, accessToken: AccessToken): User {
         val request = loginApi.request(
             platformName = platformName,
-            accessToken = AccessToken(accessToken)
+            accessToken = accessToken
         )
         return request.requireResponse(platformName).toDomain()
     }

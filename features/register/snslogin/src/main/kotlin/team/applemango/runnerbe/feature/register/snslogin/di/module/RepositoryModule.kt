@@ -13,11 +13,16 @@ import android.content.Context
 import dagger.Module
 import dagger.Provides
 import team.applemango.runnerbe.data.login.repository.KakaoAccessTokenRepositoryImpl
+import team.applemango.runnerbe.data.login.repository.LoginRepositoryImpl
 import team.applemango.runnerbe.domain.login.repository.AccessTokenRepository
+import team.applemango.runnerbe.domain.login.repository.LoginRepository
 
 @Module
 internal class RepositoryModule(private val context: Context) {
     @Provides
     fun provideAccessTokenRepository(): AccessTokenRepository =
         KakaoAccessTokenRepositoryImpl(context)
+
+    @Provides
+    fun provideLoginRepository(): LoginRepository = LoginRepositoryImpl()
 }

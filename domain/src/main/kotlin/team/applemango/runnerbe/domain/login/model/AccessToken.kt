@@ -7,6 +7,6 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.data.login.model
+package team.applemango.runnerbe.domain.login.model
 
-internal data class AccessToken(val accessToken: String)
+data class AccessToken(val accessToken: String)

@@ -9,9 +9,9 @@
 
 package team.applemango.runnerbe.domain.login.repository
 
-import team.applemango.runnerbe.domain.login.constant.PlatformType
+import team.applemango.runnerbe.domain.login.model.AccessToken
 import team.applemango.runnerbe.domain.login.model.User
 
 interface LoginRepository {
-    suspend fun request(platformType: PlatformType, accessToken: String): User
+    suspend fun request(platformName: String, accessToken: AccessToken): User
 }

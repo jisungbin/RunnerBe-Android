@@ -9,31 +9,41 @@
 
 package team.applemango.runnerbe.feature.register.snslogin
 
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.launch
+import org.orbitmvi.orbit.ContainerHost
+import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.reduce
+import org.orbitmvi.orbit.viewmodel.container
+import team.applemango.runnerbe.domain.login.constant.PlatformType
+import team.applemango.runnerbe.domain.login.model.User
 import team.applemango.runnerbe.domain.login.usecase.GetKakaoAccessTokenUseCase
 import team.applemango.runnerbe.domain.login.usecase.GetNaverAccessTokenUseCase
-import team.applemango.runnerbe.feature.register.snslogin.constant.LoginType
+import team.applemango.runnerbe.domain.login.usecase.LoginUseCase
+import team.applemango.runnerbe.feature.register.snslogin.mvi.LoginSideEffect
 import team.applemango.runnerbe.shared.base.BaseViewModel
 import javax.inject.Inject
 
 internal class SnsLoginViewModel @Inject constructor(
     private val getKakaoKakaoAccessTokenUseCase: GetKakaoAccessTokenUseCase,
     private val getNaverKakaoAccessTokenUseCase: GetNaverAccessTokenUseCase,
-) : BaseViewModel() {
+    private val loginUseCase: LoginUseCase,
+) : BaseViewModel(), ContainerHost<User, LoginSideEffect> {
 
-    private val _accessToken = MutableSharedFlow<String>()
-    val accessToken = _accessToken.asSharedFlow()
+    override val container = container<User, LoginSideEffect>(User())
 
-    fun getAccessToken(loginType: LoginType) = viewModelScope.launch {
-        when (loginType) {
-            LoginType.Kakao -> getKakaoKakaoAccessTokenUseCase()
-            LoginType.Naver -> getNaverKakaoAccessTokenUseCase()
-            LoginType.Apple -> throw NotImplementedError()
+    fun login(platformType: PlatformType) = intent {
+        when (platformType) {
+            PlatformType.Kakao -> getKakaoKakaoAccessTokenUseCase()
+            PlatformType.Naver -> getNaverKakaoAccessTokenUseCase()
+            else -> throw NotImplementedError()
         }.onSuccess { token ->
-            _accessToken.emit(token)
+            loginUseCase(platformType, token)
+                .onSuccess { user ->
+                    reduce {
+                        state.copy(jwt = user.jwt, uuid = user.uuid)
+                    }
+                }.onFailure { throwable ->
+                    emitException(throwable)
+                }
         }.onFailure { throwable ->
             emitException(throwable)
         }
