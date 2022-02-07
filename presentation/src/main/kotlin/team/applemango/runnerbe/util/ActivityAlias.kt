@@ -12,3 +12,4 @@ package team.applemango.runnerbe.util
 import android.app.Activity
 
 class DFMLoginActivityAlias : Activity()
+class DFMOnboardActivityAlias : Activity()

@@ -20,8 +20,14 @@
         <dist:removable value="true" />
     </dist:module>
 
-    <application
-        android:hasCode="false"
-        tools:ignore="MissingApplicationIcon" />
+    <application tools:ignore="MissingApplicationIcon">
+        <activity
+            android:name=".OnboardActivity"
+            android:theme="@style/Theme.RunnerBe" />
+
+        <activity-alias
+            android:name="team.applemango.runnerbe.util.DFMOnboardActivityAlias"
+            android:targetActivity=".OnboardActivity" />
+    </application>
 
 </manifest>

@@ -9,6 +9,11 @@
 
 package team.applemango.runnerbe.feature.register.onboard
 
+import android.os.Bundle
 import androidx.activity.ComponentActivity
 
-class OnboardActivity : ComponentActivity()
+class OnboardActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+}
