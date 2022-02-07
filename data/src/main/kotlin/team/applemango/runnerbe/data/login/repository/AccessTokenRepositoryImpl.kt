@@ -68,7 +68,7 @@ class AccessTokenRepositoryImpl(private val activityContext: Activity) :
     override suspend fun getNaver(): String {
         return suspendCancellableCoroutine<Result<String>> { continuation ->
             NaverIdLoginSDK.authenticate(
-                activitpeContext,
+                activityContext,
                 object : OAuthLoginCallback {
                     override fun onSuccess() {
                         val token = NaverIdLoginSDK.getAccessToken()
