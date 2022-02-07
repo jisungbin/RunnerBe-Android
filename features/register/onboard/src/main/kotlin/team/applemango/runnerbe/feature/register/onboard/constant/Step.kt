@@ -9,13 +9,13 @@
 
 package team.applemango.runnerbe.feature.register.onboard.constant
 
-internal enum class Step {
-    Terms,
-    Birthday,
-    Gender,
-    Job,
-    Email,
-    EmployeeID,
-    EmailDone,
-    EmployeeDone
+internal enum class Step(val index: Int) {
+    Terms(1),
+    Birthday(2),
+    Gender(3),
+    Job(4),
+    Email(5),
+    EmployeeID(6),
+    EmailDone(7),
+    EmployeeDone(7)
 }

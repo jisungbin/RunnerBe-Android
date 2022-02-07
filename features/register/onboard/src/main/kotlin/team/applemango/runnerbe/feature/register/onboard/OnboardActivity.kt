@@ -14,13 +14,19 @@ import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.core.view.WindowCompat
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.systemBarsPadding
@@ -30,6 +36,7 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import team.applemango.runnerbe.feature.register.component.OnboardContent
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
+import team.applemango.runnerbe.theme.GradientAsset
 
 @ExperimentalAnimationApi
 class OnboardActivity : ComponentActivity() {
@@ -44,115 +51,85 @@ class OnboardActivity : ComponentActivity() {
 
         setContent {
             ProvideWindowInsets {
+                var step by remember { mutableStateOf(Step.Terms) }
+                var stepIndex by remember { mutableStateOf(0) }
                 val navController = rememberAnimatedNavController()
                 val systemUiController = rememberSystemUiController()
                 LaunchedEffect(Unit) {
                     systemUiController.setSystemBarsColor(Color.Transparent)
                 }
-                AnimatedNavHost(
+                OnboardContent(
                     modifier = Modifier
                         .fillMaxSize()
+                        .background(brush = GradientAsset.RegisterCommonBackground)
                         .systemBarsPadding(start = false, end = false),
-                    navController = navController,
-                    startDestination = Step.Terms.name,
-                    enterTransition = {
-                        slideInHorizontally(
-                            initialOffsetX = { it / 2 },
-                            animationSpec = tween(500)
-                        )
-                    },
-                    exitTransition = {
-                        slideOutHorizontally(
-                            targetOffsetX = { it / 2 },
-                            animationSpec = tween(500)
-                        )
+                    title = stringResource(
+                        when (step) {
+                            Step.Terms -> R.string.feature_onboard_title_read_terms
+                            Step.Birthday -> R.string.feature_onboard_title_input_year
+                            Step.Gender -> R.string.feature_onboard_title_select_gender
+                            Step.Job -> R.string.feature_onboard_title_question_job
+                            Step.Email -> R.string.feature_onboard_title_verify_with_job_email
+                            else -> throw NotImplementedError()
+                        }
+                    ),
+                    subtitle = stringResource(
+                        when (step) {
+                            Step.Birthday -> R.string.feature_onboard_age_show_description
+                            Step.Job -> R.string.feature_onboard_can_edit_on_mypage
+                            else -> R.string.empty
+                        }
+                    ),
+                    onBottomCTAButtonAction = {
+                        navController.navigate(Step.Birthday.name)
                     }
-                ) {
-                    composable(route = Step.Terms.name) {
-                        OnboardContent(
-                            title = "먼저 이용약관을 읽고\n동의해주세요!",
-                            onBottomCTAButtonAction = {
-                                navController.navigate(Step.Birthday.name)
-                            },
-                            content = {}
-                        )
-                    }
-                    composable(route = Step.Birthday.name) {
-                        OnboardContent(
-                            title = "출생년도를 입력해주세요.",
-                            subtitle = "정확한 나이는 공개되지 않아요!\n20대 초반, 30대 중반 등으로 표기될 거예요.",
-                            onBottomCTAButtonAction = {
-                                navController.navigate(Step.Gender.name)
-                            },
-                            onBackAction = {
-                                navController.popBackStack()
-                            },
-                            content = {}
-                        )
-                    }
-                    composable(route = Step.Gender.name) {
-                        OnboardContent(
-                            title = "성별을 선택해주세요.",
-                            onBottomCTAButtonAction = {
-                                navController.navigate(Step.Job.name)
-                            },
-                            onBackAction = {
-                                navController.popBackStack()
-                            },
-                            content = {}
-                        )
-                    }
-                    composable(route = Step.Job.name) {
-                        OnboardContent(
-                            title = "어떤 직군에서 활동하시나요?",
-                            subtitle = "추후 마이페이지에서 수정할 수 있어요!",
-                            onBottomCTAButtonAction = {
-                                navController.navigate(Step.Email.name)
-                            },
-                            onBackAction = {
-                                navController.popBackStack()
-                            },
-                            content = {}
-                        )
-                    }
-                    composable(route = Step.Email.name) {
-                        OnboardContent(
-                            title = "회사 이메일로\n직장을 인증해주세요.",
-                            onBottomCTAButtonAction = {
-                                navController.navigate(Step.Birthday.name)
-                            },
-                            onBackAction = {
-                                navController.popBackStack()
-                            },
-                            content = {}
-                        )
-                    }
-                    composable(route = Step.EmployeeID.name) {
-                        OnboardContent(
-                            title = "먼저 이용약관을 읽고\n동의해주세요!",
-                            onBottomCTAButtonAction = {
-                                navController.navigate(Step.Birthday.name)
-                            },
-                            content = {}
-                        )
-                    }
-                    composable(route = Step.EmailDone.name) {
-                        OnboardContent(
-                            title = "먼저 이용약관을 읽고\n동의해주세요!",
-                            onBottomCTAButtonAction = {
-                                navController.navigate(Step.Birthday.name)
-                            },
-                            content = {}
-                        )
-                    }
-                    composable(route = Step.EmployeeDone.name) {
-                        OnboardContent(
-                            title = "먼저 이용약관을 읽고\n동의해주세요!",
-                            onBottomCTAButtonAction = {
-                                navController.navigate(Step.Birthday.name)
-                            },
-                            content = {}
-                        )
+                ) { modifier ->
+                    AnimatedNavHost(
+                        modifier = modifier,
+                        navController = navController,
+                        startDestination = Step.Terms.name,
+                        enterTransition = {
+                            slideInHorizontally(initialOffsetX = { it })
+                        },
+                        exitTransition = {
+                            slideOutHorizontally(targetOffsetX = { -it })
+                        }
+                    ) {
+                        composable(route = Step.Terms.name) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(color = Color.LightGray)
+                            )
+                        }
+                        composable(route = Step.Birthday.name) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(color = Color.Blue)
+                            )
+                        }
+                        composable(route = Step.Gender.name) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(color = Color.Green)
+                            )
+                        }
+                        composable(route = Step.Job.name) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(color = Color.Cyan)
+                            )
+                        }
+                        composable(route = Step.Email.name) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(color = Color.White)
+                            )
+                        }
                     }
                 }
             }

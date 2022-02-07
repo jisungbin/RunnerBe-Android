@@ -11,12 +11,10 @@ package team.applemango.runnerbe.feature.register.component
 
 import android.app.Activity
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -35,11 +33,11 @@ import androidx.constraintlayout.compose.Dimension
 import team.applemango.runnerbe.feature.register.onboard.R
 import team.applemango.runnerbe.feature.register.onboard.constant.ButtonType
 import team.applemango.runnerbe.theme.ColorAsset
-import team.applemango.runnerbe.theme.GradientAsset
 import team.applemango.runnerbe.theme.Typography
 
 @Composable
 internal fun Activity.OnboardContent(
+    modifier: Modifier,
     title: String,
     subtitle: String = "",
     stepIndex: Int = 0,
@@ -62,12 +60,7 @@ internal fun Activity.OnboardContent(
         else -> ColorAsset.G4_5
     }
 
-    ConstraintLayout(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(brush = GradientAsset.RegisterCommonBackground)
-            .padding(horizontal = 16.dp)
-    ) {
+    ConstraintLayout(modifier = modifier) {
         val (topContent, mainContent, bottomCTAButton) = createRefs()
 
         Column(
@@ -80,7 +73,8 @@ internal fun Activity.OnboardContent(
             Row( // TopBar
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(56.dp),
+                    .height(56.dp)
+                    .padding(horizontal = 16.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -119,18 +113,22 @@ internal fun Activity.OnboardContent(
             }
         }
         content(
-            modifier = Modifier.constrainAs(mainContent) {
-                top.linkTo(topContent.bottom, 52.dp)
-                width = Dimension.matchParent
-                height = Dimension.wrapContent
-            }
+            modifier = Modifier
+                .constrainAs(mainContent) {
+                    top.linkTo(topContent.bottom, 52.dp)
+                    width = Dimension.matchParent
+                    height = Dimension.wrapContent
+                }
+                .padding(horizontal = 16.dp)
         )
         Button(
-            modifier = Modifier.constrainAs(bottomCTAButton) {
-                bottom.linkTo(parent.bottom, 28.dp)
-                width = Dimension.matchParent
-                height = Dimension.value(48.dp)
-            },
+            modifier = Modifier
+                .constrainAs(bottomCTAButton) {
+                    bottom.linkTo(parent.bottom, 28.dp)
+                    width = Dimension.matchParent
+                    height = Dimension.value(48.dp)
+                }
+                .padding(horizontal = 16.dp),
             onClick = { onBottomCTAButtonAction() },
             colors = bottomCTAButtonColor,
             enabled = bottomCTAButtonEnabled,
