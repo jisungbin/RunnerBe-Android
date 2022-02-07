@@ -11,14 +11,15 @@ package team.applemango.runnerbe.feature.register.component
 
 import android.app.Activity
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -34,6 +35,7 @@ import androidx.constraintlayout.compose.Dimension
 import team.applemango.runnerbe.feature.register.onboard.R
 import team.applemango.runnerbe.feature.register.onboard.constant.ButtonType
 import team.applemango.runnerbe.theme.ColorAsset
+import team.applemango.runnerbe.theme.GradientAsset
 import team.applemango.runnerbe.theme.Typography
 
 @Composable
@@ -62,8 +64,9 @@ internal fun Activity.OnboardContent(
 
     ConstraintLayout(
         modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
+            .fillMaxSize()
+            .background(brush = GradientAsset.RegisterCommonBackground)
+            .padding(horizontal = 16.dp)
     ) {
         val (topContent, mainContent, bottomCTAButton) = createRefs()
 
@@ -75,7 +78,9 @@ internal fun Activity.OnboardContent(
             }
         ) {
             Row( // TopBar
-                modifier = Modifier.height(56.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -124,7 +129,7 @@ internal fun Activity.OnboardContent(
             modifier = Modifier.constrainAs(bottomCTAButton) {
                 bottom.linkTo(parent.bottom, 28.dp)
                 width = Dimension.matchParent
-                height = Dimension.wrapContent
+                height = Dimension.value(48.dp)
             },
             onClick = { onBottomCTAButtonAction() },
             colors = bottomCTAButtonColor,

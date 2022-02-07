@@ -9,6 +9,7 @@
 
 package team.applemango.runnerbe.theme
 
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
 object ColorAsset {
@@ -32,5 +33,6 @@ object ColorAsset {
 }
 
 object GradientAsset {
-    val RegisterCommonBackground = listOf(Color(18, 18, 18), Color(27, 26, 23))
+    val RegisterCommonBackground =
+        Brush.linearGradient(listOf(Color(18, 18, 18), Color(27, 26, 23)))
 }
