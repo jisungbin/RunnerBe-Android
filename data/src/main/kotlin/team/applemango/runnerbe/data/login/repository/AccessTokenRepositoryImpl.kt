@@ -9,80 +9,75 @@
 
 package team.applemango.runnerbe.data.login.repository
 
-import android.app.Activity
+import android.content.Context
 import com.kakao.sdk.user.UserApiClient
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.OAuthLoginCallback
+import io.github.jisungbin.logeukes.LoggerType
+import io.github.jisungbin.logeukes.logeukes
 import kotlinx.coroutines.suspendCancellableCoroutine
-import team.applemango.runnerbe.data.util.extension.failure
-import team.applemango.runnerbe.data.util.extension.success
-import team.applemango.runnerbe.domain.login.repository.AccessTokenRepository
+import team.applemango.runnerbe.domain.repository.AccessTokenRepository
 import kotlin.coroutines.resume
 
 private const val NAVER_ACCESS_TOKEN_NULL = "Naver access token is null."
 private const val RESPONSE_NOTHING = "Kakao API response is nothing."
 
-// must be activity context
-class AccessTokenRepositoryImpl(private val activityContext: Activity) :
-    AccessTokenRepository {
+class KakaoAccessTokenRepositoryImpl(private val context: Context) : AccessTokenRepository {
     override suspend fun getKakao(): String {
-        return if (UserApiClient.instance.isKakaoTalkLoginAvailable(activityContext)) {
-            loginWithKakaoTalk(activityContext)
+        return if (UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
+            loginWithKakaoTalk(context)
         } else {
-            loginWithWebView(activityContext)
+            loginWithWebView(context)
         }
     }
 
-    private suspend fun loginWithKakaoTalk(activityContext: Activity): String {
-        return suspendCancellableCoroutine<Result<String>> { continuation ->
-            UserApiClient.instance.loginWithKakaoTalk(activityContext) { token, error ->
+    private suspend fun loginWithKakaoTalk(context: Context): String =
+        suspendCancellableCoroutine { continuation ->
+            UserApiClient.instance.loginWithKakaoTalk(context) { token, error ->
                 continuation.resume(
                     when {
-                        error != null -> failure(error)
-                        token != null -> success(token.accessToken)
-                        else -> failure(RESPONSE_NOTHING)
+                        error != null -> throw Exception(error)
+                        token != null -> token.accessToken
+                        else -> throw Exception(RESPONSE_NOTHING)
                     }
                 )
             }
-        }.getOrThrow()
-    }
+        }
 
-    private suspend fun loginWithWebView(activityContext: Activity): String {
-        return suspendCancellableCoroutine<Result<String>> { continuation ->
-            UserApiClient.instance.loginWithKakaoAccount(activityContext) { token, error ->
+    private suspend fun loginWithWebView(context: Context): String =
+        suspendCancellableCoroutine { continuation ->
+            UserApiClient.instance.loginWithKakaoAccount(context) { token, error ->
                 continuation.resume(
                     when {
-                        error != null -> failure(error)
-                        token != null -> success(token.accessToken)
-                        else -> failure(RESPONSE_NOTHING)
+                        error != null -> throw Exception(error)
+                        token != null -> token.accessToken
+                        else -> throw Exception(RESPONSE_NOTHING)
                     }
                 )
             }
-        }.getOrThrow()
-    }
+        }
 
-    override suspend fun getNaver(): String {
-        return suspendCancellableCoroutine<Result<String>> { continuation ->
-            NaverIdLoginSDK.authenticate(
-                activityContext,
-                object : OAuthLoginCallback {
-                    override fun onSuccess() {
-                        val token = NaverIdLoginSDK.getAccessToken()
-                        continuation.resume(
-                            token?.let { success(it) }
-                                ?: failure(NAVER_ACCESS_TOKEN_NULL)
-                        )
-                    }
-
-                    override fun onFailure(httpStatus: Int, message: String) {
-                        continuation.resume(failure("$httpStatus ($message)"))
-                    }
-
-                    override fun onError(errorCode: Int, message: String) {
-                        onFailure(errorCode, message)
-                    }
+    override suspend fun getNaver(): String = suspendCancellableCoroutine { continuation ->
+        NaverIdLoginSDK.authenticate(
+            context,
+            object : OAuthLoginCallback {
+                override fun onSuccess() {
+                    continuation.resume(
+                        NaverIdLoginSDK.getAccessToken() ?: throw Exception(NAVER_ACCESS_TOKEN_NULL)
+                    )
                 }
-            )
-        }.getOrThrow()
+
+                override fun onFailure(httpStatus: Int, message: String) {
+                    val errorCode = NaverIdLoginSDK.getLastErrorCode().code
+                    val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
+                    logeukes(type = LoggerType.E) { listOf(errorCode, errorDescription) }
+                    throw Exception(errorDescription)
+                }
+
+                override fun onError(errorCode: Int, message: String) {
+                    onFailure(errorCode, message)
+                }
+            }
+        )
     }
 }

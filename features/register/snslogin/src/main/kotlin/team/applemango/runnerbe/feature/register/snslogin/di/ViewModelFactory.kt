@@ -15,7 +15,7 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 @Suppress("UNCHECKED_CAST")
-internal class ViewModelFactory @Inject constructor(
+class ViewModelFactory @Inject constructor(
     private val viewModelMap: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>,
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

@@ -14,15 +14,9 @@ import android.content.Context
 import android.widget.Toast
 
 fun Activity.toast(message: String) {
-    runOnUiThread {
-        toast(applicationContext) { message }
-    }
+    toast(applicationContext) { message }
 }
 
 fun toast(context: Context, message: Context.() -> String) {
-    if (context is Activity) {
-        context.toast(message(context))
-    } else {
-        Toast.makeText(context, message(context), Toast.LENGTH_SHORT).show()
-    }
+    Toast.makeText(context, message(context), Toast.LENGTH_SHORT).show()
 }

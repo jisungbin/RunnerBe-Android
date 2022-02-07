@@ -10,16 +10,10 @@
 package team.applemango.runnerbe.data.login.api
 
 import retrofit2.Response
-import retrofit2.http.Body
 import retrofit2.http.POST
-import retrofit2.http.Path
-import team.applemango.runnerbe.domain.login.model.AccessToken
 import team.applemango.runnerbe.data.login.model.LoginRequestResponse
 
-internal interface LoginService {
-    @POST("/users/{platformName}-login")
-    suspend fun request(
-        @Path("platformName") platformName: String,
-        @Body accessToken: AccessToken,
-    ): Response<LoginRequestResponse>
+interface LoginService {
+    @POST("/users/kakao-login")
+    suspend fun requestKakaoLogin(): Response<LoginRequestResponse>
 }

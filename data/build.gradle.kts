@@ -8,9 +8,7 @@
  */
 
 plugins {
-    id("com.android.library")
-    id("kotlin-android")
-    id("kotlin-kapt")
+    installLibraryDfmHiltTestScabbard()
 }
 
 dependencies {
@@ -18,6 +16,7 @@ dependencies {
     Dependencies.Network.forEach(::implementation)
     Dependencies.Login.All.forEach(::implementation)
 
+    implementation(Dependencies.Di.Hilt)
     implementation(Dependencies.Coroutine)
     implementation(Dependencies.Util.Logeukes)
     implementation(project(ProjectConstants.Domain))
@@ -26,4 +25,5 @@ dependencies {
     testDebugRuntimeOnly(Dependencies.Test.JunitEngine)
     testDebugImplementation(Dependencies.Test.Hamcrest)
     testDebugImplementation(Dependencies.Test.Coroutine)
+    kapt(Dependencies.Compiler.Hilt)
 }

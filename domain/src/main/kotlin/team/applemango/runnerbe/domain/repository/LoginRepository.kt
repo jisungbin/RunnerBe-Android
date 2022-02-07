@@ -7,11 +7,8 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.domain.login.repository
-
-import team.applemango.runnerbe.domain.login.model.AccessToken
-import team.applemango.runnerbe.domain.login.model.User
+package team.applemango.runnerbe.domain.repository
 
 interface LoginRepository {
-    suspend fun request(platformName: String, accessToken: AccessToken): User
+    suspend fun kakao()
 }

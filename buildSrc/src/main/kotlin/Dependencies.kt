@@ -8,7 +8,6 @@
  */
 
 object Versions {
-    const val Orbit = "4.3.1"
     const val Dagger = "2.40.5"
     const val FirebaseBom = "29.0.4"
 
@@ -86,7 +85,6 @@ object Versions {
 
 @Suppress("MemberVisibilityCanBePrivate")
 object Dependencies {
-    const val Orbit = "org.orbit-mvi:orbit-viewmodel:${Versions.Orbit}"
     const val Coroutine =
         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.Essential.Coroutines}"
 

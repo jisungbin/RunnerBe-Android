@@ -7,9 +7,9 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.domain.login.usecase
+package team.applemango.runnerbe.domain.usecase
 
-import team.applemango.runnerbe.domain.login.repository.AccessTokenRepository
+import team.applemango.runnerbe.domain.repository.AccessTokenRepository
 
 class GetNaverAccessTokenUseCase(private val repo: AccessTokenRepository) {
     suspend operator fun invoke() = runCatching {

@@ -9,20 +9,15 @@
 
 package team.applemango.runnerbe.feature.register.snslogin.di.module
 
-import android.app.Activity
+import android.content.Context
 import dagger.Module
 import dagger.Provides
-import team.applemango.runnerbe.data.login.repository.AccessTokenRepositoryImpl
-import team.applemango.runnerbe.data.login.repository.LoginRepositoryImpl
-import team.applemango.runnerbe.domain.login.repository.AccessTokenRepository
-import team.applemango.runnerbe.domain.login.repository.LoginRepository
+import team.applemango.runnerbe.data.login.repository.KakaoAccessTokenRepositoryImpl
+import team.applemango.runnerbe.domain.repository.AccessTokenRepository
 
 @Module
-internal class RepositoryModule(private val activityContext: Activity) {
+internal class RepositoryModule(private val context: Context) {
     @Provides
     fun provideAccessTokenRepository(): AccessTokenRepository =
-        AccessTokenRepositoryImpl(activityContext)
-
-    @Provides
-    fun provideLoginRepository(): LoginRepository = LoginRepositoryImpl()
+        KakaoAccessTokenRepositoryImpl(context)
 }

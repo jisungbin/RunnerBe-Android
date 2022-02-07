@@ -15,7 +15,7 @@ import dagger.Module
 import team.applemango.runnerbe.feature.register.snslogin.di.ViewModelFactory
 
 @Module
-internal abstract class ViewModelFactoryModule {
+abstract class ViewModelFactoryModule {
     @Binds
     abstract fun bindViewModelFactory(viewModelFactory: ViewModelFactory): ViewModelProvider.Factory
 }
