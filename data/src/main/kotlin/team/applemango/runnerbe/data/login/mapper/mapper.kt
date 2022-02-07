@@ -20,6 +20,6 @@ internal fun LoginRequestResponse.toDomain(): User {
 }
 
 private fun <T> requireField(value: T?, fieldName: String): T {
-    if (value == null) throw Exception("Require $fieldName field is null.")
+    if (value == null) throw Exception("Require `$fieldName` field is null.")
     return value
 }

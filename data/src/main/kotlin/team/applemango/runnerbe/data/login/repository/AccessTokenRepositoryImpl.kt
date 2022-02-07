@@ -13,8 +13,6 @@ import android.app.Activity
 import com.kakao.sdk.user.UserApiClient
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.OAuthLoginCallback
-import io.github.jisungbin.logeukes.LoggerType
-import io.github.jisungbin.logeukes.logeukes
 import kotlinx.coroutines.suspendCancellableCoroutine
 import team.applemango.runnerbe.data.util.extension.failure
 import team.applemango.runnerbe.data.util.extension.success
@@ -38,7 +36,6 @@ class AccessTokenRepositoryImpl(private val activityContext: Activity) :
     private suspend fun loginWithKakaoTalk(activityContext: Activity): String {
         return suspendCancellableCoroutine<Result<String>> { continuation ->
             UserApiClient.instance.loginWithKakaoTalk(activityContext) { token, error ->
-                logeukes { listOf("카카오", token, error) }
                 continuation.resume(
                     when {
                         error != null -> failure(error)
@@ -53,7 +50,6 @@ class AccessTokenRepositoryImpl(private val activityContext: Activity) :
     private suspend fun loginWithWebView(activityContext: Activity): String {
         return suspendCancellableCoroutine<Result<String>> { continuation ->
             UserApiClient.instance.loginWithKakaoAccount(activityContext) { token, error ->
-                logeukes { listOf("카카오", token, error) }
                 continuation.resume(
                     when {
                         error != null -> failure(error)
@@ -72,7 +68,6 @@ class AccessTokenRepositoryImpl(private val activityContext: Activity) :
                 object : OAuthLoginCallback {
                     override fun onSuccess() {
                         val token = NaverIdLoginSDK.getAccessToken()
-                        logeukes { listOf("네이버", token) }
                         continuation.resume(
                             token?.let { success(it) }
                                 ?: failure(NAVER_ACCESS_TOKEN_NULL)
@@ -80,7 +75,6 @@ class AccessTokenRepositoryImpl(private val activityContext: Activity) :
                     }
 
                     override fun onFailure(httpStatus: Int, message: String) {
-                        logeukes(type = LoggerType.E) { listOf(httpStatus, message) }
                         continuation.resume(failure("$httpStatus ($message)"))
                     }
 
