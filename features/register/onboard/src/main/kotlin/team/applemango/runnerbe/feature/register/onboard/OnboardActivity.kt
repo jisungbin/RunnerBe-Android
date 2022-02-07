@@ -21,10 +21,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -53,8 +49,6 @@ class OnboardActivity : ComponentActivity() {
 
         setContent {
             ProvideWindowInsets {
-                var step by remember { mutableStateOf(Step.Terms) }
-                var stepIndex by remember { mutableStateOf(0) }
                 val navController = rememberAnimatedNavController()
                 val systemUiController = rememberSystemUiController()
                 LaunchedEffect(Unit) {
@@ -73,11 +67,88 @@ class OnboardActivity : ComponentActivity() {
                 ) {
                     composable(route = Step.Terms.name) {
                         OnboardContent(
-                            stepIndex = 0,
-                            stepIndexUpdate = {},
-                            onBackAction = {},
-                            title = "",
-                            description = ""
+                            title = "먼저 이용약관을 읽고\n동의해주세요!",
+                            onBottomCTAButtonAction = {
+                                navController.navigate(Step.Birthday.name)
+                            },
+                            content = {}
+                        )
+                    }
+                    composable(route = Step.Birthday.name) {
+                        OnboardContent(
+                            title = "츨생년도를 입력해주세요.",
+                            subtitle = "정확한 나이는 공개되지 않아요!\n20대 초반, 30대 중반 등으로 표기될 거예요.",
+                            onBottomCTAButtonAction = {
+                                navController.navigate(Step.Gender.name)
+                            },
+                            onBackAction = {
+                                navController.popBackStack()
+                            },
+                            content = {}
+                        )
+                    }
+                    composable(route = Step.Gender.name) {
+                        OnboardContent(
+                            title = "성별을 선택해주세요.",
+                            onBottomCTAButtonAction = {
+                                navController.navigate(Step.Job.name)
+                            },
+                            onBackAction = {
+                                navController.popBackStack()
+                            },
+                            content = {}
+                        )
+                    }
+                    composable(route = Step.Job.name) {
+                        OnboardContent(
+                            title = "어떤 직군에서 활동하시나요?",
+                            subtitle = "추후 마이페이지에서 수정할 수 있어요!",
+                            onBottomCTAButtonAction = {
+                                navController.navigate(Step.Email.name)
+                            },
+                            onBackAction = {
+                                navController.popBackStack()
+                            },
+                            content = {}
+                        )
+                    }
+                    composable(route = Step.Email.name) {
+                        OnboardContent(
+                            title = "회사 이메일로\n직장을 인증해주세요.",
+                            onBottomCTAButtonAction = {
+                                navController.navigate(Step.Birthday.name)
+                            },
+                            onBackAction = {
+                                navController.popBackStack()
+                            },
+                            content = {}
+                        )
+                    }
+                    composable(route = Step.EmployeeID.name) {
+                        OnboardContent(
+                            title = "먼저 이용약관을 읽고\n동의해주세요!",
+                            onBottomCTAButtonAction = {
+                                navController.navigate(Step.Birthday.name)
+                            },
+                            content = {}
+                        )
+                    }
+                    composable(route = Step.EmailDone.name) {
+                        OnboardContent(
+                            title = "먼저 이용약관을 읽고\n동의해주세요!",
+                            onBottomCTAButtonAction = {
+                                navController.navigate(Step.Birthday.name)
+                            },
+                            content = {}
+                        )
+                    }
+                    composable(route = Step.EmployeeDone.name) {
+                        OnboardContent(
+                            title = "먼저 이용약관을 읽고\n동의해주세요!",
+                            onBottomCTAButtonAction = {
+                                navController.navigate(Step.Birthday.name)
+                            },
+                            content = {}
                         )
                     }
                 }

@@ -39,11 +39,11 @@ import team.applemango.runnerbe.theme.Typography
 @Composable
 internal fun Activity.OnboardContent(
     title: String,
-    description: String = "",
+    subtitle: String = "",
     stepIndex: Int = 0,
     bottomCTAButtonEnabled: Boolean = true,
     bottomCTAButtonType: ButtonType = ButtonType.Normal,
-    bottomCTAButtonText: String,
+    bottomCTAButtonText: String = "다음",
     onBottomCTAButtonAction: () -> Unit,
     onBackAction: () -> Unit = { finish() },
     content: @Composable (modifier: Modifier) -> Unit,
@@ -105,10 +105,10 @@ internal fun Activity.OnboardContent(
                 text = title,
                 style = Typography.Header28M.copy(color = ColorAsset.Primary)
             )
-            if (description.isNotEmpty()) {
+            if (subtitle.isNotEmpty()) {
                 Text(
                     modifier = Modifier.padding(top = 12.dp),
-                    text = description,
+                    text = subtitle,
                     style = Typography.Body14R.copy(color = ColorAsset.G2_5)
                 )
             }
