@@ -79,7 +79,7 @@ class SnsLoginActivity : ComponentActivity() {
 
         DaggerViewModelComponent
             .builder()
-            .repositoryModule(RepositoryModule(applicationContext))
+            .repositoryModule(RepositoryModule(this)) // must activity context (startActivity calling)
             .useCaseModule(UseCaseModule())
             .viewModelModule(ViewModelModule())
             .build()
