@@ -56,6 +56,7 @@ import team.applemango.runnerbe.feature.register.snslogin.di.module.ViewModelMod
 import team.applemango.runnerbe.feature.register.snslogin.mvi.LoginSideEffect
 import team.applemango.runnerbe.feature.register.snslogin.mvi.LoginState
 import team.applemango.runnerbe.shared.constant.DataStoreKey
+import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.util.extension.dataStore
 import team.applemango.runnerbe.shared.util.extension.launchedWhenCreated
 import team.applemango.runnerbe.shared.util.extension.toast
@@ -86,6 +87,7 @@ class SnsLoginActivity : ComponentActivity() {
 
         vm = ViewModelProvider(this, viewModelFactory)[SnsLoginViewModel::class.java]
         vm.observe(lifecycleOwner = this, state = ::handleState, sideEffect = ::handleSideEffect)
+        vm.exceptionFlow.collectWithLifecycle(this, ::handleException)
 
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,

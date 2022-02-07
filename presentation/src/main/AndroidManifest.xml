@@ -32,6 +32,10 @@
             android:theme="@style/Theme.RunnerBe" />
 
         <activity
+            android:name="io.github.jisungbin.erratum.DefaultErratumExceptionActivity"
+            android:theme="@style/Theme.RunnerBe" />
+
+        <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">
             <intent-filter>
