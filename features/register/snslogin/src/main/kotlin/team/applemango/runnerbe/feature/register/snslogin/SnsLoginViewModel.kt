@@ -44,11 +44,9 @@ internal class SnsLoginViewModel @Inject constructor(
                     }
                     postSideEffect(LoginSideEffect.SaveUuid(user.uuid!!)) // must NonNull
                 }.onFailure { throwable ->
-                    emitException(Exception("2"))
                     emitException(throwable)
                 }
         }.onFailure { throwable ->
-            emitException(Exception("1"))
             emitException(throwable)
         }
     }
