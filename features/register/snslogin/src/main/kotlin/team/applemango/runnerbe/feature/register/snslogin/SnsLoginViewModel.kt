@@ -37,7 +37,7 @@ internal class SnsLoginViewModel @Inject constructor(
             PlatformType.Naver -> getNaverKakaoAccessTokenUseCase()
             else -> throw NotImplementedError()
         }.onSuccess { token ->
-            loginUseCase(platformType, token)
+            loginUseCase(platformType = platformType, accessToken = token)
                 .onSuccess { user ->
                     reduce {
                         LoginState(true)
