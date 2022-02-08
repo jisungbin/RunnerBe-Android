@@ -9,4 +9,5 @@
 
 <resources>
     <string name="app_name">러너비</string>
+    <string name="test">test</string>
 </resources>
