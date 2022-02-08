@@ -10,6 +10,7 @@
 package team.applemango.runnerbe.feature.register.snslogin.component
 
 import android.app.Activity
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -29,7 +30,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.google.accompanist.insets.systemBarsPadding
-import com.skydoves.landscapist.coil.CoilImage
+import com.skydoves.landscapist.rememberDrawablePainter
 import team.applemango.runnerbe.domain.login.constant.PlatformType
 import team.applemango.runnerbe.feature.register.snslogin.SnsLoginViewModel
 import team.applemango.runnerbe.shared.util.presentationDrawableOf
@@ -58,7 +59,10 @@ internal fun Activity.SnsLoginScreen(vm: SnsLoginViewModel) {
             },
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CoilImage(imageModel = presentationDrawableOf("ic_logo_symbol"))
+            Image(
+                painter = rememberDrawablePainter(presentationDrawableOf("ic_logo_symbol")),
+                contentDescription = null
+            )
             Text(
                 modifier = Modifier.padding(top = 11.dp),
                 text = presentationStringOf("app_name"),
@@ -78,34 +82,37 @@ internal fun Activity.SnsLoginScreen(vm: SnsLoginViewModel) {
                 },
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            CoilImage(
+            Image(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(48.dp)
                     .clickable {
                         vm.login(PlatformType.Kakao)
                     },
-                imageModel = presentationDrawableOf("login_kakao"),
+                painter = rememberDrawablePainter(presentationDrawableOf("login_kakao")),
+                contentDescription = null,
                 contentScale = ContentScale.FillBounds
             )
-            CoilImage(
+            Image(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(48.dp)
                     .clickable {
                         vm.login(PlatformType.Naver)
                     },
-                imageModel = presentationDrawableOf("login_naver"),
+                painter = rememberDrawablePainter(presentationDrawableOf("login_naver")),
+                contentDescription = null,
                 contentScale = ContentScale.FillBounds
             )
-            CoilImage(
+            Image(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(48.dp)
                     .clickable {
                         vm.login(PlatformType.Apple)
                     },
-                imageModel = presentationDrawableOf("login_apple"),
+                painter = rememberDrawablePainter(presentationDrawableOf("login_apple")),
+                contentDescription = null,
                 contentScale = ContentScale.FillBounds
             )
         }

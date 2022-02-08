@@ -18,6 +18,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -45,7 +46,7 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.skydoves.landscapist.coil.CoilImage
+import com.skydoves.landscapist.rememberDrawablePainter
 import team.applemango.runnerbe.feature.register.component.OnboardContent
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.step.TermsTable
@@ -88,11 +89,12 @@ class OnboardActivity : ComponentActivity() {
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        CoilImage(
+                        Image(
                             modifier = Modifier.clickable {
                                 // onBackAction()
                             },
-                            imageModel = presentationDrawableOf("ic_round_arrow_left_24"),
+                            painter = rememberDrawablePainter(presentationDrawableOf("ic_round_arrow_left_24")),
+                            contentDescription = null
                         )
                         AnimatedVisibility(
                             visible = stepIndex != 0,
@@ -104,11 +106,12 @@ class OnboardActivity : ComponentActivity() {
                                 style = Typography.Body16R.copy(color = ColorAsset.G3)
                             )
                         }
-                        CoilImage(
+                        Image(
                             modifier = Modifier.clickable {
                                 finish() // TODO: goto main activity
                             },
-                            imageModel = presentationDrawableOf("ic_round_close_24"),
+                            painter = rememberDrawablePainter(presentationDrawableOf("ic_round_close_24")),
+                            contentDescription = null
                         )
                     }
                     AnimatedNavHost( // main content + bottom cta button

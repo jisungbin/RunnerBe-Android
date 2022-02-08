@@ -10,6 +10,7 @@
 package team.applemango.runnerbe.feature.register.onboard.step
 
 import android.app.Activity
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -38,7 +39,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.skydoves.landscapist.coil.CoilImage
+import com.skydoves.landscapist.rememberDrawablePainter
 import team.applemango.runnerbe.feature.register.asset.StringAsset
 import team.applemango.runnerbe.feature.register.util.Web
 import team.applemango.runnerbe.shared.util.presentationDrawableOf
@@ -164,9 +165,10 @@ internal fun Activity.TermsTable(onAllTermsChecked: () -> Unit) {
                             style = Typography.Body14R.copy(color = ColorAsset.G1)
                         )
                     }
-                    CoilImage(
+                    Image(
                         modifier = Modifier.clickable { Web.open(context, link) },
-                        imageModel = presentationDrawableOf("ic_round_arrow_right_24"),
+                        painter = rememberDrawablePainter(presentationDrawableOf("ic_round_arrow_right_24")),
+                        contentDescription = null,
                         colorFilter = ColorFilter.tint(ColorAsset.G4)
                     )
                 }
