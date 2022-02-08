@@ -11,7 +11,6 @@ package team.applemango.runnerbe.feature.register.onboard
 
 import android.os.Bundle
 import android.view.WindowManager
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
@@ -49,14 +48,20 @@ import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import io.github.jisungbin.logeukes.logeukes
+import team.applemango.runnerbe.activity.BaseSplitActivity
 import team.applemango.runnerbe.feature.register.component.OnboardContent
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
+import team.applemango.runnerbe.shared.util.extension.toast
 import team.applemango.runnerbe.theme.ColorAsset
 import team.applemango.runnerbe.theme.GradientAsset
 import team.applemango.runnerbe.theme.Typography
 
+private typealias sharedString = team.applemango.runnerbe.shared.R.string
+private typealias presentationString = team.applemango.runnerbe.R.string
+private typealias onboardString = team.applemango.runnerbe.feature.register.onboard.R.string
+
 @OptIn(ExperimentalAnimationApi::class)
-class OnboardActivity : ComponentActivity() {
+class OnboardActivity : BaseSplitActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -65,6 +70,16 @@ class OnboardActivity : ComponentActivity() {
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
         WindowCompat.setDecorFitsSystemWindows(window, false)
+        toast(getString(sharedString.test))
+        toast(getString(presentationString.test))
+        toast(getString(onboardString.test))
+        logeukes {
+            listOf(
+                sharedString.test,
+                presentationString.test,
+                onboardString.test
+            )
+        }
 
         setContent {
             ProvideWindowInsets {

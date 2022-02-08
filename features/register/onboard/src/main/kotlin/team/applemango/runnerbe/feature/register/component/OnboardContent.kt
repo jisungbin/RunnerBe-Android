@@ -109,20 +109,22 @@ internal fun OnboardContent(
                 text = title,
                 style = Typography.Header28M.copy(color = ColorAsset.Primary)
             )
-            Text(
-                modifier = Modifier.padding(top = 12.dp),
-                text = subtitle,
-                style = Typography.Body14R.copy(color = ColorAsset.G2_5)
-            )
+            if (subtitle.isNotEmpty()) {
+                Text(
+                    modifier = Modifier.padding(top = 12.dp),
+                    text = subtitle,
+                    style = Typography.Body14R.copy(color = ColorAsset.G2_5)
+                )
+            }
         }
         Box(
             modifier = Modifier
                 .constrainAs(mainContent) {
-                    top.linkTo(topContent.bottom)
-                    bottom.linkTo(bottomCTAButton.top)
+                    top.linkTo(topContent.bottom, 52.dp)
+                    bottom.linkTo(bottomCTAButton.top, 52.dp)
+                    height = Dimension.fillToConstraints
                     width = Dimension.matchParent
                 }
-                .padding(vertical = 52.dp)
         ) {
             content()
         }

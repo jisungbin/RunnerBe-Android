@@ -10,6 +10,8 @@
 package team.applemango.runnerbe
 
 import android.app.Application
+import android.content.Context
+import com.google.android.play.core.splitcompat.SplitCompat
 import com.kakao.sdk.common.KakaoSdk
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.log.NidLog
@@ -33,5 +35,10 @@ class RunnerBe : Application() {
         if (BuildConfig.DEBUG) {
             Logeukes.setup()
         }
+    }
+
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(base)
+        SplitCompat.install(this)
     }
 }

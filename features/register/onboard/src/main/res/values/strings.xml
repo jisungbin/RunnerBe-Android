@@ -9,6 +9,7 @@
 
 <resources>
     <string name="empty" />
+    <string name="test">test</string>
 
     <string name="feature_onboard_title_read_terms">먼저 이용약관을 읽고\n동의해주세요!</string>
     <string name="feature_onboard_title_input_year">출생년도를 입력해주세요.</string>
@@ -51,6 +52,5 @@
     <string name="feature_onboard_dialog_title_verify_notice">인증 확인까지 최대 6시간 정도가\n소요될 수 있어요!</string>
     <string name="feature_onboard_dialog_camera">촬영하기</string>
     <string name="feature_onboard_dialog_take_photo">앨범에서 선택하기</string>
-
 
 </resources>
