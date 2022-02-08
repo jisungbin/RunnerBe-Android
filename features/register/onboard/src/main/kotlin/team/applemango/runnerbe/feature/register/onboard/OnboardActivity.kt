@@ -135,9 +135,9 @@ class OnboardActivity : ComponentActivity() {
                         }
                         composable(route = Step.Email.name) {
                         }
-                        composable(route = Step.EmployeeID.name) {
-                        }
                         composable(route = Step.EmailDone.name) {
+                        }
+                        composable(route = Step.EmployeeID.name) {
                         }
                         composable(route = Step.EmployeeIDDone.name) {
                         }
