@@ -12,7 +12,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="team.applemango.runnerbe.feature.register.onboard">
 
-    <dist:module dist:title="@string/dist_dfm_register_onboard">
+    <dist:module
+        dist:instant="false"
+        dist:title="@string/dist_dfm_register_onboard">
         <dist:fusing dist:include="true" />
         <dist:delivery>
             <dist:install-time />

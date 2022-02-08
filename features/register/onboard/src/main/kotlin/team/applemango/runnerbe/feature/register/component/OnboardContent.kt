@@ -9,6 +9,7 @@
 
 package team.applemango.runnerbe.feature.register.component
 
+import android.app.Activity
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.BorderStroke
@@ -24,19 +25,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import team.applemango.runnerbe.feature.register.onboard.R
 import team.applemango.runnerbe.feature.register.onboard.constant.ButtonType
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
+import team.applemango.runnerbe.shared.util.presentationStringOf
 import team.applemango.runnerbe.theme.ColorAsset
 import team.applemango.runnerbe.theme.Typography
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-internal fun OnboardContent(
+internal fun Activity.OnboardContent(
     modifier: Modifier,
     step: Step,
     bottomCTAButtonEnabled: Boolean,
@@ -44,33 +44,33 @@ internal fun OnboardContent(
     onBottomCTAButtonAction: () -> Unit,
     content: @Composable BoxScope.() -> Unit,
 ) {
-    val title = stringResource(
+    val title = presentationStringOf(
         when (step) {
-            Step.Terms -> R.string.feature_onboard_title_read_terms
-            Step.Birthday -> R.string.feature_onboard_title_input_year
-            Step.Gender -> R.string.feature_onboard_title_select_gender
-            Step.Job -> R.string.feature_onboard_title_whats_job
-            Step.VerifyWithEmail -> R.string.feature_onboard_title_verify_with_email
-            Step.VerifyWithEmployeeID -> R.string.feature_onboard_title_verify_with_employee_id
-            Step.EmailVerifyDone -> R.string.feature_onboard_title_email_verify_done
-            Step.EmployeeIDVerifyRequestDone -> R.string.feature_onboard_title_employee_id_verify_request_done
+            Step.Terms -> "feature_onboard_title_read_terms"
+            Step.Birthday -> "feature_onboard_title_input_year"
+            Step.Gender -> "feature_onboard_title_select_gender"
+            Step.Job -> "feature_onboard_title_whats_job"
+            Step.VerifyWithEmail -> "feature_onboard_title_verify_with_email"
+            Step.VerifyWithEmployeeID -> "feature_onboard_title_verify_with_employee_id"
+            Step.EmailVerifyDone -> "feature_onboard_title_email_verify_done"
+            Step.EmployeeIDVerifyRequestDone -> "feature_onboard_title_employee_id_verify_request_done"
         }
     )
-    val subtitle = stringResource(
+    val subtitle = presentationStringOf(
         when (step) {
-            Step.Birthday -> R.string.feature_onboard_subtitle_age_visible_description
-            Step.Job -> R.string.feature_onboard_subtitle_job_can_edit_on_mypage
-            Step.VerifyWithEmail -> R.string.feature_onboard_subtitle_verify_with_email_notice
-            Step.VerifyWithEmployeeID -> R.string.feature_onboard_subtitle_verify_with_employee_id_notice
-            Step.EmailVerifyDone -> R.string.feature_onboard_subtitle_email_verify_done
-            Step.EmployeeIDVerifyRequestDone -> R.string.feature_onboard_subtitle_employee_id_verify_request_done
-            else -> R.string.empty
+            Step.Birthday -> "feature_onboard_subtitle_age_visible_description"
+            Step.Job -> "feature_onboard_subtitle_job_can_edit_on_mypage"
+            Step.VerifyWithEmail -> "feature_onboard_subtitle_verify_with_email_notice"
+            Step.VerifyWithEmployeeID -> "feature_onboard_subtitle_verify_with_employee_id_notice"
+            Step.EmailVerifyDone -> "feature_onboard_subtitle_email_verify_done"
+            Step.EmployeeIDVerifyRequestDone -> "feature_onboard_subtitle_employee_id_verify_request_done"
+            else -> "empty"
         }
     )
-    val bottomCTAButtonText = stringResource(
+    val bottomCTAButtonText = presentationStringOf(
         when (step) {
-            Step.VerifyWithEmail -> R.string.feature_onboard_button_no_email
-            else -> R.string.feature_onboard_button_next
+            Step.VerifyWithEmail -> "feature_onboard_button_no_email"
+            else -> "feature_onboard_button_next"
         }
     )
     val animatedBottomCTAButtonBackgroundColor by animateColorAsState(
