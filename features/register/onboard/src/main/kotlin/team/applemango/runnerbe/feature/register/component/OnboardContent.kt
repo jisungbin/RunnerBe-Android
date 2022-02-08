@@ -9,7 +9,6 @@
 
 package team.applemango.runnerbe.feature.register.component
 
-import android.app.Activity
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.BorderStroke
@@ -36,7 +35,7 @@ import team.applemango.runnerbe.theme.Typography
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-internal fun Activity.OnboardContent(
+internal fun OnboardContent(
     modifier: Modifier,
     step: Step,
     bottomCTAButtonEnabled: Boolean,
@@ -64,8 +63,11 @@ internal fun Activity.OnboardContent(
         else -> StringAsset.Empty
     }
     val bottomCTAButtonText = when (step) {
-        Step.VerifyWithEmail -> "feature_onboard_button_no_email"
-        else -> "feature_onboard_button_next"
+        Step.VerifyWithEmail -> StringAsset.Button.NoEmail
+        Step.VerifyWithEmployeeId -> StringAsset.Button.Verify
+        Step.EmailVerifyDone -> StringAsset.Button.Start
+        Step.EmployeeIdVerifyRequestDone -> StringAsset.Button.GotoMain
+        else -> StringAsset.Button.Next
     }
     val animatedBottomCTAButtonBackgroundColor by animateColorAsState(
         when (bottomCTAButtonEnabled) {
