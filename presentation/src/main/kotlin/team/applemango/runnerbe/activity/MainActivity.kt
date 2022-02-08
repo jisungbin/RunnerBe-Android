@@ -16,7 +16,12 @@ import android.view.animation.AnticipateInterpolator
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.datastore.preferences.core.edit
+import kotlinx.coroutines.flow.map
 import team.applemango.runnerbe.R
+import team.applemango.runnerbe.shared.constant.DataStoreKey
+import team.applemango.runnerbe.shared.util.extension.dataStore
+import team.applemango.runnerbe.shared.util.extension.launchedWhenCreated
 import team.applemango.runnerbe.util.DFMLoginActivityAlias
 
 class MainActivity : AppCompatActivity() {
@@ -25,6 +30,12 @@ class MainActivity : AppCompatActivity() {
         installSplashScreen()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        launchedWhenCreated {
+            applicationContext.dataStore.data.map { preference ->
+                preference
+            }
+        }
 
         finish()
         startActivity(Intent(this, DFMLoginActivityAlias::class.java))
