@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonColors
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -76,20 +77,32 @@ internal fun OnboardContent(
         }
     )
     val animatedBottomCTAButtonTextColor by animateColorAsState(
-        when (bottomCTAButtonEnabled) {
-            true -> Color.Black
-            else -> ColorAsset.G4_5
+        when (step) {
+            Step.VerifyWithEmail -> {
+                ColorAsset.Primary
+            }
+            else -> {
+                when (bottomCTAButtonEnabled) {
+                    true -> Color.Black
+                    else -> ColorAsset.G4_5
+                }
+            }
         }
     )
-    val bottomCTAButtonColor = when (bottomCTAButtonType) {
-        ButtonType.Normal -> ButtonDefaults.buttonColors(backgroundColor = animatedBottomCTAButtonBackgroundColor)
-        ButtonType.NoEmail -> ButtonDefaults.buttonColors(backgroundColor = Color.Transparent)
+    val bottomCTAButtonBackgroundColor: ButtonColors
+    val bottomCTAButtonBorder: BorderStroke?
+    when (step) {
+        Step.VerifyWithEmail -> {
+            bottomCTAButtonBackgroundColor =
+                ButtonDefaults.buttonColors(backgroundColor = Color.Transparent)
+            bottomCTAButtonBorder = BorderStroke(width = 1.dp, color = ColorAsset.Primary)
+        }
+        else -> {
+            bottomCTAButtonBackgroundColor =
+                ButtonDefaults.buttonColors(backgroundColor = animatedBottomCTAButtonBackgroundColor)
+            bottomCTAButtonBorder = null
+        }
     }
-    val bottomCTAButtonBorder = when (bottomCTAButtonType) {
-        ButtonType.NoEmail -> BorderStroke(width = 1.dp, color = ColorAsset.Primary)
-        else -> null
-    }
-
     ConstraintLayout(modifier = modifier) {
         val (topContent, mainContent, bottomCTAButton) = createRefs()
 
@@ -137,7 +150,7 @@ internal fun OnboardContent(
                     onBottomCTAButtonAction()
                 }
             },
-            colors = bottomCTAButtonColor,
+            colors = bottomCTAButtonBackgroundColor,
             elevation = null,
             border = bottomCTAButtonBorder,
             shape = RoundedCornerShape(24.dp)
