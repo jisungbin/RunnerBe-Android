@@ -9,6 +9,7 @@
 
 package team.applemango.runnerbe.feature.register.snslogin
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
@@ -37,6 +38,7 @@ import team.applemango.runnerbe.shared.util.extension.dataStore
 import team.applemango.runnerbe.shared.util.extension.launchedWhenCreated
 import team.applemango.runnerbe.shared.util.extension.toast
 import javax.inject.Inject
+import team.applemango.runnerbe.util.DFMOnboardActivityAlias
 
 class SnsLoginActivity : ComponentActivity() {
 
@@ -79,7 +81,7 @@ class SnsLoginActivity : ComponentActivity() {
 
     private fun handleState(state: LoginState) {
         if (state.success) {
-            toast(state.toString())
+            startActivity(Intent(this, DFMOnboardActivityAlias::class.java))
         }
     }
 
