@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ RunnerBe © 2022 Team AppleMango. all rights reserved.
+  ~ RunnerBe license is under the MIT.
+  ~
+  ~ [fadeout.xml] created by Ji Sungbin on 22. 2. 9. 오전 1:39
+  ~
+  ~ Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
+  -->
+
+<alpha xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="500"
+    android:fromAlpha="1.0"
+    android:toAlpha="0.0" />

@@ -15,6 +15,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 
 object DataStoreKey {
     object Login {
+        val Jwt = stringPreferencesKey("login-jwt")
         val Uuid = stringPreferencesKey("login-uuid")
     }
 
@@ -26,6 +27,7 @@ object DataStoreKey {
         val VerifyWithEmail = booleanPreferencesKey("onboard-verify_with_email")
         val VerifyWithEmployeeId = booleanPreferencesKey("onboard-verify_with_employee_id")
         val VerifyWithEmailDone = booleanPreferencesKey("onboard-verify_with_email_done")
-        val VerifyWithEmployeeIdRequestDone = booleanPreferencesKey("onboard-verify_with_employee_id_done")
+        val VerifyWithEmployeeIdRequestDone =
+            booleanPreferencesKey("onboard-verify_with_employee_id_done")
     }
 }

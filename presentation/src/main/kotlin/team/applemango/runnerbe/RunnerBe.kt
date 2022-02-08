@@ -10,20 +10,17 @@
 package team.applemango.runnerbe
 
 import android.app.Application
-import android.content.Context
-import com.google.android.play.core.splitcompat.SplitCompat
 import com.kakao.sdk.common.KakaoSdk
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.log.NidLog
 import dagger.hilt.android.HiltAndroidApp
-import io.github.jisungbin.erratum.Erratum
 import io.github.jisungbin.logeukes.Logeukes
 
 @HiltAndroidApp
 class RunnerBe : Application() {
     override fun onCreate() {
         super.onCreate()
-        Erratum.setup(application = this) // TODO: Set Exception Activity
+        // Erratum.setup(application = this) // TODO: Set Exception Activity
         NidLog.init()
         NaverIdLoginSDK.initialize(
             applicationContext,
@@ -35,10 +32,5 @@ class RunnerBe : Application() {
         if (BuildConfig.DEBUG) {
             Logeukes.setup()
         }
-    }
-
-    override fun attachBaseContext(base: Context) {
-        super.attachBaseContext(base)
-        SplitCompat.install(this)
     }
 }
