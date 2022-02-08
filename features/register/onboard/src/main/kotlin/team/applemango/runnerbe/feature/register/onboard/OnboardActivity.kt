@@ -121,7 +121,11 @@ class OnboardActivity : ComponentActivity() {
                         enterTransition = { fadeIn(tween(500)) },
                         exitTransition = { fadeOut(tween(500)) }
                     ) {
-                        composable(route = Step.Terms.name) {
+                        composable(
+                            route = Step.Terms.name,
+                            enterTransition = { fadeIn(tween(500)) },
+                            exitTransition = { fadeOut(tween(500)) }
+                        ) {
                             OnboardContent(
                                 modifier = Modifier.fillMaxSize(),
                                 step = Step.Terms,
@@ -137,7 +141,11 @@ class OnboardActivity : ComponentActivity() {
                                 )
                             }
                         }
-                        composable(route = Step.Birthday.name) {
+                        composable(
+                            route = Step.Birthday.name,
+                            enterTransition = { fadeIn(tween(500)) },
+                            exitTransition = { fadeOut(tween(500)) }
+                        ) {
                             OnboardContent(
                                 modifier = Modifier.fillMaxSize(),
                                 step = Step.Birthday,
@@ -153,7 +161,11 @@ class OnboardActivity : ComponentActivity() {
                                 )
                             }
                         }
-                        composable(route = Step.Gender.name) {
+                        composable(
+                            route = Step.Gender.name,
+                            enterTransition = { fadeIn(tween(500)) },
+                            exitTransition = { fadeOut(tween(500)) }
+                        ) {
                             OnboardContent(
                                 modifier = Modifier.fillMaxSize(),
                                 step = Step.Gender,
@@ -169,7 +181,11 @@ class OnboardActivity : ComponentActivity() {
                                 )
                             }
                         }
-                        composable(route = Step.Job.name) {
+                        composable(
+                            route = Step.Job.name,
+                            enterTransition = { fadeIn(tween(500)) },
+                            exitTransition = { fadeOut(tween(500)) }
+                        ) {
                             OnboardContent(
                                 modifier = Modifier.fillMaxSize(),
                                 step = Step.Job,
@@ -185,7 +201,11 @@ class OnboardActivity : ComponentActivity() {
                                 )
                             }
                         }
-                        composable(route = Step.VerifyWithEmail.name) {
+                        composable(
+                            route = Step.VerifyWithEmail.name,
+                            enterTransition = { fadeIn(tween(500)) },
+                            exitTransition = { fadeOut(tween(500)) }
+                        ) {
                             OnboardContent(
                                 modifier = Modifier.fillMaxSize(),
                                 step = Step.VerifyWithEmail,
@@ -201,7 +221,11 @@ class OnboardActivity : ComponentActivity() {
                                 )
                             }
                         }
-                        composable(route = Step.EmailVerifyDone.name) {
+                        composable(
+                            route = Step.EmailVerifyDone.name,
+                            enterTransition = { fadeIn(tween(500)) },
+                            exitTransition = { fadeOut(tween(500)) }
+                        ) {
                             OnboardContent(
                                 modifier = Modifier.fillMaxSize(),
                                 step = Step.EmailVerifyDone,
