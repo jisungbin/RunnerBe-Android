@@ -47,9 +47,9 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import io.github.jisungbin.logeukes.logeukes
 import team.applemango.runnerbe.feature.register.component.OnboardContent
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
+import team.applemango.runnerbe.feature.register.onboard.step.TermsTable
 import team.applemango.runnerbe.theme.ColorAsset
 import team.applemango.runnerbe.theme.GradientAsset
 import team.applemango.runnerbe.theme.Typography
@@ -67,8 +67,7 @@ class OnboardActivity : ComponentActivity() {
 
         setContent {
             ProvideWindowInsets {
-                var step by remember { mutableStateOf(Step.Terms) }
-                logeukes { step }
+                var enableGoNextStep by remember { mutableStateOf(false) }
                 var stepIndex by remember { mutableStateOf(0) }
                 val navController = rememberAnimatedNavController()
                 val systemUiController = rememberSystemUiController()
@@ -121,33 +120,21 @@ class OnboardActivity : ComponentActivity() {
                         enterTransition = { fadeIn(tween(500)) },
                         exitTransition = { fadeOut(tween(500)) }
                     ) {
-                        composable(
-                            route = Step.Terms.name,
-                            enterTransition = { fadeIn(tween(500)) },
-                            exitTransition = { fadeOut(tween(500)) }
-                        ) {
+                        composable(route = Step.Terms.name) {
                             OnboardContent(
-                                modifier = Modifier.fillMaxSize(),
                                 step = Step.Terms,
-                                bottomCTAButtonEnabled = true,
+                                bottomCTAButtonEnabled = enableGoNextStep,
                                 onBottomCTAButtonAction = {
                                     navController.navigate(Step.Birthday.name)
                                 }
                             ) {
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .background(color = Color(0xFFCC99FF))
-                                )
+                                TermsTable(onAllTermsChecked = {
+                                    enableGoNextStep = true
+                                })
                             }
                         }
-                        composable(
-                            route = Step.Birthday.name,
-                            enterTransition = { fadeIn(tween(500)) },
-                            exitTransition = { fadeOut(tween(500)) }
-                        ) {
+                        composable(route = Step.Birthday.name) {
                             OnboardContent(
-                                modifier = Modifier.fillMaxSize(),
                                 step = Step.Birthday,
                                 bottomCTAButtonEnabled = true,
                                 onBottomCTAButtonAction = {
@@ -161,13 +148,8 @@ class OnboardActivity : ComponentActivity() {
                                 )
                             }
                         }
-                        composable(
-                            route = Step.Gender.name,
-                            enterTransition = { fadeIn(tween(500)) },
-                            exitTransition = { fadeOut(tween(500)) }
-                        ) {
+                        composable(route = Step.Gender.name) {
                             OnboardContent(
-                                modifier = Modifier.fillMaxSize(),
                                 step = Step.Gender,
                                 bottomCTAButtonEnabled = true,
                                 onBottomCTAButtonAction = {
@@ -181,13 +163,8 @@ class OnboardActivity : ComponentActivity() {
                                 )
                             }
                         }
-                        composable(
-                            route = Step.Job.name,
-                            enterTransition = { fadeIn(tween(500)) },
-                            exitTransition = { fadeOut(tween(500)) }
-                        ) {
+                        composable(route = Step.Job.name) {
                             OnboardContent(
-                                modifier = Modifier.fillMaxSize(),
                                 step = Step.Job,
                                 bottomCTAButtonEnabled = true,
                                 onBottomCTAButtonAction = {
@@ -201,13 +178,8 @@ class OnboardActivity : ComponentActivity() {
                                 )
                             }
                         }
-                        composable(
-                            route = Step.VerifyWithEmail.name,
-                            enterTransition = { fadeIn(tween(500)) },
-                            exitTransition = { fadeOut(tween(500)) }
-                        ) {
+                        composable(route = Step.VerifyWithEmail.name) {
                             OnboardContent(
-                                modifier = Modifier.fillMaxSize(),
                                 step = Step.VerifyWithEmail,
                                 bottomCTAButtonEnabled = true,
                                 onBottomCTAButtonAction = {
@@ -221,13 +193,8 @@ class OnboardActivity : ComponentActivity() {
                                 )
                             }
                         }
-                        composable(
-                            route = Step.EmailVerifyDone.name,
-                            enterTransition = { fadeIn(tween(500)) },
-                            exitTransition = { fadeOut(tween(500)) }
-                        ) {
+                        composable(route = Step.EmailVerifyDone.name) {
                             OnboardContent(
-                                modifier = Modifier.fillMaxSize(),
                                 step = Step.EmailVerifyDone,
                                 bottomCTAButtonEnabled = true,
                                 onBottomCTAButtonAction = {

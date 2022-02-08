@@ -15,6 +15,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
@@ -29,7 +30,6 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import team.applemango.runnerbe.feature.register.asset.StringAsset
-import team.applemango.runnerbe.feature.register.onboard.constant.ButtonType
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.theme.ColorAsset
 import team.applemango.runnerbe.theme.Typography
@@ -37,10 +37,8 @@ import team.applemango.runnerbe.theme.Typography
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 internal fun OnboardContent(
-    modifier: Modifier,
     step: Step,
     bottomCTAButtonEnabled: Boolean,
-    bottomCTAButtonType: ButtonType = ButtonType.Normal,
     onBottomCTAButtonAction: () -> Unit,
     content: @Composable BoxScope.() -> Unit,
 ) {
@@ -103,7 +101,7 @@ internal fun OnboardContent(
             bottomCTAButtonBorder = null
         }
     }
-    ConstraintLayout(modifier = modifier) {
+    ConstraintLayout(modifier = Modifier.fillMaxSize()) {
         val (topContent, mainContent, bottomCTAButton) = createRefs()
 
         Column(
