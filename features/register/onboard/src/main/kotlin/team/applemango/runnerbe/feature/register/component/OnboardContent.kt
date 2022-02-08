@@ -10,11 +10,9 @@
 package team.applemango.runnerbe.feature.register.component
 
 import android.app.Activity
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -28,6 +26,10 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -45,26 +47,33 @@ import team.applemango.runnerbe.theme.Typography
 @Composable
 internal fun Activity.OnboardContent(
     modifier: Modifier,
-    title: String,
-    subtitle: String = "",
     stepIndex: Int = 0,
-    bottomCTAButtonEnabled: Boolean = true,
     bottomCTAButtonType: ButtonType = ButtonType.Normal,
     bottomCTAButtonText: String = stringResource(R.string.feature_onboard_button_next),
     onBottomCTAButtonAction: () -> Unit,
     onBackAction: () -> Unit = { finish() },
     content: @Composable (modifier: Modifier) -> Unit,
 ) {
+    var bottomCTAButtonEnabled by remember { mutableStateOf(false) }
+    val animatedBottomCTAButtonBackgroundColor by animateColorAsState(
+        when (bottomCTAButtonEnabled) {
+            true -> ColorAsset.Primary
+            else -> ColorAsset.G3
+        }
+    )
+    val animatedBottomCTAButtonTextColor by animateColorAsState(
+        when (bottomCTAButtonEnabled) {
+            true -> Color.Black
+            else -> ColorAsset.G4_5
+        }
+    )
     val bottomCTAButtonColor = when (bottomCTAButtonType) {
-        ButtonType.Normal -> ButtonDefaults.buttonColors(
-            backgroundColor = ColorAsset.Primary,
-            disabledBackgroundColor = ColorAsset.G3
-        )
+        ButtonType.Normal -> ButtonDefaults.buttonColors(backgroundColor = animatedBottomCTAButtonBackgroundColor)
         ButtonType.NoEmail -> ButtonDefaults.buttonColors(backgroundColor = Color.Transparent)
     }
-    val bottomCTAButtonTextColor = when (bottomCTAButtonEnabled) {
-        true -> Color.Black
-        else -> ColorAsset.G4_5
+    val bottomCTAButtonBorder = when (bottomCTAButtonType) {
+        ButtonType.NoEmail -> BorderStroke(width = 1.dp, color = ColorAsset.Primary)
+        else -> null
     }
 
     ConstraintLayout(modifier = modifier) {
@@ -80,8 +89,7 @@ internal fun Activity.OnboardContent(
             Row( // TopBar
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(56.dp)
-                    .padding(horizontal = 16.dp),
+                    .height(56.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -107,21 +115,15 @@ internal fun Activity.OnboardContent(
                 )
             }
             Text(
-                modifier = Modifier.padding(top = 26.dp, start = 16.dp),
+                modifier = Modifier.padding(top = 26.dp),
                 text = title,
                 style = Typography.Header28M.copy(color = ColorAsset.Primary)
             )
-            AnimatedVisibility(
-                modifier = Modifier.padding(top = 12.dp, start = 16.dp),
-                visible = subtitle.isNotEmpty(),
-                enter = fadeIn(tween(500)),
-                exit = fadeOut(tween(500))
-            ) {
-                Text(
-                    text = subtitle,
-                    style = Typography.Body14R.copy(color = ColorAsset.G2_5)
-                )
-            }
+            Text(
+                modifier = Modifier.padding(top = 12.dp),
+                text = subtitle,
+                style = Typography.Body14R.copy(color = ColorAsset.G2_5)
+            )
         }
         content(
             modifier = Modifier
@@ -130,7 +132,6 @@ internal fun Activity.OnboardContent(
                     width = Dimension.matchParent
                     height = Dimension.wrapContent
                 }
-                .padding(horizontal = 16.dp)
         )
         Button(
             modifier = Modifier
@@ -142,13 +143,13 @@ internal fun Activity.OnboardContent(
                 .padding(horizontal = 16.dp),
             onClick = { onBottomCTAButtonAction() },
             colors = bottomCTAButtonColor,
-            enabled = bottomCTAButtonEnabled,
             elevation = null,
+            border = bottomCTAButtonBorder,
             shape = RoundedCornerShape(24.dp)
         ) {
             Text(
                 text = bottomCTAButtonText,
-                style = Typography.Body14M.copy(color = bottomCTAButtonTextColor)
+                style = Typography.Body14M.copy(color = animatedBottomCTAButtonTextColor)
             )
         }
     }

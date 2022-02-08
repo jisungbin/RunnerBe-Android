@@ -15,9 +15,13 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,7 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.systemBarsPadding
@@ -34,7 +38,6 @@ import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import io.github.jisungbin.logeukes.logeukes
-import team.applemango.runnerbe.feature.register.component.OnboardContent
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.theme.GradientAsset
 
@@ -63,101 +66,72 @@ class OnboardActivity : ComponentActivity() {
                     navController.popBackStack()
                     step = Step.values()[step.index - 1]
                 }
-                OnboardContent(
+                AnimatedNavHost(
                     modifier = Modifier
                         .fillMaxSize()
                         .background(brush = GradientAsset.RegisterCommonBackground)
-                        .systemBarsPadding(start = false, end = false),
-                    title = stringResource(
-                        when (step) {
-                            Step.Terms -> R.string.feature_onboard_title_read_terms
-                            Step.Birthday -> R.string.feature_onboard_title_input_year
-                            Step.Gender -> R.string.feature_onboard_title_select_gender
-                            Step.Job -> R.string.feature_onboard_title_question_job
-                            Step.Email -> R.string.feature_onboard_title_verify_with_job_email
-                            else -> R.string.todo
-                        }
-                    ),
-                    subtitle = stringResource(
-                        when (step) {
-                            Step.Birthday -> R.string.feature_onboard_subtitle_age_show_description
-                            Step.Job -> R.string.feature_onboard_subtitle_can_edit_on_mypage
-                            else -> R.string.empty
-                        }
-                    ),
-                    onBottomCTAButtonAction = {
-                        if (step != Step.EmployeeDone && step != Step.EmailDone) {
-                            step = Step.values()[step.index + 1]
-                            logeukes { listOf(step, step.name) }
-                            navController.navigate(step.name)
-                        } else {
-                            // TODO
-                            // 메인 화면 이동
-                        }
-                    },
-                    stepIndex = stepIndex
-                ) { modifier ->
-                    AnimatedNavHost(
-                        modifier = modifier,
-                        navController = navController,
-                        startDestination = Step.Terms.name,
-                    ) {
-                        composable(route = Step.Terms.name) {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .background(color = Color.LightGray)
-                            )
-                        }
-                        composable(route = Step.Birthday.name) {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .background(color = Color.Blue)
-                            )
-                        }
-                        composable(route = Step.Gender.name) {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .background(color = Color.Green)
-                            )
-                        }
-                        composable(route = Step.Job.name) {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .background(color = Color.Cyan)
-                            )
-                        }
-                        composable(route = Step.Email.name) {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .background(color = Color.White)
-                            )
-                        }
-                        composable(route = Step.EmployeeID.name) {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .background(color = Color.Magenta)
-                            )
-                        }
-                        composable(route = Step.EmailDone.name) {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .background(color = Color.Red)
-                            )
-                        }
-                        composable(route = Step.EmployeeDone.name) {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .background(color = Color.Yellow)
-                            )
-                        }
+                        .systemBarsPadding(start = false, end = false)
+                        .padding(horizontal = 16.dp),
+                    navController = navController,
+                    startDestination = Step.Terms.name,
+                    enterTransition = { fadeIn(tween(500)) },
+                    exitTransition = { fadeOut(tween(500)) }
+                ) {
+                    composable(route = Step.Terms.name) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(color = Color.LightGray)
+                        )
+                    }
+                    composable(route = Step.Birthday.name) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(color = Color.Blue)
+                        )
+                    }
+                    composable(route = Step.Gender.name) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(color = Color.Green)
+                        )
+                    }
+                    composable(route = Step.Job.name) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(color = Color.Cyan)
+                        )
+                    }
+                    composable(route = Step.Email.name) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(color = Color.White)
+                        )
+                    }
+                    composable(route = Step.EmployeeID.name) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(color = Color.Magenta)
+                        )
+                    }
+                    composable(route = Step.EmailDone.name) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(color = Color.Red)
+                        )
+                    }
+                    composable(route = Step.EmployeeDone.name) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(color = Color.Yellow)
+                        )
                     }
                 }
             }
