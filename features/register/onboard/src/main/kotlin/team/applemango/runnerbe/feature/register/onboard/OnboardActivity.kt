@@ -133,13 +133,13 @@ class OnboardActivity : ComponentActivity() {
                         }
                         composable(route = Step.Job.name) {
                         }
-                        composable(route = Step.Email.name) {
+                        composable(route = Step.VerifyWithEmail.name) {
                         }
-                        composable(route = Step.EmailDone.name) {
+                        composable(route = Step.EmailVerifyDone.name) {
                         }
-                        composable(route = Step.EmployeeID.name) {
+                        composable(route = Step.VerifyWithEmployeeID.name) {
                         }
-                        composable(route = Step.EmployeeIDDone.name) {
+                        composable(route = Step.EmployeeIDVerifyRequestDone.name) {
                         }
                     }
                 }
