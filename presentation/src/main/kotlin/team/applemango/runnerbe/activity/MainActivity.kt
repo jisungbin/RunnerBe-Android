@@ -18,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import team.applemango.runnerbe.R
 import team.applemango.runnerbe.util.DFMLoginActivityAlias
-import team.applemango.runnerbe.util.DFMOnboardActivityAlias
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         finish()
-        startActivity(Intent(this, DFMOnboardActivityAlias::class.java))
+        startActivity(Intent(this, DFMLoginActivityAlias::class.java))
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             splashScreen.setOnExitAnimationListener { splashScreenView ->
                 splashScreenView.animate().run {

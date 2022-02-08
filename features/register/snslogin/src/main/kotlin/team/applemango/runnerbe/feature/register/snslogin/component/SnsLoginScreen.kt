@@ -9,6 +9,7 @@
 
 package team.applemango.runnerbe.feature.register.snslogin.component
 
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -23,26 +24,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import com.google.accompanist.insets.systemBarsPadding
 import team.applemango.runnerbe.domain.login.constant.PlatformType
-import team.applemango.runnerbe.feature.register.snslogin.R
 import team.applemango.runnerbe.feature.register.snslogin.SnsLoginViewModel
+import team.applemango.runnerbe.shared.util.presentationDrawableOf
+import team.applemango.runnerbe.shared.util.presentationStringOf
 import team.applemango.runnerbe.theme.ColorAsset
 import team.applemango.runnerbe.theme.FontAsset
 import team.applemango.runnerbe.theme.GradientAsset
 
-private typealias string = team.applemango.runnerbe.shared.R.string
-private typealias drawable = R.drawable
-
 @Composable
-internal fun SnsLoginScreen(vm: SnsLoginViewModel) {
+internal fun Activity.SnsLoginScreen(vm: SnsLoginViewModel) {
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
@@ -62,12 +60,12 @@ internal fun SnsLoginScreen(vm: SnsLoginViewModel) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
-                painter = painterResource(drawable.ic_logo_symbol),
+                painter = rememberDrawablePainter(presentationDrawableOf("ic_logo_symbol")),
                 contentDescription = null
             )
             Text(
                 modifier = Modifier.padding(top = 11.dp),
-                text = stringResource(string.app_name),
+                text = presentationStringOf("app_name"),
                 style = TextStyle(
                     color = ColorAsset.Primary,
                     fontSize = 50.sp,
@@ -91,7 +89,7 @@ internal fun SnsLoginScreen(vm: SnsLoginViewModel) {
                     .clickable {
                         vm.login(PlatformType.Kakao)
                     },
-                painter = painterResource(drawable.login_kakao),
+                painter = rememberDrawablePainter(presentationDrawableOf("login_kakao")),
                 contentDescription = null,
                 contentScale = ContentScale.FillBounds
             )
@@ -102,7 +100,7 @@ internal fun SnsLoginScreen(vm: SnsLoginViewModel) {
                     .clickable {
                         vm.login(PlatformType.Naver)
                     },
-                painter = painterResource(drawable.login_naver),
+                painter = rememberDrawablePainter(presentationDrawableOf("login_naver")),
                 contentDescription = null,
                 contentScale = ContentScale.FillBounds
             )
@@ -113,7 +111,7 @@ internal fun SnsLoginScreen(vm: SnsLoginViewModel) {
                     .clickable {
                         vm.login(PlatformType.Apple)
                     },
-                painter = painterResource(drawable.login_apple),
+                painter = rememberDrawablePainter(presentationDrawableOf("login_apple")),
                 contentDescription = null,
                 contentScale = ContentScale.FillBounds
             )

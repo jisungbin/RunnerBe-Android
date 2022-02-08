@@ -8,6 +8,7 @@
   -->
 
 <resources>
+    <string name="app_name">러너비</string>
     <string name="dist_dfm_register_snslogin">SNS 로그인</string>
     <string name="dist_dfm_register_onboard">추가 정보 입력</string>
 </resources>
