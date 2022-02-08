@@ -9,6 +9,7 @@
 
 package team.applemango.runnerbe.feature.register.onboard.step
 
+import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -24,7 +25,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Checkbox
 import androidx.compose.material.CheckboxDefaults
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,12 +35,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.skydoves.landscapist.coil.CoilImage
 import team.applemango.runnerbe.feature.register.asset.StringAsset
-import team.applemango.runnerbe.feature.register.onboard.R
 import team.applemango.runnerbe.feature.register.util.Web
+import team.applemango.runnerbe.shared.util.presentationDrawableOf
 import team.applemango.runnerbe.theme.ColorAsset
 import team.applemango.runnerbe.theme.GradientAsset
 import team.applemango.runnerbe.theme.Typography
@@ -50,7 +51,7 @@ private val HorizontalPadding = 12.dp
 private val TermsTableShape = RoundedCornerShape(10.dp)
 
 @Composable
-internal fun TermsTable(onAllTermsChecked: () -> Unit) {
+internal fun Activity.TermsTable(onAllTermsChecked: () -> Unit) {
     val context = LocalContext.current
     var isAllTermsChecked by remember { mutableStateOf(false) }
     val termsCheckState = remember { mutableStateListOf(false, false, false) }
@@ -163,11 +164,10 @@ internal fun TermsTable(onAllTermsChecked: () -> Unit) {
                             style = Typography.Body14R.copy(color = ColorAsset.G1)
                         )
                     }
-                    Icon(
+                    CoilImage(
                         modifier = Modifier.clickable { Web.open(context, link) },
-                        painter = painterResource(R.drawable.ic_round_arrow_right_24),
-                        contentDescription = null,
-                        tint = ColorAsset.G4
+                        imageModel = presentationDrawableOf("ic_round_arrow_right_24"),
+                        colorFilter = ColorFilter.tint(ColorAsset.G4)
                     )
                 }
             }

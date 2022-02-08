@@ -18,7 +18,6 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -38,7 +37,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import com.google.accompanist.insets.ProvideWindowInsets
@@ -47,9 +45,11 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.skydoves.landscapist.coil.CoilImage
 import team.applemango.runnerbe.feature.register.component.OnboardContent
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.step.TermsTable
+import team.applemango.runnerbe.shared.util.presentationDrawableOf
 import team.applemango.runnerbe.theme.ColorAsset
 import team.applemango.runnerbe.theme.GradientAsset
 import team.applemango.runnerbe.theme.Typography
@@ -88,12 +88,11 @@ class OnboardActivity : ComponentActivity() {
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Image(
+                        CoilImage(
                             modifier = Modifier.clickable {
                                 // onBackAction()
                             },
-                            painter = painterResource(R.drawable.ic_round_arrow_left_24),
-                            contentDescription = null
+                            imageModel = presentationDrawableOf("ic_round_arrow_left_24"),
                         )
                         AnimatedVisibility(
                             visible = stepIndex != 0,
@@ -105,12 +104,11 @@ class OnboardActivity : ComponentActivity() {
                                 style = Typography.Body16R.copy(color = ColorAsset.G3)
                             )
                         }
-                        Image( // cancel onboard activity
+                        CoilImage(
                             modifier = Modifier.clickable {
                                 finish() // TODO: goto main activity
                             },
-                            painter = painterResource(R.drawable.ic_round_close_24),
-                            contentDescription = null
+                            imageModel = presentationDrawableOf("ic_round_close_24"),
                         )
                     }
                     AnimatedNavHost( // main content + bottom cta button
