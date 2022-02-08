@@ -184,7 +184,7 @@ class OnboardActivity : ComponentActivity() {
                                 step = Step.VerifyWithEmail,
                                 bottomCTAButtonEnabled = true,
                                 onBottomCTAButtonAction = {
-                                    navController.navigate(Step.EmailVerifyDone.name)
+                                    navController.navigate(Step.VerifyWithEmailDone.name)
                                 }
                             ) {
                                 Box(
@@ -194,9 +194,9 @@ class OnboardActivity : ComponentActivity() {
                                 )
                             }
                         }
-                        composable(route = Step.EmailVerifyDone.name) {
+                        composable(route = Step.VerifyWithEmailDone.name) {
                             OnboardContent(
-                                step = Step.EmailVerifyDone,
+                                step = Step.VerifyWithEmailDone,
                                 bottomCTAButtonEnabled = true,
                                 onBottomCTAButtonAction = {
                                     navController.navigate(Step.Terms.name)
@@ -211,7 +211,7 @@ class OnboardActivity : ComponentActivity() {
                         }
                         composable(route = Step.VerifyWithEmployeeId.name) {
                         }
-                        composable(route = Step.EmployeeIdVerifyRequestDone.name) {
+                        composable(route = Step.VerifyWithEmployeeIdRequestDone.name) {
                         }
                     }
                 }

@@ -49,23 +49,23 @@ internal fun OnboardContent(
         Step.Job -> StringAsset.Title.WhatsJob
         Step.VerifyWithEmail -> StringAsset.Title.VerifyWithEmail
         Step.VerifyWithEmployeeId -> StringAsset.Title.VerifyWitheEmployeeId
-        Step.EmailVerifyDone -> StringAsset.Title.EmailVerifyDone
-        Step.EmployeeIdVerifyRequestDone -> StringAsset.Title.EmployeeIdVerifyRequestDone
+        Step.VerifyWithEmailDone -> StringAsset.Title.EmailVerifyDone
+        Step.VerifyWithEmployeeIdRequestDone -> StringAsset.Title.EmployeeIdVerifyRequestDone
     }
     val subtitle = when (step) {
         Step.Birthday -> StringAsset.Subtitle.AgeVisibleDescription
         Step.Job -> StringAsset.Subtitle.JobCanEditOnMypage
         Step.VerifyWithEmail -> StringAsset.Subtitle.VerifyWithEmail
         Step.VerifyWithEmployeeId -> StringAsset.Subtitle.VerifyWithEmployeeId
-        Step.EmailVerifyDone -> StringAsset.Subtitle.EmailVerifyDone
-        Step.EmployeeIdVerifyRequestDone -> StringAsset.Subtitle.EmployeeIdVerifyRequestDone
+        Step.VerifyWithEmailDone -> StringAsset.Subtitle.EmailVerifyDone
+        Step.VerifyWithEmployeeIdRequestDone -> StringAsset.Subtitle.EmployeeIdVerifyRequestDone
         else -> StringAsset.Empty
     }
     val bottomCTAButtonText = when (step) {
         Step.VerifyWithEmail -> StringAsset.Button.NoEmail
         Step.VerifyWithEmployeeId -> StringAsset.Button.Verify
-        Step.EmailVerifyDone -> StringAsset.Button.Start
-        Step.EmployeeIdVerifyRequestDone -> StringAsset.Button.GotoMain
+        Step.VerifyWithEmailDone -> StringAsset.Button.Start
+        Step.VerifyWithEmployeeIdRequestDone -> StringAsset.Button.GotoMain
         else -> StringAsset.Button.Next
     }
     val animatedBottomCTAButtonBackgroundColor by animateColorAsState(

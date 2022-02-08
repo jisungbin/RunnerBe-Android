@@ -16,6 +16,6 @@ internal enum class Step(val index: Int) {
     Job(3), // 직군 확인
     VerifyWithEmail(4), // 회사 이메일 인증
     VerifyWithEmployeeId(5), // 사원증 인증
-    EmailVerifyDone(6), // 이메일 인증 완료
-    EmployeeIdVerifyRequestDone(7) // 사원증 인증 완료
+    VerifyWithEmailDone(6), // 이메일 인증 완료
+    VerifyWithEmployeeIdRequestDone(7) // 사원증 인증 완료
 }
