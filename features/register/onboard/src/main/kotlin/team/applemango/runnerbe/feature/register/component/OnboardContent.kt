@@ -86,34 +86,6 @@ internal fun Activity.OnboardContent(
                 height = Dimension.wrapContent
             }
         ) {
-            Row( // TopBar
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Image(
-                    modifier = Modifier.clickable {
-                        onBackAction()
-                    },
-                    painter = painterResource(R.drawable.ic_round_arrow_left_24),
-                    contentDescription = null
-                )
-                if (stepIndex != 0) {
-                    Text(
-                        text = "$stepIndex/4",
-                        style = Typography.Body16R.copy(color = ColorAsset.G3)
-                    )
-                }
-                Image(
-                    modifier = Modifier.clickable {
-                        finish() // TODO: goto main activity
-                    },
-                    painter = painterResource(R.drawable.ic_round_close_24),
-                    contentDescription = null
-                )
-            }
             Text(
                 modifier = Modifier.padding(top = 26.dp),
                 text = title,

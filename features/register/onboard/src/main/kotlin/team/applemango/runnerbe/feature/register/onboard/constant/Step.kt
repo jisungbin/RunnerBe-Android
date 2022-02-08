@@ -17,5 +17,5 @@ internal enum class Step(val index: Int) {
     Email(4), // 회사 이메일 인증
     EmployeeID(5), // 사원증 인증
     EmailDone(6), // 이메일 인증 완료
-    EmployeeDone(7) // 사원증 인증 완료
+    EmployeeIDDone(7) // 사원증 인증 완료
 }
