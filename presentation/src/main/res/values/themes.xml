@@ -22,4 +22,5 @@
         <item name="android:statusBarColor">@color/G5_5</item>
         <item name="android:navigationBarColor">@color/G5_5</item>
     </style>
+
 </resources>

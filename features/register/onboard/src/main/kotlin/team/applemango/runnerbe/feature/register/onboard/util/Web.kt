@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.feature.register.util
+package team.applemango.runnerbe.feature.register.onboard.util
 
 import android.content.Context
 import android.content.Intent
@@ -15,7 +15,7 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.net.toUri
 import io.github.jisungbin.logeukes.LoggerType
 import io.github.jisungbin.logeukes.logeukes
-import team.applemango.runnerbe.feature.register.asset.StringAsset
+import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.shared.util.extension.toast
 
 internal object Web {

@@ -40,8 +40,8 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.skydoves.landscapist.rememberDrawablePainter
-import team.applemango.runnerbe.feature.register.asset.StringAsset
-import team.applemango.runnerbe.feature.register.util.Web
+import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
+import team.applemango.runnerbe.feature.register.onboard.util.Web
 import team.applemango.runnerbe.shared.util.presentationDrawableOf
 import team.applemango.runnerbe.theme.ColorAsset
 import team.applemango.runnerbe.theme.GradientAsset

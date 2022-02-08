@@ -47,7 +47,7 @@ import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.skydoves.landscapist.rememberDrawablePainter
-import team.applemango.runnerbe.feature.register.component.OnboardContent
+import team.applemango.runnerbe.feature.register.onboard.component.OnboardContent
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.step.TermsTable
 import team.applemango.runnerbe.shared.util.presentationDrawableOf

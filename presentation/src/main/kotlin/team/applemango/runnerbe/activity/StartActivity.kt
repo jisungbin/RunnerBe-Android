@@ -9,7 +9,6 @@
 
 package team.applemango.runnerbe.activity
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Build
@@ -17,7 +16,6 @@ import android.os.Bundle
 import android.view.animation.AnticipateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import team.applemango.runnerbe.R
 import team.applemango.runnerbe.feature.home.board.BoardActivity
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
@@ -25,8 +23,7 @@ import team.applemango.runnerbe.shared.util.extension.dataStore
 import team.applemango.runnerbe.util.DFMLoginActivityAlias
 import team.applemango.runnerbe.util.DFMOnboardActivityAlias
 
-@SuppressLint("CustomSplashScreen") // useless
-class SplashActivity : AppCompatActivity() {
+class StartActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
@@ -70,6 +67,7 @@ class SplashActivity : AppCompatActivity() {
 
     private inline fun <reified T : Activity> openActivity() {
         startActivity(Intent(this, T::class.java))
-        overridePendingTransition(R.anim.fadein, R.anim.fadeout)
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        finish()
     }
 }

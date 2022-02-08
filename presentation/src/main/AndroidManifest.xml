@@ -15,7 +15,7 @@
         android:theme="@style/Theme.RunnerBe.Splash">
 
         <activity
-            android:name=".activity.SplashActivity"
+            android:name=".activity.StartActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
