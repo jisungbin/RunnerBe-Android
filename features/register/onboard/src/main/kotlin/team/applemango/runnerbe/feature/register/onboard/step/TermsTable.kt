@@ -52,7 +52,7 @@ private val HorizontalPadding = 12.dp
 private val TermsTableShape = RoundedCornerShape(10.dp)
 
 @Composable
-internal fun Activity.TermsTable(onAllTermsChecked: () -> Unit) {
+internal fun Activity.TermsTable(onAllTermsCheckStateChanged: (allChecked: Boolean) -> Unit) {
     val context = LocalContext.current
     var isAllTermsChecked by remember { mutableStateOf(false) }
     val termsCheckState = remember { mutableStateListOf(false, false, false) }
@@ -68,21 +68,23 @@ internal fun Activity.TermsTable(onAllTermsChecked: () -> Unit) {
             termsCheckState[1] = false
             termsCheckState[2] = false
             isAllTermsChecked = false
+            onAllTermsCheckStateChanged(false)
         } else {
             termsCheckState[0] = true
             termsCheckState[1] = true
             termsCheckState[2] = true
             isAllTermsChecked = true
-            onAllTermsChecked()
+            onAllTermsCheckStateChanged(true)
         }
     }
 
     fun checkAllChecked() {
         if (termsCheckState.all { it }) {
             isAllTermsChecked = true
-            onAllTermsChecked()
+            onAllTermsCheckStateChanged(true)
         } else {
             isAllTermsChecked = false
+            onAllTermsCheckStateChanged(false)
         }
     }
 
@@ -121,7 +123,9 @@ internal fun Activity.TermsTable(onAllTermsChecked: () -> Unit) {
                 .background(color = ColorAsset.G4)
         )
         LazyColumn(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = HorizontalPadding),
             verticalArrangement = Arrangement.spacedBy(18.dp)
         ) {
             items(3) { number ->
@@ -144,9 +148,7 @@ internal fun Activity.TermsTable(onAllTermsChecked: () -> Unit) {
                 }
 
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = HorizontalPadding),
+                    modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {

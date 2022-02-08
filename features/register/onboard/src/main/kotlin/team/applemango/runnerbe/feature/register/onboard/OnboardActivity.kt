@@ -129,7 +129,7 @@ class OnboardActivity : ComponentActivity() {
                                     navController.navigate(Step.Birthday.name)
                                 }
                             ) {
-                                TermsTable(onAllTermsChecked = {
+                                TermsTable(onAllTermsCheckStateChanged = {
                                     enableGoNextStep = true
                                 })
                             }
