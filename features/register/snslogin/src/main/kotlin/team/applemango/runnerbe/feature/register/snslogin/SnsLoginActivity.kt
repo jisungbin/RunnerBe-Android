@@ -12,6 +12,7 @@ package team.applemango.runnerbe.feature.register.snslogin
 import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.LaunchedEffect
@@ -89,8 +90,8 @@ class SnsLoginActivity : ComponentActivity() {
         when (sideEffect) {
             is LoginSideEffect.SaveUuid -> {
                 launchedWhenCreated {
-                    applicationContext.dataStore.edit { preference ->
-                        preference[DataStoreKey.Login.Uuid] = sideEffect.uuid
+                    applicationContext.dataStore.edit { preferences ->
+                        preferences[DataStoreKey.Login.Uuid] = sideEffect.uuid
                     }
                 }
             }
@@ -99,7 +100,7 @@ class SnsLoginActivity : ComponentActivity() {
 
     // TODO: handle exception in debug mode
     private fun handleException(exception: Throwable) {
-        toast(exception.toString())
+        toast(exception.toString(), Toast.LENGTH_LONG)
         logeukes(type = LoggerType.E) { exception }
     }
 }
