@@ -33,10 +33,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import team.applemango.runnerbe.feature.register.asset.StringAsset
 import team.applemango.runnerbe.theme.ColorAsset
+import team.applemango.runnerbe.theme.GradientAsset
 import team.applemango.runnerbe.theme.Typography
 
 private val VerticalPadding = 25.dp
@@ -50,7 +50,7 @@ internal fun TermsTable(onAllTermsChecked: () -> Unit) {
     val termCheckboxColor = CheckboxDefaults.colors(
         checkedColor = ColorAsset.Primary,
         uncheckedColor = ColorAsset.G4,
-        checkmarkColor = Color.Transparent,
+        checkmarkColor = GradientAsset.EndColor
     )
 
     fun toggleAllTermsCheck() {
@@ -72,6 +72,8 @@ internal fun TermsTable(onAllTermsChecked: () -> Unit) {
         if (termCheckStates.all { it }) {
             isAllTermsChecked = true
             onAllTermsChecked()
+        } else {
+            isAllTermsChecked = false
         }
     }
 

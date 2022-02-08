@@ -7,6 +7,8 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
+@file:Suppress("MemberVisibilityCanBePrivate")
+
 package team.applemango.runnerbe.theme
 
 import androidx.compose.ui.graphics.Brush
@@ -33,6 +35,8 @@ object ColorAsset {
 }
 
 object GradientAsset {
+    val StartColor = Color(18, 18, 18)
+    val EndColor = Color(27, 26, 23)
     val RegisterCommonBackground =
-        Brush.linearGradient(listOf(Color(18, 18, 18), Color(27, 26, 23)))
+        Brush.linearGradient(listOf(StartColor, EndColor))
 }
