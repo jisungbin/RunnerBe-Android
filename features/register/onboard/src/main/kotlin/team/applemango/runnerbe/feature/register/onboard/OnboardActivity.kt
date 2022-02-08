@@ -23,6 +23,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -48,6 +49,7 @@ import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import io.github.jisungbin.logeukes.logeukes
+import team.applemango.runnerbe.feature.register.component.OnboardContent
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.theme.ColorAsset
 import team.applemango.runnerbe.theme.GradientAsset
@@ -78,7 +80,6 @@ class OnboardActivity : ComponentActivity() {
                     navController.popBackStack()
                     step = Step.values()[step.index - 1]
                 }
-
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -126,16 +127,100 @@ class OnboardActivity : ComponentActivity() {
                         exitTransition = { fadeOut(tween(500)) }
                     ) {
                         composable(route = Step.Terms.name) {
+                            OnboardContent(
+                                modifier = Modifier.fillMaxSize(),
+                                step = Step.Terms,
+                                bottomCTAButtonEnabled = true,
+                                onBottomCTAButtonAction = {
+                                    navController.navigate(Step.Birthday.name)
+                                }
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .background(color = Color(0xFFCC99FF))
+                                )
+                            }
                         }
                         composable(route = Step.Birthday.name) {
+                            OnboardContent(
+                                modifier = Modifier.fillMaxSize(),
+                                step = Step.Birthday,
+                                bottomCTAButtonEnabled = true,
+                                onBottomCTAButtonAction = {
+                                    navController.navigate(Step.Gender.name)
+                                }
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .background(color = Color(0xFFA9D1F7))
+                                )
+                            }
                         }
                         composable(route = Step.Gender.name) {
+                            OnboardContent(
+                                modifier = Modifier.fillMaxSize(),
+                                step = Step.Gender,
+                                bottomCTAButtonEnabled = true,
+                                onBottomCTAButtonAction = {
+                                    navController.navigate(Step.Job.name)
+                                }
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .background(color = Color(0xFFB4F0A7))
+                                )
+                            }
                         }
                         composable(route = Step.Job.name) {
+                            OnboardContent(
+                                modifier = Modifier.fillMaxSize(),
+                                step = Step.Job,
+                                bottomCTAButtonEnabled = true,
+                                onBottomCTAButtonAction = {
+                                    navController.navigate(Step.VerifyWithEmail.name)
+                                }
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .background(color = Color(0xFFFFFFBF))
+                                )
+                            }
                         }
                         composable(route = Step.VerifyWithEmail.name) {
+                            OnboardContent(
+                                modifier = Modifier.fillMaxSize(),
+                                step = Step.VerifyWithEmail,
+                                bottomCTAButtonEnabled = true,
+                                onBottomCTAButtonAction = {
+                                    navController.navigate(Step.EmailVerifyDone.name)
+                                }
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .background(color = Color(0xFFFFDFBE))
+                                )
+                            }
                         }
                         composable(route = Step.EmailVerifyDone.name) {
+                            OnboardContent(
+                                modifier = Modifier.fillMaxSize(),
+                                step = Step.EmailVerifyDone,
+                                bottomCTAButtonEnabled = true,
+                                onBottomCTAButtonAction = {
+                                    navController.navigate(Step.Terms.name)
+                                }
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .background(color = Color(0xFFFFB1B0))
+                                )
+                            }
                         }
                         composable(route = Step.VerifyWithEmployeeID.name) {
                         }

@@ -12,6 +12,8 @@ package team.applemango.runnerbe.feature.register.component
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -40,7 +42,7 @@ internal fun OnboardContent(
     bottomCTAButtonEnabled: Boolean,
     bottomCTAButtonType: ButtonType = ButtonType.Normal,
     onBottomCTAButtonAction: () -> Unit,
-    content: @Composable (modifier: Modifier) -> Unit,
+    content: @Composable BoxScope.() -> Unit,
 ) {
     val title = stringResource(
         when (step) {
@@ -113,14 +115,17 @@ internal fun OnboardContent(
                 style = Typography.Body14R.copy(color = ColorAsset.G2_5)
             )
         }
-        content(
+        Box(
             modifier = Modifier
                 .constrainAs(mainContent) {
-                    top.linkTo(topContent.bottom, 52.dp)
+                    top.linkTo(topContent.bottom)
+                    bottom.linkTo(bottomCTAButton.top)
                     width = Dimension.matchParent
-                    height = Dimension.wrapContent
                 }
-        )
+                .padding(vertical = 52.dp)
+        ) {
+            content()
+        }
         Button(
             modifier = Modifier
                 .constrainAs(bottomCTAButton) {
@@ -129,7 +134,11 @@ internal fun OnboardContent(
                     height = Dimension.value(48.dp)
                 }
                 .padding(horizontal = 16.dp),
-            onClick = { onBottomCTAButtonAction() },
+            onClick = {
+                if (bottomCTAButtonEnabled) {
+                    onBottomCTAButtonAction()
+                }
+            },
             colors = bottomCTAButtonColor,
             elevation = null,
             border = bottomCTAButtonBorder,
