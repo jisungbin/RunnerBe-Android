@@ -141,8 +141,7 @@ internal fun OnboardContent(
                     bottom.linkTo(parent.bottom, 28.dp)
                     width = Dimension.matchParent
                     height = Dimension.value(48.dp)
-                }
-                .padding(horizontal = 16.dp),
+                },
             onClick = {
                 if (bottomCTAButtonEnabled) {
                     onBottomCTAButtonAction()

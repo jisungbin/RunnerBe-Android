@@ -26,3 +26,11 @@ fun toast(context: Context, message: Context.() -> String) {
         Toast.makeText(context, message(context), Toast.LENGTH_SHORT).show()
     }
 }
+
+fun toast(context: Context, message: String) {
+    if (context is Activity) {
+        context.toast(message)
+    } else {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+}

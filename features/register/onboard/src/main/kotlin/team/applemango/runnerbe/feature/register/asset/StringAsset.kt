@@ -68,4 +68,8 @@ internal object StringAsset {
         const val Camera = "촬영하기"
         const val TakePhoto = "앨범에서 선택하기"
     }
+
+    object Toast {
+        const val NonInstallBrowser = "설치돼 있는 브라우저 앱이 없어요 \uD83D\uDE22"
+    }
 }

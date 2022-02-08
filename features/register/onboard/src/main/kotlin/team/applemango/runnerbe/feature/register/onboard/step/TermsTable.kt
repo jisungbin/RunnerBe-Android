@@ -46,8 +46,8 @@ private val TermsTableShape = RoundedCornerShape(10.dp)
 @Composable
 internal fun TermsTable(onAllTermsChecked: () -> Unit) {
     var isAllTermsChecked by remember { mutableStateOf(false) }
-    val termCheckStates = remember { mutableStateListOf(false, false, false) }
-    val termCheckboxColor = CheckboxDefaults.colors(
+    val termsCheckState = remember { mutableStateListOf(false, false, false) }
+    val termsCheckboxColor = CheckboxDefaults.colors(
         checkedColor = ColorAsset.Primary,
         uncheckedColor = ColorAsset.G4,
         checkmarkColor = GradientAsset.EndColor
@@ -55,21 +55,21 @@ internal fun TermsTable(onAllTermsChecked: () -> Unit) {
 
     fun toggleAllTermsCheck() {
         if (isAllTermsChecked) {
-            termCheckStates[0] = false
-            termCheckStates[1] = false
-            termCheckStates[2] = false
+            termsCheckState[0] = false
+            termsCheckState[1] = false
+            termsCheckState[2] = false
             isAllTermsChecked = false
         } else {
-            termCheckStates[0] = true
-            termCheckStates[1] = true
-            termCheckStates[2] = true
+            termsCheckState[0] = true
+            termsCheckState[1] = true
+            termsCheckState[2] = true
             isAllTermsChecked = true
             onAllTermsChecked()
         }
     }
 
     fun checkAllChecked() {
-        if (termCheckStates.all { it }) {
+        if (termsCheckState.all { it }) {
             isAllTermsChecked = true
             onAllTermsChecked()
         } else {
@@ -96,7 +96,7 @@ internal fun TermsTable(onAllTermsChecked: () -> Unit) {
                 onCheckedChange = {
                     toggleAllTermsCheck()
                 },
-                colors = termCheckboxColor
+                colors = termsCheckboxColor
             )
             Text(
                 modifier = Modifier.padding(start = HorizontalPadding),
@@ -123,12 +123,12 @@ internal fun TermsTable(onAllTermsChecked: () -> Unit) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Checkbox(
-                        checked = termCheckStates[number],
+                        checked = termsCheckState[number],
                         onCheckedChange = {
-                            termCheckStates[number] = !termCheckStates[number]
+                            termsCheckState[number] = !termsCheckState[number]
                             checkAllChecked()
                         },
-                        colors = termCheckboxColor
+                        colors = termsCheckboxColor
                     )
                     Text(
                         modifier = Modifier.padding(start = HorizontalPadding),
