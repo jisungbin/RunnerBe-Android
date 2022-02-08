@@ -241,9 +241,9 @@ class OnboardActivity : ComponentActivity() {
                                 )
                             }
                         }
-                        composable(route = Step.VerifyWithEmployeeID.name) {
+                        composable(route = Step.VerifyWithEmployeeId.name) {
                         }
-                        composable(route = Step.EmployeeIDVerifyRequestDone.name) {
+                        composable(route = Step.EmployeeIdVerifyRequestDone.name) {
                         }
                     }
                 }
