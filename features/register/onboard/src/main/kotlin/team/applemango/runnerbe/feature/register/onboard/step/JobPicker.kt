@@ -79,17 +79,14 @@ internal fun JobPicker(jobSelectChanged: (isSelected: Boolean) -> Unit) {
         listOf(Job.PSM, Job.DES),
         listOf(Job.MPR, Job.SER, Job.PRO),
         listOf(Job.RES, Job.SAF, Job.MED),
-        listOf(Job.HUR, Job.ACC, Job.CS)
+        listOf(Job.HUR, Job.ACC, Job.CUS)
     )
 
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = (35 - 16).dp),
-        verticalArrangement = Arrangement.spacedBy(
-            space = 16.dp,
-            alignment = Alignment.CenterVertically
-        ),
+        verticalArrangement = Arrangement.spacedBy(space = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         items(jobLists) { jobList ->

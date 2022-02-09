@@ -23,5 +23,5 @@ internal enum class Job(val string: String) {
     MED("의료"),
     HUR("인사"),
     ACC("제무/회계"),
-    CS("CUS")
+    CUS("CS")
 }
