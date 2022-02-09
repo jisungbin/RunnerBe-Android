@@ -48,11 +48,6 @@ internal object StringAsset {
         const val CheckLocateTerm = "[필수] 위치기반 서비스 이용약관 동의"
     }
 
-    object Gender {
-        const val Female = "여성"
-        const val Male = "남성"
-    }
-
     object Hint {
         const val AgeNotice = "19세 미만은 이용할 수 없어요!"
         const val BaseEmail = "runnerbee@company.com"

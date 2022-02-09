@@ -9,7 +9,7 @@
 
 package team.applemango.runnerbe.feature.register.onboard.constant
 
-enum class Job(val string: String) {
+internal enum class Job(val string: String) {
     PSV("공무원"),
     EDU("교육"),
     DEV("개발"),

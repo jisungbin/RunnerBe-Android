@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.edit
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import team.applemango.runnerbe.feature.register.onboard.constant.Gender
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.compose.util.collectWithLifecycleRememberOnLaunchedEffect
@@ -40,10 +41,6 @@ import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.dataStore
 
 private val GenderShape = RoundedCornerShape(20.dp)
-
-private enum class Gender(val string: String) {
-    Male("남성"), Female("여성")
-}
 
 @Composable
 internal fun GenderPicker(genderSelectChanged: (isSelected: Boolean) -> Unit) {
