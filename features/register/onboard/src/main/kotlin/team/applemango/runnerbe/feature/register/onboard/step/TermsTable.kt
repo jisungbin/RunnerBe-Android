@@ -103,7 +103,7 @@ internal fun TermsTable(onAllTermsCheckStateChanged: (allChecked: Boolean) -> Un
         if (preferences[DataStoreKey.Onboard.TermsAllCheck] == true) {
             toggleAllTermsCheck()
         }
-        cancel("onboard rollback execute must be once.")
+        cancel("onboard restore execute must be once.")
     }
 
     Column(

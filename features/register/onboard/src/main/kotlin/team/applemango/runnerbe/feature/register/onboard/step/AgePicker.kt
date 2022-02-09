@@ -62,7 +62,7 @@ internal fun AgePicker() {
             wheelPicker.setValue(restoreYear)
             selectedYearFlow.emit(restoreYear)
         }
-        cancel("onboard rollback execute must be once.")
+        cancel("onboard restore execute must be once.")
     }
     selectedYearFlow.collectWithLifecycleRememberOnLaunchedEffect(debounceTimeout = 300L) { year ->
         context.dataStore.edit { preferences ->
