@@ -1,3 +1,5 @@
+@file:Suppress("PrivatePropertyName")
+
 package team.applemango.runnerbe.xml.numberpicker
 
 import android.content.Context
@@ -7,11 +9,11 @@ import android.graphics.Paint
 import android.graphics.Typeface
 import android.os.Build
 import android.util.AttributeSet
-import android.view.*
+import android.view.* // ktlint-disable no-wildcard-imports
 import android.view.animation.DecelerateInterpolator
 import android.widget.OverScroller
 import androidx.core.content.ContextCompat
-import java.util.*
+import java.util.* // ktlint-disable no-wildcard-imports
 import kotlin.math.abs
 import kotlin.math.max
 

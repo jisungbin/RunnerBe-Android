@@ -22,4 +22,5 @@ object ProjectConstants {
     const val HomeNotification = ":features:home:notification"
     const val RegisterSnsLogin = ":features:register:snslogin"
     const val RegisterOnboard = ":features:register:onboard"
+    const val XmlNumberPicker = ":xml:numberpicker"
 }

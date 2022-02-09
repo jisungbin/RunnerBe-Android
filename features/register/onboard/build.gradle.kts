@@ -25,5 +25,6 @@ dependencies {
     implementation(Dependencies.Browser)
     implementationProject(ProjectConstants.HomeBoard)
     implementationProject(ProjectConstants.Presentation)
+    implementationProject(ProjectConstants.XmlNumberPicker)
     installSharedComposeHiltTest()
 }
