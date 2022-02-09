@@ -9,6 +9,7 @@
 
 package team.applemango.runnerbe.feature.register.onboard.step
 
+import android.content.Context
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,7 +28,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.datastore.preferences.core.edit
-import io.github.jisungbin.logeukes.logeukes
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
@@ -44,19 +45,28 @@ import team.applemango.runnerbe.xml.numberpicker.WheelPicker
 import java.util.Calendar
 
 private val nowYear = Calendar.getInstance().get(Calendar.YEAR)
-private val defaultSelectedYear = nowYear / 2
 
 @Composable
 internal fun AgePicker() {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
-    val selectedYearFlow = remember { MutableStateFlow(defaultSelectedYear) }
-    val selectedYearState by selectedYearFlow.collectAsStateWithLifecycleRemember(
-        defaultSelectedYear
-    )
+    val selectedYearFlow = remember { MutableStateFlow(nowYear) }
+    val selectedYearState by selectedYearFlow.collectAsStateWithLifecycleRemember(nowYear)
+    val wheelPicker = WheelPicker(context) { year ->
+        coroutineScope.launch {
+            selectedYearFlow.emit(year)
+        }
+    }
+    context.dataStore.data.collectWithLifecycleRememberOnLaunchedEffect { preferences ->
+        preferences[DataStoreKey.Onboard.Year]?.let { restoreYear ->
+            wheelPicker.setValue(restoreYear)
+            selectedYearFlow.emit(restoreYear)
+        }
+        cancel("onboard rollback execute must be once.")
+    }
     selectedYearFlow.collectWithLifecycleRememberOnLaunchedEffect(debounceTimeout = 300L) { year ->
         context.dataStore.edit { preferences ->
-            preferences[DataStoreKey.Onboard.Birthday] = year
+            preferences[DataStoreKey.Onboard.Year] = year
         }
     }
     Column(
@@ -66,28 +76,8 @@ internal fun AgePicker() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Divider(modifier = Modifier.fillMaxWidth(), color = ColorAsset.G5, thickness = 1.dp)
-        AndroidView(modifier = Modifier.height(250.dp), factory = { context ->
-            WheelPicker(context).apply {
-                setSelectedTextColor(presentationColorOf(context, "primary"))
-                setUnselectedTextColor(presentationColorOf(context, "G4"))
-                setTypeface(FontTypeface.Roboto.getM(context)) // can null
-                setWrapSelectorWheel(true)
-                setWheelItemCount(5)
-                setMinValue(nowYear - 80)
-                setMaxValue(nowYear)
-                setValue(defaultSelectedYear)
-                setOnValueChangedListener(object : OnValueChangeListener {
-                    override fun onValueChange(
-                        picker: WheelPicker,
-                        oldVal: Int,
-                        newVal: Int,
-                    ) {
-                        coroutineScope.launch {
-                            selectedYearFlow.emit(newVal)
-                        }
-                    }
-                })
-            }
+        AndroidView(modifier = Modifier.height(250.dp), factory = {
+            wheelPicker
         })
         Divider(modifier = Modifier.fillMaxWidth(), color = ColorAsset.G5, thickness = 1.dp)
         AnimatedVisibility(
@@ -102,4 +92,26 @@ internal fun AgePicker() {
             )
         }
     }
+}
+
+private fun WheelPicker(
+    context: Context,
+    onNumberChangeListener: (number: Int) -> Unit,
+) = WheelPicker(context).apply {
+    setSelectedTextColor(presentationColorOf(context, "primary"))
+    setUnselectedTextColor(presentationColorOf(context, "G4"))
+    setTypeface(FontTypeface.Roboto.getM(context)) // can null
+    setWrapSelectorWheel(true)
+    setWheelItemCount(5)
+    setMinValue(nowYear - 80)
+    setMaxValue(nowYear)
+    setOnValueChangedListener(object : OnValueChangeListener {
+        override fun onValueChange(
+            picker: WheelPicker,
+            oldVal: Int,
+            newVal: Int,
+        ) {
+            onNumberChangeListener(newVal)
+        }
+    })
 }

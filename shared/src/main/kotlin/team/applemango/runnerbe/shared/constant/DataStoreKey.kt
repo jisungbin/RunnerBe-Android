@@ -21,7 +21,7 @@ object DataStoreKey {
 
     object Onboard {
         val TermsAllCheck = booleanPreferencesKey("onboard-terms_all_check")
-        val Birthday = intPreferencesKey("onboard-birthday")
+        val Year = intPreferencesKey("onboard-birthday")
         val Gender = stringPreferencesKey("onboard-gender")
         val Job = stringPreferencesKey("onboard-job")
         val VerifyWithEmail = booleanPreferencesKey("onboard-verify_with_email")
