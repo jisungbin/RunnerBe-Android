@@ -739,8 +739,10 @@ class WheelPicker @JvmOverloads constructor(
      *
      * @param typeface the custom typeface object
      */
-    fun setTypeface(typeface: Typeface) {
-        mTextPaint.typeface = typeface
+    fun setTypeface(typeface: Typeface?) {
+        if (typeface != null) {
+            mTextPaint.typeface = typeface
+        }
     }
 
     /**

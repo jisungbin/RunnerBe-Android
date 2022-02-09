@@ -42,7 +42,7 @@ internal fun AgePicker() {
             WheelPicker(context).apply {
                 setSelectedTextColor(presentationColorOf(context, "primary"))
                 setUnselectedTextColor(presentationColorOf(context, "G4"))
-                setTypeface(FontTypeface.Roboto.getM(context))
+                setTypeface(FontTypeface.Roboto.getM(context)) // can null
                 setWrapSelectorWheel(true)
                 setWheelItemCount(5)
                 setMinValue(nowYear - 80)
