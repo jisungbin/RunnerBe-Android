@@ -19,33 +19,52 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.datastore.preferences.core.edit
+import io.github.jisungbin.logeukes.logeukes
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.FontTypeface
 import team.applemango.runnerbe.shared.compose.theme.Typography
+import team.applemango.runnerbe.shared.compose.util.collectAsStateWithLifecycleRemember
+import team.applemango.runnerbe.shared.compose.util.collectWithLifecycleRememberOnLaunchedEffect
 import team.applemango.runnerbe.shared.compose.util.presentationColorOf
+import team.applemango.runnerbe.shared.constant.DataStoreKey
+import team.applemango.runnerbe.shared.util.extension.dataStore
 import team.applemango.runnerbe.xml.numberpicker.OnValueChangeListener
 import team.applemango.runnerbe.xml.numberpicker.WheelPicker
 import java.util.Calendar
 
 private val nowYear = Calendar.getInstance().get(Calendar.YEAR)
+private val defaultSelectedYear = nowYear / 2
 
 @Composable
 internal fun AgePicker() {
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+    val selectedYearFlow = remember { MutableStateFlow(defaultSelectedYear) }
+    val selectedYearState by selectedYearFlow.collectAsStateWithLifecycleRemember(
+        defaultSelectedYear
+    )
+    selectedYearFlow.collectWithLifecycleRememberOnLaunchedEffect(debounceTimeout = 300L) { year ->
+        context.dataStore.edit { preferences ->
+            preferences[DataStoreKey.Onboard.Birthday] = year
+        }
+    }
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        var selectedYear by remember { mutableStateOf(nowYear / 2) }
         Divider(modifier = Modifier.fillMaxWidth(), color = ColorAsset.G5, thickness = 1.dp)
         AndroidView(modifier = Modifier.height(250.dp), factory = { context ->
             WheelPicker(context).apply {
@@ -56,14 +75,16 @@ internal fun AgePicker() {
                 setWheelItemCount(5)
                 setMinValue(nowYear - 80)
                 setMaxValue(nowYear)
-                setValue(nowYear / 2)
+                setValue(defaultSelectedYear)
                 setOnValueChangedListener(object : OnValueChangeListener {
                     override fun onValueChange(
                         picker: WheelPicker,
                         oldVal: Int,
                         newVal: Int,
                     ) {
-                        selectedYear = newVal
+                        coroutineScope.launch {
+                            selectedYearFlow.emit(newVal)
+                        }
                     }
                 })
             }
@@ -73,7 +94,7 @@ internal fun AgePicker() {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 12.dp),
-            visible = nowYear - selectedYear <= 19
+            visible = nowYear - selectedYearState <= 19
         ) {
             Text(
                 text = StringAsset.Hint.AgeNotice,

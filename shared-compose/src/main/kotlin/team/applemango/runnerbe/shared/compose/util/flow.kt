@@ -19,24 +19,31 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.debounce
 
+@OptIn(FlowPreview::class)
 @SuppressLint("ComposableNaming")
 @Composable
 fun <T> Flow<T>.collectWithLifecycleRememberOnLaunchedEffect(
     minActiveState: Lifecycle.State = Lifecycle.State.STARTED,
-    action: CoroutineScope.(T) -> Unit,
+    debounceTimeout: Long = 0L,
+    action: suspend CoroutineScope.(T) -> Unit,
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     val flowLifecycleAware = remember(this, lifecycleOwner) {
         flowWithLifecycle(lifecycleOwner.lifecycle, minActiveState)
     }
     LaunchedEffect(Unit) {
-        flowLifecycleAware.cancellable().collect {
-            action(it)
-        }
+        flowLifecycleAware
+            .debounce(debounceTimeout)
+            .cancellable()
+            .collect {
+                action(it)
+            }
     }
 }
 
