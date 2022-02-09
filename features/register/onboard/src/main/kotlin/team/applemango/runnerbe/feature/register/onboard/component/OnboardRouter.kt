@@ -29,7 +29,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,7 +46,6 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.skydoves.landscapist.rememberDrawablePainter
-import io.github.jisungbin.logeukes.logeukes
 import team.applemango.runnerbe.feature.home.board.BoardActivity
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.step.TermsTable
@@ -67,15 +65,21 @@ internal fun OnboardRouter() {
     val activity = context as Activity
     var enableGoNextStep by remember { mutableStateOf(false) }
     var stepIndex by remember { mutableStateOf(0) }
-    val navController = rememberAnimatedNavController()
     var stepIndexString by remember { mutableStateOf("") }
+    val navController = rememberAnimatedNavController()
 
     if (stepIndex != 0) {
         stepIndexString = "$stepIndex/4"
     }
 
-    logeukes {
-        navController.currentBackStackEntryAsState().value?.destination?.route
+    stepIndex = when (navController.currentBackStackEntryAsState().value?.destination?.route) {
+        Step.Terms.name -> 0
+        Step.Birthday.name -> 1
+        Step.Gender.name -> 2
+        Step.Job.name -> 3
+        Step.VerifyWithEmail.name, Step.VerifyWithEmployeeId.name -> 4
+        Step.VerifyWithEmailDone.name, Step.VerifyWithEmployeeIdRequestDone.name -> 0
+        else -> stepIndex
     }
 
     Column(
@@ -209,10 +213,10 @@ internal fun OnboardRouter() {
                     )
                 }
             }
-            // 사원증으로 인증, 무조건 Step.VerifyWithEmail 을 거쳐야 이 step 으로 올 수 있음
-            composable(route = Step.VerifyWithEmployeeId.name) {
+            composable(route = Step.VerifyWithEmployeeId.name) { // 사원증으로 인증
+                // 무조건 Step.VerifyWithEmail 을 거쳐야 이 step 으로 올 수 있음
                 OnboardContent(
-                    step = Step.VerifyWithEmailDone,
+                    step = Step.VerifyWithEmployeeId,
                     bottomCTAButtonEnabled = true,
                     onBottomCTAButtonAction = { // 인증하기
                         navController.navigate(Step.VerifyWithEmployeeIdRequestDone.name)
@@ -242,7 +246,7 @@ internal fun OnboardRouter() {
             }
             composable(route = Step.VerifyWithEmployeeIdRequestDone.name) { // 사원증 제출 완료
                 OnboardContent(
-                    step = Step.VerifyWithEmailDone,
+                    step = Step.VerifyWithEmployeeIdRequestDone,
                     bottomCTAButtonEnabled = true,
                     onBottomCTAButtonAction = { // 메인 화면으로
                         activity.changeActivityWithAnimation<BoardActivity>()
