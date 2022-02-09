@@ -36,9 +36,7 @@ class OnboardActivity : ComponentActivity() {
                 LaunchedEffect(Unit) {
                     systemUiController.setSystemBarsColor(Color.Transparent)
                 }
-                OnboardRouter {
-                    finish() // on back pressed action without pop navigate
-                }
+                OnboardRouter()
             }
         }
     }

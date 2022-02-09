@@ -9,8 +9,6 @@
 
 package team.applemango.runnerbe.activity
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.animation.AnticipateInterpolator
@@ -18,10 +16,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import team.applemango.runnerbe.feature.home.board.BoardActivity
 import team.applemango.runnerbe.shared.constant.DataStoreKey
+import team.applemango.runnerbe.shared.util.extension.changeActivityWithAnimation
 import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.util.extension.dataStore
-import team.applemango.runnerbe.shared.compose.util.DFMLoginActivityAlias
-import team.applemango.runnerbe.shared.compose.util.DFMOnboardActivityAlias
+import team.applemango.runnerbe.util.DFMLoginActivityAlias
+import team.applemango.runnerbe.util.DFMOnboardActivityAlias
 
 class StartActivity : AppCompatActivity() {
 
@@ -34,16 +33,16 @@ class StartActivity : AppCompatActivity() {
             val isSnsLoginDone = preferences[DataStoreKey.Login.Uuid] != null
             when {
                 isSignedUser -> { // JWT 존재
-                    openActivity<BoardActivity>() // XXX
+                    changeActivityWithAnimation<BoardActivity>() // XXX
                     // 얜 fragment 이여야 함
                     return@collectWithLifecycle
                 }
                 isSnsLoginDone -> { // SNS 로그인 완료 -> 온보딩 페이지로 이동
-                    openActivity<DFMOnboardActivityAlias>()
+                    changeActivityWithAnimation<DFMOnboardActivityAlias>()
                     return@collectWithLifecycle
                 }
                 !isSnsLoginDone -> { // SNS 로그인 하기 전
-                    openActivity<DFMLoginActivityAlias>()
+                    changeActivityWithAnimation<DFMLoginActivityAlias>()
                     return@collectWithLifecycle
                 }
             }
@@ -63,11 +62,5 @@ class StartActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    private inline fun <reified T : Activity> openActivity() {
-        startActivity(Intent(this, T::class.java))
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-        finish()
     }
 }

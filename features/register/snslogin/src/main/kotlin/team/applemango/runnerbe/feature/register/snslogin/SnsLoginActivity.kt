@@ -9,7 +9,6 @@
 
 package team.applemango.runnerbe.feature.register.snslogin
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
 import android.widget.Toast
@@ -33,12 +32,13 @@ import team.applemango.runnerbe.feature.register.snslogin.di.module.UseCaseModul
 import team.applemango.runnerbe.feature.register.snslogin.di.module.ViewModelModule
 import team.applemango.runnerbe.feature.register.snslogin.mvi.LoginSideEffect
 import team.applemango.runnerbe.feature.register.snslogin.mvi.LoginState
-import team.applemango.runnerbe.shared.compose.util.DFMOnboardActivityAlias
 import team.applemango.runnerbe.shared.constant.DataStoreKey
+import team.applemango.runnerbe.shared.util.extension.changeActivityWithAnimation
 import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.util.extension.dataStore
 import team.applemango.runnerbe.shared.util.extension.launchedWhenCreated
 import team.applemango.runnerbe.shared.util.extension.toast
+import team.applemango.runnerbe.util.DFMOnboardActivityAlias
 import javax.inject.Inject
 
 class SnsLoginActivity : ComponentActivity() {
@@ -80,9 +80,10 @@ class SnsLoginActivity : ComponentActivity() {
         }
     }
 
+    // 백스택 안 남긴 이유는 OnboardRouter 뒤로가기 버튼 clickable modifier 주석 참고
     private fun handleState(state: LoginState) {
         if (state.success) {
-            startActivity(Intent(this, DFMOnboardActivityAlias::class.java))
+            changeActivityWithAnimation<DFMOnboardActivityAlias>()
         }
     }
 

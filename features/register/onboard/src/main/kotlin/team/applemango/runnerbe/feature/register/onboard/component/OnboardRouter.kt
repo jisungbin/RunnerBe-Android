@@ -9,6 +9,7 @@
 
 package team.applemango.runnerbe.feature.register.onboard.component
 
+import android.app.Activity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
@@ -49,14 +50,17 @@ import team.applemango.runnerbe.feature.register.onboard.step.TermsTable
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
-import team.applemango.runnerbe.shared.compose.util.presentationDrawableOf
 import team.applemango.runnerbe.shared.constant.DataStoreKey
+import team.applemango.runnerbe.shared.util.extension.changeActivityWithAnimation
 import team.applemango.runnerbe.shared.util.extension.dataStore
+import team.applemango.runnerbe.util.DFMLoginActivityAlias
+import team.applemango.runnerbe.util.presentationDrawableOf
 
 @Composable
 @OptIn(ExperimentalAnimationApi::class)
-internal fun OnboardRouter(onBackPressedActionWithoutPopNavigate: () -> Unit) {
+internal fun OnboardRouter() {
     val context = LocalContext.current
+    val activity = context as Activity
     var enableGoNextStep by remember { mutableStateOf(false) }
     var stepIndex by remember { mutableStateOf(0) }
     val navController = rememberAnimatedNavController()
@@ -77,8 +81,14 @@ internal fun OnboardRouter(onBackPressedActionWithoutPopNavigate: () -> Unit) {
         ) {
             Image(
                 modifier = Modifier.clickable { // < 뒤로가기
-                    if (navController.popBackStack()) {
-                        onBackPressedActionWithoutPopNavigate()
+                    if (!navController.popBackStack()) { // 뒤로 갈 수 있는 백스택이 없다면 로그인 화면으로 돌아가야 함
+                        // SnsLoginActivity 에서 백스택을 남기고
+                        // 여기서 바로 finish 를 통해 뒤로 가게 된다면 가능 하지만,
+                        // 만약 로그인만 완료한 상태에서 앱을 종료해서 바로 이 화면으로 오게 된다면
+                        // finish 를 했을 때 백스택이 없어서 앱 자체가 닫힘
+                        // 따라서 SnsLoginActivity 와 OnboardRouter 둘 다 백스택을 없애고
+                        // 개별 startActivity 를 호출하는 식으로 구성
+                        activity.changeActivityWithAnimation<DFMLoginActivityAlias>()
                     }
                 },
                 painter = rememberDrawablePainter(presentationDrawableOf("ic_round_arrow_left_24")),

@@ -48,8 +48,8 @@ import team.applemango.runnerbe.feature.register.onboard.util.Web
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
-import team.applemango.runnerbe.shared.compose.util.collectWithLifecycleRememberOnLaunchedEffect
-import team.applemango.runnerbe.shared.compose.util.presentationDrawableOf
+import team.applemango.runnerbe.util.collectWithLifecycleRememberOnLaunchedEffect
+import team.applemango.runnerbe.util.presentationDrawableOf
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.dataStore
 

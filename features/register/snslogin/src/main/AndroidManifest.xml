@@ -28,7 +28,7 @@
             android:theme="@style/Theme.RunnerBe" />
 
         <activity-alias
-            android:name="team.applemango.runnerbe.shared.compose.util.DFMLoginActivityAlias"
+            android:name="team.applemango.runnerbe.util.DFMLoginActivityAlias"
             android:targetActivity=".SnsLoginActivity" />
     </application>
 

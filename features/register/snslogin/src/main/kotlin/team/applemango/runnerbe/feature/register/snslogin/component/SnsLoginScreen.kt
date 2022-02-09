@@ -35,8 +35,8 @@ import team.applemango.runnerbe.feature.register.snslogin.SnsLoginViewModel
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.FontAsset
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
-import team.applemango.runnerbe.shared.compose.util.presentationDrawableOf
-import team.applemango.runnerbe.shared.compose.util.presentationStringOf
+import team.applemango.runnerbe.util.presentationDrawableOf
+import team.applemango.runnerbe.util.presentationStringOf
 
 @Composable
 internal fun SnsLoginScreen(vm: SnsLoginViewModel) {
