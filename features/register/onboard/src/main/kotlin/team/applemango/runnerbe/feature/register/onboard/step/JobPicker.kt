@@ -9,21 +9,23 @@
 
 package team.applemango.runnerbe.feature.register.onboard.step
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.edit
-import com.google.accompanist.flowlayout.FlowCrossAxisAlignment
-import com.google.accompanist.flowlayout.FlowMainAxisAlignment
-import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.register.onboard.constant.Job
@@ -46,7 +48,7 @@ internal fun JobPicker(jobSelectChanged: (isSelected: Boolean) -> Unit) {
         cancel("onboard restore execute must be once.")
     }
 
-    FlowRow(
+    /*FlowRow(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = (35 - 16).dp),
@@ -66,6 +68,45 @@ internal fun JobPicker(jobSelectChanged: (isSelected: Boolean) -> Unit) {
                 coroutineScope.launch {
                     context.dataStore.edit { preferences ->
                         preferences[DataStoreKey.Onboard.Job] = job.name // code
+                    }
+                }
+            }
+        }
+    }*/
+
+    val jobLists = listOf(
+        listOf(Job.PSV, Job.EDU, Job.DEV),
+        listOf(Job.PSM, Job.DES),
+        listOf(Job.MPR, Job.SER, Job.PRO),
+        listOf(Job.RES, Job.SAF, Job.MED),
+        listOf(Job.HUR, Job.ACC, Job.CS)
+    )
+
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = (35 - 16).dp),
+        verticalArrangement = Arrangement.spacedBy(
+            space = 16.dp,
+            alignment = Alignment.CenterVertically
+        ),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        items(jobLists) { jobList ->
+            LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                items(jobList) { job ->
+                    ToggleButton(
+                        target = job,
+                        selectState = jobSelectState,
+                        targetStringBuilder = { job.string }
+                    ) {
+                        jobSelectState = job
+                        jobSelectChanged(true)
+                        coroutineScope.launch {
+                            context.dataStore.edit { preferences ->
+                                preferences[DataStoreKey.Onboard.Job] = job.name // code
+                            }
+                        }
                     }
                 }
             }

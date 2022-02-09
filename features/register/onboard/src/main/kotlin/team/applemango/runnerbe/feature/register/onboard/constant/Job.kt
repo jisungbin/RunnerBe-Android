@@ -17,6 +17,7 @@ internal enum class Job(val string: String) {
     DES("디자인"),
     MPR("마케팅/PR"),
     SER("서비스"),
+    PRO("생산"),
     RES("연구"),
     SAF("영업/제휴"),
     MED("의료"),
