@@ -50,6 +50,7 @@ import io.github.jisungbin.logeukes.logeukes
 import team.applemango.runnerbe.feature.home.board.BoardActivity
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.step.GenderPicker
+import team.applemango.runnerbe.feature.register.onboard.step.JobPicker
 import team.applemango.runnerbe.feature.register.onboard.step.TermsTable
 import team.applemango.runnerbe.feature.register.onboard.step.YearPicker
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
@@ -167,7 +168,6 @@ internal fun OnboardRouter(navController: NavHostController) {
                     }
                 ) {
                     YearPicker(selectedYearChanged = { isAdult ->
-                        logeukes { isAdult }
                         enableGoNextStep = isAdult
                     })
                 }
@@ -193,11 +193,9 @@ internal fun OnboardRouter(navController: NavHostController) {
                         navController.navigate(Step.VerifyWithEmail.name)
                     }
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(color = Color(0xFFE6EE9C))
-                    )
+                    JobPicker(jobSelectChanged = { isSelected ->
+                        enableGoNextStep = isSelected
+                    })
                 }
             }
             composable(route = Step.VerifyWithEmail.name) { // 회사 이메일로 직장 인증

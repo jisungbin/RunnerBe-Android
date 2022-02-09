@@ -9,3 +9,66 @@
 
 package team.applemango.runnerbe.feature.register.onboard.step
 
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import androidx.datastore.preferences.core.edit
+import com.google.accompanist.flowlayout.FlowCrossAxisAlignment
+import com.google.accompanist.flowlayout.FlowMainAxisAlignment
+import com.google.accompanist.flowlayout.FlowRow
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
+import team.applemango.runnerbe.feature.register.onboard.constant.Job
+import team.applemango.runnerbe.shared.compose.component.ToggleButton
+import team.applemango.runnerbe.shared.compose.util.collectWithLifecycleRememberOnLaunchedEffect
+import team.applemango.runnerbe.shared.constant.DataStoreKey
+import team.applemango.runnerbe.shared.util.extension.dataStore
+
+@Composable
+internal fun JobPicker(jobSelectChanged: (isSelected: Boolean) -> Unit) {
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+    var jobSelectState by remember { mutableStateOf<Job?>(null) }
+
+    context.dataStore.data.collectWithLifecycleRememberOnLaunchedEffect { preferences ->
+        preferences[DataStoreKey.Onboard.Job]?.let { restoreJobCode ->
+            jobSelectChanged(true)
+            jobSelectState = Job.values().first { it.name == restoreJobCode }
+        } ?: jobSelectChanged(false)
+        cancel("onboard restore execute must be once.")
+    }
+
+    FlowRow(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = (35 - 16).dp),
+        mainAxisAlignment = FlowMainAxisAlignment.Center,
+        mainAxisSpacing = 12.dp,
+        crossAxisAlignment = FlowCrossAxisAlignment.Center,
+        crossAxisSpacing = 16.dp,
+    ) {
+        Job.values().forEach { job ->
+            ToggleButton(
+                target = job,
+                selectState = jobSelectState,
+                targetStringBuilder = { job.string }
+            ) {
+                jobSelectState = job
+                jobSelectChanged(true)
+                coroutineScope.launch {
+                    context.dataStore.edit { preferences ->
+                        preferences[DataStoreKey.Onboard.Job] = job.name // code
+                    }
+                }
+            }
+        }
+    }
+}

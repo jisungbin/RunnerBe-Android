@@ -50,23 +50,23 @@ private val nowYear = Calendar.getInstance().get(Calendar.YEAR)
 internal fun YearPicker(selectedYearChanged: (isAdult: Boolean) -> Unit) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
-    val selectedYearFlow = remember { MutableStateFlow(nowYear) }
-    val selectedYearState by selectedYearFlow.collectAsStateWithLifecycleRemember(nowYear)
+    val yearSelectFlow = remember { MutableStateFlow(nowYear) }
+    val yearSelectState by yearSelectFlow.collectAsStateWithLifecycleRemember(nowYear)
     val wheelPicker = WheelPicker(context) { year ->
         selectedYearChanged(nowYear - year > 19)
         coroutineScope.launch {
-            selectedYearFlow.emit(year)
+            yearSelectFlow.emit(year)
         }
     }
     context.dataStore.data.collectWithLifecycleRememberOnLaunchedEffect { preferences ->
         preferences[DataStoreKey.Onboard.Year]?.let { restoreYear ->
             wheelPicker.setValue(restoreYear)
-            selectedYearFlow.emit(restoreYear)
+            yearSelectFlow.emit(restoreYear)
             selectedYearChanged(nowYear - restoreYear > 19)
         } ?: selectedYearChanged(false)
         cancel("onboard restore execute must be once.")
     }
-    selectedYearFlow.collectWithLifecycleRememberOnLaunchedEffect(debounceTimeout = 300L) { year ->
+    yearSelectFlow.collectWithLifecycleRememberOnLaunchedEffect(debounceTimeout = 300L) { year ->
         context.dataStore.edit { preferences ->
             preferences[DataStoreKey.Onboard.Year] = year
         }
@@ -86,7 +86,7 @@ internal fun YearPicker(selectedYearChanged: (isAdult: Boolean) -> Unit) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 12.dp),
-            visible = nowYear - selectedYearState <= 19
+            visible = nowYear - yearSelectState <= 19
         ) {
             Text(
                 text = StringAsset.Hint.AgeNotice,
