@@ -21,9 +21,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import io.github.jisungbin.logeukes.logeukes
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
+import team.applemango.runnerbe.shared.compose.theme.FontTypeface
 import team.applemango.runnerbe.shared.compose.util.presentationColorOf
 import team.applemango.runnerbe.xml.numberpicker.OnValueChangeListener
 import team.applemango.runnerbe.xml.numberpicker.WheelPicker
+import java.util.Calendar
+
+private val nowYear = Calendar.getInstance().get(Calendar.YEAR)
 
 @Composable
 internal fun AgePicker() {
@@ -38,8 +42,12 @@ internal fun AgePicker() {
             WheelPicker(context).apply {
                 setSelectedTextColor(presentationColorOf(context, "primary"))
                 setUnselectedTextColor(presentationColorOf(context, "G4"))
+                setTypeface(FontTypeface.Roboto.getM(context))
                 setWrapSelectorWheel(true)
                 setWheelItemCount(5)
+                setMinValue(nowYear - 80)
+                setMaxValue(nowYear)
+                setValue(nowYear / 2)
                 setOnValueChangedListener(object : OnValueChangeListener {
                     override fun onValueChange(
                         picker: WheelPicker,

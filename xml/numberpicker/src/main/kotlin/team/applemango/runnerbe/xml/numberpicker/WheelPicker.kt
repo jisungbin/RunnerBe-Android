@@ -616,9 +616,8 @@ class WheelPicker @JvmOverloads constructor(
         }
     }
 
-    private fun getPosition(value: String): Int {
+    private fun getPosition(position: Int): Int {
         return try {
-            val position = value.toInt()
             validatePosition(position)
         } catch (e: NumberFormatException) {
             0
@@ -723,11 +722,11 @@ class WheelPicker @JvmOverloads constructor(
         changeValueBySteps(realPosition - mCurSelectedItemIndex)
     }
 
-    fun smoothScrollToValue(value: String) {
+    fun smoothScrollToValue(value: Int) {
         smoothScrollTo(getPosition(value))
     }
 
-    fun scrollToValue(value: String) {
+    fun scrollToValue(value: Int) {
         scrollTo(getPosition(value))
     }
 
@@ -812,7 +811,7 @@ class WheelPicker @JvmOverloads constructor(
         }
     }
 
-    fun setValue(value: String) {
+    fun setValue(value: Int) {
         scrollToValue(value)
     }
 

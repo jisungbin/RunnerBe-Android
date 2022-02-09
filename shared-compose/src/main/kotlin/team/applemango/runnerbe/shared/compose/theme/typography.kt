@@ -11,10 +11,12 @@
 
 package team.applemango.runnerbe.shared.compose.theme
 
+import android.content.Context
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.sp
+import androidx.core.content.res.ResourcesCompat
 import team.applemango.runnerbe.shared.compose.R
 
 private typealias font = R.font
@@ -22,7 +24,7 @@ private typealias font = R.font
 private fun Int.toFontFamily() = FontFamily(Font(this))
 
 object FontAsset {
-    val Aggro = R.font.aggro_l.toFontFamily()
+    val Aggro = font.aggro_l.toFontFamily()
 
     object NotoSans {
         val R = font.notosans_r.toFontFamily()
@@ -33,6 +35,12 @@ object FontAsset {
     object Roboto {
         val R = font.roboto_r.toFontFamily()
         val M = font.roboto_m.toFontFamily()
+    }
+}
+
+object FontTypeface {
+    object Roboto {
+        fun getM(context: Context) = ResourcesCompat.getFont(context, font.roboto_m)!!
     }
 }
 
