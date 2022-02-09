@@ -53,7 +53,7 @@ internal fun JobPicker(jobSelectChanged: (isSelected: Boolean) -> Unit) {
         mainAxisAlignment = FlowMainAxisAlignment.Center,
         mainAxisSpacing = 12.dp,
         crossAxisAlignment = FlowCrossAxisAlignment.Center,
-        crossAxisSpacing = 16.dp,
+        crossAxisSpacing = 6.dp,
     ) {
         Job.values().forEach { job ->
             ToggleButton(
