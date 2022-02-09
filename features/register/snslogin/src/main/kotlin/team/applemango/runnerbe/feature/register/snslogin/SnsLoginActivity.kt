@@ -32,7 +32,7 @@ import team.applemango.runnerbe.feature.register.snslogin.di.module.UseCaseModul
 import team.applemango.runnerbe.feature.register.snslogin.di.module.ViewModelModule
 import team.applemango.runnerbe.feature.register.snslogin.mvi.LoginSideEffect
 import team.applemango.runnerbe.feature.register.snslogin.mvi.LoginState
-import team.applemango.runnerbe.activity.util.DFMOnboardActivityAlias
+import team.applemango.runnerbe.util.DFMOnboardActivityAlias
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.changeActivityWithAnimation
 import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle

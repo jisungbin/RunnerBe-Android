@@ -53,7 +53,7 @@ import team.applemango.runnerbe.feature.register.onboard.step.TermsTable
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
-import team.applemango.runnerbe.activity.util.DFMLoginActivityAlias
+import team.applemango.runnerbe.util.DFMLoginActivityAlias
 import team.applemango.runnerbe.shared.compose.util.presentationDrawableOf
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.changeActivityWithAnimation

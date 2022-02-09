@@ -27,8 +27,8 @@ import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.util.extension.dataStore
 
+@OptIn(ExperimentalAnimationApi::class)
 class OnboardActivity : ComponentActivity() {
-    @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -67,6 +67,16 @@ class OnboardActivity : ComponentActivity() {
                             verifyWithEmployeeIdRequestDone
                         ).indexOfLast { it != null }
                         if (lastStepIndex != -1) {
+                            // NPE exception occur
+                            // https://github.com/applemango-runnerbe/RunnerBe-Android/issues/16
+                            /*(1..lastStepIndex).forEach { backstackIndex ->
+                                navController.backQueue.addLast(
+                                    NavBackStackEntry.create(
+                                        context = this@OnboardActivity,
+                                        destination = NavDestination(Step.values()[backstackIndex].name)
+                                    )
+                                )
+                            }*/
                             navController.navigate(Step.values()[lastStepIndex].name)
                         }
                         cancel("step restore execute must be once.")
