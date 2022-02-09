@@ -26,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
@@ -33,17 +34,18 @@ import androidx.lifecycle.LifecycleOwner
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.shared.util.extension.launchedWhenCreated
-import team.applemango.runnerbe.shared.compose.ColorAsset
-import team.applemango.runnerbe.shared.compose.Typography
+import team.applemango.runnerbe.shared.compose.theme.ColorAsset
+import team.applemango.runnerbe.shared.compose.theme.Typography
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-internal fun LifecycleOwner.OnboardContent(
+internal fun OnboardContent(
     step: Step,
     bottomCTAButtonEnabled: Boolean,
     onBottomCTAButtonAction: suspend () -> Unit,
     content: @Composable BoxScope.() -> Unit,
 ) {
+    val lifecycleOwner = LocalLifecycleOwner.current
     val title = when (step) {
         Step.Terms -> StringAsset.Title.ReadTerms
         Step.Birthday -> StringAsset.Title.InputYear
@@ -146,7 +148,7 @@ internal fun LifecycleOwner.OnboardContent(
                 },
             onClick = {
                 if (bottomCTAButtonEnabled) {
-                    launchedWhenCreated {
+                    lifecycleOwner.launchedWhenCreated {
                         onBottomCTAButtonAction()
                     }
                 }

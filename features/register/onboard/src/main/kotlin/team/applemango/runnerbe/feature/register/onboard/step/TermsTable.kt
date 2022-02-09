@@ -9,7 +9,6 @@
 
 package team.applemango.runnerbe.feature.register.onboard.step
 
-import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -28,7 +27,6 @@ import androidx.compose.material.Checkbox
 import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -43,10 +41,13 @@ import androidx.compose.ui.unit.dp
 import com.skydoves.landscapist.rememberDrawablePainter
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.util.Web
-import team.applemango.runnerbe.shared.util.presentationDrawableOf
-import team.applemango.runnerbe.shared.compose.ColorAsset
-import team.applemango.runnerbe.shared.compose.GradientAsset
-import team.applemango.runnerbe.shared.compose.Typography
+import team.applemango.runnerbe.shared.compose.theme.ColorAsset
+import team.applemango.runnerbe.shared.compose.theme.GradientAsset
+import team.applemango.runnerbe.shared.compose.theme.Typography
+import team.applemango.runnerbe.shared.compose.util.collectWithLifecycleRememberOnLaunchedEffect
+import team.applemango.runnerbe.shared.compose.util.presentationDrawableOf
+import team.applemango.runnerbe.shared.constant.DataStoreKey
+import team.applemango.runnerbe.shared.util.extension.dataStore
 
 private val VerticalPadding = 25.dp
 private val HorizontalPadding = 12.dp
@@ -55,7 +56,6 @@ private val TermsTableShape = RoundedCornerShape(10.dp)
 @Composable
 internal fun TermsTable(onAllTermsCheckStateChanged: (allChecked: Boolean) -> Unit) {
     val context = LocalContext.current
-    val activity = context as Activity
     var isAllTermsChecked by remember { mutableStateOf(false) }
     val termsCheckState = remember { mutableStateListOf(false, false, false) }
     val termsCheckboxColor = CheckboxDefaults.colors(
@@ -90,8 +90,9 @@ internal fun TermsTable(onAllTermsCheckStateChanged: (allChecked: Boolean) -> Un
         }
     }
 
-    LaunchedEffect(Unit) {
-        applicationContext.dataStore.data.collectWithLifecycle(this@TermsTable) {
+    context.dataStore.data.collectWithLifecycleRememberOnLaunchedEffect { preferences ->
+        if (preferences[DataStoreKey.Onboard.TermsAllCheck] == true) {
+            toggleAllTermsCheck()
         }
     }
 
@@ -176,7 +177,7 @@ internal fun TermsTable(onAllTermsCheckStateChanged: (allChecked: Boolean) -> Un
                     }
                     Image(
                         modifier = Modifier.clickable { Web.open(context, link) },
-                        painter = rememberDrawablePainter(activity.presentationDrawableOf("ic_round_arrow_right_24")),
+                        painter = rememberDrawablePainter(presentationDrawableOf("ic_round_arrow_right_24")),
                         contentDescription = null,
                         colorFilter = ColorFilter.tint(ColorAsset.G4)
                     )

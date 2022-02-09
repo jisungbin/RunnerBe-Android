@@ -9,20 +9,20 @@
 
 @file:Suppress("unused")
 
-package team.applemango.runnerbe.shared.compose
+package team.applemango.runnerbe.shared.compose.theme
 
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.sp
-import team.applemango.runnerbe.theme.R
+import team.applemango.runnerbe.shared.compose.R
 
 private typealias font = R.font
 
 private fun Int.toFontFamily() = FontFamily(Font(this))
 
 object FontAsset {
-    val Aggro = font.aggro_l.toFontFamily()
+    val Aggro = R.font.aggro_l.toFontFamily()
 
     object NotoSans {
         val R = font.notosans_r.toFontFamily()

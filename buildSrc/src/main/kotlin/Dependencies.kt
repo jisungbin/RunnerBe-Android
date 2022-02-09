@@ -22,7 +22,7 @@ object Versions {
     object Ktx {
         const val Core = "1.7.0"
         const val PlayCore = "1.8.1"
-        const val LifeCycle = "2.4.0"
+        const val Lifecycle = "2.4.0"
         const val Navigation = "2.4.0"
     }
 
@@ -99,8 +99,8 @@ object Dependencies {
 
     val SharedKtx = listOf(
         "androidx.core:core-ktx:${Versions.Ktx.Core}",
-        "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.Ktx.LifeCycle}",
-        "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.Ktx.LifeCycle}"
+        "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.Ktx.Lifecycle}",
+        "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.Ktx.Lifecycle}"
     )
 
     val PresentationOnlyKtx = listOf(

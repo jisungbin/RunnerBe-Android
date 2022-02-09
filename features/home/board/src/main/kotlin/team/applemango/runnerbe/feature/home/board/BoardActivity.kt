@@ -18,8 +18,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import team.applemango.runnerbe.shared.util.presentationStringOf
-import team.applemango.runnerbe.shared.compose.ColorAsset
+import team.applemango.runnerbe.shared.compose.util.presentationStringOf
+import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 
 class BoardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

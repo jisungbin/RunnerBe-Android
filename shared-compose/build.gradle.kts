@@ -14,4 +14,5 @@ plugins {
 
 dependencies {
     Dependencies.Compose.forEach(::implementation)
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:${Versions.Ktx.Lifecycle}")
 }

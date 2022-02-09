@@ -2,15 +2,6 @@
  * RunnerBe © 2022 Team AppleMango. all rights reserved.
  * RunnerBe license is under the MIT.
  *
- * [color.kt] created by Ji Sungbin on 22. 2. 9. 오후 2:52
- *
- * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
- */
-
-/*
- * RunnerBe © 2022 Team AppleMango. all rights reserved.
- * RunnerBe license is under the MIT.
- *
  * [color.kt] created by Ji Sungbin on 22. 2. 5. 오후 5:59
  *
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
@@ -18,7 +9,7 @@
 
 @file:Suppress("MemberVisibilityCanBePrivate")
 
-package team.applemango.runnerbe.shared.compose
+package team.applemango.runnerbe.shared.compose.theme
 
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color

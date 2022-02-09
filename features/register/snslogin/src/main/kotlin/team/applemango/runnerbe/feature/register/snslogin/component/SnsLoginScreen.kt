@@ -9,7 +9,6 @@
 
 package team.applemango.runnerbe.feature.register.snslogin.component
 
-import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -33,14 +32,14 @@ import com.google.accompanist.insets.systemBarsPadding
 import com.skydoves.landscapist.rememberDrawablePainter
 import team.applemango.runnerbe.domain.login.constant.PlatformType
 import team.applemango.runnerbe.feature.register.snslogin.SnsLoginViewModel
-import team.applemango.runnerbe.shared.util.presentationDrawableOf
-import team.applemango.runnerbe.shared.util.presentationStringOf
-import team.applemango.runnerbe.shared.compose.ColorAsset
-import team.applemango.runnerbe.shared.compose.FontAsset
-import team.applemango.runnerbe.shared.compose.GradientAsset
+import team.applemango.runnerbe.shared.compose.theme.ColorAsset
+import team.applemango.runnerbe.shared.compose.theme.FontAsset
+import team.applemango.runnerbe.shared.compose.theme.GradientAsset
+import team.applemango.runnerbe.shared.compose.util.presentationDrawableOf
+import team.applemango.runnerbe.shared.compose.util.presentationStringOf
 
 @Composable
-internal fun Activity.SnsLoginScreen(vm: SnsLoginViewModel) {
+internal fun SnsLoginScreen(vm: SnsLoginViewModel) {
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()

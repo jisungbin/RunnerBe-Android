@@ -35,8 +35,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.datastore.preferences.core.edit
 import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
@@ -44,14 +46,17 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.skydoves.landscapist.rememberDrawablePainter
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.step.TermsTable
+import team.applemango.runnerbe.shared.compose.theme.ColorAsset
+import team.applemango.runnerbe.shared.compose.theme.GradientAsset
+import team.applemango.runnerbe.shared.compose.theme.Typography
+import team.applemango.runnerbe.shared.compose.util.presentationDrawableOf
 import team.applemango.runnerbe.shared.constant.DataStoreKey
-import team.applemango.runnerbe.shared.compose.ColorAsset
-import team.applemango.runnerbe.shared.compose.GradientAsset
-import team.applemango.runnerbe.shared.compose.Typography
+import team.applemango.runnerbe.shared.util.extension.dataStore
 
 @Composable
 @OptIn(ExperimentalAnimationApi::class)
-internal fun OnboardRouter() {
+internal fun OnboardRouter(onBackPressedWithoutPopNavigateAction: () -> Unit) {
+    val context = LocalContext.current
     var enableGoNextStep by remember { mutableStateOf(false) }
     var stepIndex by remember { mutableStateOf(0) }
     val navController = rememberAnimatedNavController()
@@ -73,7 +78,7 @@ internal fun OnboardRouter() {
             Image(
                 modifier = Modifier.clickable { // < 뒤로가기
                     if (navController.popBackStack()) {
-                        finish()
+                        onBackPressedWithoutPopNavigateAction()
                     }
                 },
                 painter = rememberDrawablePainter(presentationDrawableOf("ic_round_arrow_left_24")),
@@ -109,7 +114,7 @@ internal fun OnboardRouter() {
                     step = Step.Terms,
                     bottomCTAButtonEnabled = enableGoNextStep,
                     onBottomCTAButtonAction = {
-                        applicationContext.dataStore.edit { preferences ->
+                        context.dataStore.edit { preferences ->
                             preferences[DataStoreKey.Onboard.TermsAllCheck] = true
                         }
                         stepIndex = 1

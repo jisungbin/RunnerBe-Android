@@ -7,22 +7,32 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.shared.util
+package team.applemango.runnerbe.shared.compose.util
 
 import android.app.Activity
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 
-fun Activity.presentationDrawableOf(name: String) = getDrawable(
-    resources.getIdentifier(
-        name,
-        "drawable",
-        "team.applemango.runnerbe"
-    )
-) ?: throw Exception("$name resource is unavailable.")
+private const val PresentationPackage = "team.applemango.runnerbe"
 
-fun Activity.presentationStringOf(name: String) = getString(
-    resources.getIdentifier(
-        name,
-        "string",
-        "team.applemango.runnerbe"
+@Composable
+fun presentationDrawableOf(name: String) = (LocalContext.current as Activity).run {
+    getDrawable(
+        resources.getIdentifier(
+            name,
+            "drawable",
+            PresentationPackage
+        )
+    ) ?: throw Exception("$name resource is unavailable.")
+}
+
+@Composable
+fun presentationStringOf(name: String) = (LocalContext.current as Activity).run {
+    getString(
+        resources.getIdentifier(
+            name,
+            "string",
+            PresentationPackage
+        )
     )
-)
+}
