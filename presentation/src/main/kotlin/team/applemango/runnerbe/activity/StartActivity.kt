@@ -20,8 +20,8 @@ import team.applemango.runnerbe.feature.home.board.BoardActivity
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.util.extension.dataStore
-import team.applemango.runnerbe.util.DFMLoginActivityAlias
-import team.applemango.runnerbe.util.DFMOnboardActivityAlias
+import team.applemango.runnerbe.shared.compose.util.DFMLoginActivityAlias
+import team.applemango.runnerbe.shared.compose.util.DFMOnboardActivityAlias
 
 class StartActivity : AppCompatActivity() {
 

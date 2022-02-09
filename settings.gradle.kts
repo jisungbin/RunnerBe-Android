@@ -10,9 +10,9 @@
 rootProject.name = "RunnerBe"
 include(
     ":data",
-    ":theme",
     ":domain",
     ":shared",
+    ":shared-compose",
     ":presentation",
     ":features:mail",
     ":features:mypage",

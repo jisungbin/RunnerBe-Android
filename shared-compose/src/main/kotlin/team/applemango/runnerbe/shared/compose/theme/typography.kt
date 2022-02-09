@@ -9,12 +9,13 @@
 
 @file:Suppress("unused")
 
-package team.applemango.runnerbe.theme
+package team.applemango.runnerbe.shared.compose
 
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.sp
+import team.applemango.runnerbe.theme.R
 
 private typealias font = R.font
 

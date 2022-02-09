@@ -29,17 +29,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.lifecycle.LifecycleOwner
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
-import team.applemango.runnerbe.theme.ColorAsset
-import team.applemango.runnerbe.theme.Typography
+import team.applemango.runnerbe.shared.util.extension.launchedWhenCreated
+import team.applemango.runnerbe.shared.compose.ColorAsset
+import team.applemango.runnerbe.shared.compose.Typography
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-internal fun OnboardContent(
+internal fun LifecycleOwner.OnboardContent(
     step: Step,
     bottomCTAButtonEnabled: Boolean,
-    onBottomCTAButtonAction: () -> Unit,
+    onBottomCTAButtonAction: suspend () -> Unit,
     content: @Composable BoxScope.() -> Unit,
 ) {
     val title = when (step) {
@@ -144,7 +146,9 @@ internal fun OnboardContent(
                 },
             onClick = {
                 if (bottomCTAButtonEnabled) {
-                    onBottomCTAButtonAction()
+                    launchedWhenCreated {
+                        onBottomCTAButtonAction()
+                    }
                 }
             },
             colors = bottomCTAButtonBackgroundColor,

@@ -19,10 +19,10 @@ plugins {
 android {
     signingConfigs {
         create("release") {
-            storeFile = file(SecretConstant.StoreFilePath)
-            storePassword = SecretConstant.StorePassword
-            keyAlias = SecretConstant.KeyAlias
-            keyPassword = SecretConstant.KeyPassword
+            storeFile = file(BuildConstants.StoreFilePath)
+            storePassword = BuildConstants.StorePassword
+            keyAlias = BuildConstants.KeyAlias
+            keyPassword = BuildConstants.KeyPassword
         }
     }
 
@@ -56,9 +56,10 @@ dependencies {
     )
 
     features.forEach(::implementationProject)
+    implementation(platform(Dependencies.Firebase.Bom))
+
     implementation(Dependencies.Util.Erratum)
     implementation(Dependencies.Firebase.Analytics)
-    implementation(platform(Dependencies.Firebase.Bom))
 
     Dependencies.Ui.forEach(::implementation)
     Dependencies.Login.All.forEach(::implementation)

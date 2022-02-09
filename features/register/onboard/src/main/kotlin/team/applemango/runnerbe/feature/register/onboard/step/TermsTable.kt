@@ -28,6 +28,7 @@ import androidx.compose.material.Checkbox
 import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -43,17 +44,18 @@ import com.skydoves.landscapist.rememberDrawablePainter
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.util.Web
 import team.applemango.runnerbe.shared.util.presentationDrawableOf
-import team.applemango.runnerbe.theme.ColorAsset
-import team.applemango.runnerbe.theme.GradientAsset
-import team.applemango.runnerbe.theme.Typography
+import team.applemango.runnerbe.shared.compose.ColorAsset
+import team.applemango.runnerbe.shared.compose.GradientAsset
+import team.applemango.runnerbe.shared.compose.Typography
 
 private val VerticalPadding = 25.dp
 private val HorizontalPadding = 12.dp
 private val TermsTableShape = RoundedCornerShape(10.dp)
 
 @Composable
-internal fun Activity.TermsTable(onAllTermsCheckStateChanged: (allChecked: Boolean) -> Unit) {
+internal fun TermsTable(onAllTermsCheckStateChanged: (allChecked: Boolean) -> Unit) {
     val context = LocalContext.current
+    val activity = context as Activity
     var isAllTermsChecked by remember { mutableStateOf(false) }
     val termsCheckState = remember { mutableStateListOf(false, false, false) }
     val termsCheckboxColor = CheckboxDefaults.colors(
@@ -85,6 +87,11 @@ internal fun Activity.TermsTable(onAllTermsCheckStateChanged: (allChecked: Boole
         } else {
             isAllTermsChecked = false
             onAllTermsCheckStateChanged(false)
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        applicationContext.dataStore.data.collectWithLifecycle(this@TermsTable) {
         }
     }
 
@@ -169,7 +176,7 @@ internal fun Activity.TermsTable(onAllTermsCheckStateChanged: (allChecked: Boole
                     }
                     Image(
                         modifier = Modifier.clickable { Web.open(context, link) },
-                        painter = rememberDrawablePainter(presentationDrawableOf("ic_round_arrow_right_24")),
+                        painter = rememberDrawablePainter(activity.presentationDrawableOf("ic_round_arrow_right_24")),
                         contentDescription = null,
                         colorFilter = ColorFilter.tint(ColorAsset.G4)
                     )
