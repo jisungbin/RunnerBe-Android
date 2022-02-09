@@ -11,21 +11,25 @@ package team.applemango.runnerbe.feature.register.onboard.component
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonColors
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -35,6 +39,9 @@ import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
+import team.applemango.runnerbe.shared.util.extension.runIf
+
+private val BottomCTAButtonShape = RoundedCornerShape(24.dp)
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -90,18 +97,12 @@ internal fun OnboardContent(
             }
         }
     )
-    val bottomCTAButtonBackgroundColor: ButtonColors
-    val bottomCTAButtonBorder: BorderStroke?
-    when (step) {
+    val bottomCTAButtonBackgroundColor: Color = when (step) {
         Step.VerifyWithEmail -> {
-            bottomCTAButtonBackgroundColor =
-                ButtonDefaults.buttonColors(backgroundColor = Color.Transparent)
-            bottomCTAButtonBorder = BorderStroke(width = 1.dp, color = ColorAsset.Primary)
+            Color.Transparent
         }
         else -> {
-            bottomCTAButtonBackgroundColor =
-                ButtonDefaults.buttonColors(backgroundColor = animatedBottomCTAButtonBackgroundColor)
-            bottomCTAButtonBorder = null
+            animatedBottomCTAButtonBackgroundColor
         }
     }
     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
@@ -138,24 +139,33 @@ internal fun OnboardContent(
         ) {
             content()
         }
-        Button(
+        // 버튼은 리플 제거가 안되서 Box 로 변경
+        // enabled 속성으로 변경하면 텍스트 색상도 같이 변경됨
+        // (contentBackgroundColor 옵션 설정 해봤음)
+        Box(
             modifier = Modifier
                 .constrainAs(bottomCTAButton) {
                     bottom.linkTo(parent.bottom, 28.dp)
                     width = Dimension.matchParent
                     height = Dimension.value(48.dp)
-                },
-            onClick = {
-                if (bottomCTAButtonEnabled) {
-                    coroutineScope.launch {
-                        onBottomCTAButtonAction()
-                    }
                 }
-            },
-            colors = bottomCTAButtonBackgroundColor,
-            elevation = null,
-            border = bottomCTAButtonBorder,
-            shape = RoundedCornerShape(24.dp)
+                .runIf(bottomCTAButtonEnabled) {
+                    clickable(
+                        indication = rememberRipple(),
+                        interactionSource = remember { MutableInteractionSource() },
+                        onClick = {
+                            coroutineScope.launch {
+                                onBottomCTAButtonAction()
+                            }
+                        }
+                    )
+                }
+                .clip(BottomCTAButtonShape)
+                .runIf(step == Step.VerifyWithEmail) {
+                    border(width = 1.dp, color = ColorAsset.Primary, shape = BottomCTAButtonShape)
+                }
+                .background(color = bottomCTAButtonBackgroundColor, shape = BottomCTAButtonShape),
+            contentAlignment = Alignment.Center
         ) {
             Text(
                 text = bottomCTAButtonText,
