@@ -49,15 +49,16 @@ import com.skydoves.landscapist.rememberDrawablePainter
 import team.applemango.runnerbe.feature.home.board.BoardActivity
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.step.AgePicker
+import team.applemango.runnerbe.feature.register.onboard.step.GenderStep
 import team.applemango.runnerbe.feature.register.onboard.step.TermsTable
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
-import team.applemango.runnerbe.util.DFMLoginActivityAlias
 import team.applemango.runnerbe.shared.compose.util.presentationDrawableOf
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.changeActivityWithAnimation
 import team.applemango.runnerbe.shared.util.extension.dataStore
+import team.applemango.runnerbe.util.DFMLoginActivityAlias
 
 @Composable
 @OptIn(ExperimentalAnimationApi::class)
@@ -172,11 +173,7 @@ internal fun OnboardRouter(navController: NavHostController) {
                         navController.navigate(Step.Job.name)
                     }
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(color = Color(0xFFA5D6A7))
-                    )
+                    GenderStep()
                 }
             }
             composable(route = Step.Job.name) {

@@ -10,6 +10,7 @@
 package team.applemango.runnerbe
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
 import com.kakao.sdk.common.KakaoSdk
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.log.NidLog
@@ -21,6 +22,7 @@ import io.github.jisungbin.logeukes.Logeukes
 class RunnerBe : Application() {
     override fun onCreate() {
         super.onCreate()
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         NidLog.init()
         NaverIdLoginSDK.initialize(
             applicationContext,
