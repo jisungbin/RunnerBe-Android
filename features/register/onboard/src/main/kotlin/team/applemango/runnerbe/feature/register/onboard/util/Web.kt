@@ -26,7 +26,9 @@ internal object Web {
         PersonalInformationTerms("https://applemango-runnerbe.github.io/personal-information-collection-and-usage-agreement.txt")
     }
 
-    @Suppress("DEPRECATION") // Didn't find class "androidx.browser.customtabs.CustomTabColorSchemeParams$Builder"
+    @Suppress("DEPRECATION")
+    // None deprecated way usage: Didn't find class "androidx.browser.customtabs.CustomTabColorSchemeParams$Builder"
+    // Also trying: 'com.google.androidbrowserhelper:androidbrowserhelper:2.3.0' but same exception occur.
     fun open(context: Context, link: Link) {
         try {
             val builder = CustomTabsIntent.Builder()
