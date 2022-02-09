@@ -122,7 +122,7 @@ object Dependencies {
         "com.google.accompanist:accompanist-insets:${Versions.Compose.Insets}",
         "com.github.skydoves:landscapist-coil:${Versions.Compose.Landscapist}",
         "com.google.accompanist:accompanist-insets:${Versions.Compose.Accompanist}",
-        "com.google.accompanist:accompanist-flowlayout:${Versions.Compose.Accompanist}",
+        // "com.google.accompanist:accompanist-flowlayout:${Versions.Compose.Accompanist}",
         "com.google.accompanist:accompanist-systemuicontroller:${Versions.Compose.Accompanist}",
         "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.Compose.LifecycleViewModel}",
         "com.google.accompanist:accompanist-navigation-animation:${Versions.Compose.Accompanist}",
