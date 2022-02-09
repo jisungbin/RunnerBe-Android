@@ -8,5 +8,6 @@
   -->
 
 <resources>
+    <color name="primary">#ffe082</color>
     <color name="G5_5">#36342D</color>
 </resources>

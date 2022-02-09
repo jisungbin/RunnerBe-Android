@@ -21,7 +21,6 @@ import io.github.jisungbin.logeukes.Logeukes
 class RunnerBe : Application() {
     override fun onCreate() {
         super.onCreate()
-        Erratum.setup(application = this) // TODO: Set Exception Activity
         NidLog.init()
         NaverIdLoginSDK.initialize(
             applicationContext,
@@ -32,6 +31,8 @@ class RunnerBe : Application() {
         KakaoSdk.init(applicationContext, BuildConfig.KAKAO_API_KEY)
         if (BuildConfig.DEBUG) {
             Logeukes.setup()
+        } else {
+            Erratum.setup(application = this) // TODO: Set Exception Activity
         }
     }
 }

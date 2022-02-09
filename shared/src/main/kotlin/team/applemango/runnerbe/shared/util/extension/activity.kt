@@ -12,6 +12,8 @@ package team.applemango.runnerbe.shared.util.extension
 import android.app.Activity
 import android.content.Intent
 
+private const val PresentationPackage = "team.applemango.runnerbe"
+
 inline fun <reified T : Activity> Activity.changeActivityWithAnimation() {
     startActivity(Intent(this, T::class.java))
     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
