@@ -79,10 +79,14 @@ internal fun TermsTable(onAllTermsCheckStateChanged: (allChecked: Boolean) -> Un
 
     fun toggleAllTermsCheck() { // 전체 동의 버튼 토글
         isAllTermsChecked = if (isAllTermsChecked) { // true -> false
-            termsCheckState.map { false }
+            repeat(3) { index ->
+                termsCheckState[index] = false
+            }
             false
         } else { // false -> true
-            termsCheckState.map { true }
+            repeat(3) { index ->
+                termsCheckState[index] = true
+            }
             true
         }
         onAllTermsCheckStateChanged(isAllTermsChecked)
