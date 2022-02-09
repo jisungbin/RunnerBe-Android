@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -37,6 +38,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.datastore.preferences.core.edit
@@ -47,6 +49,7 @@ import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.skydoves.landscapist.rememberDrawablePainter
 import team.applemango.runnerbe.feature.home.board.BoardActivity
+import team.applemango.runnerbe.feature.register.onboard.component.picker.NumberPicker
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.step.TermsTable
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
@@ -55,8 +58,8 @@ import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.changeActivityWithAnimation
 import team.applemango.runnerbe.shared.util.extension.dataStore
-import team.applemango.runnerbe.util.DFMLoginActivityAlias
-import team.applemango.runnerbe.util.presentationDrawableOf
+import team.applemango.runnerbe.shared.compose.util.DFMLoginActivityAlias
+import team.applemango.runnerbe.shared.compose.util.presentationDrawableOf
 
 @Composable
 @OptIn(ExperimentalAnimationApi::class)
@@ -67,6 +70,7 @@ internal fun OnboardRouter() {
     var stepIndex by remember { mutableStateOf(0) }
     var stepIndexString by remember { mutableStateOf("") }
     val navController = rememberAnimatedNavController()
+    var pickerValue by remember { mutableStateOf(0) }
 
     if (stepIndex != 0) {
         stepIndexString = "$stepIndex/4"
@@ -161,10 +165,21 @@ internal fun OnboardRouter() {
                         navController.navigate(Step.Gender.name)
                     }
                 ) {
-                    Box(
+                    /*NumberPicker(
+                        // modifier = Modifier.fillMaxSize(),
+                        value = pickerValue,
+                        range = 0..10,
+                        onValueChange = {
+                            pickerValue = it
+                        }
+                    )*/
+                    NumberPicker(
+                        state = remember { mutableStateOf(9) },
+                        range = 0..10,
                         modifier = Modifier
-                            .fillMaxSize()
-                            .background(color = Color(0xFF80CBC4))
+                            .align(Alignment.Center)
+                            .fillMaxHeight(),
+                        textStyle = TextStyle(color = Color.White)
                     )
                 }
             }

@@ -9,6 +9,7 @@ local.properties
 /domain/build
 /shared/build
 /shared-compose/build
+/xml/numberpicker/build
 /buildSrc/build
 /presentation/build
 /presentation/release

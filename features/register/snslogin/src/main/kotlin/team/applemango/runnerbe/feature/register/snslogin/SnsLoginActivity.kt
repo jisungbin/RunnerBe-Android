@@ -38,7 +38,7 @@ import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.util.extension.dataStore
 import team.applemango.runnerbe.shared.util.extension.launchedWhenCreated
 import team.applemango.runnerbe.shared.util.extension.toast
-import team.applemango.runnerbe.util.DFMOnboardActivityAlias
+import team.applemango.runnerbe.shared.compose.util.DFMOnboardActivityAlias
 import javax.inject.Inject
 
 class SnsLoginActivity : ComponentActivity() {

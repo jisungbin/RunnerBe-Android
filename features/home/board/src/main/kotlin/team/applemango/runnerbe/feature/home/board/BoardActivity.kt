@@ -19,7 +19,7 @@ import androidx.compose.material.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
-import team.applemango.runnerbe.util.presentationStringOf
+import team.applemango.runnerbe.shared.compose.util.presentationStringOf
 
 class BoardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

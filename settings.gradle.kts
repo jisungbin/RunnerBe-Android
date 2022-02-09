@@ -13,6 +13,7 @@ include(
     ":domain",
     ":shared",
     ":shared-compose",
+    ":xml:numberpicker",
     ":presentation",
     ":features:mail",
     ":features:mypage",

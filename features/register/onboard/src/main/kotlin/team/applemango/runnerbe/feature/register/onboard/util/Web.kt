@@ -17,7 +17,7 @@ import io.github.jisungbin.logeukes.LoggerType
 import io.github.jisungbin.logeukes.logeukes
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.shared.util.extension.toast
-import team.applemango.runnerbe.util.presentationColorOf
+import team.applemango.runnerbe.shared.compose.util.presentationColorOf
 
 internal object Web {
     enum class Link(val string: String) {
