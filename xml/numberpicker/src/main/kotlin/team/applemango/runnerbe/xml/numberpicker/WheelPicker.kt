@@ -33,7 +33,7 @@ interface OnValueChangeListener {
      * @param oldVal The previous value.
      * @param newVal The new value.
      */
-    fun onValueChange(picker: WheelPicker, oldVal: String, newVal: String)
+    fun onValueChange(picker: WheelPicker, oldVal: Int, newVal: Int)
 }
 
 interface OnScrollListener {
@@ -608,7 +608,7 @@ class WheelPicker @JvmOverloads constructor(
 
             canvas.save()
             canvas.scale(scale, scale, x, y)
-            canvas.drawText(getValue(mSelectorItemIndices[i]), x, y, mTextPaint)
+            canvas.drawText(getValue(mSelectorItemIndices[i]).toString(), x, y, mTextPaint)
             canvas.restore()
 
             y += itemHeight
@@ -801,15 +801,15 @@ class WheelPicker @JvmOverloads constructor(
         invalidate()
     }
 
-    fun getValue(position: Int): String {
+    fun getValue(position: Int): Int {
         return if (!mWrapSelectorWheelPreferred) {
             when {
-                position > mMaxIndex -> ""
-                position < mMinIndex -> ""
-                else -> position.toString()
+                position > mMaxIndex -> 0
+                position < mMinIndex -> 0
+                else -> position
             }
         } else {
-            getWrappedSelectorIndex(position).toString()
+            getWrappedSelectorIndex(position)
         }
     }
 
@@ -847,7 +847,7 @@ class WheelPicker @JvmOverloads constructor(
         invalidate()
     }
 
-    fun getCurrentItem(): String {
+    fun getCurrentItem(): Int {
         return getValue(mCurSelectedItemIndex)
     }
 

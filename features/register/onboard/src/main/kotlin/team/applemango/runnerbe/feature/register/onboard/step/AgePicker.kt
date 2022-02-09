@@ -9,19 +9,27 @@
 
 package team.applemango.runnerbe.feature.register.onboard.step
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.Divider
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import io.github.jisungbin.logeukes.logeukes
+import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.FontTypeface
+import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.compose.util.presentationColorOf
 import team.applemango.runnerbe.xml.numberpicker.OnValueChangeListener
 import team.applemango.runnerbe.xml.numberpicker.WheelPicker
@@ -37,6 +45,7 @@ internal fun AgePicker() {
             .wrapContentHeight(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        var selectedYear by remember { mutableStateOf(nowYear / 2) }
         Divider(modifier = Modifier.fillMaxWidth(), color = ColorAsset.G5, thickness = 1.dp)
         AndroidView(modifier = Modifier.height(250.dp), factory = { context ->
             WheelPicker(context).apply {
@@ -46,19 +55,30 @@ internal fun AgePicker() {
                 setWrapSelectorWheel(true)
                 setWheelItemCount(5)
                 setMinValue(nowYear - 80)
-                setMaxValue(nowYear - 20)
+                setMaxValue(nowYear)
                 setValue(nowYear / 2)
                 setOnValueChangedListener(object : OnValueChangeListener {
                     override fun onValueChange(
                         picker: WheelPicker,
-                        oldVal: String,
-                        newVal: String,
+                        oldVal: Int,
+                        newVal: Int,
                     ) {
-                        logeukes { newVal }
+                        selectedYear = newVal
                     }
                 })
             }
         })
         Divider(modifier = Modifier.fillMaxWidth(), color = ColorAsset.G5, thickness = 1.dp)
+        AnimatedVisibility(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 12.dp),
+            visible = nowYear - selectedYear <= 19
+        ) {
+            Text(
+                text = StringAsset.Hint.AgeNotice,
+                style = Typography.Body12R.copy(color = ColorAsset.ErrorLight)
+            )
+        }
     }
 }
