@@ -28,7 +28,7 @@
             android:theme="@style/Theme.RunnerBe" />
 
         <activity-alias
-            android:name="team.applemango.runnerbe.shared.compose.util.DFMOnboardActivityAlias"
+            android:name="team.applemango.runnerbe.activity.util.DFMOnboardActivityAlias"
             android:targetActivity=".OnboardActivity" />
     </application>
 
