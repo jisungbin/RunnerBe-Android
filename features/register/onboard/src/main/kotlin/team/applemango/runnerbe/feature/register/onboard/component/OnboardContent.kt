@@ -149,6 +149,7 @@ internal fun OnboardContent(
                     width = Dimension.matchParent
                     height = Dimension.value(48.dp)
                 }
+                .clip(BottomCTAButtonShape)
                 .runIf(bottomCTAButtonEnabled) {
                     clickable(
                         indication = rememberRipple(),
@@ -160,7 +161,6 @@ internal fun OnboardContent(
                         }
                     )
                 }
-                .clip(BottomCTAButtonShape)
                 .runIf(step == Step.VerifyWithEmail) {
                     border(width = 1.dp, color = ColorAsset.Primary, shape = BottomCTAButtonShape)
                 }
