@@ -24,16 +24,15 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import androidx.lifecycle.LifecycleOwner
+import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
-import team.applemango.runnerbe.shared.util.extension.launchedWhenCreated
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 
@@ -45,7 +44,7 @@ internal fun OnboardContent(
     onBottomCTAButtonAction: suspend () -> Unit,
     content: @Composable BoxScope.() -> Unit,
 ) {
-    val lifecycleOwner = LocalLifecycleOwner.current
+    val coroutineScope = rememberCoroutineScope()
     val title = when (step) {
         Step.Terms -> StringAsset.Title.ReadTerms
         Step.Birthday -> StringAsset.Title.InputYear
@@ -148,7 +147,7 @@ internal fun OnboardContent(
                 },
             onClick = {
                 if (bottomCTAButtonEnabled) {
-                    lifecycleOwner.launchedWhenCreated {
+                    coroutineScope.launch {
                         onBottomCTAButtonAction()
                     }
                 }

@@ -31,6 +31,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,7 +39,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.datastore.preferences.core.edit
 import com.skydoves.landscapist.rememberDrawablePainter
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.util.Web
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
@@ -56,6 +60,7 @@ private val TermsTableShape = RoundedCornerShape(10.dp)
 @Composable
 internal fun TermsTable(onAllTermsCheckStateChanged: (allChecked: Boolean) -> Unit) {
     val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
     var isAllTermsChecked by remember { mutableStateOf(false) }
     val termsCheckState = remember { mutableStateListOf(false, false, false) }
     val termsCheckboxColor = CheckboxDefaults.colors(
@@ -64,36 +69,37 @@ internal fun TermsTable(onAllTermsCheckStateChanged: (allChecked: Boolean) -> Un
         checkmarkColor = GradientAsset.EndColor
     )
 
-    fun toggleAllTermsCheck() {
-        if (isAllTermsChecked) {
-            termsCheckState[0] = false
-            termsCheckState[1] = false
-            termsCheckState[2] = false
-            isAllTermsChecked = false
-            onAllTermsCheckStateChanged(false)
-        } else {
-            termsCheckState[0] = true
-            termsCheckState[1] = true
-            termsCheckState[2] = true
-            isAllTermsChecked = true
-            onAllTermsCheckStateChanged(true)
+    fun saveState() {
+        coroutineScope.launch {
+            context.dataStore.edit { preferences ->
+                preferences[DataStoreKey.Onboard.TermsAllCheck] = isAllTermsChecked
+            }
         }
     }
 
-    fun checkAllChecked() {
-        if (termsCheckState.all { it }) {
-            isAllTermsChecked = true
-            onAllTermsCheckStateChanged(true)
-        } else {
-            isAllTermsChecked = false
-            onAllTermsCheckStateChanged(false)
+    fun toggleAllTermsCheck() { // 전체 동의 버튼 토글
+        isAllTermsChecked = if (isAllTermsChecked) { // true -> false
+            termsCheckState.map { false }
+            false
+        } else { // false -> true
+            termsCheckState.map { true }
+            true
         }
+        onAllTermsCheckStateChanged(isAllTermsChecked)
+        saveState()
+    }
+
+    fun checkAllChecked() { // 개별 동의 버튼 토글 후, 전체 동의 됐는지 체크
+        isAllTermsChecked = termsCheckState.all { it }
+        onAllTermsCheckStateChanged(isAllTermsChecked)
+        saveState()
     }
 
     context.dataStore.data.collectWithLifecycleRememberOnLaunchedEffect { preferences ->
         if (preferences[DataStoreKey.Onboard.TermsAllCheck] == true) {
             toggleAllTermsCheck()
         }
+        cancel("onboard rollback execute must be once.")
     }
 
     Column(
