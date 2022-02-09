@@ -2,7 +2,7 @@
  * RunnerBe © 2022 Team AppleMango. all rights reserved.
  * RunnerBe license is under the MIT.
  *
- * [GenderStep.kt] created by Ji Sungbin on 22. 2. 10. 오전 2:48
+ * [GenderPicker.kt] created by Ji Sungbin on 22. 2. 10. 오전 2:48
  *
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
@@ -46,7 +46,7 @@ private enum class Gender(val string: String) {
 }
 
 @Composable
-internal fun GenderStep(genderSelectChanged: (selected: Boolean) -> Unit) {
+internal fun GenderPicker(genderSelectChanged: (isSelected: Boolean) -> Unit) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     var selectedGender by remember { mutableStateOf<Gender?>(null) }

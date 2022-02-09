@@ -49,7 +49,7 @@ import com.skydoves.landscapist.rememberDrawablePainter
 import io.github.jisungbin.logeukes.logeukes
 import team.applemango.runnerbe.feature.home.board.BoardActivity
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
-import team.applemango.runnerbe.feature.register.onboard.step.GenderStep
+import team.applemango.runnerbe.feature.register.onboard.step.GenderPicker
 import team.applemango.runnerbe.feature.register.onboard.step.TermsTable
 import team.applemango.runnerbe.feature.register.onboard.step.YearPicker
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
@@ -180,7 +180,7 @@ internal fun OnboardRouter(navController: NavHostController) {
                         navController.navigate(Step.Job.name)
                     }
                 ) {
-                    GenderStep(genderSelectChanged = { isSelected ->
+                    GenderPicker(genderSelectChanged = { isSelected ->
                         enableGoNextStep = isSelected
                     })
                 }
