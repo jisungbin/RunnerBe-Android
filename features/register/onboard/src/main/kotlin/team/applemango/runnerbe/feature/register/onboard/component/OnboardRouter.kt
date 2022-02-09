@@ -41,11 +41,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.datastore.preferences.core.edit
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.skydoves.landscapist.rememberDrawablePainter
+import io.github.jisungbin.logeukes.logeukes
 import team.applemango.runnerbe.feature.home.board.BoardActivity
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.step.TermsTable
@@ -66,6 +68,15 @@ internal fun OnboardRouter() {
     var enableGoNextStep by remember { mutableStateOf(false) }
     var stepIndex by remember { mutableStateOf(0) }
     val navController = rememberAnimatedNavController()
+    var stepIndexString by remember { mutableStateOf("") }
+
+    if (stepIndex != 0) {
+        stepIndexString = "$stepIndex/4"
+    }
+
+    logeukes {
+        navController.currentBackStackEntryAsState().value?.destination?.route
+    }
 
     Column(
         modifier = Modifier
@@ -103,7 +114,7 @@ internal fun OnboardRouter() {
                 exit = fadeOut(tween(500))
             ) {
                 Text(
-                    text = "$stepIndex/4",
+                    text = stepIndexString,
                     style = Typography.Body16R.copy(color = ColorAsset.G3)
                 )
             }
@@ -123,9 +134,6 @@ internal fun OnboardRouter() {
             exitTransition = { fadeOut(tween(500)) }
         ) {
             composable(route = Step.Terms.name) {
-                SideEffect {
-                    stepIndex = 0
-                }
                 OnboardContent(
                     step = Step.Terms,
                     bottomCTAButtonEnabled = enableGoNextStep,
@@ -142,9 +150,6 @@ internal fun OnboardRouter() {
                 }
             }
             composable(route = Step.Birthday.name) {
-                SideEffect {
-                    stepIndex = 1
-                }
                 OnboardContent(
                     step = Step.Birthday,
                     bottomCTAButtonEnabled = true,
@@ -160,9 +165,6 @@ internal fun OnboardRouter() {
                 }
             }
             composable(route = Step.Gender.name) {
-                SideEffect {
-                    stepIndex = 2
-                }
                 OnboardContent(
                     step = Step.Gender,
                     bottomCTAButtonEnabled = true,
@@ -178,9 +180,6 @@ internal fun OnboardRouter() {
                 }
             }
             composable(route = Step.Job.name) {
-                SideEffect {
-                    stepIndex = 3
-                }
                 OnboardContent(
                     step = Step.Job,
                     bottomCTAButtonEnabled = true,
@@ -196,9 +195,6 @@ internal fun OnboardRouter() {
                 }
             }
             composable(route = Step.VerifyWithEmail.name) { // 회사 이메일로 직장 인증
-                SideEffect {
-                    stepIndex = 4
-                }
                 OnboardContent(
                     step = Step.VerifyWithEmail,
                     bottomCTAButtonEnabled = true,
@@ -230,9 +226,6 @@ internal fun OnboardRouter() {
                 }
             }
             composable(route = Step.VerifyWithEmailDone.name) { // 이메일 인증 완료
-                SideEffect {
-                    stepIndex = 0
-                }
                 OnboardContent(
                     step = Step.VerifyWithEmailDone,
                     bottomCTAButtonEnabled = true,
@@ -248,9 +241,6 @@ internal fun OnboardRouter() {
                 }
             }
             composable(route = Step.VerifyWithEmployeeIdRequestDone.name) { // 사원증 제출 완료
-                SideEffect {
-                    stepIndex = 0
-                }
                 OnboardContent(
                     step = Step.VerifyWithEmailDone,
                     bottomCTAButtonEnabled = true,
