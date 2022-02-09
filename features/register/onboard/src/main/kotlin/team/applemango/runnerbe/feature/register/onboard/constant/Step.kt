@@ -11,7 +11,7 @@ package team.applemango.runnerbe.feature.register.onboard.constant
 
 internal enum class Step(val index: Int) {
     Terms(0),
-    Birthday(1),
+    Year(1),
     Gender(2),
     Job(3), // 직군 확인
     VerifyWithEmail(4), // 회사 이메일 인증

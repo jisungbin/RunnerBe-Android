@@ -49,9 +49,9 @@ import com.skydoves.landscapist.rememberDrawablePainter
 import io.github.jisungbin.logeukes.logeukes
 import team.applemango.runnerbe.feature.home.board.BoardActivity
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
-import team.applemango.runnerbe.feature.register.onboard.step.AgePicker
 import team.applemango.runnerbe.feature.register.onboard.step.GenderStep
 import team.applemango.runnerbe.feature.register.onboard.step.TermsTable
+import team.applemango.runnerbe.feature.register.onboard.step.YearPicker
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
@@ -59,6 +59,7 @@ import team.applemango.runnerbe.shared.compose.util.presentationDrawableOf
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.changeActivityWithAnimation
 import team.applemango.runnerbe.shared.util.extension.dataStore
+import team.applemango.runnerbe.shared.util.extension.toast
 import team.applemango.runnerbe.util.DFMLoginActivityAlias
 
 @Composable
@@ -72,7 +73,7 @@ internal fun OnboardRouter(navController: NavHostController) {
 
     stepIndex = when (navController.currentBackStackEntryAsState().value?.destination?.route) {
         Step.Terms.name -> 0
-        Step.Birthday.name -> 1
+        Step.Year.name -> 1
         Step.Gender.name -> 2
         Step.Job.name -> 3
         Step.VerifyWithEmail.name, Step.VerifyWithEmployeeId.name -> 4
@@ -83,8 +84,6 @@ internal fun OnboardRouter(navController: NavHostController) {
     if (stepIndex != 0) {
         stepIndexString = "$stepIndex/4"
     }
-
-    enableGoNextStep = false
 
     Column(
         modifier = Modifier
@@ -128,7 +127,9 @@ internal fun OnboardRouter(navController: NavHostController) {
             }
             Image(
                 modifier = Modifier.clickable { // X 온보딩 건너뛰기
-                    // TODO: goto main activity
+                    // TODO: Dialog
+                    toast(context, "todo: dialog")
+                    context.changeActivityWithAnimation<BoardActivity>()
                 },
                 painter = rememberDrawablePainter(presentationDrawableOf("ic_round_close_24")),
                 contentDescription = null
@@ -149,7 +150,7 @@ internal fun OnboardRouter(navController: NavHostController) {
                         context.dataStore.edit { preferences ->
                             preferences[DataStoreKey.Onboard.TermsAllCheck] = true
                         }
-                        navController.navigate(Step.Birthday.name)
+                        navController.navigate(Step.Year.name)
                     }
                 ) {
                     TermsTable(onAllTermsCheckStateChanged = { allChecked ->
@@ -157,15 +158,15 @@ internal fun OnboardRouter(navController: NavHostController) {
                     })
                 }
             }
-            composable(route = Step.Birthday.name) {
+            composable(route = Step.Year.name) {
                 OnboardContent(
-                    step = Step.Birthday,
+                    step = Step.Year,
                     bottomCTAButtonEnabled = enableGoNextStep,
                     onBottomCTAButtonAction = {
                         navController.navigate(Step.Gender.name)
                     }
                 ) {
-                    AgePicker(selectedAgeChanged = { isAdult ->
+                    YearPicker(selectedYearChanged = { isAdult ->
                         logeukes { isAdult }
                         enableGoNextStep = isAdult
                     })
@@ -179,8 +180,8 @@ internal fun OnboardRouter(navController: NavHostController) {
                         navController.navigate(Step.Job.name)
                     }
                 ) {
-                    GenderStep(onGenderSelectedAction = {
-                        enableGoNextStep = true
+                    GenderStep(genderSelectChanged = { isSelected ->
+                        enableGoNextStep = isSelected
                     })
                 }
             }

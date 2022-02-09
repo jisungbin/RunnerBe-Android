@@ -2,7 +2,7 @@
  * RunnerBe © 2022 Team AppleMango. all rights reserved.
  * RunnerBe license is under the MIT.
  *
- * [AgePicker.kt] created by Ji Sungbin on 22. 2. 9. 오후 10:32
+ * [YearPicker.kt] created by Ji Sungbin on 22. 2. 9. 오후 10:32
  *
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
@@ -47,13 +47,13 @@ import team.applemango.runnerbe.xml.numberpicker.WheelPicker
 private val nowYear = Calendar.getInstance().get(Calendar.YEAR)
 
 @Composable
-internal fun AgePicker(selectedAgeChanged: (isAdult: Boolean) -> Unit) {
+internal fun YearPicker(selectedYearChanged: (isAdult: Boolean) -> Unit) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val selectedYearFlow = remember { MutableStateFlow(nowYear) }
     val selectedYearState by selectedYearFlow.collectAsStateWithLifecycleRemember(nowYear)
     val wheelPicker = WheelPicker(context) { year ->
-        selectedAgeChanged(nowYear - year > 19)
+        selectedYearChanged(nowYear - year > 19)
         coroutineScope.launch {
             selectedYearFlow.emit(year)
         }
@@ -62,8 +62,8 @@ internal fun AgePicker(selectedAgeChanged: (isAdult: Boolean) -> Unit) {
         preferences[DataStoreKey.Onboard.Year]?.let { restoreYear ->
             wheelPicker.setValue(restoreYear)
             selectedYearFlow.emit(restoreYear)
-            selectedAgeChanged(nowYear - restoreYear > 19)
-        }
+            selectedYearChanged(nowYear - restoreYear > 19)
+        } ?: selectedYearChanged(false)
         cancel("onboard restore execute must be once.")
     }
     selectedYearFlow.collectWithLifecycleRememberOnLaunchedEffect(debounceTimeout = 300L) { year ->

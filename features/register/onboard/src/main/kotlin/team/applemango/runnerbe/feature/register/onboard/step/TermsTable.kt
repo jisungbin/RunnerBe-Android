@@ -102,6 +102,8 @@ internal fun TermsTable(onAllTermsCheckStateChanged: (allChecked: Boolean) -> Un
     context.dataStore.data.collectWithLifecycleRememberOnLaunchedEffect { preferences ->
         if (preferences[DataStoreKey.Onboard.TermsAllCheck] == true) {
             toggleAllTermsCheck()
+        } else {
+            onAllTermsCheckStateChanged(false)
         }
         cancel("onboard restore execute must be once.")
     }

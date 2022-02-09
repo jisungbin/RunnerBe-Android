@@ -54,7 +54,7 @@ internal fun OnboardContent(
     val coroutineScope = rememberCoroutineScope()
     val title = when (step) {
         Step.Terms -> StringAsset.Title.ReadTerms
-        Step.Birthday -> StringAsset.Title.InputYear
+        Step.Year -> StringAsset.Title.InputYear
         Step.Gender -> StringAsset.Title.SelectGender
         Step.Job -> StringAsset.Title.WhatsJob
         Step.VerifyWithEmail -> StringAsset.Title.VerifyWithEmail
@@ -63,7 +63,7 @@ internal fun OnboardContent(
         Step.VerifyWithEmployeeIdRequestDone -> StringAsset.Title.EmployeeIdVerifyRequestDone
     }
     val subtitle = when (step) {
-        Step.Birthday -> StringAsset.Subtitle.AgeVisibleDescription
+        Step.Year -> StringAsset.Subtitle.AgeVisibleDescription
         Step.Job -> StringAsset.Subtitle.JobCanEditOnMypage
         Step.VerifyWithEmail -> StringAsset.Subtitle.VerifyWithEmail
         Step.VerifyWithEmployeeId -> StringAsset.Subtitle.VerifyWithEmployeeId
