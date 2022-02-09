@@ -55,7 +55,7 @@ import team.applemango.runnerbe.shared.util.extension.dataStore
 
 @Composable
 @OptIn(ExperimentalAnimationApi::class)
-internal fun OnboardRouter(onBackPressedWithoutPopNavigateAction: () -> Unit) {
+internal fun OnboardRouter(onBackPressedActionWithoutPopNavigate: () -> Unit) {
     val context = LocalContext.current
     var enableGoNextStep by remember { mutableStateOf(false) }
     var stepIndex by remember { mutableStateOf(0) }
@@ -78,7 +78,7 @@ internal fun OnboardRouter(onBackPressedWithoutPopNavigateAction: () -> Unit) {
             Image(
                 modifier = Modifier.clickable { // < 뒤로가기
                     if (navController.popBackStack()) {
-                        onBackPressedWithoutPopNavigateAction()
+                        onBackPressedActionWithoutPopNavigate()
                     }
                 },
                 painter = rememberDrawablePainter(presentationDrawableOf("ic_round_arrow_left_24")),

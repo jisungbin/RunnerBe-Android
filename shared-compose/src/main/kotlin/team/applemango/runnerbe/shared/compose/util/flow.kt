@@ -19,12 +19,13 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 
 @SuppressLint("ComposableNaming")
 @Composable
 fun <T> Flow<T>.collectWithLifecycleRememberOnLaunchedEffect(
     minActiveState: Lifecycle.State = Lifecycle.State.STARTED,
-    collect: (T) -> Unit,
+    action: (T) -> Unit,
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     val flowLifecycleAware = remember(this, lifecycleOwner) {
@@ -32,7 +33,7 @@ fun <T> Flow<T>.collectWithLifecycleRememberOnLaunchedEffect(
     }
     LaunchedEffect(Unit) {
         flowLifecycleAware.collect {
-            collect(it)
+            action(it)
         }
     }
 }

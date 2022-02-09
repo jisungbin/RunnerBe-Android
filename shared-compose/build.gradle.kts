@@ -12,6 +12,16 @@ plugins {
     id("kotlin-android")
 }
 
+android {
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.Compose.Master
+    }
+}
+
 dependencies {
     Dependencies.Compose.forEach(::implementation)
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:${Versions.Ktx.Lifecycle}")
