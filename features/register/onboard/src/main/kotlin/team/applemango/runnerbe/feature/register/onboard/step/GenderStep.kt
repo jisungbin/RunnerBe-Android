@@ -46,7 +46,7 @@ private enum class Gender(val string: String) {
 }
 
 @Composable
-internal fun GenderStep() {
+internal fun GenderStep(onGenderSelectedAction: () -> Unit) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     var selectedGender by remember { mutableStateOf<Gender?>(null) }
@@ -68,6 +68,7 @@ internal fun GenderStep() {
 
     context.dataStore.data.collectWithLifecycleRememberOnLaunchedEffect { preferences ->
         preferences[DataStoreKey.Onboard.Gender]?.let { restoreGenderString ->
+            onGenderSelectedAction()
             selectedGender = Gender.values().first { it.string == restoreGenderString }
         }
         cancel("onboard restore execute must be once.")
@@ -84,6 +85,7 @@ internal fun GenderStep() {
             Button(
                 onClick = {
                     selectedGender = gender
+                    onGenderSelectedAction()
                     coroutineScope.launch {
                         context.dataStore.edit { preferences ->
                             preferences[DataStoreKey.Onboard.Gender] = gender.string

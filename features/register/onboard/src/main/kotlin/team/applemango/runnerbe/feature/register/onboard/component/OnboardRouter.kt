@@ -46,6 +46,7 @@ import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.skydoves.landscapist.rememberDrawablePainter
+import io.github.jisungbin.logeukes.logeukes
 import team.applemango.runnerbe.feature.home.board.BoardActivity
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.step.AgePicker
@@ -69,10 +70,6 @@ internal fun OnboardRouter(navController: NavHostController) {
     var stepIndex by remember { mutableStateOf(0) }
     var stepIndexString by remember { mutableStateOf("") }
 
-    if (stepIndex != 0) {
-        stepIndexString = "$stepIndex/4"
-    }
-
     stepIndex = when (navController.currentBackStackEntryAsState().value?.destination?.route) {
         Step.Terms.name -> 0
         Step.Birthday.name -> 1
@@ -83,11 +80,17 @@ internal fun OnboardRouter(navController: NavHostController) {
         else -> stepIndex
     }
 
+    if (stepIndex != 0) {
+        stepIndexString = "$stepIndex/4"
+    }
+
+    enableGoNextStep = false
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(brush = GradientAsset.RegisterCommonBackground)
-            .systemBarsPadding(start = false, end = false)
+            .systemBarsPadding(/*start = false, end = false*/)
             .padding(horizontal = 16.dp)
     ) {
         Row( // TopBar
@@ -157,29 +160,34 @@ internal fun OnboardRouter(navController: NavHostController) {
             composable(route = Step.Birthday.name) {
                 OnboardContent(
                     step = Step.Birthday,
-                    bottomCTAButtonEnabled = true,
+                    bottomCTAButtonEnabled = enableGoNextStep,
                     onBottomCTAButtonAction = {
                         navController.navigate(Step.Gender.name)
                     }
                 ) {
-                    AgePicker()
+                    AgePicker(selectedAgeChanged = { isAdult ->
+                        logeukes { isAdult }
+                        enableGoNextStep = isAdult
+                    })
                 }
             }
             composable(route = Step.Gender.name) {
                 OnboardContent(
                     step = Step.Gender,
-                    bottomCTAButtonEnabled = true,
+                    bottomCTAButtonEnabled = enableGoNextStep,
                     onBottomCTAButtonAction = {
                         navController.navigate(Step.Job.name)
                     }
                 ) {
-                    GenderStep()
+                    GenderStep(onGenderSelectedAction = {
+                        enableGoNextStep = true
+                    })
                 }
             }
             composable(route = Step.Job.name) {
                 OnboardContent(
                     step = Step.Job,
-                    bottomCTAButtonEnabled = true,
+                    bottomCTAButtonEnabled = enableGoNextStep,
                     onBottomCTAButtonAction = {
                         navController.navigate(Step.VerifyWithEmail.name)
                     }
@@ -210,7 +218,7 @@ internal fun OnboardRouter(navController: NavHostController) {
                 // 무조건 Step.VerifyWithEmail 을 거쳐야 이 step 으로 올 수 있음
                 OnboardContent(
                     step = Step.VerifyWithEmployeeId,
-                    bottomCTAButtonEnabled = true,
+                    bottomCTAButtonEnabled = enableGoNextStep,
                     onBottomCTAButtonAction = { // 인증하기
                         navController.navigate(Step.VerifyWithEmployeeIdRequestDone.name)
                     }

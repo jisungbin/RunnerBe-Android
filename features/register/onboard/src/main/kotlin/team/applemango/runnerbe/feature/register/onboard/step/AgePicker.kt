@@ -28,6 +28,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.datastore.preferences.core.edit
+import java.util.Calendar
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -42,17 +43,17 @@ import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.dataStore
 import team.applemango.runnerbe.xml.numberpicker.OnValueChangeListener
 import team.applemango.runnerbe.xml.numberpicker.WheelPicker
-import java.util.Calendar
 
 private val nowYear = Calendar.getInstance().get(Calendar.YEAR)
 
 @Composable
-internal fun AgePicker() {
+internal fun AgePicker(selectedAgeChanged: (isAdult: Boolean) -> Unit) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val selectedYearFlow = remember { MutableStateFlow(nowYear) }
     val selectedYearState by selectedYearFlow.collectAsStateWithLifecycleRemember(nowYear)
     val wheelPicker = WheelPicker(context) { year ->
+        selectedAgeChanged(nowYear - year > 19)
         coroutineScope.launch {
             selectedYearFlow.emit(year)
         }
@@ -61,6 +62,7 @@ internal fun AgePicker() {
         preferences[DataStoreKey.Onboard.Year]?.let { restoreYear ->
             wheelPicker.setValue(restoreYear)
             selectedYearFlow.emit(restoreYear)
+            selectedAgeChanged(nowYear - restoreYear > 19)
         }
         cancel("onboard restore execute must be once.")
     }
@@ -105,6 +107,7 @@ private fun WheelPicker(
     setWheelItemCount(5)
     setMinValue(nowYear - 80)
     setMaxValue(nowYear)
+    setValue(nowYear)
     setOnValueChangedListener(object : OnValueChangeListener {
         override fun onValueChange(
             picker: WheelPicker,

@@ -16,8 +16,8 @@ import androidx.core.net.toUri
 import io.github.jisungbin.logeukes.LoggerType
 import io.github.jisungbin.logeukes.logeukes
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
-import team.applemango.runnerbe.shared.util.extension.toast
 import team.applemango.runnerbe.shared.compose.util.presentationColorOf
+import team.applemango.runnerbe.shared.util.extension.toast
 
 internal object Web {
     enum class Link(val string: String) {
@@ -29,6 +29,7 @@ internal object Web {
     @Suppress("DEPRECATION")
     // None deprecated way usage: Didn't find class "androidx.browser.customtabs.CustomTabColorSchemeParams$Builder"
     // Also trying: 'com.google.androidbrowserhelper:androidbrowserhelper:2.3.0' but same exception occur.
+    // Issue: https://github.com/applemango-runnerbe/RunnerBe-Android/issues/17
     fun open(context: Context, link: Link) {
         try {
             val builder = CustomTabsIntent.Builder()
