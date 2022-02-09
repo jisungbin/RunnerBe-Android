@@ -46,7 +46,7 @@ internal fun AgePicker() {
                 setWrapSelectorWheel(true)
                 setWheelItemCount(5)
                 setMinValue(nowYear - 80)
-                setMaxValue(nowYear)
+                setMaxValue(nowYear - 20)
                 setValue(nowYear / 2)
                 setOnValueChangedListener(object : OnValueChangeListener {
                     override fun onValueChange(
