@@ -40,11 +40,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.datastore.preferences.core.edit
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.skydoves.landscapist.rememberDrawablePainter
 import team.applemango.runnerbe.feature.home.board.BoardActivity
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
@@ -61,14 +61,12 @@ import team.applemango.runnerbe.shared.util.extension.dataStore
 
 @Composable
 @OptIn(ExperimentalAnimationApi::class)
-internal fun OnboardRouter() {
+internal fun OnboardRouter(navController: NavHostController) {
     val context = LocalContext.current
     val activity = context as Activity
     var enableGoNextStep by remember { mutableStateOf(false) }
     var stepIndex by remember { mutableStateOf(0) }
     var stepIndexString by remember { mutableStateOf("") }
-    val navController = rememberAnimatedNavController()
-    var pickerValue by remember { mutableStateOf(0) }
 
     if (stepIndex != 0) {
         stepIndexString = "$stepIndex/4"

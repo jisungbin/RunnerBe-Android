@@ -15,12 +15,12 @@ import android.view.animation.AnticipateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import team.applemango.runnerbe.feature.home.board.BoardActivity
+import team.applemango.runnerbe.shared.compose.util.DFMLoginActivityAlias
+import team.applemango.runnerbe.shared.compose.util.DFMOnboardActivityAlias
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.changeActivityWithAnimation
 import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.util.extension.dataStore
-import team.applemango.runnerbe.shared.compose.util.DFMLoginActivityAlias
-import team.applemango.runnerbe.shared.compose.util.DFMOnboardActivityAlias
 
 class StartActivity : AppCompatActivity() {
 
@@ -28,7 +28,8 @@ class StartActivity : AppCompatActivity() {
         installSplashScreen()
         super.onCreate(savedInstanceState)
 
-        applicationContext.dataStore.data.collectWithLifecycle(this) { preferences ->
+        // 무조건 다른 액티비티로 이동되므로 알아서 cancel 됨 (수동 cancel 불필요)
+        dataStore.data.collectWithLifecycle(this) { preferences ->
             val isSignedUser = preferences[DataStoreKey.Login.Jwt] != null
             val isSnsLoginDone = preferences[DataStoreKey.Login.Uuid] != null
             when {

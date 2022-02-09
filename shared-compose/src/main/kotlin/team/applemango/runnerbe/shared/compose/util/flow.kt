@@ -29,7 +29,7 @@ import kotlinx.coroutines.flow.debounce
 @SuppressLint("ComposableNaming")
 @Composable
 fun <T> Flow<T>.collectWithLifecycleRememberOnLaunchedEffect(
-    minActiveState: Lifecycle.State = Lifecycle.State.STARTED,
+    minActiveState: Lifecycle.State = Lifecycle.State.CREATED,
     debounceTimeout: Long = 0L,
     action: suspend CoroutineScope.(T) -> Unit,
 ) {
@@ -50,7 +50,7 @@ fun <T> Flow<T>.collectWithLifecycleRememberOnLaunchedEffect(
 @Composable
 fun <T> Flow<T>.collectAsStateWithLifecycleRemember(
     initial: T,
-    minActiveState: Lifecycle.State = Lifecycle.State.STARTED,
+    minActiveState: Lifecycle.State = Lifecycle.State.CREATED,
 ): State<T> {
     val lifecycleOwner = LocalLifecycleOwner.current
     val flowLifecycleAware = remember(this, lifecycleOwner) {
