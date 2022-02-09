@@ -29,6 +29,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,6 +46,7 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.skydoves.landscapist.rememberDrawablePainter
+import team.applemango.runnerbe.feature.home.board.BoardActivity
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.step.TermsTable
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
@@ -81,7 +83,8 @@ internal fun OnboardRouter() {
         ) {
             Image(
                 modifier = Modifier.clickable { // < 뒤로가기
-                    if (!navController.popBackStack()) { // 뒤로 갈 수 있는 백스택이 없다면 로그인 화면으로 돌아가야 함
+                    if (!navController.popBackStack()) {
+                        // 뒤로 갈 수 있는 백스택이 없다면 로그인 화면으로 돌아가야 함
                         // SnsLoginActivity 에서 백스택을 남기고
                         // 여기서 바로 finish 를 통해 뒤로 가게 된다면 가능 하지만,
                         // 만약 로그인만 완료한 상태에서 앱을 종료해서 바로 이 화면으로 오게 된다면
@@ -120,6 +123,9 @@ internal fun OnboardRouter() {
             exitTransition = { fadeOut(tween(500)) }
         ) {
             composable(route = Step.Terms.name) {
+                SideEffect {
+                    stepIndex = 0
+                }
                 OnboardContent(
                     step = Step.Terms,
                     bottomCTAButtonEnabled = enableGoNextStep,
@@ -127,7 +133,6 @@ internal fun OnboardRouter() {
                         context.dataStore.edit { preferences ->
                             preferences[DataStoreKey.Onboard.TermsAllCheck] = true
                         }
-                        stepIndex = 1
                         navController.navigate(Step.Birthday.name)
                     }
                 ) {
@@ -137,11 +142,13 @@ internal fun OnboardRouter() {
                 }
             }
             composable(route = Step.Birthday.name) {
+                SideEffect {
+                    stepIndex = 1
+                }
                 OnboardContent(
                     step = Step.Birthday,
                     bottomCTAButtonEnabled = true,
                     onBottomCTAButtonAction = {
-                        stepIndex = 2
                         navController.navigate(Step.Gender.name)
                     }
                 ) {
@@ -153,11 +160,13 @@ internal fun OnboardRouter() {
                 }
             }
             composable(route = Step.Gender.name) {
+                SideEffect {
+                    stepIndex = 2
+                }
                 OnboardContent(
                     step = Step.Gender,
                     bottomCTAButtonEnabled = true,
                     onBottomCTAButtonAction = {
-                        stepIndex = 3
                         navController.navigate(Step.Job.name)
                     }
                 ) {
@@ -169,11 +178,13 @@ internal fun OnboardRouter() {
                 }
             }
             composable(route = Step.Job.name) {
+                SideEffect {
+                    stepIndex = 3
+                }
                 OnboardContent(
                     step = Step.Job,
                     bottomCTAButtonEnabled = true,
                     onBottomCTAButtonAction = {
-                        stepIndex = 4
                         navController.navigate(Step.VerifyWithEmail.name)
                     }
                 ) {
@@ -184,7 +195,10 @@ internal fun OnboardRouter() {
                     )
                 }
             }
-            composable(route = Step.VerifyWithEmail.name) {
+            composable(route = Step.VerifyWithEmail.name) { // 회사 이메일로 직장 인증
+                SideEffect {
+                    stepIndex = 4
+                }
                 OnboardContent(
                     step = Step.VerifyWithEmail,
                     bottomCTAButtonEnabled = true,
@@ -199,12 +213,12 @@ internal fun OnboardRouter() {
                     )
                 }
             }
-            composable(route = Step.VerifyWithEmployeeId.name) { // 사원증으로 인증
+            // 사원증으로 인증, 무조건 Step.VerifyWithEmail 을 거쳐야 이 step 으로 올 수 있음
+            composable(route = Step.VerifyWithEmployeeId.name) {
                 OnboardContent(
                     step = Step.VerifyWithEmailDone,
                     bottomCTAButtonEnabled = true,
                     onBottomCTAButtonAction = { // 인증하기
-                        stepIndex = 0
                         navController.navigate(Step.VerifyWithEmployeeIdRequestDone.name)
                     }
                 ) {
@@ -216,11 +230,14 @@ internal fun OnboardRouter() {
                 }
             }
             composable(route = Step.VerifyWithEmailDone.name) { // 이메일 인증 완료
+                SideEffect {
+                    stepIndex = 0
+                }
                 OnboardContent(
                     step = Step.VerifyWithEmailDone,
                     bottomCTAButtonEnabled = true,
-                    onBottomCTAButtonAction = {
-                        navController.navigate(Step.Terms.name)
+                    onBottomCTAButtonAction = { // 메인 화면으로
+                        activity.changeActivityWithAnimation<BoardActivity>()
                     }
                 ) {
                     Text(
@@ -231,12 +248,14 @@ internal fun OnboardRouter() {
                 }
             }
             composable(route = Step.VerifyWithEmployeeIdRequestDone.name) { // 사원증 제출 완료
+                SideEffect {
+                    stepIndex = 0
+                }
                 OnboardContent(
                     step = Step.VerifyWithEmailDone,
                     bottomCTAButtonEnabled = true,
-                    onBottomCTAButtonAction = { // 인증하기
-                        stepIndex = 0
-                        navController.navigate(Step.VerifyWithEmployeeIdRequestDone.name)
+                    onBottomCTAButtonAction = { // 메인 화면으로
+                        activity.changeActivityWithAnimation<BoardActivity>()
                     }
                 ) {
                     Text(
