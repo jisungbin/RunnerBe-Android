@@ -12,6 +12,7 @@ import android.util.AttributeSet
 import android.view.* // ktlint-disable no-wildcard-imports
 import android.view.animation.DecelerateInterpolator
 import android.widget.OverScroller
+import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import java.util.* // ktlint-disable no-wildcard-imports
 import kotlin.math.abs
@@ -730,8 +731,8 @@ class WheelPicker @JvmOverloads constructor(
         scrollTo(getPosition(value))
     }
 
-    fun setUnselectedTextColor(resourceId: Int) {
-        mUnSelectedTextColor = resourceId
+    fun setUnselectedTextColor(@ColorInt color: Int) {
+        mUnSelectedTextColor = color
     }
 
     /**
@@ -794,8 +795,8 @@ class WheelPicker @JvmOverloads constructor(
     /**
      * Set color for current selected item
      */
-    fun setSelectedTextColor(colorId: Int) {
-        mSelectedTextColor = ContextCompat.getColor(context, colorId)
+    fun setSelectedTextColor(@ColorInt color: Int) {
+        mSelectedTextColor = color
         invalidate()
     }
 
