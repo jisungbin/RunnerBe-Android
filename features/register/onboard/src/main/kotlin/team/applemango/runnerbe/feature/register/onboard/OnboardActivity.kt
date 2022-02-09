@@ -31,7 +31,7 @@ class OnboardActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
-            ProvideWindowInsets {
+            ProvideWindowInsets(consumeWindowInsets = false) {
                 val systemUiController = rememberSystemUiController()
                 LaunchedEffect(Unit) {
                     systemUiController.setSystemBarsColor(Color.Transparent)
