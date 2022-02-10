@@ -48,6 +48,7 @@ import androidx.datastore.preferences.core.edit
 import com.google.firebase.auth.ktx.actionCodeSettings
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import io.github.jisungbin.logeukes.logeukes
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -67,22 +68,22 @@ private val Shape = RoundedCornerShape(8.dp)
 @Composable
 internal fun EmailVerify() {
     val context = LocalContext.current
-    var uuid by remember { mutableStateOf<String?>(null) }
+    val focusManager = LocalFocusManager.current
+    var uuid by remember { mutableStateOf("") }
     val coroutineScope = rememberCoroutineScope()
     val emailInputFlow = remember { MutableStateFlow("") }
     val emailInputState by emailInputFlow.collectAsStateWithLifecycleRemember("")
     var emailVerifyState by remember { mutableStateOf<EmailVerifyState>(EmailVerifyState.None) }
     var emailSendButtonEnabled by remember { mutableStateOf(false) }
-    val focusManager = LocalFocusManager.current
 
     val emailSendButtonBackgroundColor = animateColorAsState(
-        when (emailSendButtonEnabled && uuid != null) {
+        when (emailSendButtonEnabled) {
             true -> ColorAsset.Primary
             else -> ColorAsset.G3
         }
     ).value
     val emailSendButtonTextColor = animateColorAsState(
-        when (emailSendButtonEnabled && uuid != null) {
+        when (emailSendButtonEnabled) {
             true -> ColorAsset.G6
             else -> ColorAsset.G4_5
         }
@@ -92,11 +93,7 @@ internal fun EmailVerify() {
         preferences[DataStoreKey.Onboard.Email]?.let { restoreEmail ->
             emailInputFlow.emit(restoreEmail)
         }
-        preferences[DataStoreKey.Login.Uuid]?.let { userUuid ->
-            uuid = userUuid
-        } ?: run {
-            emailVerifyState = EmailVerifyState.ErrorUuid
-        }
+        uuid = preferences[DataStoreKey.Login.Uuid]!! // must NonNull
         cancel("onboard restore execute must be once.")
     }
     emailInputFlow.collectWithLifecycleRememberOnLaunchedEffect(debounceTimeout = 500L) { email ->
@@ -120,6 +117,9 @@ internal fun EmailVerify() {
                     .border(width = 1.dp, color = ColorAsset.Primary, shape = Shape),
                 value = emailInputState,
                 onValueChange = { inputEmail ->
+                    if (emailVerifyState == EmailVerifyState.Sent) {
+                        emailVerifyState = EmailVerifyState.None
+                    }
                     if (!inputEmail.contains(" ")) {
                         emailSendButtonEnabled =
                             Patterns.EMAIL_ADDRESS.matcher(inputEmail).matches()
@@ -162,15 +162,17 @@ internal fun EmailVerify() {
                         height = Dimension.fillToConstraints
                     }
                     .clip(Shape)
-                    .runIf(emailSendButtonEnabled && uuid != null) {
+                    .runIf(emailSendButtonEnabled) {
                         clickable(
                             indication = rememberRipple(),
                             interactionSource = remember { MutableInteractionSource() },
                             onClick = {
+                                val email = emailInputFlow.value
+                                logeukes { email }
                                 Firebase.auth
                                     .sendSignInLinkToEmail(
-                                        emailInputFlow.value,
-                                        getVerifyCodeSettings(uuid!!)
+                                        email,
+                                        getVerifyCodeSettings(uuid)
                                     )
                                     .addOnSuccessListener {
                                         emailVerifyState = EmailVerifyState.Sent
@@ -221,7 +223,7 @@ internal fun EmailVerify() {
 }
 
 private fun getVerifyCodeSettings(uuid: String) = actionCodeSettings {
-    url = "https://runnerbe-auth.shop/verify=$uuid" // 이 값은 입력받는 이메일과 항상 일치해야 함
+    url = "https://runnerbe-auth.shop/welcome?verify=$uuid" // 이 값은 입력받는 이메일과 항상 일치해야 함
     handleCodeInApp = true // 필수!
     setAndroidPackageName(
         "team.applemango.runnerbe", // 리다이렉트될 앱 패키지명
