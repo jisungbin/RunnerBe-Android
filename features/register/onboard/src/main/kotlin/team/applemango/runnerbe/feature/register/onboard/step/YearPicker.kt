@@ -63,7 +63,7 @@ internal fun YearPicker(selectedYearChanged: (isAdult: Boolean) -> Unit) {
             wheelPicker.setValue(restoreYear)
             yearSelectFlow.emit(restoreYear)
             selectedYearChanged(nowYear - restoreYear > 19)
-        } ?: selectedYearChanged(false)
+        } ?: selectedYearChanged(false) // default year: ${nowYear} -> always isAdult: false
         cancel("onboard restore execute must be once.")
     }
     yearSelectFlow.collectWithLifecycleRememberOnLaunchedEffect(debounceTimeout = 300L) { year ->

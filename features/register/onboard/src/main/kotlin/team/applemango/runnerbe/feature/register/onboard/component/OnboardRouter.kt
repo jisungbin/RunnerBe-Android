@@ -25,7 +25,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -42,11 +41,9 @@ import androidx.compose.ui.unit.sp
 import androidx.datastore.preferences.core.edit
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.skydoves.landscapist.rememberDrawablePainter
-import io.github.jisungbin.logeukes.logeukes
 import team.applemango.runnerbe.feature.home.board.BoardActivity
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.step.GenderPicker
@@ -54,7 +51,6 @@ import team.applemango.runnerbe.feature.register.onboard.step.JobPicker
 import team.applemango.runnerbe.feature.register.onboard.step.TermsTable
 import team.applemango.runnerbe.feature.register.onboard.step.YearPicker
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
-import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.compose.util.presentationDrawableOf
 import team.applemango.runnerbe.shared.constant.DataStoreKey
@@ -65,7 +61,7 @@ import team.applemango.runnerbe.util.DFMLoginActivityAlias
 
 @Composable
 @OptIn(ExperimentalAnimationApi::class)
-internal fun OnboardRouter(navController: NavHostController) {
+internal fun OnboardRouter(modifier: Modifier, navController: NavHostController) {
     val context = LocalContext.current
     val activity = context as Activity
     var enableGoNextStep by remember { mutableStateOf(false) }
@@ -86,13 +82,7 @@ internal fun OnboardRouter(navController: NavHostController) {
         stepIndexString = "$stepIndex/4"
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(brush = GradientAsset.RegisterCommonBackground)
-            .systemBarsPadding(/*start = false, end = false*/)
-            .padding(horizontal = 16.dp)
-    ) {
+    Column(modifier = modifier) {
         Row( // TopBar
             modifier = Modifier
                 .fillMaxWidth()

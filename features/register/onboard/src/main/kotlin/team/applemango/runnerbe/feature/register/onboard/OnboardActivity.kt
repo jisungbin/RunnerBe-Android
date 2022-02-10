@@ -14,8 +14,13 @@ import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
@@ -23,6 +28,8 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.cancel
 import team.applemango.runnerbe.feature.register.onboard.component.OnboardRouter
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
+import team.applemango.runnerbe.shared.compose.theme.GradientAsset
+import team.applemango.runnerbe.shared.compose.util.systemBarsPaddingByDefaultColor
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.util.extension.dataStore
@@ -82,7 +89,19 @@ class OnboardActivity : ComponentActivity() {
                         cancel("step restore execute must be once.")
                     }
                 }
-                OnboardRouter(navController)
+                OnboardRouter(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(brush = GradientAsset.RegisterCommonBackground)
+                        .systemBarsPaddingByDefaultColor(
+                            window = window,
+                            defaultStatusBarColor = Color.Cyan,
+                            defaultNavigationBarColor = Color.Red,
+                            systemUiController = systemUiController
+                        )
+                        .padding(horizontal = 16.dp),
+                    navController = navController
+                )
             }
         }
     }

@@ -13,6 +13,7 @@
         <item name="android:windowBackground">@color/G5_5</item>
         <item name="android:statusBarColor">@color/G5_5</item>
         <item name="android:navigationBarColor">@color/G5_5</item>
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <style name="Theme.RunnerBe.Splash" parent="Theme.SplashScreen">
