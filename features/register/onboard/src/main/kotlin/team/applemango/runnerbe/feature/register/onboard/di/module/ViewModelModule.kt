@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
-import team.applemango.runnerbe.domain.login.usecase.CheckEmailDuplicateUseCase
+import team.applemango.runnerbe.domain.login.usecase.CheckDuplicateEmailUseCase
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.feature.register.onboard.di.qualifier.ViewModelKey
 
@@ -23,10 +23,10 @@ internal class ViewModelModule {
     @IntoMap
     @ViewModelKey(OnboardViewModel::class)
     fun provideSnsLoginViewModel(
-        checkEmailDuplicateUseCase: CheckEmailDuplicateUseCase,
+        checkDuplicateEmailUseCase: CheckDuplicateEmailUseCase,
     ): ViewModel {
         return OnboardViewModel(
-            checkEmailDuplicateUseCase = checkEmailDuplicateUseCase
+            checkDuplicateEmailUseCase = checkDuplicateEmailUseCase
         )
     }
 }

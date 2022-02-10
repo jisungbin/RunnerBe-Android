@@ -12,11 +12,11 @@ package team.applemango.runnerbe.feature.register.onboard.di.module
 import dagger.Module
 import dagger.Provides
 import team.applemango.runnerbe.domain.login.repository.RegisterRepository
-import team.applemango.runnerbe.domain.login.usecase.CheckEmailDuplicateUseCase
+import team.applemango.runnerbe.domain.login.usecase.CheckDuplicateEmailUseCase
 
 @Module
 internal class UseCaseModule {
     @Provides
-    fun provideCheckDuplicateEmailUseCase(repo: RegisterRepository): CheckEmailDuplicateUseCase =
-        CheckEmailDuplicateUseCase(repo)
+    fun provideCheckDuplicateEmailUseCase(repo: RegisterRepository): CheckDuplicateEmailUseCase =
+        CheckDuplicateEmailUseCase(repo)
 }

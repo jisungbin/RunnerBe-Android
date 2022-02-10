@@ -17,9 +17,9 @@ import team.applemango.runnerbe.domain.login.repository.RegisterRepository
 
 class RegisterRepositoryImpl : RegisterRepository {
     override suspend fun checkDuplicateEmail(email: String): Boolean {
-        return registerApi.checkDuplicateEmail(email)
+        return !registerApi.checkDuplicateEmail(email)
             .requireSuccessfulBody("checkDuplicateEmail")
-            .toBoolean()
+            .toBoolean() // isSuccessful -> true: 사용 가능, false: 사용 불가능 (중복)
     }
 
     override suspend fun register(user: User) {

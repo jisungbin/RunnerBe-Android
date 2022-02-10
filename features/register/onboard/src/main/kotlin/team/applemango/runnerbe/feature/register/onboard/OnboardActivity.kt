@@ -112,7 +112,8 @@ class OnboardActivity : ComponentActivity() {
                         .background(brush = GradientAsset.RegisterCommonBackground)
                         .systemBarsPadding(start = false, end = false)
                         .padding(horizontal = 16.dp),
-                    navController = navController
+                    navController = navController,
+                    vm = vm
                 )
             }
         }

@@ -45,10 +45,10 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.datastore.preferences.core.edit
-import io.github.jisungbin.logeukes.logeukes
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.constant.EmailVerifyState
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
@@ -63,10 +63,9 @@ import team.applemango.runnerbe.shared.util.extension.toMessage
 private val Shape = RoundedCornerShape(8.dp)
 
 @Composable
-internal fun EmailVerify() {
+internal fun EmailVerify(vm: OnboardViewModel) {
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
-    var uuid by remember { mutableStateOf("") }
     val coroutineScope = rememberCoroutineScope()
     val emailInputFlow = remember { MutableStateFlow("") }
     val emailInputState by emailInputFlow.collectAsStateWithLifecycleRemember("")
@@ -90,7 +89,6 @@ internal fun EmailVerify() {
         preferences[DataStoreKey.Onboard.Email]?.let { restoreEmail ->
             emailInputFlow.emit(restoreEmail)
         }
-        uuid = preferences[DataStoreKey.Login.Uuid]!! // must NonNull
         cancel("onboard restore execute must be once.")
     }
     emailInputFlow.collectWithLifecycleRememberOnLaunchedEffect(debounceTimeout = 500L) { email ->
@@ -164,19 +162,14 @@ internal fun EmailVerify() {
                             indication = rememberRipple(),
                             interactionSource = remember { MutableInteractionSource() },
                             onClick = {
-                                val email = emailInputFlow.value
-                                logeukes { email }
-                                /*Firebase.auth
-                                    .sendSignInLinkToEmail(
-                                        email,
-                                        getVerifyCodeSettings(uuid)
-                                    )
-                                    .addOnSuccessListener {
-                                        emailVerifyState = EmailVerifyState.Sent
+                                coroutineScope.launch {
+                                    val email = emailInputFlow.value
+                                    if (vm.checkDuplicateEmail(email)) {
+
+                                    } else {
+                                        emailVerifyState = EmailVerifyState.Duplicate
                                     }
-                                    .addOnFailureListener { exception ->
-                                        emailVerifyState = EmailVerifyState.Exception(exception)
-                                    }*/
+                                }
                             }
                         )
                     }

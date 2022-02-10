@@ -45,6 +45,7 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.skydoves.landscapist.rememberDrawablePainter
 import team.applemango.runnerbe.feature.home.board.BoardActivity
+import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.step.EmailVerify
 import team.applemango.runnerbe.feature.register.onboard.step.GenderPicker
@@ -62,7 +63,11 @@ import team.applemango.runnerbe.util.DFMLoginActivityAlias
 
 @Composable
 @OptIn(ExperimentalAnimationApi::class)
-internal fun OnboardRouter(modifier: Modifier, navController: NavHostController) {
+internal fun OnboardRouter(
+    modifier: Modifier,
+    navController: NavHostController,
+    vm: OnboardViewModel,
+) {
     val context = LocalContext.current
     val activity = context as Activity
     var enableGoNextStep by remember { mutableStateOf(false) }
@@ -197,7 +202,7 @@ internal fun OnboardRouter(modifier: Modifier, navController: NavHostController)
                         navController.navigate(Step.VerifyWithEmployeeId.name)
                     }
                 ) {
-                    EmailVerify()
+                    EmailVerify(vm = vm)
                 }
             }
             composable(route = Step.VerifyWithEmployeeId.name) { // 사원증으로 인증
