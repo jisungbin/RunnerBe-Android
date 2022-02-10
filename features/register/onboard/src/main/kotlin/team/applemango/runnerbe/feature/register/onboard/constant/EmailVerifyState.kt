@@ -12,6 +12,7 @@ package team.applemango.runnerbe.feature.register.onboard.constant
 internal sealed class EmailVerifyState {
     object None : EmailVerifyState()
     object Sent : EmailVerifyState()
+    object Loading : EmailVerifyState()
     object Duplicate : EmailVerifyState()
     object ErrorUuid : EmailVerifyState()
     data class Exception(val throwable: Throwable) : EmailVerifyState()

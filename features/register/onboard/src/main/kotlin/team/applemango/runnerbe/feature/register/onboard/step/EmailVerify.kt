@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.datastore.preferences.core.edit
+import com.google.accompanist.insets.imePadding
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -158,6 +159,7 @@ internal fun EmailVerify(vm: OnboardViewModel) {
                         width = Dimension.wrapContent
                         height = Dimension.fillToConstraints
                     }
+                    .imePadding()
                     .clip(Shape)
                     .runIf(emailSendButtonEnabled) {
                         clickable(
@@ -165,6 +167,7 @@ internal fun EmailVerify(vm: OnboardViewModel) {
                             interactionSource = remember { MutableInteractionSource() },
                             onClick = {
                                 coroutineScope.launch {
+                                    emailVerifyState = EmailVerifyState.Loading
                                     val email = emailInputFlow.value
                                     if (vm.checkUsableEmail(email)) {
                                         createUserWithEmailVerify(
@@ -205,6 +208,10 @@ internal fun EmailVerify(vm: OnboardViewModel) {
                     message = StringAsset.Hint.SentVerifyLink
                     style = Typography.Body12R.copy(color = ColorAsset.Primary)
                 }
+                EmailVerifyState.Loading -> { // success
+                    message = StringAsset.Hint.EmailSendingRequest
+                    style = Typography.Body12R.copy(color = ColorAsset.Primary)
+                }
                 EmailVerifyState.Duplicate -> {
                     message = StringAsset.Hint.DuplicateEmail
                 }
@@ -213,6 +220,9 @@ internal fun EmailVerify(vm: OnboardViewModel) {
                 }
                 is EmailVerifyState.Exception -> {
                     message = state.throwable.toMessage()
+                    if (message == "The email address is already in use by another account.") {
+                        message = StringAsset.Hint.DuplicateEmail
+                    }
                 }
             }
             if (message.isNotEmpty()) {

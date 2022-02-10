@@ -27,7 +27,8 @@
         <activity
             android:name=".OnboardActivity"
             android:exported="true"
-            android:theme="@style/Theme.RunnerBe">
+            android:theme="@style/Theme.RunnerBe"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

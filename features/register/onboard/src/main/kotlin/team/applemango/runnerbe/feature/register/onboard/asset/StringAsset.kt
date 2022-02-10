@@ -51,6 +51,7 @@ internal object StringAsset {
     object Hint {
         const val AgeNotice = "19세 미만은 이용할 수 없어요!"
         const val PlaceholderEmail = "runnerbee@company.com"
+        const val EmailSendingRequest = "인증 링크 발송을 요청중이에요."
         const val SentVerifyLink =
             "인증 링크가 발송되었어요 \uD83E\uDD18\n전송까지 최대 5분이 걸릴 수 있어서 게임을 준비했어요.\n메일이 오지 않는다면 스팸 메일함도 확인해주세요!" // 🤘
         const val DuplicateEmail = "이미 사용 중인 이메일이에요!"
