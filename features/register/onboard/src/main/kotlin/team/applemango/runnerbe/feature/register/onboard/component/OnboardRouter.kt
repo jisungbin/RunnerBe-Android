@@ -230,7 +230,7 @@ internal fun OnboardRouter(modifier: Modifier, navController: NavHostController)
                     Text(
                         modifier = Modifier.align(Alignment.Center),
                         text = "️\uD83C\uDF89", // ️🎉
-                        style = LocalTextStyle.current.copy(fontSize = 110.sp)
+                        style = LocalTextStyle.current.copy(fontSize = 100.sp)
                     )
                 }
             }
@@ -244,8 +244,8 @@ internal fun OnboardRouter(modifier: Modifier, navController: NavHostController)
                 ) {
                     Text(
                         modifier = Modifier.align(Alignment.Center),
-                        text = "️\uD83D\uDE18", // ️😘
-                        style = LocalTextStyle.current.copy(fontSize = 110.sp)
+                        text = "️✅", // ️✅
+                        style = LocalTextStyle.current.copy(fontSize = 100.sp)
                     )
                 }
             }
