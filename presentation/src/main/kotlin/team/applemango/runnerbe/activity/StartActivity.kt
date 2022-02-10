@@ -29,7 +29,7 @@ class StartActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // 무조건 다른 액티비티로 이동되므로 알아서 cancel 됨 (수동 cancel 불필요)
-        dataStore.data.collectWithLifecycle(this) { preferences ->
+        applicationContext.dataStore.data.collectWithLifecycle(this) { preferences ->
             val isSignedUser = preferences[DataStoreKey.Login.Jwt] != null
             val isSnsLoginDone = preferences[DataStoreKey.Login.Uuid] != null
             when {

@@ -48,6 +48,7 @@ internal fun JobPicker(jobSelectChanged: (isSelected: Boolean) -> Unit) {
         cancel("onboard restore execute must be once.")
     }
 
+    // FlowLayout 은 디자인이 안이쁘게 되서 수동으로 작성 함
     /*FlowRow(
         modifier = Modifier
             .fillMaxSize()
