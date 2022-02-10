@@ -73,17 +73,16 @@ internal fun EmailVerify() {
     val emailInputState by emailInputFlow.collectAsStateWithLifecycleRemember("")
     var emailVerifyState by remember { mutableStateOf<EmailVerifyState>(EmailVerifyState.None) }
     var emailSendButtonEnabled by remember { mutableStateOf(false) }
-    val emailSendButtonEnabledAndValidUuid = emailSendButtonEnabled && uuid != null
     val focusManager = LocalFocusManager.current
 
     val emailSendButtonBackgroundColor = animateColorAsState(
-        when (emailSendButtonEnabledAndValidUuid) {
+        when (emailSendButtonEnabled && uuid != null) {
             true -> ColorAsset.Primary
             else -> ColorAsset.G3
         }
     ).value
     val emailSendButtonTextColor = animateColorAsState(
-        when (emailSendButtonEnabledAndValidUuid) {
+        when (emailSendButtonEnabled && uuid != null) {
             true -> ColorAsset.G6
             else -> ColorAsset.G4_5
         }
@@ -163,7 +162,7 @@ internal fun EmailVerify() {
                         height = Dimension.fillToConstraints
                     }
                     .clip(Shape)
-                    .runIf(emailSendButtonEnabledAndValidUuid) {
+                    .runIf(emailSendButtonEnabled && uuid != null) {
                         clickable(
                             indication = rememberRipple(),
                             interactionSource = remember { MutableInteractionSource() },
