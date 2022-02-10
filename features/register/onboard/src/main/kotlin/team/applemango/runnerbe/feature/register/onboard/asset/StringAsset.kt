@@ -53,7 +53,7 @@ internal object StringAsset {
         const val PlaceholderEmail = "runnerbee@company.com"
         const val SentVerifyLink =
             "인증 링크가 발송되었어요 \uD83E\uDD18\n전송까지 최대 5분이 걸릴 수 있어서 게임을 준비했어요.\n메일이 오지 않는다면 스팸 메일함도 확인해주세요!" // 🤘
-        const val AlreadyUseEmail = "이미 사용 중인 이메일이에요!"
+        const val DuplicateEmail = "이미 사용 중인 이메일이에요!"
         const val ErrorUuid = "회원가입중에 오류가 발생했어요.\n초기 단계부터 다시 진행해 주세요."
         const val RequireFieldJob = "👉   직장명, 직무/직위는 꼭 드러나야 해요!"
         const val RequireFieldInformation = "👉   정보를 식별할 수 있어야 해요."

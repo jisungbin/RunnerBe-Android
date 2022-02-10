@@ -22,6 +22,7 @@
         <dist:removable value="true" />
     </dist:module>
 
+    <!-- https://github.com/applemango-runnerbe/RunnerBe-Android/issues/19 -->
     <application tools:ignore="MissingApplicationIcon">
         <activity
             android:name=".OnboardActivity"

@@ -203,7 +203,7 @@ internal fun EmailVerify() {
                     style = Typography.Body12R.copy(color = ColorAsset.Primary)
                 }
                 EmailVerifyState.Duplicate -> {
-                    message = StringAsset.Hint.AlreadyUseEmail
+                    message = StringAsset.Hint.DuplicateEmail
                 }
                 EmailVerifyState.ErrorUuid -> {
                     message = StringAsset.Hint.ErrorUuid
