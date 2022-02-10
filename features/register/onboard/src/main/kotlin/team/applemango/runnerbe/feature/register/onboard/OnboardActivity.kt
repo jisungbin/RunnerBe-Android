@@ -105,7 +105,7 @@ class OnboardActivity : ComponentActivity() {
                             verifyWithEmployeeIdRequestDone
                         ).indexOfLast { it != null }
                         if (lastStepIndex != -1) {
-                            // NPE exception occur
+                            // NPE issue
                             // https://github.com/applemango-runnerbe/RunnerBe-Android/issues/16
                             /*(1..lastStepIndex).forEach { backstackIndex ->
                                 navController.backQueue.addLast(
