@@ -26,5 +26,5 @@ dependencies {
     implementationProject(ProjectConstants.HomeBoard)
     implementationProject(ProjectConstants.Presentation)
     implementationProject(ProjectConstants.XmlNumberPicker)
-    installSharedComposeHiltTest()
+    installSharedComposeHiltTest(useDagger = true)
 }
