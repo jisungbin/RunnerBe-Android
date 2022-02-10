@@ -13,7 +13,6 @@ import android.os.Bundle
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
@@ -26,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
@@ -83,11 +83,7 @@ class OnboardActivity : ComponentActivity() {
             ProvideWindowInsets {
                 val systemUiController = rememberSystemUiController()
                 val navController = rememberAnimatedNavController()
-
-                BackHandler(navController.backQueue.size == 1) {
-                    logeukes { "AAA" }
-                }
-
+                logeukes { navController.currentBackStackEntryAsState().value }
                 LaunchedEffect(Unit) {
                     systemUiController.setSystemBarsColor(Color.Transparent)
                     vm.emailVerifyStateFlow.collectWithLifecycle(this@OnboardActivity) { verified ->

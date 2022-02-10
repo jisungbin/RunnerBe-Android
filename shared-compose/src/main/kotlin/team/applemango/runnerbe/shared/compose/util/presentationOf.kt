@@ -39,6 +39,7 @@ fun presentationStringOf(name: String) = (LocalContext.current as Activity).run 
     )
 }
 
+// Usage non composable
 fun presentationColorOf(context: Context, name: String) = ContextCompat.getColor(
     context,
     context.resources.getIdentifier(
