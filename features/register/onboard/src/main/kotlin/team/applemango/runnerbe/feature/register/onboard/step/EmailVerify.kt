@@ -45,7 +45,6 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.datastore.preferences.core.edit
-import com.google.accompanist.insets.imePadding
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -159,7 +158,6 @@ internal fun EmailVerify(vm: OnboardViewModel) {
                         width = Dimension.wrapContent
                         height = Dimension.fillToConstraints
                     }
-                    .imePadding()
                     .clip(Shape)
                     .runIf(emailSendButtonEnabled) {
                         clickable(

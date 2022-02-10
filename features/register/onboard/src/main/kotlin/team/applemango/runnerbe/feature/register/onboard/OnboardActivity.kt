@@ -13,6 +13,7 @@ import android.os.Bundle
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
@@ -82,6 +83,11 @@ class OnboardActivity : ComponentActivity() {
             ProvideWindowInsets {
                 val systemUiController = rememberSystemUiController()
                 val navController = rememberAnimatedNavController()
+
+                BackHandler(navController.backQueue.size == 1) {
+                    logeukes { "AAA" }
+                }
+
                 LaunchedEffect(Unit) {
                     systemUiController.setSystemBarsColor(Color.Transparent)
                     vm.emailVerifyStateFlow.collectWithLifecycle(this@OnboardActivity) { verified ->

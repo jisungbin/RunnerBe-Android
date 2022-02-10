@@ -28,6 +28,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -222,6 +223,10 @@ internal fun OnboardRouter(
                 }
             }
             composable(route = Step.VerifyWithEmailDone.name) { // 이메일 인증 완료
+                SideEffect {
+                    // 백스택 제거
+                    navController.backQueue.removeAll { it.destination.route != Step.VerifyWithEmailDone.name }
+                }
                 OnboardContent(
                     step = Step.VerifyWithEmailDone,
                     bottomCTAButtonEnabled = true,

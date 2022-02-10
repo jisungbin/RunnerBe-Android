@@ -34,6 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import com.google.accompanist.insets.imePadding
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
@@ -145,6 +146,9 @@ internal fun OnboardContent(
                     height = Dimension.value(48.dp)
                 }
                 .clip(BottomCTAButtonShape)
+                .runIf(step == Step.VerifyWithEmail) { // TextField 있는 단계
+                    imePadding()
+                }
                 .runIf(bottomCTAButtonEnabled) {
                     clickable(
                         indication = rememberRipple(),
