@@ -16,6 +16,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
 import team.applemango.runnerbe.data.login.api.LoginService
+import team.applemango.runnerbe.data.login.api.RegisterService
 import team.applemango.runnerbe.data.secret.HOST
 import team.applemango.runnerbe.data.util.extension.mapper
 
@@ -32,9 +33,11 @@ internal fun provideHttpLoggingInterceptor() =
         level = HttpLoggingInterceptor.Level.BODY
     }
 
-internal val loginApi = Retrofit.Builder()
+private val baseApi = Retrofit.Builder()
     .baseUrl(HOST)
     .addConverterFactory(JacksonConverter)
     .client(getInterceptor(provideHttpLoggingInterceptor()))
     .build()
-    .create(LoginService::class.java)
+
+internal val loginApi = baseApi.create(LoginService::class.java)
+internal val registerApi = baseApi.create(RegisterService::class.java)
