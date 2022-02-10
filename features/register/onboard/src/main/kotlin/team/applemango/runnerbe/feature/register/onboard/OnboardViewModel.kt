@@ -9,10 +9,11 @@
 
 package team.applemango.runnerbe.feature.register.onboard
 
+import javax.inject.Inject
 import team.applemango.runnerbe.domain.login.usecase.CheckUsableEmailUseCase
 import team.applemango.runnerbe.shared.base.BaseViewModel
 
-class OnboardViewModel(
+class OnboardViewModel @Inject constructor(
     private val checkUsableEmailUseCase: CheckUsableEmailUseCase,
 ) : BaseViewModel() {
     suspend fun checkUsableEmail(email: String) =
