@@ -156,7 +156,7 @@ internal fun EmailVerify() {
                             logeukes { "SUCCESS!" }
                         }
                         .addOnFailureListener {
-                            logeukes { "FAILURE!" }
+                            logeukes { "FAILURE!: $it" }
                         }
                 }
             ) {

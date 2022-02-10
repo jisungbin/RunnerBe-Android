@@ -23,10 +23,9 @@ android {
 
 dependencies {
     implementation(Dependencies.Browser)
-    implementation(Dependencies.Firebase.Bom)
+    implementation(platform(Dependencies.Firebase.Bom))
     implementation(Dependencies.Firebase.Auth)
-    implementation("com.google.android.gms:play-services-auth:20.0.1")
-    // implementation(Dependencies.Firebase.GoogleServiceAuth)
+    implementation(Dependencies.Firebase.GoogleServiceAuth)
     implementationProject(ProjectConstants.HomeBoard)
     implementationProject(ProjectConstants.Presentation)
     implementationProject(ProjectConstants.XmlNumberPicker)

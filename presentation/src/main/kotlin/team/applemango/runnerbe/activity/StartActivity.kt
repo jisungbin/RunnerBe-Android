@@ -14,6 +14,10 @@ import android.os.Bundle
 import android.view.animation.AnticipateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.google.firebase.auth.ktx.actionCodeSettings
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import io.github.jisungbin.logeukes.logeukes
 import team.applemango.runnerbe.feature.home.board.BoardActivity
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.changeActivityWithAnimation
@@ -28,8 +32,34 @@ class StartActivity : AppCompatActivity() {
         installSplashScreen()
         super.onCreate(savedInstanceState)
 
+        val verifyCodeSettings = actionCodeSettings {
+            url = "https://runnerbe-auth.shop/test"
+            handleCodeInApp = true
+            setAndroidPackageName(
+                "team.applemango.runnerbe",
+                true,
+                "21"
+            )
+        }
+
+        Firebase.auth.sendSignInLinkToEmail("ji@sungb.in", verifyCodeSettings)
+            .addOnCompleteListener { task ->
+                logeukes { "SENT!" }
+                if (task.isSuccessful) {
+                    logeukes { "SENT SUCCESSFUL!" }
+                } else {
+                    logeukes { "SENT NOT SUCCESSFUL!" }
+                }
+            }
+            .addOnSuccessListener {
+                logeukes { "SUCCESS!" }
+            }
+            .addOnFailureListener {
+                logeukes { "FAILURE!: $it" }
+            }
+
         // 무조건 다른 액티비티로 이동되므로 알아서 cancel 됨 (수동 cancel 불필요)
-        applicationContext.dataStore.data.collectWithLifecycle(this) { preferences ->
+        /*applicationContext.dataStore.data.collectWithLifecycle(this) { preferences ->
             val isSignedUser = preferences[DataStoreKey.Login.Jwt] != null
             val isSnsLoginDone = preferences[DataStoreKey.Login.Uuid] != null
             when {
@@ -47,7 +77,7 @@ class StartActivity : AppCompatActivity() {
                     return@collectWithLifecycle
                 }
             }
-        }
+        }*/
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             splashScreen.setOnExitAnimationListener { splashScreenView ->

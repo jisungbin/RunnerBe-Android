@@ -60,6 +60,8 @@ dependencies {
 
     implementation(Dependencies.Util.Erratum)
     implementation(Dependencies.Firebase.Analytics)
+    implementation(Dependencies.Firebase.Auth)
+    implementation(Dependencies.Firebase.GoogleServiceAuth)
 
     Dependencies.Ui.forEach(::implementation)
     Dependencies.Login.All.forEach(::implementation)
