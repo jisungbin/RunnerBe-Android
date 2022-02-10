@@ -23,16 +23,15 @@ object Versions {
         const val Core = "1.7.0"
         const val PlayCore = "1.8.1"
         const val Lifecycle = "2.4.0"
-        const val Navigation = "2.4.0"
+        const val Navigation = "2.4.1"
     }
 
     object Compose {
+        const val Main = "1.1.0"
         const val Lottie = "4.2.2"
         const val Activity = "1.4.0"
-        const val Landscapist = "1.4.5"
-        const val Master = "1.1.0-rc03"
+        const val Landscapist = "1.4.8"
         const val Insets = "0.24.0-alpha"
-        const val Material = "1.1.0-rc01"
         const val ConstraintLayout = "1.0.0"
         const val LifecycleViewModel = "2.4.0"
         const val Accompanist = "0.24.1-alpha"
@@ -70,10 +69,11 @@ object Versions {
     object Login {
         const val Kakao = "2.8.5"
         const val Naver = "5.0.0"
+        const val GoogleServiceAuth = "20.1.0"
     }
 
     object OssLicense {
-        const val Master = "17.0.0"
+        const val Main = "17.0.0"
         const val Classpath = "0.10.4"
     }
 
@@ -112,17 +112,19 @@ object Dependencies {
     object Firebase {
         const val Bom = "com.google.firebase:firebase-bom:${Versions.FirebaseBom}"
         const val Analytics = "com.google.firebase:firebase-analytics"
+        const val Auth = "com.google.firebase:firebase-auth-ktx"
+        const val GoogleServiceAuth =
+            "com.google.android.gms:play-services-auth:${Versions.Login.GoogleServiceAuth}"
     }
 
     val Compose = listOf(
-        "androidx.compose.ui:ui-tooling:${Versions.Compose.Master}",
+        "androidx.compose.ui:ui-tooling:${Versions.Compose.Main}",
+        "androidx.compose.material:material:${Versions.Compose.Main}",
         "com.airbnb.android:lottie-compose:${Versions.Compose.Lottie}",
         "androidx.activity:activity-compose:${Versions.Compose.Activity}",
-        "androidx.compose.material:material:${Versions.Compose.Material}",
         "com.google.accompanist:accompanist-insets:${Versions.Compose.Insets}",
         "com.github.skydoves:landscapist-coil:${Versions.Compose.Landscapist}",
         "com.google.accompanist:accompanist-insets:${Versions.Compose.Accompanist}",
-        // "com.google.accompanist:accompanist-flowlayout:${Versions.Compose.Accompanist}",
         "com.google.accompanist:accompanist-systemuicontroller:${Versions.Compose.Accompanist}",
         "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.Compose.LifecycleViewModel}",
         "com.google.accompanist:accompanist-navigation-animation:${Versions.Compose.Accompanist}",
@@ -133,7 +135,7 @@ object Dependencies {
         "androidx.appcompat:appcompat:${Versions.Ui.AppCompat}",
         "androidx.core:core-splashscreen:${Versions.Ui.Splash}",
         "com.google.android.material:material:${Versions.Ui.Material}",
-        "com.google.android.gms:play-services-oss-licenses:${Versions.OssLicense.Master}"
+        "com.google.android.gms:play-services-oss-licenses:${Versions.OssLicense.Main}"
     )
 
     val Jackson = listOf(
