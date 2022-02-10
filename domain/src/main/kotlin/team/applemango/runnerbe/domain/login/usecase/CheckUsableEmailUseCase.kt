@@ -11,8 +11,8 @@ package team.applemango.runnerbe.domain.login.usecase
 
 import team.applemango.runnerbe.domain.login.repository.RegisterRepository
 
-class CheckDuplicateEmailUseCase(private val repo: RegisterRepository) {
+class CheckUsableEmailUseCase(private val repo: RegisterRepository) {
     suspend operator fun invoke(email: String) = runCatching {
-        repo.checkDuplicateEmail(email)
+        repo.checkUsableEmail(email)
     }
 }

@@ -16,7 +16,7 @@ import team.applemango.runnerbe.data.login.model.CheckDuplicateEmailResponse
 
 internal interface RegisterService {
     @GET("/users/email/check/{officeEmail}")
-    suspend fun checkDuplicateEmail(
+    suspend fun checkUsableEmail(
         @Path("officeEmail") email: String,
     ): Response<CheckDuplicateEmailResponse>
 }

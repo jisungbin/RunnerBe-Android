@@ -9,14 +9,14 @@
 
 package team.applemango.runnerbe.feature.register.onboard
 
-import team.applemango.runnerbe.domain.login.usecase.CheckDuplicateEmailUseCase
+import team.applemango.runnerbe.domain.login.usecase.CheckUsableEmailUseCase
 import team.applemango.runnerbe.shared.base.BaseViewModel
 
 class OnboardViewModel(
-    private val checkDuplicateEmailUseCase: CheckDuplicateEmailUseCase,
+    private val checkUsableEmailUseCase: CheckUsableEmailUseCase,
 ) : BaseViewModel() {
-    suspend fun checkDuplicateEmail(email: String) =
-        checkDuplicateEmailUseCase(email).getOrElse { exception ->
+    suspend fun checkUsableEmail(email: String) =
+        checkUsableEmailUseCase(email).getOrElse { exception ->
             emitException(exception)
             false
         }

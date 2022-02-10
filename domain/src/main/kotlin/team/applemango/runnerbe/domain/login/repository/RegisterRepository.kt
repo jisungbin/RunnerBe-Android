@@ -13,9 +13,9 @@ import team.applemango.runnerbe.domain.login.model.User
 
 interface RegisterRepository {
     /**
-     * @return 이메일 중복 여부 (boolean)
+     * @return 이메일 사용 가능 여부 (비중복 여부)
      */
-    suspend fun checkDuplicateEmail(email: String): Boolean
+    suspend fun checkUsableEmail(email: String): Boolean
 
     /**
      * 가입 요청 쿼리

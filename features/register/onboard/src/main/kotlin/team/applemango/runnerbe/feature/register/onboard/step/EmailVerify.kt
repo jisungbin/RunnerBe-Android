@@ -164,7 +164,7 @@ internal fun EmailVerify(vm: OnboardViewModel) {
                             onClick = {
                                 coroutineScope.launch {
                                     val email = emailInputFlow.value
-                                    if (vm.checkDuplicateEmail(email)) {
+                                    if (!vm.checkUsableEmail(email)) {
 
                                     } else {
                                         emailVerifyState = EmailVerifyState.Duplicate
