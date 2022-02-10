@@ -89,6 +89,7 @@ internal fun EmailVerify(vm: OnboardViewModel) {
     context.dataStore.data.collectWithLifecycleRememberOnLaunchedEffect { preferences ->
         preferences[DataStoreKey.Onboard.Email]?.let { restoreEmail ->
             emailInputFlow.emit(restoreEmail)
+            emailSendButtonEnabled = Patterns.EMAIL_ADDRESS.matcher(restoreEmail).matches()
         }
         cancel("onboard restore execute must be once.")
     }

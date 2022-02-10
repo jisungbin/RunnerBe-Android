@@ -9,11 +9,15 @@
 
 package team.applemango.runnerbe.feature.register.onboard.util
 
+import com.google.firebase.auth.ktx.actionCodeSettings
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 private val alphabetRange = ('a'..'z') + ('A'..'Z') + (0..10)
 private val randomPassword get() = List(10) { alphabetRange.random() }.joinToString("")
+
+private val SendEmailExceptionWithNoMessage =
+    Exception("user.sendEmailVerification failure. But, exception message is null.")
 private val UserNullException =
     Exception("Firebase.auth.createUserWithEmailAndPassword success. But, current user is null.")
 
@@ -26,12 +30,25 @@ internal fun createUserWithEmailVerify(
         .createUserWithEmailAndPassword(email, randomPassword)
         .addOnSuccessListener {
             Firebase.auth.currentUser?.let { user ->
-                user.sendEmailVerification()
-                    .addOnSuccessListener {
-                        emailSendSuccess()
-                    }.addOnFailureListener { exception ->
-                        exceptionHandler(exception)
+                user.sendEmailVerification(
+                    actionCodeSettings {
+                        url = "https://runnerbe-auth.shop/verify=true"
+                        handleCodeInApp = true // 필수!
+                        setAndroidPackageName(
+                            "team.applemango.runnerbe", // 리다이렉트될 앱 패키지명
+                            true, // 이용 불가능시 플레이스토어 이동해서 설치 요청
+                            "21" // min sdk level
+                        )
                     }
+                ).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        emailSendSuccess()
+                    } else {
+                        exceptionHandler(task.exception ?: SendEmailExceptionWithNoMessage)
+                    }
+                    user.delete() // 이 메일로 끝까지 회원가입 안 했을떈 메일 다시 쓸 수 있게 하기 위해 유저 삭제
+                    // 러너비 서버에서 따로 이메일 중복 검사 절차 거침
+                }
             } ?: run {
                 exceptionHandler(UserNullException)
             }

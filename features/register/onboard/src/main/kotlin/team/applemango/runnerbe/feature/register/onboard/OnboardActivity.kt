@@ -83,6 +83,11 @@ class OnboardActivity : ComponentActivity() {
                 val navController = rememberAnimatedNavController()
                 LaunchedEffect(Unit) {
                     systemUiController.setSystemBarsColor(Color.Transparent)
+                    vm.emailVerifyStateFlow.collectWithLifecycle(this@OnboardActivity) { verified ->
+                        if (verified) {
+                            navController.navigate(Step.VerifyWithEmailDone.name)
+                        }
+                    }
                     dataStore.data.collectWithLifecycle(this@OnboardActivity) { preferences ->
                         val terms = preferences[DataStoreKey.Onboard.TermsAllCheck]
                         val year = preferences[DataStoreKey.Onboard.Year]
@@ -143,16 +148,10 @@ class OnboardActivity : ComponentActivity() {
         Firebase.dynamicLinks
             .getDynamicLink(intent)
             .addOnSuccessListener(this) { pendingDynamicLinkData ->
-                logeukes { listOf("pendingDynamicLinkData", pendingDynamicLinkData) }
                 if (pendingDynamicLinkData != null) {
-                    val deepLink = pendingDynamicLinkData.link
-                    logeukes {
-                        listOf(
-                            "deepLink",
-                            deepLink,
-                            pendingDynamicLinkData.utmParameters,
-                            pendingDynamicLinkData.extensions
-                        )
+                    val deepLink = pendingDynamicLinkData.link.toString()
+                    if (deepLink.contains("verify%3Dtrue")) { // verify=true
+                        vm.updateEmailVerifyState(true)
                     }
                 }
             }
