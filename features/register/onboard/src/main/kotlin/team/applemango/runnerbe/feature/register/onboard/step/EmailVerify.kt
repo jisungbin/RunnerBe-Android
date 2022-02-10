@@ -55,28 +55,26 @@ import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.dataStore
 
 private val Shape = RoundedCornerShape(8.dp)
-private val verifyCodeSettings = actionCodeSettings {
-    url = "https://runnerbe-auth.shop/test"
-    handleCodeInApp = true
-    setAndroidPackageName(
-        "team.applemango.runnerbe",
-        true,
-        "21"
-    )
-}
 
 @Composable
 internal fun EmailVerify() {
     val context = LocalContext.current
+    var uuid: String? = null
     val coroutineScope = rememberCoroutineScope()
     val emailInputFlow = remember { MutableStateFlow("") }
     val emailInputState by emailInputFlow.collectAsStateWithLifecycleRemember("")
-    var emailVerifyState by remember { mutableStateOf(EmailVerifyState.None) }
+    var emailVerifyState by remember { mutableStateOf<EmailVerifyState>(EmailVerifyState.None) }
+    var emailSendButtonEnabled by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
 
     context.dataStore.data.collectWithLifecycleRememberOnLaunchedEffect { preferences ->
         preferences[DataStoreKey.Onboard.Email]?.let { restoreEmail ->
             emailInputFlow.emit(restoreEmail)
+        }
+        preferences[DataStoreKey.Login.Uuid]?.let { userUuid ->
+            uuid = userUuid
+        } ?: run {
+            emailVerifyState = EmailVerifyState.ErrorUuid
         }
         cancel("onboard restore execute must be once.")
     }
@@ -141,17 +139,7 @@ internal fun EmailVerify() {
                 shape = Shape,
                 colors = ButtonDefaults.buttonColors(backgroundColor = ColorAsset.Primary),
                 onClick = {
-                    // TODO
-                    // emailVerifyState = EmailVerifyState.values().random()
                     Firebase.auth.sendSignInLinkToEmail("ji@sungb.in", verifyCodeSettings)
-                        .addOnCompleteListener { task ->
-                            logeukes { "SENT!" }
-                            if (task.isSuccessful) {
-                                logeukes { "SENT SUCCESSFUL!" }
-                            } else {
-                                logeukes { "SENT NOT SUCCESSFUL!" }
-                            }
-                        }
                         .addOnSuccessListener {
                             logeukes { "SUCCESS!" }
                         }
@@ -171,21 +159,40 @@ internal fun EmailVerify() {
             modifier = Modifier.padding(top = 12.dp),
             targetState = emailVerifyState
         ) { state ->
+            var message = ""
+            var style = Typography.Body12R.copy(color = ColorAsset.ErrorLight)
             when (state) {
                 EmailVerifyState.None -> {}
-                EmailVerifyState.Sent -> {
-                    Text(
-                        text = StringAsset.Hint.SentVerifyLink,
-                        style = Typography.Body12R.copy(color = ColorAsset.Primary)
-                    )
+                EmailVerifyState.Sent -> { // success
+                    message = StringAsset.Hint.SentVerifyLink
+                    style = Typography.Body12R.copy(color = ColorAsset.Primary)
                 }
                 EmailVerifyState.Duplicate -> {
-                    Text(
-                        text = StringAsset.Hint.AlreadyUseEmail,
-                        style = Typography.Body12R.copy(color = ColorAsset.ErrorLight)
-                    )
+                    message = StringAsset.Hint.AlreadyUseEmail
                 }
+                EmailVerifyState.ErrorUuid -> {
+                    message = StringAsset.Hint.ErrorUuid
+                }
+                is EmailVerifyState.Exception -> {
+                    message = state.message
+                }
+            }
+            if (message.isNotEmpty()) {
+                Text(
+                    text = message,
+                    style = style
+                )
             }
         }
     }
+}
+
+private fun getVerifyCodeSettings(uuid: String) = actionCodeSettings {
+    url = "https://runnerbe-auth.shop/verify=$uuid" // 이 값은 입력받는 이메일과 항상 일치해야 함
+    handleCodeInApp = true // 필수!
+    setAndroidPackageName(
+        "team.applemango.runnerbe", // 리다이렉트될 앱 패키지명
+        true, // 이용 불가능시 플레이스토어 이동해서 설치 요청
+        "21" // min sdk level
+    )
 }
