@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.Dp
 import androidx.core.view.WindowCompat
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.systemuicontroller.SystemUiController
@@ -28,15 +28,15 @@ inline fun Modifier.systemBarsPaddingByDefaultColor(
     defaultNavigationBarColor: Color,
     systemUiController: SystemUiController,
 ): Modifier = composed {
-    val insets = LocalWindowInsets.current
-    val statusBarHeight: Int
-    val navigationBarHeight: Int
+    val insets = LocalWindowInsets.current.systemBars
+    val statusBarHeight: Dp
+    val navigationBarHeight: Dp
     with(LocalDensity.current) {
-        statusBarHeight = insets.systemBars.top
-        navigationBarHeight = insets.systemBars.bottom
+        statusBarHeight = insets.top.toDp()
+        navigationBarHeight = insets.bottom.toDp()
     }
-    if (statusBarHeight * navigationBarHeight != 0) { // insets 이 구해진 상태
-        padding(top = statusBarHeight.dp, bottom = navigationBarHeight.dp)
+    if (statusBarHeight.value * navigationBarHeight.value != 0f) { // insets 이 구해진 상태
+        padding(top = statusBarHeight, bottom = navigationBarHeight)
     } else { // insets 이 0.dp 임 (구해지지 않음) -> window insets consume 비활성화, default color 세팅
         WindowCompat.setDecorFitsSystemWindows(window, true)
         systemUiController.setStatusBarColor(defaultStatusBarColor)
