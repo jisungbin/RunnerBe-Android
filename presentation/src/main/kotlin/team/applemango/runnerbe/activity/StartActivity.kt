@@ -9,6 +9,7 @@
 
 package team.applemango.runnerbe.activity
 
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.animation.AnticipateInterpolator
@@ -16,15 +17,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.firebase.auth.ktx.actionCodeSettings
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.ktx.Firebase
 import io.github.jisungbin.logeukes.logeukes
-import team.applemango.runnerbe.feature.home.board.BoardActivity
-import team.applemango.runnerbe.shared.constant.DataStoreKey
-import team.applemango.runnerbe.shared.util.extension.changeActivityWithAnimation
-import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
-import team.applemango.runnerbe.shared.util.extension.dataStore
-import team.applemango.runnerbe.util.DFMLoginActivityAlias
-import team.applemango.runnerbe.util.DFMOnboardActivityAlias
 
 class StartActivity : AppCompatActivity() {
 
@@ -32,8 +27,9 @@ class StartActivity : AppCompatActivity() {
         installSplashScreen()
         super.onCreate(savedInstanceState)
 
+        // 로그인하려면 이 이메일 주소가 처음에 로그인 링크를 보낸 주소와 일치해야 합니다.
         val verifyCodeSettings = actionCodeSettings {
-            url = "https://runnerbe-auth.shop/test"
+            url = "https://runnerbe-auth.shop/byeworld"
             handleCodeInApp = true
             setAndroidPackageName(
                 "team.applemango.runnerbe",
@@ -42,7 +38,9 @@ class StartActivity : AppCompatActivity() {
             )
         }
 
-        Firebase.auth.sendSignInLinkToEmail("ji@sungb.in", verifyCodeSettings)
+        logeukes { "AAA!!!!" }
+        logeukes { "sungbin.me@gmail.com" }
+        Firebase.auth.sendSignInLinkToEmail("sungbin.me@gmail.com", verifyCodeSettings)
             .addOnCompleteListener { task ->
                 logeukes { "SENT!" }
                 if (task.isSuccessful) {
@@ -56,6 +54,27 @@ class StartActivity : AppCompatActivity() {
             }
             .addOnFailureListener {
                 logeukes { "FAILURE!: $it" }
+            }
+
+        Firebase.dynamicLinks
+            .getDynamicLink(intent)
+            .addOnSuccessListener(this) { pendingDynamicLinkData ->
+                logeukes { pendingDynamicLinkData }
+                var deepLink: Uri? = null
+                if (pendingDynamicLinkData != null) {
+                    deepLink = pendingDynamicLinkData.link
+                    logeukes { deepLink }
+                }
+
+                // Handle the deep link. For example, open the linked
+                // content, or apply promotional credit to the user's
+                // account.
+                // ...
+
+                // ...
+            }
+            .addOnFailureListener(this) {
+                logeukes { "getDynamicLink:onFailure: $it" }
             }
 
         // 무조건 다른 액티비티로 이동되므로 알아서 cancel 됨 (수동 cancel 불필요)

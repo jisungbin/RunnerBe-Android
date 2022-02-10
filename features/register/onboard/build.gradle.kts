@@ -23,9 +23,6 @@ android {
 
 dependencies {
     implementation(Dependencies.Browser)
-    implementation(platform(Dependencies.Firebase.Bom))
-    implementation(Dependencies.Firebase.Auth)
-    implementation(Dependencies.Firebase.GoogleServiceAuth)
     implementationProject(ProjectConstants.HomeBoard)
     implementationProject(ProjectConstants.Presentation)
     implementationProject(ProjectConstants.XmlNumberPicker)

@@ -54,15 +54,16 @@ dependencies {
         ProjectConstants.MyPage,
         ProjectConstants.HomeBoard
     )
-
     features.forEach(::implementationProject)
-    implementation(platform(Dependencies.Firebase.Bom))
+
+    // onboard (dfm) 에서 필요하기 때문에 api 로 설정
+    api(platform(Dependencies.Firebase.Bom))
+    api(Dependencies.Firebase.Auth)
+    api(Dependencies.Firebase.Analytics)
+    api(Dependencies.Firebase.DynamicLink)
+    api(Dependencies.Firebase.GoogleServiceAuth)
 
     implementation(Dependencies.Util.Erratum)
-    implementation(Dependencies.Firebase.Analytics)
-    implementation(Dependencies.Firebase.Auth)
-    implementation(Dependencies.Firebase.GoogleServiceAuth)
-
     Dependencies.Ui.forEach(::implementation)
     Dependencies.Login.All.forEach(::implementation)
     Dependencies.PresentationOnlyKtx.forEach(::implementation)

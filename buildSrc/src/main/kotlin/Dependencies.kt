@@ -111,8 +111,9 @@ object Dependencies {
 
     object Firebase {
         const val Bom = "com.google.firebase:firebase-bom:${Versions.FirebaseBom}"
-        const val Analytics = "com.google.firebase:firebase-analytics"
         const val Auth = "com.google.firebase:firebase-auth-ktx"
+        const val Analytics = "com.google.firebase:firebase-analytics"
+        const val DynamicLink = "com.google.firebase:firebase-dynamic-links-ktx"
         const val GoogleServiceAuth =
             "com.google.android.gms:play-services-auth:${Versions.Login.GoogleServiceAuth}"
     }
