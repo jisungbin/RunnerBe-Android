@@ -86,25 +86,20 @@ internal fun OnboardContent(
     )
     val animatedBottomCTAButtonTextColor by animateColorAsState(
         when (step) {
-            Step.VerifyWithEmail -> {
-                ColorAsset.Primary
-            }
+            Step.VerifyWithEmail -> ColorAsset.Primary
             else -> {
                 when (bottomCTAButtonEnabled) {
-                    true -> Color.Black
+                    true -> ColorAsset.G6
                     else -> ColorAsset.G4_5
                 }
             }
         }
     )
     val bottomCTAButtonBackgroundColor: Color = when (step) {
-        Step.VerifyWithEmail -> {
-            Color.Transparent
-        }
-        else -> {
-            animatedBottomCTAButtonBackgroundColor
-        }
+        Step.VerifyWithEmail -> Color.Transparent
+        else -> animatedBottomCTAButtonBackgroundColor
     }
+
     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
         val (topContent, mainContent, bottomCTAButton) = createRefs()
 

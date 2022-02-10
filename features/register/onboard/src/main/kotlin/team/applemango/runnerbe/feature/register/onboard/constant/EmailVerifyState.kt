@@ -14,5 +14,5 @@ internal sealed class EmailVerifyState {
     object Sent : EmailVerifyState()
     object Duplicate : EmailVerifyState()
     object ErrorUuid : EmailVerifyState()
-    data class Exception(val message: String) : EmailVerifyState()
+    data class Exception(val throwable: Throwable) : EmailVerifyState()
 }

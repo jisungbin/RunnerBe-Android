@@ -9,8 +9,14 @@
 
 package team.applemango.runnerbe.feature.register.onboard.step
 
+import android.util.Patterns
 import androidx.compose.animation.Crossfade
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,18 +24,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
@@ -41,7 +48,6 @@ import androidx.datastore.preferences.core.edit
 import com.google.firebase.auth.ktx.actionCodeSettings
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import io.github.jisungbin.logeukes.logeukes
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -53,6 +59,9 @@ import team.applemango.runnerbe.shared.compose.util.collectAsStateWithLifecycleR
 import team.applemango.runnerbe.shared.compose.util.collectWithLifecycleRememberOnLaunchedEffect
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.dataStore
+import team.applemango.runnerbe.shared.util.extension.runIf
+import team.applemango.runnerbe.shared.util.extension.toMessage
+import team.applemango.runnerbe.shared.util.extension.toast
 
 private val Shape = RoundedCornerShape(8.dp)
 
@@ -66,6 +75,19 @@ internal fun EmailVerify() {
     var emailVerifyState by remember { mutableStateOf<EmailVerifyState>(EmailVerifyState.None) }
     var emailSendButtonEnabled by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
+
+    val emailSendButtonBackgroundColor = animateColorAsState(
+        when (emailSendButtonEnabled) {
+            true -> ColorAsset.Primary
+            else -> ColorAsset.G3
+        }
+    ).value
+    val emailSendButtonTextColor = animateColorAsState(
+        when (emailSendButtonEnabled) {
+            true -> ColorAsset.G6
+            else -> ColorAsset.G4_5
+        }
+    ).value
 
     context.dataStore.data.collectWithLifecycleRememberOnLaunchedEffect { preferences ->
         preferences[DataStoreKey.Onboard.Email]?.let { restoreEmail ->
@@ -98,10 +120,12 @@ internal fun EmailVerify() {
                     }
                     .border(width = 1.dp, color = ColorAsset.Primary, shape = Shape),
                 value = emailInputState,
-                onValueChange = {
-                    if (!it.contains(" ")) {
+                onValueChange = { inputEmail ->
+                    if (!inputEmail.contains(" ")) {
+                        emailSendButtonEnabled =
+                            Patterns.EMAIL_ADDRESS.matcher(inputEmail).matches()
                         coroutineScope.launch {
-                            emailInputFlow.emit(it)
+                            emailInputFlow.emit(inputEmail)
                         }
                     }
                 },
@@ -119,69 +143,90 @@ internal fun EmailVerify() {
                 },
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     backgroundColor = ColorAsset.G5_5,
-                    textColor = ColorAsset.G1,
+                    textColor = ColorAsset.G2,
                     cursorColor = ColorAsset.Primary,
                     focusedBorderColor = ColorAsset.Primary,
                     unfocusedBorderColor = ColorAsset.Primary,
-                    placeholderColor = ColorAsset.G2
+                    placeholderColor = ColorAsset.G3_5
                 ),
                 textStyle = Typography.EngBody16R,
                 shape = Shape
             )
-            Button(
-                modifier = Modifier.constrainAs(button) {
-                    end.linkTo(parent.end)
-                    top.linkTo(field.top)
-                    bottom.linkTo(field.bottom)
-                    width = Dimension.wrapContent
-                    height = Dimension.fillToConstraints
-                },
-                shape = Shape,
-                colors = ButtonDefaults.buttonColors(backgroundColor = ColorAsset.Primary),
-                onClick = {
-                    Firebase.auth.sendSignInLinkToEmail("ji@sungb.in", verifyCodeSettings)
-                        .addOnSuccessListener {
-                            logeukes { "SUCCESS!" }
-                        }
-                        .addOnFailureListener {
-                            logeukes { "FAILURE!: $it" }
-                        }
-                }
+
+            Box(
+                modifier = Modifier
+                    .constrainAs(button) {
+                        end.linkTo(parent.end)
+                        top.linkTo(field.top)
+                        bottom.linkTo(field.bottom)
+                        width = Dimension.wrapContent
+                        height = Dimension.fillToConstraints
+                    }
+                    .clip(Shape)
+                    .runIf(emailSendButtonEnabled) {
+                        clickable(
+                            indication = rememberRipple(),
+                            interactionSource = remember { MutableInteractionSource() },
+                            onClick = {
+                                uuid?.let { nonNullUuid ->
+                                    Firebase.auth
+                                        .sendSignInLinkToEmail(
+                                            emailInputFlow.value,
+                                            getVerifyCodeSettings(nonNullUuid)
+                                        )
+                                        .addOnSuccessListener {
+                                            toast(context, "이메일이 ")
+                                        }
+                                        .addOnFailureListener { exception ->
+                                            emailVerifyState =
+                                                EmailVerifyState.Exception(exception.message)
+                                        }
+                                } ?: run {
+                                    emailVerifyState = EmailVerifyState.ErrorUuid
+                                }
+                            }
+                        )
+                    }
+                    .background(
+                        color = emailSendButtonBackgroundColor,
+                        shape = Shape
+                    ),
+                contentAlignment = Alignment.Center
             ) {
                 Text(
                     modifier = Modifier.padding(horizontal = 5.dp),
                     text = StringAsset.Button.Verify,
-                    style = Typography.Body14M.copy(color = ColorAsset.G5)
+                    style = Typography.Body14M.copy(color = emailSendButtonTextColor)
                 )
             }
-        }
-        Crossfade(
-            modifier = Modifier.padding(top = 12.dp),
-            targetState = emailVerifyState
-        ) { state ->
-            var message = ""
-            var style = Typography.Body12R.copy(color = ColorAsset.ErrorLight)
-            when (state) {
-                EmailVerifyState.None -> {}
-                EmailVerifyState.Sent -> { // success
-                    message = StringAsset.Hint.SentVerifyLink
-                    style = Typography.Body12R.copy(color = ColorAsset.Primary)
+            Crossfade(
+                modifier = Modifier.padding(top = 12.dp),
+                targetState = emailVerifyState
+            ) { state ->
+                var message = ""
+                var style = Typography.Body12R.copy(color = ColorAsset.ErrorLight)
+                when (state) {
+                    EmailVerifyState.None -> {}
+                    EmailVerifyState.Sent -> { // success
+                        message = StringAsset.Hint.SentVerifyLink
+                        style = Typography.Body12R.copy(color = ColorAsset.Primary)
+                    }
+                    EmailVerifyState.Duplicate -> {
+                        message = StringAsset.Hint.AlreadyUseEmail
+                    }
+                    EmailVerifyState.ErrorUuid -> {
+                        message = StringAsset.Hint.ErrorUuid
+                    }
+                    is EmailVerifyState.Exception -> {
+                        message = state.throwable.toMessage()
+                    }
                 }
-                EmailVerifyState.Duplicate -> {
-                    message = StringAsset.Hint.AlreadyUseEmail
+                if (message.isNotEmpty()) {
+                    Text(
+                        text = message,
+                        style = style
+                    )
                 }
-                EmailVerifyState.ErrorUuid -> {
-                    message = StringAsset.Hint.ErrorUuid
-                }
-                is EmailVerifyState.Exception -> {
-                    message = state.message
-                }
-            }
-            if (message.isNotEmpty()) {
-                Text(
-                    text = message,
-                    style = style
-                )
             }
         }
     }
