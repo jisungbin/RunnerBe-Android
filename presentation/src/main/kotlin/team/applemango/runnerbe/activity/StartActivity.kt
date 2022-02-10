@@ -15,8 +15,6 @@ import android.os.Bundle
 import android.view.animation.AnticipateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.google.firebase.auth.ktx.actionCodeSettings
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.ktx.Firebase
 import io.github.jisungbin.logeukes.logeukes
@@ -26,35 +24,6 @@ class StartActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
-
-        // 로그인하려면 이 이메일 주소가 처음에 로그인 링크를 보낸 주소와 일치해야 합니다.
-        val verifyCodeSettings = actionCodeSettings {
-            url = "https://runnerbe-auth.shop/byeworld"
-            handleCodeInApp = true
-            setAndroidPackageName(
-                "team.applemango.runnerbe",
-                true,
-                "21"
-            )
-        }
-
-        logeukes { "AAA!!!!" }
-        logeukes { "sungbin.me@gmail.com" }
-        Firebase.auth.sendSignInLinkToEmail("sungbin.me@gmail.com", verifyCodeSettings)
-            .addOnCompleteListener { task ->
-                logeukes { "SENT!" }
-                if (task.isSuccessful) {
-                    logeukes { "SENT SUCCESSFUL!" }
-                } else {
-                    logeukes { "SENT NOT SUCCESSFUL!" }
-                }
-            }
-            .addOnSuccessListener {
-                logeukes { "SUCCESS!" }
-            }
-            .addOnFailureListener {
-                logeukes { "FAILURE!: $it" }
-            }
 
         Firebase.dynamicLinks
             .getDynamicLink(intent)
