@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
+import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.ViewModelProvider
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.systemBarsPadding
@@ -85,10 +86,13 @@ class OnboardActivity : ComponentActivity() {
                     systemUiController.setSystemBarsColor(Color.Transparent)
                     vm.emailVerifyStateFlow.collectWithLifecycle(this@OnboardActivity) { verified ->
                         if (verified) {
+                            applicationContext.dataStore.edit { preferences ->
+                                preferences[DataStoreKey.Onboard.VerifyWithEmailDone] = true
+                            }
                             navController.navigate(Step.VerifyWithEmailDone.name)
                         }
                     }
-                    dataStore.data.collectWithLifecycle(this@OnboardActivity) { preferences ->
+                    applicationContext.dataStore.data.collectWithLifecycle(this@OnboardActivity) { preferences ->
                         val terms = preferences[DataStoreKey.Onboard.TermsAllCheck]
                         val year = preferences[DataStoreKey.Onboard.Year]
                         val gender = preferences[DataStoreKey.Onboard.Gender]
