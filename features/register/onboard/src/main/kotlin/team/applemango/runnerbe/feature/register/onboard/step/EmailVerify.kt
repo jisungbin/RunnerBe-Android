@@ -67,22 +67,23 @@ private val Shape = RoundedCornerShape(8.dp)
 @Composable
 internal fun EmailVerify() {
     val context = LocalContext.current
-    var uuid: String? = null
+    var uuid by remember { mutableStateOf<String?>(null) }
     val coroutineScope = rememberCoroutineScope()
     val emailInputFlow = remember { MutableStateFlow("") }
     val emailInputState by emailInputFlow.collectAsStateWithLifecycleRemember("")
     var emailVerifyState by remember { mutableStateOf<EmailVerifyState>(EmailVerifyState.None) }
     var emailSendButtonEnabled by remember { mutableStateOf(false) }
+    val emailSendButtonEnabledAndValidUuid = emailSendButtonEnabled && uuid != null
     val focusManager = LocalFocusManager.current
 
     val emailSendButtonBackgroundColor = animateColorAsState(
-        when (emailSendButtonEnabled) {
+        when (emailSendButtonEnabledAndValidUuid) {
             true -> ColorAsset.Primary
             else -> ColorAsset.G3
         }
     ).value
     val emailSendButtonTextColor = animateColorAsState(
-        when (emailSendButtonEnabled) {
+        when (emailSendButtonEnabledAndValidUuid) {
             true -> ColorAsset.G6
             else -> ColorAsset.G4_5
         }
@@ -162,26 +163,22 @@ internal fun EmailVerify() {
                         height = Dimension.fillToConstraints
                     }
                     .clip(Shape)
-                    .runIf(emailSendButtonEnabled) {
+                    .runIf(emailSendButtonEnabledAndValidUuid) {
                         clickable(
                             indication = rememberRipple(),
                             interactionSource = remember { MutableInteractionSource() },
                             onClick = {
-                                uuid?.let { nonNullUuid ->
-                                    Firebase.auth
-                                        .sendSignInLinkToEmail(
-                                            emailInputFlow.value,
-                                            getVerifyCodeSettings(nonNullUuid)
-                                        )
-                                        .addOnSuccessListener {
-                                            emailVerifyState = EmailVerifyState.Sent
-                                        }
-                                        .addOnFailureListener { exception ->
-                                            emailVerifyState = EmailVerifyState.Exception(exception)
-                                        }
-                                } ?: run {
-                                    emailVerifyState = EmailVerifyState.ErrorUuid
-                                }
+                                Firebase.auth
+                                    .sendSignInLinkToEmail(
+                                        emailInputFlow.value,
+                                        getVerifyCodeSettings(uuid!!)
+                                    )
+                                    .addOnSuccessListener {
+                                        emailVerifyState = EmailVerifyState.Sent
+                                    }
+                                    .addOnFailureListener { exception ->
+                                        emailVerifyState = EmailVerifyState.Exception(exception)
+                                    }
                             }
                         )
                     }
@@ -189,36 +186,36 @@ internal fun EmailVerify() {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    modifier = Modifier.padding(horizontal = 5.dp),
+                    modifier = Modifier.padding(horizontal = 15.dp),
                     text = StringAsset.Button.Verify,
                     style = Typography.Body14M.copy(color = emailSendButtonTextColor)
                 )
             }
-            Crossfade(
-                modifier = Modifier.padding(top = 12.dp),
-                targetState = emailVerifyState
-            ) { state ->
-                var message = ""
-                var style = Typography.Body12R.copy(color = ColorAsset.ErrorLight)
-                when (state) {
-                    EmailVerifyState.None -> {}
-                    EmailVerifyState.Sent -> { // success
-                        message = StringAsset.Hint.SentVerifyLink
-                        style = Typography.Body12R.copy(color = ColorAsset.Primary)
-                    }
-                    EmailVerifyState.Duplicate -> {
-                        message = StringAsset.Hint.AlreadyUseEmail
-                    }
-                    EmailVerifyState.ErrorUuid -> {
-                        message = StringAsset.Hint.ErrorUuid
-                    }
-                    is EmailVerifyState.Exception -> {
-                        message = state.throwable.toMessage()
-                    }
+        }
+        Crossfade(
+            modifier = Modifier.padding(top = 12.dp),
+            targetState = emailVerifyState
+        ) { state ->
+            var message = ""
+            var style = Typography.Body12R.copy(color = ColorAsset.ErrorLight)
+            when (state) {
+                EmailVerifyState.None -> {}
+                EmailVerifyState.Sent -> { // success
+                    message = StringAsset.Hint.SentVerifyLink
+                    style = Typography.Body12R.copy(color = ColorAsset.Primary)
                 }
-                if (message.isNotEmpty()) {
-                    Text(text = message, style = style)
+                EmailVerifyState.Duplicate -> {
+                    message = StringAsset.Hint.AlreadyUseEmail
                 }
+                EmailVerifyState.ErrorUuid -> {
+                    message = StringAsset.Hint.ErrorUuid
+                }
+                is EmailVerifyState.Exception -> {
+                    message = state.throwable.toMessage()
+                }
+            }
+            if (message.isNotEmpty()) {
+                Text(text = message, style = style)
             }
         }
     }
