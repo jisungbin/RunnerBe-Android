@@ -26,8 +26,7 @@ import androidx.core.view.WindowCompat
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.ViewModelProvider
 import com.google.accompanist.insets.ProvideWindowInsets
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
+import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
@@ -135,8 +134,9 @@ class OnboardActivity : ComponentActivity() {
                     modifier = Modifier
                         .fillMaxSize()
                         .background(brush = GradientAsset.RegisterCommonBackground)
-                        .statusBarsPadding()
-                        .navigationBarsWithImePadding() // Step.VerifyWithEmail 단계에 TextField 있음
+                        /*.statusBarsPadding()
+                        .navigationBarsWithImePadding() // Step.VerifyWithEmail 단계에 TextField 있음*/
+                        .systemBarsPadding(start = false, end = false)
                         .padding(horizontal = 16.dp),
                     navController = navController,
                     vm = vm
