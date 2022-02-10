@@ -45,9 +45,6 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.datastore.preferences.core.edit
-import com.google.firebase.auth.ktx.actionCodeSettings
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import io.github.jisungbin.logeukes.logeukes
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -169,7 +166,7 @@ internal fun EmailVerify() {
                             onClick = {
                                 val email = emailInputFlow.value
                                 logeukes { email }
-                                Firebase.auth
+                                /*Firebase.auth
                                     .sendSignInLinkToEmail(
                                         email,
                                         getVerifyCodeSettings(uuid)
@@ -179,7 +176,7 @@ internal fun EmailVerify() {
                                     }
                                     .addOnFailureListener { exception ->
                                         emailVerifyState = EmailVerifyState.Exception(exception)
-                                    }
+                                    }*/
                             }
                         )
                     }
@@ -222,6 +219,7 @@ internal fun EmailVerify() {
     }
 }
 
+/*
 private fun getVerifyCodeSettings(uuid: String) = actionCodeSettings {
     url = "https://runnerbe-auth.shop/welcome?verify=$uuid" // 이 값은 입력받는 이메일과 항상 일치해야 함
     handleCodeInApp = true // 필수!
@@ -231,3 +229,4 @@ private fun getVerifyCodeSettings(uuid: String) = actionCodeSettings {
         "21" // min sdk level
     )
 }
+*/

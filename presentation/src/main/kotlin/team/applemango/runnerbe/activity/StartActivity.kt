@@ -14,16 +14,11 @@ import android.os.Bundle
 import android.view.animation.AnticipateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.google.firebase.auth.ktx.actionCodeSettings
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.ktx.Firebase
 import io.github.jisungbin.logeukes.logeukes
-import team.applemango.runnerbe.feature.home.board.BoardActivity
-import team.applemango.runnerbe.shared.constant.DataStoreKey
-import team.applemango.runnerbe.shared.util.extension.changeActivityWithAnimation
-import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
-import team.applemango.runnerbe.shared.util.extension.dataStore
-import team.applemango.runnerbe.util.DFMLoginActivityAlias
-import team.applemango.runnerbe.util.DFMOnboardActivityAlias
 
 class StartActivity : AppCompatActivity() {
 
@@ -51,7 +46,60 @@ class StartActivity : AppCompatActivity() {
                 logeukes { "getDynamicLink:onFailure: $it" }
             }
 
-        // 무조건 다른 액티비티로 이동되므로 알아서 cancel 됨 (수동 cancel 불필요)
+        fun getVerifyCodeSettings(uuid: String) = actionCodeSettings {
+            url = "https://runnerbe-auth.shop/test" // 이 값은 입력받는 이메일과 항상 일치해야 함
+            handleCodeInApp = true // 필수!
+            setAndroidPackageName(
+                "team.applemango.runnerbe", // 리다이렉트될 앱 패키지명
+                true, // 이용 불가능시 플레이스토어 이동해서 설치 요청
+                "21" // min sdk level
+            )
+        }
+
+        val actionCodeSettings = actionCodeSettings {
+            url = "https://runnerbe-auth.shop/test" // 이 값은 입력받는 이메일과 항상 일치해야 함
+            handleCodeInApp = true // 필수!
+            setAndroidPackageName(
+                "team.applemango.runnerbe", // 리다이렉트될 앱 패키지명
+                true, // 이용 불가능시 플레이스토어 이동해서 설치 요청
+                "21" // min sdk level
+            )
+        }
+
+        // Firebase.auth.signOut()
+        logeukes { "asdsadfawfsc" }
+        Firebase.auth
+            .sendSignInLinkToEmail(
+                "dahaeng.service@gmail.com",
+                actionCodeSettings
+            )
+            .addOnSuccessListener {
+                logeukes { "sent" }
+            }
+            .addOnFailureListener { exception ->
+                logeukes { exception }
+            }
+
+        Firebase.auth.createUserWithEmailAndPassword("sungbin.me@gmail.com", "1234567890")
+            .addOnSuccessListener {
+                logeukes { "created" }
+                Firebase.auth.currentUser?.let {
+                    it.sendEmailVerification().addOnSuccessListener {
+                        logeukes { "sent 2" }
+                    }.addOnFailureListener {
+                        logeukes { "eee: $it" }
+                    }
+                } ?: run {
+                    logeukes { "null" }
+                }
+            }
+            .addOnFailureListener {
+                logeukes { "AAAL : $it" }
+            }
+
+
+
+        /*// 무조건 다른 액티비티로 이동되므로 알아서 cancel 됨 (수동 cancel 불필요)
         applicationContext.dataStore.data.collectWithLifecycle(this) { preferences ->
             val isSignedUser = preferences[DataStoreKey.Login.Jwt] != null
             val isSnsLoginDone = preferences[DataStoreKey.Login.Uuid] != null
@@ -70,7 +118,7 @@ class StartActivity : AppCompatActivity() {
                     return@collectWithLifecycle
                 }
             }
-        }
+        }*/
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             splashScreen.setOnExitAnimationListener { splashScreenView ->

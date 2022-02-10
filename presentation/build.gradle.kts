@@ -57,10 +57,10 @@ dependencies {
     features.forEach(::implementationProject)
 
     // onboard (dfm) 에서 필요하기 때문에 api 로 설정
-    api(platform(Dependencies.Firebase.Bom))
-    api(Dependencies.Firebase.Auth)
-    api(Dependencies.Firebase.Analytics)
-    api(Dependencies.Firebase.GoogleServiceAuth)
+    implementation(platform(Dependencies.Firebase.Bom))
+    implementation(Dependencies.Firebase.Auth)
+    implementation(Dependencies.Firebase.Analytics)
+    implementation(Dependencies.Firebase.GoogleServiceAuth)
 
     // 얘는 presentation 에서만 사용
     implementation(Dependencies.Firebase.DynamicLink)

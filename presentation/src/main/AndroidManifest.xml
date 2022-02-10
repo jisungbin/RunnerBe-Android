@@ -17,7 +17,7 @@
         <activity
             android:name=".activity.StartActivity"
             android:exported="true">
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
 
@@ -28,6 +28,10 @@
                 <data
                     android:host="runnerbe-auth.shop"
                     android:scheme="https" />
+            </intent-filter>-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
