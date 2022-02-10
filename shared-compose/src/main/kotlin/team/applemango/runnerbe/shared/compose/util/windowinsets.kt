@@ -22,6 +22,7 @@ import androidx.core.view.WindowCompat
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.systemuicontroller.SystemUiController
 
+// Original function implementation is inlined
 inline fun Modifier.systemBarsPaddingByDefaultColor(
     window: Window,
     defaultStatusBarColor: Color,
