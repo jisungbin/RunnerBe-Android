@@ -38,6 +38,10 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.datastore.preferences.core.edit
+import com.google.firebase.auth.ktx.actionCodeSettings
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import io.github.jisungbin.logeukes.logeukes
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -51,6 +55,15 @@ import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.dataStore
 
 private val Shape = RoundedCornerShape(8.dp)
+private val verifyCodeSettings = actionCodeSettings {
+    url = "https://runnerbe-auth.shop/test"
+    handleCodeInApp = true
+    setAndroidPackageName(
+        "team.applemango.runnerbe",
+        true,
+        "21"
+    )
+}
 
 @Composable
 internal fun EmailVerify() {
@@ -129,7 +142,22 @@ internal fun EmailVerify() {
                 colors = ButtonDefaults.buttonColors(backgroundColor = ColorAsset.Primary),
                 onClick = {
                     // TODO
-                    emailVerifyState = EmailVerifyState.values().random()
+                    // emailVerifyState = EmailVerifyState.values().random()
+                    Firebase.auth.sendSignInLinkToEmail("ji@sungb.in", verifyCodeSettings)
+                        .addOnCompleteListener { task ->
+                            logeukes { "SENT!" }
+                            if (task.isSuccessful) {
+                                logeukes { "SENT SUCCESSFUL!" }
+                            } else {
+                                logeukes { "SENT NOT SUCCESSFUL!" }
+                            }
+                        }
+                        .addOnSuccessListener {
+                            logeukes { "SUCCESS!" }
+                        }
+                        .addOnFailureListener {
+                            logeukes { "FAILURE!" }
+                        }
                 }
             ) {
                 Text(
