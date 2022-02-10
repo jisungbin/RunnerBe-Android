@@ -56,7 +56,7 @@ class OnboardActivity : ComponentActivity() {
                         val year = preferences[DataStoreKey.Onboard.Year]
                         val gender = preferences[DataStoreKey.Onboard.Gender]
                         val job = preferences[DataStoreKey.Onboard.Job]
-                        val verifyWithEmail = preferences[DataStoreKey.Onboard.VerifyWithEmail]
+                        val verifyWithEmail = preferences[DataStoreKey.Onboard.Email]
                         val verifyWithEmployeeId =
                             preferences[DataStoreKey.Onboard.VerifyWithEmployeeId]
                         val verifyWithEmailDone =

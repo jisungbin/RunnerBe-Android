@@ -46,6 +46,7 @@ import com.google.accompanist.navigation.animation.composable
 import com.skydoves.landscapist.rememberDrawablePainter
 import team.applemango.runnerbe.feature.home.board.BoardActivity
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
+import team.applemango.runnerbe.feature.register.onboard.step.EmailVerify
 import team.applemango.runnerbe.feature.register.onboard.step.GenderPicker
 import team.applemango.runnerbe.feature.register.onboard.step.JobPicker
 import team.applemango.runnerbe.feature.register.onboard.step.TermsTable
@@ -196,11 +197,7 @@ internal fun OnboardRouter(modifier: Modifier, navController: NavHostController)
                         navController.navigate(Step.VerifyWithEmployeeId.name)
                     }
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(color = Color(0xFFFFE082))
-                    )
+                    EmailVerify()
                 }
             }
             composable(route = Step.VerifyWithEmployeeId.name) { // 사원증으로 인증

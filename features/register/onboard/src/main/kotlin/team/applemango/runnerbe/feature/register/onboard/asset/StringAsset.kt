@@ -50,7 +50,7 @@ internal object StringAsset {
 
     object Hint {
         const val AgeNotice = "19세 미만은 이용할 수 없어요!"
-        const val BaseEmail = "runnerbee@company.com"
+        const val PlaceholderEmail = "runnerbee@company.com"
         const val SentVerifyLink = "인증 링크가 발송되었어요\n메일이 오지 않는다면 스팸 메일함도 확인해주세요!"
         const val AlreadyUseEmail = "이미 사용 중인 이메일이에요!"
         const val RequireFieldJob = "👉   직장명, 직무/직위는 꼭 드러나야 해요!"

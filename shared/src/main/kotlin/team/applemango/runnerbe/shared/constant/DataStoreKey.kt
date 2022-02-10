@@ -24,7 +24,7 @@ object DataStoreKey {
         val Year = intPreferencesKey("onboard-birthday")
         val Gender = stringPreferencesKey("onboard-gender")
         val Job = stringPreferencesKey("onboard-job")
-        val VerifyWithEmail = booleanPreferencesKey("onboard-verify_with_email")
+        val Email = stringPreferencesKey("onboard-email")
         val VerifyWithEmployeeId = booleanPreferencesKey("onboard-verify_with_employee_id")
         val VerifyWithEmailDone = booleanPreferencesKey("onboard-verify_with_email_done")
         val VerifyWithEmployeeIdRequestDone =
