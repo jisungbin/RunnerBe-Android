@@ -14,9 +14,6 @@ import android.os.Bundle
 import android.view.animation.AnticipateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.google.firebase.dynamiclinks.ktx.dynamicLinks
-import com.google.firebase.ktx.Firebase
-import io.github.jisungbin.logeukes.logeukes
 import team.applemango.runnerbe.feature.home.board.BoardActivity
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.changeActivityWithAnimation
@@ -30,26 +27,6 @@ class StartActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
-
-        Firebase.dynamicLinks
-            .getDynamicLink(intent)
-            .addOnSuccessListener(this) { pendingDynamicLinkData ->
-                logeukes { listOf("pendingDynamicLinkData", pendingDynamicLinkData) }
-                if (pendingDynamicLinkData != null) {
-                    val deepLink = pendingDynamicLinkData.link
-                    logeukes {
-                        listOf(
-                            "deepLink",
-                            deepLink,
-                            pendingDynamicLinkData.utmParameters,
-                            pendingDynamicLinkData.extensions
-                        )
-                    }
-                }
-            }
-            .addOnFailureListener(this) {
-                logeukes { "getDynamicLink:onFailure: $it" }
-            }
 
         // 무조건 다른 액티비티로 이동되므로 알아서 cancel 됨 (수동 cancel 불필요)
         applicationContext.dataStore.data.collectWithLifecycle(this) { preferences ->

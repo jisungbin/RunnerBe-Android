@@ -28,6 +28,8 @@ import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.google.firebase.dynamiclinks.ktx.dynamicLinks
+import com.google.firebase.ktx.Firebase
 import io.github.jisungbin.logeukes.LoggerType
 import io.github.jisungbin.logeukes.logeukes
 import javax.inject.Inject
@@ -35,6 +37,10 @@ import kotlinx.coroutines.cancel
 import team.applemango.runnerbe.feature.register.onboard.component.OnboardRouter
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.di.ViewModelFactory
+import team.applemango.runnerbe.feature.register.onboard.di.component.DaggerViewModelComponent
+import team.applemango.runnerbe.feature.register.onboard.di.module.RepositoryModule
+import team.applemango.runnerbe.feature.register.onboard.di.module.UseCaseModule
+import team.applemango.runnerbe.feature.register.onboard.di.module.ViewModelModule
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
@@ -53,9 +59,17 @@ class OnboardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        DaggerViewModelComponent
+            .builder()
+            .repositoryModule(RepositoryModule())
+            .useCaseModule(UseCaseModule())
+            .viewModelModule(ViewModelModule())
+            .build()
+
         vm = ViewModelProvider(this, viewModelFactory)[OnboardViewModel::class.java]
         vm.exceptionFlow.collectWithLifecycle(this) { handleException(it) }
 
+        initDynamicLink()
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
@@ -122,5 +136,27 @@ class OnboardActivity : ComponentActivity() {
     private fun handleException(exception: Throwable) {
         toast(exception.toMessage(), Toast.LENGTH_LONG)
         logeukes(type = LoggerType.E) { exception }
+    }
+
+    private fun initDynamicLink() {
+        Firebase.dynamicLinks
+            .getDynamicLink(intent)
+            .addOnSuccessListener(this) { pendingDynamicLinkData ->
+                logeukes { listOf("pendingDynamicLinkData", pendingDynamicLinkData) }
+                if (pendingDynamicLinkData != null) {
+                    val deepLink = pendingDynamicLinkData.link
+                    logeukes {
+                        listOf(
+                            "deepLink",
+                            deepLink,
+                            pendingDynamicLinkData.utmParameters,
+                            pendingDynamicLinkData.extensions
+                        )
+                    }
+                }
+            }
+            .addOnFailureListener(this) {
+                logeukes { "getDynamicLink:onFailure: $it" }
+            }
     }
 }
