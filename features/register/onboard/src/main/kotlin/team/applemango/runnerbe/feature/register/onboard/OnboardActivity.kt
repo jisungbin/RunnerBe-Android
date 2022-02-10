@@ -25,9 +25,9 @@ import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.insets.ProvideWindowInsets
-import com.google.accompanist.insets.systemBarsPadding
+import com.google.accompanist.insets.navigationBarsWithImePadding
+import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
@@ -83,7 +83,6 @@ class OnboardActivity : ComponentActivity() {
             ProvideWindowInsets {
                 val systemUiController = rememberSystemUiController()
                 val navController = rememberAnimatedNavController()
-                logeukes { navController.currentBackStackEntryAsState().value }
                 LaunchedEffect(Unit) {
                     systemUiController.setSystemBarsColor(Color.Transparent)
                     vm.emailVerifyStateFlow.collectWithLifecycle(this@OnboardActivity) { verified ->
@@ -136,7 +135,8 @@ class OnboardActivity : ComponentActivity() {
                     modifier = Modifier
                         .fillMaxSize()
                         .background(brush = GradientAsset.RegisterCommonBackground)
-                        .systemBarsPadding(start = false, end = false)
+                        .statusBarsPadding()
+                        .navigationBarsWithImePadding() // Step.VerifyWithEmail 단계에 TextField 있음
                         .padding(horizontal = 16.dp),
                     navController = navController,
                     vm = vm

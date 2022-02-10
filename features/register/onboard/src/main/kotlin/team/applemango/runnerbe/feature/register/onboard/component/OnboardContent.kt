@@ -31,11 +31,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.google.accompanist.insets.LocalWindowInsets
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
@@ -53,34 +51,38 @@ internal fun OnboardContent(
     onBottomCTAButtonAction: suspend () -> Unit,
     content: @Composable BoxScope.() -> Unit,
 ) {
-    val insets = LocalWindowInsets.current
-    val imeHeight = with(LocalDensity.current) { insets.ime.bottom.toDp() }
     val coroutineScope = rememberCoroutineScope()
-    val title = when (step) {
-        Step.Terms -> StringAsset.Title.ReadTerms
-        Step.Year -> StringAsset.Title.InputYear
-        Step.Gender -> StringAsset.Title.SelectGender
-        Step.Job -> StringAsset.Title.WhatsJob
-        Step.VerifyWithEmail -> StringAsset.Title.VerifyWithEmail
-        Step.VerifyWithEmployeeId -> StringAsset.Title.VerifyWitheEmployeeId
-        Step.VerifyWithEmailDone -> StringAsset.Title.EmailVerifyDone
-        Step.VerifyWithEmployeeIdRequestDone -> StringAsset.Title.EmployeeIdVerifyRequestDone
+    val title = remember(step) {
+        when (step) {
+            Step.Terms -> StringAsset.Title.ReadTerms
+            Step.Year -> StringAsset.Title.InputYear
+            Step.Gender -> StringAsset.Title.SelectGender
+            Step.Job -> StringAsset.Title.WhatsJob
+            Step.VerifyWithEmail -> StringAsset.Title.VerifyWithEmail
+            Step.VerifyWithEmployeeId -> StringAsset.Title.VerifyWitheEmployeeId
+            Step.VerifyWithEmailDone -> StringAsset.Title.EmailVerifyDone
+            Step.VerifyWithEmployeeIdRequestDone -> StringAsset.Title.EmployeeIdVerifyRequestDone
+        }
     }
-    val subtitle = when (step) {
-        Step.Year -> StringAsset.Subtitle.AgeVisibleDescription
-        Step.Job -> StringAsset.Subtitle.JobCanEditOnMypage
-        Step.VerifyWithEmail -> StringAsset.Subtitle.VerifyWithEmail
-        Step.VerifyWithEmployeeId -> StringAsset.Subtitle.VerifyWithEmployeeId
-        Step.VerifyWithEmailDone -> StringAsset.Subtitle.EmailVerifyDone
-        Step.VerifyWithEmployeeIdRequestDone -> StringAsset.Subtitle.EmployeeIdVerifyRequestDone
-        else -> StringAsset.Empty
+    val subtitle = remember(step) {
+        when (step) {
+            Step.Year -> StringAsset.Subtitle.AgeVisibleDescription
+            Step.Job -> StringAsset.Subtitle.JobCanEditOnMypage
+            Step.VerifyWithEmail -> StringAsset.Subtitle.VerifyWithEmail
+            Step.VerifyWithEmployeeId -> StringAsset.Subtitle.VerifyWithEmployeeId
+            Step.VerifyWithEmailDone -> StringAsset.Subtitle.EmailVerifyDone
+            Step.VerifyWithEmployeeIdRequestDone -> StringAsset.Subtitle.EmployeeIdVerifyRequestDone
+            else -> StringAsset.Empty
+        }
     }
-    val bottomCTAButtonText = when (step) {
-        Step.VerifyWithEmail -> StringAsset.Button.NoEmail
-        Step.VerifyWithEmployeeId -> StringAsset.Button.Verify
-        Step.VerifyWithEmailDone -> StringAsset.Button.Start
-        Step.VerifyWithEmployeeIdRequestDone -> StringAsset.Button.GotoMain
-        else -> StringAsset.Button.Next
+    val bottomCTAButtonText = remember(step) {
+        when (step) {
+            Step.VerifyWithEmail -> StringAsset.Button.NoEmail
+            Step.VerifyWithEmployeeId -> StringAsset.Button.Verify
+            Step.VerifyWithEmailDone -> StringAsset.Button.Start
+            Step.VerifyWithEmployeeIdRequestDone -> StringAsset.Button.GotoMain
+            else -> StringAsset.Button.Next
+        }
     }
     val animatedBottomCTAButtonBackgroundColor by animateColorAsState(
         when (bottomCTAButtonEnabled) {
@@ -99,9 +101,11 @@ internal fun OnboardContent(
             }
         }
     )
-    val bottomCTAButtonBackgroundColor = when (step) {
-        Step.VerifyWithEmail -> Color.Transparent
-        else -> animatedBottomCTAButtonBackgroundColor
+    val bottomCTAButtonBackgroundColor = remember(step) {
+        when (step) {
+            Step.VerifyWithEmail -> Color.Transparent
+            else -> animatedBottomCTAButtonBackgroundColor
+        }
     }
 
     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
@@ -144,7 +148,7 @@ internal fun OnboardContent(
         Box(
             modifier = Modifier
                 .constrainAs(bottomCTAButton) {
-                    bottom.linkTo(parent.bottom, 28.dp + imeHeight)
+                    bottom.linkTo(parent.bottom, 28.dp)
                     width = Dimension.matchParent
                     height = Dimension.value(48.dp)
                 }
