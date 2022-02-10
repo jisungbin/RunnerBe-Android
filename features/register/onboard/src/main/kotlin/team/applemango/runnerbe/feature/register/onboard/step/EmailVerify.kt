@@ -51,6 +51,7 @@ import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.constant.EmailVerifyState
+import team.applemango.runnerbe.feature.register.onboard.util.createUserWithEmailVerify
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.compose.util.collectAsStateWithLifecycleRemember
@@ -164,8 +165,16 @@ internal fun EmailVerify(vm: OnboardViewModel) {
                             onClick = {
                                 coroutineScope.launch {
                                     val email = emailInputFlow.value
-                                    if (!vm.checkUsableEmail(email)) {
-
+                                    if (vm.checkUsableEmail(email)) {
+                                        createUserWithEmailVerify(
+                                            email = email,
+                                            exceptionHandler = { exception ->
+                                                emailVerifyState =
+                                                    EmailVerifyState.Exception(exception)
+                                            }
+                                        ) { // on successful
+                                            emailVerifyState = EmailVerifyState.Sent
+                                        }
                                     } else {
                                         emailVerifyState = EmailVerifyState.Duplicate
                                     }
