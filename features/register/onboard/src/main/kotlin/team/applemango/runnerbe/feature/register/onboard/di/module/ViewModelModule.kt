@@ -22,7 +22,7 @@ internal class ViewModelModule {
     @Provides
     @IntoMap
     @ViewModelKey(OnboardViewModel::class)
-    fun provideSnsLoginViewModel(
+    fun provideOnboardViewModel(
         checkUsableEmailUseCase: CheckUsableEmailUseCase,
     ): ViewModel {
         return OnboardViewModel(
