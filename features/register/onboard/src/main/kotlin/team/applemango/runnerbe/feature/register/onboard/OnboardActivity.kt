@@ -65,6 +65,7 @@ class OnboardActivity : ComponentActivity() {
             .useCaseModule(UseCaseModule())
             .viewModelModule(ViewModelModule())
             .build()
+            .inject(this)
 
         vm = ViewModelProvider(this, viewModelFactory)[OnboardViewModel::class.java]
         vm.exceptionFlow.collectWithLifecycle(this) { handleException(it) }
