@@ -60,8 +60,10 @@ dependencies {
     api(platform(Dependencies.Firebase.Bom))
     api(Dependencies.Firebase.Auth)
     api(Dependencies.Firebase.Analytics)
-    api(Dependencies.Firebase.DynamicLink)
     api(Dependencies.Firebase.GoogleServiceAuth)
+
+    // 얘는 presentation 에서만 사용
+    implementation(Dependencies.Firebase.DynamicLink)
 
     implementation(Dependencies.Util.Erratum)
     Dependencies.Ui.forEach(::implementation)
