@@ -76,6 +76,8 @@
 
 ## Developer
 
+> 2022년 2월 4일 개발 시작
+
 - **[PM]** [@jisungbin](https://github.com/jisungbin)
 
 ---
