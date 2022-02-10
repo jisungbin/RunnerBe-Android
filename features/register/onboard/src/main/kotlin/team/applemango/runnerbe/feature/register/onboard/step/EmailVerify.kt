@@ -129,6 +129,7 @@ internal fun EmailVerify() {
                 colors = ButtonDefaults.buttonColors(backgroundColor = ColorAsset.Primary),
                 onClick = {
                     // TODO
+                    emailVerifyState = EmailVerifyState.values().random()
                 }
             ) {
                 Text(
