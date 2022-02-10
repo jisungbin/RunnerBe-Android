@@ -40,7 +40,7 @@ fun <T> ToggleButton(
 
     @Composable
     fun textColor(target: T) = animateColorAsState(
-        if (target == selectState) Color.Black else ColorAsset.G4
+        if (target == selectState) Color.Black else ColorAsset.G3_5
     ).value
 
     Button(
