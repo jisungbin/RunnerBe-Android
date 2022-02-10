@@ -14,15 +14,22 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.ViewModelProvider
 import com.google.accompanist.insets.ProvideWindowInsets
+import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import io.github.jisungbin.logeukes.LoggerType
 import io.github.jisungbin.logeukes.logeukes
+import javax.inject.Inject
 import org.orbitmvi.orbit.viewmodel.observe
 import team.applemango.runnerbe.feature.register.snslogin.component.SnsLoginScreen
 import team.applemango.runnerbe.feature.register.snslogin.di.ViewModelFactory
@@ -32,14 +39,14 @@ import team.applemango.runnerbe.feature.register.snslogin.di.module.UseCaseModul
 import team.applemango.runnerbe.feature.register.snslogin.di.module.ViewModelModule
 import team.applemango.runnerbe.feature.register.snslogin.mvi.LoginSideEffect
 import team.applemango.runnerbe.feature.register.snslogin.mvi.LoginState
-import team.applemango.runnerbe.util.DFMOnboardActivityAlias
+import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.changeActivityWithAnimation
 import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.util.extension.dataStore
 import team.applemango.runnerbe.shared.util.extension.launchedWhenCreated
 import team.applemango.runnerbe.shared.util.extension.toast
-import javax.inject.Inject
+import team.applemango.runnerbe.util.DFMOnboardActivityAlias
 
 class SnsLoginActivity : ComponentActivity() {
 
@@ -75,7 +82,14 @@ class SnsLoginActivity : ComponentActivity() {
                 LaunchedEffect(Unit) {
                     systemUiController.setSystemBarsColor(Color.Transparent)
                 }
-                SnsLoginScreen(vm)
+                SnsLoginScreen(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(brush = GradientAsset.RegisterCommonBackground)
+                        .systemBarsPadding(start = false, end = false)
+                        .padding(horizontal = 16.dp),
+                    vm = vm
+                )
             }
         }
     }

@@ -10,7 +10,6 @@
 package team.applemango.runnerbe.feature.register.onboard
 
 import android.os.Bundle
-import android.util.Log
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -31,7 +30,6 @@ import kotlinx.coroutines.cancel
 import team.applemango.runnerbe.feature.register.onboard.component.OnboardRouter
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
-import team.applemango.runnerbe.shared.compose.util.systemBarsPaddingByDefaultColor
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.util.extension.dataStore
@@ -48,7 +46,7 @@ class OnboardActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
-            ProvideWindowInsets(consumeWindowInsets = false) {
+            ProvideWindowInsets {
                 val systemUiController = rememberSystemUiController()
                 val navController = rememberAnimatedNavController()
                 LaunchedEffect(Unit) {
@@ -95,12 +93,7 @@ class OnboardActivity : ComponentActivity() {
                     modifier = Modifier
                         .fillMaxSize()
                         .background(brush = GradientAsset.RegisterCommonBackground)
-                        .systemBarsPaddingByDefaultColor(
-                            window = window,
-                            defaultStatusBarColor = Color.Cyan,
-                            defaultNavigationBarColor = Color.Red,
-                            systemUiController = systemUiController
-                        )
+                        .systemBarsPadding(start = false, end = false)
                         .padding(horizontal = 16.dp),
                     navController = navController
                 )

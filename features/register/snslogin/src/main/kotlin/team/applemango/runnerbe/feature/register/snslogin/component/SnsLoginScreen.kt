@@ -10,11 +10,9 @@
 package team.applemango.runnerbe.feature.register.snslogin.component
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -28,25 +26,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.google.accompanist.insets.systemBarsPadding
 import com.skydoves.landscapist.rememberDrawablePainter
 import team.applemango.runnerbe.domain.login.constant.PlatformType
 import team.applemango.runnerbe.feature.register.snslogin.SnsLoginViewModel
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.FontAsset
-import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.compose.util.presentationDrawableOf
 import team.applemango.runnerbe.shared.compose.util.presentationStringOf
 
 @Composable
-internal fun SnsLoginScreen(vm: SnsLoginViewModel) {
-    ConstraintLayout(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(brush = GradientAsset.RegisterCommonBackground)
-            .systemBarsPadding(start = false, end = false)
-            .padding(horizontal = 16.dp)
-    ) {
+internal fun SnsLoginScreen(modifier: Modifier, vm: SnsLoginViewModel) {
+    ConstraintLayout(modifier = modifier) {
         val (logo, buttons) = createRefs()
 
         Column(

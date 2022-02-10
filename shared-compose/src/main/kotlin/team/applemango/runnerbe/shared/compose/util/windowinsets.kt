@@ -23,6 +23,7 @@ import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.systemuicontroller.SystemUiController
 
 // Original function implementation is inlined
+// https://github.com/applemango-runnerbe/RunnerBe-Android/issues/13
 inline fun Modifier.systemBarsPaddingByDefaultColor(
     window: Window,
     defaultStatusBarColor: Color,
