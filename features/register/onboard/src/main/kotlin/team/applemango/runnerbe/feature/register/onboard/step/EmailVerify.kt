@@ -57,7 +57,8 @@ internal fun EmailVerify() {
     context.dataStore.data.collectWithLifecycleRememberOnLaunchedEffect { preferences ->
         preferences[DataStoreKey.Onboard.Email]?.let { restoreEmail ->
             emailInputFlow.emit(restoreEmail)
-        } ?: cancel("onboard restore execute must be once.")
+        }
+        cancel("onboard restore execute must be once.")
     }
     emailInputFlow.collectWithLifecycleRememberOnLaunchedEffect(debounceTimeout = 500L) { email ->
         context.dataStore.edit { preferences ->
