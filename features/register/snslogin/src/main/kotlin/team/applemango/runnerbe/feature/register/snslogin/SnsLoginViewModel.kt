@@ -9,6 +9,7 @@
 
 package team.applemango.runnerbe.feature.register.snslogin
 
+import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.orbitmvi.orbit.ContainerHost
@@ -23,7 +24,6 @@ import team.applemango.runnerbe.domain.login.usecase.LoginUseCase
 import team.applemango.runnerbe.feature.register.snslogin.mvi.LoginSideEffect
 import team.applemango.runnerbe.feature.register.snslogin.mvi.LoginState
 import team.applemango.runnerbe.shared.base.BaseViewModel
-import javax.inject.Inject
 
 internal class SnsLoginViewModel @Inject constructor(
     private val getKakaoKakaoAccessTokenUseCase: GetKakaoAccessTokenUseCase,
@@ -42,10 +42,10 @@ internal class SnsLoginViewModel @Inject constructor(
             }.onSuccess { token ->
                 loginUseCase(platformType = platformType, accessToken = token)
                     .onSuccess { user ->
+                        postSideEffect(LoginSideEffect.SaveUuid(user.uuid!!)) // must NonNull
                         reduce {
                             LoginState(true)
                         }
-                        postSideEffect(LoginSideEffect.SaveUuid(user.uuid!!)) // must NonNull
                     }.onFailure { throwable ->
                         emitException(throwable)
                     }
