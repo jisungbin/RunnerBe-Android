@@ -218,15 +218,3 @@ internal fun EmailVerify() {
         }
     }
 }
-
-/*
-private fun getVerifyCodeSettings(uuid: String) = actionCodeSettings {
-    url = "https://runnerbe-auth.shop/welcome?verify=$uuid" // 이 값은 입력받는 이메일과 항상 일치해야 함
-    handleCodeInApp = true // 필수!
-    setAndroidPackageName(
-        "team.applemango.runnerbe", // 리다이렉트될 앱 패키지명
-        true, // 이용 불가능시 플레이스토어 이동해서 설치 요청
-        "21" // min sdk level
-    )
-}
-*/

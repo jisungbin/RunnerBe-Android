@@ -45,6 +45,7 @@ import team.applemango.runnerbe.shared.util.extension.changeActivityWithAnimatio
 import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.util.extension.dataStore
 import team.applemango.runnerbe.shared.util.extension.launchedWhenCreated
+import team.applemango.runnerbe.shared.util.extension.toMessage
 import team.applemango.runnerbe.shared.util.extension.toast
 import team.applemango.runnerbe.util.DFMOnboardActivityAlias
 
@@ -113,9 +114,8 @@ class SnsLoginActivity : ComponentActivity() {
         }
     }
 
-    // TODO: handle exception in debug mode
     private fun handleException(exception: Throwable) {
-        toast(exception.toString(), Toast.LENGTH_LONG)
+        toast(exception.toMessage(), Toast.LENGTH_LONG)
         logeukes(type = LoggerType.E) { exception }
     }
 }

@@ -11,6 +11,7 @@ package team.applemango.runnerbe.feature.register.onboard
 
 import android.os.Bundle
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -22,22 +23,38 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.ViewModelProvider
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import io.github.jisungbin.logeukes.LoggerType
+import io.github.jisungbin.logeukes.logeukes
+import javax.inject.Inject
 import kotlinx.coroutines.cancel
 import team.applemango.runnerbe.feature.register.onboard.component.OnboardRouter
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
+import team.applemango.runnerbe.feature.register.onboard.di.ViewModelFactory
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.util.extension.dataStore
+import team.applemango.runnerbe.shared.util.extension.toMessage
+import team.applemango.runnerbe.shared.util.extension.toast
 
 @OptIn(ExperimentalAnimationApi::class)
 class OnboardActivity : ComponentActivity() {
+
+    @Inject
+    internal lateinit var viewModelFactory: ViewModelFactory
+
+    private lateinit var vm: OnboardViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        vm = ViewModelProvider(this, viewModelFactory)[OnboardViewModel::class.java]
+        vm.exceptionFlow.collectWithLifecycle(this) { handleException(it) }
 
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
@@ -99,5 +116,10 @@ class OnboardActivity : ComponentActivity() {
                 )
             }
         }
+    }
+
+    private fun handleException(exception: Throwable) {
+        toast(exception.toMessage(), Toast.LENGTH_LONG)
+        logeukes(type = LoggerType.E) { exception }
     }
 }
