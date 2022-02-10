@@ -61,7 +61,6 @@ import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.dataStore
 import team.applemango.runnerbe.shared.util.extension.runIf
 import team.applemango.runnerbe.shared.util.extension.toMessage
-import team.applemango.runnerbe.shared.util.extension.toast
 
 private val Shape = RoundedCornerShape(8.dp)
 
@@ -175,11 +174,10 @@ internal fun EmailVerify() {
                                             getVerifyCodeSettings(nonNullUuid)
                                         )
                                         .addOnSuccessListener {
-                                            toast(context, "이메일이 ")
+                                            emailVerifyState = EmailVerifyState.Sent
                                         }
                                         .addOnFailureListener { exception ->
-                                            emailVerifyState =
-                                                EmailVerifyState.Exception(exception.message)
+                                            emailVerifyState = EmailVerifyState.Exception(exception)
                                         }
                                 } ?: run {
                                     emailVerifyState = EmailVerifyState.ErrorUuid
@@ -187,10 +185,7 @@ internal fun EmailVerify() {
                             }
                         )
                     }
-                    .background(
-                        color = emailSendButtonBackgroundColor,
-                        shape = Shape
-                    ),
+                    .background(color = emailSendButtonBackgroundColor, shape = Shape),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
@@ -222,10 +217,7 @@ internal fun EmailVerify() {
                     }
                 }
                 if (message.isNotEmpty()) {
-                    Text(
-                        text = message,
-                        style = style
-                    )
+                    Text(text = message, style = style)
                 }
             }
         }

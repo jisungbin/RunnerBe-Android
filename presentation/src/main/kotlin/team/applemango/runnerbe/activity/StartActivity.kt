@@ -9,7 +9,6 @@
 
 package team.applemango.runnerbe.activity
 
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.animation.AnticipateInterpolator
@@ -18,6 +17,13 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.ktx.Firebase
 import io.github.jisungbin.logeukes.logeukes
+import team.applemango.runnerbe.feature.home.board.BoardActivity
+import team.applemango.runnerbe.shared.constant.DataStoreKey
+import team.applemango.runnerbe.shared.util.extension.changeActivityWithAnimation
+import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
+import team.applemango.runnerbe.shared.util.extension.dataStore
+import team.applemango.runnerbe.util.DFMLoginActivityAlias
+import team.applemango.runnerbe.util.DFMOnboardActivityAlias
 
 class StartActivity : AppCompatActivity() {
 
@@ -28,26 +34,25 @@ class StartActivity : AppCompatActivity() {
         Firebase.dynamicLinks
             .getDynamicLink(intent)
             .addOnSuccessListener(this) { pendingDynamicLinkData ->
-                logeukes { pendingDynamicLinkData }
-                var deepLink: Uri? = null
+                logeukes { listOf("pendingDynamicLinkData", pendingDynamicLinkData) }
                 if (pendingDynamicLinkData != null) {
-                    deepLink = pendingDynamicLinkData.link
-                    logeukes { deepLink }
+                    val deepLink = pendingDynamicLinkData.link
+                    logeukes {
+                        listOf(
+                            "deepLink",
+                            deepLink,
+                            pendingDynamicLinkData.utmParameters,
+                            pendingDynamicLinkData.extensions
+                        )
+                    }
                 }
-
-                // Handle the deep link. For example, open the linked
-                // content, or apply promotional credit to the user's
-                // account.
-                // ...
-
-                // ...
             }
             .addOnFailureListener(this) {
                 logeukes { "getDynamicLink:onFailure: $it" }
             }
 
         // 무조건 다른 액티비티로 이동되므로 알아서 cancel 됨 (수동 cancel 불필요)
-        /*applicationContext.dataStore.data.collectWithLifecycle(this) { preferences ->
+        applicationContext.dataStore.data.collectWithLifecycle(this) { preferences ->
             val isSignedUser = preferences[DataStoreKey.Login.Jwt] != null
             val isSnsLoginDone = preferences[DataStoreKey.Login.Uuid] != null
             when {
@@ -65,7 +70,7 @@ class StartActivity : AppCompatActivity() {
                     return@collectWithLifecycle
                 }
             }
-        }*/
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             splashScreen.setOnExitAnimationListener { splashScreenView ->
