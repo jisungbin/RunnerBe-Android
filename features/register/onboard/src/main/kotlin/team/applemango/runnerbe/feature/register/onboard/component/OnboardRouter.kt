@@ -68,6 +68,8 @@ import team.applemango.runnerbe.shared.util.extension.dataStore
 import team.applemango.runnerbe.shared.util.extension.toast
 import team.applemango.runnerbe.util.DFMLoginActivityAlias
 
+private var lastBackPressedTime = 0L
+
 @Composable
 @OptIn(ExperimentalAnimationApi::class)
 internal fun OnboardRouter(
@@ -82,7 +84,6 @@ internal fun OnboardRouter(
     var stepIndex by remember { mutableStateOf(0) }
     var stepIndexString by remember { mutableStateOf("") }
     var confirmFinishSnackbarVisible by remember { mutableStateOf(false) }
-    var lastBackPressedTime = remember { 0L }
 
     stepIndex = when (navController.currentBackStackEntryAsState().value?.destination?.route) {
         Step.Terms.name -> 0
@@ -105,12 +106,12 @@ internal fun OnboardRouter(
     }
 
     fun confirmFinish() {
-        val backPressedTime = System.currentTimeMillis()
-        if (backPressedTime - lastBackPressedTime <= 2000) { // 2로 내에 다시 누름
+        val nowBackPressedTime = System.currentTimeMillis()
+        if (nowBackPressedTime - lastBackPressedTime <= 2000) { // 2로 내에 다시 누름
             activity.finish()
         } else {
             confirmFinishSnackbarVisible = true
-            lastBackPressedTime = backPressedTime
+            lastBackPressedTime = nowBackPressedTime
             coroutineScope.launch {
                 delay(2000)
                 confirmFinishSnackbarVisible = false
