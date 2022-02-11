@@ -123,4 +123,8 @@ internal class OnboardViewModel @Inject constructor(
                     }
             }
         }
+
+    fun register() {
+        // TODO
+    }
 }
