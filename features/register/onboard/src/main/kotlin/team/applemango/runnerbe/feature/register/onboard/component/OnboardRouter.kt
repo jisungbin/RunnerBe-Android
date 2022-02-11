@@ -195,8 +195,10 @@ internal fun OnboardRouter(
                     step = Step.Terms,
                     bottomCTAButtonEnabled = enableGoNextStep,
                     onBottomCTAButtonAction = {
-                        context.dataStore.edit { preferences ->
-                            preferences[DataStoreKey.Onboard.TermsAllCheck] = true
+                        coroutineScope.launch {
+                            context.dataStore.edit { preferences ->
+                                preferences[DataStoreKey.Onboard.TermsAllCheck] = true
+                            }
                         }
                         navController.navigate(Step.Year.name)
                     }

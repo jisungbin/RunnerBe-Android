@@ -34,7 +34,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
@@ -48,10 +47,9 @@ private val BottomCTAButtonShape = RoundedCornerShape(24.dp)
 internal fun OnboardContent(
     step: Step,
     bottomCTAButtonEnabled: Boolean,
-    onBottomCTAButtonAction: suspend () -> Unit,
+    onBottomCTAButtonAction: () -> Unit,
     content: @Composable BoxScope.() -> Unit,
 ) {
-    val coroutineScope = rememberCoroutineScope()
     val title = remember(step) {
         when (step) {
             Step.Terms -> StringAsset.Title.ReadTerms
@@ -158,9 +156,7 @@ internal fun OnboardContent(
                         indication = rememberRipple(),
                         interactionSource = remember { MutableInteractionSource() },
                         onClick = {
-                            coroutineScope.launch {
-                                onBottomCTAButtonAction()
-                            }
+                            onBottomCTAButtonAction()
                         }
                     )
                 }
