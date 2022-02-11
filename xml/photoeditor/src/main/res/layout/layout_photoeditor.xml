@@ -17,46 +17,55 @@
     <ja.burhanrashid52.photoeditor.PhotoEditorView
         android:id="@+id/editor"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
+        android:layout_height="match_parent" />
 
     <Button
         android:id="@+id/undo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="15dp"
         android:text="undo"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/draw"
+        app:layout_constraintEnd_toEndOf="@+id/draw"
+        app:layout_constraintStart_toStartOf="@+id/eraser" />
 
     <Button
         android:id="@+id/redo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="15dp"
         android:text="redo"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/eraser"
-        app:layout_constraintStart_toEndOf="@+id/undo" />
+        app:layout_constraintBottom_toTopOf="@+id/draw"
+        app:layout_constraintEnd_toEndOf="@+id/export"
+        app:layout_constraintStart_toStartOf="@+id/draw" />
 
     <Button
         android:id="@+id/eraser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
         android:layout_marginBottom="30dp"
         android:text="eraser"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/draw" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/draw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
         android:text="draw"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/export"
+        app:layout_constraintStart_toEndOf="@+id/eraser" />
+
+    <Button
+        android:id="@+id/export"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:text="export"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
