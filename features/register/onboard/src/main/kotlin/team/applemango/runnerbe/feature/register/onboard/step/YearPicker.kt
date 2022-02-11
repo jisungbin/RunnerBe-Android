@@ -33,12 +33,12 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
+import team.applemango.runnerbe.feature.register.onboard.util.presentationColorOf
+import team.applemango.runnerbe.shared.compose.extension.collectAsStateWithLifecycleRemember
+import team.applemango.runnerbe.shared.compose.extension.collectWithLifecycleRememberOnLaunchedEffect
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.FontTypeface
 import team.applemango.runnerbe.shared.compose.theme.Typography
-import team.applemango.runnerbe.shared.compose.extension.collectAsStateWithLifecycleRemember
-import team.applemango.runnerbe.shared.compose.extension.collectWithLifecycleRememberOnLaunchedEffect
-import team.applemango.runnerbe.shared.compose.extension.presentationColorOf
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.dataStore
 import team.applemango.runnerbe.xml.numberpicker.OnValueChangeListener
