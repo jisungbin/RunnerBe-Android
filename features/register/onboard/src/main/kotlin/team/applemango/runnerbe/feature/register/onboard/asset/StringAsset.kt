@@ -65,8 +65,8 @@ internal object StringAsset {
 
     object Dialog {
         const val TitleVerifyNotice = "인증 확인까지 최대 6시간 정도가\n소요될 수 있어요!"
-        const val Camera = "촬영하기"
-        const val TakePhoto = "앨범에서 선택하기"
+        const val FromCamera = "촬영하기"
+        const val FromAlbum = "앨범에서 선택하기"
     }
 
     object Toast {
