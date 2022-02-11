@@ -151,10 +151,10 @@ class OnboardActivity : ComponentActivity() {
                                 .padding(horizontal = 30.dp),
                             hostState = snackbarHostState
                         ) { snackbarData ->
-                            Snackbar(backgroundColor = ColorAsset.Primary) {
+                            Snackbar(backgroundColor = ColorAsset.G5) {
                                 Text(
                                     text = snackbarData.message,
-                                    style = Typography.Body14R.copy(color = ColorAsset.G5)
+                                    style = Typography.Body14R.copy(color = ColorAsset.Primary)
                                 )
                             }
                         }
