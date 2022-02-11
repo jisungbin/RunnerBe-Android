@@ -99,6 +99,7 @@ internal fun TermsTable(onAllTermsCheckStateChanged: (allChecked: Boolean) -> Un
         saveState()
     }
 
+    // 위치 고정 (toggleAllTermsCheck 함수 사용)
     context.dataStore.data.collectWithLifecycleRememberOnLaunchedEffect { preferences ->
         if (preferences[DataStoreKey.Onboard.TermsAllCheck] == true) {
             toggleAllTermsCheck()

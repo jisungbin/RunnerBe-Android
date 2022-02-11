@@ -58,6 +58,7 @@ internal fun YearPicker(selectedYearChanged: (isAdult: Boolean) -> Unit) {
             yearSelectFlow.emit(year)
         }
     }
+
     context.dataStore.data.collectWithLifecycleRememberOnLaunchedEffect { preferences ->
         preferences[DataStoreKey.Onboard.Year]?.let { restoreYear ->
             wheelPicker.setValue(restoreYear)
@@ -71,6 +72,7 @@ internal fun YearPicker(selectedYearChanged: (isAdult: Boolean) -> Unit) {
             preferences[DataStoreKey.Onboard.Year] = year
         }
     }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
