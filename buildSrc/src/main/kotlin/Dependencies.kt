@@ -39,7 +39,6 @@ object Versions {
 
     object Ui {
         const val Browser = "1.3.0"
-        const val Material = "1.5.0"
         const val AppCompat = "1.4.1"
         const val Splash = "1.0.0-beta01"
     }
@@ -135,7 +134,6 @@ object Dependencies {
     val Ui = listOf(
         "androidx.appcompat:appcompat:${Versions.Ui.AppCompat}",
         "androidx.core:core-splashscreen:${Versions.Ui.Splash}",
-        "com.google.android.material:material:${Versions.Ui.Material}",
         "com.google.android.gms:play-services-oss-licenses:${Versions.OssLicense.Main}"
     )
 

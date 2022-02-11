@@ -9,7 +9,7 @@
 
 <resources>
 
-    <style name="Theme.RunnerBe" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.RunnerBe" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@color/G5_5</item>
         <item name="android:statusBarColor">@color/G5_5</item>
         <item name="android:navigationBarColor">@color/G5_5</item>
