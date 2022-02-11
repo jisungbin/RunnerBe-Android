@@ -14,6 +14,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import io.github.jisungbin.logeukes.LoggerType
 import io.github.jisungbin.logeukes.logeukes
+import team.applemango.runnerbe.feature.register.onboard.constant.EmailVerifyCode
 
 private val alphabetRange = ('a'..'z') + ('A'..'Z') + (0..10)
 private val randomPassword get() = List(10) { alphabetRange.random() }.joinToString("")
@@ -34,7 +35,7 @@ internal fun createUserWithEmailVerify(
             Firebase.auth.currentUser?.let { user ->
                 user.sendEmailVerification(
                     actionCodeSettings {
-                        url = "https://runnerbe-auth.shop/verify=true"
+                        url = "https://runnerbe-auth.shop/$EmailVerifyCode"
                         handleCodeInApp = true // 필수!
                         setAndroidPackageName(
                             "team.applemango.runnerbe", // 리다이렉트될 앱 패키지명

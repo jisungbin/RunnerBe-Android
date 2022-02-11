@@ -42,6 +42,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.cancel
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.component.OnboardRouter
+import team.applemango.runnerbe.feature.register.onboard.constant.EmailVerifyCode
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.di.ViewModelFactory
 import team.applemango.runnerbe.feature.register.onboard.di.component.DaggerViewModelComponent
@@ -183,7 +184,7 @@ class OnboardActivity : ComponentActivity() {
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        if (intent?.data.toString().contains("verify%3Dtrue")) { // verify=true
+        if (intent?.data.toString().contains(EmailVerifyCode)) {
             vm.updateEmailVerifyState(true)
         } else {
             toast(StringAsset.Toast.FailVerifyEmail)

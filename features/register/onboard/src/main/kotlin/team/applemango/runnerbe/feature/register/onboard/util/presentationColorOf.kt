@@ -11,8 +11,7 @@ package team.applemango.runnerbe.feature.register.onboard.util
 
 import android.content.Context
 import androidx.core.content.ContextCompat
-
-private const val PresentationPackage = "team.applemango.runnerbe"
+import team.applemango.runnerbe.feature.register.onboard.constant.PresentationPackage
 
 internal fun presentationColorOf(context: Context, name: String) = ContextCompat.getColor(
     context,
