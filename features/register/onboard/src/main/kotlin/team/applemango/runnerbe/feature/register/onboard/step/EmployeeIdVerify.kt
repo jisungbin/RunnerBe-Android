@@ -122,7 +122,7 @@ internal fun EmployeeIdVerify() {
                         )
                     }
                 }
-                else -> {
+                else -> { // TODO: 버튼 순간이동 해결
                     FloatingActionButton(
                         onClick = { photoTakenTypeDialogVisible = true },
                         elevation = FloatingActionButtonDefaults.elevation(
