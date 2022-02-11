@@ -10,6 +10,7 @@ local.properties
 /shared/build
 /shared-compose/build
 /xml/numberpicker/build
+/xml/photoeditor/build
 /buildSrc/build
 /presentation/build
 /presentation/release
