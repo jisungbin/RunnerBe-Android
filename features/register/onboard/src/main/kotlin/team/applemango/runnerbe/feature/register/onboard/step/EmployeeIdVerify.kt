@@ -53,8 +53,8 @@ import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.shared.compose.component.CustomAlertDialog
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
-import team.applemango.runnerbe.shared.compose.util.noRippleClickable
-import team.applemango.runnerbe.shared.compose.util.presentationDrawableOf
+import team.applemango.runnerbe.shared.compose.extension.noRippleClickable
+import team.applemango.runnerbe.shared.compose.extension.presentationDrawableOf
 import team.applemango.runnerbe.shared.util.extension.toast
 
 @Composable

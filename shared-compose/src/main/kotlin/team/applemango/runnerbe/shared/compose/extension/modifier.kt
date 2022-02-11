@@ -2,17 +2,20 @@
  * RunnerBe © 2022 Team AppleMango. all rights reserved.
  * RunnerBe license is under the MIT.
  *
- * [windowinsets.kt] created by Ji Sungbin on 22. 2. 10. 오후 1:24
+ * [modifier.kt] created by Ji Sungbin on 22. 2. 12. 오전 3:25
  *
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-@file:Suppress("NOTHING_TO_INLINE", "ComposableModifierFactory")
+@file:Suppress("NOTHING_TO_INLINE")
 
-package team.applemango.runnerbe.shared.compose.util
+package team.applemango.runnerbe.shared.compose.extension
 
 import android.view.Window
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.Color
@@ -22,6 +25,15 @@ import androidx.core.view.WindowCompat
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.systemuicontroller.SystemUiController
 
+// https://stackoverflow.com/a/66839858/14299073s
+inline fun Modifier.noRippleClickable(crossinline onClick: () -> Unit) = composed {
+    clickable(
+        indication = null,
+        interactionSource = remember { MutableInteractionSource() },
+        onClick = { onClick() },
+    )
+}
+
 // Original function implementation is inlined
 // https://github.com/applemango-runnerbe/RunnerBe-Android/issues/13
 inline fun Modifier.systemBarsPaddingByDefaultColor(
@@ -29,12 +41,12 @@ inline fun Modifier.systemBarsPaddingByDefaultColor(
     defaultStatusBarColor: Color,
     defaultNavigationBarColor: Color,
     systemUiController: SystemUiController,
-): Modifier = composed {
+) = composed {
     val insets = LocalWindowInsets.current.systemBars
     val statusBarHeight: Dp
     val navigationBarHeight: Dp
     with(LocalDensity.current) {
-        statusBarHeight = insets.top.toDp()
+        statusBarHeight = insets.top.toDp() // dp 로 바꾸는 함수도 스코프에 따라 값이 달라짐 (Density 스코프에서 돌려야 함)
         navigationBarHeight = insets.bottom.toDp()
     }
     if (statusBarHeight.value * navigationBarHeight.value != 0f) { // insets 이 구해진 상태

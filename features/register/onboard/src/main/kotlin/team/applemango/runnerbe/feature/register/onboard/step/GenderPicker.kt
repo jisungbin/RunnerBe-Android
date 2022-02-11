@@ -28,7 +28,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.register.onboard.constant.Gender
 import team.applemango.runnerbe.shared.compose.component.ToggleButton
-import team.applemango.runnerbe.shared.compose.util.collectWithLifecycleRememberOnLaunchedEffect
+import team.applemango.runnerbe.shared.compose.extension.collectWithLifecycleRememberOnLaunchedEffect
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.dataStore
 

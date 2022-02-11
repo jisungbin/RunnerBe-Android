@@ -16,7 +16,6 @@ import androidx.core.net.toUri
 import io.github.jisungbin.logeukes.LoggerType
 import io.github.jisungbin.logeukes.logeukes
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
-import team.applemango.runnerbe.shared.compose.util.presentationColorOf
 import team.applemango.runnerbe.shared.util.extension.toast
 
 internal object Web {
