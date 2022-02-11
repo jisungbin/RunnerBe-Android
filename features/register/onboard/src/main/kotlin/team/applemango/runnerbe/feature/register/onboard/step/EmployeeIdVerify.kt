@@ -110,7 +110,7 @@ internal fun EmployeeIdVerify() {
                         CoilImage(
                             imageModel = photo,
                             modifier = Modifier.fillMaxSize(),
-                            contentScale = ContentScale.FillBounds
+                            contentScale = ContentScale.Fit
                         )
                         Image(
                             modifier = Modifier
