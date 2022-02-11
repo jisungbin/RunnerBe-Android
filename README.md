@@ -33,9 +33,9 @@
 #### Jetpack
 
 - Hilt
+- Compose
 - DataStore
 - Navigation
-- Jetpack Compose
 
 #### Test
 
