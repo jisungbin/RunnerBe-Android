@@ -40,7 +40,9 @@ object Versions {
     object Ui {
         const val Browser = "1.3.0"
         const val AppCompat = "1.4.1"
+        const val PhotoEditor = "2.0.0"
         const val Splash = "1.0.0-beta01"
+        const val ConstraintLayout = "2.1.3"
     }
 
     object Network {

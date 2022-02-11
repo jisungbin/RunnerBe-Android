@@ -14,6 +14,7 @@ include(
     ":shared",
     ":shared-compose",
     ":xml:numberpicker",
+    ":xml:photoeditor",
     ":presentation",
     ":features:mail",
     ":features:mypage",

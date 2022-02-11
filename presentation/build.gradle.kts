@@ -68,7 +68,6 @@ dependencies {
     Dependencies.Ui.forEach(::implementation)
     Dependencies.Login.All.forEach(::implementation)
     Dependencies.PresentationOnlyKtx.forEach(::implementation)
-    implementation("com.burhanrashid52:photoeditor:2.0.0")
 
     Dependencies.Debug.forEach(::debugImplementation)
     installSharedComposeHiltTest(excludeCompose = true)

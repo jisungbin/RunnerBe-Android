@@ -9,31 +9,31 @@
 
 package team.applemango.runnerbe.activity
 
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.animation.AnticipateInterpolator
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import ja.burhanrashid52.photoeditor.PhotoEditor
-import ja.burhanrashid52.photoeditor.PhotoEditorView
-import ja.burhanrashid52.photoeditor.shape.ShapeBuilder
-import ja.burhanrashid52.photoeditor.shape.ShapeType
-import team.applemango.runnerbe.R
+import team.applemango.runnerbe.feature.home.board.BoardActivity
+import team.applemango.runnerbe.shared.constant.DataStoreKey
+import team.applemango.runnerbe.shared.util.extension.changeActivityWithAnimation
+import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
+import team.applemango.runnerbe.shared.util.extension.dataStore
+import team.applemango.runnerbe.util.DFMLoginActivityAlias
+import team.applemango.runnerbe.util.DFMOnboardActivityAlias
 
 class StartActivity : AppCompatActivity() {
 
-    private val editorConfig = ShapeBuilder()
+    /*private val editorConfig = ShapeBuilder()
         .withShapeSize(60f)
-        .withShapeType(ShapeType.RECTANGLE)
+        .withShapeType(ShapeType.LINE)
         .withShapeColor(Color.LTGRAY)
-        .withShapeOpacity(100)
+        .withShapeOpacity(100)*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.edit_activity)
+        /*setContentView(R.layout.edit_activity)
 
         val editorView: PhotoEditorView = findViewById(R.id.editor)
         val editor = PhotoEditor.Builder(this, editorView)
@@ -63,9 +63,9 @@ class StartActivity : AppCompatActivity() {
 
         draw.setOnClickListener {
             editor.setBrushDrawingMode(true)
-        }
+        }*/
 
-        /*// 무조건 다른 액티비티로 이동되므로 알아서 cancel 됨 (수동 cancel 불필요)
+        // 무조건 다른 액티비티로 이동되므로 알아서 cancel 됨 (수동 cancel 불필요)
         applicationContext.dataStore.data.collectWithLifecycle(this) { preferences ->
             val isSignedUser = preferences[DataStoreKey.Login.Jwt] != null
             val isSnsLoginDone = preferences[DataStoreKey.Login.Uuid] != null
@@ -84,7 +84,7 @@ class StartActivity : AppCompatActivity() {
                     return@collectWithLifecycle
                 }
             }
-        }*/
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             splashScreen.setOnExitAnimationListener { splashScreenView ->
