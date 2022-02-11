@@ -24,46 +24,9 @@ import team.applemango.runnerbe.util.DFMOnboardActivityAlias
 
 class StartActivity : AppCompatActivity() {
 
-    /*private val editorConfig = ShapeBuilder()
-        .withShapeSize(60f)
-        .withShapeType(ShapeType.LINE)
-        .withShapeColor(Color.LTGRAY)
-        .withShapeOpacity(100)*/
-
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
-        /*setContentView(R.layout.edit_activity)
-
-        val editorView: PhotoEditorView = findViewById(R.id.editor)
-        val editor = PhotoEditor.Builder(this, editorView)
-            .setPinchTextScalable(false)
-            .build()
-            .also {
-                it.setBrushDrawingMode(true)
-                it.setShape(editorConfig)
-            }
-
-        val undo: Button = findViewById(R.id.undo)
-        val redo: Button = findViewById(R.id.redo)
-        val draw: Button = findViewById(R.id.draw)
-        val eraser: Button = findViewById(R.id.eraser)
-
-        undo.setOnClickListener {
-            editor.undo()
-        }
-
-        redo.setOnClickListener {
-            editor.redo()
-        }
-
-        eraser.setOnClickListener {
-            editor.brushEraser()
-        }
-
-        draw.setOnClickListener {
-            editor.setBrushDrawingMode(true)
-        }*/
 
         // 무조건 다른 액티비티로 이동되므로 알아서 cancel 됨 (수동 cancel 불필요)
         applicationContext.dataStore.data.collectWithLifecycle(this) { preferences ->
