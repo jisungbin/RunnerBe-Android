@@ -22,8 +22,8 @@
 #### Architecture
 
 - Layered Architecture (Presentation/Domain/Data)
-- MVW Pattern
 - Dynamic Feature Module (:features:register)
+- MVW Pattern
 - TDD
 
 #### CI/CD
