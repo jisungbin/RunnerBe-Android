@@ -21,23 +21,20 @@
 
 #### Architecture
 
-- Layered Architecture (Presentation/Domain/Data)
-- Dynamic Feature Module (:features:register)
-- MVW Pattern
 - TDD
+- MVW Pattern
+- Dynamic Feature Module (:features:register)
+- Layered Architecture (Presentation/Domain/Data)
 
-#### CI/CD
+#### CD
 
-- Github Action
 - Fastlane + Firebase App Distribution
 
 #### Jetpack
 
 - Hilt
-- Paging
-- WorkManager
-- CameraX
 - DataStore
+- Navigation
 - Jetpack Compose
 
 #### Test
@@ -49,9 +46,9 @@
 #### Etc
 
 - GMS
-- Retrofit, OkHttp
-- Coroutine/Flow
 - WindowInsets
+- Coroutine/Flow
+- Retrofit, OkHttp
 
 ## Layer
 
