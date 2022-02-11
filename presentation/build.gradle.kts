@@ -58,11 +58,8 @@ dependencies {
 
     // :features:register:onboard 에서 필요하기 때문에 api 로 설정
     // DFM 에서 바로 implementation 해주면 exception 발생
-    api(platform(Dependencies.Firebase.Bom))
-    api(Dependencies.Firebase.Auth)
-    api(Dependencies.Firebase.Analytics)
-    api(Dependencies.Firebase.DynamicLink)
-    api(Dependencies.Firebase.GoogleServiceAuth)
+    api(platform(Dependencies.FirebaseBom))
+    Dependencies.Firebase.forEach(::api)
 
     implementation(Dependencies.Util.Erratum)
     Dependencies.Ui.forEach(::implementation)

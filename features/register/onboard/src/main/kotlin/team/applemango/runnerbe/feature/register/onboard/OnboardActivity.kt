@@ -9,6 +9,7 @@
 
 package team.applemango.runnerbe.feature.register.onboard
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
 import android.widget.Toast
@@ -35,12 +36,11 @@ import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.google.firebase.dynamiclinks.ktx.dynamicLinks
-import com.google.firebase.ktx.Firebase
 import io.github.jisungbin.logeukes.LoggerType
 import io.github.jisungbin.logeukes.logeukes
 import javax.inject.Inject
 import kotlinx.coroutines.cancel
+import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.component.OnboardRouter
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.di.ViewModelFactory
@@ -79,7 +79,6 @@ class OnboardActivity : ComponentActivity() {
         vm = ViewModelProvider(this, viewModelFactory)[OnboardViewModel::class.java]
         vm.exceptionFlow.collectWithLifecycle(this) { handleException(it) }
 
-        initDynamicLink()
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
@@ -182,19 +181,12 @@ class OnboardActivity : ComponentActivity() {
         logeukes(type = LoggerType.E) { exception }
     }
 
-    private fun initDynamicLink() {
-        Firebase.dynamicLinks
-            .getDynamicLink(intent)
-            .addOnSuccessListener(this) { pendingDynamicLinkData ->
-                if (pendingDynamicLinkData != null) {
-                    val deepLink = pendingDynamicLinkData.link.toString()
-                    if (deepLink.contains("verify%3Dtrue")) { // verify=true
-                        vm.updateEmailVerifyState(true)
-                    }
-                }
-            }
-            .addOnFailureListener(this) { exception ->
-                handleException(exception)
-            }
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        if (intent?.data.toString().contains("verify%3Dtrue")) { // verify=true
+            vm.updateEmailVerifyState(true)
+        } else {
+            toast(StringAsset.Toast.FailVerifyEmail)
+        }
     }
 }

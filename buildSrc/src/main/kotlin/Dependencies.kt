@@ -92,6 +92,7 @@ object Dependencies {
     const val Browser = "androidx.browser:browser:${Versions.Ui.Browser}"
     const val Coroutine =
         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.Essential.Coroutines}"
+    const val FirebaseBom = "com.google.firebase:firebase-bom:${Versions.FirebaseBom}"
 
     object Di {
         const val Dagger = "com.google.dagger:dagger:${Versions.Dagger}"
@@ -110,14 +111,12 @@ object Dependencies {
         "androidx.navigation:navigation-fragment-ktx:${Versions.Ktx.Navigation}",
     )
 
-    object Firebase {
-        const val Bom = "com.google.firebase:firebase-bom:${Versions.FirebaseBom}"
-        const val Auth = "com.google.firebase:firebase-auth-ktx"
-        const val Analytics = "com.google.firebase:firebase-analytics"
-        const val DynamicLink = "com.google.firebase:firebase-dynamic-links-ktx"
-        const val GoogleServiceAuth =
-            "com.google.android.gms:play-services-auth:${Versions.Login.GoogleServiceAuth}"
-    }
+    val Firebase = listOf(
+        "com.google.firebase:firebase-auth-ktx",
+        "com.google.firebase:firebase-analytics",
+        "com.google.firebase:firebase-storage-ktx",
+        "com.google.android.gms:play-services-auth:${Versions.Login.GoogleServiceAuth}"
+    )
 
     val Compose = listOf(
         "androidx.compose.ui:ui-tooling:${Versions.Compose.Main}",
