@@ -19,9 +19,16 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import ja.burhanrashid52.photoeditor.PhotoEditor
 import ja.burhanrashid52.photoeditor.PhotoEditorView
 import ja.burhanrashid52.photoeditor.shape.ShapeBuilder
+import ja.burhanrashid52.photoeditor.shape.ShapeType
 import team.applemango.runnerbe.R
 
 class StartActivity : AppCompatActivity() {
+
+    private val editorConfig = ShapeBuilder()
+        .withShapeSize(60f)
+        .withShapeType(ShapeType.RECTANGLE)
+        .withShapeColor(Color.LTGRAY)
+        .withShapeOpacity(100)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
@@ -34,12 +41,7 @@ class StartActivity : AppCompatActivity() {
             .build()
             .also {
                 it.setBrushDrawingMode(true)
-                it.setShape(
-                    ShapeBuilder()
-                        .withShapeSize(30f)
-                        .withShapeColor(Color.LTGRAY)
-                        .withShapeOpacity(100)
-                )
+                it.setShape(editorConfig)
             }
 
         val undo: Button = findViewById(R.id.undo)
@@ -60,7 +62,7 @@ class StartActivity : AppCompatActivity() {
         }
 
         draw.setOnClickListener {
-            editor.setShape(ShapeBuilder().withShapeOpacity(100))
+            editor.setBrushDrawingMode(true)
         }
 
         /*// 무조건 다른 액티비티로 이동되므로 알아서 cancel 됨 (수동 cancel 불필요)
