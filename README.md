@@ -23,8 +23,8 @@
 
 - TDD
 - MVW Pattern
+- Layered Architecture
 - Dynamic Feature Module (:features:register)
-- Layered Architecture (Presentation/Domain/Data)
 
 #### CD
 
