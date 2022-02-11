@@ -19,7 +19,6 @@ import androidx.activity.result.launch
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -50,6 +49,7 @@ import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.shared.compose.component.CustomAlertDialog
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
+import team.applemango.runnerbe.shared.compose.util.noRippleClickable
 import team.applemango.runnerbe.shared.compose.util.presentationDrawableOf
 import team.applemango.runnerbe.shared.util.extension.toast
 
@@ -106,17 +106,25 @@ internal fun EmployeeIdVerify() {
         Crossfade(photo != null) { photoIsReady ->
             when (photoIsReady) {
                 true -> {
-                    CoilImage(
-                        imageModel = photo,
-                        modifier = Modifier.fillMaxSize(),
-                        contentScale = ContentScale.FillBounds
-                    )
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopEnd) {
+                        CoilImage(
+                            imageModel = photo,
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.FillBounds
+                        )
+                        Image(
+                            modifier = Modifier
+                                .noRippleClickable { photo = null }
+                                .padding(16.dp),
+                            painter = rememberDrawablePainter(presentationDrawableOf("ic_round_close_24")),
+                            contentDescription = null,
+                            colorFilter = ColorFilter.tint(color = ColorAsset.G4_5)
+                        )
+                    }
                 }
                 else -> {
                     FloatingActionButton(
-                        onClick = {
-                            photoTakenTypeDialogVisible = true
-                        },
+                        onClick = { photoTakenTypeDialogVisible = true },
                         elevation = FloatingActionButtonDefaults.elevation(
                             defaultElevation = 3.dp,
                             pressedElevation = 6.dp,
@@ -160,7 +168,8 @@ private fun PhotoTakenTypeDialog(
                 Divider(modifier = Modifier.fillMaxWidth(), color = ColorAsset.G4_5)
                 Text(
                     modifier = Modifier
-                        .clickable { fromCameraClick() }
+                        .fillMaxWidth()
+                        .noRippleClickable { fromCameraClick() }
                         .padding(vertical = 16.dp, horizontal = 24.dp),
                     text = StringAsset.Dialog.FromCamera,
                     style = Typography.Body16R.copy(color = ColorAsset.Primary)
@@ -168,7 +177,8 @@ private fun PhotoTakenTypeDialog(
                 Divider(modifier = Modifier.fillMaxWidth(), color = ColorAsset.G4_5)
                 Text(
                     modifier = Modifier
-                        .clickable { fromAlbumClick() }
+                        .fillMaxWidth()
+                        .noRippleClickable { fromAlbumClick() }
                         .padding(horizontal = 24.dp)
                         .padding(top = 16.dp, bottom = 20.dp),
                     text = StringAsset.Dialog.FromAlbum,
