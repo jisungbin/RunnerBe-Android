@@ -22,7 +22,7 @@
 #### Architecture
 
 - Layered Architecture (Presentation/Domain/Data)
-- MVI Pattern (use framework: [orbit](https://github.com/orbit-mvi/orbit-mvi))
+- MVW Pattern
 - Dynamic Feature Module (:features:register)
 - TDD
 
@@ -38,10 +38,6 @@
 - WorkManager
 - CameraX
 - DataStore
-
-#### Design System
-
-- ~~[Honeycomb-core](https://github.com/applemango-runnerbe/honeycomb)~~
 - Jetpack Compose
 
 #### Test
