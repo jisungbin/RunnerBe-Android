@@ -10,6 +10,7 @@
 package team.applemango.runnerbe.feature.register.onboard.component
 
 import android.app.Activity
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
@@ -26,12 +27,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.LocalTextStyle
+import androidx.compose.material.Snackbar
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,8 +48,11 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.skydoves.landscapist.rememberDrawablePainter
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.home.board.BoardActivity
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
+import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.step.EmailVerify
 import team.applemango.runnerbe.feature.register.onboard.step.GenderPicker
@@ -71,9 +77,12 @@ internal fun OnboardRouter(
 ) {
     val context = LocalContext.current
     val activity = context as Activity
+    val coroutineScope = rememberCoroutineScope()
     var enableGoNextStep by remember { mutableStateOf(false) }
     var stepIndex by remember { mutableStateOf(0) }
     var stepIndexString by remember { mutableStateOf("") }
+    var confirmFinishSnackbarVisible by remember { mutableStateOf(false) }
+    var lastBackPressedTime = remember { 0L }
 
     stepIndex = when (navController.currentBackStackEntryAsState().value?.destination?.route) {
         Step.Terms.name -> 0
@@ -87,6 +96,26 @@ internal fun OnboardRouter(
 
     if (stepIndex != 0) {
         stepIndexString = "$stepIndex/4"
+    }
+
+    if (confirmFinishSnackbarVisible) {
+        Snackbar(backgroundColor = ColorAsset.Primary) {
+            Text(text = StringAsset.Snackbar.ConfirmFinish, style = Typography.Body14M)
+        }
+    }
+
+    fun confirmFinish() {
+        val backPressedTime = System.currentTimeMillis()
+        if (backPressedTime - lastBackPressedTime <= 2000) { // 2로 내에 다시 누름
+            activity.finish()
+        } else {
+            confirmFinishSnackbarVisible = true
+            lastBackPressedTime = backPressedTime
+            coroutineScope.launch {
+                delay(2000)
+                confirmFinishSnackbarVisible = false
+            }
+        }
     }
 
     Column(modifier = modifier) {
@@ -223,13 +252,17 @@ internal fun OnboardRouter(
                 }
             }
             composable(route = Step.VerifyWithEmailDone.name) { // 이메일 인증 완료
-                SideEffect {
-                    // 백스택 제거
-                    navController.backQueue.removeAll { it.destination.route != Step.VerifyWithEmailDone.name }
+                BackHandler {
+                    confirmFinish()
+                }
+                LaunchedEffect(Unit) {
+                    context.dataStore.edit { preferences ->
+                        preferences[DataStoreKey.Onboard.VerifyWithEmailDone] = true
+                    }
                 }
                 OnboardContent(
                     step = Step.VerifyWithEmailDone,
-                    bottomCTAButtonEnabled = true,
+                    bottomCTAButtonEnabled = true, // TODO: 가입 성공했을 때만 버튼 할성
                     onBottomCTAButtonAction = { // 메인 화면으로
                         activity.changeActivityWithAnimation<BoardActivity>()
                     }
@@ -242,6 +275,14 @@ internal fun OnboardRouter(
                 }
             }
             composable(route = Step.VerifyWithEmployeeIdRequestDone.name) { // 사원증 제출 완료
+                BackHandler {
+                    confirmFinish()
+                }
+                LaunchedEffect(Unit) {
+                    context.dataStore.edit { preferences ->
+                        preferences[DataStoreKey.Onboard.VerifyWithEmployeeIdRequestDone] = true
+                    }
+                }
                 OnboardContent(
                     step = Step.VerifyWithEmployeeIdRequestDone,
                     bottomCTAButtonEnabled = true,

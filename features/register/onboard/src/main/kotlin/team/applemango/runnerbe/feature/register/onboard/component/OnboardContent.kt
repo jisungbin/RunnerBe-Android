@@ -101,7 +101,7 @@ internal fun OnboardContent(
             }
         }
     )
-    val bottomCTAButtonBackgroundColor = remember(step) {
+    val bottomCTAButtonBackgroundColor = remember(step, animatedBottomCTAButtonBackgroundColor) {
         when (step) {
             Step.VerifyWithEmail -> Color.Transparent
             else -> animatedBottomCTAButtonBackgroundColor

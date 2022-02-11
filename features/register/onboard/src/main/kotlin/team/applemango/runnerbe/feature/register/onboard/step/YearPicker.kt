@@ -52,10 +52,12 @@ internal fun YearPicker(selectedYearChanged: (isAdult: Boolean) -> Unit) {
     val coroutineScope = rememberCoroutineScope()
     val yearSelectFlow = remember { MutableStateFlow(nowYear) }
     val yearSelectState by yearSelectFlow.collectAsStateWithLifecycleRemember(nowYear)
-    val wheelPicker = WheelPicker(context) { year ->
-        selectedYearChanged(nowYear - year > 19)
-        coroutineScope.launch {
-            yearSelectFlow.emit(year)
+    val wheelPicker = remember {
+        WheelPicker(context) { year ->
+            selectedYearChanged(nowYear - year > 19)
+            coroutineScope.launch {
+                yearSelectFlow.emit(year)
+            }
         }
     }
 

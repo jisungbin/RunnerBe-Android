@@ -80,8 +80,9 @@ class OnboardActivity : ComponentActivity() {
 
         setContent {
             ProvideWindowInsets {
-                val systemUiController = rememberSystemUiController()
                 val navController = rememberAnimatedNavController()
+                val systemUiController = rememberSystemUiController()
+
                 LaunchedEffect(Unit) {
                     systemUiController.setSystemBarsColor(Color.Transparent)
                     vm.emailVerifyStateFlow.collectWithLifecycle(this@OnboardActivity) { verified ->
@@ -161,8 +162,8 @@ class OnboardActivity : ComponentActivity() {
                     }
                 }
             }
-            .addOnFailureListener(this) {
-                logeukes { "getDynamicLink:onFailure: $it" }
+            .addOnFailureListener(this) { exception ->
+                handleException(exception)
             }
     }
 }
