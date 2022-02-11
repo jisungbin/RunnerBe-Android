@@ -53,7 +53,8 @@ internal object StringAsset {
         const val PlaceholderEmail = "runnerbee@company.com"
         const val EmailSendingRequest = "인증 링크 발송을 요청중이에요."
         val SentVerifyLink = """
-            링크는 최대 5분 내에 도착할 거예요 🐝🐝 💨
+            인증 링크를 발송했어요!
+            최대 5분 내에 도착할 거예요 🐝🐝 💨
             메일이 오지 않는다면 스팸 메일함도 확인해주세요.
         """.trimIndent() // 🐝🐝 💨 이모지 때문에 너무 길어져서 """ 처리
         const val DuplicateEmail = "이미 사용 중인 이메일이에요!"
@@ -70,6 +71,7 @@ internal object StringAsset {
     }
 
     object Toast {
+        const val ErrorTakenPhoto = "사진을 불러오지 못했어요.\n문제가 지속되면 카메라를 통해 진행해 주세요."
         const val NonInstallBrowser = "설치돼 있는 브라우저 앱이 없어요 \uD83D\uDE22"
     }
 
