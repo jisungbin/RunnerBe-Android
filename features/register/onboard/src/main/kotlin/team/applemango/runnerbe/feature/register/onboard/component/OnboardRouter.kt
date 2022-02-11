@@ -11,18 +11,17 @@ package team.applemango.runnerbe.feature.register.onboard.component
 
 import android.app.Activity
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.Crossfade
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -38,7 +37,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -55,6 +53,7 @@ import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.step.EmailVerify
+import team.applemango.runnerbe.feature.register.onboard.step.EmployeeIdVerify
 import team.applemango.runnerbe.feature.register.onboard.step.GenderPicker
 import team.applemango.runnerbe.feature.register.onboard.step.JobPicker
 import team.applemango.runnerbe.feature.register.onboard.step.TermsTable
@@ -117,48 +116,54 @@ internal fun OnboardRouter(
     }
 
     Column(modifier = modifier) {
-        Row( // TopBar
+        Crossfade(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Image(
-                modifier = Modifier.clickable { // < 뒤로가기
-                    if (!navController.popBackStack()) {
-                        // 뒤로 갈 수 있는 백스택이 없다면 로그인 화면으로 돌아가야 함
-                        // SnsLoginActivity 에서 백스택을 남기고
-                        // 여기서 바로 finish 를 통해 뒤로 가게 된다면 가능 하지만,
-                        // 만약 로그인만 완료한 상태에서 앱을 종료해서 바로 이 화면으로 오게 된다면
-                        // finish 를 했을 때 백스택이 없어서 앱 자체가 닫힘
-                        // 따라서 SnsLoginActivity 와 OnboardRouter 둘 다 백스택을 없애고
-                        // 개별 startActivity 를 호출하는 식으로 구성
-                        activity.changeActivityWithAnimation<DFMLoginActivityAlias>()
+            targetState = stepIndex != 0
+        ) { showTopBar ->
+            when (showTopBar) {
+                true -> {
+                    Row( // TopBar
+                        modifier = Modifier.fillMaxSize(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Image(
+                            modifier = Modifier.clickable { // < 뒤로가기
+                                if (!navController.popBackStack()) {
+                                    // 뒤로 갈 수 있는 백스택이 없다면 로그인 화면으로 돌아가야 함
+                                    // SnsLoginActivity 에서 백스택을 남기고
+                                    // 여기서 바로 finish 를 통해 뒤로 가게 된다면 가능 하지만,
+                                    // 만약 로그인만 완료한 상태에서 앱을 종료해서 바로 이 화면으로 오게 된다면
+                                    // finish 를 했을 때 백스택이 없어서 앱 자체가 닫힘
+                                    // 따라서 SnsLoginActivity 와 OnboardRouter 둘 다 백스택을 없애고
+                                    // 개별 startActivity 를 호출하는 식으로 구성
+                                    activity.changeActivityWithAnimation<DFMLoginActivityAlias>()
+                                }
+                            },
+                            painter = rememberDrawablePainter(presentationDrawableOf("ic_round_arrow_left_24")),
+                            contentDescription = null
+                        )
+                        Text(
+                            text = stepIndexString,
+                            style = Typography.Body16R.copy(color = ColorAsset.G3)
+                        )
+                        Image(
+                            modifier = Modifier.clickable { // X 온보딩 건너뛰기
+                                // TODO: Dialog
+                                toast(context, "todo: dialog")
+                                context.changeActivityWithAnimation<BoardActivity>()
+                            },
+                            painter = rememberDrawablePainter(presentationDrawableOf("ic_round_close_24")),
+                            contentDescription = null
+                        )
                     }
-                },
-                painter = rememberDrawablePainter(presentationDrawableOf("ic_round_arrow_left_24")),
-                contentDescription = null
-            )
-            AnimatedVisibility(
-                visible = stepIndex != 0,
-                enter = fadeIn(tween(500)),
-                exit = fadeOut(tween(500))
-            ) {
-                Text(
-                    text = stepIndexString,
-                    style = Typography.Body16R.copy(color = ColorAsset.G3)
-                )
+                }
+                else -> {
+                    Spacer(modifier = Modifier.fillMaxSize())
+                }
             }
-            Image(
-                modifier = Modifier.clickable { // X 온보딩 건너뛰기
-                    // TODO: Dialog
-                    toast(context, "todo: dialog")
-                    context.changeActivityWithAnimation<BoardActivity>()
-                },
-                painter = rememberDrawablePainter(presentationDrawableOf("ic_round_close_24")),
-                contentDescription = null
-            )
         }
         AnimatedNavHost( // main content + bottom cta button
             modifier = Modifier.fillMaxSize(),
@@ -242,11 +247,7 @@ internal fun OnboardRouter(
                         navController.navigate(Step.VerifyWithEmployeeIdRequestDone.name)
                     }
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(color = Color(0xFFFFAB91))
-                    )
+                    EmployeeIdVerify()
                 }
             }
             composable(route = Step.VerifyWithEmailDone.name) { // 이메일 인증 완료
