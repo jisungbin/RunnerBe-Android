@@ -31,7 +31,6 @@ import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -48,6 +47,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.skydoves.landscapist.rememberDrawablePainter
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.home.board.BoardActivity
@@ -60,9 +60,10 @@ import team.applemango.runnerbe.feature.register.onboard.step.GenderPicker
 import team.applemango.runnerbe.feature.register.onboard.step.JobPicker
 import team.applemango.runnerbe.feature.register.onboard.step.TermsTable
 import team.applemango.runnerbe.feature.register.onboard.step.YearPicker
+import team.applemango.runnerbe.shared.compose.extension.collectWithLifecycleRememberOnLaunchedEffect
+import team.applemango.runnerbe.shared.compose.extension.presentationDrawableOf
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
-import team.applemango.runnerbe.shared.compose.extension.presentationDrawableOf
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.changeActivityWithAnimation
 import team.applemango.runnerbe.shared.util.extension.dataStore
@@ -86,6 +87,14 @@ internal fun OnboardRouter(
     var stepIndex by remember { mutableStateOf(0) }
     var stepIndexString by remember { mutableStateOf("") }
     var photo by remember { mutableStateOf<Bitmap?>(null) }
+    var userUuid by remember { mutableStateOf<String?>(null) }
+
+    context.dataStore.data.collectWithLifecycleRememberOnLaunchedEffect { preferences ->
+        preferences[DataStoreKey.Login.Uuid]!!.let { uuid -> // non null
+            userUuid = uuid
+        }
+        cancel("user uuid load execute must be once.")
+    }
 
     stepIndex = when (navController.currentBackStackEntryAsState().value?.destination?.route) {
         Step.Terms.name -> 0
@@ -115,6 +124,12 @@ internal fun OnboardRouter(
                 delay(2000)
                 scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
             }
+        }
+    }
+
+    fun uploadEmployeeIdPhoto() {
+        coroutineScope.launch {
+            vm.uploadImage(photo!!, userUuid!!)
         }
     }
 
@@ -243,14 +258,11 @@ internal fun OnboardRouter(
             }
             composable(route = Step.VerifyWithEmployeeId.name) { // 사원증으로 인증
                 // 무조건 Step.VerifyWithEmail 을 거쳐야 이 step 으로 올 수 있음
-                SideEffect {
-                    enableGoNextStep = false
-                }
                 OnboardContent(
                     step = Step.VerifyWithEmployeeId,
-                    bottomCTAButtonEnabled = enableGoNextStep,
+                    bottomCTAButtonEnabled = photo != null,
                     onBottomCTAButtonAction = { // 인증하기
-                        navController.navigate(Step.VerifyWithEmployeeIdRequestDone.name)
+                        uploadEmployeeIdPhoto()
                     }
                 ) {
                     EmployeeIdVerify(photo = photo, onPhotoChanged = { newPhoto ->

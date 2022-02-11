@@ -51,11 +51,10 @@ import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.constant.EmailVerifyState
-import team.applemango.runnerbe.feature.register.onboard.util.createUserWithEmailVerify
-import team.applemango.runnerbe.shared.compose.theme.ColorAsset
-import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.compose.extension.collectAsStateWithLifecycleRemember
 import team.applemango.runnerbe.shared.compose.extension.collectWithLifecycleRememberOnLaunchedEffect
+import team.applemango.runnerbe.shared.compose.theme.ColorAsset
+import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.dataStore
 import team.applemango.runnerbe.shared.util.extension.runIf
@@ -148,7 +147,6 @@ internal fun EmailVerify(vm: OnboardViewModel) {
                 textStyle = Typography.EngBody16R,
                 shape = Shape
             )
-
             Box(
                 modifier = Modifier
                     .constrainAs(button) {
@@ -168,15 +166,16 @@ internal fun EmailVerify(vm: OnboardViewModel) {
                                     emailVerifyState = EmailVerifyState.Loading
                                     val email = emailInputFlow.value
                                     if (vm.checkUsableEmail(email)) {
-                                        createUserWithEmailVerify(
+                                        vm.createUserWithEmailVerify(
                                             email = email,
                                             exceptionHandler = { exception ->
                                                 emailVerifyState =
                                                     EmailVerifyState.Exception(exception)
+                                            },
+                                            emailSendSuccess = {
+                                                emailVerifyState = EmailVerifyState.Sent
                                             }
-                                        ) { // on successful
-                                            emailVerifyState = EmailVerifyState.Sent
-                                        }
+                                        )
                                     } else {
                                         emailVerifyState = EmailVerifyState.Duplicate
                                     }
