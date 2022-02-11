@@ -10,6 +10,7 @@
 package team.applemango.runnerbe.feature.register.onboard.component
 
 import android.app.Activity
+import android.graphics.Bitmap
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -30,6 +31,7 @@ import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -83,6 +85,7 @@ internal fun OnboardRouter(
     var enableGoNextStep by remember { mutableStateOf(false) }
     var stepIndex by remember { mutableStateOf(0) }
     var stepIndexString by remember { mutableStateOf("") }
+    var photo by remember { mutableStateOf<Bitmap?>(null) }
 
     stepIndex = when (navController.currentBackStackEntryAsState().value?.destination?.route) {
         Step.Terms.name -> 0
@@ -240,6 +243,9 @@ internal fun OnboardRouter(
             }
             composable(route = Step.VerifyWithEmployeeId.name) { // 사원증으로 인증
                 // 무조건 Step.VerifyWithEmail 을 거쳐야 이 step 으로 올 수 있음
+                SideEffect {
+                    enableGoNextStep = false
+                }
                 OnboardContent(
                     step = Step.VerifyWithEmployeeId,
                     bottomCTAButtonEnabled = enableGoNextStep,
@@ -247,7 +253,9 @@ internal fun OnboardRouter(
                         navController.navigate(Step.VerifyWithEmployeeIdRequestDone.name)
                     }
                 ) {
-                    EmployeeIdVerify()
+                    EmployeeIdVerify(photo = photo, onPhotoChanged = { newPhoto ->
+                        photo = newPhoto
+                    })
                 }
             }
             composable(route = Step.VerifyWithEmailDone.name) { // 이메일 인증 완료

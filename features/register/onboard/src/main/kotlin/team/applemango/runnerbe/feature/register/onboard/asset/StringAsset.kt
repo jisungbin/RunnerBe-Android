@@ -71,7 +71,7 @@ internal object StringAsset {
     }
 
     object Toast {
-        const val ErrorTakenPhoto = "사진을 불러오지 못했어요.\n문제가 지속되면 카메라를 통해 진행해 주세요."
+        const val ErrorTakenPhoto = "사진을 불러오지 못했어요.\n다시 시도해 주세요."
         const val NonInstallBrowser = "설치돼 있는 브라우저 앱이 없어요 \uD83D\uDE22"
     }
 
