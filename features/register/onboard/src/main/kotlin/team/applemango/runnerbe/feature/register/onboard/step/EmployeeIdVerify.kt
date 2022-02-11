@@ -89,9 +89,11 @@ internal fun EmployeeIdVerify() {
         },
         fromCameraClick = {
             takePhotoFromCameraLauncher.launch()
+            photoTakenTypeDialogVisible = false
         },
         fromAlbumClick = {
             takePhotoFromAlbumLauncher.launch("image/*")
+            photoTakenTypeDialogVisible = false
         }
     )
 
@@ -100,8 +102,7 @@ internal fun EmployeeIdVerify() {
             .fillMaxWidth()
             .height(180.dp)
             .clip(RoundedCornerShape(8.dp))
-            .background(color = ColorAsset.G6),
-        contentAlignment = Alignment.Center
+            .background(color = ColorAsset.G6)
     ) {
         Crossfade(photo != null) { photoIsReady ->
             when (photoIsReady) {
@@ -122,22 +123,27 @@ internal fun EmployeeIdVerify() {
                         )
                     }
                 }
-                else -> { // TODO: 버튼 순간이동 해결
-                    FloatingActionButton(
-                        onClick = { photoTakenTypeDialogVisible = true },
-                        elevation = FloatingActionButtonDefaults.elevation(
-                            defaultElevation = 3.dp,
-                            pressedElevation = 6.dp,
-                            hoveredElevation = 6.dp,
-                            focusedElevation = 6.dp
-                        ),
-                        backgroundColor = ColorAsset.G5
+                else -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
                     ) {
-                        Image(
-                            painter = rememberDrawablePainter(presentationDrawableOf("ic_round_add_24")),
-                            contentDescription = null,
-                            colorFilter = ColorFilter.tint(color = ColorAsset.G2)
-                        )
+                        FloatingActionButton(
+                            onClick = { photoTakenTypeDialogVisible = true },
+                            elevation = FloatingActionButtonDefaults.elevation(
+                                defaultElevation = 3.dp,
+                                pressedElevation = 6.dp,
+                                hoveredElevation = 6.dp,
+                                focusedElevation = 6.dp
+                            ),
+                            backgroundColor = ColorAsset.G5
+                        ) {
+                            Image(
+                                painter = rememberDrawablePainter(presentationDrawableOf("ic_round_add_24")),
+                                contentDescription = null,
+                                colorFilter = ColorFilter.tint(color = ColorAsset.G2)
+                            )
+                        }
                     }
                 }
             }
