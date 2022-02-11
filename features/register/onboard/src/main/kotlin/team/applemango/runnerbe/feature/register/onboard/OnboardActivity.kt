@@ -18,6 +18,11 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Snackbar
+import androidx.compose.material.SnackbarHost
+import androidx.compose.material.Text
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,6 +31,7 @@ import androidx.core.view.WindowCompat
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.ViewModelProvider
 import com.google.accompanist.insets.ProvideWindowInsets
+import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -42,7 +48,9 @@ import team.applemango.runnerbe.feature.register.onboard.di.component.DaggerView
 import team.applemango.runnerbe.feature.register.onboard.di.module.RepositoryModule
 import team.applemango.runnerbe.feature.register.onboard.di.module.UseCaseModule
 import team.applemango.runnerbe.feature.register.onboard.di.module.ViewModelModule
+import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
+import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.util.extension.dataStore
@@ -80,6 +88,7 @@ class OnboardActivity : ComponentActivity() {
 
         setContent {
             ProvideWindowInsets {
+                val scaffoldState = rememberScaffoldState()
                 val navController = rememberAnimatedNavController()
                 val systemUiController = rememberSystemUiController()
 
@@ -131,17 +140,36 @@ class OnboardActivity : ComponentActivity() {
                         cancel("step restore execute must be once.")
                     }
                 }
-                OnboardRouter(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(brush = GradientAsset.RegisterCommonBackground)
-                        /*.statusBarsPadding()
-                        .navigationBarsWithImePadding() // Step.VerifyWithEmail 단계에 TextField 있음*/
-                        .systemBarsPadding(start = false, end = false)
-                        .padding(horizontal = 16.dp),
-                    navController = navController,
-                    vm = vm
-                )
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    scaffoldState = scaffoldState,
+                    snackbarHost = { snackbarHostState ->
+                        SnackbarHost(
+                            modifier = Modifier
+                                .navigationBarsPadding()
+                                .padding(bottom = 30.dp)
+                                .padding(horizontal = 30.dp),
+                            hostState = snackbarHostState
+                        ) { snackbarData ->
+                            Snackbar(backgroundColor = ColorAsset.Primary) {
+                                Text(text = snackbarData.message, style = Typography.Body14R)
+                            }
+                        }
+                    }
+                ) { // Scaffold 는 backgroundColor 로 Brush 가 안되서 이렇게 함
+                    OnboardRouter(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(brush = GradientAsset.RegisterCommonBackground)
+                            /*.statusBarsPadding()
+                            .navigationBarsWithImePadding() // Step.VerifyWithEmail 단계에 TextField 있음*/
+                            .systemBarsPadding(start = false, end = false)
+                            .padding(horizontal = 16.dp),
+                        navController = navController,
+                        scaffoldState = scaffoldState,
+                        vm = vm,
+                    )
+                }
             }
         }
     }

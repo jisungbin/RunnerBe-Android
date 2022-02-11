@@ -27,7 +27,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.LocalTextStyle
-import androidx.compose.material.Snackbar
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -48,7 +48,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.skydoves.landscapist.rememberDrawablePainter
-import kotlinx.coroutines.delay
+import io.github.jisungbin.logeukes.logeukes
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.home.board.BoardActivity
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
@@ -75,6 +75,7 @@ private var lastBackPressedTime = 0L
 internal fun OnboardRouter(
     modifier: Modifier,
     navController: NavHostController,
+    scaffoldState: ScaffoldState,
     vm: OnboardViewModel,
 ) {
     val context = LocalContext.current
@@ -83,7 +84,6 @@ internal fun OnboardRouter(
     var enableGoNextStep by remember { mutableStateOf(false) }
     var stepIndex by remember { mutableStateOf(0) }
     var stepIndexString by remember { mutableStateOf("") }
-    var confirmFinishSnackbarVisible by remember { mutableStateOf(false) }
 
     stepIndex = when (navController.currentBackStackEntryAsState().value?.destination?.route) {
         Step.Terms.name -> 0
@@ -99,22 +99,16 @@ internal fun OnboardRouter(
         stepIndexString = "$stepIndex/4"
     }
 
-    if (confirmFinishSnackbarVisible) {
-        Snackbar(backgroundColor = ColorAsset.Primary) {
-            Text(text = StringAsset.Snackbar.ConfirmFinish, style = Typography.Body14M)
-        }
-    }
-
     fun confirmFinish() {
         val nowBackPressedTime = System.currentTimeMillis()
         if (nowBackPressedTime - lastBackPressedTime <= 2000) { // 2로 내에 다시 누름
             activity.finish()
+            logeukes { "finish" }
         } else {
-            confirmFinishSnackbarVisible = true
-            lastBackPressedTime = nowBackPressedTime
             coroutineScope.launch {
-                delay(2000)
-                confirmFinishSnackbarVisible = false
+                logeukes { "show snackbar" }
+                lastBackPressedTime = nowBackPressedTime
+                scaffoldState.snackbarHostState.showSnackbar(StringAsset.Snackbar.ConfirmFinish)
             }
         }
     }
