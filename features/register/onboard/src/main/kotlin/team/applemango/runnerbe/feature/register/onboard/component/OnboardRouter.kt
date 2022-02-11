@@ -48,7 +48,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.skydoves.landscapist.rememberDrawablePainter
-import io.github.jisungbin.logeukes.logeukes
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.home.board.BoardActivity
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
@@ -103,12 +103,15 @@ internal fun OnboardRouter(
         val nowBackPressedTime = System.currentTimeMillis()
         if (nowBackPressedTime - lastBackPressedTime <= 2000) { // 2로 내에 다시 누름
             activity.finish()
-            logeukes { "finish" }
         } else {
             coroutineScope.launch {
-                logeukes { "show snackbar" }
                 lastBackPressedTime = nowBackPressedTime
                 scaffoldState.snackbarHostState.showSnackbar(StringAsset.Snackbar.ConfirmFinish)
+            }
+            // snackbarHostState.showSnackbar keeps the coroutine scope in the suspended state until the snackbar is dismissed.
+            coroutineScope.launch {
+                delay(2000)
+                scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
             }
         }
     }
