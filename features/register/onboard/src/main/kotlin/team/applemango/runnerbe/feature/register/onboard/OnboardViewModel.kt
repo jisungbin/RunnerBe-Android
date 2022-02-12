@@ -49,21 +49,22 @@ import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterState
 import team.applemango.runnerbe.shared.base.BaseViewModel
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 
+private val SendEmailExceptionWithNoMessage =
+    Exception("user.sendEmailVerification is fail. But, exception message is null.")
+private val UserNullException =
+    Exception("Firebase.auth.createUserWithEmailAndPassword success. But, current user is null.")
+private val ImageUpdateExceptionWithNull =
+    Exception("Image upload is fail. But, exception is null.")
+
+private val alphabetRange = ('a'..'z') + ('A'..'Z') + (0..10)
+private val randomPassword get() = List(10) { alphabetRange.random() }.joinToString("")
+
 internal class OnboardViewModel @Inject constructor(
     private val checkUsableEmailUseCase: CheckUsableEmailUseCase,
     private val userRegisterUseCase: UserRegisterUseCase,
 ) : BaseViewModel(), ContainerHost<RegisterState, RegisterSideEffect> {
 
     override val container = container<RegisterState, RegisterSideEffect>(RegisterState.None)
-
-    private val alphabetRange = ('a'..'z') + ('A'..'Z') + (0..10)
-    private val randomPassword get() = List(10) { alphabetRange.random() }.joinToString("")
-
-    private val sendEmailExceptionWithNoMessage =
-        Exception("user.sendEmailVerification is fail. But, exception message is null.")
-    private val userNullException =
-        Exception("Firebase.auth.createUserWithEmailAndPassword success. But, current user is null.")
-    private val imageUpdateException = Exception("Image upload is fail. But, exception is null.")
 
     private val _emailVerifyStateFlow = MutableStateFlow(false)
     val emailVerifyStateFlow = _emailVerifyStateFlow.asStateFlow()
@@ -104,7 +105,7 @@ internal class OnboardViewModel @Inject constructor(
                         if (task.isSuccessful) {
                             emailSendSuccess()
                         } else {
-                            exceptionHandler(task.exception ?: sendEmailExceptionWithNoMessage)
+                            exceptionHandler(task.exception ?: SendEmailExceptionWithNoMessage)
                         }
                         // 이 메일로 끝까지 회원가입 안 했을떈 메일 다시 쓸 수 있게 하기 위해 유저 삭제
                         // 러너비 서버에서 따로 이메일 중복 검사 절차 거침
@@ -116,7 +117,7 @@ internal class OnboardViewModel @Inject constructor(
                             }
                     }
                 } ?: run {
-                    exceptionHandler(userNullException)
+                    exceptionHandler(UserNullException)
                 }
             }
             .addOnFailureListener { exception ->
@@ -124,18 +125,21 @@ internal class OnboardViewModel @Inject constructor(
             }
     }
 
+    // register entry point
     fun registerUser(dataStore: DataStore<Preferences>, photo: Bitmap?, nextStep: Step) = intent {
         reduce {
             RegisterState.Request
         }
         coroutineScope {
             dataStore.data.cancellable().collect { preferences ->
+                logeukes { "dataStore data collect" }
                 val uuid = preferences[DataStoreKey.Login.Uuid]
                 val year = preferences[DataStoreKey.Onboard.Year]
                 val gender = preferences[DataStoreKey.Onboard.Gender]
                 val job = preferences[DataStoreKey.Onboard.Job]
-                // StateFlow 로 저장되는 값이라 TextField 의 초기값인 "" 이 들어갈 수 있음
+                // StateFlow 로 저장되는 값이라 TextField 의 초기값인 "" (공백) 이 들어갈 수 있음
                 val officeEmail = preferences[DataStoreKey.Onboard.Email]?.ifEmpty { null }
+                logeukes { listOf(uuid, year, gender, job, officeEmail) }
                 if (listOf(uuid, year, gender, job).contains(null)) {
                     reduce {
                         RegisterState.NullInformation
@@ -149,6 +153,7 @@ internal class OnboardViewModel @Inject constructor(
                             return@collect
                         }
                     }
+                    logeukes { photoUrl }
                     val user = UserRegister(
                         uuid = uuid!!,
                         birthday = year!!,
@@ -159,8 +164,8 @@ internal class OnboardViewModel @Inject constructor(
                     )
                     requestUserRegister(user, nextStep)
                 }
+                cancel("user login data collect and register execute must be once.")
             }
-            cancel("user login data collect and register execute must be once.")
         }
     }
 
@@ -179,7 +184,7 @@ internal class OnboardViewModel @Inject constructor(
                         if (task.isSuccessful && task.result != null) {
                             continuation.resume(task.result.toString())
                         } else {
-                            emitException(task.exception ?: imageUpdateException)
+                            emitException(task.exception ?: ImageUpdateExceptionWithNull)
                             continuation.resume(null)
                         }
                     }
