@@ -8,7 +8,7 @@
  */
 
 object Versions {
-    const val Orbit = "4.3.1"
+    const val Orbit = "4.3.2"
     const val Dagger = "2.40.5"
     const val FirebaseBom = "29.0.4"
 

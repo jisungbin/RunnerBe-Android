@@ -19,6 +19,6 @@ package team.applemango.runnerbe.feature.register.onboard.mvi
  * @property Success 회원가입 성공
  * @property NullInformation 회원가입에 꼭 필요한 정보가 null 임 (프론트 에러)
  */
-enum class RegisterState {
+internal enum class RegisterState {
     None, Request, Success, NullInformation
 }

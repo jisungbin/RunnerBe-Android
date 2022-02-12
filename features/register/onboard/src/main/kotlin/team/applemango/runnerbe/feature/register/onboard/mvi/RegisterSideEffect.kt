@@ -9,6 +9,9 @@
 
 package team.applemango.runnerbe.feature.register.onboard.mvi
 
-enum class RegisterSideEffect {
-    StartMainActivity
+import team.applemango.runnerbe.feature.register.onboard.constant.Step
+
+internal sealed class RegisterSideEffect {
+    data class NavigateToNextStep(val nextStep: Step) : RegisterSideEffect()
+    object ResetStep : RegisterSideEffect()
 }

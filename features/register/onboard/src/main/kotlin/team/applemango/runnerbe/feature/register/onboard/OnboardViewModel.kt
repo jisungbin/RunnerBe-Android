@@ -42,6 +42,7 @@ import team.applemango.runnerbe.feature.register.onboard.constant.EmailVerifyCod
 import team.applemango.runnerbe.feature.register.onboard.constant.FirebaseStoragePath
 import team.applemango.runnerbe.feature.register.onboard.constant.Gender
 import team.applemango.runnerbe.feature.register.onboard.constant.PresentationPackage
+import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterSideEffect
 import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterState
 import team.applemango.runnerbe.shared.base.BaseViewModel
@@ -144,7 +145,7 @@ internal class OnboardViewModel @Inject constructor(
             }
         }
 
-    fun register(dataStore: DataStore<Preferences>, photo: Bitmap?) = intent {
+    fun register(dataStore: DataStore<Preferences>, photo: Bitmap?, nextStep: Step) = intent {
         reduce {
             RegisterState.Request
         }
@@ -159,6 +160,7 @@ internal class OnboardViewModel @Inject constructor(
                     reduce {
                         RegisterState.NullInformation
                     }
+                    postSideEffect(RegisterSideEffect.ResetStep)
                 } else {
                     var photoUrl: String? = null
                     if (photo != null) { // 사원증을 통한 인증일 경우
@@ -183,7 +185,7 @@ internal class OnboardViewModel @Inject constructor(
                             reduce {
                                 RegisterState.Success
                             }
-                            postSideEffect(RegisterSideEffect.StartMainActivity)
+                            postSideEffect(RegisterSideEffect.NavigateToNextStep(nextStep))
                         }
                         .onFailure { exception ->
                             emitException(exception)

@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavHostController
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.systemBarsPadding
@@ -41,7 +42,6 @@ import io.github.jisungbin.logeukes.logeukes
 import javax.inject.Inject
 import kotlinx.coroutines.cancel
 import org.orbitmvi.orbit.viewmodel.observe
-import team.applemango.runnerbe.feature.home.board.MainActivity
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.component.OnboardRouter
 import team.applemango.runnerbe.feature.register.onboard.constant.EmailVerifyCode
@@ -57,7 +57,6 @@ import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.constant.DataStoreKey
-import team.applemango.runnerbe.shared.util.extension.changeActivityWithAnimation
 import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.util.extension.dataStore
 import team.applemango.runnerbe.shared.util.extension.toMessage
@@ -84,12 +83,6 @@ class OnboardActivity : ComponentActivity() {
 
         vm = ViewModelProvider(this, viewModelFactory)[OnboardViewModel::class.java]
         vm.exceptionFlow.collectWithLifecycle(this) { handleException(it) }
-        vm.observe(
-            lifecycleOwner = this,
-            state = ::handleRegisterState,
-            sideEffect = ::handleRegisterSideEffect
-        )
-
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
@@ -104,12 +97,19 @@ class OnboardActivity : ComponentActivity() {
 
                 LaunchedEffect(Unit) {
                     systemUiController.setSystemBarsColor(Color.Transparent)
+                    vm.observe(
+                        lifecycleOwner = this@OnboardActivity,
+                        state = ::handleRegisterState,
+                        sideEffect = { sideEffect ->
+                            handleRegisterSideEffect(navController, sideEffect)
+                        }
+                    )
                     vm.emailVerifyStateFlow.collectWithLifecycle(this@OnboardActivity) { verified ->
                         if (verified) {
                             applicationContext.dataStore.edit { preferences ->
                                 preferences[DataStoreKey.Onboard.VerifyWithEmailDone] = true
                             }
-                            navController.navigate(Step.VerifyWithEmailDone.name)
+                            // navController.navigate(Step.VerifyWithEmailDone.name)
                         }
                     }
                     applicationContext.dataStore.data.collectWithLifecycle(this@OnboardActivity) { preferences ->
@@ -207,10 +207,18 @@ class OnboardActivity : ComponentActivity() {
         }
     }
 
-    private fun handleRegisterSideEffect(sideEffect: RegisterSideEffect) {
+    private suspend fun handleRegisterSideEffect(
+        navController: NavHostController,
+        sideEffect: RegisterSideEffect,
+    ) {
         when (sideEffect) {
-            RegisterSideEffect.StartMainActivity -> {
-                changeActivityWithAnimation<MainActivity>()
+            is RegisterSideEffect.NavigateToNextStep -> {
+                navController.navigate(sideEffect.nextStep.name)
+            }
+            RegisterSideEffect.ResetStep -> {
+                applicationContext.dataStore.edit { preferences ->
+                    preferences.clear() // clear all preferences
+                }
             }
         }
     }
