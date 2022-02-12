@@ -13,10 +13,15 @@ import dagger.Module
 import dagger.Provides
 import team.applemango.runnerbe.domain.login.repository.RegisterRepository
 import team.applemango.runnerbe.domain.login.usecase.CheckUsableEmailUseCase
+import team.applemango.runnerbe.domain.login.usecase.UserRegisterUseCase
 
 @Module
 internal class UseCaseModule {
     @Provides
     fun provideCheckUsableEmailUseCase(repo: RegisterRepository): CheckUsableEmailUseCase =
         CheckUsableEmailUseCase(repo)
+
+    @Provides
+    fun provideUserRegisterUseCase(repo: RegisterRepository): UserRegisterUseCase =
+        UserRegisterUseCase(repo)
 }

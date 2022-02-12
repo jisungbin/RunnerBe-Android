@@ -22,5 +22,5 @@ interface RegisterRepository {
      * 가입 요청 쿼리
      * @return 가입 요청 응답 enum class
      */
-    suspend fun register(register: UserRegister): UserRegisterResult
+    suspend fun register(user: UserRegister): UserRegisterResult
 }

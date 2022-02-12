@@ -50,7 +50,7 @@ import com.skydoves.landscapist.rememberDrawablePainter
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import team.applemango.runnerbe.feature.home.board.BoardActivity
+import team.applemango.runnerbe.feature.home.board.MainActivity
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
@@ -171,7 +171,7 @@ internal fun OnboardRouter(
                             modifier = Modifier.clickable { // X 온보딩 건너뛰기
                                 // TODO: Dialog
                                 toast(context, "todo: dialog")
-                                context.changeActivityWithAnimation<BoardActivity>()
+                                context.changeActivityWithAnimation<MainActivity>()
                             },
                             painter = rememberDrawablePainter(presentationDrawableOf("ic_round_close_24")),
                             contentDescription = null
@@ -285,7 +285,7 @@ internal fun OnboardRouter(
                     step = Step.VerifyWithEmailDone,
                     bottomCTAButtonEnabled = true, // TODO: 가입 성공했을 때만 버튼 할성
                     onBottomCTAButtonAction = { // 메인 화면으로
-                        activity.changeActivityWithAnimation<BoardActivity>()
+                        activity.changeActivityWithAnimation<MainActivity>()
                     }
                 ) {
                     Text(
@@ -308,7 +308,7 @@ internal fun OnboardRouter(
                     step = Step.VerifyWithEmployeeIdRequestDone,
                     bottomCTAButtonEnabled = true,
                     onBottomCTAButtonAction = { // 메인 화면으로
-                        activity.changeActivityWithAnimation<BoardActivity>()
+                        activity.changeActivityWithAnimation<MainActivity>()
                     }
                 ) {
                     Text(

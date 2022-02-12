@@ -9,6 +9,11 @@
 
 package team.applemango.runnerbe.feature.register.onboard.mvi
 
+/**
+ * UserRegisterUseCase state enum class
+ * Failure 의 경우 emitException 으로 따로 통보 해주고 있으므로
+ * 중복 state 를 막기 위해 failure state 생략
+ */
 enum class RegisterState {
     None, Request, Success
 }

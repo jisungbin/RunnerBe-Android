@@ -31,7 +31,7 @@ internal fun UserRegisterResponse.toResultDomain(): UserRegisterResult {
         3002 -> UserRegisterResult.DuplicateEmail
         3004 -> UserRegisterResult.DuplicateNickname
         4000 -> UserRegisterResult.DatabaseError
-        else ->
+        else -> UserRegisterResult.Exception
     }
 }
 

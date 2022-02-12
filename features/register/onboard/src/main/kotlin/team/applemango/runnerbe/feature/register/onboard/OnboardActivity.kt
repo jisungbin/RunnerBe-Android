@@ -40,6 +40,8 @@ import io.github.jisungbin.logeukes.LoggerType
 import io.github.jisungbin.logeukes.logeukes
 import javax.inject.Inject
 import kotlinx.coroutines.cancel
+import org.orbitmvi.orbit.viewmodel.observe
+import team.applemango.runnerbe.feature.home.board.MainActivity
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.component.OnboardRouter
 import team.applemango.runnerbe.feature.register.onboard.constant.EmailVerifyCode
@@ -49,10 +51,13 @@ import team.applemango.runnerbe.feature.register.onboard.di.component.DaggerView
 import team.applemango.runnerbe.feature.register.onboard.di.module.RepositoryModule
 import team.applemango.runnerbe.feature.register.onboard.di.module.UseCaseModule
 import team.applemango.runnerbe.feature.register.onboard.di.module.ViewModelModule
+import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterSideEffect
+import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterState
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.constant.DataStoreKey
+import team.applemango.runnerbe.shared.util.extension.changeActivityWithAnimation
 import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.util.extension.dataStore
 import team.applemango.runnerbe.shared.util.extension.toMessage
@@ -79,6 +84,11 @@ class OnboardActivity : ComponentActivity() {
 
         vm = ViewModelProvider(this, viewModelFactory)[OnboardViewModel::class.java]
         vm.exceptionFlow.collectWithLifecycle(this) { handleException(it) }
+        vm.observe(
+            lifecycleOwner = this,
+            state = ::handleRegisterState,
+            sideEffect = ::handleRegisterSideEffect
+        )
 
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
@@ -177,6 +187,26 @@ class OnboardActivity : ComponentActivity() {
         }
     }
 
+    private fun handleRegisterState(state: RegisterState) {
+        when (state) {
+            RegisterState.None -> {}
+            RegisterState.Success -> {
+                toast(StringAsset.Toast.RegisterSuccess)
+            }
+            RegisterState.Request -> {
+                toast(StringAsset.Toast.RegisterRequest)
+            }
+        }
+    }
+
+    private fun handleRegisterSideEffect(sideEffect: RegisterSideEffect) {
+        when (sideEffect) {
+            RegisterSideEffect.StartMainActivity -> {
+                changeActivityWithAnimation<MainActivity>()
+            }
+        }
+    }
+
     private fun handleException(exception: Throwable) {
         toast(exception.toMessage(), Toast.LENGTH_LONG)
         logeukes(type = LoggerType.E) { exception }
@@ -187,7 +217,7 @@ class OnboardActivity : ComponentActivity() {
         if (intent?.data.toString().contains(EmailVerifyCode)) {
             vm.updateEmailVerifyState(true)
         } else {
-            toast(StringAsset.Toast.FailVerifyEmail)
+            toast(StringAsset.Toast.VerifyEmailFailure)
         }
     }
 }

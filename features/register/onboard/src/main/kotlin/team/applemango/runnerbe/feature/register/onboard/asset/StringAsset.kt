@@ -71,7 +71,9 @@ internal object StringAsset {
     }
 
     object Toast {
-        const val FailVerifyEmail = "이메일 인증에 실패했어요."
+        const val RegisterRequest = "회원가입을 처리중이에요."
+        const val RegisterSuccess = "회원가입이 완료됐어요! \uD83E\uDD73" // 🥳
+        const val VerifyEmailFailure = "이메일 인증에 실패했어요."
         const val ErrorTakenPhoto = "사진을 불러오지 못했어요.\n다시 시도해 주세요."
         const val NonInstallBrowser = "설치돼 있는 브라우저 앱이 없어요 \uD83D\uDE22"
     }

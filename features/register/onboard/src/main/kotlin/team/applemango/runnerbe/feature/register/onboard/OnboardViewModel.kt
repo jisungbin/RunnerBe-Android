@@ -26,20 +26,23 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
+import team.applemango.runnerbe.domain.login.model.UserRegister
 import team.applemango.runnerbe.domain.login.usecase.CheckUsableEmailUseCase
+import team.applemango.runnerbe.domain.login.usecase.UserRegisterUseCase
 import team.applemango.runnerbe.feature.register.onboard.constant.ApplicationMinSdkLevel
 import team.applemango.runnerbe.feature.register.onboard.constant.EmailVerifyCode
 import team.applemango.runnerbe.feature.register.onboard.constant.FirebaseStoragePath
 import team.applemango.runnerbe.feature.register.onboard.constant.PresentationPackage
-import team.applemango.runnerbe.domain.login.model.UserRegister
 import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterSideEffect
 import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterState
 import team.applemango.runnerbe.shared.base.BaseViewModel
 
 internal class OnboardViewModel @Inject constructor(
     private val checkUsableEmailUseCase: CheckUsableEmailUseCase,
+    private val userRegisterUseCase: UserRegisterUseCase,
 ) : BaseViewModel(), ContainerHost<RegisterState, RegisterSideEffect> {
 
     override val container = container<RegisterState, RegisterSideEffect>(RegisterState.None)
@@ -134,13 +137,13 @@ internal class OnboardViewModel @Inject constructor(
             }
         }
 
-    fun register(userRegister: UserRegister, photo: Bitmap?) = intent {
+    fun register(user: UserRegister, photo: Bitmap?) = intent {
         reduce {
             RegisterState.Request
         }
         var photoUrl: String? = null
-        if (photo != null) {
-            photoUrl = uploadImage(photo, userRegister.uuid)
+        if (photo != null) { // 사원증을 통한 인증일 경우
+            photoUrl = uploadImage(photo, user.uuid)
             if (photoUrl == null) { // null 이면 내부에서 emitException 함
                 reduce {
                     RegisterState.None
@@ -148,6 +151,18 @@ internal class OnboardViewModel @Inject constructor(
                 return@intent
             }
         }
-
+        userRegisterUseCase(user.copy(idCardImageUrl = photoUrl))
+            .onSuccess {
+                reduce {
+                    RegisterState.Success
+                }
+                postSideEffect(RegisterSideEffect.StartMainActivity)
+            }
+            .onFailure { exception ->
+                emitException(exception)
+                reduce {
+                    RegisterState.None
+                }
+            }
     }
 }
