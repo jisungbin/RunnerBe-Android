@@ -247,9 +247,7 @@ private fun EmailVerifyLinkNoticeDialog(
     onDismissRequest: () -> Unit,
 ) {
     if (visible) {
-        CustomAlertDialog(
-            onDismissRequest = { onDismissRequest() }
-        ) {
+        CustomAlertDialog(onDismissRequest = { onDismissRequest() }) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
