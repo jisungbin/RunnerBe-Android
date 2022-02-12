@@ -81,10 +81,10 @@ internal fun OnboardRouter(
     val context = LocalContext.current
     val activity = context as Activity
     val coroutineScope = rememberCoroutineScope()
-    var enableGoNextStep by remember { mutableStateOf(false) }
     var stepIndex by remember { mutableStateOf(0) }
     var stepIndexString by remember { mutableStateOf("") }
     var photo by remember { mutableStateOf<Bitmap?>(null) }
+    var enableGoNextStep by remember { mutableStateOf(false) }
 
     stepIndex = when (navController.currentBackStackEntryAsState().value?.destination?.route) {
         Step.Terms.name -> 0
@@ -232,10 +232,12 @@ internal fun OnboardRouter(
                 }
             }
             composable(route = Step.VerifyWithEmail.name) { // 회사 이메일로 직장 인증
+                // 링크 클릭시 딥링크로 OnboardActivity 이동
+                // OnboardActivity 에서 회원기입 요청
                 OnboardContent(
                     step = Step.VerifyWithEmail,
-                    bottomCTAButtonEnabled = true,
-                    onBottomCTAButtonAction = { // 회사 이메일이 없어요
+                    bottomCTAButtonEnabled = true, // 회사 이메일이 없어요
+                    onBottomCTAButtonAction = {
                         navController.navigate(Step.VerifyWithEmployeeId.name)
                     }
                 ) {
@@ -251,7 +253,7 @@ internal fun OnboardRouter(
                         coroutineScope.launch {
                             vm.registerUser(
                                 dataStore = context.dataStore,
-                                photo = photo,
+                                photo = photo!!, // non null, 만약 null 로 들어오면 작동되지 않아야 하기 때문에 NonNull 강제 처리
                                 nextStep = Step.VerifyWithEmployeeIdRequestDone
                             )
                         }

@@ -82,8 +82,9 @@ class OnboardActivity : ComponentActivity() {
             .inject(this)
 
         vm = ViewModelProvider(this, viewModelFactory)[OnboardViewModel::class.java]
+        // CoroutineScope 에서 돌아가서 더블클론(::) 참조 안됨
         vm.exceptionFlow.collectWithLifecycle(this) { handleException(it) }
-        window.setFlags(
+        window.setFlags( // 네비게이션바까지 영역 확장하려면 필요
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
@@ -190,6 +191,7 @@ class OnboardActivity : ComponentActivity() {
     }
 
     private fun handleRegisterState(state: RegisterState) {
+        logeukes { state }
         val message = when (state) {
             RegisterState.None -> {
                 StringAsset.Empty
@@ -226,7 +228,7 @@ class OnboardActivity : ComponentActivity() {
         sideEffect: RegisterSideEffect,
     ) {
         when (sideEffect) {
-            RegisterSideEffect.ResetStep -> {
+            RegisterSideEffect.ResetStep -> { // 회원가입 단계 초기화
                 applicationContext.dataStore.edit { preferences ->
                     preferences.clear() // clear all preferences
                 }
