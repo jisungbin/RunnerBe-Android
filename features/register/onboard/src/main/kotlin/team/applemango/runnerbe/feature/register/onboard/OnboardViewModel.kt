@@ -10,6 +10,8 @@
 package team.applemango.runnerbe.feature.register.onboard
 
 import android.graphics.Bitmap
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.ktx.actionCodeSettings
 import com.google.firebase.auth.ktx.auth
@@ -20,8 +22,11 @@ import io.github.jisungbin.logeukes.logeukes
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 import kotlin.coroutines.resume
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import org.orbitmvi.orbit.ContainerHost
@@ -35,10 +40,12 @@ import team.applemango.runnerbe.domain.login.usecase.UserRegisterUseCase
 import team.applemango.runnerbe.feature.register.onboard.constant.ApplicationMinSdkLevel
 import team.applemango.runnerbe.feature.register.onboard.constant.EmailVerifyCode
 import team.applemango.runnerbe.feature.register.onboard.constant.FirebaseStoragePath
+import team.applemango.runnerbe.feature.register.onboard.constant.Gender
 import team.applemango.runnerbe.feature.register.onboard.constant.PresentationPackage
 import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterSideEffect
 import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterState
 import team.applemango.runnerbe.shared.base.BaseViewModel
+import team.applemango.runnerbe.shared.constant.DataStoreKey
 
 internal class OnboardViewModel @Inject constructor(
     private val checkUsableEmailUseCase: CheckUsableEmailUseCase,
@@ -137,32 +144,56 @@ internal class OnboardViewModel @Inject constructor(
             }
         }
 
-    fun register(user: UserRegister, photo: Bitmap?) = intent {
+    fun register(dataStore: DataStore<Preferences>, photo: Bitmap?) = intent {
         reduce {
             RegisterState.Request
         }
-        var photoUrl: String? = null
-        if (photo != null) { // 사원증을 통한 인증일 경우
-            photoUrl = uploadImage(photo, user.uuid)
-            if (photoUrl == null) { // null 이면 내부에서 emitException 함
-                reduce {
-                    RegisterState.None
+        coroutineScope {
+            dataStore.data.cancellable().collect { preferences ->
+                val uuid = preferences[DataStoreKey.Login.Uuid]
+                val year = preferences[DataStoreKey.Onboard.Year]
+                val gender = preferences[DataStoreKey.Onboard.Gender]
+                val job = preferences[DataStoreKey.Onboard.Job]
+                val officeEmail = preferences[DataStoreKey.Onboard.Email]
+                if (listOf(uuid, year, gender, job, officeEmail).contains(null)) {
+                    reduce {
+                        RegisterState.NullInformation
+                    }
+                } else {
+                    var photoUrl: String? = null
+                    if (photo != null) { // 사원증을 통한 인증일 경우
+                        photoUrl = uploadImage(photo, uuid!!)
+                        if (photoUrl == null) { // null 이면 내부에서 emitException 함
+                            reduce {
+                                RegisterState.None
+                            }
+                            return@collect
+                        }
+                    }
+                    val user = UserRegister(
+                        uuid = uuid!!,
+                        birthday = year!!,
+                        gender = Gender.values().first { it.string == gender!! }.code,
+                        job = job!!,
+                        officeEmail = officeEmail!!,
+                        idCardImageUrl = photoUrl
+                    )
+                    userRegisterUseCase(user)
+                        .onSuccess {
+                            reduce {
+                                RegisterState.Success
+                            }
+                            postSideEffect(RegisterSideEffect.StartMainActivity)
+                        }
+                        .onFailure { exception ->
+                            emitException(exception)
+                            reduce {
+                                RegisterState.None
+                            }
+                        }
                 }
-                return@intent
             }
+            cancel("user login data collect and register execute must be once.")
         }
-        userRegisterUseCase(user.copy(idCardImageUrl = photoUrl))
-            .onSuccess {
-                reduce {
-                    RegisterState.Success
-                }
-                postSideEffect(RegisterSideEffect.StartMainActivity)
-            }
-            .onFailure { exception ->
-                emitException(exception)
-                reduce {
-                    RegisterState.None
-                }
-            }
     }
 }

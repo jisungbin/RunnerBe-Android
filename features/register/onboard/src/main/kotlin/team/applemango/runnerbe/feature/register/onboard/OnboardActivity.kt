@@ -188,14 +188,22 @@ class OnboardActivity : ComponentActivity() {
     }
 
     private fun handleRegisterState(state: RegisterState) {
-        when (state) {
-            RegisterState.None -> {}
+        val message = when (state) {
+            RegisterState.None -> {
+                StringAsset.Empty
+            }
+            RegisterState.NullInformation -> {
+                StringAsset.Toast.RegisterNullInformation
+            }
             RegisterState.Success -> {
-                toast(StringAsset.Toast.RegisterSuccess)
+                StringAsset.Toast.RegisterSuccess
             }
             RegisterState.Request -> {
-                toast(StringAsset.Toast.RegisterRequest)
+                StringAsset.Toast.RegisterRequest
             }
+        }
+        if (message.isNotEmpty()) {
+            toast(message)
         }
     }
 

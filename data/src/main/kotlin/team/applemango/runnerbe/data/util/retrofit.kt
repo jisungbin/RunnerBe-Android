@@ -28,15 +28,18 @@ internal fun getInterceptor(vararg interceptors: Interceptor): OkHttpClient {
 
 internal val JacksonConverter = JacksonConverterFactory.create(mapper)
 
-internal fun provideHttpLoggingInterceptor() =
-    HttpLoggingInterceptor { message -> logeukes("OkHttp") { message } }.apply {
-        level = HttpLoggingInterceptor.Level.BODY
+internal fun getHttpLoggingInterceptor() = HttpLoggingInterceptor { message ->
+    if (message.isNotEmpty()) {
+        logeukes("OkHttp") { message }
     }
+}.apply {
+    level = HttpLoggingInterceptor.Level.BODY
+}
 
 private val baseApi = Retrofit.Builder()
     .baseUrl(HOST)
     .addConverterFactory(JacksonConverter)
-    .client(getInterceptor(provideHttpLoggingInterceptor()))
+    .client(getInterceptor(getHttpLoggingInterceptor()))
     .build()
 
 internal val loginApi = baseApi.create(LoginService::class.java)

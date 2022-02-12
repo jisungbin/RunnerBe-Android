@@ -87,14 +87,6 @@ internal fun OnboardRouter(
     var stepIndex by remember { mutableStateOf(0) }
     var stepIndexString by remember { mutableStateOf("") }
     var photo by remember { mutableStateOf<Bitmap?>(null) }
-    var userUuid by remember { mutableStateOf<String?>(null) }
-
-    context.dataStore.data.collectWithLifecycleRememberOnLaunchedEffect { preferences ->
-        preferences[DataStoreKey.Login.Uuid]!!.let { uuid -> // non null
-            userUuid = uuid
-        }
-        cancel("user uuid load execute must be once.")
-    }
 
     stepIndex = when (navController.currentBackStackEntryAsState().value?.destination?.route) {
         Step.Terms.name -> 0
@@ -124,12 +116,6 @@ internal fun OnboardRouter(
                 delay(2000)
                 scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
             }
-        }
-    }
-
-    fun uploadEmployeeIdPhoto() {
-        coroutineScope.launch {
-            vm.uploadImage(photo!!, userUuid!!)
         }
     }
 
@@ -264,7 +250,9 @@ internal fun OnboardRouter(
                     step = Step.VerifyWithEmployeeId,
                     bottomCTAButtonEnabled = photo != null,
                     onBottomCTAButtonAction = { // 인증하기
-                        uploadEmployeeIdPhoto()
+                        coroutineScope.launch {
+                            vm.register(photo)
+                        }
                     }
                 ) {
                     EmployeeIdVerify(photo = photo, onPhotoChanged = { newPhoto ->

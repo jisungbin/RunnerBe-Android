@@ -71,6 +71,7 @@ internal object StringAsset {
     }
 
     object Toast {
+        const val RegisterNullInformation = "회원가입에 필요한 정보중 일부가 유실되었어요.\n회원가입을 다시 해주세요."
         const val RegisterRequest = "회원가입을 처리중이에요."
         const val RegisterSuccess = "회원가입이 완료됐어요! \uD83E\uDD73" // 🥳
         const val VerifyEmailFailure = "이메일 인증에 실패했어요."

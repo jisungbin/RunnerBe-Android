@@ -20,11 +20,11 @@ object DataStoreKey {
     }
 
     object Onboard {
-        val TermsAllCheck = booleanPreferencesKey("onboard-terms_all_check")
-        val Year = intPreferencesKey("onboard-birthday")
-        val Gender = stringPreferencesKey("onboard-gender")
-        val Job = stringPreferencesKey("onboard-job")
-        val Email = stringPreferencesKey("onboard-email")
+        val TermsAllCheck = booleanPreferencesKey("onboard-terms_all_check") // 동의 여부 boolean
+        val Year = intPreferencesKey("onboard-birthday") // 입력한 년도
+        val Gender = stringPreferencesKey("onboard-gender") // Gender enum class string value
+        val Job = stringPreferencesKey("onboard-job") // Job enum class name
+        val Email = stringPreferencesKey("onboard-email") // 입력한 이메일
         val VerifyWithEmployeeId = booleanPreferencesKey("onboard-verify_with_employee_id")
         val VerifyWithEmailDone = booleanPreferencesKey("onboard-verify_with_email_done")
         val VerifyWithEmployeeIdRequestDone =
