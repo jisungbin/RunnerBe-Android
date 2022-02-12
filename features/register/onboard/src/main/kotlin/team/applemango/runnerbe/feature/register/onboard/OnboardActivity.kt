@@ -191,7 +191,6 @@ class OnboardActivity : ComponentActivity() {
     }
 
     private fun handleRegisterState(state: RegisterState) {
-        logeukes { state }
         val message = when (state) {
             RegisterState.None -> {
                 StringAsset.Empty

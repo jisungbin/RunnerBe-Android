@@ -127,20 +127,27 @@ internal class OnboardViewModel @Inject constructor(
     }
 
     // register entry point
-    fun registerUser(dataStore: DataStore<Preferences>, photo: Bitmap?, nextStep: Step) = intent {
-        reduce {
+    fun registerUser(
+        dataStore: DataStore<Preferences>,
+        photo: Bitmap?,
+        nextStep: Step,
+        isTestMode: Boolean = false,
+    ) = intent {
+        // 회원가입 응답이 평균 0.03초 안에 와서 로딩 삭제
+        /*reduce {
             RegisterState.Request
-        }
+        }*/
         coroutineScope {
             dataStore.data.cancellable().collect { preferences ->
-                logeukes { "dataStore data collect" }
-                val uuid = /*preferences[DataStoreKey.Login.Uuid]*/ Random.nextInt().toString()
+                val uuid = when (isTestMode) {
+                    true -> Random.nextInt().toString()
+                    else -> preferences[DataStoreKey.Login.Uuid]
+                }
                 val year = preferences[DataStoreKey.Onboard.Year]
                 val gender = preferences[DataStoreKey.Onboard.Gender]
                 val job = preferences[DataStoreKey.Onboard.Job]
                 // StateFlow 로 저장되는 값이라 TextField 의 초기값인 "" (공백) 이 들어갈 수 있음
                 val officeEmail = preferences[DataStoreKey.Onboard.Email]?.ifEmpty { null }
-                logeukes { listOf(uuid, year, gender, job, officeEmail) }
                 if (listOf(uuid, year, gender, job).contains(null)) {
                     reduce {
                         RegisterState.NullInformation
@@ -154,7 +161,6 @@ internal class OnboardViewModel @Inject constructor(
                             return@collect
                         }
                     }
-                    logeukes { photoUrl }
                     val user = UserRegister(
                         uuid = uuid!!,
                         birthday = year!!,
