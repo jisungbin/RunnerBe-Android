@@ -106,10 +106,11 @@ class OnboardActivity : ComponentActivity() {
                     )
                     vm.emailVerifyStateFlow.collectWithLifecycle(this@OnboardActivity) { verified ->
                         if (verified) {
-                            applicationContext.dataStore.edit { preferences ->
-                                preferences[DataStoreKey.Onboard.VerifyWithEmailDone] = true
-                            }
-                            // navController.navigate(Step.VerifyWithEmailDone.name)
+                            vm.register(
+                                dataStore = applicationContext.dataStore,
+                                photo = null,
+                                nextStep = Step.VerifyWithEmailDone
+                            )
                         }
                     }
                     applicationContext.dataStore.data.collectWithLifecycle(this@OnboardActivity) { preferences ->
@@ -212,13 +213,13 @@ class OnboardActivity : ComponentActivity() {
         sideEffect: RegisterSideEffect,
     ) {
         when (sideEffect) {
-            is RegisterSideEffect.NavigateToNextStep -> {
-                navController.navigate(sideEffect.nextStep.name)
-            }
             RegisterSideEffect.ResetStep -> {
                 applicationContext.dataStore.edit { preferences ->
                     preferences.clear() // clear all preferences
                 }
+            }
+            is RegisterSideEffect.NavigateToNextStep -> {
+                navController.navigate(sideEffect.nextStep.name)
             }
         }
     }

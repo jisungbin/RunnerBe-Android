@@ -249,7 +249,11 @@ internal fun OnboardRouter(
                     bottomCTAButtonEnabled = photo != null,
                     onBottomCTAButtonAction = { // 인증하기
                         coroutineScope.launch {
-                            vm.register(context.dataStore, photo)
+                            vm.register(
+                                dataStore = context.dataStore,
+                                photo = photo,
+                                nextStep = Step.VerifyWithEmployeeIdRequestDone
+                            )
                         }
                     }
                 ) {
@@ -269,7 +273,7 @@ internal fun OnboardRouter(
                 }
                 OnboardContent(
                     step = Step.VerifyWithEmailDone,
-                    bottomCTAButtonEnabled = true, // TODO: 가입 성공했을 때만 버튼 할성
+                    bottomCTAButtonEnabled = true,
                     onBottomCTAButtonAction = { // 메인 화면으로
                         activity.changeActivityWithAnimation<MainActivity>()
                     }
