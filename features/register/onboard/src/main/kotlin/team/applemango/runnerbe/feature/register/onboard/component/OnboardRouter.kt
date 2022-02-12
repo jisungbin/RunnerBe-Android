@@ -47,7 +47,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.skydoves.landscapist.rememberDrawablePainter
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.home.board.MainActivity
@@ -60,7 +59,6 @@ import team.applemango.runnerbe.feature.register.onboard.step.GenderPicker
 import team.applemango.runnerbe.feature.register.onboard.step.JobPicker
 import team.applemango.runnerbe.feature.register.onboard.step.TermsTable
 import team.applemango.runnerbe.feature.register.onboard.step.YearPicker
-import team.applemango.runnerbe.shared.compose.extension.collectWithLifecycleRememberOnLaunchedEffect
 import team.applemango.runnerbe.shared.compose.extension.presentationDrawableOf
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
@@ -251,7 +249,7 @@ internal fun OnboardRouter(
                     bottomCTAButtonEnabled = photo != null,
                     onBottomCTAButtonAction = { // 인증하기
                         coroutineScope.launch {
-                            vm.register(photo)
+                            vm.register(context.dataStore, photo)
                         }
                     }
                 ) {
