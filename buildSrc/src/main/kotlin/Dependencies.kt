@@ -10,7 +10,7 @@
 object Versions {
     const val Orbit = "4.3.2"
     const val Dagger = "2.40.5"
-    const val FirebaseBom = "29.0.4"
+    const val FirebaseBom = "29.1.0"
 
     object Essential {
         const val Gradle = "7.1.1"
