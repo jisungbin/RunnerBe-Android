@@ -6,9 +6,11 @@ local.properties
 /fastlane/Fastfile
 /fastlane/service-key.json
 /data/build
-/theme/build
 /domain/build
 /shared/build
+/shared-compose/build
+/xml/numberpicker/build
+/xml/photoeditor/build
 /buildSrc/build
 /presentation/build
 /presentation/release
@@ -18,7 +20,7 @@ local.properties
 /features/home/board/build
 /features/home/notification/build
 /features/register/snslogin/build
-/features/register/information/build
+/features/register/onboard/build
 /presentation/google-services.json
 /data/src/main/kotlin/team/applemango/runnerbe/data/secret/
-/buildSrc/src/main/kotlin/SecretConstant.kt
+/buildSrc/src/main/kotlin/BuildConstants.kt

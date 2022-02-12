@@ -3,7 +3,7 @@
 </p>
 <p align="center">직장인 타겟 러닝 모임 O2O 플랫폼 🐝</p>
 <p align="center">
-  <a href="https://github.com/jisungbin/RunnerBe/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/badge/License-MIT-blue"/></a>
+  <a href="https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/badge/License-MIT-blue"/></a>
   <a href="https://developer.android.com/about/versions/lollipop"><img alt="API 21+" src="https://img.shields.io/badge/API-21%2B-brightgreen.svg"/></a>
   <a href="https://github.com/applemango-runnerbe/RunnerBe-Android/actions/workflows/android-ci.yml"> <img alt="CI" src="https://github.com/applemango-runnerbe/RunnerBe-Android/actions/workflows/android-ci.yml/badge.svg?branch=develop"/></a>
   <a href="https://www.codefactor.io/repository/github/applemango-runnerbe/runnerbe-android/overview"><img src="https://www.codefactor.io/repository/github/applemango-runnerbe/runnerbe-android/badge" alt="CodeFactor" /></a>
@@ -21,28 +21,22 @@
 
 #### Architecture
 
-- Layered Architecture (Presentation/Domain/Data)
-- MVI Pattern (use framework: [orbit](https://github.com/orbit-mvi/orbit-mvi))
-- Dynamic Feature Module (:features:register)
 - TDD
+- MVW Pattern
+- Layered Architecture
+- Dynamic Feature Module (:features:register)
 
 #### CI/CD
 
-- Github Action
+- Github Actions (unit test)
 - Fastlane + Firebase App Distribution
 
 #### Jetpack
 
 - Hilt
-- Paging
-- WorkManager
-- CameraX
+- Compose
 - DataStore
-
-#### Design System
-
-- ~~[Honeycomb-core](https://github.com/applemango-runnerbe/honeycomb)~~
-- Jetpack Compose
+- Navigation
 
 #### Test
 
@@ -53,9 +47,9 @@
 #### Etc
 
 - GMS
-- Retrofit, OkHttp
-- Coroutine/Flow
 - WindowInsets
+- Coroutine/Flow
+- Retrofit, OkHttp
 
 ## Layer
 
@@ -75,6 +69,8 @@
 > TODO
 
 ## Developer
+
+> 2022년 2월 4일 개발 시작
 
 - **[PM]** [@jisungbin](https://github.com/jisungbin)
 

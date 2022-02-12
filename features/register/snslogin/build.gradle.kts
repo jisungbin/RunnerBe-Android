@@ -17,11 +17,11 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = Versions.Compose.Master
+        kotlinCompilerExtensionVersion = Versions.Compose.Main
     }
 }
 
 dependencies {
     implementationProject(ProjectConstants.Presentation)
-    installSharedComposeHiltTest(useDagger = true)
+    installSharedComposeOrbitHiltTest(useDagger = true)
 }

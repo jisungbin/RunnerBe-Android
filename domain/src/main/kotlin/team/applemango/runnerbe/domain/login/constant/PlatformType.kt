@@ -10,5 +10,5 @@
 package team.applemango.runnerbe.domain.login.constant
 
 enum class PlatformType {
-    Kakao, Naver, Apple, RunnerBe
+    Kakao, Naver, Apple, /*RunnerBe*/
 }

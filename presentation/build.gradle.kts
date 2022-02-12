@@ -19,10 +19,10 @@ plugins {
 android {
     signingConfigs {
         create("release") {
-            storeFile = file(SecretConstant.StoreFilePath)
-            storePassword = SecretConstant.StorePassword
-            keyAlias = SecretConstant.KeyAlias
-            keyPassword = SecretConstant.KeyPassword
+            storeFile = file(BuildConstants.StoreFilePath)
+            storePassword = BuildConstants.StorePassword
+            keyAlias = BuildConstants.KeyAlias
+            keyPassword = BuildConstants.KeyPassword
         }
     }
 
@@ -43,7 +43,7 @@ android {
 
     dynamicFeatures += setOf(
         ProjectConstants.RegisterSnsLogin,
-        ProjectConstants.RegisterInformation
+        ProjectConstants.RegisterOnboard
     )
 }
 
@@ -54,16 +54,18 @@ dependencies {
         ProjectConstants.MyPage,
         ProjectConstants.HomeBoard
     )
-
     features.forEach(::implementationProject)
-    implementation(Dependencies.Util.Erratum)
-    implementation(Dependencies.Firebase.Analytics)
-    implementation(platform(Dependencies.Firebase.Bom))
 
+    // :features:register:onboard 에서 필요하기 때문에 api 로 설정
+    // DFM 에서 바로 implementation 해주면 exception 발생
+    api(platform(Dependencies.FirebaseBom))
+    Dependencies.Firebase.forEach(::api)
+
+    implementation(Dependencies.Util.Erratum)
     Dependencies.Ui.forEach(::implementation)
     Dependencies.Login.All.forEach(::implementation)
     Dependencies.PresentationOnlyKtx.forEach(::implementation)
 
     Dependencies.Debug.forEach(::debugImplementation)
-    installSharedComposeHiltTest(excludeCompose = true)
+    installSharedComposeOrbitHiltTest(excludeCompose = true)
 }

@@ -1,4 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ RunnerBe © 2022 Team AppleMango. all rights reserved.
+  ~ RunnerBe license is under the MIT.
+  ~
+  ~ [strings.xml] created by Ji Sungbin on 22. 2. 8. 오후 5:09
+  ~
+  ~ Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
+  -->
+
 <resources>
+    <string name="app_name">러너비</string>
     <string name="dist_dfm_register_snslogin">SNS 로그인</string>
-    <string name="dist_dfm_register_information">추가 정보 입력</string>
+    <string name="dist_dfm_register_onboard">추가 정보 입력</string>
 </resources>

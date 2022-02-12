@@ -33,7 +33,7 @@ fun PluginDependenciesSpec.installLibraryDfmHiltTestScabbard(
 }
 
 // dependencies
-fun DependencyHandler.installSharedComposeHiltTest(
+fun DependencyHandler.installSharedComposeOrbitHiltTest(
     isSharedModule: Boolean = false,
     useDagger: Boolean = false,
     excludeCompose: Boolean = false,
@@ -42,7 +42,7 @@ fun DependencyHandler.installSharedComposeHiltTest(
         implementationProject(ProjectConstants.Shared)
     }
     if (!excludeCompose) {
-        implementationProject(ProjectConstants.Theme)
+        implementationProject(ProjectConstants.SharedCompose)
         Dependencies.Compose.forEach(::implementation)
     }
     implementation(Dependencies.Orbit)
