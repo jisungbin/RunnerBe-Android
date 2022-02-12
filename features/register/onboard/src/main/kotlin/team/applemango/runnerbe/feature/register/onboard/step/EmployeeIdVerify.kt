@@ -62,6 +62,12 @@ import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.util.extension.toast
 
+private val PhotoContainerModifier = Modifier
+    .fillMaxWidth()
+    .height(180.dp)
+    .clip(RoundedCornerShape(8.dp))
+    .background(color = ColorAsset.G6)
+
 @Composable
 internal fun EmployeeIdVerify(photo: Bitmap?, onPhotoChanged: (photo: Bitmap?) -> Unit) {
     val context = LocalContext.current
@@ -120,8 +126,6 @@ internal fun EmployeeIdVerify(photo: Bitmap?, onPhotoChanged: (photo: Bitmap?) -
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .clip(RoundedCornerShape(8.dp))
-            .background(color = ColorAsset.G6)
     ) {
         Crossfade(photo != null) { photoIsReady ->
             when (photoIsReady) {
@@ -185,9 +189,7 @@ private fun PhotoTakenTypeDialog(
 @Composable
 private fun PhotoScreen(photo: Bitmap, onPhotoChanged: (photo: Bitmap?) -> Unit) {
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .height(180.dp),
+        modifier = PhotoContainerModifier,
         contentAlignment = Alignment.TopEnd
     ) {
         CoilImage(
@@ -220,9 +222,7 @@ private fun PhotoPickScreen(photoPickFabClickAction: () -> Unit) {
             .wrapContentHeight()
     ) {
         Box( // 위에서 contentAlignment 로 그냥 하게 되면, FAB 이 Center Alignment 적용 되면서 순간이동함
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(180.dp),
+            modifier = PhotoContainerModifier,
             contentAlignment = Alignment.Center
         ) {
             FloatingActionButton(
