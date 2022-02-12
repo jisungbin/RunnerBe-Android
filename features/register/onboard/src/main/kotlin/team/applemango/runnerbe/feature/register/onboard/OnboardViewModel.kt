@@ -35,6 +35,7 @@ import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import team.applemango.runnerbe.domain.login.model.UserRegister
+import team.applemango.runnerbe.domain.login.model.result.UserRegisterResult
 import team.applemango.runnerbe.domain.login.usecase.CheckUsableEmailUseCase
 import team.applemango.runnerbe.domain.login.usecase.UserRegisterUseCase
 import team.applemango.runnerbe.feature.register.onboard.constant.ApplicationMinSdkLevel
@@ -156,6 +157,7 @@ internal class OnboardViewModel @Inject constructor(
                 val gender = preferences[DataStoreKey.Onboard.Gender]
                 val job = preferences[DataStoreKey.Onboard.Job]
                 val officeEmail = preferences[DataStoreKey.Onboard.Email]
+                logeukes { listOf(uuid, year, gender, job, officeEmail) }
                 if (listOf(uuid, year, gender, job, officeEmail).contains(null)) {
                     reduce {
                         RegisterState.NullInformation
@@ -167,7 +169,7 @@ internal class OnboardViewModel @Inject constructor(
                         photoUrl = uploadImage(photo, uuid!!)
                         if (photoUrl == null) { // null 이면 내부에서 emitException 함
                             reduce {
-                                RegisterState.None
+                                RegisterState.None // uploadImage 내부에서 emitException 해주고 있음
                             }
                             return@collect
                         }
@@ -177,15 +179,45 @@ internal class OnboardViewModel @Inject constructor(
                         birthday = year!!,
                         gender = Gender.values().first { it.string == gender!! }.code,
                         job = job!!,
-                        officeEmail = officeEmail!!,
-                        idCardImageUrl = photoUrl
+                        officeEmail = officeEmail, // nullable
+                        idCardImageUrl = photoUrl // nullable
                     )
                     userRegisterUseCase(user)
-                        .onSuccess {
-                            reduce {
-                                RegisterState.Success
+                        .onSuccess { result ->
+                            when (result) {
+                                UserRegisterResult.Success -> {
+                                    reduce {
+                                        RegisterState.Success
+                                    }
+                                    postSideEffect(RegisterSideEffect.NavigateToNextStep(nextStep))
+                                }
+                                UserRegisterResult.DuplicateUuid -> {
+                                    reduce {
+                                        RegisterState.DuplicateUuid
+                                    }
+                                }
+                                UserRegisterResult.DuplicateNickname -> {
+                                    reduce {
+                                        RegisterState.DuplicateNickname
+                                    }
+                                }
+                                UserRegisterResult.DuplicateEmail -> {
+                                    reduce {
+                                        RegisterState.DuplicateEmail
+                                    }
+                                }
+                                UserRegisterResult.DatabaseError -> {
+                                    reduce {
+                                        RegisterState.DatabaseError
+                                    }
+                                }
+                                is UserRegisterResult.Exception -> {
+                                    emitException(Exception("Server request fail: ${result.code}"))
+                                    reduce {
+                                        RegisterState.None
+                                    }
+                                }
                             }
-                            postSideEffect(RegisterSideEffect.NavigateToNextStep(nextStep))
                         }
                         .onFailure { exception ->
                             emitException(exception)

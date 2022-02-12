@@ -25,13 +25,13 @@ internal fun LoginRequestResponse.toDomain(): UserToken {
 internal fun CheckDuplicateEmailResponse.toBoolean() = requireField(isSuccess, "isSuccess")
 
 internal fun UserRegisterResponse.toResultDomain(): UserRegisterResult {
-    return when (requireField(code, "code")) {
+    return when (val code = requireField(code, "code")) {
         1000 -> UserRegisterResult.Success
         3001 -> UserRegisterResult.DuplicateUuid
         3002 -> UserRegisterResult.DuplicateEmail
         3004 -> UserRegisterResult.DuplicateNickname
         4000 -> UserRegisterResult.DatabaseError
-        else -> UserRegisterResult.Exception
+        else -> UserRegisterResult.Exception(code)
     }
 }
 
