@@ -98,11 +98,9 @@ internal fun OnboardContent(
             }
         }
     )
-    val bottomCTAButtonBackgroundColor = remember(step) {
-        when (step) {
-            Step.VerifyWithEmail -> Color.Transparent
-            else -> animatedBottomCTAButtonBackgroundColor
-        }
+    val bottomCTAButtonBackgroundColor = when (step) {
+        Step.VerifyWithEmail -> Color.Transparent
+        else -> animatedBottomCTAButtonBackgroundColor
     }
 
     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
