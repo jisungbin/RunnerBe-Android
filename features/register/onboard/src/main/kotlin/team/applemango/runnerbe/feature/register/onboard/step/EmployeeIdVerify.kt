@@ -51,10 +51,10 @@ import com.skydoves.landscapist.coil.CoilImage
 import com.skydoves.landscapist.rememberDrawablePainter
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.shared.compose.component.CustomAlertDialog
-import team.applemango.runnerbe.shared.compose.theme.ColorAsset
-import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.compose.extension.noRippleClickable
 import team.applemango.runnerbe.shared.compose.extension.presentationDrawableOf
+import team.applemango.runnerbe.shared.compose.theme.ColorAsset
+import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.util.extension.toast
 
 @Composable
@@ -182,7 +182,7 @@ private fun PhotoTakenTypeDialog(
             ) {
                 Text(
                     modifier = Modifier.padding(24.dp),
-                    text = StringAsset.Dialog.EmailVerifyNotice,
+                    text = StringAsset.Dialog.EmailVerifyTimeNotice,
                     style = Typography.Body14R.copy(color = ColorAsset.G1)
                 )
                 Divider(modifier = Modifier.fillMaxWidth(), color = ColorAsset.G4_5)
@@ -209,10 +209,10 @@ private fun PhotoTakenTypeDialog(
     }
 }
 
-@Suppress("DEPRECATION")
+@Suppress("DEPRECATION", "NewApi")
 private fun Uri?.parseBitmap(context: Context): Bitmap? {
     return if (this != null) {
-        val bitmap = when (Build.VERSION.SDK_INT >= 28) {
+        val bitmap = when (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) { // 28
             true -> {
                 val source = ImageDecoder.createSource(context.contentResolver, this)
                 ImageDecoder.decodeBitmap(source)

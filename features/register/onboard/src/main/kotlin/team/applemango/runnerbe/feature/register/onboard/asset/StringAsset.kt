@@ -66,7 +66,8 @@ internal object StringAsset {
     }
 
     object Dialog {
-        const val EmailVerifyNotice = "인증 확인까지 최대 6시간 정도가\n소요될 수 있어요!"
+        const val EmailVerifyLinkNotice = "메일 인증은 현재 접속하신\n기기 내에서만 가능합니다!"
+        const val EmailVerifyTimeNotice = "인증 확인까지 최대 6시간 정도가\n소요될 수 있어요!"
         const val FromCamera = "촬영하기"
         const val FromAlbum = "앨범에서 선택하기"
     }

@@ -18,10 +18,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -57,7 +55,6 @@ import team.applemango.runnerbe.feature.register.onboard.constant.EmailVerifySta
 import team.applemango.runnerbe.shared.compose.component.CustomAlertDialog
 import team.applemango.runnerbe.shared.compose.extension.collectAsStateWithLifecycleRemember
 import team.applemango.runnerbe.shared.compose.extension.collectWithLifecycleRememberOnLaunchedEffect
-import team.applemango.runnerbe.shared.compose.extension.noRippleClickable
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.constant.DataStoreKey
@@ -78,7 +75,7 @@ internal fun EmailVerify(vm: OnboardViewModel) {
     var emailSendButtonEnabled by remember { mutableStateOf(false) }
     var emailVerifyNoticeDialogVisible by remember { mutableStateOf(true) }
 
-    EmailVerifyNoticeDialog(
+    EmailVerifyLinkNoticeDialog(
         visible = emailVerifyNoticeDialogVisible,
         onDismissRequest = {
             emailVerifyNoticeDialogVisible = false
@@ -245,7 +242,7 @@ internal fun EmailVerify(vm: OnboardViewModel) {
 }
 
 @Composable
-private fun EmailVerifyNoticeDialog(
+private fun EmailVerifyLinkNoticeDialog(
     visible: Boolean,
     onDismissRequest: () -> Unit,
 ) {
@@ -259,21 +256,20 @@ private fun EmailVerifyNoticeDialog(
                     .wrapContentHeight()
                     .clip(RoundedCornerShape(12.dp))
                     .background(color = ColorAsset.G5)
-                    .padding(24.dp)
             ) {
                 Text(
-                    text = StringAsset.Dialog.EmailVerifyNotice,
+                    modifier = Modifier.padding(24.dp),
+                    text = StringAsset.Dialog.EmailVerifyLinkNotice,
                     style = Typography.Title18R.copy(color = ColorAsset.G1)
                 )
-                Spacer(modifier = Modifier.height(12.dp))
                 Text(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.End)
                         .padding(12.dp)
-                        .noRippleClickable {
+                        .align(Alignment.End)
+                        .clickable {
                             onDismissRequest()
-                        },
+                        }
+                        .padding(12.dp),
                     text = StringAsset.OK,
                     style = Typography.Body14M.copy(color = ColorAsset.Primary)
                 )
