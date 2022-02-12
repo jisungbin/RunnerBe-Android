@@ -23,6 +23,7 @@ import androidx.activity.result.launch
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,6 +31,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.FloatingActionButton
@@ -52,6 +55,7 @@ import com.skydoves.landscapist.rememberDrawablePainter
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.shared.compose.component.CustomAlertDialog
 import team.applemango.runnerbe.shared.compose.extension.noRippleClickable
+import team.applemango.runnerbe.shared.compose.extension.parseHtml
 import team.applemango.runnerbe.shared.compose.extension.presentationDrawableOf
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
@@ -121,44 +125,9 @@ internal fun EmployeeIdVerify(photo: Bitmap?, onPhotoChanged: (photo: Bitmap?) -
         Crossfade(photo != null) { photoIsReady ->
             when (photoIsReady) {
                 true -> {
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopEnd) {
-                        CoilImage(
-                            imageModel = photo,
-                            modifier = Modifier.fillMaxSize(),
-                            contentScale = ContentScale.Fit
-                        )
-                        Image(
-                            modifier = Modifier
-                                .noRippleClickable { onPhotoChanged(null) }
-                                .padding(16.dp),
-                            painter = rememberDrawablePainter(presentationDrawableOf("ic_round_close_24")),
-                            contentDescription = null,
-                            colorFilter = ColorFilter.tint(color = ColorAsset.G4_5)
-                        )
-                    }
+                    PhotoScreen(photo = photo!!, onPhotoChanged = onPhotoChanged)
                 }
                 else -> {
-                    Box( // 위에서 contentAlignment 로 그냥 하게 되면, FAB 이 Center Alignment 적용 되면서 순간이동함
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        FloatingActionButton(
-                            onClick = { photoTakenTypeDialogVisible = true },
-                            elevation = FloatingActionButtonDefaults.elevation(
-                                defaultElevation = 3.dp,
-                                pressedElevation = 6.dp,
-                                hoveredElevation = 6.dp,
-                                focusedElevation = 6.dp
-                            ),
-                            backgroundColor = ColorAsset.G5
-                        ) {
-                            Image(
-                                painter = rememberDrawablePainter(presentationDrawableOf("ic_round_add_24")),
-                                contentDescription = null,
-                                colorFilter = ColorFilter.tint(color = ColorAsset.G2)
-                            )
-                        }
-                    }
                 }
             }
         }
@@ -203,6 +172,69 @@ private fun PhotoTakenTypeDialog(
                         .padding(top = 16.dp, bottom = 20.dp),
                     text = StringAsset.Dialog.FromAlbum,
                     style = Typography.Body16R.copy(color = ColorAsset.Primary)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun PhotoScreen(photo: Bitmap, onPhotoChanged: (photo: Bitmap?) -> Unit) {
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopEnd) {
+        CoilImage(
+            imageModel = photo,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Fit
+        )
+        Image(
+            modifier = Modifier
+                .noRippleClickable { onPhotoChanged(null) }
+                .padding(16.dp),
+            painter = rememberDrawablePainter(presentationDrawableOf("ic_round_close_24")),
+            contentDescription = null,
+            colorFilter = ColorFilter.tint(color = ColorAsset.G4_5)
+        )
+    }
+}
+
+@Composable
+private fun PhotoPickScreen(photoPickFabClickAction: () -> Unit) {
+    val noticeTexts = listOf(
+        StringAsset.Hint.RequireFieldJob,
+        StringAsset.Hint.RequireFieldInformation,
+        StringAsset.Hint.RequireFieldProtect
+    )
+
+    Column(modifier = Modifier.fillMaxSize()) {
+        Box( // 위에서 contentAlignment 로 그냥 하게 되면, FAB 이 Center Alignment 적용 되면서 순간이동함
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            FloatingActionButton(
+                onClick = { photoPickFabClickAction() },
+                elevation = FloatingActionButtonDefaults.elevation(
+                    defaultElevation = 3.dp,
+                    pressedElevation = 6.dp,
+                    hoveredElevation = 6.dp,
+                    focusedElevation = 6.dp
+                ),
+                backgroundColor = ColorAsset.G5
+            ) {
+                Image(
+                    painter = rememberDrawablePainter(presentationDrawableOf("ic_round_add_24")),
+                    contentDescription = null,
+                    colorFilter = ColorFilter.tint(color = ColorAsset.G2)
+                )
+            }
+        }
+        LazyColumn(
+            modifier = Modifier.padding(20.dp),
+            verticalArrangement = Arrangement.spacedBy(2.dp)
+        ) {
+            items(noticeTexts) { notice ->
+                Text(
+                    text = notice.parseHtml(),
+                    style = Typography.Body14R.copy(color = ColorAsset.G2_5)
                 )
             }
         }

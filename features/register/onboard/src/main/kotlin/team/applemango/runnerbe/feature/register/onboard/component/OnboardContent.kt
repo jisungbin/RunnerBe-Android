@@ -35,6 +35,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
+import team.applemango.runnerbe.shared.compose.extension.parseHtml
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.util.extension.runIf
@@ -121,7 +122,7 @@ internal fun OnboardContent(
             if (subtitle.isNotEmpty()) {
                 Text(
                     modifier = Modifier.padding(top = 12.dp),
-                    text = subtitle,
+                    text = subtitle.parseHtml(),
                     style = Typography.Body14R.copy(color = ColorAsset.G2_5)
                 )
             }

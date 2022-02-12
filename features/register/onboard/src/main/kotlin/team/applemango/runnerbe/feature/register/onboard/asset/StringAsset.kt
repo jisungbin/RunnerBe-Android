@@ -31,7 +31,7 @@ internal object StringAsset {
         const val VerifyWithEmployeeId = "해당 정보는 러너님이 직장인임을 확인하는 용도로만\n사용되며, 인증 후 안전하게 폐기됩니다."
         const val EmailVerifyDone = "이제 러너비에서 함께 달려볼까요?"
         const val EmployeeIdVerifyRequestDone =
-            "소요 시간은 최대 6시간 정도이며, 완료 시 알림을\n보내드립니다. 그 전까지는 둘러보기만 가능헤요."
+            "소요 시간은 <u>최대 6시간</u> 정도이며, 완료 시 알림을\n보내드립니다. 그 전까지는 둘러보기만 가능헤요."
     }
 
     object Button {
@@ -60,7 +60,7 @@ internal object StringAsset {
         """.trimIndent() // 🐝🐝 💨 이모지 때문에 너무 길어져서 """ 처리
         const val DuplicateEmail = "이미 사용 중인 이메일이에요!"
         const val ErrorUuid = "회원가입중에 오류가 발생했어요.\n초기 단계부터 다시 진행해 주세요."
-        const val RequireFieldJob = "👉   직장명, 직무/직위는 꼭 드러나야 해요!"
+        const val RequireFieldJob = "👉   <b><u>직장명, 직무/직위</u></b>는 꼭 드러나야 해요!"
         const val RequireFieldInformation = "👉   정보를 식별할 수 있어야 해요."
         const val RequireFieldProtect = "👉   개인정보 보호를 위해 다른 정보는 가려주세요."
     }
