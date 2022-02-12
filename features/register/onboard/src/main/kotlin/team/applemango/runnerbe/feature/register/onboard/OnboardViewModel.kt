@@ -156,7 +156,8 @@ internal class OnboardViewModel @Inject constructor(
                 val year = preferences[DataStoreKey.Onboard.Year]
                 val gender = preferences[DataStoreKey.Onboard.Gender]
                 val job = preferences[DataStoreKey.Onboard.Job]
-                val officeEmail = preferences[DataStoreKey.Onboard.Email]
+                // StateFlow 로 저장되는 값이라 TextField 의 초기값인 "" 이 들어갈 수 있음
+                val officeEmail = preferences[DataStoreKey.Onboard.Email]?.ifEmpty { null }
                 logeukes { listOf(uuid, year, gender, job, officeEmail) }
                 if (listOf(uuid, year, gender, job, officeEmail).contains(null)) {
                     reduce {

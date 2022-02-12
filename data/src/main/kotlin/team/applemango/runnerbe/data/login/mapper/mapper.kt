@@ -15,27 +15,25 @@ import team.applemango.runnerbe.data.login.model.UserRegisterResponse
 import team.applemango.runnerbe.domain.login.model.UserToken
 import team.applemango.runnerbe.domain.login.model.result.UserRegisterResult
 
+private fun requireFieldExceptionMessage(fieldName: String) = "Require field $fieldName is null."
+
 internal fun LoginRequestResponse.toDomain(): UserToken {
     return when (code!!) { // must 1001..1002, NonNull result
-        1001 -> UserToken(jwt = requireField(loginResult!!.jwt, "jwt")) // 회원
-        else -> UserToken(uuid = requireField(loginResult!!.uuid, "uuid")) // 비회원
+        1001 -> UserToken(jwt = requireNotNull(loginResult!!.jwt) { requireFieldExceptionMessage("jwt") }) // 회원
+        else -> UserToken(uuid = requireNotNull(loginResult!!.uuid) { requireFieldExceptionMessage("uuid") }) // 비회원
     }
 }
 
-internal fun CheckDuplicateEmailResponse.toBoolean() = requireField(isSuccess, "isSuccess")
+internal fun CheckDuplicateEmailResponse.toBoolean() =
+    requireNotNull(isSuccess) { requireFieldExceptionMessage("isSuccess") }
 
 internal fun UserRegisterResponse.toResultDomain(): UserRegisterResult {
-    return when (val code = requireField(code, "code")) {
-        1000 -> UserRegisterResult.Success
+    return when (val code = requireNotNull(code) { requireFieldExceptionMessage("code") }) {
+        1000 -> UserRegisterResult.Success(requireNotNull(jwt) { requireFieldExceptionMessage("jwt") })
         3001 -> UserRegisterResult.DuplicateUuid
         3002 -> UserRegisterResult.DuplicateEmail
         3004 -> UserRegisterResult.DuplicateNickname
         4000 -> UserRegisterResult.DatabaseError
         else -> UserRegisterResult.Exception(code)
     }
-}
-
-private fun <T> requireField(value: T?, fieldName: String): T {
-    if (value == null) throw NullPointerException("Require `$fieldName` field is null.")
-    return value
 }

@@ -18,7 +18,7 @@ package team.applemango.runnerbe.domain.login.model.result
  * @property Exception 프론트엔드 데이터 처리 에러 (2001 ~ 2009, 3003)
  */
 sealed class UserRegisterResult {
-    object Success : UserRegisterResult()
+    data class Success(val jwt: String) : UserRegisterResult()
     object DuplicateUuid : UserRegisterResult()
     object DuplicateEmail : UserRegisterResult()
     object DuplicateNickname : UserRegisterResult()

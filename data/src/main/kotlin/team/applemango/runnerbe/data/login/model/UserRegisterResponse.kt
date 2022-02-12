@@ -20,4 +20,7 @@ data class UserRegisterResponse(
 
     @field:JsonProperty("isSuccess")
     val isSuccess: Boolean? = null,
+
+    @field:JsonProperty("result")
+    val jwt: String? = null,
 )

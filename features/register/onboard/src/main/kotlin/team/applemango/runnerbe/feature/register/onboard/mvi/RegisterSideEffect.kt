@@ -12,6 +12,7 @@ package team.applemango.runnerbe.feature.register.onboard.mvi
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 
 internal sealed class RegisterSideEffect {
+    data class SaveUserJwt(val jwt: String) : RegisterSideEffect()
     data class NavigateToNextStep(val nextStep: Step) : RegisterSideEffect()
     object ResetStep : RegisterSideEffect()
 }
