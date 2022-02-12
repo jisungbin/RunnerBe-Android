@@ -30,6 +30,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -118,7 +119,7 @@ internal fun EmployeeIdVerify(photo: Bitmap?, onPhotoChanged: (photo: Bitmap?) -
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(180.dp)
+            .wrapContentHeight()
             .clip(RoundedCornerShape(8.dp))
             .background(color = ColorAsset.G6)
     ) {
@@ -128,6 +129,9 @@ internal fun EmployeeIdVerify(photo: Bitmap?, onPhotoChanged: (photo: Bitmap?) -
                     PhotoScreen(photo = photo!!, onPhotoChanged = onPhotoChanged)
                 }
                 else -> {
+                    PhotoPickScreen(photoPickFabClickAction = {
+                        photoTakenTypeDialogVisible = true
+                    })
                 }
             }
         }
@@ -180,7 +184,12 @@ private fun PhotoTakenTypeDialog(
 
 @Composable
 private fun PhotoScreen(photo: Bitmap, onPhotoChanged: (photo: Bitmap?) -> Unit) {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopEnd) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .height(180.dp),
+        contentAlignment = Alignment.TopEnd
+    ) {
         CoilImage(
             imageModel = photo,
             modifier = Modifier.fillMaxSize(),
@@ -205,9 +214,15 @@ private fun PhotoPickScreen(photoPickFabClickAction: () -> Unit) {
         StringAsset.Hint.RequireFieldProtect
     )
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+    ) {
         Box( // 위에서 contentAlignment 로 그냥 하게 되면, FAB 이 Center Alignment 적용 되면서 순간이동함
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(180.dp),
             contentAlignment = Alignment.Center
         ) {
             FloatingActionButton(
@@ -228,7 +243,7 @@ private fun PhotoPickScreen(photoPickFabClickAction: () -> Unit) {
             }
         }
         LazyColumn(
-            modifier = Modifier.padding(20.dp),
+            modifier = Modifier.padding(top = 20.dp),
             verticalArrangement = Arrangement.spacedBy(2.dp)
         ) {
             items(noticeTexts) { notice ->
