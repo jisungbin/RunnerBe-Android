@@ -33,7 +33,7 @@ fun PluginDependenciesSpec.installLibraryDfmHiltTestScabbard(
 }
 
 // dependencies
-fun DependencyHandler.installSharedComposeHiltTest(
+fun DependencyHandler.installSharedComposeOrbitHiltTest(
     isSharedModule: Boolean = false,
     useDagger: Boolean = false,
     excludeCompose: Boolean = false,

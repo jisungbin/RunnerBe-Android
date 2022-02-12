@@ -9,16 +9,18 @@
 
 package team.applemango.runnerbe.domain.login.repository
 
-import team.applemango.runnerbe.domain.login.model.User
+import team.applemango.runnerbe.domain.login.model.UserRegister
+import team.applemango.runnerbe.domain.login.model.result.UserRegisterResult
 
 interface RegisterRepository {
     /**
-     * @return 이메일 사용 가능 여부 (비중복 여부)
+     * @return 이메일 사용 가능 여부 (비중복 여부), 사용 가능: true / 사용 불가능: false
      */
     suspend fun checkUsableEmail(email: String): Boolean
 
     /**
      * 가입 요청 쿼리
+     * @return 가입 요청 응답 enum class
      */
-    suspend fun register(user: User) // TODO
+    suspend fun register(register: UserRegister): UserRegisterResult
 }

@@ -24,16 +24,25 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
+import org.orbitmvi.orbit.ContainerHost
+import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.reduce
+import org.orbitmvi.orbit.viewmodel.container
 import team.applemango.runnerbe.domain.login.usecase.CheckUsableEmailUseCase
 import team.applemango.runnerbe.feature.register.onboard.constant.ApplicationMinSdkLevel
 import team.applemango.runnerbe.feature.register.onboard.constant.EmailVerifyCode
 import team.applemango.runnerbe.feature.register.onboard.constant.FirebaseStoragePath
 import team.applemango.runnerbe.feature.register.onboard.constant.PresentationPackage
+import team.applemango.runnerbe.domain.login.model.UserRegister
+import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterSideEffect
+import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterState
 import team.applemango.runnerbe.shared.base.BaseViewModel
 
 internal class OnboardViewModel @Inject constructor(
     private val checkUsableEmailUseCase: CheckUsableEmailUseCase,
-) : BaseViewModel() {
+) : BaseViewModel(), ContainerHost<RegisterState, RegisterSideEffect> {
+
+    override val container = container<RegisterState, RegisterSideEffect>(RegisterState.None)
 
     private val alphabetRange = ('a'..'z') + ('A'..'Z') + (0..10)
     private val randomPassword get() = List(10) { alphabetRange.random() }.joinToString("")
@@ -63,6 +72,7 @@ internal class OnboardViewModel @Inject constructor(
         email: String,
         emailSendSuccess: () -> Unit,
         exceptionHandler: (Exception) -> Unit,
+        // 사용하는 step ui 에 state 를 보여주는 label 을 따로 갖고 있기 때문에 exception handle 별도 ui 처리
     ) {
         Firebase.auth
             .createUserWithEmailAndPassword(email, randomPassword)
@@ -105,11 +115,11 @@ internal class OnboardViewModel @Inject constructor(
     /**
      * @return 성공시 이미지 주소, 실패시 null
      */
-    suspend fun uploadImage(photo: Bitmap, userUuid: String): String? =
+    private suspend fun uploadImage(photo: Bitmap, userUuid: String): String? =
         suspendCancellableCoroutine { continuation ->
             val baos = ByteArrayOutputStream()
             photo.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-            val data = baos.toByteArray()
+            val data = baos.toByteArray() // TODO: 메모리 사용에 안 좋은 방식, 개선 필요
             storageRef.child(FirebaseStoragePath).child(userUuid).run {
                 putBytes(data)
                     .continueWithTask { downloadUrl }
@@ -124,7 +134,20 @@ internal class OnboardViewModel @Inject constructor(
             }
         }
 
-    fun register() {
-        // TODO
+    fun register(userRegister: UserRegister, photo: Bitmap?) = intent {
+        reduce {
+            RegisterState.Request
+        }
+        var photoUrl: String? = null
+        if (photo != null) {
+            photoUrl = uploadImage(photo, userRegister.uuid)
+            if (photoUrl == null) { // null 이면 내부에서 emitException 함
+                reduce {
+                    RegisterState.None
+                }
+                return@intent
+            }
+        }
+
     }
 }

@@ -9,7 +9,7 @@
 
 package team.applemango.runnerbe.domain.login.model
 
-data class User(
+data class UserToken(
     val jwt: String? = null,
     val uuid: String? = null,
 )

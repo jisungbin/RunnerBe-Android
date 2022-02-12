@@ -26,7 +26,7 @@ internal fun <T> Response<T>.requireSuccessfulBody(requestName: String): T {
 
 internal fun Response<LoginRequestResponse>.requireSuccessfulLoginResponse(platformName: String): LoginRequestResponse {
     val body = requireSuccessfulBody("$platformName login")
-    if (body.isSuccess == true && body.code in 1001..1002 && body.result != null) {
+    if (body.isSuccess == true && body.code in 1001..1002 && body.loginResult != null) {
         return body
     } else {
         throw Exception(body.message ?: REQUEST_EXCEPTION)

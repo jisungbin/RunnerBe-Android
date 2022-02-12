@@ -12,7 +12,7 @@ package team.applemango.runnerbe.data.login.repository
 import team.applemango.runnerbe.data.login.mapper.toBoolean
 import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
 import team.applemango.runnerbe.data.util.registerApi
-import team.applemango.runnerbe.domain.login.model.User
+import team.applemango.runnerbe.domain.login.model.UserToken
 import team.applemango.runnerbe.domain.login.repository.RegisterRepository
 
 class RegisterRepositoryImpl : RegisterRepository {
@@ -22,7 +22,7 @@ class RegisterRepositoryImpl : RegisterRepository {
             .toBoolean()
     }
 
-    override suspend fun register(user: User) {
+    override suspend fun register(userToken: UserToken) {
         TODO("Not yet implemented")
     }
 }

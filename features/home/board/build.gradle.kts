@@ -22,7 +22,7 @@ android {
 }
 
 dependencies {
-    installSharedComposeHiltTest()
+    installSharedComposeOrbitHiltTest()
     implementationProject(ProjectConstants.HomeWrite)
     implementationProject(ProjectConstants.HomeNotification)
 }

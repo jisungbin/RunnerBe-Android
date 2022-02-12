@@ -10,11 +10,11 @@
 package team.applemango.runnerbe.domain.login.repository
 
 import team.applemango.runnerbe.domain.login.model.AccessToken
-import team.applemango.runnerbe.domain.login.model.User
+import team.applemango.runnerbe.domain.login.model.UserToken
 
 interface LoginRepository {
     /**
      * 로그인 요청 쿼리 (SNS 로그인)
      */
-    suspend fun request(platformName: String, accessToken: AccessToken): User
+    suspend fun request(platformName: String, accessToken: AccessToken): UserToken
 }

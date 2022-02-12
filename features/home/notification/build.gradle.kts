@@ -22,5 +22,5 @@ android {
 }
 
 dependencies {
-    installSharedComposeHiltTest()
+    installSharedComposeOrbitHiltTest()
 }

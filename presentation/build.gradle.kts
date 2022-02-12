@@ -67,5 +67,5 @@ dependencies {
     Dependencies.PresentationOnlyKtx.forEach(::implementation)
 
     Dependencies.Debug.forEach(::debugImplementation)
-    installSharedComposeHiltTest(excludeCompose = true)
+    installSharedComposeOrbitHiltTest(excludeCompose = true)
 }
