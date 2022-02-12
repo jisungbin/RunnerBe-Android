@@ -129,8 +129,8 @@ internal fun EmployeeIdVerify(photo: Bitmap?, onPhotoChanged: (photo: Bitmap?) -
     ) {
         Crossfade(photo != null) { photoIsReady ->
             when (photoIsReady) {
-                true -> {
-                    PhotoScreen(photo = photo!!, onPhotoChanged = onPhotoChanged)
+                true -> { // visible 바뀔 때 photo 가 null 임
+                    PhotoScreen(photo = photo, onPhotoChanged = onPhotoChanged)
                 }
                 else -> {
                     PhotoPickScreen(photoPickFabClickAction = {
@@ -187,7 +187,7 @@ private fun PhotoTakenTypeDialog(
 }
 
 @Composable
-private fun PhotoScreen(photo: Bitmap, onPhotoChanged: (photo: Bitmap?) -> Unit) {
+private fun PhotoScreen(photo: Bitmap?, onPhotoChanged: (photo: Bitmap?) -> Unit) {
     Box(
         modifier = PhotoContainerModifier,
         contentAlignment = Alignment.TopEnd

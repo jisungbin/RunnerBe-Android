@@ -195,8 +195,8 @@ class OnboardActivity : ComponentActivity() {
             RegisterState.None -> {
                 StringAsset.Empty
             }
-            RegisterState.Request -> {
-                StringAsset.Toast.RegisterRequest
+            RegisterState.ImageUploading -> {
+                StringAsset.Toast.ImageUploading
             }
             RegisterState.Success -> {
                 StringAsset.Toast.RegisterSuccess

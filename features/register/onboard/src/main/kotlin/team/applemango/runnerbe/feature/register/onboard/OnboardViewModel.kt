@@ -155,6 +155,9 @@ internal class OnboardViewModel @Inject constructor(
                 } else {
                     var photoUrl: String? = null
                     if (photo != null) { // 사원증을 통한 인증일 경우
+                        reduce {
+                            RegisterState.ImageUploading
+                        }
                         photoUrl = uploadImage(photo, uuid!!)
                         if (photoUrl == null) {
                             // uploadImage 내부에서 emitException 해주고 있음

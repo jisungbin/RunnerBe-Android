@@ -22,7 +22,7 @@ package team.applemango.runnerbe.feature.register.onboard.mvi
  * UserRegisterUseCase state enum class
  *
  * @property None 아무것도 하지 않은 초기화 상태
- * @property Request 요청한 상태 (성공 X, 요청 O)
+ * @property ImageUploading 이미지(사원증 사진) 업로드중
  * @property Success 가입 성공 (1000)
  * @property DuplicateUuid 중복된 uuid (3001)
  * @property DuplicateEmail 중복된 이메일 (3002)
@@ -32,7 +32,7 @@ package team.applemango.runnerbe.feature.register.onboard.mvi
  */
 internal enum class RegisterState {
     None,
-    Request,
+    ImageUploading,
     Success,
     DuplicateUuid,
     DuplicateEmail,
