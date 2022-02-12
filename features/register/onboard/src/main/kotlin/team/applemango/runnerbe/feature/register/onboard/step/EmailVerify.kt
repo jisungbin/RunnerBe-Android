@@ -258,7 +258,9 @@ private fun EmailVerifyLinkNoticeDialog(
                     .background(color = ColorAsset.G5)
             ) {
                 Text(
-                    modifier = Modifier.padding(24.dp),
+                    modifier = Modifier
+                        .padding(top = 24.dp)
+                        .padding(horizontal = 24.dp),
                     text = StringAsset.Dialog.EmailVerifyLinkNotice,
                     style = Typography.Title18R.copy(color = ColorAsset.G1)
                 )
