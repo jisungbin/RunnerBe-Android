@@ -182,7 +182,7 @@ private fun PhotoTakenTypeDialog(
             ) {
                 Text(
                     modifier = Modifier.padding(24.dp),
-                    text = StringAsset.Dialog.TitleVerifyNotice,
+                    text = StringAsset.Dialog.EmailVerifyNotice,
                     style = Typography.Body14R.copy(color = ColorAsset.G1)
                 )
                 Divider(modifier = Modifier.fillMaxWidth(), color = ColorAsset.G4_5)

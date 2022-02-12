@@ -18,9 +18,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -51,8 +54,10 @@ import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.constant.EmailVerifyState
+import team.applemango.runnerbe.shared.compose.component.CustomAlertDialog
 import team.applemango.runnerbe.shared.compose.extension.collectAsStateWithLifecycleRemember
 import team.applemango.runnerbe.shared.compose.extension.collectWithLifecycleRememberOnLaunchedEffect
+import team.applemango.runnerbe.shared.compose.extension.noRippleClickable
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.constant.DataStoreKey
@@ -71,6 +76,14 @@ internal fun EmailVerify(vm: OnboardViewModel) {
     val emailInputState by emailInputFlow.collectAsStateWithLifecycleRemember("")
     var emailVerifyState by remember { mutableStateOf<EmailVerifyState>(EmailVerifyState.None) }
     var emailSendButtonEnabled by remember { mutableStateOf(false) }
+    var emailVerifyNoticeDialogVisible by remember { mutableStateOf(true) }
+
+    EmailVerifyNoticeDialog(
+        visible = emailVerifyNoticeDialogVisible,
+        onDismissRequest = {
+            emailVerifyNoticeDialogVisible = false
+        }
+    )
 
     val emailSendButtonBackgroundColor by animateColorAsState(
         when (emailSendButtonEnabled) {
@@ -226,6 +239,44 @@ internal fun EmailVerify(vm: OnboardViewModel) {
             }
             if (message.isNotEmpty()) {
                 Text(text = message, style = style)
+            }
+        }
+    }
+}
+
+@Composable
+private fun EmailVerifyNoticeDialog(
+    visible: Boolean,
+    onDismissRequest: () -> Unit,
+) {
+    if (visible) {
+        CustomAlertDialog(
+            onDismissRequest = { onDismissRequest() }
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(color = ColorAsset.G5)
+                    .padding(24.dp)
+            ) {
+                Text(
+                    text = StringAsset.Dialog.EmailVerifyNotice,
+                    style = Typography.Title18R.copy(color = ColorAsset.G1)
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.End)
+                        .padding(12.dp)
+                        .noRippleClickable {
+                            onDismissRequest()
+                        },
+                    text = StringAsset.OK,
+                    style = Typography.Body14M.copy(color = ColorAsset.Primary)
+                )
             }
         }
     }
