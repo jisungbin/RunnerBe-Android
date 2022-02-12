@@ -77,8 +77,8 @@ internal fun TermsTable(onAllTermsCheckStateChanged: (allChecked: Boolean) -> Un
         }
     }
 
-    fun toggleAllTermsCheck() { // 전체 동의 버튼 토글
-        isAllTermsChecked = if (isAllTermsChecked) { // true -> false
+    fun toggleAllTermsCheck(nowState: Boolean = isAllTermsChecked) { // 전체 동의 버튼 토글
+        isAllTermsChecked = if (nowState) { // true -> false
             repeat(3) { index ->
                 termsCheckState[index] = false
             }
@@ -102,7 +102,7 @@ internal fun TermsTable(onAllTermsCheckStateChanged: (allChecked: Boolean) -> Un
     // 위치 고정 (toggleAllTermsCheck 함수 사용)
     context.dataStore.data.collectWithLifecycleRememberOnLaunchedEffect { preferences ->
         if (preferences[DataStoreKey.Onboard.TermsAllCheck] == true) {
-            toggleAllTermsCheck()
+            toggleAllTermsCheck(nowState = false) // state toggle -> false -> true
         } else {
             onAllTermsCheckStateChanged(false)
         }

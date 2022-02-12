@@ -26,7 +26,6 @@ import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -99,7 +98,7 @@ internal fun OnboardContent(
             }
         }
     )
-    val bottomCTAButtonBackgroundColor = remember(step, animatedBottomCTAButtonBackgroundColor) {
+    val bottomCTAButtonBackgroundColor = remember(step) {
         when (step) {
             Step.VerifyWithEmail -> Color.Transparent
             else -> animatedBottomCTAButtonBackgroundColor

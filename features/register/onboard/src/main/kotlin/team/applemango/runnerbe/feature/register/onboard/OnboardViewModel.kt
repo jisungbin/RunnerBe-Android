@@ -124,6 +124,46 @@ internal class OnboardViewModel @Inject constructor(
             }
     }
 
+    fun registerUser(dataStore: DataStore<Preferences>, photo: Bitmap?, nextStep: Step) = intent {
+        reduce {
+            RegisterState.Request
+        }
+        coroutineScope {
+            dataStore.data.cancellable().collect { preferences ->
+                val uuid = preferences[DataStoreKey.Login.Uuid]
+                val year = preferences[DataStoreKey.Onboard.Year]
+                val gender = preferences[DataStoreKey.Onboard.Gender]
+                val job = preferences[DataStoreKey.Onboard.Job]
+                // StateFlow 로 저장되는 값이라 TextField 의 초기값인 "" 이 들어갈 수 있음
+                val officeEmail = preferences[DataStoreKey.Onboard.Email]?.ifEmpty { null }
+                if (listOf(uuid, year, gender, job).contains(null)) {
+                    reduce {
+                        RegisterState.NullInformation
+                    }
+                } else {
+                    var photoUrl: String? = null
+                    if (photo != null) { // 사원증을 통한 인증일 경우
+                        photoUrl = uploadImage(photo, uuid!!)
+                        if (photoUrl == null) {
+                            // uploadImage 내부에서 emitException 해주고 있음
+                            return@collect
+                        }
+                    }
+                    val user = UserRegister(
+                        uuid = uuid!!,
+                        birthday = year!!,
+                        gender = Gender.values().first { it.string == gender!! }.code,
+                        job = job!!,
+                        officeEmail = officeEmail, // nullable
+                        idCardImageUrl = photoUrl // nullable
+                    )
+                    requestUserRegister(user, nextStep)
+                }
+            }
+            cancel("user login data collect and register execute must be once.")
+        }
+    }
+
     /**
      * @return 성공시 이미지 주소, 실패시 null
      */
@@ -146,89 +186,50 @@ internal class OnboardViewModel @Inject constructor(
             }
         }
 
-    fun register(dataStore: DataStore<Preferences>, photo: Bitmap?, nextStep: Step) = intent {
-        reduce {
-            RegisterState.Request
-        }
-        coroutineScope {
-            dataStore.data.cancellable().collect { preferences ->
-                val uuid = preferences[DataStoreKey.Login.Uuid]
-                val year = preferences[DataStoreKey.Onboard.Year]
-                val gender = preferences[DataStoreKey.Onboard.Gender]
-                val job = preferences[DataStoreKey.Onboard.Job]
-                // StateFlow 로 저장되는 값이라 TextField 의 초기값인 "" 이 들어갈 수 있음
-                val officeEmail = preferences[DataStoreKey.Onboard.Email]?.ifEmpty { null }
-                logeukes { listOf(uuid, year, gender, job, officeEmail) }
-                if (listOf(uuid, year, gender, job, officeEmail).contains(null)) {
-                    reduce {
-                        RegisterState.NullInformation
+    private fun requestUserRegister(user: UserRegister, nextStep: Step) = intent {
+        userRegisterUseCase(user)
+            .onSuccess { result ->
+                when (result) {
+                    is UserRegisterResult.Success -> {
+                        reduce {
+                            RegisterState.Success
+                        }
+                        postSideEffect(RegisterSideEffect.SaveUserJwt(result.jwt))
+                        postSideEffect(RegisterSideEffect.NavigateToNextStep(nextStep))
                     }
-                    postSideEffect(RegisterSideEffect.ResetStep)
-                } else {
-                    var photoUrl: String? = null
-                    if (photo != null) { // 사원증을 통한 인증일 경우
-                        photoUrl = uploadImage(photo, uuid!!)
-                        if (photoUrl == null) { // null 이면 내부에서 emitException 함
-                            reduce {
-                                RegisterState.None // uploadImage 내부에서 emitException 해주고 있음
-                            }
-                            return@collect
+                    UserRegisterResult.DuplicateUuid -> {
+                        reduce {
+                            RegisterState.DuplicateUuid
                         }
                     }
-                    val user = UserRegister(
-                        uuid = uuid!!,
-                        birthday = year!!,
-                        gender = Gender.values().first { it.string == gender!! }.code,
-                        job = job!!,
-                        officeEmail = officeEmail, // nullable
-                        idCardImageUrl = photoUrl // nullable
-                    )
-                    userRegisterUseCase(user)
-                        .onSuccess { result ->
-                            when (result) {
-                                UserRegisterResult.Success -> {
-                                    reduce {
-                                        RegisterState.Success
-                                    }
-                                    postSideEffect(RegisterSideEffect.NavigateToNextStep(nextStep))
-                                }
-                                UserRegisterResult.DuplicateUuid -> {
-                                    reduce {
-                                        RegisterState.DuplicateUuid
-                                    }
-                                }
-                                UserRegisterResult.DuplicateNickname -> {
-                                    reduce {
-                                        RegisterState.DuplicateNickname
-                                    }
-                                }
-                                UserRegisterResult.DuplicateEmail -> {
-                                    reduce {
-                                        RegisterState.DuplicateEmail
-                                    }
-                                }
-                                UserRegisterResult.DatabaseError -> {
-                                    reduce {
-                                        RegisterState.DatabaseError
-                                    }
-                                }
-                                is UserRegisterResult.Exception -> {
-                                    emitException(Exception("Server request fail: ${result.code}"))
-                                    reduce {
-                                        RegisterState.None
-                                    }
-                                }
-                            }
+                    UserRegisterResult.DuplicateNickname -> {
+                        reduce {
+                            RegisterState.DuplicateNickname
                         }
-                        .onFailure { exception ->
-                            emitException(exception)
-                            reduce {
-                                RegisterState.None
-                            }
+                    }
+                    UserRegisterResult.DuplicateEmail -> {
+                        reduce {
+                            RegisterState.DuplicateEmail
                         }
+                    }
+                    UserRegisterResult.DatabaseError -> {
+                        reduce {
+                            RegisterState.DatabaseError
+                        }
+                    }
+                    is UserRegisterResult.Exception -> {
+                        emitException(Exception("Server request fail: ${result.code}"))
+                        reduce {
+                            RegisterState.None
+                        }
+                    }
                 }
             }
-            cancel("user login data collect and register execute must be once.")
-        }
+            .onFailure { exception ->
+                emitException(exception)
+                reduce {
+                    RegisterState.None
+                }
+            }
     }
 }

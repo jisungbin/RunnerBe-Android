@@ -72,18 +72,18 @@ internal fun EmailVerify(vm: OnboardViewModel) {
     var emailVerifyState by remember { mutableStateOf<EmailVerifyState>(EmailVerifyState.None) }
     var emailSendButtonEnabled by remember { mutableStateOf(false) }
 
-    val emailSendButtonBackgroundColor = animateColorAsState(
+    val emailSendButtonBackgroundColor by animateColorAsState(
         when (emailSendButtonEnabled) {
             true -> ColorAsset.Primary
             else -> ColorAsset.G3
         }
-    ).value
-    val emailSendButtonTextColor = animateColorAsState(
+    )
+    val emailSendButtonTextColor by animateColorAsState(
         when (emailSendButtonEnabled) {
             true -> ColorAsset.G6
             else -> ColorAsset.G4_5
         }
-    ).value
+    )
 
     context.dataStore.data.collectWithLifecycleRememberOnLaunchedEffect { preferences ->
         preferences[DataStoreKey.Onboard.Email]?.let { restoreEmail ->
@@ -216,9 +216,11 @@ internal fun EmailVerify(vm: OnboardViewModel) {
                     message = StringAsset.Hint.ErrorUuid
                 }
                 is EmailVerifyState.Exception -> {
-                    message = state.throwable.toMessage()
-                    if (message == "The email address is already in use by another account.") {
-                        message = StringAsset.Hint.DuplicateEmail
+                    val throwable = state.throwable
+                    message = if (throwable.message.orEmpty().contains("by another account")) {
+                        StringAsset.Hint.DuplicateEmail
+                    } else {
+                        throwable.toMessage()
                     }
                 }
             }

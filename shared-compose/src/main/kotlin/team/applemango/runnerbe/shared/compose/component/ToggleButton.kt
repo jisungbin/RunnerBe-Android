@@ -44,9 +44,7 @@ fun <T> ToggleButton(
     ).value
 
     Button(
-        onClick = {
-            onClick()
-        },
+        onClick = { onClick() },
         shape = RoundedCornerShape(20.dp),
         colors = ButtonDefaults.buttonColors(backgroundColor = backgroundColor(target)),
         border = BorderStroke(width = 1.dp, color = borderColor(target))

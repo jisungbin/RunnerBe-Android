@@ -249,7 +249,7 @@ internal fun OnboardRouter(
                     bottomCTAButtonEnabled = photo != null,
                     onBottomCTAButtonAction = { // 인증하기
                         coroutineScope.launch {
-                            vm.register(
+                            vm.registerUser(
                                 dataStore = context.dataStore,
                                 photo = photo,
                                 nextStep = Step.VerifyWithEmployeeIdRequestDone

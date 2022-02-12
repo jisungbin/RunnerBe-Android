@@ -104,9 +104,10 @@ class OnboardActivity : ComponentActivity() {
                             handleRegisterSideEffect(navController, sideEffect)
                         }
                     )
+                    // 이메일 인증 됨 -> photo null 로 회원가입 진행
                     vm.emailVerifyStateFlow.collectWithLifecycle(this@OnboardActivity) { verified ->
                         if (verified) {
-                            vm.register(
+                            vm.registerUser(
                                 dataStore = applicationContext.dataStore,
                                 photo = null,
                                 nextStep = Step.VerifyWithEmailDone
@@ -228,6 +229,11 @@ class OnboardActivity : ComponentActivity() {
             RegisterSideEffect.ResetStep -> {
                 applicationContext.dataStore.edit { preferences ->
                     preferences.clear() // clear all preferences
+                }
+            }
+            is RegisterSideEffect.SaveUserJwt -> {
+                applicationContext.dataStore.edit { preference ->
+                    preference[DataStoreKey.Login.Jwt] = sideEffect.jwt
                 }
             }
             is RegisterSideEffect.NavigateToNextStep -> {
