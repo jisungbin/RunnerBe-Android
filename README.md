@@ -26,8 +26,9 @@
 - Layered Architecture
 - Dynamic Feature Module (:features:register)
 
-#### CD
+#### CI/CD
 
+- Github Actions (unit test)
 - Fastlane + Firebase App Distribution
 
 #### Jetpack
