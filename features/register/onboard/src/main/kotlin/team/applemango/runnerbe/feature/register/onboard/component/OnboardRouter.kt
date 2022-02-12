@@ -255,7 +255,7 @@ internal fun OnboardRouter(
                                 dataStore = context.dataStore,
                                 photo = photo!!, // non null, 만약 null 로 들어오면 작동되지 않아야 하기 때문에 NonNull 강제 처리
                                 nextStep = Step.VerifyWithEmployeeIdRequestDone,
-                                isTestMode = true
+                                // isTestMode = true
                             )
                         }
                     }
