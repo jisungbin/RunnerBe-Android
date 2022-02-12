@@ -193,14 +193,26 @@ class OnboardActivity : ComponentActivity() {
             RegisterState.None -> {
                 StringAsset.Empty
             }
-            RegisterState.NullInformation -> {
-                StringAsset.Toast.RegisterNullInformation
+            RegisterState.Request -> {
+                StringAsset.Toast.RegisterRequest
             }
             RegisterState.Success -> {
                 StringAsset.Toast.RegisterSuccess
             }
-            RegisterState.Request -> {
-                StringAsset.Toast.RegisterRequest
+            RegisterState.DuplicateUuid -> {
+                StringAsset.Toast.DuplicateUuid
+            }
+            RegisterState.DuplicateEmail -> {
+                StringAsset.Toast.DuplicateEmail
+            }
+            RegisterState.DuplicateNickname -> {
+                StringAsset.Toast.DuplicateNickname
+            }
+            RegisterState.DatabaseError -> {
+                StringAsset.Toast.DatabaseError
+            }
+            RegisterState.NullInformation -> {
+                StringAsset.Toast.RegisterNullInformation
             }
         }
         if (message.isNotEmpty()) {

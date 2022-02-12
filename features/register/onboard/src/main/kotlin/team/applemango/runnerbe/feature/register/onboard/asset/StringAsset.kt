@@ -71,12 +71,16 @@ internal object StringAsset {
     }
 
     object Toast {
-        const val RegisterNullInformation = "회원가입에 필요한 정보중 일부가 유실되었어요.\n회원가입을 다시 해주세요."
-        const val RegisterRequest = "회원가입을 처리중이에요."
-        const val RegisterSuccess = "회원가입이 완료됐어요! \uD83E\uDD73" // 🥳
         const val VerifyEmailFailure = "이메일 인증에 실패했어요."
         const val ErrorTakenPhoto = "사진을 불러오지 못했어요.\n다시 시도해 주세요."
         const val NonInstallBrowser = "설치돼 있는 브라우저 앱이 없어요 \uD83D\uDE22"
+        const val RegisterRequest = "회원가입을 처리중이에요."
+        const val RegisterSuccess = "회원가입이 완료됐어요! \uD83E\uDD73" // 🥳
+        const val DuplicateUuid = "유저 고유 번호가 중복돼요."
+        const val DuplicateEmail = "이미 사용중인 이메일이에요."
+        const val DuplicateNickname = "랜덤으로 닉네임을 골랐지만 이미 사용중인 닉네임이네요,\n다시 시도해 주세요."
+        const val DatabaseError = "서버 데이터베이스에서 에러가 발생했어요."
+        const val RegisterNullInformation = "회원가입에 필요한 정보중 일부가 유실되었어요.\n회원가입을 다시 해주세요."
     }
 
     object Snackbar {
