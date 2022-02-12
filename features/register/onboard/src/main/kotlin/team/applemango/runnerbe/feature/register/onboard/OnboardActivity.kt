@@ -249,6 +249,7 @@ class OnboardActivity : ComponentActivity() {
         logeukes(type = LoggerType.E) { exception }
     }
 
+    // Firebase Dynamic Link 가 감지하지 못해 onNewIntent 로 수동으로 감지하여 작업
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         if (intent?.data.toString().contains(EmailVerifyCode)) {

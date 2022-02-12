@@ -22,6 +22,7 @@ import io.github.jisungbin.logeukes.logeukes
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 import kotlin.coroutines.resume
+import kotlin.random.Random
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -133,7 +134,7 @@ internal class OnboardViewModel @Inject constructor(
         coroutineScope {
             dataStore.data.cancellable().collect { preferences ->
                 logeukes { "dataStore data collect" }
-                val uuid = preferences[DataStoreKey.Login.Uuid]
+                val uuid = /*preferences[DataStoreKey.Login.Uuid]*/ Random.nextInt().toString()
                 val year = preferences[DataStoreKey.Onboard.Year]
                 val gender = preferences[DataStoreKey.Onboard.Gender]
                 val job = preferences[DataStoreKey.Onboard.Job]
