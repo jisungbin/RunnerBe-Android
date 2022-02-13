@@ -13,7 +13,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 import team.applemango.runnerbe.data.mail.model.MailjetResponse
-import team.applemango.runnerbe.domain.mail.MailTemplate
+import team.applemango.runnerbe.domain.mail.model.MailTemplate
 
 interface MailjetService {
     @POST("/v3.1/send")
