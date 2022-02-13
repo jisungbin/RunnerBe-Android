@@ -13,12 +13,8 @@ import android.graphics.Bitmap
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.auth.ktx.actionCodeSettings
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
-import io.github.jisungbin.logeukes.LoggerType
-import io.github.jisungbin.logeukes.logeukes
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 import kotlin.coroutines.resume
@@ -40,11 +36,8 @@ import team.applemango.runnerbe.domain.login.model.result.UserRegisterResult
 import team.applemango.runnerbe.domain.login.usecase.CheckUsableEmailUseCase
 import team.applemango.runnerbe.domain.login.usecase.UserRegisterUseCase
 import team.applemango.runnerbe.domain.mail.usecase.MailSendUseCase
-import team.applemango.runnerbe.feature.register.onboard.constant.ApplicationMinSdkLevel
-import team.applemango.runnerbe.feature.register.onboard.constant.EmailVerifyCode
 import team.applemango.runnerbe.feature.register.onboard.constant.FirebaseStoragePath
 import team.applemango.runnerbe.feature.register.onboard.constant.Gender
-import team.applemango.runnerbe.feature.register.onboard.constant.PresentationPackage
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterSideEffect
 import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterState
@@ -84,49 +77,25 @@ internal class OnboardViewModel @Inject constructor(
         _emailVerifyStateFlow.value = state
     }
 
-    fun createUserWithEmailVerify(
-        email: String,
-        emailSendSuccess: () -> Unit,
-        exceptionHandler: (Exception) -> Unit,
-        // 사용하는 step ui 에 state 를 보여주는 label 을 따로 갖고 있기 때문에 exception handle 별도 ui 처리
-    ) {
-        Firebase.auth
-            .createUserWithEmailAndPassword(email, randomPassword)
-            .addOnSuccessListener {
-                Firebase.auth.currentUser?.let { user ->
-                    user.sendEmailVerification(
-                        actionCodeSettings {
-                            url = "https://runnerbe-auth.shop/$EmailVerifyCode"
-                            handleCodeInApp = true // 필수!
-                            setAndroidPackageName(
-                                PresentationPackage, // 리다이렉트될 앱 패키지명
-                                true, // 이용 불가능시 플레이스토어 이동해서 설치 요청
-                                ApplicationMinSdkLevel // min sdk level
-                            )
+    // 이메일 인증하는 step 에서 따로 label 이 있어서 listener 콜백 처리
+    fun sendVerifyMail(email: String, onSuccess: () -> Unit, onException: (Throwable) -> Unit) =
+        viewModelScope.launch {
+            val token = Random.nextInt().toString() // TODO: 토큰 인증
+            mailSendUseCase(token = token, email = email)
+                .onSuccess { result ->
+                    when (result.isSuccess) {
+                        true -> {
+                            onSuccess()
                         }
-                    ).addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            emailSendSuccess()
-                        } else {
-                            exceptionHandler(task.exception ?: SendEmailExceptionWithNoMessage)
+                        else -> {
+                            onException(Exception(result.errorResult?.errorMessage))
                         }
-                        // 이 메일로 끝까지 회원가입 안 했을떈 메일 다시 쓸 수 있게 하기 위해 유저 삭제
-                        // 러너비 서버에서 따로 이메일 중복 검사 절차 거침
-                        user.delete()
-                            .addOnSuccessListener {
-                                logeukes { "$email 유저 삭제 완료" }
-                            }.addOnFailureListener { exception ->
-                                logeukes(type = LoggerType.E) { "$email 유저 삭제 실패: $exception" }
-                            }
                     }
-                } ?: run {
-                    exceptionHandler(UserNullException)
                 }
-            }
-            .addOnFailureListener { exception ->
-                exceptionHandler(exception)
-            }
-    }
+                .onFailure { exception ->
+                    onException(exception)
+                }
+        }
 
     // register entry point
     fun registerUser(
@@ -161,10 +130,7 @@ internal class OnboardViewModel @Inject constructor(
                             RegisterState.ImageUploading
                         }
                         photoUrl = uploadImage(photo, uuid!!)
-                        if (photoUrl == null) {
-                            // uploadImage 내부에서 emitException 해주고 있음
-                            return@collect
-                        }
+                            ?: return@collect // uploadImage 내부에서 emitException 해주고 있음
                     }
                     val user = UserRegister(
                         uuid = uuid!!,

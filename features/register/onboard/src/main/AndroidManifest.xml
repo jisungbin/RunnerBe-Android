@@ -28,8 +28,7 @@
             android:name=".OnboardActivity"
             android:exported="true"
             android:launchMode="singleTask"
-            android:theme="@style/Theme.RunnerBe"
-            android:windowSoftInputMode="adjustResize">
+            android:theme="@style/Theme.RunnerBe">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -38,7 +37,7 @@
 
                 <data
                     android:host="runnerbe-auth.shop"
-                    android:scheme="https" />
+                    android:scheme="http" />
             </intent-filter>
         </activity>
 

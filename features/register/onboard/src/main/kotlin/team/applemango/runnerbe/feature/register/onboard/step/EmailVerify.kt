@@ -69,6 +69,7 @@ internal fun EmailVerify(vm: OnboardViewModel) {
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
     val coroutineScope = rememberCoroutineScope()
+    var emailSent by remember { mutableStateOf(false) }
     val emailInputFlow = remember { MutableStateFlow("") }
     val emailInputState by emailInputFlow.collectAsStateWithLifecycleRemember("")
     var emailVerifyState by remember { mutableStateOf<EmailVerifyState>(EmailVerifyState.None) }
@@ -176,13 +177,13 @@ internal fun EmailVerify(vm: OnboardViewModel) {
                                     emailVerifyState = EmailVerifyState.Loading
                                     val email = emailInputFlow.value
                                     if (vm.checkUsableEmail(email)) {
-                                        vm.createUserWithEmailVerify(
+                                        vm.sendVerifyMail(
                                             email = email,
-                                            exceptionHandler = { exception ->
+                                            onException = { exception ->
                                                 emailVerifyState =
                                                     EmailVerifyState.Exception(exception)
                                             },
-                                            emailSendSuccess = {
+                                            onSuccess = {
                                                 emailVerifyState = EmailVerifyState.Sent
                                             }
                                         )
@@ -198,7 +199,7 @@ internal fun EmailVerify(vm: OnboardViewModel) {
             ) {
                 Text(
                     modifier = Modifier.padding(horizontal = 15.dp),
-                    text = StringAsset.Button.Verify,
+                    text = if (!emailSent) StringAsset.Button.Verify else StringAsset.Button.ReVerify,
                     style = Typography.Body14M.copy(color = emailSendButtonTextColor)
                 )
             }

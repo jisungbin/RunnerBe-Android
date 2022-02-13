@@ -38,6 +38,7 @@ internal object StringAsset {
         const val Next = "다음"
         const val NoEmail = "회사 이메일이 없어요"
         const val Verify = "인증하기"
+        const val ReVerify = "재인증"
         const val Start = "START!"
         const val GotoMain = "메인 화면으로"
     }
