@@ -74,21 +74,21 @@ private val noticeTexts = listOf(
     StringAsset.Hint.RequireFieldProtect
 )
 
+private val takePhotoFromAlbumIntent =
+    Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
+        type = "image/*"
+        action = Intent.ACTION_GET_CONTENT
+        putExtra(
+            Intent.EXTRA_MIME_TYPES,
+            arrayOf("image/jpeg", "image/png", "image/bmp", "image/webp")
+        )
+        putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+    }
+
 @Composable
 internal fun EmployeeIdVerify(photo: Bitmap?, onPhotoChanged: (photo: Bitmap?) -> Unit) {
     val context = LocalContext.current
     var photoTakenTypeDialogVisible by remember { mutableStateOf(false) }
-    val takePhotoFromAlbumIntent = remember {
-        Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
-            type = "image/*"
-            action = Intent.ACTION_GET_CONTENT
-            putExtra(
-                Intent.EXTRA_MIME_TYPES,
-                arrayOf("image/jpeg", "image/png", "image/bmp", "image/webp")
-            )
-            putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
-        }
-    }
 
     val takePhotoFromCameraLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.TakePicturePreview()) { takenPhoto ->
