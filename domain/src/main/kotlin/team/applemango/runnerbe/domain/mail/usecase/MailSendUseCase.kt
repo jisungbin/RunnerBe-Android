@@ -27,8 +27,9 @@ private fun buildContent(token: String, isHtml: Boolean) =
     ${if (isHtml) "<a href=\"${token.toLink()}\">${token.toLink()}</a>" else token.toLink()}
                             
     그럼, 지금부터 러너비와 힘차게 달려볼까요?
-    """.trimIndent().apply {
+    """.trimIndent().run {
         if (isHtml) replace("\n", "<br/>")
+        else this
     }
 
 class MailSendUseCase(private val repo: MailRepository) {
