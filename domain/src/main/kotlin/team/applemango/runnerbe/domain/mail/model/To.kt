@@ -9,7 +9,4 @@
 
 package team.applemango.runnerbe.domain.mail.model
 
-data class To(
-    val email: String,
-    val name: String,
-)
+data class To(val email: String)
