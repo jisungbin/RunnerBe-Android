@@ -306,7 +306,7 @@ internal fun OnboardRouter(
                 ) {
                     Text(
                         modifier = Modifier.align(Alignment.Center),
-                        text = "️✅", // ️✅
+                        text = "️\uD83D\uDCD1", // 📑
                         style = LocalTextStyle.current.copy(fontSize = 100.sp)
                     )
                 }
