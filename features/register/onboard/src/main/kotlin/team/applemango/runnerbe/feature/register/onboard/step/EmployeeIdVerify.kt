@@ -108,7 +108,7 @@ internal fun EmployeeIdVerify(photo: Bitmap?, onPhotoChanged: (photo: Bitmap?) -
                 } ?: run {
                     toast(context, StringAsset.Toast.ErrorTakenPhoto)
                 }
-            } else {
+            } else if (result.resultCode != Activity.RESULT_CANCELED) {
                 toast(context, StringAsset.Toast.ErrorTakenPhoto)
             }
         }
