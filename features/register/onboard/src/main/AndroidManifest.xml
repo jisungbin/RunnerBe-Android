@@ -37,7 +37,7 @@
 
                 <data
                     android:host="runnerbe-auth.shop"
-                    android:scheme="http" />
+                    android:scheme="welcome" />
             </intent-filter>
         </activity>
 

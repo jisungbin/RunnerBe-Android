@@ -9,7 +9,12 @@
 
 package team.applemango.runnerbe.domain.mail.model
 
+/**
+ * When the HTML part is the only part provided,
+ * Mailjet will not generate a Text-part from the HTML version.
+ */
 data class MailTemplateItem(
+    val htmlPart: String,
     val textPart: String,
     val from: From,
     val to: List<To>,
