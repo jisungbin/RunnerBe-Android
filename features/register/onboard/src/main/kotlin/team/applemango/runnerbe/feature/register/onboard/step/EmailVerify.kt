@@ -179,12 +179,13 @@ internal fun EmailVerify(vm: OnboardViewModel) {
                                     if (vm.checkUsableEmail(email)) {
                                         vm.sendVerifyMail(
                                             email = email,
+                                            onSuccess = {
+                                                emailSent = true
+                                                emailVerifyState = EmailVerifyState.Sent
+                                            },
                                             onException = { exception ->
                                                 emailVerifyState =
                                                     EmailVerifyState.Exception(exception)
-                                            },
-                                            onSuccess = {
-                                                emailVerifyState = EmailVerifyState.Sent
                                             }
                                         )
                                     } else {

@@ -17,7 +17,4 @@ data class MessagesItem(
 
     @field:JsonProperty("Errors")
     val errors: List<ErrorsItem?>? = null,
-
-    @field:JsonProperty("To")
-    val to: List<ToItem?>? = null,
 )

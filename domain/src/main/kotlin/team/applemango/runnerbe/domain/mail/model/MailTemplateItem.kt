@@ -10,7 +10,7 @@
 package team.applemango.runnerbe.domain.mail.model
 
 data class MailTemplateItem(
-    val htmlPart: String,
+    val textPart: String,
     val from: From,
     val to: List<To>,
     val subject: String,

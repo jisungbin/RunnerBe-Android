@@ -10,5 +10,5 @@
 package team.applemango.runnerbe.domain.mail.model
 
 data class MailTemplate(
-    val mailTemplate: List<MailTemplateItem>,
+    val messages: List<MailTemplateItem>,
 )
