@@ -257,20 +257,14 @@ private fun PhotoPickScreen(photoPickFabClickAction: () -> Unit) {
 }
 
 @Suppress("DEPRECATION", "NewApi")
-private fun Uri?.parseBitmap(context: Context): Bitmap? {
-    return if (this != null) {
-        val bitmap = when (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) { // 28
-            true -> {
-                val source = ImageDecoder.createSource(context.contentResolver, this)
-                ImageDecoder.decodeBitmap(source)
-            }
-            else -> {
-                MediaStore.Images.Media.getBitmap(context.contentResolver, this)
-            }
+private fun Uri.parseBitmap(context: Context): Bitmap {
+    return when (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) { // 28
+        true -> {
+            val source = ImageDecoder.createSource(context.contentResolver, this)
+            ImageDecoder.decodeBitmap(source)
         }
-        bitmap
-    } else {
-        toast(context, StringAsset.Toast.ErrorTakenPhoto)
-        null
+        else -> {
+            MediaStore.Images.Media.getBitmap(context.contentResolver, this)
+        }
     }
 }
