@@ -15,6 +15,7 @@ import dagger.Provides
 import dagger.multibindings.IntoMap
 import team.applemango.runnerbe.domain.login.usecase.CheckUsableEmailUseCase
 import team.applemango.runnerbe.domain.login.usecase.UserRegisterUseCase
+import team.applemango.runnerbe.domain.mail.usecase.MailSendUseCase
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.feature.register.onboard.di.qualifier.ViewModelKey
 
@@ -26,10 +27,12 @@ internal class ViewModelModule {
     fun provideOnboardViewModel(
         checkUsableEmailUseCase: CheckUsableEmailUseCase,
         userRegisterUseCase: UserRegisterUseCase,
+        mailSendUseCase: MailSendUseCase,
     ): ViewModel {
         return OnboardViewModel(
             checkUsableEmailUseCase = checkUsableEmailUseCase,
-            userRegisterUseCase = userRegisterUseCase
+            userRegisterUseCase = userRegisterUseCase,
+            mailSendUseCase = mailSendUseCase
         )
     }
 }

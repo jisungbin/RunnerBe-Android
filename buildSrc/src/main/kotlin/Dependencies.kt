@@ -70,7 +70,6 @@ object Versions {
     object Login {
         const val Kakao = "2.8.5"
         const val Naver = "5.0.0"
-        const val GoogleServiceAuth = "20.1.0"
     }
 
     object OssLicense {
@@ -112,10 +111,8 @@ object Dependencies {
     )
 
     val Firebase = listOf(
-        "com.google.firebase:firebase-auth-ktx",
         "com.google.firebase:firebase-analytics",
         "com.google.firebase:firebase-storage-ktx",
-        "com.google.android.gms:play-services-auth:${Versions.Login.GoogleServiceAuth}"
     )
 
     val Compose = listOf(

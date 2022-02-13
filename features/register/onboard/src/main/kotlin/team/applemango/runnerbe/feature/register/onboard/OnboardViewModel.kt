@@ -39,6 +39,7 @@ import team.applemango.runnerbe.domain.login.model.UserRegister
 import team.applemango.runnerbe.domain.login.model.result.UserRegisterResult
 import team.applemango.runnerbe.domain.login.usecase.CheckUsableEmailUseCase
 import team.applemango.runnerbe.domain.login.usecase.UserRegisterUseCase
+import team.applemango.runnerbe.domain.mail.usecase.MailSendUseCase
 import team.applemango.runnerbe.feature.register.onboard.constant.ApplicationMinSdkLevel
 import team.applemango.runnerbe.feature.register.onboard.constant.EmailVerifyCode
 import team.applemango.runnerbe.feature.register.onboard.constant.FirebaseStoragePath
@@ -63,6 +64,7 @@ private val randomPassword get() = List(10) { alphabetRange.random() }.joinToStr
 internal class OnboardViewModel @Inject constructor(
     private val checkUsableEmailUseCase: CheckUsableEmailUseCase,
     private val userRegisterUseCase: UserRegisterUseCase,
+    private val mailSendUseCase: MailSendUseCase,
 ) : BaseViewModel(), ContainerHost<RegisterState, RegisterSideEffect> {
 
     override val container = container<RegisterState, RegisterSideEffect>(RegisterState.None)
