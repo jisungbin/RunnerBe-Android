@@ -68,6 +68,12 @@ private val PhotoContainerModifier = Modifier
     .clip(RoundedCornerShape(8.dp))
     .background(color = ColorAsset.G6)
 
+private val noticeTexts = listOf(
+    StringAsset.Hint.RequireFieldJob,
+    StringAsset.Hint.RequireFieldInformation,
+    StringAsset.Hint.RequireFieldProtect
+)
+
 @Composable
 internal fun EmployeeIdVerify(photo: Bitmap?, onPhotoChanged: (photo: Bitmap?) -> Unit) {
     val context = LocalContext.current
@@ -140,6 +146,17 @@ internal fun EmployeeIdVerify(photo: Bitmap?, onPhotoChanged: (photo: Bitmap?) -
             }
         }
     }
+    LazyColumn(
+        modifier = Modifier.padding(top = 20.dp),
+        verticalArrangement = Arrangement.spacedBy(2.dp)
+    ) {
+        items(noticeTexts) { notice ->
+            Text(
+                text = notice.parseHtml(),
+                style = Typography.Body14R.copy(color = ColorAsset.G2_5)
+            )
+        }
+    }
 }
 
 @Composable
@@ -210,12 +227,6 @@ private fun PhotoScreen(photo: Bitmap?, onPhotoChanged: (photo: Bitmap?) -> Unit
 
 @Composable
 private fun PhotoPickScreen(photoPickFabClickAction: () -> Unit) {
-    val noticeTexts = listOf(
-        StringAsset.Hint.RequireFieldJob,
-        StringAsset.Hint.RequireFieldInformation,
-        StringAsset.Hint.RequireFieldProtect
-    )
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -239,17 +250,6 @@ private fun PhotoPickScreen(photoPickFabClickAction: () -> Unit) {
                     painter = rememberDrawablePainter(presentationDrawableOf("ic_round_add_24")),
                     contentDescription = null,
                     colorFilter = ColorFilter.tint(color = ColorAsset.G2)
-                )
-            }
-        }
-        LazyColumn(
-            modifier = Modifier.padding(top = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(2.dp)
-        ) {
-            items(noticeTexts) { notice ->
-                Text(
-                    text = notice.parseHtml(),
-                    style = Typography.Body14R.copy(color = ColorAsset.G2_5)
                 )
             }
         }
