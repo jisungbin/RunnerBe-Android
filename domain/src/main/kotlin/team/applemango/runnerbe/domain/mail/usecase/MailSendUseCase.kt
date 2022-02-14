@@ -15,7 +15,7 @@ import team.applemango.runnerbe.domain.mail.model.MailTemplateItem
 import team.applemango.runnerbe.domain.mail.model.To
 import team.applemango.runnerbe.domain.mail.repository.MailRepository
 
-private fun String.toLink() = "welcome://runnerbe-auth.shop/?verify=$this"
+private fun String.toLink() = "https://jisungbin.github.io/verify?=$this"
 
 private fun buildContent(token: String, isHtml: Boolean) =
     """
@@ -24,7 +24,7 @@ private fun buildContent(token: String, isHtml: Boolean) =
 
     하단의 링크를 클릭해 이메일 주소를 인증하면 회원님에 대한 모든 소개가 완료돼요.
 
-    ${if (isHtml) "<a href=\"${token.toLink()}\">${token.toLink()}</a>" else token.toLink()}
+    ${if (isHtml) "<a href=\"${token.toLink()}\">${token.toLink()} - html form</a>" else "${token.toLink()} - text form"}
                             
     그럼, 지금부터 러너비와 힘차게 달려볼까요?
     """.trimIndent().run {
