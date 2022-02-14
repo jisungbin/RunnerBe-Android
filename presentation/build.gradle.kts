@@ -9,12 +9,20 @@
 
 plugins {
     id("com.android.application")
+    // id("com.spotify.ruler")
     id("com.google.gms.google-services")
     id("com.google.android.gms.oss-licenses-plugin")
     id("name.remal.check-dependency-updates") version Versions.Util.CheckDependencyUpdates
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
-    installLibraryDfmHiltTestScabbard(isLibrary = false)
+    installLibraryDfmHiltTest(isLibrary = false)
 }
+
+/*ruler {
+    abi.set("arm64-v8a")
+    locale.set("ko")
+    screenDensity.set(480)
+    sdkVersion.set(31)
+}*/
 
 android {
     signingConfigs {
