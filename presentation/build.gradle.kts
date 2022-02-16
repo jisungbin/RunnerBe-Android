@@ -9,20 +9,28 @@
 
 plugins {
     id("com.android.application")
+    // id("com.spotify.ruler")
     id("com.google.gms.google-services")
     id("com.google.android.gms.oss-licenses-plugin")
     id("name.remal.check-dependency-updates") version Versions.Util.CheckDependencyUpdates
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
-    installLibraryDfmHiltTestScabbard(isLibrary = false)
+    installLibraryDfmHiltTest(isLibrary = false)
 }
+
+/*ruler {
+    abi.set("arm64-v8a")
+    locale.set("ko")
+    screenDensity.set(480)
+    sdkVersion.set(31)
+}*/
 
 android {
     signingConfigs {
         create("release") {
-            storeFile = file(SecretConstant.StoreFilePath)
-            storePassword = SecretConstant.StorePassword
-            keyAlias = SecretConstant.KeyAlias
-            keyPassword = SecretConstant.KeyPassword
+            storeFile = file(BuildConstants.StoreFilePath)
+            storePassword = BuildConstants.StorePassword
+            keyAlias = BuildConstants.KeyAlias
+            keyPassword = BuildConstants.KeyPassword
         }
     }
 
@@ -43,7 +51,7 @@ android {
 
     dynamicFeatures += setOf(
         ProjectConstants.RegisterSnsLogin,
-        ProjectConstants.RegisterInformation
+        ProjectConstants.RegisterOnboard
     )
 }
 
@@ -54,16 +62,18 @@ dependencies {
         ProjectConstants.MyPage,
         ProjectConstants.HomeBoard
     )
-
     features.forEach(::implementationProject)
-    implementation(Dependencies.Util.Erratum)
-    implementation(Dependencies.Firebase.Analytics)
-    implementation(platform(Dependencies.Firebase.Bom))
 
+    // :features:register:onboard 에서 필요하기 때문에 api 로 설정
+    // DFM 에서 바로 implementation 해주면 exception 발생
+    api(platform(Dependencies.FirebaseBom))
+    Dependencies.Firebase.forEach(::api)
+
+    implementation(Dependencies.Util.Erratum)
     Dependencies.Ui.forEach(::implementation)
     Dependencies.Login.All.forEach(::implementation)
     Dependencies.PresentationOnlyKtx.forEach(::implementation)
 
     Dependencies.Debug.forEach(::debugImplementation)
-    installSharedComposeHiltTest(excludeCompose = true)
+    installSharedComposeOrbitHiltTest(excludeCompose = true)
 }

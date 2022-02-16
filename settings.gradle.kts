@@ -10,9 +10,11 @@
 rootProject.name = "RunnerBe"
 include(
     ":data",
-    ":theme",
     ":domain",
     ":shared",
+    ":shared-compose",
+    ":xml:numberpicker",
+    ":xml:photoeditor",
     ":presentation",
     ":features:mail",
     ":features:mypage",
@@ -20,5 +22,5 @@ include(
     ":features:home:board",
     ":features:home:notification",
     ":features:register:snslogin",
-    ":features:register:information"
+    ":features:register:onboard"
 )

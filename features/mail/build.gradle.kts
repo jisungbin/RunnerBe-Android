@@ -8,7 +8,7 @@
  */
 
 plugins {
-    installLibraryDfmHiltTestScabbard()
+    installLibraryDfmHiltTest()
 }
 
 android {
@@ -17,10 +17,10 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = Versions.Compose.Master
+        kotlinCompilerExtensionVersion = Versions.Compose.Main
     }
 }
 
 dependencies {
-    installSharedComposeHiltTest()
+    installSharedComposeOrbitHiltTest()
 }

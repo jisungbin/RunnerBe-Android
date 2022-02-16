@@ -8,9 +8,9 @@
  */
 
 object Versions {
-    const val Orbit = "4.3.1"
+    const val Orbit = "4.3.2"
     const val Dagger = "2.40.5"
-    const val FirebaseBom = "29.0.4"
+    const val FirebaseBom = "29.1.0"
 
     object Essential {
         const val Gradle = "7.1.1"
@@ -22,26 +22,27 @@ object Versions {
     object Ktx {
         const val Core = "1.7.0"
         const val PlayCore = "1.8.1"
-        const val LifeCycle = "2.4.0"
-        const val Navigation = "2.4.0"
+        const val Lifecycle = "2.4.0"
+        const val Navigation = "2.4.1"
     }
 
     object Compose {
+        const val Main = "1.1.0"
         const val Lottie = "4.2.2"
         const val Activity = "1.4.0"
-        const val Landscapist = "1.4.5"
-        const val Master = "1.1.0-rc03"
+        const val Landscapist = "1.4.8"
         const val Insets = "0.24.0-alpha"
-        const val Material = "1.1.0-rc01"
         const val ConstraintLayout = "1.0.0"
         const val LifecycleViewModel = "2.4.0"
         const val Accompanist = "0.24.1-alpha"
     }
 
     object Ui {
-        const val Material = "1.5.0"
+        const val Browser = "1.3.0"
         const val AppCompat = "1.4.1"
+        const val PhotoEditor = "2.0.0"
         const val Splash = "1.0.0-beta01"
+        const val ConstraintLayout = "2.1.3"
     }
 
     object Network {
@@ -72,7 +73,7 @@ object Versions {
     }
 
     object OssLicense {
-        const val Master = "17.0.0"
+        const val Main = "17.0.0"
         const val Classpath = "0.10.4"
     }
 
@@ -87,8 +88,10 @@ object Versions {
 @Suppress("MemberVisibilityCanBePrivate")
 object Dependencies {
     const val Orbit = "org.orbit-mvi:orbit-viewmodel:${Versions.Orbit}"
+    const val Browser = "androidx.browser:browser:${Versions.Ui.Browser}"
     const val Coroutine =
         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.Essential.Coroutines}"
+    const val FirebaseBom = "com.google.firebase:firebase-bom:${Versions.FirebaseBom}"
 
     object Di {
         const val Dagger = "com.google.dagger:dagger:${Versions.Dagger}"
@@ -97,8 +100,8 @@ object Dependencies {
 
     val SharedKtx = listOf(
         "androidx.core:core-ktx:${Versions.Ktx.Core}",
-        "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.Ktx.LifeCycle}",
-        "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.Ktx.LifeCycle}"
+        "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.Ktx.Lifecycle}",
+        "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.Ktx.Lifecycle}"
     )
 
     val PresentationOnlyKtx = listOf(
@@ -107,29 +110,29 @@ object Dependencies {
         "androidx.navigation:navigation-fragment-ktx:${Versions.Ktx.Navigation}",
     )
 
-    object Firebase {
-        const val Bom = "com.google.firebase:firebase-bom:${Versions.FirebaseBom}"
-        const val Analytics = "com.google.firebase:firebase-analytics"
-    }
+    val Firebase = listOf(
+        "com.google.firebase:firebase-analytics",
+        "com.google.firebase:firebase-storage-ktx",
+    )
 
     val Compose = listOf(
-        "androidx.compose.ui:ui-tooling:${Versions.Compose.Master}",
+        "androidx.compose.ui:ui-tooling:${Versions.Compose.Main}",
+        "androidx.compose.material:material:${Versions.Compose.Main}",
         "com.airbnb.android:lottie-compose:${Versions.Compose.Lottie}",
         "androidx.activity:activity-compose:${Versions.Compose.Activity}",
-        "androidx.compose.material:material:${Versions.Compose.Material}",
         "com.google.accompanist:accompanist-insets:${Versions.Compose.Insets}",
-        "com.github.skydoves:landscapist-glide:${Versions.Compose.Landscapist}",
+        "com.github.skydoves:landscapist-coil:${Versions.Compose.Landscapist}",
         "com.google.accompanist:accompanist-insets:${Versions.Compose.Accompanist}",
         "com.google.accompanist:accompanist-systemuicontroller:${Versions.Compose.Accompanist}",
         "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.Compose.LifecycleViewModel}",
-        "androidx.constraintlayout:constraintlayout-compose:${Versions.Compose.ConstraintLayout}",
+        "com.google.accompanist:accompanist-navigation-animation:${Versions.Compose.Accompanist}",
+        "androidx.constraintlayout:constraintlayout-compose:${Versions.Compose.ConstraintLayout}"
     )
 
     val Ui = listOf(
         "androidx.appcompat:appcompat:${Versions.Ui.AppCompat}",
         "androidx.core:core-splashscreen:${Versions.Ui.Splash}",
-        "com.google.android.material:material:${Versions.Ui.Material}",
-        "com.google.android.gms:play-services-oss-licenses:${Versions.OssLicense.Master}"
+        "com.google.android.gms:play-services-oss-licenses:${Versions.OssLicense.Main}"
     )
 
     val Jackson = listOf(

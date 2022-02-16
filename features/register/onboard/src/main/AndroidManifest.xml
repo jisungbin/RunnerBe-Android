@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ RunnerBe © 2022 Team AppleMango. all rights reserved.
+  ~ RunnerBe license is under the MIT.
+  ~
+  ~ [AndroidManifest.xml] created by Ji Sungbin on 22. 1. 31. 오후 9:26
+  ~
+  ~ Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
+  -->
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="team.applemango.runnerbe.feature.register.onboard">
+
+    <dist:module
+        dist:instant="false"
+        dist:title="@string/dist_dfm_register_onboard">
+        <dist:fusing dist:include="true" />
+        <dist:delivery>
+            <dist:install-time />
+        </dist:delivery>
+        <dist:removable value="true" />
+    </dist:module>
+
+    <!-- https://github.com/applemango-runnerbe/RunnerBe-Android/issues/19 -->
+    <application tools:ignore="MissingApplicationIcon">
+        <activity
+            android:name=".OnboardActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.RunnerBe">
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="jisungbin.github.io"
+                    android:path="/verify"
+                    android:scheme="https" />
+
+                <data
+                    android:host="runnerbe-auth.shop"
+                    android:path="/verify"
+                    android:scheme="welcome" />
+            </intent-filter>
+        </activity>
+
+        <activity-alias
+            android:name="team.applemango.runnerbe.util.DFMOnboardActivityAlias"
+            android:targetActivity=".OnboardActivity" />
+    </application>
+
+</manifest>

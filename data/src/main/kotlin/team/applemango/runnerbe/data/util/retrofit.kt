@@ -16,25 +16,48 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
 import team.applemango.runnerbe.data.login.api.LoginService
-import team.applemango.runnerbe.data.secret.HOST
+import team.applemango.runnerbe.data.login.api.RegisterService
+import team.applemango.runnerbe.data.mail.api.MailjetService
+import team.applemango.runnerbe.data.secret.Mailjet
+import team.applemango.runnerbe.data.secret.RunnerbeHost
 import team.applemango.runnerbe.data.util.extension.mapper
+import team.applemango.runnerbe.data.util.interceptor.BasicAuthInterceptor
 
-internal fun getInterceptor(vararg interceptors: Interceptor): OkHttpClient {
+private fun getInterceptor(vararg interceptors: Interceptor): OkHttpClient {
     val builder = OkHttpClient.Builder()
     for (interceptor in interceptors) builder.addInterceptor(interceptor)
     return builder.build()
 }
 
-internal val JacksonConverter = JacksonConverterFactory.create(mapper)
+private val JacksonConverter = JacksonConverterFactory.create(mapper)
 
-internal fun provideHttpLoggingInterceptor() =
-    HttpLoggingInterceptor { message -> logeukes("OkHttp") { message } }.apply {
-        level = HttpLoggingInterceptor.Level.BODY
+private fun getHttpLoggingInterceptor() = HttpLoggingInterceptor { message ->
+    if (message.isNotEmpty()) {
+        logeukes("OkHttp") { message }
     }
+}.apply {
+    level = HttpLoggingInterceptor.Level.BODY
+}
 
-internal val loginApi = Retrofit.Builder()
-    .baseUrl(HOST)
+private val runnerbeBaseApi = Retrofit.Builder()
+    .baseUrl(RunnerbeHost)
     .addConverterFactory(JacksonConverter)
-    .client(getInterceptor(provideHttpLoggingInterceptor()))
+    .client(getInterceptor(getHttpLoggingInterceptor()))
     .build()
-    .create(LoginService::class.java)
+
+private val mailjetBaseApi = Retrofit.Builder()
+    .baseUrl(Mailjet.Host)
+    .addConverterFactory(JacksonConverter)
+    .client(
+        getInterceptor(
+            getHttpLoggingInterceptor(),
+            BasicAuthInterceptor(Mailjet.ApiKey, Mailjet.SecretKey)
+        )
+    )
+    .build()
+
+internal val loginApi = runnerbeBaseApi.create(LoginService::class.java)
+
+internal val registerApi = runnerbeBaseApi.create(RegisterService::class.java)
+
+internal val mailjetApi = mailjetBaseApi.create(MailjetService::class.java)

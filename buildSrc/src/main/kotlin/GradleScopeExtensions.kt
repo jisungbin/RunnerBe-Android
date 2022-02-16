@@ -13,7 +13,7 @@ import org.gradle.kotlin.dsl.version
 import org.gradle.plugin.use.PluginDependenciesSpec
 
 // plugin
-fun PluginDependenciesSpec.installLibraryDfmHiltTestScabbard(
+fun PluginDependenciesSpec.installLibraryDfmHiltTest(
     isLibrary: Boolean = true,
     isDFM: Boolean = false,
 ) {
@@ -29,11 +29,11 @@ fun PluginDependenciesSpec.installLibraryDfmHiltTestScabbard(
         id("dagger.hilt.android.plugin")
     }
     id("de.mannodermaus.android-junit5")
-    id("scabbard.gradle") version Versions.Util.Scabbard
+    // id("scabbard.gradle") version Versions.Util.Scabbard
 }
 
 // dependencies
-fun DependencyHandler.installSharedComposeHiltTest(
+fun DependencyHandler.installSharedComposeOrbitHiltTest(
     isSharedModule: Boolean = false,
     useDagger: Boolean = false,
     excludeCompose: Boolean = false,
@@ -42,7 +42,7 @@ fun DependencyHandler.installSharedComposeHiltTest(
         implementationProject(ProjectConstants.Shared)
     }
     if (!excludeCompose) {
-        implementationProject(ProjectConstants.Theme)
+        implementationProject(ProjectConstants.SharedCompose)
         Dependencies.Compose.forEach(::implementation)
     }
     implementation(Dependencies.Orbit)

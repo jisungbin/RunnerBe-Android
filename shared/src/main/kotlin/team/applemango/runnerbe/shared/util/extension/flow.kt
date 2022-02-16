@@ -9,17 +9,23 @@
 
 package team.applemango.runnerbe.shared.util.extension
 
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.cancellable
 
 fun <T> Flow<T>.collectWithLifecycle(
     lifecycleOwner: LifecycleOwner,
-    action: suspend (T) -> Unit,
+    action: suspend CoroutineScope.(T) -> Unit,
 ) {
     lifecycleOwner.lifecycleScope.launchWhenCreated {
-        flowWithLifecycle(lifecycleOwner.lifecycle).collect { value ->
+        flowWithLifecycle(
+            lifecycle = lifecycleOwner.lifecycle,
+            minActiveState = Lifecycle.State.CREATED
+        ).cancellable().collect { value ->
             action(value)
         }
     }

@@ -11,7 +11,7 @@
 @Suppress("SpellCheckingInspection")
 object ProjectConstants {
     const val Data = ":data"
-    const val Theme = ":theme"
+    const val SharedCompose = ":shared-compose"
     const val Domain = ":domain"
     const val Shared = ":shared"
     const val Mail = ":features:mail"
@@ -21,5 +21,6 @@ object ProjectConstants {
     const val HomeBoard = ":features:home:board"
     const val HomeNotification = ":features:home:notification"
     const val RegisterSnsLogin = ":features:register:snslogin"
-    const val RegisterInformation = ":features:register:information"
+    const val RegisterOnboard = ":features:register:onboard"
+    const val XmlNumberPicker = ":xml:numberpicker"
 }

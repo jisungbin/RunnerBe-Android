@@ -5,44 +5,47 @@
 <p align="center">
   <a href="https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/badge/License-MIT-blue"/></a>
   <a href="https://developer.android.com/about/versions/lollipop"><img alt="API 21+" src="https://img.shields.io/badge/API-21%2B-brightgreen.svg"/></a>
-  <a href="https://github.com/applemango-runnerbe/RunnerBe-Android/actions/workflows/android-ci.yml"> <img alt="CI" src="https://github.com/applemango-runnerbe/RunnerBe-Android/actions/workflows/android-ci.yml/badge.svg?branch=develop"/></a>
-  <a href="https://www.codefactor.io/repository/github/applemango-runnerbe/runnerbe-android/overview"><img src="https://www.codefactor.io/repository/github/applemango-runnerbe/runnerbe-android/badge" alt="CodeFactor" /></a>
+  <a href="https://github.com/applemango-runnerbe/RunnerBe-Android"><img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/applemango-runnerbe/RunnerBe-Android"/></a>
   <br/>
-  <a href="https://github.com/applemango-runnerbe/RunnerBe-Android"><img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/applemango-runnerbe/RunnerBe-Android" /></a>
-<!--   <a href="https://github.com/applemango-runnerbe/RunnerBe-Android"><img alt="Lines of code" src="https://img.shields.io/tokei/lines/github/applemango-runnerbe/RunnerBe-Android" /></a> -->
-  <a href="https://kotlin.link"><img src="https://kotlin.link/awesome-kotlin.svg" alt="awesome-kotlin" /></a>
-  <a href="https://ktlint.github.io/"><img src="https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg" alt="ktlint" /></a>
+  <a href="https://www.codefactor.io/repository/github/applemango-runnerbe/runnerbe-android/overview"><img src="https://www.codefactor.io/repository/github/applemango-runnerbe/runnerbe-android/badge" alt="CodeFactor"/></a>
+  <a href="https://sonarcloud.io/summary/new_code?id=applemango-runnerbe_RunnerBe-Android"><img src="https://sonarcloud.io/api/project_badges/measure?project=applemango-runnerbe_RunnerBe-Android&metric=sqale_rating" alt="Maintainability Rating"/>     
+  <a href="https://sonarcloud.io/summary/new_code?id=applemango-runnerbe_RunnerBe-Android"><img src="https://sonarcloud.io/api/project_badges/measure?project=applemango-runnerbe_RunnerBe-Android&metric=ncloc" alt="Lines of Code"/></a>
+  <br/>
+  <a href="https://kotlin.link"><img src="https://kotlin.link/awesome-kotlin.svg" alt="awesome-kotlin"/></a>
+  <a href="https://ktlint.github.io/"><img src="https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg" alt="ktlint"/></a>
   <a href="https://wakatime.com/badge/user/2da851dd-14d7-47dd-821a-7d902e52c1c2/project/eead2f63-3468-4e8a-98b2-12de1e4cebb2"><img src="https://wakatime.com/badge/user/2da851dd-14d7-47dd-821a-7d902e52c1c2/project/eead2f63-3468-4e8a-98b2-12de1e4cebb2.svg" alt="wakatime"></a>
 </p>
 
 ---
-
+  
+# 🚀🚀🚀 SUPER-FAST-DEV ON 🚀🚀🚀
+ 
+시간이 매우 촉박하여 디테일과 앱 스킬들을 다 무시하고 모놀리식 구성으로 개발합니다.
+  
+**따라서 코드가 매우 더러우며 코드 확인을 권장하지 않습니다.**
+  
+프로젝트 기간이 끝난 이후, 이쁘고 아름답게 리펙토링 할 예정입니다. 
+  
 ## Tech Skill
 
 #### Architecture
 
-- Layered Architecture (Presentation/Domain/Data)
-- MVI Pattern (use framework: [orbit](https://github.com/orbit-mvi/orbit-mvi))
-- Dynamic Feature Module (:features:register)
 - TDD
+- MVW Pattern
+- Layered Architecture
+- Dynamic Feature Module (:features:register)
 
 #### CI/CD
 
-- Github Action
+- Github Actions (unit test)
 - Fastlane + Firebase App Distribution
 
 #### Jetpack
 
 - Hilt
-- Paging
-- WorkManager
-- CameraX
+- Compose
 - DataStore
-
-#### Design System
-
-- ~~[Honeycomb-core](https://github.com/applemango-runnerbe/honeycomb)~~
-- Jetpack Compose
+- Navigation
 
 #### Test
 
@@ -53,9 +56,9 @@
 #### Etc
 
 - GMS
-- Retrofit, OkHttp
-- Coroutine/Flow
 - WindowInsets
+- Coroutine/Flow
+- Retrofit, OkHttp
 
 ## Layer
 
@@ -75,6 +78,10 @@
 > TODO
 
 ## Developer
+
+> [2월 4일] 개발 시작
+> 
+> [2월 13일] 온보딩 전체 개발 완료 (125시간)
 
 - **[PM]** [@jisungbin](https://github.com/jisungbin)
 
