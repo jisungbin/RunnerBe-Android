@@ -28,17 +28,23 @@
             android:name=".OnboardActivity"
             android:exported="true"
             android:launchMode="singleTask"
-            android:theme="@style/Theme.RunnerBe"
-            android:windowSoftInputMode="adjustResize">
-            <intent-filter>
+            android:theme="@style/Theme.RunnerBe">
+
+            <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="runnerbe-auth.shop"
+                    android:host="jisungbin.github.io"
+                    android:path="/verify"
                     android:scheme="https" />
+
+                <data
+                    android:host="runnerbe-auth.shop"
+                    android:path="/verify"
+                    android:scheme="welcome" />
             </intent-filter>
         </activity>
 

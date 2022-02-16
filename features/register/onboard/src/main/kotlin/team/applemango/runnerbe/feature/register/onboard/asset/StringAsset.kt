@@ -11,7 +11,7 @@ package team.applemango.runnerbe.feature.register.onboard.asset
 
 internal object StringAsset {
     const val Empty = ""
-    const val OK = "OK"
+    const val OK = "확인했어요"
 
     object Title {
         const val ReadTerms = "먼저 이용약관을 읽고\n동의해주세요!"
@@ -38,6 +38,7 @@ internal object StringAsset {
         const val Next = "다음"
         const val NoEmail = "회사 이메일이 없어요"
         const val Verify = "인증하기"
+        const val ReVerify = "재인증"
         const val Start = "START!"
         const val GotoMain = "메인 화면으로"
     }
@@ -78,7 +79,7 @@ internal object StringAsset {
         const val NonInstallBrowser = "설치돼 있는 브라우저 앱이 없어요 \uD83D\uDE22"
         const val ImageUploading = "사진을 업로드하고 있어요."
         const val RegisterSuccess = "회원가입이 완료됐어요! \uD83E\uDD73" // 🥳
-        const val DuplicateUuid = "유저 고유 번호가 중복돼요."
+        const val DuplicateUuid = "동일 계정 내 가입 이력이 존재해요."
         const val DuplicateEmail = "이미 사용중인 이메일이에요."
         const val DuplicateNickname = "랜덤으로 닉네임을 골랐지만 이미 사용중인 닉네임이네요,\n다시 시도해 주세요."
         const val DatabaseError = "서버 데이터베이스에서 에러가 발생했어요."

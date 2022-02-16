@@ -13,7 +13,7 @@ import org.gradle.kotlin.dsl.version
 import org.gradle.plugin.use.PluginDependenciesSpec
 
 // plugin
-fun PluginDependenciesSpec.installLibraryDfmHiltTestScabbard(
+fun PluginDependenciesSpec.installLibraryDfmHiltTest(
     isLibrary: Boolean = true,
     isDFM: Boolean = false,
 ) {
@@ -29,7 +29,7 @@ fun PluginDependenciesSpec.installLibraryDfmHiltTestScabbard(
         id("dagger.hilt.android.plugin")
     }
     id("de.mannodermaus.android-junit5")
-    id("scabbard.gradle") version Versions.Util.Scabbard
+    // id("scabbard.gradle") version Versions.Util.Scabbard
 }
 
 // dependencies

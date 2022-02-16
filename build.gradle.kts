@@ -16,13 +16,14 @@ buildscript {
     }
 
     dependencies {
+        // classpath("com.spotify.ruler:ruler-gradle-plugin:1.0.0")
         classpath("com.android.tools.build:gradle:${Versions.Essential.Gradle}")
         classpath("com.google.gms:google-services:${Versions.Essential.GoogleService}")
         classpath("com.google.dagger:hilt-android-gradle-plugin:${Versions.Jetpack.Hilt}")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.Essential.Kotlin}")
         classpath("de.mannodermaus.gradle.plugins:android-junit5:${Versions.Test.JUnitGradle}")
         classpath("com.google.android.gms:oss-licenses-plugin:${Versions.OssLicense.Classpath}")
-        classpath("com.vanniktech:gradle-dependency-graph-generator-plugin:${Versions.Util.DependencyGraphGenerator}")
+        // classpath("com.vanniktech:gradle-dependency-graph-generator-plugin:${Versions.Util.DependencyGraphGenerator}")
         classpath("com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:${Versions.Util.SecretsGradlePlugin}")
     }
 }
@@ -46,14 +47,14 @@ allprojects {
         }
     }
 
-    configurations.all {
+    /*configurations.all {
         resolutionStrategy.eachDependency {
             if (requested.group == "com.github.kittinunf.result" && requested.name == "result" && requested.version == "3.0.0") {
                 useVersion("3.0.1")
                 because("Transitive dependency of Scabbard, currently not available on mavenCentral()")
             }
         }
-    }
+    }*/
 }
 
 subprojects {
@@ -73,6 +74,6 @@ tasks.register("clean", Delete::class) {
 }
 
 apply {
-    plugin("com.vanniktech.dependency.graph.generator")
+    // plugin("com.vanniktech.dependency.graph.generator")
     from("gradle/projectDependencyGraph.gradle")
 }
