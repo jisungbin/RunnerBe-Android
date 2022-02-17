@@ -30,7 +30,7 @@
 
 # 🥇 마지막 실력 향상 프로젝트
 
-토스/뱅샐/당근 에 지원하기 전에, 마지막으로 진행하는 실력 향상용 프로젝트 입니다.
+토스/뱅샐/당근 에 지원(2022년 12월 26일)하기 전에, 마지막으로 진행하는 실력 향상용 프로젝트 입니다.
 
 따라서 **아키텍처가 매우 오버하게 적용**됐으며, 아래와 같은 기술들을 처음 적용합니다.
 
@@ -39,6 +39,7 @@
 - TDD
 - Unit Test + [Test Coverage 100% 목표](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/35)
 - DataStore
+- WindowInsets
 - Feature별 모듈 분리
 - Complex Custom View
 
