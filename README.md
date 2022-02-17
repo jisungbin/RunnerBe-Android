@@ -35,9 +35,9 @@
 따라서 **아키텍처가 매우 오버하게 적용**됐으며, 아래와 같은 기술들을 처음 적용합니다.
 
 - DFM
-- CI/CD
+- [CI](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/22)/CD
 - TDD
-- Unit Test + Test Coverage 100% 목표
+- Unit Test + [Test Coverage 100% 목표](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/35)
 - DataStore
 - Feature별 모듈 분리
 - Complex Custom View
