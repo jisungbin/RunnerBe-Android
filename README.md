@@ -16,7 +16,6 @@
   <a href="https://wakatime.com/badge/user/2da851dd-14d7-47dd-821a-7d902e52c1c2/project/eead2f63-3468-4e8a-98b2-12de1e4cebb2"><img src="https://wakatime.com/badge/user/2da851dd-14d7-47dd-821a-7d902e52c1c2/project/eead2f63-3468-4e8a-98b2-12de1e4cebb2.svg" alt="wakatime"></a>
 </p>
 
-
 ---
 
 # 🚀🚀🚀 SUPER-FAST-DEV ON 🚀🚀🚀
@@ -41,6 +40,7 @@
 - Unit Test + Test Coverage 100% 목표
 - DataStore
 - Feature별 모듈 분리
+- Custom View
 
 ---
 
