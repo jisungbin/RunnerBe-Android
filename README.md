@@ -84,8 +84,6 @@
 ## Developer
 
 > [2월 4일] 개발 시작
-> 
-> [2월 13일] 온보딩 전체 개발 완료 (125시간)
 
 - **[PM]** [@jisungbin](https://github.com/jisungbin)
 
