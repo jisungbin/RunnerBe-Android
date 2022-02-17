@@ -16,20 +16,34 @@
   <a href="https://wakatime.com/badge/user/2da851dd-14d7-47dd-821a-7d902e52c1c2/project/eead2f63-3468-4e8a-98b2-12de1e4cebb2"><img src="https://wakatime.com/badge/user/2da851dd-14d7-47dd-821a-7d902e52c1c2/project/eead2f63-3468-4e8a-98b2-12de1e4cebb2.svg" alt="wakatime"></a>
 </p>
 
+
 ---
-  
+
 # 🚀🚀🚀 SUPER-FAST-DEV ON 🚀🚀🚀
- 
+
 시간이 매우 촉박하여 퍼포먼스와 앱 스킬들을 다 무시하고 모놀리식 구성으로 [재개발](https://github.com/applemango-runnerbe/RunnerBe-Android-SuperFastDev)합니다.
-  
+
 **따라서 코드가 매우 더러우며 코드 확인을 권장하지 않습니다.**
-  
+
 프로젝트 기간이 끝난 이후, 이쁘고 아름답게 리펙토링 할 예정입니다. 
-  
+
 현재 main 브런치 코드와 리드미에 적힌 스팩들은 SUPER-FAST-DEV 가 OFF 인 상태일 때 개발된 코드들 입니다.
-  
+
+# 🥇 마지막 실력 향상 프로젝트
+
+토스/뱅샐/당근 에 지원하기 전에, 마지막으로 진행하는 실력 향상용 프로젝트 입니다.
+
+따라서 **아키텍처가 매우 오버하게 적용**됐으며, 아래와 같은 기술들을 처음 적용합니다.
+
+- DFM
+- CI/CD
+- TDD
+- Unit Test + Test Coverage 100% 목표
+- DataStore
+- Feature별 모듈 분리
+
 ---
-  
+
 ## Tech Skill
 
 #### Architecture
@@ -76,7 +90,6 @@
   <img src="https://img.shields.io/badge/Module-Android%20Library-%2381D4FA" />
 </p>
 
-
 #### Dependency Injection Graph
 
 > TODO
@@ -91,6 +104,4 @@
 
 ## License
 
-RunnerBe는 MIT 라이선스를 따릅니다. 자세한
-내용은 [LICENSE](https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE) 파일을 확인해
-주세요.
+RunnerBe는 MIT 라이선스를 따릅니다. 자세한 내용은 [LICENSE](https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE) 파일을 확인해 주세요.
