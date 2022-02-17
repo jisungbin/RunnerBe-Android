@@ -40,7 +40,7 @@
 - Unit Test + Test Coverage 100% 목표
 - DataStore
 - Feature별 모듈 분리
-- Custom View
+- Complex Custom View
 
 ---
 
