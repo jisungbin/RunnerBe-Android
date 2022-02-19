@@ -81,7 +81,7 @@
 
 ## Layer
 
-#### Project Dependencies
+#### Project Dependencies Graph
 
 ![](art/project-dependency-graph/graph.dot.png)
 
