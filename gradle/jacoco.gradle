@@ -7,10 +7,12 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
+// reference: https://docs.gradle.org/current/userguide/jacoco_plugin.html
+
 apply plugin: 'jacoco'
 
 jacoco {
-    toolVersion '0.8.7'
+    toolVersion "0.8.7"
 }
 
 tasks.withType(Test) {
