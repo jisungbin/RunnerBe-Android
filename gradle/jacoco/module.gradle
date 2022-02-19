@@ -2,17 +2,15 @@
  * RunnerBe © 2022 Team AppleMango. all rights reserved.
  * RunnerBe license is under the MIT.
  *
- * [jacoco.gradle] created by Ji Sungbin on 22. 2. 19. 오후 10:12
+ * [module.gradle] created by Ji Sungbin on 22. 2. 19. 오후 10:26
  *
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-// reference: https://docs.gradle.org/current/userguide/jacoco_plugin.html
-
 apply plugin: 'jacoco'
 
 jacoco {
-    toolVersion "0.8.7"
+    toolVersion '0.8.7'
 }
 
 tasks.withType(Test) {
@@ -20,10 +18,10 @@ tasks.withType(Test) {
 }
 
 project.afterEvaluate {
-    tasks.create(name: "allDebugCoverage", type: JacocoReport) {
+    tasks.create(name: "debugCoverage", type: JacocoReport, dependsOn: "testDebugUnitTest") {
 
         group = "Reporting"
-        description = "Generate overall Jacoco coverage report for the debug build."
+        description = "Generate Jacoco coverage reports for the debug build."
 
         reports {
             html.enabled = true
@@ -52,28 +50,13 @@ project.afterEvaluate {
                 '**/*Binding.*'
         ]
 
-        def kClasses = subprojects.collect { proj ->
-            "${proj.buildDir}/tmp/kotlin-classes/debug"
-        }
+        def kClasses = "${project.buildDir}/tmp/kotlin-classes/debug"
+        def kotlinClasses = fileTree(dir: kClasses, excludes: excludes)
+        classDirectories.from = file(kotlinClasses)
 
-        def kotlinClasses = kClasses.collect { path ->
-            fileTree(dir: path, excludes: excludes)
-        }
+        def sourceDirs = "${project.projectDir}/src/main/kotlin"
+        sourceDirectories.from = file(sourceDirs)
 
-        def sources = subprojects.collect { proj ->
-            ["${proj.projectDir}/src/main/kotlin"]
-        }.flatten()
-
-        classDirectories.from = files(kotlinClasses)
-        sourceDirectories.from = files(sources)
-
-        def executions = subprojects.findAll { proj ->
-            def path = "${proj.buildDir}/jacoco/testDebugUnitTest.exec"
-            new File(path).exists()
-        }.collect { proj ->
-            "${proj.buildDir}/jacoco/testDebugUnitTest.exec"
-        }
-
-        executionData.from = files(executions)
+        executionData.from = file("${project.buildDir}/jacoco/testDebugUnitTest.exec")
     }
 }
