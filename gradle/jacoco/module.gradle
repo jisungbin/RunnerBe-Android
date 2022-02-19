@@ -52,7 +52,7 @@ project.afterEvaluate {
 
         def kClasses = "${project.buildDir}/tmp/kotlin-classes/debug"
         def kotlinClasses = fileTree(dir: kClasses, excludes: excludes)
-        classDirectories.from = file(kotlinClasses)
+        classDirectories.from = files([kotlinClasses]) // must files array
 
         def sourceDirs = "${project.projectDir}/src/main/kotlin"
         sourceDirectories.from = file(sourceDirs)
