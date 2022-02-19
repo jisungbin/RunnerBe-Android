@@ -1,17 +1,17 @@
 package team.applemango.runnerbe.feature.register.snslogin
 
-import org.junit.Test
-
-import org.junit.Assert.*
+import org.hamcrest.MatcherAssert
+import org.hamcrest.Matchers
+import org.junit.jupiter.api.Test
 
 /**
  * Example local unit test, which will execute on the development machine (host).
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-class ExampleUnitTest {
+class BasicUnitTest {
     @Test
     fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+        MatcherAssert.assertThat("1", Matchers.`is`("1"))
     }
 }
