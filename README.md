@@ -17,8 +17,7 @@
 </p>
 
 ---
-
-# 🚀🚀🚀 SUPER-FAST-DEV ON 🚀🚀🚀
+<!-- # 🚀🚀🚀 SUPER-FAST-DEV ON 🚀🚀🚀
 
 시간이 매우 촉박하여 퍼포먼스와 앱 스킬들을 다 무시하고 모놀리식 구성으로 [재개발](https://github.com/applemango-runnerbe/RunnerBe-Android-SuperFastDev)합니다.
 
@@ -26,13 +25,13 @@
 
 프로젝트 기간이 끝난 이후, 이쁘고 아름답게 리펙토링 할 예정입니다. 
 
-현재 main 브런치 코드와 리드미에 적힌 스팩들은 SUPER-FAST-DEV 가 OFF 인 상태일 때 개발된 코드들 입니다.
+현재 main 브런치 코드와 리드미에 적힌 스팩들은 SUPER-FAST-DEV 가 OFF 인 상태일 때 개발된 코드들 입니다. -->
 
 # 🥇 마지막 실력 향상 프로젝트
 
 토스/뱅샐/당근 에 지원(2022년 12월 26일)하기 전에, 마지막으로 진행하는 *엄청난* 실력 향상용 프로젝트 입니다.<br/>(엄청난 실력 향상의 변천사: 중3, 고2, 이 프로젝트 이후 예정)
 
-따라서 **아키텍처가 매우 오버하게 적용**됐으며, 아래와 같은 기술들을 처음 적용합니다.
+따라서 **아키텍처가 다소 오버하게 적용**됐으며, 아래와 같은 기술들을 처음 적용합니다.
 
 - DFM
 - [CI](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/22)/CD
