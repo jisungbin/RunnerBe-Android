@@ -284,6 +284,11 @@ internal fun OnboardRouter(
                     step = Step.VerifyWithEmailDone,
                     bottomCTAButtonEnabled = true,
                     onBottomCTAButtonAction = { // 메인 화면으로
+                        coroutineScope.launch {
+                            context.dataStore.edit { preferences ->
+                                preferences[DataStoreKey.Login.RegisterDone] = true
+                            }
+                        }
                         activity.changeActivityWithAnimation<MainActivity>()
                     }
                 ) {
