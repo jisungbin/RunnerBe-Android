@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -30,6 +29,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,15 +46,14 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.datastore.preferences.core.edit
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.constant.EmailVerifyState
-import team.applemango.runnerbe.shared.compose.component.CustomAlertDialog
-import team.applemango.runnerbe.shared.compose.extension.collectAsStateWithLifecycleRemember
+import team.applemango.runnerbe.shared.compose.component.RunnerbeDialog
 import team.applemango.runnerbe.shared.compose.extension.collectWithLifecycleRememberOnLaunchedEffect
+import team.applemango.runnerbe.shared.compose.extension.withLifecycleRemember
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.constant.DataStoreKey
@@ -62,6 +61,7 @@ import team.applemango.runnerbe.shared.util.extension.dataStore
 import team.applemango.runnerbe.shared.util.extension.runIf
 import team.applemango.runnerbe.shared.util.extension.toMessage
 
+private const val EmailVerifyStateDoneMessage = "EmailVerifyStateDone"
 private val Shape = RoundedCornerShape(8.dp)
 
 @Composable
@@ -71,7 +71,7 @@ internal fun EmailVerify(vm: OnboardViewModel) {
     val coroutineScope = rememberCoroutineScope()
     var emailSent by remember { mutableStateOf(false) }
     val emailInputFlow = remember { MutableStateFlow("") }
-    val emailInputState by emailInputFlow.collectAsStateWithLifecycleRemember("")
+    val emailInputState by emailInputFlow.withLifecycleRemember().collectAsState("")
     var emailVerifyState by remember { mutableStateOf<EmailVerifyState>(EmailVerifyState.None) }
     var emailSendButtonEnabled by remember { mutableStateOf(false) }
     var emailVerifyNoticeDialogVisible by remember { mutableStateOf(true) }
@@ -209,10 +209,12 @@ internal fun EmailVerify(vm: OnboardViewModel) {
             modifier = Modifier.padding(top = 12.dp),
             targetState = emailVerifyState
         ) { state ->
-            var message = ""
+            val message: String
             var style = Typography.Body12R.copy(color = ColorAsset.ErrorLight)
             when (state) {
-                EmailVerifyState.None -> {}
+                EmailVerifyState.None -> {
+                    message = EmailVerifyStateDoneMessage
+                }
                 EmailVerifyState.Sent -> { // success
                     message = StringAsset.Hint.SentVerifyLink
                     style = Typography.Body12R.copy(color = ColorAsset.Primary)
@@ -236,7 +238,7 @@ internal fun EmailVerify(vm: OnboardViewModel) {
                     }
                 }
             }
-            if (message.isNotEmpty()) {
+            if (message != EmailVerifyStateDoneMessage) {
                 Text(text = message, style = style)
             }
         }
@@ -248,34 +250,27 @@ private fun EmailVerifyLinkNoticeDialog(
     visible: Boolean,
     onDismissRequest: () -> Unit,
 ) {
-    if (visible) {
-        CustomAlertDialog(onDismissRequest = { onDismissRequest() }) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-                    .clip(RoundedCornerShape(12.dp))
-                    .background(color = ColorAsset.G5)
-            ) {
-                Text(
-                    modifier = Modifier
-                        .padding(top = 24.dp)
-                        .padding(horizontal = 24.dp),
-                    text = StringAsset.Dialog.EmailVerifyLinkNotice,
-                    style = Typography.Title18R.copy(color = ColorAsset.G1)
-                )
-                Text(
-                    modifier = Modifier
-                        .padding(12.dp)
-                        .align(Alignment.End)
-                        .clickable {
-                            onDismissRequest()
-                        }
-                        .padding(12.dp),
-                    text = StringAsset.OK,
-                    style = Typography.Body14M.copy(color = ColorAsset.Primary)
-                )
-            }
-        }
+    RunnerbeDialog(
+        visible = visible,
+        onDismissRequest = { onDismissRequest() }
+    ) {
+        Text(
+            modifier = Modifier
+                .padding(top = 24.dp)
+                .padding(horizontal = 24.dp),
+            text = StringAsset.Dialog.EmailVerifyLinkNotice,
+            style = Typography.Title18R.copy(color = ColorAsset.G1)
+        )
+        Text(
+            modifier = Modifier
+                .padding(12.dp)
+                .align(Alignment.End)
+                .clickable {
+                    onDismissRequest()
+                }
+                .padding(12.dp),
+            text = StringAsset.OK,
+            style = Typography.Body14M.copy(color = ColorAsset.Primary)
+        )
     }
 }
