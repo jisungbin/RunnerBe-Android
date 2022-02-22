@@ -69,7 +69,7 @@ internal fun TermsTable(onAllTermsCheckStateChanged: (allChecked: Boolean) -> Un
         checkmarkColor = GradientAsset.EndColor
     )
 
-    fun saveState() {
+    fun saveTermsAllCheckState() {
         coroutineScope.launch {
             context.dataStore.edit { preferences ->
                 preferences[DataStoreKey.Onboard.TermsAllCheck] = isAllTermsCheckedState
@@ -90,13 +90,13 @@ internal fun TermsTable(onAllTermsCheckStateChanged: (allChecked: Boolean) -> Un
             true
         }
         onAllTermsCheckStateChanged(isAllTermsCheckedState)
-        saveState()
+        saveTermsAllCheckState()
     }
 
     fun checkAllChecked() { // 개별 동의 버튼 토글 후, 전체 동의 됐는지 체크
         isAllTermsCheckedState = termsCheckState.all { it }
         onAllTermsCheckStateChanged(isAllTermsCheckedState)
-        saveState()
+        saveTermsAllCheckState()
     }
 
     // 위치 고정 (toggleAllTermsCheck 함수 사용)

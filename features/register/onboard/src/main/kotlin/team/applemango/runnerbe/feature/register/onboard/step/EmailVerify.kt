@@ -118,7 +118,6 @@ internal fun EmailVerify(vm: OnboardViewModel) {
 
     LaunchedEffect(Unit) {
         emailInputFlowWithLifecycle
-            .flowWithLifecycle(lifecycleOwner.lifecycle)
             .debounce(300L)
             .collect { email ->
                 context.dataStore.edit { preferences ->
