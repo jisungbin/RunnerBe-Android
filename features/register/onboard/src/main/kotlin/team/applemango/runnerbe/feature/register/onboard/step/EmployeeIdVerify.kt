@@ -130,33 +130,35 @@ internal fun EmployeeIdVerify(photo: Bitmap?, onPhotoChanged: (photo: Bitmap?) -
         }
     )
 
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-    ) {
-        Crossfade(photo != null) { photoIsReady ->
-            when (photoIsReady) {
-                true -> { // visible 바뀔 때 photo 가 null 임
-                    PhotoScreen(photo = photo, onPhotoChanged = onPhotoChanged)
-                }
-                else -> {
-                    PhotoPickScreen(photoPickFabClickAction = {
-                        photoTakenTypeDialogVisibleState = true
-                    })
+    Column(modifier = Modifier.fillMaxSize()) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+        ) {
+            Crossfade(photo != null) { photoIsReady ->
+                when (photoIsReady) {
+                    true -> { // visible 바뀔 때 photo 가 null 임
+                        PhotoScreen(photo = photo, onPhotoChanged = onPhotoChanged)
+                    }
+                    else -> {
+                        PhotoPickScreen(photoPickFabClickAction = {
+                            photoTakenTypeDialogVisibleState = true
+                        })
+                    }
                 }
             }
         }
-    }
-    LazyColumn(
-        modifier = Modifier.padding(top = 20.dp),
-        verticalArrangement = Arrangement.spacedBy(2.dp)
-    ) {
-        items(noticeTexts) { notice ->
-            Text(
-                text = notice.parseHtml(),
-                style = Typography.Body14R.copy(color = ColorAsset.G2_5)
-            )
+        LazyColumn(
+            modifier = Modifier.padding(top = 20.dp),
+            verticalArrangement = Arrangement.spacedBy(2.dp)
+        ) {
+            items(noticeTexts) { notice ->
+                Text(
+                    text = notice.parseHtml(),
+                    style = Typography.Body14R.copy(color = ColorAsset.G2_5)
+                )
+            }
         }
     }
 }
