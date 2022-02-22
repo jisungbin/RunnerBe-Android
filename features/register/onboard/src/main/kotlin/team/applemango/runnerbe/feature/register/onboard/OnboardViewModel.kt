@@ -51,9 +51,6 @@ private val UserNullException =
 private val ImageUpdateExceptionWithNull =
     Exception("Image upload is fail. But, exception is null.")
 
-private val alphabetRange = ('a'..'z') + ('A'..'Z') + (0..10)
-private val randomPassword get() = List(10) { alphabetRange.random() }.joinToString("")
-
 internal class OnboardViewModel @Inject constructor(
     private val checkUsableEmailUseCase: CheckUsableEmailUseCase,
     private val userRegisterUseCase: UserRegisterUseCase,
@@ -148,13 +145,16 @@ internal class OnboardViewModel @Inject constructor(
     }
 
     /**
+     * 매우 좋지 않은 방식임
+     * https://github.com/applemango-runnerbe/RunnerBe-Android/issues/36 참고
+     *
      * @return 성공시 이미지 주소, 실패시 null
      */
     private suspend fun uploadImage(photo: Bitmap, userUuid: String): String? =
         suspendCancellableCoroutine { continuation ->
             val baos = ByteArrayOutputStream()
             photo.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-            val data = baos.toByteArray() // TODO: 메모리 사용에 안 좋은 방식, 개선 필요
+            val data = baos.toByteArray()
             storageRef.child(FirebaseStoragePath).child(userUuid).run {
                 putBytes(data)
                     .continueWithTask { downloadUrl }
