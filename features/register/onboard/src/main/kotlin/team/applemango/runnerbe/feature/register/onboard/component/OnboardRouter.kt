@@ -17,7 +17,6 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -26,6 +25,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.material.Icon
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
@@ -81,23 +81,23 @@ internal fun OnboardRouter(
     val context = LocalContext.current
     val activity = context as Activity
     val coroutineScope = rememberCoroutineScope()
-    var stepIndex by remember { mutableStateOf(0) }
-    var stepIndexString by remember { mutableStateOf("") }
-    var photo by remember { mutableStateOf<Bitmap?>(null) }
-    var enableGoNextStep by remember { mutableStateOf(false) }
+    var stepIndexState by remember { mutableStateOf(0) }
+    var stepIndexStringState by remember { mutableStateOf("") }
+    var photoState by remember { mutableStateOf<Bitmap?>(null) }
+    var enableGoNextStepState by remember { mutableStateOf(false) }
 
-    stepIndex = when (navController.currentBackStackEntryAsState().value?.destination?.route) {
+    stepIndexState = when (navController.currentBackStackEntryAsState().value?.destination?.route) {
         Step.Terms.name -> 0
         Step.Year.name -> 1
         Step.Gender.name -> 2
         Step.Job.name -> 3
         Step.VerifyWithEmail.name, Step.VerifyWithEmployeeId.name -> 4
         Step.VerifyWithEmailDone.name, Step.VerifyWithEmployeeIdRequestDone.name -> 0
-        else -> stepIndex
+        else -> stepIndexState
     }
 
-    if (stepIndex != 0) {
-        stepIndexString = "$stepIndex/4"
+    if (stepIndexState != 0) {
+        stepIndexStringState = "$stepIndexState/4"
     }
 
     fun confirmFinish() {
@@ -122,7 +122,7 @@ internal fun OnboardRouter(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),
-            targetState = stepIndex != 0
+            targetState = stepIndexState != 0
         ) { showTopBar ->
             when (showTopBar) {
                 true -> {
@@ -131,7 +131,7 @@ internal fun OnboardRouter(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Image(
+                        Icon(
                             modifier = Modifier.clickable { // < 뒤로가기
                                 if (!navController.popBackStack()) {
                                     // 뒤로 갈 수 있는 백스택이 없다면 로그인 화면으로 돌아가야 함
@@ -145,20 +145,22 @@ internal fun OnboardRouter(
                                 }
                             },
                             painter = rememberDrawablePainter(presentationDrawableOf("ic_round_arrow_left_24")),
-                            contentDescription = null
+                            contentDescription = null,
+                            tint = ColorAsset.G3_5
                         )
                         Text(
-                            text = stepIndexString,
+                            text = stepIndexStringState,
                             style = Typography.Body16R.copy(color = ColorAsset.G3)
                         )
-                        Image(
+                        Icon(
                             modifier = Modifier.clickable { // X 온보딩 건너뛰기
                                 // TODO: Dialog
                                 toast(context, "todo: dialog")
                                 context.changeActivityWithAnimation<MainActivity>()
                             },
                             painter = rememberDrawablePainter(presentationDrawableOf("ic_round_close_24")),
-                            contentDescription = null
+                            contentDescription = null,
+                            tint = ColorAsset.G3_5
                         )
                     }
                 }
@@ -177,7 +179,7 @@ internal fun OnboardRouter(
             composable(route = Step.Terms.name) {
                 OnboardContent(
                     step = Step.Terms,
-                    bottomCTAButtonEnabled = enableGoNextStep,
+                    bottomCTAButtonEnabled = enableGoNextStepState,
                     onBottomCTAButtonAction = {
                         coroutineScope.launch {
                             context.dataStore.edit { preferences ->
@@ -188,46 +190,46 @@ internal fun OnboardRouter(
                     }
                 ) {
                     TermsTable(onAllTermsCheckStateChanged = { allChecked ->
-                        enableGoNextStep = allChecked
+                        enableGoNextStepState = allChecked
                     })
                 }
             }
             composable(route = Step.Year.name) {
                 OnboardContent(
                     step = Step.Year,
-                    bottomCTAButtonEnabled = enableGoNextStep,
+                    bottomCTAButtonEnabled = enableGoNextStepState,
                     onBottomCTAButtonAction = {
                         navController.navigate(Step.Gender.name)
                     }
                 ) {
                     YearPicker(selectedYearChanged = { isAdult ->
-                        enableGoNextStep = isAdult
+                        enableGoNextStepState = isAdult
                     })
                 }
             }
             composable(route = Step.Gender.name) {
                 OnboardContent(
                     step = Step.Gender,
-                    bottomCTAButtonEnabled = enableGoNextStep,
+                    bottomCTAButtonEnabled = enableGoNextStepState,
                     onBottomCTAButtonAction = {
                         navController.navigate(Step.Job.name)
                     }
                 ) {
                     GenderPicker(genderSelectChanged = { isSelected ->
-                        enableGoNextStep = isSelected
+                        enableGoNextStepState = isSelected
                     })
                 }
             }
             composable(route = Step.Job.name) {
                 OnboardContent(
                     step = Step.Job,
-                    bottomCTAButtonEnabled = enableGoNextStep,
+                    bottomCTAButtonEnabled = enableGoNextStepState,
                     onBottomCTAButtonAction = {
                         navController.navigate(Step.VerifyWithEmail.name)
                     }
                 ) {
                     JobPicker(jobSelectChanged = { isSelected ->
-                        enableGoNextStep = isSelected
+                        enableGoNextStepState = isSelected
                     })
                 }
             }
@@ -248,21 +250,24 @@ internal fun OnboardRouter(
                 // 무조건 Step.VerifyWithEmail 을 거쳐야 이 step 으로 올 수 있음
                 OnboardContent(
                     step = Step.VerifyWithEmployeeId,
-                    bottomCTAButtonEnabled = photo != null,
+                    bottomCTAButtonEnabled = photoState != null,
                     onBottomCTAButtonAction = { // 인증하기
                         coroutineScope.launch {
                             vm.registerUser(
                                 dataStore = context.dataStore,
-                                photo = photo!!, // non null, 만약 null 로 들어오면 작동되지 않아야 하기 때문에 NonNull 강제 처리
+                                photo = photoState!!, // non null, 만약 null 로 들어오면 작동되지 않아야 하기 때문에 NonNull 강제 처리
                                 nextStep = Step.VerifyWithEmployeeIdRequestDone,
                                 // isTestMode = true
                             )
                         }
                     }
                 ) {
-                    EmployeeIdVerify(photo = photo, onPhotoChanged = { newPhoto ->
-                        photo = newPhoto
-                    })
+                    EmployeeIdVerify(
+                        photo = photoState,
+                        onPhotoChanged = { newPhoto ->
+                            photoState = newPhoto
+                        }
+                    )
                 }
             }
             composable(route = Step.VerifyWithEmailDone.name) { // 이메일 인증 완료
