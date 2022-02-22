@@ -126,8 +126,11 @@ internal class OnboardViewModel @Inject constructor(
                         reduce {
                             RegisterState.ImageUploading
                         }
-                        photoUrl = uploadImage(photo, uuid!!)
-                            ?: return@collect // uploadImage 내부에서 emitException 해주고 있음
+                        photoUrl = uploadImage(photo, uuid!!) ?: run {
+                            // uploadImage 내부에서 emitException 해주고 있음
+                            cancel("user login data collect and register execute must be once.")
+                            return@collect
+                        }
                     }
                     val user = UserRegister(
                         uuid = uuid!!,
