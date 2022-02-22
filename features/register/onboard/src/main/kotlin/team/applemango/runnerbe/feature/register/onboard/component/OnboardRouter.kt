@@ -258,7 +258,6 @@ internal fun OnboardRouter(
                                 dataStore = context.dataStore,
                                 photo = photoState!!, // NonNull, 만약 null 로 들어오면 작동되지 않아야 하기 때문에 NonNull 강제 처리
                                 nextStep = Step.VerifyWithEmployeeIdRequestDone,
-                                // isTestMode = true
                             )
                         }
                     }
@@ -271,7 +270,7 @@ internal fun OnboardRouter(
                     )
                 }
             }
-            composable(route = Step.VerifyWithEmailDone.name) { // 이메일 인증 완료
+            composable(route = Step.VerifyWithEmailDone.name) { // 이메일 인증 완료 -> 회원가입 끝
                 BackHandler {
                     confirmFinish()
                 }
@@ -299,7 +298,7 @@ internal fun OnboardRouter(
                     )
                 }
             }
-            composable(route = Step.VerifyWithEmployeeIdRequestDone.name) { // 사원증 제출 완료
+            composable(route = Step.VerifyWithEmployeeIdRequestDone.name) { // 사원증 제출 완료 -> 회원가입 요청 완료
                 BackHandler {
                     confirmFinish()
                 }
