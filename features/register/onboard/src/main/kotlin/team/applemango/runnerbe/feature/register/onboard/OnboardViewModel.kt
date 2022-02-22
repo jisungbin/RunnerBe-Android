@@ -99,7 +99,6 @@ internal class OnboardViewModel @Inject constructor(
         dataStore: DataStore<Preferences>,
         photo: Bitmap?,
         nextStep: Step,
-        isTestMode: Boolean = false,
     ) = intent {
         // 회원가입 응답이 평균 0.03초 안에 와서 로딩 삭제
         /*reduce {
@@ -107,10 +106,7 @@ internal class OnboardViewModel @Inject constructor(
         }*/
         coroutineScope {
             dataStore.data.cancellable().collect { preferences ->
-                val uuid = when (isTestMode) {
-                    true -> Random.nextInt().toString()
-                    else -> preferences[DataStoreKey.Login.Uuid]
-                }
+                val uuid = preferences[DataStoreKey.Login.Uuid]
                 val year = preferences[DataStoreKey.Onboard.Year]
                 val gender = preferences[DataStoreKey.Onboard.Gender]
                 val job = preferences[DataStoreKey.Onboard.Job]

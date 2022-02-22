@@ -52,6 +52,7 @@ import androidx.compose.ui.unit.dp
 import com.skydoves.landscapist.coil.CoilImage
 import com.skydoves.landscapist.rememberDrawablePainter
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
+import team.applemango.runnerbe.feature.register.onboard.component.OnboardContent
 import team.applemango.runnerbe.shared.compose.component.RunnerbeDialog
 import team.applemango.runnerbe.shared.compose.extension.noRippleClickable
 import team.applemango.runnerbe.shared.compose.extension.parseHtml
@@ -83,6 +84,10 @@ private val takePhotoFromAlbumIntent =
         putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
     }
 
+/**
+ * 여기서는 그냥 사진만 불러오고 보여주는 역할만 함
+ * -> 사진 업로드 및 회원가입 요청은 [OnboardContent] 의 `onBottomCTAButtonAction` 에서 진행함
+ */
 @Composable
 internal fun EmployeeIdVerify(photo: Bitmap?, onPhotoChanged: (photo: Bitmap?) -> Unit) {
     val context = LocalContext.current
