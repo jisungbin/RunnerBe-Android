@@ -13,14 +13,12 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import team.applemango.runnerbe.shared.constant.DataStoreKey.Login.Jwt
-import team.applemango.runnerbe.shared.constant.DataStoreKey.Login.Uuid
 import team.applemango.runnerbe.shared.constant.DataStoreKey.Login.RegisterDone
+import team.applemango.runnerbe.shared.constant.DataStoreKey.Login.Uuid
 import team.applemango.runnerbe.shared.constant.DataStoreKey.Onboard.Email
 import team.applemango.runnerbe.shared.constant.DataStoreKey.Onboard.Gender
 import team.applemango.runnerbe.shared.constant.DataStoreKey.Onboard.Job
 import team.applemango.runnerbe.shared.constant.DataStoreKey.Onboard.TermsAllCheck
-import team.applemango.runnerbe.shared.constant.DataStoreKey.Onboard.VerifyWithEmailDone
-import team.applemango.runnerbe.shared.constant.DataStoreKey.Onboard.VerifyWithEmployeeIdRequestDone
 import team.applemango.runnerbe.shared.constant.DataStoreKey.Onboard.Year
 
 /**
@@ -50,8 +48,6 @@ object DataStoreKey {
      * Gender enum class 의 string 값 - string
      * @property Job 직업 enum class 의 [Enum.name] 값 - string
      * @property Email 입력한 이메일 - string
-     * @property VerifyWithEmailDone 이메일 인증 완료 여부 - boolean
-     * @property VerifyWithEmployeeIdRequestDone 사원증으로 인증 완료 여부 - boolean
      */
     object Onboard {
         val TermsAllCheck = booleanPreferencesKey("onboard-terms_all_check") // 동의 여부 boolean
@@ -59,8 +55,5 @@ object DataStoreKey {
         val Gender = stringPreferencesKey("onboard-gender") // Gender enum class string value
         val Job = stringPreferencesKey("onboard-job") // Job enum class name
         val Email = stringPreferencesKey("onboard-email") // 입력한 이메일
-        val VerifyWithEmailDone = booleanPreferencesKey("onboard-verify_with_email_done")
-        val VerifyWithEmployeeIdRequestDone =
-            booleanPreferencesKey("onboard-verify_with_employee_id_done")
     }
 }

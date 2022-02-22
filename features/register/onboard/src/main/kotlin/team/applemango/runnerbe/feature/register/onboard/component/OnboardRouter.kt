@@ -30,7 +30,6 @@ import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -274,11 +273,6 @@ internal fun OnboardRouter(
                 BackHandler {
                     confirmFinish()
                 }
-                LaunchedEffect(Unit) {
-                    context.dataStore.edit { preferences ->
-                        preferences[DataStoreKey.Onboard.VerifyWithEmailDone] = true
-                    }
-                }
                 OnboardContent(
                     step = Step.VerifyWithEmailDone,
                     bottomCTAButtonEnabled = true,
@@ -301,11 +295,6 @@ internal fun OnboardRouter(
             composable(route = Step.VerifyWithEmployeeIdRequestDone.name) { // 사원증 제출 완료 -> 회원가입 요청 완료
                 BackHandler {
                     confirmFinish()
-                }
-                LaunchedEffect(Unit) {
-                    context.dataStore.edit { preferences ->
-                        preferences[DataStoreKey.Onboard.VerifyWithEmployeeIdRequestDone] = true
-                    }
                 }
                 OnboardContent(
                     step = Step.VerifyWithEmployeeIdRequestDone,

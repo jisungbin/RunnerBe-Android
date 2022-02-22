@@ -109,7 +109,7 @@ class OnboardActivity : WindowInsetActivity() {
                             )
                         }
                     }
-                    // verifyWithEmail, verifyWithEmailDone: 임시 비활성화
+                    // 이메일 인증 임시 비활성화
                     applicationContext.dataStore.data.collectWithLifecycle(
                         lifecycleOwner = this@OnboardActivity,
                         builder = { cancellable() }
@@ -119,22 +119,16 @@ class OnboardActivity : WindowInsetActivity() {
                         val gender = preferences[DataStoreKey.Onboard.Gender]
                         val job = preferences[DataStoreKey.Onboard.Job]
                         // val verifyWithEmail = preferences[DataStoreKey.Onboard.Email]
-                        /*val verifyWithEmailDone =
-                            preferences[DataStoreKey.Onboard.VerifyWithEmailDone]*/
-                        val verifyWithEmployeeIdRequestDone =
-                            preferences[DataStoreKey.Onboard.VerifyWithEmployeeIdRequestDone]
                         val lastStepIndex = listOf(
                             terms,
                             year,
                             gender,
                             job,
                             // verifyWithEmail,
-                            // verifyWithEmailDone,
-                            verifyWithEmployeeIdRequestDone
                         ).indexOfLast { it != null }
                         if (lastStepIndex != -1) {
-                            // NPE issue
-                            // 백스택 생성 enhancement
+                            // NPE occurred
+                            // TODO: 백스택 임의 생성
                             // https://github.com/applemango-runnerbe/RunnerBe-Android/issues/16
                             /*(1..lastStepIndex).forEach { backstackIndex ->
                                 navController.backQueue.addLast(
