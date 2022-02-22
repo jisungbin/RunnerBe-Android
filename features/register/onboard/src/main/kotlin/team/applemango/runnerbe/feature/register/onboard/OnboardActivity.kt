@@ -194,7 +194,7 @@ class OnboardActivity : WindowInsetActivity() {
             RegisterState.ImageUploading -> {
                 StringAsset.Toast.ImageUploading
             }
-            RegisterState.RequestDone -> {
+            RegisterState.VerifyRequestDone -> {
                 StringAsset.Toast.EmployeeIdRegisterRequestDone
             }
             RegisterState.RegisterDone -> {

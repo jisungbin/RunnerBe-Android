@@ -178,7 +178,7 @@ internal class OnboardViewModel @Inject constructor(
                 when (result) {
                     is UserRegisterResult.Success -> {
                         val registerState = if (user.isVerifyWithEmployeeId) {
-                            RegisterState.RequestDone // 가입 신청 (사원증 인증 대기중)
+                            RegisterState.VerifyRequestDone // 가입 신청 (사원증 인증 대기중)
                         } else {
                             RegisterState.RegisterDone // 가입 완료
                         }
