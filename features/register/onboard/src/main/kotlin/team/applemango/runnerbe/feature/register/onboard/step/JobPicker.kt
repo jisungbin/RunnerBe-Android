@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,10 +28,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.edit
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.register.onboard.constant.Job
 import team.applemango.runnerbe.shared.compose.component.ToggleButton
-import team.applemango.runnerbe.shared.compose.extension.collectWithLifecycleRememberOnLaunchedEffect
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.dataStore
 
@@ -40,12 +41,14 @@ internal fun JobPicker(jobSelectChanged: (isSelected: Boolean) -> Unit) {
     val coroutineScope = rememberCoroutineScope()
     var jobSelectState by remember { mutableStateOf<Job?>(null) }
 
-    context.dataStore.data.collectWithLifecycleRememberOnLaunchedEffect { preferences ->
-        preferences[DataStoreKey.Onboard.Job]?.let { restoreJobCode ->
-            jobSelectChanged(true)
-            jobSelectState = Job.values().first { it.name == restoreJobCode }
-        } ?: jobSelectChanged(false)
-        cancel("onboard restore execute must be once.")
+    LaunchedEffect(Unit) {
+        context.dataStore.data.cancellable().collect { preferences ->
+            preferences[DataStoreKey.Onboard.Job]?.let { restoreJobCode ->
+                jobSelectChanged(true)
+                jobSelectState = Job.values().first { it.name == restoreJobCode }
+            } ?: jobSelectChanged(false)
+            cancel("onboard restore execute must be once.")
+        }
     }
 
     // FlowLayout 은 디자인이 안이쁘게 되서 수동으로 작성 함
@@ -102,7 +105,7 @@ internal fun JobPicker(jobSelectChanged: (isSelected: Boolean) -> Unit) {
                         jobSelectChanged(true)
                         coroutineScope.launch {
                             context.dataStore.edit { preferences ->
-                                preferences[DataStoreKey.Onboard.Job] = job.name // code
+                                preferences[DataStoreKey.Onboard.Job] = job.name // job code
                             }
                         }
                     }
