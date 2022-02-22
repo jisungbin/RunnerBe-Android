@@ -14,7 +14,6 @@ import android.os.Bundle
 import android.view.animation.AnticipateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import team.applemango.runnerbe.feature.home.board.MainActivity
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.changeActivityWithAnimation
 import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
@@ -34,8 +33,7 @@ class StartActivity : AppCompatActivity() {
             val isSnsLoginDone = preferences[DataStoreKey.Login.Uuid] != null
             when {
                 isSignedUser -> { // JWT 존재
-                    changeActivityWithAnimation<MainActivity>() // XXX
-                    // 얜 fragment 이여야 함
+                    changeActivityWithAnimation<MainActivity>() // XXX, 얜 fragment 이여야 함
                     return@collectWithLifecycle
                 }
                 isSnsLoginDone -> { // SNS 로그인 완료 -> 온보딩 페이지로 이동

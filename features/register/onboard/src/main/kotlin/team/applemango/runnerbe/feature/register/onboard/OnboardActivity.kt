@@ -43,6 +43,7 @@ import org.orbitmvi.orbit.viewmodel.observe
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.component.OnboardRouter
 import team.applemango.runnerbe.feature.register.onboard.constant.EmailVerifyCode
+import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.di.ViewModelFactory
 import team.applemango.runnerbe.feature.register.onboard.di.component.DaggerViewModelComponent
@@ -50,7 +51,6 @@ import team.applemango.runnerbe.feature.register.onboard.di.module.RepositoryMod
 import team.applemango.runnerbe.feature.register.onboard.di.module.UseCaseModule
 import team.applemango.runnerbe.feature.register.onboard.di.module.ViewModelModule
 import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterSideEffect
-import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterState
 import team.applemango.runnerbe.shared.base.WindowInsetActivity
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
@@ -109,7 +109,7 @@ class OnboardActivity : WindowInsetActivity() {
                             )
                         }
                     }
-                    // verifyWithEmail, verifyWithEmailDone: 임시 비활성화
+                    // 이메일 인증 임시 비활성화
                     applicationContext.dataStore.data.collectWithLifecycle(
                         lifecycleOwner = this@OnboardActivity,
                         builder = { cancellable() }
@@ -119,25 +119,16 @@ class OnboardActivity : WindowInsetActivity() {
                         val gender = preferences[DataStoreKey.Onboard.Gender]
                         val job = preferences[DataStoreKey.Onboard.Job]
                         // val verifyWithEmail = preferences[DataStoreKey.Onboard.Email]
-                        val verifyWithEmployeeId =
-                            preferences[DataStoreKey.Onboard.VerifyWithEmployeeId]
-                        /*val verifyWithEmailDone =
-                            preferences[DataStoreKey.Onboard.VerifyWithEmailDone]*/
-                        val verifyWithEmployeeIdRequestDone =
-                            preferences[DataStoreKey.Onboard.VerifyWithEmployeeIdRequestDone]
                         val lastStepIndex = listOf(
                             terms,
                             year,
                             gender,
                             job,
                             // verifyWithEmail,
-                            verifyWithEmployeeId,
-                            // verifyWithEmailDone,
-                            verifyWithEmployeeIdRequestDone
                         ).indexOfLast { it != null }
                         if (lastStepIndex != -1) {
-                            // NPE issue
-                            // 백스택 생성 enhancement
+                            // NPE occurred
+                            // TODO: 백스택 임의 생성
                             // https://github.com/applemango-runnerbe/RunnerBe-Android/issues/16
                             /*(1..lastStepIndex).forEach { backstackIndex ->
                                 navController.backQueue.addLast(
@@ -197,7 +188,10 @@ class OnboardActivity : WindowInsetActivity() {
             RegisterState.ImageUploading -> {
                 StringAsset.Toast.ImageUploading
             }
-            RegisterState.Success -> {
+            RegisterState.VerifyRequestDone -> {
+                StringAsset.Toast.EmployeeIdRegisterRequestDone
+            }
+            RegisterState.RegisterDone -> {
                 StringAsset.Toast.RegisterSuccess
             }
             RegisterState.DuplicateUuid -> {

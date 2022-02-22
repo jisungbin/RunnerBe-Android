@@ -30,7 +30,6 @@ import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -49,7 +48,7 @@ import com.google.accompanist.navigation.animation.composable
 import com.skydoves.landscapist.rememberDrawablePainter
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import team.applemango.runnerbe.feature.home.board.MainActivity
+import team.applemango.runnerbe.activity.MainActivity
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
@@ -224,8 +223,8 @@ internal fun OnboardRouter(
                 OnboardContent(
                     step = Step.Job,
                     bottomCTAButtonEnabled = enableGoNextStepState,
-                    onBottomCTAButtonAction = {
-                        navController.navigate(Step.VerifyWithEmail.name)
+                    onBottomCTAButtonAction = { // verifyWithEmail, verifyWithEmailDone: 임시 비활성화
+                        navController.navigate(/*Step.VerifyWithEmail.name*/ Step.VerifyWithEmployeeId.name)
                     }
                 ) {
                     JobPicker(jobSelectChanged = { isSelected ->
@@ -247,7 +246,8 @@ internal fun OnboardRouter(
                 }
             }
             composable(route = Step.VerifyWithEmployeeId.name) { // 사원증으로 인증
-                // 무조건 Step.VerifyWithEmail 을 거쳐야 이 step 으로 올 수 있음
+                // verifyWithEmail, verifyWithEmailDone: 임시 비활성화
+                // 무조건 Step.VerifyWithEmail 을 거쳐야 이 step 으로 올 수 있음 -> XXX
                 OnboardContent(
                     step = Step.VerifyWithEmployeeId,
                     bottomCTAButtonEnabled = photoState != null,
@@ -255,9 +255,8 @@ internal fun OnboardRouter(
                         coroutineScope.launch {
                             vm.registerUser(
                                 dataStore = context.dataStore,
-                                photo = photoState!!, // non null, 만약 null 로 들어오면 작동되지 않아야 하기 때문에 NonNull 강제 처리
+                                photo = photoState!!, // NonNull, 만약 null 로 들어오면 작동되지 않아야 하기 때문에 NonNull 강제 처리
                                 nextStep = Step.VerifyWithEmployeeIdRequestDone,
-                                // isTestMode = true
                             )
                         }
                     }
@@ -270,19 +269,19 @@ internal fun OnboardRouter(
                     )
                 }
             }
-            composable(route = Step.VerifyWithEmailDone.name) { // 이메일 인증 완료
+            composable(route = Step.VerifyWithEmailDone.name) { // 이메일 인증 완료 -> 회원가입 끝
                 BackHandler {
                     confirmFinish()
-                }
-                LaunchedEffect(Unit) {
-                    context.dataStore.edit { preferences ->
-                        preferences[DataStoreKey.Onboard.VerifyWithEmailDone] = true
-                    }
                 }
                 OnboardContent(
                     step = Step.VerifyWithEmailDone,
                     bottomCTAButtonEnabled = true,
                     onBottomCTAButtonAction = { // 메인 화면으로
+                        coroutineScope.launch {
+                            context.dataStore.edit { preferences ->
+                                preferences[DataStoreKey.Login.RegisterDone] = true
+                            }
+                        }
                         activity.changeActivityWithAnimation<MainActivity>()
                     }
                 ) {
@@ -293,14 +292,9 @@ internal fun OnboardRouter(
                     )
                 }
             }
-            composable(route = Step.VerifyWithEmployeeIdRequestDone.name) { // 사원증 제출 완료
+            composable(route = Step.VerifyWithEmployeeIdRequestDone.name) { // 사원증 제출 완료 -> 회원가입 요청 완료
                 BackHandler {
                     confirmFinish()
-                }
-                LaunchedEffect(Unit) {
-                    context.dataStore.edit { preferences ->
-                        preferences[DataStoreKey.Onboard.VerifyWithEmployeeIdRequestDone] = true
-                    }
                 }
                 OnboardContent(
                     step = Step.VerifyWithEmployeeIdRequestDone,

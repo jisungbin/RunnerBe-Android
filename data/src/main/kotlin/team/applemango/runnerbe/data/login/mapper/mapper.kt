@@ -29,7 +29,11 @@ internal fun CheckDuplicateEmailResponse.toBoolean() =
 
 internal fun UserRegisterResponse.toResultDomain(): UserRegisterResult {
     return when (val code = requireNotNull(code) { requireFieldExceptionMessage("code") }) {
-        1000 -> UserRegisterResult.Success(requireNotNull(jwt) { requireFieldExceptionMessage("jwt") })
+        1005, 1006 -> UserRegisterResult.Success(
+            requireNotNull(jwt) {
+                requireFieldExceptionMessage("jwt")
+            }
+        )
         3001 -> UserRegisterResult.DuplicateUuid
         3002 -> UserRegisterResult.DuplicateEmail
         3004 -> UserRegisterResult.DuplicateNickname

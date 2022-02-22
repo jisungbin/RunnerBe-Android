@@ -20,7 +20,6 @@ import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.random.Random
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.cancellable
@@ -38,9 +37,9 @@ import team.applemango.runnerbe.domain.login.usecase.UserRegisterUseCase
 import team.applemango.runnerbe.domain.mail.usecase.MailSendUseCase
 import team.applemango.runnerbe.feature.register.onboard.constant.FirebaseStoragePath
 import team.applemango.runnerbe.feature.register.onboard.constant.Gender
+import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterSideEffect
-import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterState
 import team.applemango.runnerbe.shared.base.BaseViewModel
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 
@@ -51,6 +50,7 @@ private val UserNullException =
 private val ImageUpdateExceptionWithNull =
     Exception("Image upload is fail. But, exception is null.")
 
+// TODO: https://github.com/applemango-runnerbe/RunnerBe-Android/issues/38
 internal class OnboardViewModel @Inject constructor(
     private val checkUsableEmailUseCase: CheckUsableEmailUseCase,
     private val userRegisterUseCase: UserRegisterUseCase,
@@ -75,42 +75,41 @@ internal class OnboardViewModel @Inject constructor(
     }
 
     // 이메일 인증하는 step 에서 따로 label 이 있어서 listener 콜백 처리
-    fun sendVerifyMail(email: String, onSuccess: () -> Unit, onException: (Throwable) -> Unit) =
-        viewModelScope.launch {
-            val token = Random.nextInt().toString() // TODO: 토큰 인증
-            mailSendUseCase(token = token, email = email)
-                .onSuccess { result ->
-                    when (result.isSuccess) {
-                        true -> {
-                            onSuccess()
-                        }
-                        else -> {
-                            onException(Exception(result.errorResult?.errorMessage))
-                        }
+    fun sendVerifyMail(
+        email: String,
+        onSuccess: () -> Unit,
+        onException: (Throwable) -> Unit,
+    ) = viewModelScope.launch {
+        val token = Random.nextInt().toString() // TODO: 토큰 인증
+        mailSendUseCase(token = token, email = email)
+            .onSuccess { result ->
+                when (result.isSuccess) {
+                    true -> {
+                        onSuccess()
+                    }
+                    else -> {
+                        onException(Exception(result.errorResult?.errorMessage))
                     }
                 }
-                .onFailure { exception ->
-                    onException(exception)
-                }
-        }
+            }
+            .onFailure { exception ->
+                onException(exception)
+            }
+    }
 
     // register entry point
     fun registerUser(
         dataStore: DataStore<Preferences>,
         photo: Bitmap?,
         nextStep: Step,
-        isTestMode: Boolean = false,
     ) = intent {
         // 회원가입 응답이 평균 0.03초 안에 와서 로딩 삭제
         /*reduce {
             RegisterState.Request
         }*/
-        coroutineScope {
+        viewModelScope.launch {
             dataStore.data.cancellable().collect { preferences ->
-                val uuid = when (isTestMode) {
-                    true -> Random.nextInt().toString()
-                    else -> preferences[DataStoreKey.Login.Uuid]
-                }
+                val uuid = preferences[DataStoreKey.Login.Uuid]
                 val year = preferences[DataStoreKey.Onboard.Year]
                 val gender = preferences[DataStoreKey.Onboard.Gender]
                 val job = preferences[DataStoreKey.Onboard.Job]
@@ -122,17 +121,21 @@ internal class OnboardViewModel @Inject constructor(
                     }
                 } else {
                     var photoUrl: String? = null
+                    val genderCode = Gender.values().first { it.string == gender!! }.code
                     if (photo != null) { // 사원증을 통한 인증일 경우
                         reduce {
                             RegisterState.ImageUploading
                         }
-                        photoUrl = uploadImage(photo, uuid!!)
-                            ?: return@collect // uploadImage 내부에서 emitException 해주고 있음
+                        photoUrl = uploadImage(photo, uuid!!) ?: run {
+                            // uploadImage 내부에서 emitException 해주고 있음
+                            cancel("user login data collect and register execute must be once.")
+                            return@collect
+                        }
                     }
                     val user = UserRegister(
                         uuid = uuid!!,
                         birthday = year!!,
-                        gender = Gender.values().first { it.string == gender!! }.code,
+                        gender = genderCode,
                         job = job!!,
                         officeEmail = officeEmail, // nullable
                         idCardImageUrl = photoUrl // nullable
@@ -145,8 +148,8 @@ internal class OnboardViewModel @Inject constructor(
     }
 
     /**
-     * 매우 좋지 않은 방식임
-     * https://github.com/applemango-runnerbe/RunnerBe-Android/issues/36 참고
+     * 매우 좋지 않은 방식
+     * TODO: https://github.com/applemango-runnerbe/RunnerBe-Android/issues/36
      *
      * @return 성공시 이미지 주소, 실패시 null
      */
@@ -174,8 +177,13 @@ internal class OnboardViewModel @Inject constructor(
             .onSuccess { result ->
                 when (result) {
                     is UserRegisterResult.Success -> {
+                        val registerState = if (user.isVerifyWithEmployeeId) {
+                            RegisterState.VerifyRequestDone // 가입 신청 (사원증 인증 대기중)
+                        } else {
+                            RegisterState.RegisterDone // 가입 완료
+                        }
                         reduce {
-                            RegisterState.Success
+                            registerState
                         }
                         postSideEffect(RegisterSideEffect.SaveUserJwt(result.jwt))
                         postSideEffect(RegisterSideEffect.NavigateToNextStep(nextStep))
