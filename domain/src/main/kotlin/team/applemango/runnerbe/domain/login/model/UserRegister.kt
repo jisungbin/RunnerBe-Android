@@ -19,4 +19,6 @@ data class UserRegister(
     val job: String,
     val officeEmail: String?,
     val idCardImageUrl: String?,
-)
+) {
+    val isVerifyWithEmployeeId = officeEmail != null
+}

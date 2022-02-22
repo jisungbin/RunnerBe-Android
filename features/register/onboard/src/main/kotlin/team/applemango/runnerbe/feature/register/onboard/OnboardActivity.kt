@@ -50,7 +50,7 @@ import team.applemango.runnerbe.feature.register.onboard.di.module.RepositoryMod
 import team.applemango.runnerbe.feature.register.onboard.di.module.UseCaseModule
 import team.applemango.runnerbe.feature.register.onboard.di.module.ViewModelModule
 import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterSideEffect
-import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterState
+import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState
 import team.applemango.runnerbe.shared.base.WindowInsetActivity
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset

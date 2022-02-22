@@ -40,7 +40,7 @@ import team.applemango.runnerbe.feature.register.onboard.constant.FirebaseStorag
 import team.applemango.runnerbe.feature.register.onboard.constant.Gender
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterSideEffect
-import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterState
+import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState
 import team.applemango.runnerbe.shared.base.BaseViewModel
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 

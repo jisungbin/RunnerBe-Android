@@ -224,8 +224,8 @@ internal fun OnboardRouter(
                 OnboardContent(
                     step = Step.Job,
                     bottomCTAButtonEnabled = enableGoNextStepState,
-                    onBottomCTAButtonAction = {
-                        navController.navigate(Step.VerifyWithEmail.name)
+                    onBottomCTAButtonAction = { // verifyWithEmail, verifyWithEmailDone: 임시 비활성화
+                        navController.navigate(/*Step.VerifyWithEmail.name*/ Step.VerifyWithEmployeeId.name)
                     }
                 ) {
                     JobPicker(jobSelectChanged = { isSelected ->
@@ -247,7 +247,8 @@ internal fun OnboardRouter(
                 }
             }
             composable(route = Step.VerifyWithEmployeeId.name) { // 사원증으로 인증
-                // 무조건 Step.VerifyWithEmail 을 거쳐야 이 step 으로 올 수 있음
+                // verifyWithEmail, verifyWithEmailDone: 임시 비활성화
+                // 무조건 Step.VerifyWithEmail 을 거쳐야 이 step 으로 올 수 있음 -> XXX
                 OnboardContent(
                     step = Step.VerifyWithEmployeeId,
                     bottomCTAButtonEnabled = photoState != null,

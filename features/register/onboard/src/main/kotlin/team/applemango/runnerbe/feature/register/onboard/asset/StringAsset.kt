@@ -78,6 +78,7 @@ internal object StringAsset {
         const val ErrorTakenPhoto = "사진을 불러오지 못했어요.\n다시 시도해 주세요."
         const val NonInstallBrowser = "설치돼 있는 브라우저 앱이 없어요 \uD83D\uDE22"
         const val ImageUploading = "사진을 업로드하고 있어요."
+        const val EmployeeIdRegisterRequestDone = "인증 요청이 완료되었어요 :)"
         const val RegisterSuccess = "회원가입이 완료됐어요! \uD83E\uDD73" // 🥳
         const val DuplicateUuid = "동일 계정 내 가입 이력이 존재해요."
         const val DuplicateEmail = "이미 사용중인 이메일이에요."

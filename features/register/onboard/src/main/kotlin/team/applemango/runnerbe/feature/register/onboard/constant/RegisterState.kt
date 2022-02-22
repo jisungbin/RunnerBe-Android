@@ -2,24 +2,25 @@
  * RunnerBe © 2022 Team AppleMango. all rights reserved.
  * RunnerBe license is under the MIT.
  *
- * [RegisterState.kt] created by Ji Sungbin on 22. 2. 12. 오후 5:41
- *
- * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
- */
-
-/*
- * RunnerBe © 2022 Team AppleMango. all rights reserved.
- * RunnerBe license is under the MIT.
- *
  * [RegisterState.kt] created by Ji Sungbin on 22. 2. 12. 오후 2:11
  *
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.feature.register.onboard.mvi
+package team.applemango.runnerbe.feature.register.onboard.constant
+
+import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
+import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState.DatabaseError
+import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState.DuplicateEmail
+import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState.DuplicateNickname
+import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState.DuplicateUuid
+import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState.ImageUploading
+import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState.None
+import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState.NullInformation
+import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState.Success
 
 /**
- * UserRegisterUseCase state enum class
+ * [OnboardViewModel.requestUserRegister] state enum class
  *
  * @property None 아무것도 하지 않은 초기화 상태
  * @property ImageUploading 이미지(사원증 사진) 업로드중
@@ -34,6 +35,7 @@ internal enum class RegisterState {
     None,
     ImageUploading,
     Success,
+    RequestDone,
     DuplicateUuid,
     DuplicateEmail,
     DuplicateNickname,
