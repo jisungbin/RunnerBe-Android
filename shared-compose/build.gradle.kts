@@ -23,6 +23,6 @@ android {
 }
 
 dependencies {
+    implementation(Dependencies.EachKtx.Core)
     Dependencies.Compose.forEach(::implementation)
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:${Versions.Ktx.Lifecycle}")
 }

@@ -13,7 +13,7 @@ plugins {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:${Versions.Ktx.Core}")
-    implementation("com.burhanrashid52:photoeditor:${Versions.Ui.PhotoEditor}")
-    implementation("androidx.constraintlayout:constraintlayout:${Versions.Ui.ConstraintLayout}")
+    implementation(Dependencies.EachKtx.Core)
+    implementation(Dependencies.EachUi.PhotoEditor)
+    implementation(Dependencies.EachUi.ConstraintLayout)
 }

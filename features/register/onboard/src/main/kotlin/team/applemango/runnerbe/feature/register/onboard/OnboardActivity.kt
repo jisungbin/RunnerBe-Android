@@ -84,11 +84,7 @@ class OnboardActivity : ComponentActivity() {
         vm = ViewModelProvider(this, viewModelFactory)[OnboardViewModel::class.java]
         // CoroutineScope 에서 돌아가서 더블클론(::) 참조 안됨
         vm.exceptionFlow.collectWithLifecycle(this) { handleException(it) }
-        window.setFlags( // 네비게이션바까지 영역 확장하려면 필요
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        )
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+
 
         setContent {
             ProvideWindowInsets {

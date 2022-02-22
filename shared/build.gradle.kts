@@ -18,4 +18,5 @@ dependencies {
     api(project(ProjectConstants.Data))
     api(project(ProjectConstants.Domain))
     Dependencies.SharedKtx.forEach(::api)
+    implementation(Dependencies.EachKtx.Activity)
 }

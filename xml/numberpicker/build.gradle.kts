@@ -13,5 +13,5 @@ plugins {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:${Versions.Ktx.Core}")
+    implementation(Dependencies.EachKtx.Core)
 }
