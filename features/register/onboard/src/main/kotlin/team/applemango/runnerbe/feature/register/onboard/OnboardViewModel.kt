@@ -20,7 +20,6 @@ import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.random.Random
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.cancellable
@@ -51,6 +50,7 @@ private val UserNullException =
 private val ImageUpdateExceptionWithNull =
     Exception("Image upload is fail. But, exception is null.")
 
+// TODO: https://github.com/applemango-runnerbe/RunnerBe-Android/issues/38
 internal class OnboardViewModel @Inject constructor(
     private val checkUsableEmailUseCase: CheckUsableEmailUseCase,
     private val userRegisterUseCase: UserRegisterUseCase,
@@ -75,24 +75,27 @@ internal class OnboardViewModel @Inject constructor(
     }
 
     // 이메일 인증하는 step 에서 따로 label 이 있어서 listener 콜백 처리
-    fun sendVerifyMail(email: String, onSuccess: () -> Unit, onException: (Throwable) -> Unit) =
-        viewModelScope.launch {
-            val token = Random.nextInt().toString() // TODO: 토큰 인증
-            mailSendUseCase(token = token, email = email)
-                .onSuccess { result ->
-                    when (result.isSuccess) {
-                        true -> {
-                            onSuccess()
-                        }
-                        else -> {
-                            onException(Exception(result.errorResult?.errorMessage))
-                        }
+    fun sendVerifyMail(
+        email: String,
+        onSuccess: () -> Unit,
+        onException: (Throwable) -> Unit,
+    ) = viewModelScope.launch {
+        val token = Random.nextInt().toString() // TODO: 토큰 인증
+        mailSendUseCase(token = token, email = email)
+            .onSuccess { result ->
+                when (result.isSuccess) {
+                    true -> {
+                        onSuccess()
+                    }
+                    else -> {
+                        onException(Exception(result.errorResult?.errorMessage))
                     }
                 }
-                .onFailure { exception ->
-                    onException(exception)
-                }
-        }
+            }
+            .onFailure { exception ->
+                onException(exception)
+            }
+    }
 
     // register entry point
     fun registerUser(
@@ -104,7 +107,7 @@ internal class OnboardViewModel @Inject constructor(
         /*reduce {
             RegisterState.Request
         }*/
-        coroutineScope {
+        viewModelScope.launch {
             dataStore.data.cancellable().collect { preferences ->
                 val uuid = preferences[DataStoreKey.Login.Uuid]
                 val year = preferences[DataStoreKey.Onboard.Year]
@@ -118,6 +121,7 @@ internal class OnboardViewModel @Inject constructor(
                     }
                 } else {
                     var photoUrl: String? = null
+                    val genderCode = Gender.values().first { it.string == gender!! }.code
                     if (photo != null) { // 사원증을 통한 인증일 경우
                         reduce {
                             RegisterState.ImageUploading
@@ -128,7 +132,7 @@ internal class OnboardViewModel @Inject constructor(
                     val user = UserRegister(
                         uuid = uuid!!,
                         birthday = year!!,
-                        gender = Gender.values().first { it.string == gender!! }.code,
+                        gender = genderCode,
                         job = job!!,
                         officeEmail = officeEmail, // nullable
                         idCardImageUrl = photoUrl // nullable
@@ -141,8 +145,8 @@ internal class OnboardViewModel @Inject constructor(
     }
 
     /**
-     * 매우 좋지 않은 방식임
-     * https://github.com/applemango-runnerbe/RunnerBe-Android/issues/36 참고
+     * 매우 좋지 않은 방식
+     * TODO: https://github.com/applemango-runnerbe/RunnerBe-Android/issues/36
      *
      * @return 성공시 이미지 주소, 실패시 null
      */
