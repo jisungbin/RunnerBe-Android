@@ -117,11 +117,14 @@ internal fun EmailVerify(vm: OnboardViewModel) {
     }
 
     LaunchedEffect(Unit) {
-        emailInputFlowWithLifecycle.debounce(500L).collect { email ->
-            context.dataStore.edit { preferences ->
-                preferences[DataStoreKey.Onboard.Email] = email
+        emailInputFlowWithLifecycle
+            .flowWithLifecycle(lifecycleOwner.lifecycle)
+            .debounce(300L)
+            .collect { email ->
+                context.dataStore.edit { preferences ->
+                    preferences[DataStoreKey.Onboard.Email] = email
+                }
             }
-        }
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
