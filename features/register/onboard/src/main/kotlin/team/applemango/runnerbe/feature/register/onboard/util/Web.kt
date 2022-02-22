@@ -37,8 +37,8 @@ internal object Web {
                 .intent
                 .addCategory(Intent.CATEGORY_BROWSABLE)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            val customTabIntent = builder.build()
-            customTabIntent.launchUrl(context, link.string.toUri())
+            val tabIntent = builder.build()
+            tabIntent.launchUrl(context, link.string.toUri())
         } catch (exception: Exception) {
             logeukes(type = LoggerType.E) { exception }
             toast(context, StringAsset.Toast.NonInstallBrowser)

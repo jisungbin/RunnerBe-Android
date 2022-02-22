@@ -99,6 +99,8 @@ internal fun OnboardContent(
             }
         }
     )
+
+    // Do NOT remember: if remember, color change not immediately. (maybe state issue)
     val bottomCTAButtonBackgroundColor = when (step) {
         Step.VerifyWithEmail -> Color.Transparent
         else -> animatedBottomCTAButtonBackgroundColor
@@ -138,7 +140,7 @@ internal fun OnboardContent(
         ) {
             content()
         }
-        // 버튼은 리플 제거가 안되서 Box 로 변경
+        // 내 지식에선 버튼은 리플 제거가 안되서 Box 로 변경
         // enabled 속성으로 변경하면 텍스트 색상도 같이 변경됨
         // (contentBackgroundColor 옵션 설정 해봤음)
         Box(

@@ -19,23 +19,28 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.datastore.preferences.core.edit
+import androidx.lifecycle.flowWithLifecycle
 import java.util.Calendar
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.cancellable
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.util.presentationColorOf
-import team.applemango.runnerbe.shared.compose.extension.collectAsStateWithLifecycleRemember
-import team.applemango.runnerbe.shared.compose.extension.collectWithLifecycleRememberOnLaunchedEffect
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.FontTypeface
 import team.applemango.runnerbe.shared.compose.theme.Typography
@@ -46,12 +51,17 @@ import team.applemango.runnerbe.xml.numberpicker.WheelPicker
 
 private val nowYear = Calendar.getInstance().get(Calendar.YEAR)
 
+@OptIn(FlowPreview::class)
 @Composable
 internal fun YearPicker(selectedYearChanged: (isAdult: Boolean) -> Unit) {
     val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
     val coroutineScope = rememberCoroutineScope()
     val yearSelectFlow = remember { MutableStateFlow(nowYear) }
-    val yearSelectState by yearSelectFlow.collectAsStateWithLifecycleRemember(nowYear)
+    val yearSelectFlowWithLifecycle = remember(yearSelectFlow, lifecycleOwner) {
+        yearSelectFlow.flowWithLifecycle(lifecycleOwner.lifecycle)
+    }
+    val yearSelectStateWithLifecycle by yearSelectFlowWithLifecycle.collectAsState(nowYear)
     val wheelPicker = remember {
         WheelPicker(context) { year ->
             selectedYearChanged(nowYear - year > 19)
@@ -61,18 +71,25 @@ internal fun YearPicker(selectedYearChanged: (isAdult: Boolean) -> Unit) {
         }
     }
 
-    context.dataStore.data.collectWithLifecycleRememberOnLaunchedEffect { preferences ->
-        preferences[DataStoreKey.Onboard.Year]?.let { restoreYear ->
-            wheelPicker.setValue(restoreYear)
-            yearSelectFlow.emit(restoreYear)
-            selectedYearChanged(nowYear - restoreYear > 19)
-        } ?: selectedYearChanged(false) // default year: ${nowYear} -> always isAdult: false
-        cancel("onboard restore execute must be once.")
-    }
-    yearSelectFlow.collectWithLifecycleRememberOnLaunchedEffect(debounceTimeout = 300L) { year ->
-        context.dataStore.edit { preferences ->
-            preferences[DataStoreKey.Onboard.Year] = year
+    LaunchedEffect(Unit) {
+        context.dataStore.data.cancellable().collect { preferences ->
+            preferences[DataStoreKey.Onboard.Year]?.let { restoreYear ->
+                wheelPicker.setValue(restoreYear)
+                yearSelectFlow.emit(restoreYear)
+                selectedYearChanged(nowYear - restoreYear > 19)
+            } ?: selectedYearChanged(false) // default year: ${nowYear} -> always isAdult: false
+            cancel("onboard restore execute must be once.")
         }
+    }
+
+    LaunchedEffect(Unit) {
+        yearSelectFlowWithLifecycle
+            .debounce(300L)
+            .collect { year ->
+                context.dataStore.edit { preferences ->
+                    preferences[DataStoreKey.Onboard.Year] = year
+                }
+            }
     }
 
     Column(
@@ -82,15 +99,16 @@ internal fun YearPicker(selectedYearChanged: (isAdult: Boolean) -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Divider(modifier = Modifier.fillMaxWidth(), color = ColorAsset.G5, thickness = 1.dp)
-        AndroidView(modifier = Modifier.height(250.dp), factory = {
-            wheelPicker
-        })
+        AndroidView(
+            modifier = Modifier.height(250.dp),
+            factory = { wheelPicker }
+        )
         Divider(modifier = Modifier.fillMaxWidth(), color = ColorAsset.G5, thickness = 1.dp)
         AnimatedVisibility(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 12.dp),
-            visible = nowYear - yearSelectState <= 19
+            visible = nowYear - yearSelectStateWithLifecycle <= 19
         ) {
             Text(
                 text = StringAsset.Hint.AgeNotice,
@@ -106,7 +124,7 @@ private fun WheelPicker(
 ) = WheelPicker(context).apply {
     setSelectedTextColor(presentationColorOf(context, "primary"))
     setUnselectedTextColor(presentationColorOf(context, "G4"))
-    setTypeface(FontTypeface.Roboto.getM(context)) // can null
+    setTypeface(FontTypeface.Roboto.medium(context)) // nullable
     setWrapSelectorWheel(true)
     setWheelItemCount(5)
     setMinValue(nowYear - 80)

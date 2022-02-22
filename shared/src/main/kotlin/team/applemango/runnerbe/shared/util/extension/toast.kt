@@ -15,7 +15,7 @@ import android.widget.Toast
 
 fun Activity.toast(message: String, length: Int = Toast.LENGTH_SHORT) {
     runOnUiThread {
-        toast(context = applicationContext, message = { message }, length = length)
+        toastBuilder(context = applicationContext, message = message, length = length)
     }
 }
 
@@ -23,7 +23,7 @@ fun toast(context: Context, message: Context.() -> String, length: Int = Toast.L
     if (context is Activity) {
         context.toast(message(context), length)
     } else {
-        Toast.makeText(context, message(context), length).show()
+        toastBuilder(context, message(context), length)
     }
 }
 
@@ -31,6 +31,10 @@ fun toast(context: Context, message: String, length: Int = Toast.LENGTH_SHORT) {
     if (context is Activity) {
         context.toast(message, length)
     } else {
-        Toast.makeText(context, message, length).show()
+        toastBuilder(context, message, length)
     }
+}
+
+private fun toastBuilder(context: Context, message: String, length: Int) {
+    Toast.makeText(context, message, length).show()
 }

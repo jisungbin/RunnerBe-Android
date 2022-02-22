@@ -25,7 +25,6 @@ import androidx.core.view.WindowCompat
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.systemuicontroller.SystemUiController
 
-// https://stackoverflow.com/a/66839858/14299073s
 inline fun Modifier.noRippleClickable(crossinline onClick: () -> Unit) = composed {
     clickable(
         indication = null,
@@ -34,9 +33,10 @@ inline fun Modifier.noRippleClickable(crossinline onClick: () -> Unit) = compose
     )
 }
 
+// Feature: https://github.com/applemango-runnerbe/RunnerBe-Android/issues/13
 // Original function implementation is inlined
-// https://github.com/applemango-runnerbe/RunnerBe-Android/issues/13
-inline fun Modifier.systemBarsPaddingByDefaultColor(
+// Not working -> internal function
+internal inline fun Modifier.systemBarsPaddingByDefaultColor(
     window: Window,
     defaultStatusBarColor: Color,
     defaultNavigationBarColor: Color,

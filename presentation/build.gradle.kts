@@ -71,7 +71,7 @@ dependencies {
 
     implementation(Dependencies.Util.Erratum)
     Dependencies.Ui.forEach(::implementation)
-    Dependencies.Login.All.forEach(::implementation)
+    Dependencies.Login.forEach(::implementation)
     Dependencies.PresentationOnlyKtx.forEach(::implementation)
 
     Dependencies.Debug.forEach(::debugImplementation)

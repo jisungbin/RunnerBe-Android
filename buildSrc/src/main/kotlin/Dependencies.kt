@@ -21,6 +21,7 @@ object Versions {
 
     object Ktx {
         const val Core = "1.7.0"
+        const val Activity = "1.4.0"
         const val PlayCore = "1.8.1"
         const val Lifecycle = "2.4.0"
         const val Navigation = "2.4.1"
@@ -28,7 +29,7 @@ object Versions {
 
     object Compose {
         const val Main = "1.1.0"
-        const val Lottie = "4.2.2"
+        const val Lottie = "5.0.1"
         const val Activity = "1.4.0"
         const val Landscapist = "1.4.8"
         const val Insets = "0.24.0-alpha"
@@ -62,14 +63,14 @@ object Versions {
     }
 
     object Jetpack {
-        const val Hilt = "2.40.5"
+        const val Hilt = "2.41"
         const val DataStore = "1.0.0"
         // TODO: room (offline-mode support)
     }
 
     object Login {
-        const val Kakao = "2.8.5"
-        const val Naver = "5.0.0"
+        const val Kakao = "2.8.6"
+        const val Naver = "5.0.1"
     }
 
     object OssLicense {
@@ -93,9 +94,21 @@ object Dependencies {
         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.Essential.Coroutines}"
     const val FirebaseBom = "com.google.firebase:firebase-bom:${Versions.FirebaseBom}"
 
-    object Di {
+    object Di { // Dagger 는 DFM 에서만 쓰임
         const val Dagger = "com.google.dagger:dagger:${Versions.Dagger}"
         const val Hilt = "com.google.dagger:hilt-android:${Versions.Jetpack.Hilt}"
+    }
+
+    object EachKtx {
+        const val Core = "androidx.core:core-ktx:${Versions.Ktx.Core}"
+        const val Activity = "androidx.activity:activity-ktx:${Versions.Ktx.Activity}"
+        const val Lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.Ktx.Lifecycle}"
+    }
+
+    object EachUi {
+        const val PhotoEditor = "com.burhanrashid52:photoeditor:${Versions.Ui.PhotoEditor}"
+        const val ConstraintLayout =
+            "androidx.constraintlayout:constraintlayout:${Versions.Ui.ConstraintLayout}"
     }
 
     val SharedKtx = listOf(
@@ -148,14 +161,19 @@ object Dependencies {
         "com.squareup.retrofit2:converter-jackson:${Versions.Network.Retrofit}"
     )
 
-    object Util {
-        const val Erratum = "land.sungbin:erratum:${Versions.Util.Erratum}"
-        const val Logeukes = "land.sungbin:logeukes:${Versions.Util.Logeukes}"
-    }
+    val Login = listOf(
+        "com.kakao.sdk:v2-user:${Versions.Login.Kakao}",
+        "com.navercorp.nid:oauth:${Versions.Login.Naver}"
+    )
 
     val Debug = listOf(
         "com.squareup.leakcanary:leakcanary-android:${Versions.Util.LeakCanary}"
     )
+
+    object Util { // Erratum 은 :presentation 에서만 쓰임
+        const val Erratum = "land.sungbin:erratum:${Versions.Util.Erratum}"
+        const val Logeukes = "land.sungbin:logeukes:${Versions.Util.Logeukes}"
+    }
 
     object Jetpack {
         const val DataStore =
@@ -168,13 +186,7 @@ object Dependencies {
         // TODO: room (offline-mode support)
     }
 
-    object Login {
-        const val Kakao = "com.kakao.sdk:v2-user:${Versions.Login.Kakao}"
-        const val Naver = "com.navercorp.nid:oauth:${Versions.Login.Naver}"
-        val All = listOf(Kakao, Naver)
-    }
-
-    object Test {
+    object Test { // dependency scope 가 각각 다름
         const val Hamcrest = "org.hamcrest:hamcrest:${Versions.Test.Hamcrest}"
         const val JunitApi = "org.junit.jupiter:junit-jupiter-api:${Versions.Test.JUnit}"
         const val JunitEngine = "org.junit.jupiter:junit-jupiter-engine:${Versions.Test.JUnit}"

@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,10 +26,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.edit
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.register.onboard.constant.Gender
 import team.applemango.runnerbe.shared.compose.component.ToggleButton
-import team.applemango.runnerbe.shared.compose.extension.collectWithLifecycleRememberOnLaunchedEffect
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.dataStore
 
@@ -38,12 +39,14 @@ internal fun GenderPicker(genderSelectChanged: (isSelected: Boolean) -> Unit) {
     val coroutineScope = rememberCoroutineScope()
     var genderSelectState by remember { mutableStateOf<Gender?>(null) }
 
-    context.dataStore.data.collectWithLifecycleRememberOnLaunchedEffect { preferences ->
-        preferences[DataStoreKey.Onboard.Gender]?.let { restoreGenderString ->
-            genderSelectChanged(true)
-            genderSelectState = Gender.values().first { it.string == restoreGenderString }
-        } ?: genderSelectChanged(false)
-        cancel("onboard restore execute must be once.")
+    LaunchedEffect(Unit) {
+        context.dataStore.data.cancellable().collect { preferences ->
+            preferences[DataStoreKey.Onboard.Gender]?.let { restoreGenderString ->
+                genderSelectChanged(true)
+                genderSelectState = Gender.values().first { it.string == restoreGenderString }
+            } ?: genderSelectChanged(false)
+            cancel("onboard restore execute must be once.")
+        }
     }
 
     LazyRow(

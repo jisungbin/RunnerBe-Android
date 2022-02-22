@@ -11,9 +11,7 @@ package team.applemango.runnerbe.feature.register.onboard
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.WindowManager
 import android.widget.Toast
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
@@ -28,7 +26,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.core.view.WindowCompat
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
@@ -41,6 +38,7 @@ import io.github.jisungbin.logeukes.LoggerType
 import io.github.jisungbin.logeukes.logeukes
 import javax.inject.Inject
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.cancellable
 import org.orbitmvi.orbit.viewmodel.observe
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.component.OnboardRouter
@@ -53,6 +51,7 @@ import team.applemango.runnerbe.feature.register.onboard.di.module.UseCaseModule
 import team.applemango.runnerbe.feature.register.onboard.di.module.ViewModelModule
 import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterSideEffect
 import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterState
+import team.applemango.runnerbe.shared.base.WindowInsetActivity
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
@@ -63,7 +62,7 @@ import team.applemango.runnerbe.shared.util.extension.toMessage
 import team.applemango.runnerbe.shared.util.extension.toast
 
 @OptIn(ExperimentalAnimationApi::class)
-class OnboardActivity : ComponentActivity() {
+class OnboardActivity : WindowInsetActivity() {
 
     @Inject
     internal lateinit var viewModelFactory: ViewModelFactory
@@ -84,11 +83,6 @@ class OnboardActivity : ComponentActivity() {
         vm = ViewModelProvider(this, viewModelFactory)[OnboardViewModel::class.java]
         // CoroutineScope 에서 돌아가서 더블클론(::) 참조 안됨
         vm.exceptionFlow.collectWithLifecycle(this) { handleException(it) }
-        window.setFlags( // 네비게이션바까지 영역 확장하려면 필요
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        )
-        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
             ProvideWindowInsets {
@@ -115,16 +109,20 @@ class OnboardActivity : ComponentActivity() {
                             )
                         }
                     }
-                    applicationContext.dataStore.data.collectWithLifecycle(this@OnboardActivity) { preferences ->
+                    // verifyWithEmail, verifyWithEmailDone: 임시 비활성화
+                    applicationContext.dataStore.data.collectWithLifecycle(
+                        lifecycleOwner = this@OnboardActivity,
+                        builder = { cancellable() }
+                    ) { preferences ->
                         val terms = preferences[DataStoreKey.Onboard.TermsAllCheck]
                         val year = preferences[DataStoreKey.Onboard.Year]
                         val gender = preferences[DataStoreKey.Onboard.Gender]
                         val job = preferences[DataStoreKey.Onboard.Job]
-                        val verifyWithEmail = preferences[DataStoreKey.Onboard.Email]
+                        // val verifyWithEmail = preferences[DataStoreKey.Onboard.Email]
                         val verifyWithEmployeeId =
                             preferences[DataStoreKey.Onboard.VerifyWithEmployeeId]
-                        val verifyWithEmailDone =
-                            preferences[DataStoreKey.Onboard.VerifyWithEmailDone]
+                        /*val verifyWithEmailDone =
+                            preferences[DataStoreKey.Onboard.VerifyWithEmailDone]*/
                         val verifyWithEmployeeIdRequestDone =
                             preferences[DataStoreKey.Onboard.VerifyWithEmployeeIdRequestDone]
                         val lastStepIndex = listOf(
@@ -132,13 +130,14 @@ class OnboardActivity : ComponentActivity() {
                             year,
                             gender,
                             job,
-                            verifyWithEmail,
+                            // verifyWithEmail,
                             verifyWithEmployeeId,
-                            verifyWithEmailDone,
+                            // verifyWithEmailDone,
                             verifyWithEmployeeIdRequestDone
                         ).indexOfLast { it != null }
                         if (lastStepIndex != -1) {
                             // NPE issue
+                            // 백스택 생성 enhancement
                             // https://github.com/applemango-runnerbe/RunnerBe-Android/issues/16
                             /*(1..lastStepIndex).forEach { backstackIndex ->
                                 navController.backQueue.addLast(

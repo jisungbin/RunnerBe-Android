@@ -40,7 +40,7 @@ object FontAsset {
 
 object FontTypeface {
     object Roboto {
-        fun getM(context: Context) = ResourcesCompat.getFont(context, font.roboto_m)
+        fun medium(context: Context) = ResourcesCompat.getFont(context, font.roboto_m)
     }
 }
 

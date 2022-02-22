@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -30,6 +29,8 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,21 +41,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.datastore.preferences.core.edit
+import androidx.lifecycle.flowWithLifecycle
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.cancellable
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.constant.EmailVerifyState
-import team.applemango.runnerbe.shared.compose.component.CustomAlertDialog
-import team.applemango.runnerbe.shared.compose.extension.collectAsStateWithLifecycleRemember
-import team.applemango.runnerbe.shared.compose.extension.collectWithLifecycleRememberOnLaunchedEffect
+import team.applemango.runnerbe.shared.compose.component.RunnerbeDialog
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.constant.DataStoreKey
@@ -62,51 +66,64 @@ import team.applemango.runnerbe.shared.util.extension.dataStore
 import team.applemango.runnerbe.shared.util.extension.runIf
 import team.applemango.runnerbe.shared.util.extension.toMessage
 
+private const val EmailVerifyStateDoneMessage = "EmailVerifyStateDone"
 private val Shape = RoundedCornerShape(8.dp)
 
+@OptIn(FlowPreview::class)
 @Composable
 internal fun EmailVerify(vm: OnboardViewModel) {
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
+    val lifecycleOwner = LocalLifecycleOwner.current
     val coroutineScope = rememberCoroutineScope()
-    var emailSent by remember { mutableStateOf(false) }
+    var emailSentState by remember { mutableStateOf(false) }
     val emailInputFlow = remember { MutableStateFlow("") }
-    val emailInputState by emailInputFlow.collectAsStateWithLifecycleRemember("")
+    val emailInputFlowWithLifecycle = remember(emailInputFlow, lifecycleOwner) {
+        emailInputFlow.flowWithLifecycle(lifecycleOwner.lifecycle)
+    }
+    val emailInputStateWithLifecycle by emailInputFlowWithLifecycle.collectAsState("")
     var emailVerifyState by remember { mutableStateOf<EmailVerifyState>(EmailVerifyState.None) }
-    var emailSendButtonEnabled by remember { mutableStateOf(false) }
-    var emailVerifyNoticeDialogVisible by remember { mutableStateOf(true) }
+    var emailSendButtonEnabledState by remember { mutableStateOf(false) }
+    var emailVerifyNoticeDialogVisibleState by remember { mutableStateOf(true) }
 
     EmailVerifyLinkNoticeDialog(
-        visible = emailVerifyNoticeDialogVisible,
+        visible = emailVerifyNoticeDialogVisibleState,
         onDismissRequest = {
-            emailVerifyNoticeDialogVisible = false
+            emailVerifyNoticeDialogVisibleState = false
         }
     )
 
     val emailSendButtonBackgroundColor by animateColorAsState(
-        when (emailSendButtonEnabled) {
+        when (emailSendButtonEnabledState) {
             true -> ColorAsset.Primary
             else -> ColorAsset.G3
         }
     )
     val emailSendButtonTextColor by animateColorAsState(
-        when (emailSendButtonEnabled) {
+        when (emailSendButtonEnabledState) {
             true -> ColorAsset.G6
             else -> ColorAsset.G4_5
         }
     )
 
-    context.dataStore.data.collectWithLifecycleRememberOnLaunchedEffect { preferences ->
-        preferences[DataStoreKey.Onboard.Email]?.let { restoreEmail ->
-            emailInputFlow.emit(restoreEmail)
-            emailSendButtonEnabled = Patterns.EMAIL_ADDRESS.matcher(restoreEmail).matches()
+    LaunchedEffect(Unit) {
+        context.dataStore.data.cancellable().collect { preferences ->
+            preferences[DataStoreKey.Onboard.Email]?.let { restoreEmail ->
+                emailInputFlow.emit(restoreEmail)
+                emailSendButtonEnabledState = Patterns.EMAIL_ADDRESS.matcher(restoreEmail).matches()
+            }
+            cancel("onboard restore execute must be once.")
         }
-        cancel("onboard restore execute must be once.")
     }
-    emailInputFlow.collectWithLifecycleRememberOnLaunchedEffect(debounceTimeout = 500L) { email ->
-        context.dataStore.edit { preferences ->
-            preferences[DataStoreKey.Onboard.Email] = email
-        }
+
+    LaunchedEffect(Unit) {
+        emailInputFlowWithLifecycle
+            .debounce(300L)
+            .collect { email ->
+                context.dataStore.edit { preferences ->
+                    preferences[DataStoreKey.Onboard.Email] = email
+                }
+            }
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -122,13 +139,13 @@ internal fun EmailVerify(vm: OnboardViewModel) {
                         height = Dimension.wrapContent
                     }
                     .border(width = 1.dp, color = ColorAsset.Primary, shape = Shape),
-                value = emailInputState,
+                value = emailInputStateWithLifecycle,
                 onValueChange = { inputEmail ->
                     if (emailVerifyState == EmailVerifyState.Sent) {
                         emailVerifyState = EmailVerifyState.None
                     }
                     if (!inputEmail.contains(" ")) {
-                        emailSendButtonEnabled =
+                        emailSendButtonEnabledState =
                             Patterns.EMAIL_ADDRESS.matcher(inputEmail).matches()
                         coroutineScope.launch {
                             emailInputFlow.emit(inputEmail)
@@ -168,7 +185,7 @@ internal fun EmailVerify(vm: OnboardViewModel) {
                         height = Dimension.fillToConstraints
                     }
                     .clip(Shape)
-                    .runIf(emailSendButtonEnabled) {
+                    .runIf(emailSendButtonEnabledState) {
                         clickable(
                             indication = rememberRipple(),
                             interactionSource = remember { MutableInteractionSource() },
@@ -180,7 +197,7 @@ internal fun EmailVerify(vm: OnboardViewModel) {
                                         vm.sendVerifyMail(
                                             email = email,
                                             onSuccess = {
-                                                emailSent = true
+                                                emailSentState = true
                                                 emailVerifyState = EmailVerifyState.Sent
                                             },
                                             onException = { exception ->
@@ -200,7 +217,7 @@ internal fun EmailVerify(vm: OnboardViewModel) {
             ) {
                 Text(
                     modifier = Modifier.padding(horizontal = 15.dp),
-                    text = if (!emailSent) StringAsset.Button.Verify else StringAsset.Button.ReVerify,
+                    text = if (!emailSentState) StringAsset.Button.Verify else StringAsset.Button.ReVerify,
                     style = Typography.Body14M.copy(color = emailSendButtonTextColor)
                 )
             }
@@ -209,10 +226,12 @@ internal fun EmailVerify(vm: OnboardViewModel) {
             modifier = Modifier.padding(top = 12.dp),
             targetState = emailVerifyState
         ) { state ->
-            var message = ""
+            val message: String
             var style = Typography.Body12R.copy(color = ColorAsset.ErrorLight)
             when (state) {
-                EmailVerifyState.None -> {}
+                EmailVerifyState.None -> {
+                    message = EmailVerifyStateDoneMessage
+                }
                 EmailVerifyState.Sent -> { // success
                     message = StringAsset.Hint.SentVerifyLink
                     style = Typography.Body12R.copy(color = ColorAsset.Primary)
@@ -236,7 +255,7 @@ internal fun EmailVerify(vm: OnboardViewModel) {
                     }
                 }
             }
-            if (message.isNotEmpty()) {
+            if (message != EmailVerifyStateDoneMessage) {
                 Text(text = message, style = style)
             }
         }
@@ -248,34 +267,27 @@ private fun EmailVerifyLinkNoticeDialog(
     visible: Boolean,
     onDismissRequest: () -> Unit,
 ) {
-    if (visible) {
-        CustomAlertDialog(onDismissRequest = { onDismissRequest() }) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-                    .clip(RoundedCornerShape(12.dp))
-                    .background(color = ColorAsset.G5)
-            ) {
-                Text(
-                    modifier = Modifier
-                        .padding(top = 24.dp)
-                        .padding(horizontal = 24.dp),
-                    text = StringAsset.Dialog.EmailVerifyLinkNotice,
-                    style = Typography.Title18R.copy(color = ColorAsset.G1)
-                )
-                Text(
-                    modifier = Modifier
-                        .padding(12.dp)
-                        .align(Alignment.End)
-                        .clickable {
-                            onDismissRequest()
-                        }
-                        .padding(12.dp),
-                    text = StringAsset.OK,
-                    style = Typography.Body14M.copy(color = ColorAsset.Primary)
-                )
-            }
-        }
+    RunnerbeDialog(
+        visible = visible,
+        onDismissRequest = { onDismissRequest() }
+    ) {
+        Text(
+            modifier = Modifier
+                .padding(top = 24.dp)
+                .padding(horizontal = 24.dp),
+            text = StringAsset.Dialog.EmailVerifyLinkNotice,
+            style = Typography.Title18R.copy(color = ColorAsset.G1)
+        )
+        Text(
+            modifier = Modifier
+                .padding(12.dp)
+                .align(Alignment.End)
+                .clickable {
+                    onDismissRequest()
+                }
+                .padding(12.dp),
+            text = StringAsset.OK,
+            style = Typography.Body14M.copy(color = ColorAsset.Primary)
+        )
     }
 }

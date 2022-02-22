@@ -13,13 +13,13 @@ plugins {
 }
 
 dependencies {
+    Dependencies.Login.forEach(::implementation)
     Dependencies.Jackson.forEach(::implementation)
     Dependencies.Network.forEach(::implementation)
-    Dependencies.Login.All.forEach(::implementation)
 
     implementation(Dependencies.Coroutine)
     implementation(Dependencies.Util.Logeukes)
-    implementation(project(ProjectConstants.Domain))
+    implementationProject(ProjectConstants.Domain)
 
     testDebugImplementation(Dependencies.Test.JunitApi)
     testDebugRuntimeOnly(Dependencies.Test.JunitEngine)
