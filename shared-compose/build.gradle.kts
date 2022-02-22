@@ -24,5 +24,6 @@ android {
 
 dependencies {
     implementation(Dependencies.EachKtx.Core)
+    implementation(Dependencies.EachKtx.Lifecycle)
     Dependencies.Compose.forEach(::implementation)
 }
