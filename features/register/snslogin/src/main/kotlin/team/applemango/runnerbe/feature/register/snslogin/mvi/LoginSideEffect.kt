@@ -11,4 +11,5 @@ package team.applemango.runnerbe.feature.register.snslogin.mvi
 
 internal sealed class LoginSideEffect {
     data class SaveUuid(val uuid: String) : LoginSideEffect()
+    data class SaveJwt(val jwt: String) : LoginSideEffect()
 }

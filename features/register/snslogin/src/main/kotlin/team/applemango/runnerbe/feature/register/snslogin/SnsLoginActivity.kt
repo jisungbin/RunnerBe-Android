@@ -28,14 +28,15 @@ import io.github.jisungbin.logeukes.LoggerType
 import io.github.jisungbin.logeukes.logeukes
 import javax.inject.Inject
 import org.orbitmvi.orbit.viewmodel.observe
+import team.applemango.runnerbe.activity.MainActivity
 import team.applemango.runnerbe.feature.register.snslogin.component.SnsLoginScreen
+import team.applemango.runnerbe.feature.register.snslogin.constant.LoginState
 import team.applemango.runnerbe.feature.register.snslogin.di.ViewModelFactory
 import team.applemango.runnerbe.feature.register.snslogin.di.component.DaggerViewModelComponent
 import team.applemango.runnerbe.feature.register.snslogin.di.module.RepositoryModule
 import team.applemango.runnerbe.feature.register.snslogin.di.module.UseCaseModule
 import team.applemango.runnerbe.feature.register.snslogin.di.module.ViewModelModule
 import team.applemango.runnerbe.feature.register.snslogin.mvi.LoginSideEffect
-import team.applemango.runnerbe.feature.register.snslogin.mvi.LoginState
 import team.applemango.runnerbe.shared.base.WindowInsetActivity
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.constant.DataStoreKey
@@ -89,15 +90,22 @@ class SnsLoginActivity : WindowInsetActivity() {
 
     // 백스택 안 남긴 이유는 OnboardRouter 뒤로가기 버튼 clickable modifier 주석 참고
     private fun handleState(state: LoginState) {
-        if (state.success) {
-            changeActivityWithAnimation<DFMOnboardActivityAlias>()
+        when (state) {
+            LoginState.Done -> changeActivityWithAnimation<DFMOnboardActivityAlias>()
+            LoginState.Registered -> changeActivityWithAnimation<MainActivity>()
+            LoginState.None -> {}
         }
     }
 
     private fun handleSideEffect(sideEffect: LoginSideEffect) {
-        when (sideEffect) {
-            is LoginSideEffect.SaveUuid -> {
-                launchedWhenCreated {
+        launchedWhenCreated {
+            when (sideEffect) {
+                is LoginSideEffect.SaveJwt -> {
+                    applicationContext.dataStore.edit { preferences ->
+                        preferences[DataStoreKey.Login.Jwt] = sideEffect.jwt
+                    }
+                }
+                is LoginSideEffect.SaveUuid -> {
                     applicationContext.dataStore.edit { preferences ->
                         preferences[DataStoreKey.Login.Uuid] = sideEffect.uuid
                     }

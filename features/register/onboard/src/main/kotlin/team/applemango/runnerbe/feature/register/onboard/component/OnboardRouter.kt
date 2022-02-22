@@ -49,7 +49,7 @@ import com.google.accompanist.navigation.animation.composable
 import com.skydoves.landscapist.rememberDrawablePainter
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import team.applemango.runnerbe.feature.home.board.MainActivity
+import team.applemango.runnerbe.activity.MainActivity
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.constant.Step

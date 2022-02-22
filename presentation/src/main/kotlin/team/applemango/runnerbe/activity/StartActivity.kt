@@ -14,7 +14,6 @@ import android.os.Bundle
 import android.view.animation.AnticipateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import team.applemango.runnerbe.feature.home.board.MainActivity
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.changeActivityWithAnimation
 import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
