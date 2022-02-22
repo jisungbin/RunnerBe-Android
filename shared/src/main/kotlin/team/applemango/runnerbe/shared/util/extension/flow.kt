@@ -15,18 +15,19 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.cancellable
 
 fun <T> Flow<T>.collectWithLifecycle(
     lifecycleOwner: LifecycleOwner,
+    builder: Flow<T>.() -> Flow<T> = { this },
     action: suspend CoroutineScope.(T) -> Unit,
 ) {
     lifecycleOwner.lifecycleScope.launchWhenCreated {
-        flowWithLifecycle(
-            lifecycle = lifecycleOwner.lifecycle,
-            minActiveState = Lifecycle.State.CREATED
-        ).cancellable().collect { value ->
-            action(value)
-        }
+        builder()
+            .flowWithLifecycle(
+                lifecycle = lifecycleOwner.lifecycle,
+                minActiveState = Lifecycle.State.CREATED
+            ).collect { value ->
+                action(value)
+            }
     }
 }

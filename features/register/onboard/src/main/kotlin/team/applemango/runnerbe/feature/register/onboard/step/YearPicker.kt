@@ -19,7 +19,6 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -29,7 +28,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.datastore.preferences.core.edit
 import java.util.Calendar
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
@@ -106,7 +104,7 @@ private fun WheelPicker(
 ) = WheelPicker(context).apply {
     setSelectedTextColor(presentationColorOf(context, "primary"))
     setUnselectedTextColor(presentationColorOf(context, "G4"))
-    setTypeface(FontTypeface.Roboto.getM(context)) // can null
+    setTypeface(FontTypeface.Roboto.medium(context)) // can null
     setWrapSelectorWheel(true)
     setWheelItemCount(5)
     setMinValue(nowYear - 80)
