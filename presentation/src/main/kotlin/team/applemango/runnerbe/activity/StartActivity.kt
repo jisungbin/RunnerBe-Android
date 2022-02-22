@@ -33,8 +33,7 @@ class StartActivity : AppCompatActivity() {
             val isSnsLoginDone = preferences[DataStoreKey.Login.Uuid] != null
             when {
                 isSignedUser -> { // JWT 존재
-                    changeActivityWithAnimation<MainActivity>() // XXX
-                    // 얜 fragment 이여야 함
+                    changeActivityWithAnimation<MainActivity>() // XXX, 얜 fragment 이여야 함
                     return@collectWithLifecycle
                 }
                 isSnsLoginDone -> { // SNS 로그인 완료 -> 온보딩 페이지로 이동
