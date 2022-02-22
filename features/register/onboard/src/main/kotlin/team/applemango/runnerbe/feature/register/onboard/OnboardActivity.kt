@@ -43,6 +43,7 @@ import org.orbitmvi.orbit.viewmodel.observe
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.component.OnboardRouter
 import team.applemango.runnerbe.feature.register.onboard.constant.EmailVerifyCode
+import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.di.ViewModelFactory
 import team.applemango.runnerbe.feature.register.onboard.di.component.DaggerViewModelComponent
@@ -50,7 +51,6 @@ import team.applemango.runnerbe.feature.register.onboard.di.module.RepositoryMod
 import team.applemango.runnerbe.feature.register.onboard.di.module.UseCaseModule
 import team.applemango.runnerbe.feature.register.onboard.di.module.ViewModelModule
 import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterSideEffect
-import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState
 import team.applemango.runnerbe.shared.base.WindowInsetActivity
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
@@ -119,8 +119,6 @@ class OnboardActivity : WindowInsetActivity() {
                         val gender = preferences[DataStoreKey.Onboard.Gender]
                         val job = preferences[DataStoreKey.Onboard.Job]
                         // val verifyWithEmail = preferences[DataStoreKey.Onboard.Email]
-                        val verifyWithEmployeeId =
-                            preferences[DataStoreKey.Onboard.VerifyWithEmployeeId]
                         /*val verifyWithEmailDone =
                             preferences[DataStoreKey.Onboard.VerifyWithEmailDone]*/
                         val verifyWithEmployeeIdRequestDone =
@@ -131,7 +129,6 @@ class OnboardActivity : WindowInsetActivity() {
                             gender,
                             job,
                             // verifyWithEmail,
-                            verifyWithEmployeeId,
                             // verifyWithEmailDone,
                             verifyWithEmployeeIdRequestDone
                         ).indexOfLast { it != null }
@@ -197,7 +194,10 @@ class OnboardActivity : WindowInsetActivity() {
             RegisterState.ImageUploading -> {
                 StringAsset.Toast.ImageUploading
             }
-            RegisterState.Success -> {
+            RegisterState.RequestDone -> {
+                StringAsset.Toast.EmployeeIdRegisterRequestDone
+            }
+            RegisterState.RegisterDone -> {
                 StringAsset.Toast.RegisterSuccess
             }
             RegisterState.DuplicateUuid -> {

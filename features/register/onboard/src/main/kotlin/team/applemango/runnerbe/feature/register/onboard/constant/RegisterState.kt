@@ -17,14 +17,16 @@ import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState.
 import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState.ImageUploading
 import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState.None
 import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState.NullInformation
-import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState.Success
+import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState.RegisterDone
+import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState.RequestDone
 
 /**
  * [OnboardViewModel.requestUserRegister] state enum class
  *
- * @property None 아무것도 하지 않은 초기화 상태
+ * @property None 아무것도 하지 않은 초기 상태
  * @property ImageUploading 이미지(사원증 사진) 업로드중
- * @property Success 가입 성공 (1000)
+ * @property RegisterDone 가입 성공 (1000)
+ * @property RequestDone 사원증으로 인증을 진행했을 경우, 인증 요청 완료한 상태 -> 가입 성공 X, 가입 대기 상태 O
  * @property DuplicateUuid 중복된 uuid (3001)
  * @property DuplicateEmail 중복된 이메일 (3002)
  * @property DuplicateNickname 중복된 닉네임 (랜덤 6자리 숫자로 자동 생성 됐지만 중복됨) (3004)
@@ -34,7 +36,7 @@ import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState.
 internal enum class RegisterState {
     None,
     ImageUploading,
-    Success,
+    RegisterDone,
     RequestDone,
     DuplicateUuid,
     DuplicateEmail,

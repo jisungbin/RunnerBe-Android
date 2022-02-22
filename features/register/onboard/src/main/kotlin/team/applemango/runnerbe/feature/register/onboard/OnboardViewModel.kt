@@ -38,9 +38,9 @@ import team.applemango.runnerbe.domain.login.usecase.UserRegisterUseCase
 import team.applemango.runnerbe.domain.mail.usecase.MailSendUseCase
 import team.applemango.runnerbe.feature.register.onboard.constant.FirebaseStoragePath
 import team.applemango.runnerbe.feature.register.onboard.constant.Gender
+import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterSideEffect
-import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState
 import team.applemango.runnerbe.shared.base.BaseViewModel
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 
@@ -174,8 +174,13 @@ internal class OnboardViewModel @Inject constructor(
             .onSuccess { result ->
                 when (result) {
                     is UserRegisterResult.Success -> {
+                        val registerState = if (user.isVerifyWithEmployeeId) {
+                            RegisterState.RequestDone
+                        } else {
+                            RegisterState.RegisterDone
+                        }
                         reduce {
-                            RegisterState.Success
+                            registerState
                         }
                         postSideEffect(RegisterSideEffect.SaveUserJwt(result.jwt))
                         postSideEffect(RegisterSideEffect.NavigateToNextStep(nextStep))
