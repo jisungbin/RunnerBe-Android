@@ -10,9 +10,7 @@
 package team.applemango.runnerbe.feature.register.snslogin
 
 import android.os.Bundle
-import android.view.WindowManager
 import android.widget.Toast
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,7 +19,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.core.view.WindowCompat
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.ViewModelProvider
 import com.google.accompanist.insets.ProvideWindowInsets
@@ -39,6 +36,7 @@ import team.applemango.runnerbe.feature.register.snslogin.di.module.UseCaseModul
 import team.applemango.runnerbe.feature.register.snslogin.di.module.ViewModelModule
 import team.applemango.runnerbe.feature.register.snslogin.mvi.LoginSideEffect
 import team.applemango.runnerbe.feature.register.snslogin.mvi.LoginState
+import team.applemango.runnerbe.shared.base.WindowInsetActivity
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.changeActivityWithAnimation
@@ -49,7 +47,7 @@ import team.applemango.runnerbe.shared.util.extension.toMessage
 import team.applemango.runnerbe.shared.util.extension.toast
 import team.applemango.runnerbe.util.DFMOnboardActivityAlias
 
-class SnsLoginActivity : ComponentActivity() {
+class SnsLoginActivity : WindowInsetActivity() {
 
     @Inject
     internal lateinit var viewModelFactory: ViewModelFactory
@@ -70,12 +68,6 @@ class SnsLoginActivity : ComponentActivity() {
         vm = ViewModelProvider(this, viewModelFactory)[SnsLoginViewModel::class.java]
         vm.observe(lifecycleOwner = this, state = ::handleState, sideEffect = ::handleSideEffect)
         vm.exceptionFlow.collectWithLifecycle(this) { handleException(it) }
-
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        )
-        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
             ProvideWindowInsets {
