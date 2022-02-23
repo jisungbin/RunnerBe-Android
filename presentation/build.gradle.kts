@@ -46,12 +46,18 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
+        compose = true
     }
 
-    dynamicFeatures += setOf(
-        ProjectConstants.RegisterSnsLogin,
-        ProjectConstants.RegisterOnboard
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.Compose.Main
+    }
+
+    dynamicFeatures.addAll(
+        setOf(
+            ProjectConstants.RegisterSnsLogin,
+            ProjectConstants.RegisterOnboard
+        )
     )
 }
 
