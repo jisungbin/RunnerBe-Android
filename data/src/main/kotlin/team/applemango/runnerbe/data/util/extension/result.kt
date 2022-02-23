@@ -9,7 +9,6 @@
 
 package team.applemango.runnerbe.data.util.extension
 
+internal fun <T> success(value: T) = Result.success(value)
 internal fun <T> failure(message: String) = Result.failure<T>(Exception(message))
 internal fun <T> failure(exception: Throwable) = Result.failure<T>(exception)
-
-internal fun <T> success(any: T) = Result.success(any)
