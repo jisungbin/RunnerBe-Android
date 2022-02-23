@@ -14,6 +14,6 @@ package team.applemango.runnerbe.domain.main.constant
  * @property After 퇴근 후
  * @property Off 휴일
  */
-enum class RunningItemType {
-    Before, After, Off
+enum class RunningItemType(val code: String) {
+    Before("B"), After("A"), Off("H")
 }
