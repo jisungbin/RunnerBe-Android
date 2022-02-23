@@ -33,6 +33,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import team.applemango.runnerbe.shared.compose.extension.noRippleClickable
 
+private const val DefaultBottomBarHeight = 56
+
 internal data class StateIcon<T>(
     val id: T,
     @DrawableRes val inactivate: Int,
@@ -45,7 +47,7 @@ internal fun <T> IconBottomBar(
     @Size(min = 1) stateIcons: List<StateIcon<T>>,
     backgroundColor: Color = MaterialTheme.colors.primarySurface,
     activateIconTint: Color = contentColorFor(backgroundColor),
-    height: Dp = 56.dp,
+    height: Dp = DefaultBottomBarHeight.dp,
     onIconClick: (iconId: T) -> Unit,
 ) {
     require(stateIcons.isNotEmpty()) { "stateIcons size must be not zero." }
