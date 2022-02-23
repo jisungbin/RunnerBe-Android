@@ -12,10 +12,10 @@ package team.applemango.runnerbe.domain.main.constant
 /**
  * 나이 필터
  *
- * @property None 모든 나이
- * @property Age [Age.age] 이상 나이만 모집하는 아이템만 조회
+ * 필터를 적용하지 않은 상태도 있어야 하기 때문에
+ * 모든 필드는 Nullable 함
+ *
+ * @property min 최소 연령대
+ * @property max 최대 연령대
  */
-sealed class AgeFilter(val code: String) {
-    object None : AgeFilter("A")
-    data class Age(val age: Int) : AgeFilter(age.toString())
-}
+data class AgeRange(val min: Int?, val max: Int?)

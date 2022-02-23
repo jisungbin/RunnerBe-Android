@@ -32,7 +32,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import team.applemango.runnerbe.feature.home.board.constant.RunningItemType
+import team.applemango.runnerbe.domain.main.constant.RunningItemType
 import team.applemango.runnerbe.shared.compose.component.ToggleTopBar
 import team.applemango.runnerbe.shared.compose.component.ToggleTopBarItem
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset

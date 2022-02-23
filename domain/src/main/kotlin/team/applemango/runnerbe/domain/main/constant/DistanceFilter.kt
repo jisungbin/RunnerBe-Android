@@ -13,9 +13,9 @@ package team.applemango.runnerbe.domain.main.constant
  * 거리 필터
  *
  * @property None 전체
- * @property KiloMeter [KiloMeter.km] 킬로미터 안에 있는 아이템만 조회
+ * @property Create [Create.km] 킬로미터 안에 있는 아이템만 조회
  */
 sealed class DistanceFilter(val code: String) {
     object None : DistanceFilter("N")
-    data class KiloMeter(val km: Int) : DistanceFilter(km.toString())
+    data class Create(val km: Int) : DistanceFilter(km.toString())
 }

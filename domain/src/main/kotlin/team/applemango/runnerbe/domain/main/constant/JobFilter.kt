@@ -9,15 +9,17 @@
 
 package team.applemango.runnerbe.domain.main.constant
 
-private typealias JobConstant = team.applemango.runnerbe.domain.register.login.constant.Job
+import team.applemango.runnerbe.domain.main.constant.JobFilter.Create
+import team.applemango.runnerbe.domain.main.constant.JobFilter.None
+import team.applemango.runnerbe.domain.register.login.constant.Job
 
 /**
  * 직군 필터
  *
  * @property None 모든 직군
- * @property Job [Job.job] 에 해당하는 직군을 모집하는 아이템만 조회
+ * @property Create [Create.job] 에 해당하는 직군을 모집하는 아이템만 조회
  */
 sealed class JobFilter(val code: String) {
     object None : JobFilter("N")
-    data class Job(val job: JobConstant) : JobFilter(job.code)
+    data class Create(val job: Job) : JobFilter(job.code)
 }
