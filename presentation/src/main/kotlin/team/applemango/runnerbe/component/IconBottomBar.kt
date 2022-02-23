@@ -37,8 +37,8 @@ private const val DefaultBottomBarHeight = 56
 
 internal data class StateIcon<T>(
     val id: T,
-    @DrawableRes val inactivate: Int,
     @DrawableRes val activate: Int,
+    @DrawableRes val inactivate: Int,
 )
 
 @Composable
