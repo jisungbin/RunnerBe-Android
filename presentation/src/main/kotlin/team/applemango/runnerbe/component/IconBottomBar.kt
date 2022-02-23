@@ -14,6 +14,7 @@ import androidx.annotation.Size
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.Icon
@@ -64,6 +65,7 @@ internal fun <T> IconBottomBar(
             Box(
                 modifier = Modifier
                     .weight(1f)
+                    .fillMaxSize()
                     .noRippleClickable {
                         onIconClick(stateIcon.id)
                         selectedIconState = stateIcon.id
