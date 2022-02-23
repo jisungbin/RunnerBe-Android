@@ -18,11 +18,11 @@ interface MainRepository {
         itemFilter: String,
         distance: String,
         gender: String,
-        maxAge: String,
         minAge: String,
+        maxAge: String,
         job: String,
-        longitude: Float,
         latitude: Float,
+        longitude: Float,
         keyword: String,
     ): List<RunningItem>
 }

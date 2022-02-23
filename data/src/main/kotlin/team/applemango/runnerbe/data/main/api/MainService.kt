@@ -23,11 +23,11 @@ interface MainService {
         @Query("filter") itemFilter: String,
         @Query("distanceFilter") distance: String,
         @Query("genderFilter") gender: String,
-        @Query("ageFilterMax") maxAge: String,
         @Query("ageFilterMin") minAge: String,
+        @Query("ageFilterMax") maxAge: String,
         @Query("jobFilter") job: String,
-        @Query("userLongitude") longitude: Float,
         @Query("userLatitude") latitude: Float,
+        @Query("userLongitude") longitude: Float,
         @Query("keywordSearch") keyword: String,
     ): Response<RunningItemResponse>
 }
