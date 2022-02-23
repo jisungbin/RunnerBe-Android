@@ -79,7 +79,7 @@ class SnsLoginActivity : WindowInsetActivity() {
                 SnsLoginScreen(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(brush = GradientAsset.RegisterCommonBackground)
+                        .background(brush = GradientAsset.BlackGradientBrush)
                         .systemBarsPadding(start = false, end = false)
                         .padding(horizontal = 16.dp),
                     vm = vm

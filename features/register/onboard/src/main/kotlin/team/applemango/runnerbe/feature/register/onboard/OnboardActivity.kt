@@ -166,7 +166,7 @@ class OnboardActivity : WindowInsetActivity() {
                     OnboardRouter(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(brush = GradientAsset.RegisterCommonBackground)
+                            .background(brush = GradientAsset.BlackGradientBrush)
                             /*.statusBarsPadding()
                             .navigationBarsWithImePadding() // Step.VerifyWithEmail 단계에 TextField 있음*/
                             .systemBarsPadding(start = false, end = false)

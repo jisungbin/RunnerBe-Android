@@ -66,7 +66,7 @@ internal fun TermsTable(onAllTermsCheckStateChanged: (allChecked: Boolean) -> Un
     val termsCheckboxColor = CheckboxDefaults.colors(
         checkedColor = ColorAsset.Primary,
         uncheckedColor = ColorAsset.G4,
-        checkmarkColor = GradientAsset.EndColor
+        checkmarkColor = GradientAsset.BlackEndColor
     )
 
     fun saveTermsAllCheckState() {

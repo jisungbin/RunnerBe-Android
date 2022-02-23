@@ -35,8 +35,7 @@ object ColorAsset {
 }
 
 object GradientAsset {
-    val StartColor = Color(18, 18, 18)
-    val EndColor = Color(27, 26, 23)
-    val RegisterCommonBackground =
-        Brush.linearGradient(listOf(StartColor, EndColor))
+    val BlackStartColor = Color(18, 18, 18)
+    val BlackEndColor = Color(27, 26, 23)
+    val BlackGradientBrush = Brush.linearGradient(listOf(BlackStartColor, BlackEndColor))
 }
