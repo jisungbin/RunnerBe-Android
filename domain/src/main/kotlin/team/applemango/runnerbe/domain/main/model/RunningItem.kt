@@ -15,14 +15,34 @@ import team.applemango.runnerbe.domain.main.constant.RunningItemType
 import team.applemango.runnerbe.domain.register.login.constant.Job
 
 /**
- * @property itemId 게시글 아이템 아이디
+ * @property itemId 게시글 아이디
+ * @property ownerId 게시글 작성자 아이디
+ * @property ownerNickName 게시글 작성자 닉네임
+ * @property ownerProfileImageUrl 게시글 작성자 프로필 사진 URL
+ * @property createdAt 게시글 작성 날짜
+ * @property bookmarkCount 게시글 북마크 개수
+ * @property runningType 게시글 아이템 타입 (출근 전, 퇴근 후, 휴일)
+ * @property finish 게시글 러닝 모집 마감 여부
+ * @property title 게시글 제목
+ * @property gender 러닝 참여 가능 성별 필터
+ * @property jobs 러닝 참여자 직업 리스트
+ * @property ageRange 러닝 참여 가능 연령대 필터
+ * @property runningTime 예정 러닝 소요 시간
+ * @property locateAddress 모임 장소의 간단한 주소 (ex_석림동 석림 1로)
+ * @property distance 모임 장소와 내 위치간 거리 (단위: KM)
+ * @property latitude 모임 장소 위도
+ * @property longitude 모임 장소 경도
+ * @property meetingDate 모임 날짜 및 시간 (ex_05/22(일) AM11:22)
  */
 data class RunningItem(
     val itemId: Int,
     val ownerId: Int,
-    val ownerNickName: String? = null,
+    val ownerNickName: String,
     val ownerProfileImageUrl: String,
     val createdAt: String,
+    val bookmarkCount: Int,
+    val runningType: RunningItemType,
+    val finish: Boolean,
     val title: String,
     val gender: GenderFilter,
     val jobs: List<Job>,
@@ -33,7 +53,4 @@ data class RunningItem(
     val latitude: Double,
     val longitude: Double,
     val meetingDate: String,
-    val bookmarkCount: Int,
-    val runningType: RunningItemType,
-    val finish: Boolean,
 )
