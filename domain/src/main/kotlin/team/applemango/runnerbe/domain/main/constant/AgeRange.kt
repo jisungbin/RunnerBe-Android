@@ -20,4 +20,5 @@ package team.applemango.runnerbe.domain.main.constant
  */
 data class AgeRange(val min: Int?, val max: Int?) {
     override fun toString() = "$min-$max"
+    fun getCode(ageBuilder: AgeRange.() -> Int?) = ageBuilder(this)?.toString() ?: "N"
 }
