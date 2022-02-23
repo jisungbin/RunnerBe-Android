@@ -29,29 +29,29 @@ fun <T> ToggleButton(
     onClick: () -> Unit,
 ) {
     @Composable
-    fun backgroundColor(target: T) = animateColorAsState(
+    fun backgroundAnimateColor(target: T) = animateColorAsState(
         if (target == selectState) ColorAsset.Primary else Color.Transparent
     ).value
 
     @Composable
-    fun borderColor(target: T) = animateColorAsState(
+    fun borderAnimateColor(target: T) = animateColorAsState(
         if (target == selectState) ColorAsset.Primary else ColorAsset.G4
     ).value
 
     @Composable
-    fun textColor(target: T) = animateColorAsState(
+    fun textAnimateColor(target: T) = animateColorAsState(
         if (target == selectState) ColorAsset.G6 else ColorAsset.G3_5
     ).value
 
     Button(
         onClick = { onClick() },
         shape = RoundedCornerShape(20.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = backgroundColor(target)),
-        border = BorderStroke(width = 1.dp, color = borderColor(target))
+        colors = ButtonDefaults.buttonColors(backgroundColor = backgroundAnimateColor(target)),
+        border = BorderStroke(width = 1.dp, color = borderAnimateColor(target))
     ) {
         Text(
             text = targetStringBuilder(),
-            style = Typography.Body14R.copy(color = textColor(target))
+            style = Typography.Body14R.copy(color = textAnimateColor(target))
         )
     }
 }
