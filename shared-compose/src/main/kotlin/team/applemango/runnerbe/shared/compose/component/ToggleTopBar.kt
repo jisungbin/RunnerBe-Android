@@ -40,7 +40,7 @@ import team.applemango.runnerbe.shared.compose.extension.noRippleClickable
 private const val DefaultToggleTopBarRadius = 34
 private const val DefaultToggleTopBarHeight = 36
 
-data class TopBarItem<T>(
+data class ToggleTopBarItem<T>(
     val id: T,
     val text: String,
 )
@@ -53,14 +53,15 @@ fun <T> ToggleTopBar(
     inactivateBackgroundColor: Color = baseBackgroundColor,
     activateTextColor: Color = contentColorFor(activateBackgroundColor),
     inactivateTextColor: Color = contentColorFor(inactivateBackgroundColor),
-    textStyle: TextStyle = LocalTextStyle.current,
+    activateTextStyle: TextStyle = LocalTextStyle.current,
+    inactivateTextStyle: TextStyle = LocalTextStyle.current,
     height: Dp = DefaultToggleTopBarHeight.dp,
     radius: Dp = DefaultToggleTopBarRadius.dp,
-    @Size(min = 1) topBarItems: List<TopBarItem<T>>,
+    @Size(min = 1) toggleTopBarItems: List<ToggleTopBarItem<T>>,
     onItemClick: (itemId: T) -> Unit,
 ) {
-    require(topBarItems.isNotEmpty()) { "topBarItems size must be not zero." }
-    var selectedItemState by remember { mutableStateOf(topBarItems.first().id) }
+    require(toggleTopBarItems.isNotEmpty()) { "topBarItems size must be not zero." }
+    var selectedItemState by remember { mutableStateOf(toggleTopBarItems.first().id) }
 
     @Composable
     fun backgroundAnimateColor(itemId: T) = animateColorAsState(
@@ -78,6 +79,12 @@ fun <T> ToggleTopBar(
         }
     ).value
 
+    @Composable
+    fun textStyle(itemId: T) = when (selectedItemState == itemId) {
+        true -> activateTextStyle
+        else -> inactivateTextStyle
+    }
+
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -86,7 +93,7 @@ fun <T> ToggleTopBar(
             .background(color = baseBackgroundColor),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        topBarItems.forEach { item ->
+        toggleTopBarItems.forEach { item ->
             Box(
                 modifier = Modifier
                     .weight(1f)
@@ -99,7 +106,10 @@ fun <T> ToggleTopBar(
                     },
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = item.text, style = textStyle.copy(color = textAnimateColor(item.id)))
+                Text(
+                    text = item.text,
+                    style = textStyle(item.id).copy(color = textAnimateColor(item.id))
+                )
             }
         }
     }
