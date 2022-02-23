@@ -44,10 +44,12 @@ class MainActivity : WindowInsetActivity() {
             ProvideWindowInsets {
                 val systemUiController = rememberSystemUiController()
                 LaunchedEffect(Unit) {
-                    systemUiController.setSystemBarsColor(Color.Transparent)
+                    systemUiController.setStatusBarColor(Color.Transparent)
+                    systemUiController.setNavigationBarColor(ColorAsset.G6)
                 }
                 MainScreen(
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
+                        .fillMaxSize()
                         .background(brush = GradientAsset.BlackGradientBrush)
                         .systemBarsPadding(start = false, end = false)
                 )
