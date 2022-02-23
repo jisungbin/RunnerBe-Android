@@ -40,13 +40,13 @@ import team.applemango.runnerbe.shared.compose.extension.noRippleClickable
 private const val DefaultToggleTopBarRadius = 34
 private const val DefaultToggleTopBarHeight = 36
 
-internal data class TopBarItem<T>(
+data class TopBarItem<T>(
     val id: T,
     val text: String,
 )
 
 @Composable
-internal fun <T> ToggleTopBar(
+fun <T> ToggleTopBar(
     modifier: Modifier = Modifier,
     baseBackgroundColor: Color = MaterialTheme.colors.primarySurface,
     activateBackgroundColor: Color,
