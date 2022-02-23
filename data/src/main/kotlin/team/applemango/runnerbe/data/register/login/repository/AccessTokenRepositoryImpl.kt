@@ -13,18 +13,17 @@ import android.app.Activity
 import com.kakao.sdk.user.UserApiClient
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.OAuthLoginCallback
+import kotlin.coroutines.resume
 import kotlinx.coroutines.suspendCancellableCoroutine
 import team.applemango.runnerbe.data.util.extension.failure
 import team.applemango.runnerbe.data.util.extension.success
 import team.applemango.runnerbe.domain.register.login.repository.AccessTokenRepository
-import kotlin.coroutines.resume
 
 private const val NAVER_ACCESS_TOKEN_NULL = "Naver access token is null."
 private const val RESPONSE_NOTHING = "Kakao API response is nothing."
 
 // must be activity context
-class AccessTokenRepositoryImpl(private val activityContext: Activity) :
-    AccessTokenRepository {
+class AccessTokenRepositoryImpl(private val activityContext: Activity) : AccessTokenRepository {
     override suspend fun getKakao(): String {
         return if (UserApiClient.instance.isKakaoTalkLoginAvailable(activityContext)) {
             loginWithKakaoTalk(activityContext)
