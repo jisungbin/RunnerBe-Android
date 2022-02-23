@@ -64,7 +64,7 @@
 #### Etc
 
 - GMS
-- Dagger2
+- Dagger2 (for DFM)
 - WindowInsets
 - Coroutine/Flow
 - Retrofit, OkHttp
