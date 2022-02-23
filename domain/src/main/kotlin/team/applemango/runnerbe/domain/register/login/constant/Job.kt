@@ -7,9 +7,9 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.feature.register.onboard.constant
+package team.applemango.runnerbe.domain.register.login.constant
 
-internal enum class Job(val string: String) {
+enum class Job(val code: String) {
     PSV("공무원"),
     EDU("교육"),
     DEV("개발"),
