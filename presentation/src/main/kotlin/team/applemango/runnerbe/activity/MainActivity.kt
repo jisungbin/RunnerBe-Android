@@ -12,8 +12,11 @@ package team.applemango.runnerbe.activity
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,12 +26,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.google.accompanist.insets.ProvideWindowInsets
+import com.google.accompanist.insets.systemBarsPadding
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import team.applemango.runnerbe.R
 import team.applemango.runnerbe.component.IconBottomBar
 import team.applemango.runnerbe.component.StateIcon
 import team.applemango.runnerbe.constant.ScreenType
 import team.applemango.runnerbe.shared.base.WindowInsetActivity
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
+import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 
 class MainActivity : WindowInsetActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +42,15 @@ class MainActivity : WindowInsetActivity() {
 
         setContent {
             ProvideWindowInsets {
-                MainScreen()
+                val systemUiController = rememberSystemUiController()
+                LaunchedEffect(Unit) {
+                    systemUiController.setSystemBarsColor(Color.Transparent)
+                }
+                MainScreen(
+                    modifier = Modifier.fillMaxSize()
+                        .background(brush = GradientAsset.BlackGradientBrush)
+                        .systemBarsPadding(start = false, end = false)
+                )
             }
         }
     }
@@ -77,10 +91,16 @@ class MainActivity : WindowInsetActivity() {
                 targetState = selectedScreenType
             ) { screen ->
                 when (screen) {
-                    ScreenType.Main -> { Text(text = "1") }
-                    ScreenType.Bookmark -> { Text(text = "2") }
+                    ScreenType.Main -> {
+                        Text(text = "1")
+                    }
+                    ScreenType.Bookmark -> {
+                        Text(text = "2")
+                    }
                     ScreenType.Mail -> throw NotImplementedError()
-                    ScreenType.Mypage -> { Text(text = "3") }
+                    ScreenType.Mypage -> {
+                        Text(text = "3")
+                    }
                 }
             }
             IconBottomBar(

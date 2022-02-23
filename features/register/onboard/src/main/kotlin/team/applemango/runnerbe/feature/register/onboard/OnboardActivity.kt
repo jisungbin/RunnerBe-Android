@@ -143,6 +143,7 @@ class OnboardActivity : WindowInsetActivity() {
                         cancel("step restore execute must be once.")
                     }
                 }
+
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     scaffoldState = scaffoldState,
