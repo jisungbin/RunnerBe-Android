@@ -11,19 +11,21 @@ package team.applemango.runnerbe.data.main.api
 
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 import team.applemango.runnerbe.data.main.model.RunningItemResponse
 
 interface MainService {
     @GET("/users/main/{runningTag}")
-    suspend fun requestRunningItems(
+    suspend fun loadRunningItems(
+        @Path("runningTag") itemType: String,
         @Query("whetherEnd") includeEndItems: Boolean,
-        @Query("filter") mainFilterType: String,
-        @Query("distanceFilter") distanceFilter: String,
-        @Query("genderFilter") genderFilter: String,
-        @Query("ageFilterMax") maxAgeFilter: String,
-        @Query("ageFilterMin") minAgeFilter: String,
-        @Query("jobFilter") jobFilter: String,
+        @Query("filter") itemFilter: String,
+        @Query("distanceFilter") distance: String,
+        @Query("genderFilter") gender: String,
+        @Query("ageFilterMax") maxAge: String,
+        @Query("ageFilterMin") minAge: String,
+        @Query("jobFilter") job: String,
         @Query("userLongitude") longitude: Float,
         @Query("userLatitude") latitude: Float,
         @Query("keywordSearch") keyword: String,

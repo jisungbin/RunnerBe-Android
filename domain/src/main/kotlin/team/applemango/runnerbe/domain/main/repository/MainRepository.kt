@@ -9,6 +9,20 @@
 
 package team.applemango.runnerbe.domain.main.repository
 
+import team.applemango.runnerbe.domain.main.model.RunningItem
+
 interface MainRepository {
-    suspend fun loadRunningItems()
+    suspend fun loadRunningItems(
+        itemType: String,
+        includeEndItems: Boolean,
+        itemFilter: String,
+        distance: String,
+        gender: String,
+        maxAge: String,
+        minAge: String,
+        job: String,
+        longitude: Float,
+        latitude: Float,
+        keyword: String,
+    ): List<RunningItem>
 }
