@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.component
+package team.applemango.runnerbe.shared.compose.component
 
 import androidx.annotation.Size
 import androidx.compose.animation.animateColorAsState
