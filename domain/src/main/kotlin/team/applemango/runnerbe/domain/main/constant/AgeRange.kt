@@ -18,4 +18,6 @@ package team.applemango.runnerbe.domain.main.constant
  * @property min 최소 연령대
  * @property max 최대 연령대
  */
-data class AgeRange(val min: Int?, val max: Int?)
+data class AgeRange(val min: Int?, val max: Int?) {
+    override fun toString() = "$min-$max"
+}
