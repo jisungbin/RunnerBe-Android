@@ -14,7 +14,7 @@ import dagger.Provides
 import team.applemango.runnerbe.domain.login.repository.RegisterRepository
 import team.applemango.runnerbe.domain.login.usecase.CheckUsableEmailUseCase
 import team.applemango.runnerbe.domain.login.usecase.UserRegisterUseCase
-import team.applemango.runnerbe.domain.mail.repository.MailRepository
+import team.applemango.runnerbe.domain.mail.repository.MailjetRepository
 import team.applemango.runnerbe.domain.mail.usecase.MailSendUseCase
 
 @Module
@@ -28,5 +28,5 @@ internal class UseCaseModule {
         UserRegisterUseCase(repo)
 
     @Provides
-    fun provideMailSendUseCase(repo: MailRepository): MailSendUseCase = MailSendUseCase(repo)
+    fun provideMailSendUseCase(repo: MailjetRepository): MailSendUseCase = MailSendUseCase(repo)
 }

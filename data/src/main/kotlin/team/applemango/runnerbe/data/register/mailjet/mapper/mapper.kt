@@ -7,9 +7,9 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.data.mail.mapper
+package team.applemango.runnerbe.data.register.mailjet.mapper
 
-import team.applemango.runnerbe.data.mail.model.MailjetResponse
+import team.applemango.runnerbe.data.register.mailjet.model.MailjetResponse
 import team.applemango.runnerbe.domain.mail.model.result.MailjetErrorResult
 import team.applemango.runnerbe.domain.mail.model.result.MailjetResult
 

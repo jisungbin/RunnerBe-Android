@@ -7,15 +7,15 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.data.login.api
+package team.applemango.runnerbe.data.register.login.api
 
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
-import team.applemango.runnerbe.data.login.model.CheckDuplicateEmailResponse
-import team.applemango.runnerbe.data.login.model.UserRegisterResponse
+import team.applemango.runnerbe.data.register.login.model.CheckDuplicateEmailResponse
+import team.applemango.runnerbe.data.register.login.model.UserRegisterResponse
 import team.applemango.runnerbe.domain.login.model.UserRegister
 
 internal interface RegisterService {

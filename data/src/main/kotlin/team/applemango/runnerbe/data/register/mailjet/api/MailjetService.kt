@@ -7,12 +7,12 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.data.mail.api
+package team.applemango.runnerbe.data.register.mailjet.api
 
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
-import team.applemango.runnerbe.data.mail.model.MailjetResponse
+import team.applemango.runnerbe.data.register.mailjet.model.MailjetResponse
 import team.applemango.runnerbe.domain.mail.model.MailTemplate
 
 interface MailjetService {

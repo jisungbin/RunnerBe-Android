@@ -7,10 +7,10 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.data.login.repository
+package team.applemango.runnerbe.data.register.login.repository
 
-import team.applemango.runnerbe.data.login.mapper.toBoolean
-import team.applemango.runnerbe.data.login.mapper.toResultDomain
+import team.applemango.runnerbe.data.register.login.mapper.toBoolean
+import team.applemango.runnerbe.data.register.login.mapper.toResultDomain
 import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
 import team.applemango.runnerbe.data.util.registerApi
 import team.applemango.runnerbe.domain.login.model.UserRegister

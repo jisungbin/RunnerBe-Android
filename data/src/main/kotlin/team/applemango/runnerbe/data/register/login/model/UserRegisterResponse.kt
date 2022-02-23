@@ -2,19 +2,16 @@
  * RunnerBe © 2022 Team AppleMango. all rights reserved.
  * RunnerBe license is under the MIT.
  *
- * [LoginRequestResponse.kt] created by Ji Sungbin on 22. 2. 6. 오후 4:42
+ * [UserRegisterResponse.kt] created by Ji Sungbin on 22. 2. 12. 오후 2:50
  *
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.data.login.model
+package team.applemango.runnerbe.data.register.login.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-internal data class LoginRequestResponse(
-    @field:JsonProperty("result")
-    val loginResult: LoginResult? = null,
-
+data class UserRegisterResponse(
     @field:JsonProperty("code")
     val code: Int? = null,
 
@@ -23,4 +20,7 @@ internal data class LoginRequestResponse(
 
     @field:JsonProperty("isSuccess")
     val isSuccess: Boolean? = null,
+
+    @field:JsonProperty("result")
+    val jwt: String? = null,
 )

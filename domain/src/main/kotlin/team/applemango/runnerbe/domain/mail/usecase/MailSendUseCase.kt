@@ -13,7 +13,7 @@ import team.applemango.runnerbe.domain.mail.model.From
 import team.applemango.runnerbe.domain.mail.model.MailTemplate
 import team.applemango.runnerbe.domain.mail.model.MailTemplateItem
 import team.applemango.runnerbe.domain.mail.model.To
-import team.applemango.runnerbe.domain.mail.repository.MailRepository
+import team.applemango.runnerbe.domain.mail.repository.MailjetRepository
 
 private fun String.toLink() = "https://jisungbin.github.io/verify?=$this"
 
@@ -32,7 +32,7 @@ private fun buildContent(token: String, isHtml: Boolean) =
         else this
     }
 
-class MailSendUseCase(private val repo: MailRepository) {
+class MailSendUseCase(private val repo: MailjetRepository) {
     suspend operator fun invoke(token: String, email: String) = runCatching {
         repo.send(
             MailTemplate(

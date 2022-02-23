@@ -10,7 +10,7 @@
 package team.applemango.runnerbe.data.util.extension
 
 import retrofit2.Response
-import team.applemango.runnerbe.data.login.model.LoginRequestResponse
+import team.applemango.runnerbe.data.register.login.model.LoginRequestResponse
 
 private const val REQUEST_EXCEPTION =
     "The request is a success, but the server execution is failed. (or result field is null)"

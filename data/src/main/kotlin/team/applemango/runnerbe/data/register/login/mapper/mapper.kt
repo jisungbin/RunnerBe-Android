@@ -7,11 +7,11 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.data.login.mapper
+package team.applemango.runnerbe.data.register.login.mapper
 
-import team.applemango.runnerbe.data.login.model.CheckDuplicateEmailResponse
-import team.applemango.runnerbe.data.login.model.LoginRequestResponse
-import team.applemango.runnerbe.data.login.model.UserRegisterResponse
+import team.applemango.runnerbe.data.register.login.model.CheckDuplicateEmailResponse
+import team.applemango.runnerbe.data.register.login.model.LoginRequestResponse
+import team.applemango.runnerbe.data.register.login.model.UserRegisterResponse
 import team.applemango.runnerbe.domain.login.model.UserToken
 import team.applemango.runnerbe.domain.login.model.result.UserRegisterResult
 

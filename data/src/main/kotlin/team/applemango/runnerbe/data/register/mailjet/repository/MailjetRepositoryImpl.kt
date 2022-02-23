@@ -7,16 +7,16 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.data.mail.repository
+package team.applemango.runnerbe.data.register.mailjet.repository
 
-import team.applemango.runnerbe.data.mail.mapper.toDomain
+import team.applemango.runnerbe.data.register.mailjet.mapper.toDomain
 import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
 import team.applemango.runnerbe.data.util.mailjetApi
 import team.applemango.runnerbe.domain.mail.model.MailTemplate
 import team.applemango.runnerbe.domain.mail.model.result.MailjetResult
-import team.applemango.runnerbe.domain.mail.repository.MailRepository
+import team.applemango.runnerbe.domain.mail.repository.MailjetRepository
 
-class MailRepositoryImpl : MailRepository {
+class MailjetRepositoryImpl : MailjetRepository {
     override suspend fun send(mailTemplate: MailTemplate): MailjetResult {
         val request = mailjetApi.send(mailTemplate)
         val isSuccess: Boolean

@@ -12,8 +12,8 @@ package team.applemango.runnerbe.feature.register.snslogin.di.module
 import android.app.Activity
 import dagger.Module
 import dagger.Provides
-import team.applemango.runnerbe.data.login.repository.AccessTokenRepositoryImpl
-import team.applemango.runnerbe.data.login.repository.LoginRepositoryImpl
+import team.applemango.runnerbe.data.register.login.repository.AccessTokenRepositoryImpl
+import team.applemango.runnerbe.data.register.login.repository.LoginRepositoryImpl
 import team.applemango.runnerbe.domain.login.repository.AccessTokenRepository
 import team.applemango.runnerbe.domain.login.repository.LoginRepository
 

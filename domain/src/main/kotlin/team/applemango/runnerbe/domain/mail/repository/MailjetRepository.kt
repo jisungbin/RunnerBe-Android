@@ -12,6 +12,6 @@ package team.applemango.runnerbe.domain.mail.repository
 import team.applemango.runnerbe.domain.mail.model.MailTemplate
 import team.applemango.runnerbe.domain.mail.model.result.MailjetResult
 
-interface MailRepository {
+interface MailjetRepository {
     suspend fun send(mailTemplate: MailTemplate): MailjetResult
 }

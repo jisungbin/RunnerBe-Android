@@ -7,14 +7,14 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.data.login.api
+package team.applemango.runnerbe.data.register.login.api
 
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 import retrofit2.http.Path
 import team.applemango.runnerbe.domain.login.model.AccessToken
-import team.applemango.runnerbe.data.login.model.LoginRequestResponse
+import team.applemango.runnerbe.data.register.login.model.LoginRequestResponse
 
 internal interface LoginService {
     @POST("/users/{platformName}-login")

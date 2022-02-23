@@ -7,11 +7,11 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.data.mail.model
+package team.applemango.runnerbe.data.register.mailjet.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class MailjetResponse(
     @field:JsonProperty("Messages")
-    val messages: List<MessagesItem?>? = null,
+    val messages: List<MailjetItem?>? = null,
 )
