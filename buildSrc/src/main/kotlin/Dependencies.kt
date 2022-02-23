@@ -119,8 +119,6 @@ object Dependencies {
 
     val PresentationOnlyKtx = listOf(
         "com.google.android.play:core-ktx:${Versions.Ktx.PlayCore}",
-        "androidx.navigation:navigation-ui-ktx:${Versions.Ktx.Navigation}",
-        "androidx.navigation:navigation-fragment-ktx:${Versions.Ktx.Navigation}",
     )
 
     val Firebase = listOf(
