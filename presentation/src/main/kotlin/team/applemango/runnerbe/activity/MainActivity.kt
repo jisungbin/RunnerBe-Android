@@ -11,12 +11,14 @@ package team.applemango.runnerbe.activity
 
 import android.os.Bundle
 import android.widget.TextView
-import androidx.activity.ComponentActivity
+import androidx.compose.material.BottomAppBar
 import team.applemango.runnerbe.R
+import team.applemango.runnerbe.shared.base.WindowInsetActivity
 
-class MainActivity : ComponentActivity() {
+class MainActivity : WindowInsetActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(TextView(this).apply { text = getString(R.string.app_name) })
+        BottomAppBar()
     }
 }
