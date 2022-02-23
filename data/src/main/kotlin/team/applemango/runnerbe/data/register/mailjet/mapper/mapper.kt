@@ -10,8 +10,8 @@
 package team.applemango.runnerbe.data.register.mailjet.mapper
 
 import team.applemango.runnerbe.data.register.mailjet.model.MailjetResponse
-import team.applemango.runnerbe.domain.mail.model.result.MailjetErrorResult
-import team.applemango.runnerbe.domain.mail.model.result.MailjetResult
+import team.applemango.runnerbe.domain.register.mailjet.model.result.MailjetErrorResult
+import team.applemango.runnerbe.domain.register.mailjet.model.result.MailjetResult
 
 internal fun MailjetResponse.toDomain(isSuccess: Boolean) = when (isSuccess) {
     true -> MailjetResult(isSuccess = true, errorResult = null)

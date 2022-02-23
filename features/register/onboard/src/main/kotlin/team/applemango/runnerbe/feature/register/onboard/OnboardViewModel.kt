@@ -30,11 +30,11 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
-import team.applemango.runnerbe.domain.login.model.UserRegister
-import team.applemango.runnerbe.domain.login.model.result.UserRegisterResult
-import team.applemango.runnerbe.domain.login.usecase.CheckUsableEmailUseCase
-import team.applemango.runnerbe.domain.login.usecase.UserRegisterUseCase
-import team.applemango.runnerbe.domain.mail.usecase.MailSendUseCase
+import team.applemango.runnerbe.domain.register.login.model.UserRegister
+import team.applemango.runnerbe.domain.register.login.model.result.UserRegisterResult
+import team.applemango.runnerbe.domain.register.login.usecase.CheckUsableEmailUseCase
+import team.applemango.runnerbe.domain.register.login.usecase.UserRegisterUseCase
+import team.applemango.runnerbe.domain.register.mailjet.usecase.MailjetSendUseCase
 import team.applemango.runnerbe.feature.register.onboard.constant.FirebaseStoragePath
 import team.applemango.runnerbe.feature.register.onboard.constant.Gender
 import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState
@@ -54,7 +54,7 @@ private val ImageUpdateExceptionWithNull =
 internal class OnboardViewModel @Inject constructor(
     private val checkUsableEmailUseCase: CheckUsableEmailUseCase,
     private val userRegisterUseCase: UserRegisterUseCase,
-    private val mailSendUseCase: MailSendUseCase,
+    private val mailjetSendUseCase: MailjetSendUseCase,
 ) : BaseViewModel(), ContainerHost<RegisterState, RegisterSideEffect> {
 
     override val container = container<RegisterState, RegisterSideEffect>(RegisterState.None)
@@ -81,7 +81,7 @@ internal class OnboardViewModel @Inject constructor(
         onException: (Throwable) -> Unit,
     ) = viewModelScope.launch {
         val token = Random.nextInt().toString() // TODO: 토큰 인증
-        mailSendUseCase(token = token, email = email)
+        mailjetSendUseCase(token = token, email = email)
             .onSuccess { result ->
                 when (result.isSuccess) {
                     true -> {

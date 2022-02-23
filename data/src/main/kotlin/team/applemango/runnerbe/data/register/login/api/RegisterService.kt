@@ -16,7 +16,7 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 import team.applemango.runnerbe.data.register.login.model.CheckDuplicateEmailResponse
 import team.applemango.runnerbe.data.register.login.model.UserRegisterResponse
-import team.applemango.runnerbe.domain.login.model.UserRegister
+import team.applemango.runnerbe.domain.register.login.model.UserRegister
 
 internal interface RegisterService {
     @GET("/users/email/check/{officeEmail}")

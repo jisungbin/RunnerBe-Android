@@ -13,7 +13,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 import retrofit2.http.Path
-import team.applemango.runnerbe.domain.login.model.AccessToken
+import team.applemango.runnerbe.domain.register.login.model.AccessToken
 import team.applemango.runnerbe.data.register.login.model.LoginRequestResponse
 
 internal interface LoginService {

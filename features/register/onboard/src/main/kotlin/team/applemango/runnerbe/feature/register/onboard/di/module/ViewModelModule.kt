@@ -13,9 +13,9 @@ import androidx.lifecycle.ViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
-import team.applemango.runnerbe.domain.login.usecase.CheckUsableEmailUseCase
-import team.applemango.runnerbe.domain.login.usecase.UserRegisterUseCase
-import team.applemango.runnerbe.domain.mail.usecase.MailSendUseCase
+import team.applemango.runnerbe.domain.register.login.usecase.CheckUsableEmailUseCase
+import team.applemango.runnerbe.domain.register.login.usecase.UserRegisterUseCase
+import team.applemango.runnerbe.domain.register.mailjet.usecase.MailjetSendUseCase
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.feature.register.onboard.di.qualifier.ViewModelKey
 
@@ -27,12 +27,12 @@ internal class ViewModelModule {
     fun provideOnboardViewModel(
         checkUsableEmailUseCase: CheckUsableEmailUseCase,
         userRegisterUseCase: UserRegisterUseCase,
-        mailSendUseCase: MailSendUseCase,
+        mailjetSendUseCase: MailjetSendUseCase,
     ): ViewModel {
         return OnboardViewModel(
             checkUsableEmailUseCase = checkUsableEmailUseCase,
             userRegisterUseCase = userRegisterUseCase,
-            mailSendUseCase = mailSendUseCase
+            mailSendUseCase = mailjetSendUseCase
         )
     }
 }

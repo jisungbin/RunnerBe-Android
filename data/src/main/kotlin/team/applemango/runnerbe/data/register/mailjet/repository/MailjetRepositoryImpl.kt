@@ -12,13 +12,13 @@ package team.applemango.runnerbe.data.register.mailjet.repository
 import team.applemango.runnerbe.data.register.mailjet.mapper.toDomain
 import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
 import team.applemango.runnerbe.data.util.mailjetApi
-import team.applemango.runnerbe.domain.mail.model.MailTemplate
-import team.applemango.runnerbe.domain.mail.model.result.MailjetResult
-import team.applemango.runnerbe.domain.mail.repository.MailjetRepository
+import team.applemango.runnerbe.domain.register.mailjet.model.MailjetTemplate
+import team.applemango.runnerbe.domain.register.mailjet.model.result.MailjetResult
+import team.applemango.runnerbe.domain.register.mailjet.repository.MailjetRepository
 
 class MailjetRepositoryImpl : MailjetRepository {
-    override suspend fun send(mailTemplate: MailTemplate): MailjetResult {
-        val request = mailjetApi.send(mailTemplate)
+    override suspend fun send(mailjetTemplate: MailjetTemplate): MailjetResult {
+        val request = mailjetApi.send(mailjetTemplate)
         val isSuccess: Boolean
         return request.requireSuccessfulBody("Mail send").also { response ->
             isSuccess = response.messages?.first()?.status == "success"

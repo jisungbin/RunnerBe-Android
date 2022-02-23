@@ -13,8 +13,8 @@ import dagger.Module
 import dagger.Provides
 import team.applemango.runnerbe.data.register.login.repository.RegisterRepositoryImpl
 import team.applemango.runnerbe.data.register.mailjet.repository.MailjetRepositoryImpl
-import team.applemango.runnerbe.domain.login.repository.RegisterRepository
-import team.applemango.runnerbe.domain.mail.repository.MailjetRepository
+import team.applemango.runnerbe.domain.register.login.repository.RegisterRepository
+import team.applemango.runnerbe.domain.register.mailjet.repository.MailjetRepository
 
 @Module
 internal class RepositoryModule {

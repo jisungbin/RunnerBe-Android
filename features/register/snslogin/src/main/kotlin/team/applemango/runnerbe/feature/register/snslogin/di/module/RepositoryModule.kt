@@ -14,8 +14,8 @@ import dagger.Module
 import dagger.Provides
 import team.applemango.runnerbe.data.register.login.repository.AccessTokenRepositoryImpl
 import team.applemango.runnerbe.data.register.login.repository.LoginRepositoryImpl
-import team.applemango.runnerbe.domain.login.repository.AccessTokenRepository
-import team.applemango.runnerbe.domain.login.repository.LoginRepository
+import team.applemango.runnerbe.domain.register.login.repository.AccessTokenRepository
+import team.applemango.runnerbe.domain.register.login.repository.LoginRepository
 
 @Module
 internal class RepositoryModule(private val activityContext: Activity) {

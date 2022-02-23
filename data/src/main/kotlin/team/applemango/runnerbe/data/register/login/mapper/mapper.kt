@@ -12,8 +12,8 @@ package team.applemango.runnerbe.data.register.login.mapper
 import team.applemango.runnerbe.data.register.login.model.CheckDuplicateEmailResponse
 import team.applemango.runnerbe.data.register.login.model.LoginRequestResponse
 import team.applemango.runnerbe.data.register.login.model.UserRegisterResponse
-import team.applemango.runnerbe.domain.login.model.UserToken
-import team.applemango.runnerbe.domain.login.model.result.UserRegisterResult
+import team.applemango.runnerbe.domain.register.login.model.UserToken
+import team.applemango.runnerbe.domain.register.login.model.result.UserRegisterResult
 
 private fun requireFieldExceptionMessage(fieldName: String) = "Require field $fieldName is null."
 
