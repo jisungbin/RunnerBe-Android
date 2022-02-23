@@ -25,7 +25,6 @@
 따라서 **아키텍처가 다소 오버하게 적용**됐으며, 아래와 같은 기술들을 처음 적용합니다.
 
 - DFM
-- [CI](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/22)/CD
 - TDD
 - Unit Test + [Test Coverage 100% 목표](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/35)
 
