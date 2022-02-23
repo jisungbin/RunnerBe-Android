@@ -57,7 +57,8 @@ internal fun <T> IconBottomBar(
         modifier = modifier
             .fillMaxWidth()
             .height(height)
-            .background(color = backgroundColor)
+            .background(color = backgroundColor),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         stateIcons.forEach { stateIcon ->
             Box(
