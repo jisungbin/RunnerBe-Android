@@ -58,7 +58,7 @@ data class RunningItem(
     val job: String? = null,
 
     @field:JsonProperty("profileImageUrl")
-    val profileImageUrl: Any? = null,
+    val profileImageUrl: String? = null,
 
     @field:JsonProperty("age")
     val age: String? = null,
