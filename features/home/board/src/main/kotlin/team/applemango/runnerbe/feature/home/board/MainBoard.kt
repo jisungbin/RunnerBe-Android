@@ -15,5 +15,4 @@ import androidx.compose.runtime.Composable
 fun MainBoard(
     isFavoriteBoard: Boolean = false,
 ) {
-
 }
