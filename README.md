@@ -28,7 +28,6 @@
 - [CI](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/22)/CD
 - TDD
 - Unit Test + [Test Coverage 100% 목표](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/35)
-- DataStore
 - WindowInsets
 - Feature별 모듈 분리
 
