@@ -62,4 +62,7 @@ data class RunningItem(
 
     @field:JsonProperty("age")
     val age: String? = null,
+
+    @field:JsonProperty("runningTime")
+    val runningTime: String? = null,
 )
