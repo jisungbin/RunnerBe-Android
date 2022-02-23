@@ -63,7 +63,6 @@
 - Hilt
 - Compose
 - DataStore
-- Navigation
 
 #### Test
 
