@@ -34,6 +34,23 @@ internal fun <T : BaseResponse> Response<T>.requireSuccessfulBody(
     }
 }
 
+internal fun <T> Response<T>.requireSuccessfulBody(
+    requestName: String,
+    resultVerifyBuilder: (body: T) -> Boolean,
+): T {
+    val body = body()
+    if (isSuccessful && body != null && resultVerifyBuilder(body)) {
+        return body
+    } else {
+        throw Exception(
+            """
+            Request $requestName is fail.
+            Http message: ${errorBody()?.use { it.string() }}
+            """.trimIndent()
+        )
+    }
+}
+
 @Deprecated("Use the resultVerifyBuilder argument of the Response<T>.requireSuccessfulBody function instead.")
 internal fun Response<LoginRequestResponse>.requireSuccessfulLoginResponse(platformName: String): LoginRequestResponse {
     val body = requireSuccessfulBody("$platformName login") { true }

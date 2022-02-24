@@ -20,7 +20,10 @@ class MailjetRepositoryImpl : MailjetRepository {
     override suspend fun send(mailjetTemplate: MailjetTemplate): MailjetResult {
         val request = mailjetApi.send(mailjetTemplate)
         val isSuccess: Boolean
-        return request.requireSuccessfulBody("Mail send").also { response ->
+        return request.requireSuccessfulBody(
+            requestName = "mailjetApi.send",
+            resultVerifyBuilder = { true }
+        ).also { response ->
             isSuccess = response.messages?.first()?.status == "success"
         }.toDomain(isSuccess)
     }
