@@ -7,12 +7,13 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.domain.main.model
+package team.applemango.runnerbe.domain.main.model.write
 
 import java.util.Date
 import team.applemango.runnerbe.domain.main.constant.load.AgeRange
 import team.applemango.runnerbe.domain.main.constant.load.GenderFilter
 import team.applemango.runnerbe.domain.main.constant.load.RunningItemType
+import team.applemango.runnerbe.domain.main.model.Locate
 
 /**
  * API Call Body entry model

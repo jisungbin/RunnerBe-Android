@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.data.main.model.write
+package team.applemango.runnerbe.domain.main.model.write
 
 /**
  * API Call 전용 Body class

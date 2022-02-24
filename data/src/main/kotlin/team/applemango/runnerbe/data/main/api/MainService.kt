@@ -18,7 +18,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 import team.applemango.runnerbe.data.main.model.common.DefaultResponse
 import team.applemango.runnerbe.data.main.model.load.RunningItemResponse
-import team.applemango.runnerbe.data.main.model.write.RunningItemBodyData
+import team.applemango.runnerbe.domain.main.model.write.RunningItemBodyData
 
 interface MainService {
     @GET("/users/main/{runningTag}")
