@@ -9,7 +9,10 @@
 
 package team.applemango.runnerbe.domain.main.repository
 
-import team.applemango.runnerbe.domain.main.model.RunningItem
+import team.applemango.runnerbe.domain.main.common.BaseResult
+import team.applemango.runnerbe.domain.main.model.load.RunningItem
+import team.applemango.runnerbe.domain.main.model.write.RunningItemBody
+import team.applemango.runnerbe.domain.main.model.write.RunningItemBodyData
 
 interface MainRepository {
     suspend fun loadRunningItems(
@@ -25,4 +28,10 @@ interface MainRepository {
         longitude: Float,
         keyword: String,
     ): List<RunningItem>
+
+    suspend fun writeRunningItem(
+        jwt: String,
+        userId: Int,
+        item: RunningItemBodyData,
+    ): BaseResult
 }

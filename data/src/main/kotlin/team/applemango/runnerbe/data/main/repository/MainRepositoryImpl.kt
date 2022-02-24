@@ -9,10 +9,14 @@
 
 package team.applemango.runnerbe.data.main.repository
 
-import team.applemango.runnerbe.data.main.mapper.toDomain
+import team.applemango.runnerbe.data.main.mapper.load.toDomain
+import team.applemango.runnerbe.data.main.mapper.write.toDomain
 import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
+import team.applemango.runnerbe.data.util.extension.toXAccessTokenHeader
 import team.applemango.runnerbe.data.util.mainApi
-import team.applemango.runnerbe.domain.main.model.RunningItem
+import team.applemango.runnerbe.domain.main.common.BaseResult
+import team.applemango.runnerbe.domain.main.model.load.RunningItem
+import team.applemango.runnerbe.domain.main.model.write.RunningItemBodyData
 import team.applemango.runnerbe.domain.main.repository.MainRepository
 
 class MainRepositoryImpl : MainRepository {
@@ -46,6 +50,24 @@ class MainRepositoryImpl : MainRepository {
             requestName = "mainApi.loadRunningItems",
             resultVerifyBuilder = { body ->
                 body.code == 1000
+            }
+        ).toDomain()
+    }
+
+    override suspend fun writeRunningItem(
+        jwt: String,
+        userId: Int,
+        item: RunningItemBodyData,
+    ): BaseResult {
+        val request = mainApi.writeRunningItem(
+            headers = jwt.toXAccessTokenHeader(),
+            userId = userId,
+            item = item
+        )
+        return request.requireSuccessfulBody(
+            requestName = "mainApi.writeRunningItem",
+            resultVerifyBuilder = { body ->
+                body.code != null
             }
         ).toDomain()
     }
