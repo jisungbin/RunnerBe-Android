@@ -99,7 +99,7 @@ internal fun JobPicker(jobSelectChanged: (isSelected: Boolean) -> Unit) {
                     ToggleButton(
                         target = job,
                         selectState = jobSelectState,
-                        targetStringBuilder = { job.code }
+                        targetStringBuilder = { job.string }
                     ) {
                         jobSelectState = job
                         jobSelectChanged(true)

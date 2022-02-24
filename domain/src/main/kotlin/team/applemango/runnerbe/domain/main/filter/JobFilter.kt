@@ -21,5 +21,5 @@ import team.applemango.runnerbe.domain.runner.Job
  */
 sealed class JobFilter(val code: String) {
     object None : JobFilter("N")
-    data class Create(val job: Job) : JobFilter(job.code)
+    data class Create(val job: Job) : JobFilter(job.string)
 }

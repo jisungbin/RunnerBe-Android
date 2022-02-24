@@ -92,7 +92,7 @@ internal fun RunningItemsResponse.toDomain(type: MappingType): List<RunningItem>
                 MainPageApiFields -> requireNotNull(data.job) { requireFieldExceptionMessage("job") }
                     .split(",")
                     .map { jobCode ->
-                        Job.values().first { it.code == jobCode }
+                        Job.values().first { it.string == jobCode }
                     }
                 InformationApiFields -> emptyList()
             },

@@ -9,7 +9,7 @@
 
 package team.applemango.runnerbe.domain.runner
 
-enum class Job(val code: String) {
+enum class Job(val string: String) {
     PSV("공무원"),
     EDU("교육"),
     DEV("개발"),

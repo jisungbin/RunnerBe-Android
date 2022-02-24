@@ -9,6 +9,8 @@
 
 package team.applemango.runnerbe.domain.main.model.runner
 
+import team.applemango.runnerbe.domain.runner.AgeGroup
+import team.applemango.runnerbe.domain.runner.Diligence
 import team.applemango.runnerbe.domain.runner.Gender
 import team.applemango.runnerbe.domain.runner.Job
 
@@ -18,6 +20,6 @@ data class Runner(
     val gender: Gender,
     val job: Job,
     val profileImageUrl: String,
-    val ageGroup: String,
-    val diligence: String,
+    val ageGroup: AgeGroup,
+    val diligence: Diligence,
 )

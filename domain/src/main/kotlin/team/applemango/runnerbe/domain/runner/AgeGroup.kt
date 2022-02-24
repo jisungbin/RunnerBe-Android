@@ -16,14 +16,18 @@ package team.applemango.runnerbe.domain.runner
  * @property Middle 중반
  * @property End 후반
  */
-enum class AgeGroupType {
-    Start, Middle, End
+enum class AgeGroupType(val string: String) {
+    Start("초반"),
+    Middle("중반"),
+    End("후반")
 }
 
 /**
  * 연령대 종합
  *
- * @property age 연령대 (30대)
+ * @property ageLevel 연령대 레벨 (30대)
  * @property type 연령대 타입 (초반/중반/후반)
  */
-data class AgeGroup(val age: Int, val type: AgeGroupType)
+data class AgeGroup(val ageLevel: Int, val type: AgeGroupType) {
+    override fun toString() = "${ageLevel}대 ${type.string}"
+}
