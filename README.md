@@ -92,6 +92,7 @@
 
 - develop 브런치 만들었어야 했는데 초기에 까먹고 main 브런치에 다 때려박아서 그냥 develop 브런치 버리고 main 으로 통합함
 - 세부 feature 별로 브런치 만들어서 진행해야 하는데 아직 feature 브런치에 익숙하지 않아 대분류 feature 만 브런치를 만들며 작업해서 아쉬움
+- [mapper](https://github.com/applemango-runnerbe/RunnerBe-Android/blob/f0855a490f90c1b0f668f9aeb2cd3b60e6c5fd75/data/src/main/kotlin/team/applemango/runnerbe/data/main/mapper/mapper.kt) 만드는게 제일 귀찮아...
 
 ## License
 
