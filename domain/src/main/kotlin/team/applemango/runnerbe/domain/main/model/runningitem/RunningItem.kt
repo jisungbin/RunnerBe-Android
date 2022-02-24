@@ -13,6 +13,7 @@ import team.applemango.runnerbe.domain.main.filter.AgeFilter
 import team.applemango.runnerbe.domain.main.filter.GenderFilter
 import team.applemango.runnerbe.domain.main.common.RunningItemType
 import team.applemango.runnerbe.domain.main.model.common.Locate
+import team.applemango.runnerbe.domain.runner.Gender
 import team.applemango.runnerbe.domain.runner.Job
 
 /**
@@ -48,7 +49,7 @@ data class RunningItem(
     val finish: Boolean,
     val maxRunnerCount: Int,
     val title: String,
-    val gender: GenderFilter,
+    val gender: Gender,
     val jobs: List<Job>,
     val ageFilter: AgeFilter,
     val runningTime: String,
