@@ -7,9 +7,10 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.feature.register.onboard.constant
+package team.applemango.runnerbe.domain.common
 
-internal enum class Gender(val string: String, val code: String) {
+enum class Gender(val string: String, val code: String) {
+    All("전체", "A"),
     Male("남성", "M"),
     Female("여성", "F")
 }

@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.domain.register.login.constant
+package team.applemango.runnerbe.domain.common
 
 enum class Job(val code: String) {
     PSV("공무원"),

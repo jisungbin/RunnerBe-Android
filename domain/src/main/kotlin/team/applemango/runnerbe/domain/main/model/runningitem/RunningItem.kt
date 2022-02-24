@@ -13,7 +13,7 @@ import team.applemango.runnerbe.domain.main.constant.load.AgeRange
 import team.applemango.runnerbe.domain.main.constant.load.GenderFilter
 import team.applemango.runnerbe.domain.main.constant.load.RunningItemType
 import team.applemango.runnerbe.domain.main.model.common.Locate
-import team.applemango.runnerbe.domain.register.login.constant.Job
+import team.applemango.runnerbe.domain.common.Job
 
 /**
  * @property itemId 게시글 아이디
