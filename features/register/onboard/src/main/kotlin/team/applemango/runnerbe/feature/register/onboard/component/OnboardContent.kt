@@ -38,7 +38,7 @@ import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.shared.compose.extension.parseHtml
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
-import team.applemango.runnerbe.shared.util.extension.runIf
+import team.applemango.runnerbe.shared.domain.extension.runIf
 
 private val BottomCTAButtonShape = RoundedCornerShape(24.dp)
 
