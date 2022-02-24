@@ -33,4 +33,10 @@ interface MainRepository {
         userId: Int,
         item: RunningItemApiBodyData,
     ): BaseResult
+
+    suspend fun getRunningItemInformation(
+        jwt: String,
+        userId: Int,
+        postId: Int,
+    ): RunningItemInfor
 }
