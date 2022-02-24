@@ -14,7 +14,7 @@ import team.applemango.runnerbe.data.common.BaseResponse
 
 data class RunningItemInformationResponse(
     @field:JsonProperty("result")
-    val result: RunningItemInformation? = null,
+    val result: RunningItemInformationData? = null,
 
     @field:JsonProperty("code")
     override val code: Int? = null,
