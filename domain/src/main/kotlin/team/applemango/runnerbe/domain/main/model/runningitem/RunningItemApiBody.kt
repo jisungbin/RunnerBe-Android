@@ -10,9 +10,9 @@
 package team.applemango.runnerbe.domain.main.model.runningitem
 
 import java.util.Date
-import team.applemango.runnerbe.domain.main.constant.load.AgeRange
-import team.applemango.runnerbe.domain.main.constant.load.GenderFilter
-import team.applemango.runnerbe.domain.main.constant.load.RunningItemType
+import team.applemango.runnerbe.domain.main.filter.AgeFilter
+import team.applemango.runnerbe.domain.main.filter.GenderFilter
+import team.applemango.runnerbe.domain.main.common.RunningItemType
 import team.applemango.runnerbe.domain.main.model.common.Locate
 
 /**
@@ -23,7 +23,7 @@ import team.applemango.runnerbe.domain.main.model.common.Locate
  * @property meetingDate 모임 시간
  * @property runningTime 예정 러닝 소요 시간
  * @property locate 러닝 모임 장소
- * @property ageRange 러닝 참여 가능 연령대
+ * @property ageFilter 러닝 참여 가능 연령대
  * @property maxPeopleCount 러닝 참여 가능 최대 인원 수
  * @property gender 러닝 참여 가능 성별
  * @property message 아이템 메시지
@@ -34,7 +34,7 @@ data class RunningItemApiBody(
     val meetingDate: Date,
     val runningTime: String,
     val locate: Locate,
-    val ageRange: AgeRange,
+    val ageFilter: AgeFilter,
     val maxPeopleCount: Int,
     val gender: GenderFilter,
     val message: String,

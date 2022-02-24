@@ -9,11 +9,11 @@
 
 package team.applemango.runnerbe.domain.main.model.runningitem
 
-import team.applemango.runnerbe.domain.main.constant.load.AgeRange
-import team.applemango.runnerbe.domain.main.constant.load.GenderFilter
-import team.applemango.runnerbe.domain.main.constant.load.RunningItemType
+import team.applemango.runnerbe.domain.main.filter.AgeFilter
+import team.applemango.runnerbe.domain.main.filter.GenderFilter
+import team.applemango.runnerbe.domain.main.common.RunningItemType
 import team.applemango.runnerbe.domain.main.model.common.Locate
-import team.applemango.runnerbe.domain.common.Job
+import team.applemango.runnerbe.domain.runner.Job
 
 /**
  * @property itemId 게시글 아이디
@@ -28,7 +28,7 @@ import team.applemango.runnerbe.domain.common.Job
  * @property title 게시글 제목
  * @property gender 러닝 참여 가능 성별 필터
  * @property jobs 러닝 참여자 직업 리스트
- * @property ageRange 러닝 참여 가능 연령대 필터
+ * @property ageFilter 러닝 참여 가능 연령대 필터
  * @property runningTime 예정 러닝 소요 시간
  * @property locate 모임 장소의 위치(위도, 경도, 주소)
  * @property distance 모임 장소와 내 위치간 거리 (단위: KM)
@@ -50,7 +50,7 @@ data class RunningItem(
     val title: String,
     val gender: GenderFilter,
     val jobs: List<Job>,
-    val ageRange: AgeRange,
+    val ageFilter: AgeFilter,
     val runningTime: String,
     val locate: Locate,
     val distance: Float,

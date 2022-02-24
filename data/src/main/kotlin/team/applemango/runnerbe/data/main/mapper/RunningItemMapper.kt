@@ -12,12 +12,12 @@ package team.applemango.runnerbe.data.main.mapper
 import team.applemango.runnerbe.data.main.mapper.MappingType.InformationApiFields
 import team.applemango.runnerbe.data.main.mapper.MappingType.MainPageApiFields
 import team.applemango.runnerbe.data.main.model.runningitem.RunningItemsResponse
-import team.applemango.runnerbe.domain.main.constant.load.AgeRange
-import team.applemango.runnerbe.domain.main.constant.load.GenderFilter
-import team.applemango.runnerbe.domain.main.constant.load.RunningItemType
+import team.applemango.runnerbe.domain.main.filter.AgeFilter
+import team.applemango.runnerbe.domain.main.filter.GenderFilter
+import team.applemango.runnerbe.domain.main.common.RunningItemType
 import team.applemango.runnerbe.domain.main.model.common.Locate
 import team.applemango.runnerbe.domain.main.model.runningitem.RunningItem
-import team.applemango.runnerbe.domain.common.Job
+import team.applemango.runnerbe.domain.runner.Job
 import team.applemango.runnerbe.shared.domain.extension.convertNullableString
 import team.applemango.runnerbe.shared.domain.requireFieldExceptionMessage
 import team.applemango.runnerbe.shared.domain.requireValueExceptionMessage
@@ -96,10 +96,10 @@ internal fun RunningItemsResponse.toDomain(type: MappingType): List<RunningItem>
                     }
                 InformationApiFields -> emptyList()
             },
-            ageRange = run {
+            ageFilter = run {
                 val age = requireNotNull(data.age) { requireFieldExceptionMessage("age") }
                 val (minAge, maxAge) = age.split("-").map(String::toInt)
-                AgeRange(min = minAge, max = maxAge)
+                AgeFilter(min = minAge, max = maxAge)
             },
             runningTime = requireNotNull(data.runningTime) { requireFieldExceptionMessage("runningTime") },
             locate = run {

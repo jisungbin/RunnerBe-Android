@@ -9,13 +9,13 @@
 
 package team.applemango.runnerbe.domain.main.usecase
 
-import team.applemango.runnerbe.domain.main.constant.load.AgeRange
-import team.applemango.runnerbe.domain.main.constant.load.DistanceFilter
-import team.applemango.runnerbe.domain.main.constant.load.GenderFilter
-import team.applemango.runnerbe.domain.main.constant.load.JobFilter
-import team.applemango.runnerbe.domain.main.constant.load.KeywordFilter
-import team.applemango.runnerbe.domain.main.constant.load.RunningItemFilter
-import team.applemango.runnerbe.domain.main.constant.load.RunningItemType
+import team.applemango.runnerbe.domain.main.filter.AgeFilter
+import team.applemango.runnerbe.domain.main.filter.DistanceFilter
+import team.applemango.runnerbe.domain.main.filter.GenderFilter
+import team.applemango.runnerbe.domain.main.filter.JobFilter
+import team.applemango.runnerbe.domain.main.filter.KeywordFilter
+import team.applemango.runnerbe.domain.main.filter.RunningItemFilter
+import team.applemango.runnerbe.domain.main.common.RunningItemType
 import team.applemango.runnerbe.domain.main.model.common.Locate
 import team.applemango.runnerbe.domain.main.repository.MainRepository
 
@@ -26,7 +26,7 @@ class LoadRunningItemsUseCase(private val repo: MainRepository) {
         itemFilter: RunningItemFilter,
         distanceFilter: DistanceFilter,
         genderFilter: GenderFilter,
-        ageRange: AgeRange,
+        ageFilter: AgeFilter,
         jobFilter: JobFilter,
         locate: Locate,
         keywordFilter: KeywordFilter,
@@ -37,8 +37,8 @@ class LoadRunningItemsUseCase(private val repo: MainRepository) {
             itemFilter = itemFilter.code,
             distance = distanceFilter.code,
             gender = genderFilter.code,
-            minAge = ageRange.getCode { min },
-            maxAge = ageRange.getCode { max },
+            minAge = ageFilter.getCode { min },
+            maxAge = ageFilter.getCode { max },
             job = jobFilter.code,
             latitude = locate.latitude.toFloat(),
             longitude = locate.longitude.toFloat(),

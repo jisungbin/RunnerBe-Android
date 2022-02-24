@@ -9,15 +9,15 @@
 
 package team.applemango.runnerbe.domain.main.model.runner
 
-import team.applemango.runnerbe.domain.main.constant.load.GenderFilter
-import team.applemango.runnerbe.domain.common.Job
+import team.applemango.runnerbe.domain.runner.Gender
+import team.applemango.runnerbe.domain.runner.Job
 
 data class Runner(
-    val gender: GenderFilter,
+    val id: Int,
     val nickname: String,
+    val gender: Gender,
     val job: Job,
-    val userId: Int? = null,
-    val profileImageUrl: String? = null,
-    val age: String? = null,
-    val diligence: String? = null,
+    val profileImageUrl: String,
+    val ageGroup: String,
+    val diligence: String,
 )
