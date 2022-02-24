@@ -22,7 +22,7 @@ class RegisterRepositoryImpl : RegisterRepository {
         return registerApi.checkUsableEmail(email)
             .requireSuccessfulBody(
                 requestName = "registerApi.checkUsableEmail",
-                resultVerifyBuilder = { true }
+                resultVerifyBuilder = { true } // receive only code
             )
             .toBoolean()
     }
