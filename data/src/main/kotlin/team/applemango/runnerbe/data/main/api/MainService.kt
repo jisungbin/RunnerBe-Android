@@ -16,7 +16,7 @@ import retrofit2.http.HeaderMap
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
-import team.applemango.runnerbe.data.main.model.common.DefaultResponse
+import team.applemango.runnerbe.data.main.model.DefaultResponse
 import team.applemango.runnerbe.data.main.model.load.RunningItemResponse
 import team.applemango.runnerbe.domain.main.model.write.RunningItemBodyData
 

@@ -9,6 +9,11 @@
 
 package team.applemango.runnerbe.domain.main.model.common
 
+/**
+ * @property address 주소 (ex_석림1로 20)
+ * @property latitude 위도
+ * @property longitude 경도
+ */
 data class Locate(
     val address: String,
     val latitude: Double,

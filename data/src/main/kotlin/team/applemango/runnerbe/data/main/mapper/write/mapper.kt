@@ -9,7 +9,7 @@
 
 package team.applemango.runnerbe.data.main.mapper.write
 
-import team.applemango.runnerbe.data.main.model.common.DefaultResponse
+import team.applemango.runnerbe.data.main.model.DefaultResponse
 import team.applemango.runnerbe.domain.main.common.BaseResult
 import team.applemango.runnerbe.shared.domain.requireFieldExceptionMessage
 
