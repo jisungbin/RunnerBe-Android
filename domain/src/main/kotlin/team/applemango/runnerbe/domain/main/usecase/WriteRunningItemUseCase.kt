@@ -24,6 +24,7 @@ class WriteRunningItemUseCase(private val repo: MainRepository) {
         val meetingTime =
             SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(item.meetingDate)
         val (address, latitude, longitude) = item.locate
+        val (minAge, maxAge) = item.ageRange
 
         repo.writeRunningItem(
             jwt = jwt,
@@ -37,10 +38,10 @@ class WriteRunningItemUseCase(private val repo: MainRepository) {
                 locationInfo = address,
                 gatherLatitude = latitude.toString(),
                 gatherLongitude = longitude.toString(),
-                ageMin = item.ageRange.getCode { min },
-                ageMax = maxAge,
-                peopleNum = 0,
-                contents = ""
+                ageMin = minAge ?: 20,
+                ageMax = maxAge ?: 65,
+                peopleNum = item.maxPeopleCount,
+                contents = item.message
             )
         )
     }
