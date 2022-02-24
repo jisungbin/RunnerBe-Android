@@ -13,13 +13,13 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import team.applemango.runnerbe.data.main.model.runner.RunnerData
 import team.applemango.runnerbe.data.main.model.runningitem.RunningItemData
 
-data class RunningItemInformation(
+data class RunningItemInformationData(
+    @field:JsonProperty("postingInfo")
+    val postingInfo: List<RunningItemData?>? = null,
+
     @field:JsonProperty("runnerInfo")
-    val runners: List<RunnerData?>? = null,
+    val runnerInfo: List<RunnerData?>? = null,
 
     @field:JsonProperty("waitingRunnerInfo")
-    val waitingRunners: List<RunnerData?>? = null,
-
-    @field:JsonProperty("postingInfo")
-    val item: List<RunningItemData?>? = null,
+    val waitingRunnerInfo: List<RunnerData?>? = null,
 )
