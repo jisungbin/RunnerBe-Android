@@ -7,11 +7,11 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.data.main.model.load
+package team.applemango.runnerbe.data.main.model.common
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class RunningItem(
+data class RunningItemData(
     @field:JsonProperty("locationInfo")
     val locationInfo: String? = null,
 

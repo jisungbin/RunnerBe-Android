@@ -11,10 +11,11 @@ package team.applemango.runnerbe.data.main.model.load
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import team.applemango.runnerbe.data.common.BaseResponse
+import team.applemango.runnerbe.data.main.model.common.RunningItemData
 
 data class RunningItemResponse(
     @field:JsonProperty("result")
-    val result: List<RunningItem?>? = null,
+    val result: List<RunningItemData?>? = null,
 
     @field:JsonProperty("code")
     override val code: Int? = null,
