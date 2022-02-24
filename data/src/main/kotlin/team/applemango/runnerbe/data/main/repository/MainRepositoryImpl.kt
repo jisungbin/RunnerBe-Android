@@ -77,6 +77,16 @@ class MainRepositoryImpl : MainRepository {
         userId: Int,
         postId: Int,
     ): RunningItemInformation {
-        TODO("Not yet implemented")
+        val request = mainApi.getRunningItemInformation(
+            jwtHeader = jwt.toXAccessTokenHeader(),
+            userId = userId,
+            postId = postId
+        )
+        return request.requireSuccessfulBody(
+            requestName = "mainApi.getRunningItemInformation",
+            resultVerifyBuilder = { body ->
+                body.code in 1015..1020
+            }
+        ).toDomain()
     }
 }
