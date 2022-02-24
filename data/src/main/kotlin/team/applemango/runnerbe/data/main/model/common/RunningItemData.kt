@@ -70,8 +70,8 @@ data class RunningItemData(
     val runningTime: String? = null,
 
     @field:JsonProperty("peopleNum")
-    val maxRunnerCount: String? = null,
+    val peopleNum: String? = null,
 
     @field:JsonProperty("contents")
-    val message: String? = null,
+    val contents: String? = null,
 )
