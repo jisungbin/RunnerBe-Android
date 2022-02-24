@@ -35,6 +35,7 @@ internal enum class MappingType {
     InformationApiFields,
 }
 
+private const val DefaultIntValue = -1
 private const val DefaultProfileImageUrl =
     "https://github.com/applemango-runnerbe/applemango-runnerbe.github.io/blob/main/Profile_28.png?raw=true"
 
@@ -45,29 +46,54 @@ internal fun RunningItemResponse.toDomain(type: MappingType): List<RunningItem> 
         RunningItem(
             itemId = requireNotNull(data.postId) { requireFieldExceptionMessage("postId") },
             ownerId = requireNotNull(data.postUserId) { requireFieldExceptionMessage("postUserId") },
-            ownerNickName = requireNotNull(data.nickName) { requireFieldExceptionMessage("nickName") },
-            ownerProfileImageUrl = requireNotNull(data.profileImageUrl) {
-                requireFieldExceptionMessage("profileImageUrl")
-            }.convertNullableString() ?: DefaultProfileImageUrl,
+            ownerNickName = when (type) {
+                MainPageApiFields -> requireNotNull(data.nickName) { requireFieldExceptionMessage("nickName") }
+                InformationApiFields -> ""
+            },
+            ownerProfileImageUrl = when (type) {
+                MainPageApiFields -> requireNotNull(data.profileImageUrl) {
+                    requireFieldExceptionMessage("profileImageUrl")
+                }.convertNullableString() ?: DefaultProfileImageUrl
+                InformationApiFields -> DefaultProfileImageUrl
+            },
             createdAt = requireNotNull(data.postingTime) { requireFieldExceptionMessage("postingTime") },
-            bookmarkCount = requireNotNull(data.bookMarkNumber) { requireFieldExceptionMessage("bookMarkNumber") },
+            bookmarkCount = when (type) {
+                MainPageApiFields -> requireNotNull(data.bookMarkNumber) {
+                    requireFieldExceptionMessage("bookMarkNumber")
+                }
+                InformationApiFields -> DefaultIntValue
+            },
             runningType = RunningItemType.values().first {
                 val runningTypeCode =
                     requireNotNull(data.runningTag) { requireFieldExceptionMessage("runningTag") }
                 it.code == runningTypeCode
             },
-            finish = requireNotNull(data.whetherEnd) { requireFieldExceptionMessage("whetherEnd") }.toBoolean(),
+            finish = when (type) {
+                MainPageApiFields -> requireNotNull(data.whetherEnd) {
+                    requireFieldExceptionMessage("whetherEnd")
+                }.toBoolean()
+                InformationApiFields -> false
+            },
+            maxRunnerCount = when (type) {
+                MainPageApiFields -> DefaultIntValue
+                InformationApiFields -> requireNotNull(data.peopleNum) {
+                    requireFieldExceptionMessage("peopleNum") // ex_최대 4명
+                }.split(" ")[1].split("명")[0].toInt()
+            },
             title = requireNotNull(data.title) { requireFieldExceptionMessage("title") },
             gender = GenderFilter.values().first {
                 val genderCode =
                     requireNotNull(data.gender) { requireFieldExceptionMessage("gender") }
                 it.code == genderCode
             },
-            jobs = requireNotNull(data.job) { requireFieldExceptionMessage("job") }
-                .split(",")
-                .map { jobCode ->
-                    Job.values().first { it.code == jobCode }
-                },
+            jobs = when (type) {
+                MainPageApiFields -> requireNotNull(data.job) { requireFieldExceptionMessage("job") }
+                    .split(",")
+                    .map { jobCode ->
+                        Job.values().first { it.code == jobCode }
+                    }
+                InformationApiFields -> emptyList()
+            },
             ageRange = run {
                 val age = requireNotNull(data.age) { requireFieldExceptionMessage("age") }
                 val (minAge, maxAge) = age.split("-").map(String::toInt)
@@ -87,8 +113,17 @@ internal fun RunningItemResponse.toDomain(type: MappingType): List<RunningItem> 
                     longitude = longitudeString.toDouble(),
                 )
             },
-            distance = requireNotNull(data.distance) { requireFieldExceptionMessage("distance") }.toFloat(),
-            meetingDate = requireNotNull(data.gatheringTime) { requireFieldExceptionMessage("gatheringTime") }
+            distance = when (type) {
+                MainPageApiFields -> requireNotNull(data.distance) { requireFieldExceptionMessage("distance") }.toFloat()
+                InformationApiFields -> DefaultIntValue.toFloat()
+            },
+            meetingDate = requireNotNull(data.gatheringTime) { requireFieldExceptionMessage("gatheringTime") },
+            message = when (type) {
+                MainPageApiFields -> ""
+                InformationApiFields -> requireNotNull(data.contents) {
+                    requireFieldExceptionMessage("contents")
+                }
+            }
         )
     }
 }
