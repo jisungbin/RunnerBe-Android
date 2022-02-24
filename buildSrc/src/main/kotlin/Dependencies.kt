@@ -13,7 +13,7 @@ object Versions {
     const val FirebaseBom = "29.1.0"
 
     object Essential {
-        const val Gradle = "7.1.1"
+        const val Gradle = "7.1.2"
         const val Kotlin = "1.6.10"
         const val Coroutines = "1.6.0"
         const val GoogleService = "4.3.3"
@@ -94,8 +94,8 @@ object Dependencies {
     const val FirebaseBom = "com.google.firebase:firebase-bom:${Versions.FirebaseBom}"
 
     object Orbit {
-        const val Main = "org.orbit-mvi:orbit-viewmodel:${Versions.Orbit}"
         const val Test = "org.orbit-mvi:orbit-test:${Versions.Orbit}"
+        const val Main = "org.orbit-mvi:orbit-viewmodel:${Versions.Orbit}"
     }
 
     object Di { // Dagger 는 DFM 에서만 쓰임
