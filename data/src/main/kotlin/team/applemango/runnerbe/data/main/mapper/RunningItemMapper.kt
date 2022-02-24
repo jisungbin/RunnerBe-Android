@@ -11,7 +11,7 @@ package team.applemango.runnerbe.data.main.mapper
 
 import team.applemango.runnerbe.data.main.mapper.MappingType.InformationApiFields
 import team.applemango.runnerbe.data.main.mapper.MappingType.MainPageApiFields
-import team.applemango.runnerbe.data.main.model.runningitem.RunningItemResponse
+import team.applemango.runnerbe.data.main.model.runningitem.RunningItemsResponse
 import team.applemango.runnerbe.domain.main.constant.load.AgeRange
 import team.applemango.runnerbe.domain.main.constant.load.GenderFilter
 import team.applemango.runnerbe.domain.main.constant.load.RunningItemType
@@ -39,7 +39,7 @@ private const val DefaultIntValue = -1
 private const val DefaultProfileImageUrl =
     "https://github.com/applemango-runnerbe/applemango-runnerbe.github.io/blob/main/Profile_28.png?raw=true"
 
-internal fun RunningItemResponse.toDomain(type: MappingType): List<RunningItem> {
+internal fun RunningItemsResponse.toDomain(type: MappingType): List<RunningItem> {
     if (result.isNullOrEmpty()) return emptyList()
     return result.map { data ->
         checkNotNull(data) { requireValueExceptionMessage("RunningItemResponse.result item") }

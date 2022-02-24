@@ -18,7 +18,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 import team.applemango.runnerbe.data.main.model.DefaultResponse
 import team.applemango.runnerbe.data.main.model.runningitem.RunningItemInformationResponse
-import team.applemango.runnerbe.data.main.model.runningitem.RunningItemResponse
+import team.applemango.runnerbe.data.main.model.runningitem.RunningItemsResponse
 import team.applemango.runnerbe.domain.main.model.runningitem.RunningItemApiBodyData
 
 interface MainService {
@@ -35,7 +35,7 @@ interface MainService {
         @Query("userLatitude") latitude: Float,
         @Query("userLongitude") longitude: Float,
         @Query("keywordSearch") keyword: String,
-    ): Response<RunningItemResponse>
+    ): Response<RunningItemsResponse>
 
     @POST("/postings/{userId}")
     suspend fun writeRunningItem(

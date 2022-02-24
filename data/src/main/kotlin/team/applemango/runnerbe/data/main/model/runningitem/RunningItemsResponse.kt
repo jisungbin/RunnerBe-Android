@@ -12,7 +12,7 @@ package team.applemango.runnerbe.data.main.model.runningitem
 import com.fasterxml.jackson.annotation.JsonProperty
 import team.applemango.runnerbe.data.common.BaseResponse
 
-data class RunningItemResponse(
+data class RunningItemsResponse(
     @field:JsonProperty("result")
     val result: List<RunningItemData?>? = null,
 
