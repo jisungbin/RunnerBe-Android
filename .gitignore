@@ -8,6 +8,7 @@ local.properties
 /data/build
 /domain/build
 /shared/build
+/shared-domain/build
 /shared-compose/build
 /xml/numberpicker/build
 /xml/photoeditor/build
