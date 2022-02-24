@@ -15,7 +15,7 @@ import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
 import team.applemango.runnerbe.data.util.extension.toXAccessTokenHeader
 import team.applemango.runnerbe.data.util.mainApi
 import team.applemango.runnerbe.domain.main.common.BaseResult
-import team.applemango.runnerbe.domain.main.model.load.RunningItem
+import team.applemango.runnerbe.domain.main.model.common.RunningItem
 import team.applemango.runnerbe.domain.main.model.write.RunningItemBodyData
 import team.applemango.runnerbe.domain.main.repository.MainRepository
 

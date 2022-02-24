@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.domain.main.model
+package team.applemango.runnerbe.domain.main.model.common
 
 data class Locate(
     val address: String,

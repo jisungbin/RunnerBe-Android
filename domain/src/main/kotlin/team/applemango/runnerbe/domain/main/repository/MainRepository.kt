@@ -10,8 +10,7 @@
 package team.applemango.runnerbe.domain.main.repository
 
 import team.applemango.runnerbe.domain.main.common.BaseResult
-import team.applemango.runnerbe.domain.main.model.load.RunningItem
-import team.applemango.runnerbe.domain.main.model.write.RunningItemBody
+import team.applemango.runnerbe.domain.main.model.common.RunningItem
 import team.applemango.runnerbe.domain.main.model.write.RunningItemBodyData
 
 interface MainRepository {

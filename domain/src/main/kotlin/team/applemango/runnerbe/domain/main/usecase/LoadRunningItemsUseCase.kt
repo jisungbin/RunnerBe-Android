@@ -16,7 +16,7 @@ import team.applemango.runnerbe.domain.main.constant.load.JobFilter
 import team.applemango.runnerbe.domain.main.constant.load.KeywordFilter
 import team.applemango.runnerbe.domain.main.constant.load.RunningItemFilter
 import team.applemango.runnerbe.domain.main.constant.load.RunningItemType
-import team.applemango.runnerbe.domain.main.model.Locate
+import team.applemango.runnerbe.domain.main.model.common.Locate
 import team.applemango.runnerbe.domain.main.repository.MainRepository
 
 class LoadRunningItemsUseCase(private val repo: MainRepository) {
