@@ -88,11 +88,15 @@ object Versions {
 
 @Suppress("MemberVisibilityCanBePrivate")
 object Dependencies {
-    const val Orbit = "org.orbit-mvi:orbit-viewmodel:${Versions.Orbit}"
     const val Browser = "androidx.browser:browser:${Versions.Ui.Browser}"
     const val Coroutine =
         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.Essential.Coroutines}"
     const val FirebaseBom = "com.google.firebase:firebase-bom:${Versions.FirebaseBom}"
+
+    object Orbit {
+        const val Main = "org.orbit-mvi:orbit-viewmodel:${Versions.Orbit}"
+        const val Test = "org.orbit-mvi:orbit-test:${Versions.Orbit}"
+    }
 
     object Di { // Dagger 는 DFM 에서만 쓰임
         const val Dagger = "com.google.dagger:dagger:${Versions.Dagger}"

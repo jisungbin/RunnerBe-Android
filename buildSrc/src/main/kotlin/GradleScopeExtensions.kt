@@ -39,13 +39,14 @@ fun DependencyHandler.installSharedComposeOrbitHiltTest(
     if (!isSharedModule) {
         implementationProject(ProjectConstants.Shared)
     }
-    implementation(Dependencies.Orbit)
+    implementation(Dependencies.Orbit.Main)
     Dependencies.Compose.forEach(::implementation)
     implementationProject(ProjectConstants.SharedCompose)
     add("testDebugImplementation", Dependencies.Test.JunitApi)
     add("testDebugRuntimeOnly", Dependencies.Test.JunitEngine)
     add("testDebugImplementation", Dependencies.Test.Hamcrest)
     add("testDebugImplementation", Dependencies.Test.Coroutine)
+    add("testDebugImplementation", Dependencies.Orbit.Test)
     if (!useDagger) {
         implementation(Dependencies.Di.Hilt)
         add("kapt", Dependencies.Compiler.Hilt)
