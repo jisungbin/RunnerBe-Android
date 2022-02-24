@@ -15,17 +15,21 @@ import team.applemango.runnerbe.data.register.login.model.LoginRequestResponse
 private const val REQUEST_EXCEPTION =
     "The request is a success, but the server execution is failed. (or result field is null)"
 
-internal fun <T> Response<T>.requireSuccessfulBody(requestName: String): T {
+internal fun <T> Response<T>.requireSuccessfulBody(
+    requestName: String,
+    resultVerifyBuilder: (T) -> Boolean,
+): T {
     val body = body()
-    if (isSuccessful && body != null) {
+    if (isSuccessful && body != null && resultVerifyBuilder(body)) {
         return body
     } else {
         throw throw Exception("Request $requestName is fail. (${errorBody()?.use { it.string() }})")
     }
 }
 
+@Deprecated("Use the resultVerifyBuilder argument of the Response<T>.requireSuccessfulBody function instead.")
 internal fun Response<LoginRequestResponse>.requireSuccessfulLoginResponse(platformName: String): LoginRequestResponse {
-    val body = requireSuccessfulBody("$platformName login")
+    val body = requireSuccessfulBody("$platformName login") { true }
     if (body.isSuccess == true && body.code in 1001..1002 && body.loginResult != null) {
         return body
     } else {

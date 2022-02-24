@@ -10,7 +10,7 @@
 package team.applemango.runnerbe.data.register.login.repository
 
 import team.applemango.runnerbe.data.register.login.mapper.toDomain
-import team.applemango.runnerbe.data.util.extension.requireSuccessfulLoginResponse
+import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
 import team.applemango.runnerbe.data.util.loginApi
 import team.applemango.runnerbe.domain.register.login.model.AccessToken
 import team.applemango.runnerbe.domain.register.login.model.UserToken
@@ -22,6 +22,11 @@ class LoginRepositoryImpl : LoginRepository {
             platformName = platformName,
             accessToken = accessToken
         )
-        return request.requireSuccessfulLoginResponse(platformName).toDomain()
+        return request.requireSuccessfulBody(
+            requestName = platformName,
+            resultVerifyBuilder = { body ->
+                body.isSuccess == true && body.code in 1001..1002 && body.loginResult != null
+            }
+        ).toDomain()
     }
 }
