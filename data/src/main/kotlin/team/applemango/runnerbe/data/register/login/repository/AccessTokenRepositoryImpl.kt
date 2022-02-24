@@ -13,14 +13,14 @@ import android.app.Activity
 import com.kakao.sdk.user.UserApiClient
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.OAuthLoginCallback
+import kotlin.Result.Companion.failure
+import kotlin.Result.Companion.success
 import kotlin.coroutines.resume
 import kotlinx.coroutines.suspendCancellableCoroutine
-import team.applemango.runnerbe.data.util.extension.failure
-import team.applemango.runnerbe.data.util.extension.success
 import team.applemango.runnerbe.domain.register.login.repository.AccessTokenRepository
 
-private const val NAVER_ACCESS_TOKEN_NULL = "Naver access token is null."
-private const val RESPONSE_NOTHING = "Kakao API response is nothing."
+private val EXCEPTION_NAVER_ACCESS_TOKEN_NULL = Exception("Naver access token is null.")
+private val EXCEPTION_RESPONSE_NOTHING = Exception("Kakao API response is nothing.")
 
 // must be activity context
 class AccessTokenRepositoryImpl(private val activityContext: Activity) : AccessTokenRepository {
@@ -39,7 +39,7 @@ class AccessTokenRepositoryImpl(private val activityContext: Activity) : AccessT
                     when {
                         error != null -> failure(error)
                         token != null -> success(token.accessToken)
-                        else -> failure(RESPONSE_NOTHING)
+                        else -> failure(EXCEPTION_RESPONSE_NOTHING)
                     }
                 )
             }
@@ -53,7 +53,7 @@ class AccessTokenRepositoryImpl(private val activityContext: Activity) : AccessT
                     when {
                         error != null -> failure(error)
                         token != null -> success(token.accessToken)
-                        else -> failure(RESPONSE_NOTHING)
+                        else -> failure(EXCEPTION_RESPONSE_NOTHING)
                     }
                 )
             }
@@ -69,12 +69,12 @@ class AccessTokenRepositoryImpl(private val activityContext: Activity) : AccessT
                         val token = NaverIdLoginSDK.getAccessToken()
                         continuation.resume(
                             token?.let { success(it) }
-                                ?: failure(NAVER_ACCESS_TOKEN_NULL)
+                                ?: failure(EXCEPTION_NAVER_ACCESS_TOKEN_NULL)
                         )
                     }
 
                     override fun onFailure(httpStatus: Int, message: String) {
-                        continuation.resume(failure("$httpStatus ($message)"))
+                        continuation.resume(failure(Exception("$httpStatus ($message)")))
                     }
 
                     override fun onError(errorCode: Int, message: String) {
