@@ -45,7 +45,7 @@ class MainRepositoryImpl : MainRepository {
         return request.requireSuccessfulBody(
             requestName = "mainApi.loadRunningItems",
             resultVerifyBuilder = { body ->
-                body.isSuccess == true && body.code == 1000
+                body.code == 1000
             }
         ).toDomain()
     }
