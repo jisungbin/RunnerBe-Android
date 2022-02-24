@@ -17,9 +17,8 @@ dependencies {
     Dependencies.Jackson.forEach(::implementation)
     Dependencies.Network.forEach(::implementation)
 
-    implementation(Dependencies.Coroutine)
-    implementation(Dependencies.Util.Logeukes)
     implementationProject(ProjectConstants.Domain)
+    implementationProject(ProjectConstants.SharedDomain)
 
     testDebugImplementation(Dependencies.Test.JunitApi)
     testDebugRuntimeOnly(Dependencies.Test.JunitEngine)

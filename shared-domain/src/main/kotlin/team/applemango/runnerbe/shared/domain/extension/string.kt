@@ -7,6 +7,6 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.data.util.extension
+package team.applemango.runnerbe.shared.domain.extension
 
 fun String.convertNullableString() = if (this == "null") null else this

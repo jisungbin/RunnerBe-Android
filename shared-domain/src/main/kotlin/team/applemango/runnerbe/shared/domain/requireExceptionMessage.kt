@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.data.util
+package team.applemango.runnerbe.shared.domain
 
 fun requireFieldExceptionMessage(fieldName: String) = "Require `$fieldName` field is null."
 fun requireValueExceptionMessage(valueName: String) = "Require `$valueName` value is null."

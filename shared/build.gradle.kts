@@ -13,7 +13,6 @@ plugins {
 }
 
 dependencies {
-    api(Dependencies.Util.Logeukes)
     api(Dependencies.Jetpack.DataStore)
     api(project(ProjectConstants.Data))
     api(project(ProjectConstants.Domain))

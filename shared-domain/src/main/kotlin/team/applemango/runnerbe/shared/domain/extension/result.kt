@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.data.util.extension
+package team.applemango.runnerbe.shared.domain.extension
 
 internal fun <T> success(value: T) = Result.success(value)
 internal fun <T> failure(message: String) = Result.failure<T>(Exception(message))

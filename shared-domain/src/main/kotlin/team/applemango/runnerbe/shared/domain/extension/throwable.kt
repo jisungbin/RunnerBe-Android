@@ -7,9 +7,9 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.shared.util.extension
+package team.applemango.runnerbe.shared.domain.extension
 
-import team.applemango.runnerbe.shared.BuildConfig
+import team.applemango.runnerbe.shared.domain.BuildConfig
 
 fun Throwable.toMessage() = when (BuildConfig.DEBUG) {
     true -> message?.trim() ?: "Error message is null."

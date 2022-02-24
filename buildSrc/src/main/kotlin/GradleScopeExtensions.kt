@@ -39,6 +39,7 @@ fun DependencyHandler.installSharedComposeOrbitHiltTest(
     if (!isSharedModule) {
         implementationProject(ProjectConstants.Shared)
     }
+    implementationProject(ProjectConstants.SharedDomain)
     implementation(Dependencies.Orbit.Main)
     Dependencies.Compose.forEach(::implementation)
     implementationProject(ProjectConstants.SharedCompose)

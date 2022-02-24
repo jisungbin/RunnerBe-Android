@@ -10,15 +10,15 @@
 package team.applemango.runnerbe.data.main.mapper
 
 import team.applemango.runnerbe.data.main.model.RunningItemResponse
-import team.applemango.runnerbe.data.util.extension.convertNullableString
-import team.applemango.runnerbe.data.util.requireFieldExceptionMessage
-import team.applemango.runnerbe.data.util.requireValueExceptionMessage
 import team.applemango.runnerbe.domain.main.constant.AgeRange
 import team.applemango.runnerbe.domain.main.constant.GenderFilter
 import team.applemango.runnerbe.domain.main.constant.RunningItemType
 import team.applemango.runnerbe.domain.main.model.Locate
 import team.applemango.runnerbe.domain.main.model.RunningItem
 import team.applemango.runnerbe.domain.register.login.constant.Job
+import team.applemango.runnerbe.shared.domain.extension.convertNullableString
+import team.applemango.runnerbe.shared.domain.requireFieldExceptionMessage
+import team.applemango.runnerbe.shared.domain.requireValueExceptionMessage
 
 private const val DefaultProfileImageUrl =
     "https://github.com/applemango-runnerbe/applemango-runnerbe.github.io/blob/main/Profile_28.png?raw=true"
