@@ -12,11 +12,11 @@ package team.applemango.runnerbe.data.main.mapper
 import team.applemango.runnerbe.data.main.mapper.MappingType.InformationApiFields
 import team.applemango.runnerbe.data.main.mapper.MappingType.MainPageApiFields
 import team.applemango.runnerbe.data.main.model.runningitem.RunningItemsResponse
-import team.applemango.runnerbe.domain.main.filter.AgeFilter
-import team.applemango.runnerbe.domain.main.filter.GenderFilter
 import team.applemango.runnerbe.domain.main.common.RunningItemType
+import team.applemango.runnerbe.domain.main.filter.AgeFilter
 import team.applemango.runnerbe.domain.main.model.common.Locate
 import team.applemango.runnerbe.domain.main.model.runningitem.RunningItem
+import team.applemango.runnerbe.domain.runner.Gender
 import team.applemango.runnerbe.domain.runner.Job
 import team.applemango.runnerbe.shared.domain.extension.convertNullableString
 import team.applemango.runnerbe.shared.domain.requireFieldExceptionMessage
@@ -66,8 +66,9 @@ internal fun RunningItemsResponse.toDomain(type: MappingType): List<RunningItem>
                 InformationApiFields -> DefaultIntValue
             },
             runningType = RunningItemType.values().first {
-                val runningTypeCode =
-                    requireNotNull(data.runningTag) { requireFieldExceptionMessage("runningTag") }
+                val runningTypeCode = requireNotNull(data.runningTag) {
+                    requireFieldExceptionMessage("runningTag")
+                }
                 it.code == runningTypeCode
             },
             finish = when (type) {
@@ -83,9 +84,10 @@ internal fun RunningItemsResponse.toDomain(type: MappingType): List<RunningItem>
                 }.split(" ")[1].split("명")[0].toInt()
             },
             title = requireNotNull(data.title) { requireFieldExceptionMessage("title") },
-            gender = GenderFilter.values().first {
-                val genderCode =
-                    requireNotNull(data.gender) { requireFieldExceptionMessage("gender") }
+            gender = Gender.values().first {
+                val genderCode = requireNotNull(data.gender) {
+                    requireFieldExceptionMessage("gender")
+                }
                 it.code == genderCode
             },
             jobs = when (type) {
@@ -103,12 +105,15 @@ internal fun RunningItemsResponse.toDomain(type: MappingType): List<RunningItem>
             },
             runningTime = requireNotNull(data.runningTime) { requireFieldExceptionMessage("runningTime") },
             locate = run {
-                val address =
-                    requireNotNull(data.locationInfo) { requireFieldExceptionMessage("locationInfo") }
-                val latitudeString =
-                    requireNotNull(data.gatherLatitude) { requireFieldExceptionMessage("gatherLatitude") }
-                val longitudeString =
-                    requireNotNull(data.gatherLongitude) { requireFieldExceptionMessage("gatherLongitude") }
+                val address = requireNotNull(data.locationInfo) {
+                    requireFieldExceptionMessage("locationInfo")
+                }
+                val latitudeString = requireNotNull(data.gatherLatitude) {
+                    requireFieldExceptionMessage("gatherLatitude")
+                }
+                val longitudeString = requireNotNull(data.gatherLongitude) {
+                    requireFieldExceptionMessage("gatherLongitude")
+                }
                 Locate(
                     address = address,
                     latitude = latitudeString.toDouble(),
@@ -116,7 +121,9 @@ internal fun RunningItemsResponse.toDomain(type: MappingType): List<RunningItem>
                 )
             },
             distance = when (type) {
-                MainPageApiFields -> requireNotNull(data.distance) { requireFieldExceptionMessage("distance") }.toFloat()
+                MainPageApiFields -> requireNotNull(data.distance) {
+                    requireFieldExceptionMessage("distance")
+                }.toFloat()
                 InformationApiFields -> DefaultIntValue.toFloat()
             },
             meetingDate = requireNotNull(data.gatheringTime) { requireFieldExceptionMessage("gatheringTime") },
