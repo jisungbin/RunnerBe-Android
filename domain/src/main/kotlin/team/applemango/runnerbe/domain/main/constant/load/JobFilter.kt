@@ -7,10 +7,10 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.domain.main.constant
+package team.applemango.runnerbe.domain.main.constant.load
 
-import team.applemango.runnerbe.domain.main.constant.JobFilter.Create
-import team.applemango.runnerbe.domain.main.constant.JobFilter.None
+import team.applemango.runnerbe.domain.main.constant.load.JobFilter.Create
+import team.applemango.runnerbe.domain.main.constant.load.JobFilter.None
 import team.applemango.runnerbe.domain.register.login.constant.Job
 
 /**

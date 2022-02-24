@@ -10,7 +10,7 @@
 package team.applemango.runnerbe.domain.register.login.repository
 
 import team.applemango.runnerbe.domain.register.login.model.UserRegister
-import team.applemango.runnerbe.domain.register.login.model.result.UserRegisterResult
+import team.applemango.runnerbe.domain.register.login.constant.UserRegisterResult
 
 interface RegisterRepository {
     /**

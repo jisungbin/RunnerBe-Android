@@ -31,7 +31,7 @@ import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import team.applemango.runnerbe.domain.register.login.model.UserRegister
-import team.applemango.runnerbe.domain.register.login.model.result.UserRegisterResult
+import team.applemango.runnerbe.domain.register.login.constant.UserRegisterResult
 import team.applemango.runnerbe.domain.register.login.usecase.CheckUsableEmailUseCase
 import team.applemango.runnerbe.domain.register.login.usecase.UserRegisterUseCase
 import team.applemango.runnerbe.domain.register.mailjet.usecase.MailjetSendUseCase

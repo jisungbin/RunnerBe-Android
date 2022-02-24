@@ -16,8 +16,9 @@ import retrofit2.http.HeaderMap
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
-import team.applemango.runnerbe.data.main.model.write.RunningItemBodyData
+import team.applemango.runnerbe.data.main.model.common.DefaultResponse
 import team.applemango.runnerbe.data.main.model.load.RunningItemResponse
+import team.applemango.runnerbe.data.main.model.write.RunningItemBodyData
 
 interface MainService {
     @GET("/users/main/{runningTag}")
@@ -40,5 +41,5 @@ interface MainService {
         @HeaderMap headers: Map<String, String>,
         @Path("userId") userId: Int,
         @Body item: RunningItemBodyData,
-    )
+    ): Response<DefaultResponse>
 }

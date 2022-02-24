@@ -10,9 +10,9 @@
 package team.applemango.runnerbe.data.main.mapper
 
 import team.applemango.runnerbe.data.main.model.load.RunningItemResponse
-import team.applemango.runnerbe.domain.main.constant.AgeRange
-import team.applemango.runnerbe.domain.main.constant.GenderFilter
-import team.applemango.runnerbe.domain.main.constant.RunningItemType
+import team.applemango.runnerbe.domain.main.constant.load.AgeRange
+import team.applemango.runnerbe.domain.main.constant.load.GenderFilter
+import team.applemango.runnerbe.domain.main.constant.load.RunningItemType
 import team.applemango.runnerbe.domain.main.model.Locate
 import team.applemango.runnerbe.domain.main.model.RunningItem
 import team.applemango.runnerbe.domain.register.login.constant.Job

@@ -14,7 +14,7 @@ import team.applemango.runnerbe.data.register.login.mapper.toResultDomain
 import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
 import team.applemango.runnerbe.data.util.registerApi
 import team.applemango.runnerbe.domain.register.login.model.UserRegister
-import team.applemango.runnerbe.domain.register.login.model.result.UserRegisterResult
+import team.applemango.runnerbe.domain.register.login.constant.UserRegisterResult
 import team.applemango.runnerbe.domain.register.login.repository.RegisterRepository
 
 class RegisterRepositoryImpl : RegisterRepository {

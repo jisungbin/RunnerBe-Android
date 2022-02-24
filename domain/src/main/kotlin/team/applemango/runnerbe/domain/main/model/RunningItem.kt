@@ -9,9 +9,9 @@
 
 package team.applemango.runnerbe.domain.main.model
 
-import team.applemango.runnerbe.domain.main.constant.AgeRange
-import team.applemango.runnerbe.domain.main.constant.GenderFilter
-import team.applemango.runnerbe.domain.main.constant.RunningItemType
+import team.applemango.runnerbe.domain.main.constant.load.AgeRange
+import team.applemango.runnerbe.domain.main.constant.load.GenderFilter
+import team.applemango.runnerbe.domain.main.constant.load.RunningItemType
 import team.applemango.runnerbe.domain.register.login.constant.Job
 
 /**

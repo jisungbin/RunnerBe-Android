@@ -13,7 +13,7 @@ import team.applemango.runnerbe.data.register.login.model.email.CheckDuplicateEm
 import team.applemango.runnerbe.data.register.login.model.login.LoginRequestResponse
 import team.applemango.runnerbe.data.register.login.model.register.UserRegisterResponse
 import team.applemango.runnerbe.domain.register.login.model.UserToken
-import team.applemango.runnerbe.domain.register.login.model.result.UserRegisterResult
+import team.applemango.runnerbe.domain.register.login.constant.UserRegisterResult
 import team.applemango.runnerbe.shared.domain.requireFieldExceptionMessage
 
 internal fun LoginRequestResponse.toDomain(): UserToken {

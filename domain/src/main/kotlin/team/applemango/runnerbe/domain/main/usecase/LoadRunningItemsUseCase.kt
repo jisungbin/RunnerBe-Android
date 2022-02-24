@@ -9,13 +9,13 @@
 
 package team.applemango.runnerbe.domain.main.usecase
 
-import team.applemango.runnerbe.domain.main.constant.AgeRange
-import team.applemango.runnerbe.domain.main.constant.DistanceFilter
-import team.applemango.runnerbe.domain.main.constant.GenderFilter
-import team.applemango.runnerbe.domain.main.constant.JobFilter
-import team.applemango.runnerbe.domain.main.constant.KeywordFilter
-import team.applemango.runnerbe.domain.main.constant.RunningItemFilter
-import team.applemango.runnerbe.domain.main.constant.RunningItemType
+import team.applemango.runnerbe.domain.main.constant.load.AgeRange
+import team.applemango.runnerbe.domain.main.constant.load.DistanceFilter
+import team.applemango.runnerbe.domain.main.constant.load.GenderFilter
+import team.applemango.runnerbe.domain.main.constant.load.JobFilter
+import team.applemango.runnerbe.domain.main.constant.load.KeywordFilter
+import team.applemango.runnerbe.domain.main.constant.load.RunningItemFilter
+import team.applemango.runnerbe.domain.main.constant.load.RunningItemType
 import team.applemango.runnerbe.domain.main.model.Locate
 import team.applemango.runnerbe.domain.main.repository.MainRepository
 
