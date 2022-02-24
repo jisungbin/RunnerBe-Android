@@ -23,9 +23,9 @@ class LoginRepositoryImpl : LoginRepository {
             accessToken = accessToken
         )
         return request.requireSuccessfulBody(
-            requestName = platformName,
+            requestName = "loginApi.request $platformName",
             resultVerifyBuilder = { body ->
-                body.isSuccess == true && body.code in 1001..1002 && body.loginResult != null
+                body.code in 1001..1002 && body.loginResult != null
             }
         ).toDomain()
     }

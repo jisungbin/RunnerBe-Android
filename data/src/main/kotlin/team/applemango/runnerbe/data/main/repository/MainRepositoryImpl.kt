@@ -9,6 +9,8 @@
 
 package team.applemango.runnerbe.data.main.repository
 
+import team.applemango.runnerbe.data.main.mapper.toDomain
+import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
 import team.applemango.runnerbe.data.util.mainApi
 import team.applemango.runnerbe.domain.main.model.RunningItem
 import team.applemango.runnerbe.domain.main.repository.MainRepository
@@ -40,5 +42,11 @@ class MainRepositoryImpl : MainRepository {
             longitude = longitude,
             keyword = keyword
         )
+        return request.requireSuccessfulBody(
+            requestName = "mainApi.loadRunningItems",
+            resultVerifyBuilder = { body ->
+                body.isSuccess == true && body.code == 1000
+            }
+        ).toDomain()
     }
 }

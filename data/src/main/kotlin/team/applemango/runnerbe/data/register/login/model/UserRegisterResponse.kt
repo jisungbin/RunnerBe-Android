@@ -10,17 +10,18 @@
 package team.applemango.runnerbe.data.register.login.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import team.applemango.runnerbe.data.common.BaseResponse
 
 data class UserRegisterResponse(
     @field:JsonProperty("code")
-    val code: Int? = null,
+    override val code: Int? = null,
 
     @field:JsonProperty("message")
-    val message: String? = null,
+    override val message: String? = null,
 
     @field:JsonProperty("isSuccess")
-    val isSuccess: Boolean? = null,
+    override val isSuccess: Boolean? = null,
 
     @field:JsonProperty("result")
     val jwt: String? = null,
-)
+) : BaseResponse

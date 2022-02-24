@@ -10,20 +10,27 @@
 package team.applemango.runnerbe.data.util.extension
 
 import retrofit2.Response
+import team.applemango.runnerbe.data.common.BaseResponse
 import team.applemango.runnerbe.data.register.login.model.LoginRequestResponse
 
 private const val REQUEST_EXCEPTION =
     "The request is a success, but the server execution is failed. (or result field is null)"
 
-internal fun <T> Response<T>.requireSuccessfulBody(
+internal fun <T : BaseResponse> Response<T>.requireSuccessfulBody(
     requestName: String,
-    resultVerifyBuilder: (T) -> Boolean,
+    resultVerifyBuilder: (body: T) -> Boolean,
 ): T {
     val body = body()
-    if (isSuccessful && body != null && resultVerifyBuilder(body)) {
+    if (isSuccessful && body != null && body.isSuccess == true && resultVerifyBuilder(body)) {
         return body
     } else {
-        throw throw Exception("Request $requestName is fail. (${errorBody()?.use { it.string() }})")
+        throw Exception(
+            """
+            Request $requestName is fail.
+            Http message: ${errorBody()?.use { it.string() }}
+            Server message: ${body?.message}
+            """.trimIndent()
+        )
     }
 }
 
