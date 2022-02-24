@@ -9,6 +9,12 @@
 
 package team.applemango.runnerbe.domain.main.filter
 
+/**
+ * 키워드 검색 필터
+ *
+ * @property None 키워드 검색 비활성화
+ * @property Create [Create.keyword] 를 포함하는 아이템들만 조회 (글 제목, 글 내용 검색)
+ */
 sealed class KeywordFilter(val code: String) {
     object None : KeywordFilter("N")
     data class Create(val keyword: String) : KeywordFilter(keyword)
