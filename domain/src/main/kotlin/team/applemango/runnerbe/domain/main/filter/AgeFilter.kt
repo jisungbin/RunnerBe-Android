@@ -13,7 +13,7 @@ package team.applemango.runnerbe.domain.main.filter
  * 나이 필터
  *
  * 필터를 적용하지 않은 상태도 있어야 하기 때문에
- * 모든 필드는 Nullable 함
+ * 모든 필드는 Nullable 함 -> AgeRange 가 아닌 AgeFilter 인 이유
  *
  * @property min 최소 나이
  * @property max 최대 나이

@@ -9,6 +9,7 @@
 
 package team.applemango.runnerbe.domain.runner
 
+// TODO: 퀴어분들 대응
 enum class Gender(val string: String, val code: String) {
     All("전체", "A"),
     Male("남성", "M"),
