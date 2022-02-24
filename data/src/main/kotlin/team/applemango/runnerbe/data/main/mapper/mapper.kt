@@ -37,16 +37,16 @@ internal fun RunningItemResponse.toDomain(): List<RunningItem> {
             createdAt = requireNotNull(data.postingTime) { requireFieldExceptionMessage("postingTime") },
             bookmarkCount = requireNotNull(data.bookMarkNumber) { requireFieldExceptionMessage("bookMarkNumber") },
             runningType = RunningItemType.values().first {
-                val dataCode =
+                val runningTypeCode =
                     requireNotNull(data.runningTag) { requireFieldExceptionMessage("runningTag") }
-                it.code == dataCode
+                it.code == runningTypeCode
             },
             finish = requireNotNull(data.whetherEnd) { requireFieldExceptionMessage("whetherEnd") }.toBoolean(),
             title = requireNotNull(data.title) { requireFieldExceptionMessage("title") },
             gender = GenderFilter.values().first {
-                val dataGender =
+                val genderCode =
                     requireNotNull(data.gender) { requireFieldExceptionMessage("gender") }
-                it.code == dataGender
+                it.code == genderCode
             },
             jobs = requireNotNull(data.job) { requireFieldExceptionMessage("job") }
                 .split(",")
