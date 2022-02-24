@@ -10,17 +10,18 @@
 package team.applemango.runnerbe.data.main.model.information
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import team.applemango.runnerbe.data.common.BaseResponse
 
 data class RunningItemInformationResponse(
     @field:JsonProperty("result")
     val result: RunningItemInformation? = null,
 
     @field:JsonProperty("code")
-    val code: Int? = null,
+    override val code: Int? = null,
 
     @field:JsonProperty("message")
-    val message: String? = null,
+    override val message: String? = null,
 
     @field:JsonProperty("isSuccess")
-    val isSuccess: Boolean? = null,
-)
+    override val isSuccess: Boolean? = null,
+) : BaseResponse
