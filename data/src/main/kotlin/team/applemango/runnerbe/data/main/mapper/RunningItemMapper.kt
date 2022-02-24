@@ -11,7 +11,7 @@ package team.applemango.runnerbe.data.main.mapper
 
 import team.applemango.runnerbe.data.main.mapper.MappingType.InformationApiFields
 import team.applemango.runnerbe.data.main.mapper.MappingType.MainPageApiFields
-import team.applemango.runnerbe.data.main.model.load.RunningItemResponse
+import team.applemango.runnerbe.data.main.model.runningitem.RunningItemResponse
 import team.applemango.runnerbe.domain.main.constant.load.AgeRange
 import team.applemango.runnerbe.domain.main.constant.load.GenderFilter
 import team.applemango.runnerbe.domain.main.constant.load.RunningItemType
