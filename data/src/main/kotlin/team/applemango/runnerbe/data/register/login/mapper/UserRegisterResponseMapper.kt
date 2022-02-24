@@ -2,12 +2,12 @@
  * RunnerBe © 2022 Team AppleMango. all rights reserved.
  * RunnerBe license is under the MIT.
  *
- * [mapper.kt] created by Ji Sungbin on 22. 2. 24. 오후 8:44
+ * [UserRegisterResponseMapper.kt] created by Ji Sungbin on 22. 2. 24. 오후 8:44
  *
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.data.register.login.mapper.register
+package team.applemango.runnerbe.data.register.login.mapper
 
 import team.applemango.runnerbe.data.register.login.model.register.UserRegisterResponse
 import team.applemango.runnerbe.domain.register.login.constant.UserRegisterResult

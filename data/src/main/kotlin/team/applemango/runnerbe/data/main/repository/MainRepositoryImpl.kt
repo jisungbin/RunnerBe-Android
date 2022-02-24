@@ -9,9 +9,8 @@
 
 package team.applemango.runnerbe.data.main.repository
 
-import team.applemango.runnerbe.data.main.mapper.common.MappingType
-import team.applemango.runnerbe.data.main.mapper.common.toDomain
-import team.applemango.runnerbe.data.main.mapper.write.toDomain
+import team.applemango.runnerbe.data.main.mapper.runningitem.MappingType
+import team.applemango.runnerbe.data.main.mapper.toDomain
 import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
 import team.applemango.runnerbe.data.util.extension.toXAccessTokenHeader
 import team.applemango.runnerbe.data.util.mainApi
@@ -61,7 +60,7 @@ class MainRepositoryImpl : MainRepository {
         item: RunningItemBodyData,
     ): BaseResult {
         val request = mainApi.writeRunningItem(
-            headers = jwt.toXAccessTokenHeader(),
+            jwtHeader = jwt.toXAccessTokenHeader(),
             userId = userId,
             item = item
         )

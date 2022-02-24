@@ -2,15 +2,15 @@
  * RunnerBe © 2022 Team AppleMango. all rights reserved.
  * RunnerBe license is under the MIT.
  *
- * [mapper.kt] created by Ji Sungbin on 22. 2. 24. 오후 3:03
+ * [RunningItemMapper.kt] created by Ji Sungbin on 22. 2. 24. 오후 3:03
  *
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.data.main.mapper.common
+package team.applemango.runnerbe.data.main.mapper
 
-import team.applemango.runnerbe.data.main.mapper.common.MappingType.InformationApiFields
-import team.applemango.runnerbe.data.main.mapper.common.MappingType.MainPageApiFields
+import team.applemango.runnerbe.data.main.mapper.MappingType.InformationApiFields
+import team.applemango.runnerbe.data.main.mapper.MappingType.MainPageApiFields
 import team.applemango.runnerbe.data.main.model.load.RunningItemResponse
 import team.applemango.runnerbe.domain.main.constant.load.AgeRange
 import team.applemango.runnerbe.domain.main.constant.load.GenderFilter
@@ -47,7 +47,9 @@ internal fun RunningItemResponse.toDomain(type: MappingType): List<RunningItem> 
             itemId = requireNotNull(data.postId) { requireFieldExceptionMessage("postId") },
             ownerId = requireNotNull(data.postUserId) { requireFieldExceptionMessage("postUserId") },
             ownerNickName = when (type) {
-                MainPageApiFields -> requireNotNull(data.nickName) { requireFieldExceptionMessage("nickName") }
+                MainPageApiFields -> requireNotNull(data.nickName) {
+                    requireFieldExceptionMessage("nickName")
+                }
                 InformationApiFields -> ""
             },
             ownerProfileImageUrl = when (type) {
