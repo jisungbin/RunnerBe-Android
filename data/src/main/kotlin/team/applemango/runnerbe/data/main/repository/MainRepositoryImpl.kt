@@ -9,7 +9,6 @@
 
 package team.applemango.runnerbe.data.main.repository
 
-import team.applemango.runnerbe.data.main.mapper.MappingType
 import team.applemango.runnerbe.data.main.mapper.toDomain
 import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
 import team.applemango.runnerbe.data.util.extension.toXAccessTokenHeader
@@ -17,6 +16,7 @@ import team.applemango.runnerbe.data.util.mainApi
 import team.applemango.runnerbe.domain.main.common.BaseResult
 import team.applemango.runnerbe.domain.main.model.runningitem.RunningItem
 import team.applemango.runnerbe.domain.main.model.runningitem.RunningItemApiBodyData
+import team.applemango.runnerbe.domain.main.model.runningitem.information.RunningItemInformation
 import team.applemango.runnerbe.domain.main.repository.MainRepository
 
 class MainRepositoryImpl : MainRepository {
@@ -51,7 +51,7 @@ class MainRepositoryImpl : MainRepository {
             resultVerifyBuilder = { body ->
                 body.code == 1000
             }
-        ).toDomain(type = MappingType.MainPageApiFields)
+        ).toDomain()
     }
 
     override suspend fun writeRunningItem(
@@ -70,5 +70,13 @@ class MainRepositoryImpl : MainRepository {
                 body.code != null
             }
         ).toDomain()
+    }
+
+    override suspend fun getRunningItemInformation(
+        jwt: String,
+        userId: Int,
+        postId: Int,
+    ): RunningItemInformation {
+        TODO("Not yet implemented")
     }
 }
