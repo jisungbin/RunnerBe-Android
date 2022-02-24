@@ -7,8 +7,10 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.data.main.mapper.load
+package team.applemango.runnerbe.data.main.mapper.common
 
+import team.applemango.runnerbe.data.main.mapper.common.MappingType.InformationApiFields
+import team.applemango.runnerbe.data.main.mapper.common.MappingType.MainPageApiFields
 import team.applemango.runnerbe.data.main.model.load.RunningItemResponse
 import team.applemango.runnerbe.domain.main.constant.load.AgeRange
 import team.applemango.runnerbe.domain.main.constant.load.GenderFilter
@@ -20,10 +22,23 @@ import team.applemango.runnerbe.shared.domain.extension.convertNullableString
 import team.applemango.runnerbe.shared.domain.requireFieldExceptionMessage
 import team.applemango.runnerbe.shared.domain.requireValueExceptionMessage
 
+/**
+ * API Call 마다 불러오는 [RunningItem] 필드들이 다름
+ *
+ * @property MainPageApiFields 메인 페이지 API Call result
+ * - peopleNum, contents 필드 없음
+ * @property InformationApiFields  게시글 상세 페이지 API Call result
+ * - nickName, profileImageUrl, bookMarkNumber, whetherEnd, job, distance 필드 없음
+ */
+internal enum class MappingType {
+    MainPageApiFields,
+    InformationApiFields,
+}
+
 private const val DefaultProfileImageUrl =
     "https://github.com/applemango-runnerbe/applemango-runnerbe.github.io/blob/main/Profile_28.png?raw=true"
 
-internal fun RunningItemResponse.toDomain(): List<RunningItem> {
+internal fun RunningItemResponse.toDomain(type: MappingType): List<RunningItem> {
     if (result.isNullOrEmpty()) return emptyList()
     return result.map { data ->
         checkNotNull(data) { requireValueExceptionMessage("RunningItemResponse.result item") }

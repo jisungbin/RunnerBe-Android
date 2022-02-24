@@ -9,7 +9,7 @@
 
 package team.applemango.runnerbe.data.main.repository
 
-import team.applemango.runnerbe.data.main.mapper.load.toDomain
+import team.applemango.runnerbe.data.main.mapper.common.toDomain
 import team.applemango.runnerbe.data.main.mapper.write.toDomain
 import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
 import team.applemango.runnerbe.data.util.extension.toXAccessTokenHeader

@@ -11,6 +11,9 @@ package team.applemango.runnerbe.data.main.model.common
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
+/**
+ * 총 20개 필드
+ */
 data class RunningItemData(
     @field:JsonProperty("locationInfo")
     val locationInfo: String? = null,
@@ -65,4 +68,10 @@ data class RunningItemData(
 
     @field:JsonProperty("runningTime")
     val runningTime: String? = null,
+
+    @field:JsonProperty("peopleNum")
+    val maxRunnerCount: String? = null,
+
+    @field:JsonProperty("contents")
+    val message: String? = null,
 )

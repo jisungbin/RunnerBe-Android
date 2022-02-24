@@ -23,6 +23,7 @@ import team.applemango.runnerbe.domain.register.login.constant.Job
  * @property bookmarkCount 게시글 북마크 개수
  * @property runningType 게시글 아이템 타입 (출근 전, 퇴근 후, 휴일)
  * @property finish 게시글 러닝 모집 마감 여부
+ * @property maxRunnerCount 최대 러닝 인원
  * @property title 게시글 제목
  * @property gender 러닝 참여 가능 성별 필터
  * @property jobs 러닝 참여자 직업 리스트
@@ -31,6 +32,9 @@ import team.applemango.runnerbe.domain.register.login.constant.Job
  * @property locate 모임 장소의 위치(위도, 경도, 주소)
  * @property distance 모임 장소와 내 위치간 거리 (단위: KM)
  * @property meetingDate 모임 날짜 및 시간 (ex_05/22(일) AM11:22)
+ * @property message 게시글 메시지
+ *
+ * 총 18개 필드
  */
 data class RunningItem(
     val itemId: Int,
@@ -41,6 +45,7 @@ data class RunningItem(
     val bookmarkCount: Int,
     val runningType: RunningItemType,
     val finish: Boolean,
+    val maxRunnerCount: Int,
     val title: String,
     val gender: GenderFilter,
     val jobs: List<Job>,
@@ -49,4 +54,5 @@ data class RunningItem(
     val locate: Locate,
     val distance: Float,
     val meetingDate: String,
+    val message: String,
 )
