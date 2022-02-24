@@ -18,27 +18,25 @@ import team.applemango.runnerbe.domain.runner.Gender
 import team.applemango.runnerbe.domain.runner.Job
 import team.applemango.runnerbe.shared.domain.requireFieldExceptionMessage
 
-internal fun RunnerData.toDomain(): Runner {
-    return Runner(
-        id = requireNotNull(userId) { requireFieldExceptionMessage("userId") },
-        nickname = requireNotNull(nickName) { requireFieldExceptionMessage("nickName") },
-        gender = Gender.values().first {
-            it.code == requireNotNull(gender) { requireFieldExceptionMessage("gender") }
-        },
-        job = Job.values().first {
-            it.string == requireNotNull(job) { requireFieldExceptionMessage("job") }
-        },
-        profileImageUrl = requireNotNull(profileImageUrl) { requireFieldExceptionMessage("profileImageUrl") },
-        ageGroup = run {
-            val ageGroup = requireNotNull(age) { requireFieldExceptionMessage("age") }
-            val (ageGroupString, ageGroupTypeString) = ageGroup.split(" ")
-            AgeGroup(
-                ageLevel = ageGroupString.split("대")[0].toInt(),
-                type = AgeGroupType.values().first { it.string == ageGroupTypeString }
-            )
-        },
-        diligence = Diligence.values().first {
-            it.message == requireNotNull(diligence) { requireFieldExceptionMessage("diligence") }
-        }
-    )
-}
+internal fun RunnerData.toDomain() = Runner(
+    id = requireNotNull(userId) { requireFieldExceptionMessage("userId") },
+    nickname = requireNotNull(nickName) { requireFieldExceptionMessage("nickName") },
+    gender = Gender.values().first {
+        it.code == requireNotNull(gender) { requireFieldExceptionMessage("gender") }
+    },
+    job = Job.values().first {
+        it.string == requireNotNull(job) { requireFieldExceptionMessage("job") }
+    },
+    profileImageUrl = requireNotNull(profileImageUrl) { requireFieldExceptionMessage("profileImageUrl") },
+    ageGroup = run {
+        val ageGroup = requireNotNull(age) { requireFieldExceptionMessage("age") }
+        val (ageGroupString, ageGroupTypeString) = ageGroup.split(" ")
+        AgeGroup(
+            ageLevel = ageGroupString.split("대")[0].toInt(),
+            type = AgeGroupType.values().first { it.string == ageGroupTypeString }
+        )
+    },
+    diligence = Diligence.values().first {
+        it.message == requireNotNull(diligence) { requireFieldExceptionMessage("diligence") }
+    }
+)
