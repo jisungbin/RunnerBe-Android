@@ -28,10 +28,8 @@ import team.applemango.runnerbe.domain.register.login.constant.Job
  * @property jobs 러닝 참여자 직업 리스트
  * @property ageRange 러닝 참여 가능 연령대 필터
  * @property runningTime 예정 러닝 소요 시간
- * @property locateAddress 모임 장소의 간단한 주소 (ex_석림동 석림 1로)
+ * @property locate 모임 장소의 위치(위도, 경도, 주소)
  * @property distance 모임 장소와 내 위치간 거리 (단위: KM)
- * @property latitude 모임 장소 위도
- * @property longitude 모임 장소 경도
  * @property meetingDate 모임 날짜 및 시간 (ex_05/22(일) AM11:22)
  */
 data class RunningItem(
@@ -48,9 +46,7 @@ data class RunningItem(
     val jobs: List<Job>,
     val ageRange: AgeRange,
     val runningTime: String,
-    val locateAddress: String,
+    val locate: Locate,
     val distance: Float,
-    val latitude: Double,
-    val longitude: Double,
     val meetingDate: String,
 )

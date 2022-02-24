@@ -11,6 +11,6 @@ package team.applemango.runnerbe.domain.main.model
 
 data class Locate(
     val address: String,
-    val longitude: Double,
     val latitude: Double,
+    val longitude: Double,
 )
