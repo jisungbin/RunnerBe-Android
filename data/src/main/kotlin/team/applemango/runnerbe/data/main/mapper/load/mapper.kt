@@ -7,14 +7,14 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.data.main.mapper
+package team.applemango.runnerbe.data.main.mapper.load
 
 import team.applemango.runnerbe.data.main.model.load.RunningItemResponse
 import team.applemango.runnerbe.domain.main.constant.load.AgeRange
 import team.applemango.runnerbe.domain.main.constant.load.GenderFilter
 import team.applemango.runnerbe.domain.main.constant.load.RunningItemType
 import team.applemango.runnerbe.domain.main.model.Locate
-import team.applemango.runnerbe.domain.main.model.RunningItem
+import team.applemango.runnerbe.domain.main.model.load.RunningItem
 import team.applemango.runnerbe.domain.register.login.constant.Job
 import team.applemango.runnerbe.shared.domain.extension.convertNullableString
 import team.applemango.runnerbe.shared.domain.requireFieldExceptionMessage
