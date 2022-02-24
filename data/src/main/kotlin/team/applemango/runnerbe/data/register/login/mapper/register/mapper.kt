@@ -13,7 +13,7 @@ import team.applemango.runnerbe.data.register.login.model.register.UserRegisterR
 import team.applemango.runnerbe.domain.register.login.constant.UserRegisterResult
 import team.applemango.runnerbe.shared.domain.requireFieldExceptionMessage
 
-internal fun UserRegisterResponse.toResultDomain(): UserRegisterResult {
+internal fun UserRegisterResponse.toDomain(): UserRegisterResult {
     return when (val code = checkNotNull(code) { requireFieldExceptionMessage("code") }) {
         1005, 1006 -> {
             val jwt = requireNotNull(jwt) { requireFieldExceptionMessage("jwt") }

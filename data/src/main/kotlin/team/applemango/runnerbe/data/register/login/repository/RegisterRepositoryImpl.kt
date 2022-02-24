@@ -10,11 +10,11 @@
 package team.applemango.runnerbe.data.register.login.repository
 
 import team.applemango.runnerbe.data.register.login.mapper.email.toBoolean
-import team.applemango.runnerbe.data.register.login.mapper.email.toResultDomain
+import team.applemango.runnerbe.data.register.login.mapper.register.toDomain
 import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
 import team.applemango.runnerbe.data.util.registerApi
-import team.applemango.runnerbe.domain.register.login.model.UserRegister
 import team.applemango.runnerbe.domain.register.login.constant.UserRegisterResult
+import team.applemango.runnerbe.domain.register.login.model.UserRegister
 import team.applemango.runnerbe.domain.register.login.repository.RegisterRepository
 
 class RegisterRepositoryImpl : RegisterRepository {
@@ -35,6 +35,6 @@ class RegisterRepositoryImpl : RegisterRepository {
                     body.jwt != null
                 }
             )
-            .toResultDomain()
+            .toDomain()
     }
 }
