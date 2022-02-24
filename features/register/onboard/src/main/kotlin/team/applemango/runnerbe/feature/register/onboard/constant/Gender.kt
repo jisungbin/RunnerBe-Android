@@ -10,5 +10,6 @@
 package team.applemango.runnerbe.feature.register.onboard.constant
 
 internal enum class Gender(val string: String, val code: String) {
-    Male("남성", "M"), Female("여성", "F")
+    Male("남성", "M"),
+    Female("여성", "F")
 }
