@@ -9,4 +9,4 @@
 
 package team.applemango.runnerbe.data.util.extension
 
-private fun String.toXAccessTokenHeader() = mapOf("x-access-token" to this)
+internal fun String.toXAccessTokenHeader() = mapOf("x-access-token" to this)
