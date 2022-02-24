@@ -20,13 +20,21 @@ import team.applemango.runnerbe.domain.register.login.repository.RegisterReposit
 class RegisterRepositoryImpl : RegisterRepository {
     override suspend fun checkUsableEmail(email: String): Boolean {
         return registerApi.checkUsableEmail(email)
-            .requireSuccessfulBody("checkUsableEmail")
+            .requireSuccessfulBody(
+                requestName = "registerApi.checkUsableEmail",
+                resultVerifyBuilder = { true }
+            )
             .toBoolean()
     }
 
     override suspend fun register(user: UserRegister): UserRegisterResult {
         return registerApi.requestRegister(user)
-            .requireSuccessfulBody("register")
+            .requireSuccessfulBody(
+                requestName = "registerApi.requestRegister",
+                resultVerifyBuilder = { body ->
+                    body.jwt != null
+                }
+            )
             .toResultDomain()
     }
 }

@@ -17,22 +17,24 @@ import team.applemango.runnerbe.domain.register.login.model.UserToken
 import team.applemango.runnerbe.domain.register.login.model.result.UserRegisterResult
 
 internal fun LoginRequestResponse.toDomain(): UserToken {
-    return when (code!!) { // must 1001..1002, NonNull result
-        1001 -> UserToken(jwt = requireNotNull(loginResult!!.jwt) { requireFieldExceptionMessage("jwt") }) // 회원
-        else -> UserToken(uuid = requireNotNull(loginResult!!.uuid) { requireFieldExceptionMessage("uuid") }) // 비회원
+    val code = checkNotNull(code) { requireFieldExceptionMessage("code") }
+    val loginResult = checkNotNull(loginResult) { requireFieldExceptionMessage("loginResult") }
+    check(code in listOf(1001, 1007)) { "Success result code must be 1001 or 1007." }
+    return when (code) { // must 1001, 1007
+        1001 -> UserToken(jwt = requireNotNull(loginResult.jwt) { requireFieldExceptionMessage("jwt") }) // 회원
+        else -> UserToken(uuid = requireNotNull(loginResult.uuid) { requireFieldExceptionMessage("uuid") }) // 비회원
     }
 }
 
 internal fun CheckDuplicateEmailResponse.toBoolean() =
-    requireNotNull(isSuccess) { requireFieldExceptionMessage("isSuccess") }
+    checkNotNull(isSuccess) { requireFieldExceptionMessage("isSuccess") }
 
 internal fun UserRegisterResponse.toResultDomain(): UserRegisterResult {
-    return when (val code = requireNotNull(code) { requireFieldExceptionMessage("code") }) {
-        1005, 1006 -> UserRegisterResult.Success(
-            requireNotNull(jwt) {
-                requireFieldExceptionMessage("jwt")
-            }
-        )
+    return when (val code = checkNotNull(code) { requireFieldExceptionMessage("code") }) {
+        1005, 1006 -> {
+            val jwt = requireNotNull(jwt) { requireFieldExceptionMessage("jwt") }
+            UserRegisterResult.Success(jwt)
+        }
         3001 -> UserRegisterResult.DuplicateUuid
         3002 -> UserRegisterResult.DuplicateEmail
         3004 -> UserRegisterResult.DuplicateNickname

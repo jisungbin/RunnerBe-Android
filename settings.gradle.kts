@@ -24,3 +24,4 @@ include(
     ":features:register:snslogin",
     ":features:register:onboard"
 )
+include(":shared-domain")

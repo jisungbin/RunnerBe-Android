@@ -43,6 +43,7 @@ internal class SnsLoginViewModel @Inject constructor(
                 loginUseCase(platformType = platformType, accessToken = token)
                     .onSuccess { user ->
                         if (user.isAlreadyRegisterUser) { // 이미 가입후 회원가입까지 모두 마친 유저
+                            val jwt = requireNotNull(user.jwt) { RequireMe }
                             postSideEffect(LoginSideEffect.SaveJwt(user.jwt!!)) // must NonNull
                             reduce {
                                 LoginState.Registered
