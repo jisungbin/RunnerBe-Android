@@ -14,9 +14,9 @@ package team.applemango.runnerbe.feature.register.onboard.constant
  * @property Year 출생 년도
  * @property Gender 성별
  * @property Job 직군
- * @property VerifyWithEmail 화사 이메일로 인증
+ * @property VerifyWithEmail 회사 이메일로 인증
  * @property VerifyWithEmployeeId 사원증으로 인증
- * @property VerifyWithEmailDone 화서 이메일로 인증 완료
+ * @property VerifyWithEmailDone 회사 이메일로 인증 완료
  * @property VerifyWithEmployeeIdRequestDone 사원증으로 인증 완료
  */
 internal enum class Step(val index: Int) {
