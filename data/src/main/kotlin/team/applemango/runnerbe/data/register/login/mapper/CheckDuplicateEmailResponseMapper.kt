@@ -12,5 +12,6 @@ package team.applemango.runnerbe.data.register.login.mapper
 import team.applemango.runnerbe.data.register.login.model.email.CheckDuplicateEmailResponse
 import team.applemango.runnerbe.shared.domain.requireFieldExceptionMessage
 
-internal fun CheckDuplicateEmailResponse.toBoolean() =
-    checkNotNull(isSuccess) { requireFieldExceptionMessage("isSuccess") }
+internal fun CheckDuplicateEmailResponse.toBoolean() = checkNotNull(isSuccess) {
+    requireFieldExceptionMessage("isSuccess")
+}
