@@ -32,7 +32,7 @@ internal class ViewModelModule {
         return OnboardViewModel(
             checkUsableEmailUseCase = checkUsableEmailUseCase,
             userRegisterUseCase = userRegisterUseCase,
-            mailSendUseCase = mailjetSendUseCase
+            mailjetSendUseCase = mailjetSendUseCase
         )
     }
 }
