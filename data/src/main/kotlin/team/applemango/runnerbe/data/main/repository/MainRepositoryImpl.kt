@@ -15,8 +15,8 @@ import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
 import team.applemango.runnerbe.data.util.extension.toXAccessTokenHeader
 import team.applemango.runnerbe.data.util.mainApi
 import team.applemango.runnerbe.domain.main.common.BaseResult
-import team.applemango.runnerbe.domain.main.model.common.RunningItem
-import team.applemango.runnerbe.domain.main.model.write.RunningItemBodyData
+import team.applemango.runnerbe.domain.main.model.runningitem.RunningItem
+import team.applemango.runnerbe.domain.main.model.runningitem.RunningItemApiBodyData
 import team.applemango.runnerbe.domain.main.repository.MainRepository
 
 class MainRepositoryImpl : MainRepository {
@@ -57,7 +57,7 @@ class MainRepositoryImpl : MainRepository {
     override suspend fun writeRunningItem(
         jwt: String,
         userId: Int,
-        item: RunningItemBodyData,
+        item: RunningItemApiBodyData,
     ): BaseResult {
         val request = mainApi.writeRunningItem(
             jwtHeader = jwt.toXAccessTokenHeader(),

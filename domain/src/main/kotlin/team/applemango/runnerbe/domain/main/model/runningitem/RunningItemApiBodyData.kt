@@ -7,12 +7,12 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.domain.main.model.write
+package team.applemango.runnerbe.domain.main.model.runningitem
 
 /**
  * API Call 전용 Body class
  */
-data class RunningItemBodyData(
+data class RunningItemApiBodyData(
     val title: String,
     val runnerGender: String,
     val runningTag: String,

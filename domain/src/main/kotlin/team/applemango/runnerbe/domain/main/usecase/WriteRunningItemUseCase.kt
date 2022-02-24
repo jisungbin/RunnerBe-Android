@@ -11,15 +11,15 @@ package team.applemango.runnerbe.domain.main.usecase
 
 import java.text.SimpleDateFormat
 import java.util.Locale
-import team.applemango.runnerbe.domain.main.model.write.RunningItemBody
-import team.applemango.runnerbe.domain.main.model.write.RunningItemBodyData
+import team.applemango.runnerbe.domain.main.model.runningitem.RunningItemApiBody
+import team.applemango.runnerbe.domain.main.model.runningitem.RunningItemApiBodyData
 import team.applemango.runnerbe.domain.main.repository.MainRepository
 
 class WriteRunningItemUseCase(private val repo: MainRepository) {
     suspend operator fun invoke(
         jwt: String,
         userId: Int,
-        item: RunningItemBody,
+        item: RunningItemApiBody,
     ) = runCatching {
         val meetingTime =
             SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(item.meetingDate)
@@ -29,7 +29,7 @@ class WriteRunningItemUseCase(private val repo: MainRepository) {
         repo.writeRunningItem(
             jwt = jwt,
             userId = userId,
-            item = RunningItemBodyData(
+            item = RunningItemApiBodyData(
                 title = item.title,
                 runnerGender = item.gender.code,
                 runningTag = item.itemType.code,

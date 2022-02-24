@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.domain.main.model.write
+package team.applemango.runnerbe.domain.main.model.runningitem
 
 import java.util.Date
 import team.applemango.runnerbe.domain.main.constant.load.AgeRange
@@ -28,7 +28,7 @@ import team.applemango.runnerbe.domain.main.model.common.Locate
  * @property gender 러닝 참여 가능 성별
  * @property message 아이템 메시지
  */
-data class RunningItemBody(
+data class RunningItemApiBody(
     val title: String,
     val itemType: RunningItemType,
     val meetingDate: Date,

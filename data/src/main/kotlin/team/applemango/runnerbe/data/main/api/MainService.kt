@@ -19,7 +19,7 @@ import retrofit2.http.Query
 import team.applemango.runnerbe.data.main.model.DefaultResponse
 import team.applemango.runnerbe.data.main.model.information.RunningItemInformationResponse
 import team.applemango.runnerbe.data.main.model.load.RunningItemResponse
-import team.applemango.runnerbe.domain.main.model.write.RunningItemBodyData
+import team.applemango.runnerbe.domain.main.model.runningitem.RunningItemApiBodyData
 
 interface MainService {
     @GET("/users/main/{runningTag}")
@@ -41,7 +41,7 @@ interface MainService {
     suspend fun writeRunningItem(
         @HeaderMap jwtHeader: Map<String, String>,
         @Path("userId") userId: Int,
-        @Body item: RunningItemBodyData,
+        @Body item: RunningItemApiBodyData,
     ): Response<DefaultResponse>
 
     @GET("/postings/{postId}/{userId}")
