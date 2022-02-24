@@ -9,6 +9,7 @@
 
 package team.applemango.runnerbe.data.main.repository
 
+import team.applemango.runnerbe.data.main.mapper.common.MappingType
 import team.applemango.runnerbe.data.main.mapper.common.toDomain
 import team.applemango.runnerbe.data.main.mapper.write.toDomain
 import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
@@ -51,7 +52,7 @@ class MainRepositoryImpl : MainRepository {
             resultVerifyBuilder = { body ->
                 body.code == 1000
             }
-        ).toDomain()
+        ).toDomain(type = MappingType.MainPageApiFields)
     }
 
     override suspend fun writeRunningItem(
