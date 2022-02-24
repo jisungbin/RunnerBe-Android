@@ -9,9 +9,9 @@
 
 package team.applemango.runnerbe.data.register.login.mapper
 
-import team.applemango.runnerbe.data.register.login.model.CheckDuplicateEmailResponse
-import team.applemango.runnerbe.data.register.login.model.LoginRequestResponse
-import team.applemango.runnerbe.data.register.login.model.UserRegisterResponse
+import team.applemango.runnerbe.data.register.login.model.email.CheckDuplicateEmailResponse
+import team.applemango.runnerbe.data.register.login.model.login.LoginRequestResponse
+import team.applemango.runnerbe.data.register.login.model.register.UserRegisterResponse
 import team.applemango.runnerbe.domain.register.login.model.UserToken
 import team.applemango.runnerbe.domain.register.login.model.result.UserRegisterResult
 import team.applemango.runnerbe.shared.domain.requireFieldExceptionMessage

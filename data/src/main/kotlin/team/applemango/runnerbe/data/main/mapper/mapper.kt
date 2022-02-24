@@ -9,7 +9,7 @@
 
 package team.applemango.runnerbe.data.main.mapper
 
-import team.applemango.runnerbe.data.main.model.RunningItemResponse
+import team.applemango.runnerbe.data.main.model.load.RunningItemResponse
 import team.applemango.runnerbe.domain.main.constant.AgeRange
 import team.applemango.runnerbe.domain.main.constant.GenderFilter
 import team.applemango.runnerbe.domain.main.constant.RunningItemType

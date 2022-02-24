@@ -14,8 +14,8 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
-import team.applemango.runnerbe.data.register.login.model.CheckDuplicateEmailResponse
-import team.applemango.runnerbe.data.register.login.model.UserRegisterResponse
+import team.applemango.runnerbe.data.register.login.model.email.CheckDuplicateEmailResponse
+import team.applemango.runnerbe.data.register.login.model.register.UserRegisterResponse
 import team.applemango.runnerbe.domain.register.login.model.UserRegister
 
 internal interface RegisterService {

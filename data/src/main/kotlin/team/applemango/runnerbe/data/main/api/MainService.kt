@@ -10,10 +10,14 @@
 package team.applemango.runnerbe.data.main.api
 
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.HeaderMap
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
-import team.applemango.runnerbe.data.main.model.RunningItemResponse
+import team.applemango.runnerbe.data.main.model.write.RunningItemBodyData
+import team.applemango.runnerbe.data.main.model.load.RunningItemResponse
 
 interface MainService {
     @GET("/users/main/{runningTag}")
@@ -30,4 +34,11 @@ interface MainService {
         @Query("userLongitude") longitude: Float,
         @Query("keywordSearch") keyword: String,
     ): Response<RunningItemResponse>
+
+    @POST("/postings/{userId}")
+    suspend fun writeRunningItem(
+        @HeaderMap headers: Map<String, String>,
+        @Path("userId") userId: Int,
+        @Body item: RunningItemBodyData,
+    )
 }

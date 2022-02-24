@@ -2,17 +2,17 @@
  * RunnerBe © 2022 Team AppleMango. all rights reserved.
  * RunnerBe license is under the MIT.
  *
- * [CheckDuplicateEmailResponse.kt] created by Ji Sungbin on 22. 2. 11. 오전 3:52
+ * [UserRegisterResponse.kt] created by Ji Sungbin on 22. 2. 12. 오후 2:50
  *
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.data.register.login.model
+package team.applemango.runnerbe.data.register.login.model.register
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import team.applemango.runnerbe.data.common.BaseResponse
 
-internal data class CheckDuplicateEmailResponse(
+data class UserRegisterResponse(
     @field:JsonProperty("code")
     override val code: Int? = null,
 
@@ -21,4 +21,7 @@ internal data class CheckDuplicateEmailResponse(
 
     @field:JsonProperty("isSuccess")
     override val isSuccess: Boolean? = null,
+
+    @field:JsonProperty("result")
+    val jwt: String? = null,
 ) : BaseResponse
