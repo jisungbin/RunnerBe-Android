@@ -21,7 +21,7 @@ import team.applemango.runnerbe.data.register.login.api.RegisterService
 import team.applemango.runnerbe.data.register.mailjet.api.MailjetService
 import team.applemango.runnerbe.data.secret.Mailjet
 import team.applemango.runnerbe.data.secret.RunnerbeHost
-import team.applemango.runnerbe.data.util.extension.mapper
+import team.applemango.runnerbe.data.util.extension.JacksonObjectMapper
 import team.applemango.runnerbe.data.util.interceptor.BasicAuthInterceptor
 
 private fun getInterceptor(vararg interceptors: Interceptor): OkHttpClient {
@@ -30,7 +30,7 @@ private fun getInterceptor(vararg interceptors: Interceptor): OkHttpClient {
     return builder.build()
 }
 
-private val JacksonConverter = JacksonConverterFactory.create(mapper)
+private val JacksonConverter = JacksonConverterFactory.create(JacksonObjectMapper)
 
 private fun getHttpLoggingInterceptor() = HttpLoggingInterceptor { message ->
     if (message.isNotEmpty()) {
