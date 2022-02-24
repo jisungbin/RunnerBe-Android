@@ -12,6 +12,7 @@ package team.applemango.runnerbe.domain.main.repository
 import team.applemango.runnerbe.domain.main.common.BaseResult
 import team.applemango.runnerbe.domain.main.model.runningitem.RunningItem
 import team.applemango.runnerbe.domain.main.model.runningitem.RunningItemApiBodyData
+import team.applemango.runnerbe.domain.main.model.runningitem.information.RunningItemInformation
 
 interface MainRepository {
     suspend fun loadRunningItems(
@@ -38,5 +39,5 @@ interface MainRepository {
         jwt: String,
         userId: Int,
         postId: Int,
-    ): RunningItemInfor
+    ): RunningItemInformation
 }
