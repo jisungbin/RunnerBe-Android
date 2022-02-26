@@ -15,6 +15,8 @@ import team.applemango.runnerbe.domain.main.common.BaseResult.NotYetVerify
 import team.applemango.runnerbe.domain.main.common.BaseResult.Success
 
 /**
+ * 추후 다양한 result 를 확장하여 지원할 수 있도록 interface 로 설계
+ *
  * @property Success 작업 성공
  * @property NotYetVerify 아직 인증되지 않은 계정
  * @property DatabaseError 서버 데이터베이스 에러
