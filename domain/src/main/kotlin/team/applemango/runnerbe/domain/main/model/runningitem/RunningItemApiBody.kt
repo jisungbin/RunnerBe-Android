@@ -10,10 +10,10 @@
 package team.applemango.runnerbe.domain.main.model.runningitem
 
 import java.util.Date
-import team.applemango.runnerbe.domain.main.filter.AgeFilter
-import team.applemango.runnerbe.domain.main.filter.GenderFilter
 import team.applemango.runnerbe.domain.main.common.RunningItemType
+import team.applemango.runnerbe.domain.main.filter.AgeFilter
 import team.applemango.runnerbe.domain.main.model.common.Locate
+import team.applemango.runnerbe.domain.runner.Gender
 
 /**
  * API Call Body entry model
@@ -36,6 +36,6 @@ data class RunningItemApiBody(
     val locate: Locate,
     val ageFilter: AgeFilter,
     val maxPeopleCount: Int,
-    val gender: GenderFilter,
+    val gender: Gender,
     val message: String,
 )

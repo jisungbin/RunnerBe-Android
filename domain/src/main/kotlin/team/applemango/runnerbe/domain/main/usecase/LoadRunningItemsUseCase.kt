@@ -9,15 +9,15 @@
 
 package team.applemango.runnerbe.domain.main.usecase
 
+import team.applemango.runnerbe.domain.main.common.RunningItemType
 import team.applemango.runnerbe.domain.main.filter.AgeFilter
 import team.applemango.runnerbe.domain.main.filter.DistanceFilter
-import team.applemango.runnerbe.domain.main.filter.GenderFilter
 import team.applemango.runnerbe.domain.main.filter.JobFilter
 import team.applemango.runnerbe.domain.main.filter.KeywordFilter
 import team.applemango.runnerbe.domain.main.filter.RunningItemFilter
-import team.applemango.runnerbe.domain.main.common.RunningItemType
 import team.applemango.runnerbe.domain.main.model.common.Locate
 import team.applemango.runnerbe.domain.main.repository.MainRepository
+import team.applemango.runnerbe.domain.runner.Gender
 
 class LoadRunningItemsUseCase(private val repo: MainRepository) {
     suspend operator fun invoke(
@@ -25,7 +25,7 @@ class LoadRunningItemsUseCase(private val repo: MainRepository) {
         includeEndItems: Boolean,
         itemFilter: RunningItemFilter,
         distanceFilter: DistanceFilter,
-        genderFilter: GenderFilter,
+        genderFilter: Gender,
         ageFilter: AgeFilter,
         jobFilter: JobFilter,
         locate: Locate,
