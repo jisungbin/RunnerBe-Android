@@ -41,11 +41,6 @@ interface UserRepository {
     suspend fun loadMyPage()
 
     /**
-     * 푸시 알림 요청 (26번 API)
-     */
-    suspend fun pushNotification()
-
-    /**
      * 출석 (27번 API)
      */
     suspend fun attendanceCheck()
