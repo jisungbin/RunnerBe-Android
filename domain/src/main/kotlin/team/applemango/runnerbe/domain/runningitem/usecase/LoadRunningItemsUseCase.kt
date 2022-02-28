@@ -31,7 +31,7 @@ class LoadRunningItemsUseCase(private val repo: RunningItemRepository) {
         locate: Locate,
         keywordFilter: KeywordFilter,
     ) = runCatching {
-        repo.loadRunningItems(
+        repo.loadItems(
             itemType = itemType.code,
             includeEndItems = includeEndItems,
             itemFilter = itemFilter.code,

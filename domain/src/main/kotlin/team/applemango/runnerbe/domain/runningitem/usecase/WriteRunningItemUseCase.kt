@@ -26,7 +26,7 @@ class WriteRunningItemUseCase(private val repo: RunningItemRepository) {
         val (address, latitude, longitude) = item.locate
         val (minAge, maxAge) = item.ageFilter
 
-        repo.writeRunningItem(
+        repo.write(
             jwt = jwt,
             userId = userId,
             item = RunningItemApiBodyData(

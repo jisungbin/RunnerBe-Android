@@ -12,12 +12,12 @@ package team.applemango.runnerbe.data.runningitem.mapper
 import team.applemango.runnerbe.data.runningitem.model.DefaultResponse
 import team.applemango.runnerbe.domain.runningitem.common.BaseResult
 import team.applemango.runnerbe.shared.domain.requireFieldExceptionMessage
+import team.applemango.runnerbe.shared.domain.resultCodeExceptionMessage
 
 internal fun DefaultResponse.toDomain() = when (
     val code = requireNotNull(code) { requireFieldExceptionMessage("code") }
 ) {
     1000 -> BaseResult.Success
     2044 -> BaseResult.NotYetVerify
-    4000 -> BaseResult.DatabaseError
-    else -> BaseResult.Exception(code)
+    else -> throw IllegalStateException(resultCodeExceptionMessage(code))
 }

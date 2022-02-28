@@ -9,6 +9,8 @@
 
 package team.applemango.runnerbe.data.runningitem.repository
 
+import team.applemango.runnerbe.data.runningitem.constant.NotYetVerifyCode
+import team.applemango.runnerbe.data.runningitem.constant.SuccessCode
 import team.applemango.runnerbe.data.runningitem.mapper.toDomain
 import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
 import team.applemango.runnerbe.data.util.runningItemApi
@@ -19,7 +21,25 @@ import team.applemango.runnerbe.domain.runningitem.model.runningitem.information
 import team.applemango.runnerbe.domain.runningitem.repository.RunningItemRepository
 
 class RunningItemRepositoryImpl : RunningItemRepository {
-    override suspend fun loadRunningItems(
+    override suspend fun write(
+        jwt: String,
+        userId: Int,
+        item: RunningItemApiBodyData,
+    ): BaseResult {
+        val request = runningItemApi.writeRunningItem(
+            jwt = jwt,
+            userId = userId,
+            item = item
+        )
+        return request.requireSuccessfulBody(
+            requestName = "runningItemApi.writeRunningItem",
+            resultVerifyBuilder = { body ->
+                body.code in listOf(SuccessCode, NotYetVerifyCode)
+            }
+        ).toDomain()
+    }
+
+    override suspend fun loadItems(
         itemType: String,
         includeEndItems: Boolean,
         itemFilter: String,
@@ -46,32 +66,14 @@ class RunningItemRepositoryImpl : RunningItemRepository {
             keyword = keyword
         )
         return request.requireSuccessfulBody(
-            requestName = "mainApi.loadRunningItems",
+            requestName = "runningItemApi.loadRunningItems",
             resultVerifyBuilder = { body ->
-                body.code == 1000
+                body.code in listOf(SuccessCode, NotYetVerifyCode)
             }
         ).toDomain()
     }
 
-    override suspend fun writeRunningItem(
-        jwt: String,
-        userId: Int,
-        item: RunningItemApiBodyData,
-    ): BaseResult {
-        val request = runningItemApi.writeRunningItem(
-            jwt = jwt,
-            userId = userId,
-            item = item
-        )
-        return request.requireSuccessfulBody(
-            requestName = "mainApi.writeRunningItem",
-            resultVerifyBuilder = { body ->
-                body.code != null
-            }
-        ).toDomain()
-    }
-
-    override suspend fun getRunningItemInformation(
+    override suspend fun getInformation(
         jwt: String,
         userId: Int,
         postId: Int,
@@ -82,9 +84,9 @@ class RunningItemRepositoryImpl : RunningItemRepository {
             postId = postId
         )
         return request.requireSuccessfulBody(
-            requestName = "mainApi.getRunningItemInformation",
+            requestName = "runningItemApi.getRunningItemInformation",
             resultVerifyBuilder = { body ->
-                body.code in 1015..1020
+                body.code in 1015..1020 || body.code == NotYetVerifyCode
             }
         ).toDomain()
     }
