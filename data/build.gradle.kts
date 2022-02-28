@@ -19,6 +19,8 @@ dependencies {
 
     implementationProject(ProjectConstants.Domain)
     implementationProject(ProjectConstants.SharedDomain)
+
+    implementation(platform(Dependencies.FirebaseBom))
     implementation(Dependencies.FirebaseEachKtx.Storage)
 
     testDebugImplementation(Dependencies.Test.JunitApi)
