@@ -30,24 +30,23 @@ class FirebaseRepositoryImpl : FirebaseRepository {
         name: String,
         userId: Int,
         exceptionHandler: (exception: Throwable) -> Unit,
-    ): String? =
-        suspendCancellableCoroutine { continuation ->
-            val baos = ByteArrayOutputStream()
-            image.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-            val data = baos.toByteArray()
-            storageRef.child(FirebaseStoragePath).child(userId.toString()).run {
-                putBytes(data)
-                    .continueWithTask { downloadUrl }
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful && task.result != null) {
-                            continuation.resume(task.result.toString())
-                        } else {
-                            exceptionHandler(task.exception ?: ImageUpdateExceptionWithNull)
-                            continuation.resume(null)
-                        }
+    ): String? = suspendCancellableCoroutine { continuation ->
+        val baos = ByteArrayOutputStream()
+        image.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        val data = baos.toByteArray()
+        storageRef.child(FirebaseStoragePath).child(userId.toString()).run {
+            putBytes(data)
+                .continueWithTask { downloadUrl }
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful && task.result != null) {
+                        continuation.resume(task.result.toString())
+                    } else {
+                        exceptionHandler(task.exception ?: ImageUpdateExceptionWithNull)
+                        continuation.resume(null)
                     }
-            }
+                }
         }
+    }
 
     override suspend fun loadConfigData(name: String): String {
         TODO("Not yet implemented")
