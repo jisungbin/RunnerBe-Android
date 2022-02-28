@@ -41,8 +41,6 @@ private val SendEmailExceptionWithNoMessage =
     Exception("user.sendEmailVerification is fail. But, exception message is null.")
 private val UserNullException =
     Exception("Firebase.auth.createUserWithEmailAndPassword success. But, current user is null.")
-private val ImageUpdateExceptionWithNull =
-    Exception("Image upload is fail. But, exception is null.")
 
 // TODO: https://github.com/applemango-runnerbe/RunnerBe-Android/issues/38
 internal class OnboardViewModel @Inject constructor(
