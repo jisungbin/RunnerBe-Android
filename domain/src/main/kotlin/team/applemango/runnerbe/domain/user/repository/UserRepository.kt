@@ -9,16 +9,37 @@
 
 package team.applemango.runnerbe.domain.user.repository
 
+import team.applemango.runnerbe.domain.user.constant.NicknameChangeResult
+import team.applemango.runnerbe.domain.user.model.Nickname
+
 interface UserRepository {
     /**
      * 닉네임 설정 (5번 API)
+     *
+     * @return 닉네임 설정 성공 여부
      */
-    suspend fun setNickname()
+    suspend fun setNickname(
+        jwt: String,
+        userId: Int,
+        nickName: Nickname,
+    ): NicknameChangeResult
 
     /**
      * 찜 관리 (등록/해제) (20번 API)
+     *
+     * @param jwt 유저 JWT
+     * @param postId 북마크 할 러닝 아이템의 아이디
+     * @param userId 유저 아이디
+     * @param whetherAdd 북마크 상태 (Y: 등록 / N: 해제)
+     *
+     * @return 북마크 업데이트 반영 여부
      */
-    suspend fun updateBookmarkItem()
+    suspend fun updateBookmarkItem(
+        jwt: String,
+        postId: Int,
+        userId: Int,
+        whetherAdd: String,
+    ): Boolean
 
     /**
      * 찜 목록 조회 (21번 API)
