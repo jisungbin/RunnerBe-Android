@@ -9,11 +9,11 @@
 
 package team.applemango.runnerbe.data.runningitem.repository
 
-import team.applemango.runnerbe.data.common.toSuccessValueBoolean
+import team.applemango.runnerbe.data.common.isSuccessNonNull
 import team.applemango.runnerbe.data.runningitem.constant.NotYetVerifyCode
 import team.applemango.runnerbe.data.runningitem.constant.SuccessCode
-import team.applemango.runnerbe.data.runningitem.mapper.toDomain
 import team.applemango.runnerbe.data.runningitem.mapper.toBaseResult
+import team.applemango.runnerbe.data.runningitem.mapper.toDomain
 import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
 import team.applemango.runnerbe.data.util.runningItemApi
 import team.applemango.runnerbe.domain.runningitem.common.BaseResult
@@ -103,7 +103,7 @@ class RunningItemRepositoryImpl : RunningItemRepository {
             resultVerifyBuilder = { body ->
                 body.isSuccess != null // receive only isSuccess field
             }
-        ).toSuccessValueBoolean()
+        ).isSuccessNonNull
     }
 
     override suspend fun edit(
@@ -123,7 +123,7 @@ class RunningItemRepositoryImpl : RunningItemRepository {
             resultVerifyBuilder = { body ->
                 body.isSuccess != null // receive only isSuccess field
             }
-        ).toSuccessValueBoolean()
+        ).isSuccessNonNull
     }
 
     override suspend fun delete(
@@ -141,7 +141,7 @@ class RunningItemRepositoryImpl : RunningItemRepository {
             resultVerifyBuilder = { body ->
                 body.isSuccess != null // receive only isSuccess field
             }
-        ).toSuccessValueBoolean()
+        ).isSuccessNonNull
     }
 
     override suspend fun requestJoin(
@@ -181,7 +181,7 @@ class RunningItemRepositoryImpl : RunningItemRepository {
             resultVerifyBuilder = { body ->
                 body.isSuccess != null // receive only isSuccess field
             }
-        ).toSuccessValueBoolean()
+        ).isSuccessNonNull
     }
 
     override suspend fun report(
@@ -199,6 +199,6 @@ class RunningItemRepositoryImpl : RunningItemRepository {
             resultVerifyBuilder = { body ->
                 body.isSuccess != null // receive only isSuccess field
             }
-        ).toSuccessValueBoolean()
+        ).isSuccessNonNull
     }
 }
