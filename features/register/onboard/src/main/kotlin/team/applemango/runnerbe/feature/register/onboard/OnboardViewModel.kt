@@ -36,7 +36,7 @@ import team.applemango.runnerbe.domain.register.login.usecase.CheckUsableEmailUs
 import team.applemango.runnerbe.domain.register.login.usecase.UserRegisterUseCase
 import team.applemango.runnerbe.domain.register.mailjet.usecase.MailjetSendUseCase
 import team.applemango.runnerbe.feature.register.onboard.constant.FirebaseStoragePath
-import team.applemango.runnerbe.domain.runner.Gender
+import team.applemango.runnerbe.domain.constant.Gender
 import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterSideEffect

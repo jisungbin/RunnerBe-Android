@@ -13,7 +13,7 @@ import java.util.Date
 import team.applemango.runnerbe.domain.main.common.RunningItemType
 import team.applemango.runnerbe.domain.main.filter.AgeFilter
 import team.applemango.runnerbe.domain.main.model.common.Locate
-import team.applemango.runnerbe.domain.runner.Gender
+import team.applemango.runnerbe.domain.constant.Gender
 
 /**
  * API Call Body entry model

@@ -16,8 +16,8 @@ import team.applemango.runnerbe.domain.main.common.RunningItemType
 import team.applemango.runnerbe.domain.main.filter.AgeFilter
 import team.applemango.runnerbe.domain.main.model.common.Locate
 import team.applemango.runnerbe.domain.main.model.runningitem.RunningItem
-import team.applemango.runnerbe.domain.runner.Gender
-import team.applemango.runnerbe.domain.runner.Job
+import team.applemango.runnerbe.domain.constant.Gender
+import team.applemango.runnerbe.domain.constant.Job
 import team.applemango.runnerbe.shared.domain.extension.convertNullableString
 import team.applemango.runnerbe.shared.domain.requireFieldExceptionMessage
 

@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.domain.runner
+package team.applemango.runnerbe.domain.constant
 
 // TODO: 퀴어분들 대응
 enum class Gender(val string: String, val code: String) {

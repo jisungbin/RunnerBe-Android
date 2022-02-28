@@ -11,11 +11,11 @@ package team.applemango.runnerbe.data.main.mapper
 
 import team.applemango.runnerbe.data.main.model.runner.RunnerData
 import team.applemango.runnerbe.domain.main.model.runner.Runner
-import team.applemango.runnerbe.domain.runner.AgeGroup
-import team.applemango.runnerbe.domain.runner.AgeGroupType
-import team.applemango.runnerbe.domain.runner.Diligence
-import team.applemango.runnerbe.domain.runner.Gender
-import team.applemango.runnerbe.domain.runner.Job
+import team.applemango.runnerbe.domain.constant.AgeGroup
+import team.applemango.runnerbe.domain.constant.AgeGroupType
+import team.applemango.runnerbe.domain.constant.Diligence
+import team.applemango.runnerbe.domain.constant.Gender
+import team.applemango.runnerbe.domain.constant.Job
 import team.applemango.runnerbe.shared.domain.requireFieldExceptionMessage
 
 internal fun RunnerData.toDomain() = Runner(

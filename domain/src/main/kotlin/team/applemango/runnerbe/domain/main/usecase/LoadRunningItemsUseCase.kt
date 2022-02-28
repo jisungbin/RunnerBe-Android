@@ -17,7 +17,7 @@ import team.applemango.runnerbe.domain.main.filter.KeywordFilter
 import team.applemango.runnerbe.domain.main.filter.RunningItemFilter
 import team.applemango.runnerbe.domain.main.model.common.Locate
 import team.applemango.runnerbe.domain.main.repository.MainRepository
-import team.applemango.runnerbe.domain.runner.Gender
+import team.applemango.runnerbe.domain.constant.Gender
 
 class LoadRunningItemsUseCase(private val repo: MainRepository) {
     suspend operator fun invoke(

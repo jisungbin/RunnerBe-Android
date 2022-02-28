@@ -9,10 +9,10 @@
 
 package team.applemango.runnerbe.domain.main.model.runner
 
-import team.applemango.runnerbe.domain.runner.AgeGroup
-import team.applemango.runnerbe.domain.runner.Diligence
-import team.applemango.runnerbe.domain.runner.Gender
-import team.applemango.runnerbe.domain.runner.Job
+import team.applemango.runnerbe.domain.constant.AgeGroup
+import team.applemango.runnerbe.domain.constant.Diligence
+import team.applemango.runnerbe.domain.constant.Gender
+import team.applemango.runnerbe.domain.constant.Job
 
 data class Runner(
     val id: Int,

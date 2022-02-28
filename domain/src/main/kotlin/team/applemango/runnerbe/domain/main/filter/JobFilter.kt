@@ -11,7 +11,7 @@ package team.applemango.runnerbe.domain.main.filter
 
 import team.applemango.runnerbe.domain.main.filter.JobFilter.Create
 import team.applemango.runnerbe.domain.main.filter.JobFilter.None
-import team.applemango.runnerbe.domain.runner.Job
+import team.applemango.runnerbe.domain.constant.Job
 
 /**
  * 직군 필터
