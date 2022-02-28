@@ -86,8 +86,17 @@ interface RunningItemRepository {
 
     /**
      * 러닝 아이템 삭제 (12번 API)
+     *
+     * @return 러닝 아이템을 삭제하기 위해선 러닝 아이템을 작성해야 함
+     * 러닝 아이템을 작성하는건 인증된 회원만 가능하므로 이 API(러닝 아이템 삭제)을
+     * 호출할 수 있는 상태는 무조건 유저가 인증이 된 상태임
+     * 따라서 삭제 성공 여부를 나타내는 [Boolean] 값만 리턴함
      */
-    suspend fun delete()
+    suspend fun delete(
+        jwt: String,
+        userId: Int,
+        postId: Int,
+    ): Boolean
 
     /**
      * 러닝 참여 신청 (러닝 아이템 작성자는 불가능, 18번 API)
