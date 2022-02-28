@@ -12,7 +12,6 @@ package team.applemango.runnerbe.data.register.login.repository
 import team.applemango.runnerbe.data.register.login.mapper.toBoolean
 import team.applemango.runnerbe.data.register.login.mapper.toDomain
 import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
-import team.applemango.runnerbe.data.util.loginApi
 import team.applemango.runnerbe.data.util.registerApi
 import team.applemango.runnerbe.domain.register.login.constant.UserRegisterResult
 import team.applemango.runnerbe.domain.register.login.model.AccessToken
@@ -22,14 +21,14 @@ import team.applemango.runnerbe.domain.register.login.repository.RegisterReposit
 
 class RegisterRepositoryImpl : RegisterRepository {
     override suspend fun login(platformName: String, accessToken: AccessToken): UserToken {
-        val request = loginApi.request(
+        val request = registerApi.login(
             platformName = platformName,
             accessToken = accessToken
         )
         return request.requireSuccessfulBody(
-            requestName = "loginApi.request $platformName",
+            requestName = "registerApi.login $platformName",
             resultVerifyBuilder = { body ->
-                body.isSuccess == true && body.code in listOf(1001, 1007) && body.loginResult != null
+                body.code in listOf(1001, 1007) && body.loginResult != null
             }
         ).toDomain()
     }
@@ -38,6 +37,7 @@ class RegisterRepositoryImpl : RegisterRepository {
         return registerApi.checkUsableEmail(email)
             .requireSuccessfulBody(
                 requestName = "registerApi.checkUsableEmail",
+                checkBodyIsSuccess = false,
                 resultVerifyBuilder = { body ->
                     body.isSuccess != null // receive only isSuccess field
                 }
@@ -50,7 +50,7 @@ class RegisterRepositoryImpl : RegisterRepository {
             .requireSuccessfulBody(
                 requestName = "registerApi.requestRegister",
                 resultVerifyBuilder = { body ->
-                    body.isSuccess == true && body.jwt != null
+                    body.jwt != null
                 }
             )
             .toDomain()

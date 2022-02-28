@@ -20,7 +20,7 @@ import team.applemango.runnerbe.data.register.login.model.register.UserRegisterR
 import team.applemango.runnerbe.domain.register.login.model.AccessToken
 import team.applemango.runnerbe.domain.register.login.model.UserRegister
 
-internal interface RegisterService {
+internal interface RegisterApi {
     @POST("/users/{platformName}-login")
     suspend fun login(
         @Path("platformName") platformName: String,

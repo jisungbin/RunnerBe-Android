@@ -21,7 +21,7 @@ import team.applemango.runnerbe.data.runningitem.model.runningitem.RunningItemsR
 import team.applemango.runnerbe.data.runningitem.model.runningitem.information.RunningItemInformationResponse
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItemApiBodyData
 
-interface MainService {
+interface RunningItemApi {
     @GET("/users/main/{runningTag}")
     suspend fun loadRunningItems(
         @Path("runningTag") itemType: String,

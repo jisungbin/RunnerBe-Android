@@ -15,10 +15,9 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
-import team.applemango.runnerbe.data.runningitem.api.MainService
-import team.applemango.runnerbe.data.register.login.api.LoginService
-import team.applemango.runnerbe.data.register.login.api.RegisterService
-import team.applemango.runnerbe.data.register.mailjet.api.MailjetService
+import team.applemango.runnerbe.data.register.login.api.RegisterApi
+import team.applemango.runnerbe.data.register.mailjet.api.MailjetApi
+import team.applemango.runnerbe.data.runningitem.api.RunningItemApi
 import team.applemango.runnerbe.data.secret.Mailjet
 import team.applemango.runnerbe.data.secret.RunnerbeHost
 import team.applemango.runnerbe.data.util.extension.JacksonObjectMapper
@@ -57,8 +56,7 @@ private val mailjetBaseApi = Retrofit.Builder()
     )
     .build()
 
-internal val loginApi = runnerbeBaseApi.create(LoginService::class.java)
-internal val registerApi = runnerbeBaseApi.create(RegisterService::class.java)
-internal val mailjetApi = mailjetBaseApi.create(MailjetService::class.java)
+internal val registerApi = runnerbeBaseApi.create(RegisterApi::class.java)
+internal val mailjetApi = mailjetBaseApi.create(MailjetApi::class.java)
 
-internal val mainApi = runnerbeBaseApi.create(MainService::class.java)
+internal val runningItemApi = runnerbeBaseApi.create(RunningItemApi::class.java)

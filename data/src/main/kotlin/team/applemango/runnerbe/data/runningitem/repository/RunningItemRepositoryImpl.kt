@@ -11,7 +11,7 @@ package team.applemango.runnerbe.data.runningitem.repository
 
 import team.applemango.runnerbe.data.runningitem.mapper.toDomain
 import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
-import team.applemango.runnerbe.data.util.mainApi
+import team.applemango.runnerbe.data.util.runningItemApi
 import team.applemango.runnerbe.domain.runningitem.common.BaseResult
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItemApiBodyData
@@ -32,7 +32,7 @@ class RunningItemRepositoryImpl : RunningItemRepository {
         longitude: Float,
         keyword: String,
     ): List<RunningItem> {
-        val request = mainApi.loadRunningItems(
+        val request = runningItemApi.loadRunningItems(
             itemType = itemType,
             includeEndItems = includeEndItems,
             itemFilter = itemFilter,
@@ -58,7 +58,7 @@ class RunningItemRepositoryImpl : RunningItemRepository {
         userId: Int,
         item: RunningItemApiBodyData,
     ): BaseResult {
-        val request = mainApi.writeRunningItem(
+        val request = runningItemApi.writeRunningItem(
             jwt = jwt,
             userId = userId,
             item = item
@@ -76,7 +76,7 @@ class RunningItemRepositoryImpl : RunningItemRepository {
         userId: Int,
         postId: Int,
     ): RunningItemInformation {
-        val request = mainApi.getRunningItemInformation(
+        val request = runningItemApi.getRunningItemInformation(
             jwt = jwt,
             userId = userId,
             postId = postId

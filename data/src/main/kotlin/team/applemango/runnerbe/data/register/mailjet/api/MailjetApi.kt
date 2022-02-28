@@ -15,7 +15,7 @@ import retrofit2.http.POST
 import team.applemango.runnerbe.data.register.mailjet.model.MailjetResponse
 import team.applemango.runnerbe.domain.register.mailjet.model.MailjetTemplate
 
-interface MailjetService {
+interface MailjetApi {
     @POST("/v3.1/send")
     suspend fun send(@Body mailjetTemplate: MailjetTemplate): Response<MailjetResponse>
 }
