@@ -101,7 +101,7 @@ class RunningItemRepositoryImpl : RunningItemRepository {
             requestName = "runningItemApi.finish",
             checkBodyIsSuccess = false,
             resultVerifyBuilder = { body ->
-                body.isSuccess != null
+                body.isSuccess != null // receive only isSuccess field
             }
         ).toSuccessValueBoolean()
     }
@@ -122,7 +122,7 @@ class RunningItemRepositoryImpl : RunningItemRepository {
             requestName = "runningItemApi.edit",
             checkBodyIsSuccess = false,
             resultVerifyBuilder = { body ->
-                body.isSuccess != null
+                body.isSuccess != null // receive only isSuccess field
             }
         ).toSuccessValueBoolean()
     }
@@ -141,7 +141,7 @@ class RunningItemRepositoryImpl : RunningItemRepository {
             requestName = "runningItemApi.delete",
             checkBodyIsSuccess = false,
             resultVerifyBuilder = { body ->
-                body.isSuccess != null
+                body.isSuccess != null // receive only isSuccess field
             }
         ).toSuccessValueBoolean()
     }
@@ -160,7 +160,7 @@ class RunningItemRepositoryImpl : RunningItemRepository {
             requestName = "runningItemApi.requestJoin",
             checkBodyIsSuccess = false,
             resultVerifyBuilder = { body ->
-                body.isSuccess != null
+                body.isSuccess != null // receive only isSuccess field
             }
         ).toDomain()
     }
@@ -183,7 +183,7 @@ class RunningItemRepositoryImpl : RunningItemRepository {
             requestName = "runningItemApi.joinManage",
             checkBodyIsSuccess = false,
             resultVerifyBuilder = { body ->
-                body.isSuccess != null
+                body.isSuccess != null // receive only isSuccess field
             }
         ).toSuccessValueBoolean()
     }
@@ -202,7 +202,7 @@ class RunningItemRepositoryImpl : RunningItemRepository {
             requestName = "runningItemApi.report",
             checkBodyIsSuccess = false,
             resultVerifyBuilder = { body ->
-                body.isSuccess != null
+                body.isSuccess != null // receive only isSuccess field
             }
         ).toSuccessValueBoolean()
     }
