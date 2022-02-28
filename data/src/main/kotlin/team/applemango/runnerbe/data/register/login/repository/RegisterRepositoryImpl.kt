@@ -34,7 +34,7 @@ class RegisterRepositoryImpl : RegisterRepository {
     }
 
     override suspend fun checkUsableEmail(email: String): Boolean {
-        return registerApi.checkUsableEmail(email)
+        return registerApi.checkUsableEmail(email = email)
             .requireSuccessfulBody(
                 requestName = "registerApi.checkUsableEmail",
                 checkBodyIsSuccess = false,
@@ -46,7 +46,7 @@ class RegisterRepositoryImpl : RegisterRepository {
     }
 
     override suspend fun requestRegister(user: UserRegister): UserRegisterResult {
-        return registerApi.requestRegister(user)
+        return registerApi.requestRegister(user = user)
             .requireSuccessfulBody(
                 requestName = "registerApi.requestRegister",
                 resultVerifyBuilder = { body ->
