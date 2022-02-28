@@ -26,7 +26,7 @@ class RunningItemRepositoryImpl : RunningItemRepository {
         userId: Int,
         item: RunningItemApiBodyData,
     ): BaseResult {
-        val request = runningItemApi.writeRunningItem(
+        val request = runningItemApi.write(
             jwt = jwt,
             userId = userId,
             item = item
@@ -52,7 +52,7 @@ class RunningItemRepositoryImpl : RunningItemRepository {
         longitude: Float,
         keyword: String,
     ): List<RunningItem> {
-        val request = runningItemApi.loadRunningItems(
+        val request = runningItemApi.loadItems(
             itemType = itemType,
             includeEndItems = includeEndItems,
             itemFilter = itemFilter,
@@ -78,7 +78,7 @@ class RunningItemRepositoryImpl : RunningItemRepository {
         userId: Int,
         postId: Int,
     ): RunningItemInformation? {
-        val request = runningItemApi.getRunningItemInformation(
+        val request = runningItemApi.loadInformation(
             jwt = jwt,
             userId = userId,
             postId = postId
