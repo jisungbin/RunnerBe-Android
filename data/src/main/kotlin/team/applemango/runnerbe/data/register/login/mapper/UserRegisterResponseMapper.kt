@@ -12,9 +12,12 @@ package team.applemango.runnerbe.data.register.login.mapper
 import team.applemango.runnerbe.data.register.login.model.register.UserRegisterResponse
 import team.applemango.runnerbe.domain.register.login.constant.UserRegisterResult
 import team.applemango.runnerbe.shared.domain.requireFieldExceptionMessage
+import team.applemango.runnerbe.shared.domain.resultCodeExceptionMessage
 
+// 회원가입의 경우 처리가 어떻게 이뤄졌는지 사용자에게 나타내기 위해
+// 사용자가 만들 수 있는 failure state 만 open 함
 internal fun UserRegisterResponse.toDomain(): UserRegisterResult {
-    return when (val code = checkNotNull(code) { requireFieldExceptionMessage("code") }) {
+    return when (checkNotNull(code)) {
         1005, 1006 -> {
             val jwt = requireNotNull(jwt) { requireFieldExceptionMessage("jwt") }
             UserRegisterResult.Success(jwt)
@@ -22,7 +25,6 @@ internal fun UserRegisterResponse.toDomain(): UserRegisterResult {
         3001 -> UserRegisterResult.DuplicateUuid
         3002 -> UserRegisterResult.DuplicateEmail
         3004 -> UserRegisterResult.DuplicateNickname
-        4000 -> UserRegisterResult.DatabaseError
-        else -> UserRegisterResult.Exception(code)
+        else -> throw IllegalStateException(resultCodeExceptionMessage(code))
     }
 }
