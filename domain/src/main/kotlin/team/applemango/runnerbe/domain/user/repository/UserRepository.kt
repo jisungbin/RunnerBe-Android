@@ -9,6 +9,7 @@
 
 package team.applemango.runnerbe.domain.user.repository
 
+import team.applemango.runnerbe.domain.runningitem.common.BaseResult
 import team.applemango.runnerbe.domain.user.constant.NicknameChangeResult
 import team.applemango.runnerbe.domain.user.model.Nickname
 
@@ -17,12 +18,13 @@ interface UserRepository {
      * 닉네임 설정 (5번 API)
      *
      * @return 닉네임 설정 성공 여부
+     * return type 은 BaseResult 이지만 [NicknameChangeResult] 가 return 될 수 있음
      */
     suspend fun setNickname(
         jwt: String,
         userId: Int,
         nickName: Nickname,
-    ): NicknameChangeResult
+    ): BaseResult
 
     /**
      * 찜 관리 (등록/해제) (20번 API)
