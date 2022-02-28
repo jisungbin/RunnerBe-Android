@@ -15,7 +15,7 @@ interface FirebaseRepository {
     /**
      * Firebase Storage 에 이미지 업로드
      *
-     * TODO: fix platform independent
+     * TODO: platform independent
      * 인자에 들어가는 Bitmap 은 안드로이드에 platform aware 함
      * 이를 수정해야 함!! (related issue: [#38](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/38))
      *
