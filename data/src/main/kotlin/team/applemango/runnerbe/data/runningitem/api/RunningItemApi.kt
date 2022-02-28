@@ -13,6 +13,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -22,8 +23,15 @@ import team.applemango.runnerbe.data.runningitem.model.runningitem.information.R
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItemApiBodyData
 
 interface RunningItemApi {
+    @POST("/postings/{userId}")
+    suspend fun write(
+        @Header("x-access-token") jwt: String,
+        @Path("userId") userId: Int,
+        @Body item: RunningItemApiBodyData,
+    ): Response<DefaultResponse>
+
     @GET("/users/main/{runningTag}")
-    suspend fun loadRunningItems(
+    suspend fun loadItems(
         @Path("runningTag") itemType: String,
         @Query("whetherEnd") includeEndItems: Boolean,
         @Query("filter") itemFilter: String,
@@ -37,17 +45,31 @@ interface RunningItemApi {
         @Query("keywordSearch") keyword: String,
     ): Response<RunningItemsResponse>
 
-    @POST("/postings/{userId}")
-    suspend fun writeRunningItem(
-        @Header("x-access-token") jwt: String,
-        @Path("userId") userId: Int,
-        @Body item: RunningItemApiBodyData,
-    ): Response<DefaultResponse>
-
     @GET("/postings/{postId}/{userId}")
-    suspend fun getRunningItemInformation(
+    suspend fun loadInformation(
         @Header("x-access-token") jwt: String,
         @Path("postId") postId: Int,
         @Path("userId") userId: Int,
     ): Response<RunningItemInformationResponse>
+
+    @POST("/postings/{postId}/closing")
+    suspend fun finish(
+        @Header("x-access-token") jwt: String,
+        @Path("postId") postId: Int,
+    ): Response<DefaultResponse>
+
+    @PATCH("/postings/{postId}")
+    suspend fun edit(
+        @Header("x-access-token") jwt: String,
+        @Query("userId") userId: Int,
+        @Path("postId") postId: Int,
+        @Body item: RunningItemApiBodyData,
+    ): Response<DefaultResponse>
+
+    @PATCH("/postings/{postId}/drop")
+    suspend fun delete(
+        @Header("x-access-token") jwt: String,
+        @Query("userId") userId: Int,
+        @Path("postId") postId: Int,
+    ): Response<DefaultResponse>
 }
