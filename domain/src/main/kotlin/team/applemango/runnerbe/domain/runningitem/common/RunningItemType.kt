@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.domain.main.common
+package team.applemango.runnerbe.domain.runningitem.common
 
 /**
  * @property Before 출근 전

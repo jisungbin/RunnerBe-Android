@@ -10,7 +10,7 @@
 package team.applemango.runnerbe.data.main.mapper
 
 import team.applemango.runnerbe.data.main.model.runningitem.RunningItemsResponse
-import team.applemango.runnerbe.domain.main.model.runningitem.RunningItem
+import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 import team.applemango.runnerbe.shared.domain.requireFieldExceptionMessage
 
 internal fun RunningItemsResponse.toDomain(): List<RunningItem> {

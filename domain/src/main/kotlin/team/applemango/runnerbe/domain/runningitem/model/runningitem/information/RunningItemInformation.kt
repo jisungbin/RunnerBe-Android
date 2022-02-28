@@ -7,10 +7,10 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.domain.main.model.runningitem.information
+package team.applemango.runnerbe.domain.runningitem.model.runningitem.information
 
-import team.applemango.runnerbe.domain.main.model.runner.Runner
-import team.applemango.runnerbe.domain.main.model.runningitem.RunningItem
+import team.applemango.runnerbe.domain.runningitem.model.runner.Runner
+import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 
 data class RunningItemInformation(
     val item: RunningItem,

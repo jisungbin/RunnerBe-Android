@@ -7,13 +7,13 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.domain.main.usecase
+package team.applemango.runnerbe.domain.runningitem.usecase
 
 import java.text.SimpleDateFormat
 import java.util.Locale
-import team.applemango.runnerbe.domain.main.model.runningitem.RunningItemApiBody
-import team.applemango.runnerbe.domain.main.model.runningitem.RunningItemApiBodyData
-import team.applemango.runnerbe.domain.main.repository.RunningItemRepository
+import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItemApiBody
+import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItemApiBodyData
+import team.applemango.runnerbe.domain.runningitem.repository.RunningItemRepository
 
 class WriteRunningItemUseCase(private val repo: RunningItemRepository) {
     suspend operator fun invoke(

@@ -7,11 +7,11 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.domain.main.model.runningitem
+package team.applemango.runnerbe.domain.runningitem.model.runningitem
 
-import team.applemango.runnerbe.domain.main.common.RunningItemType
-import team.applemango.runnerbe.domain.main.filter.AgeFilter
-import team.applemango.runnerbe.domain.main.model.common.Locate
+import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
+import team.applemango.runnerbe.domain.runningitem.filter.AgeFilter
+import team.applemango.runnerbe.domain.runningitem.model.common.Locate
 import team.applemango.runnerbe.domain.constant.Gender
 import team.applemango.runnerbe.domain.constant.Job
 

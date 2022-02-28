@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.domain.main.model.common
+package team.applemango.runnerbe.domain.runningitem.model.common
 
 /**
  * @property address 주소 (ex_석림1로 20)

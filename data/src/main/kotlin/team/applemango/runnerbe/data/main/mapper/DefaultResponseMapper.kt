@@ -10,7 +10,7 @@
 package team.applemango.runnerbe.data.main.mapper
 
 import team.applemango.runnerbe.data.main.model.DefaultResponse
-import team.applemango.runnerbe.domain.main.common.BaseResult
+import team.applemango.runnerbe.domain.runningitem.common.BaseResult
 import team.applemango.runnerbe.shared.domain.requireFieldExceptionMessage
 
 internal fun DefaultResponse.toDomain() = when (

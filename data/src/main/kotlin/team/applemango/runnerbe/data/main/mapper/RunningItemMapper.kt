@@ -12,10 +12,10 @@ package team.applemango.runnerbe.data.main.mapper
 import team.applemango.runnerbe.data.main.mapper.MappingType.InformationApiFields
 import team.applemango.runnerbe.data.main.mapper.MappingType.MainPageApiFields
 import team.applemango.runnerbe.data.main.model.runningitem.RunningItemData
-import team.applemango.runnerbe.domain.main.common.RunningItemType
-import team.applemango.runnerbe.domain.main.filter.AgeFilter
-import team.applemango.runnerbe.domain.main.model.common.Locate
-import team.applemango.runnerbe.domain.main.model.runningitem.RunningItem
+import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
+import team.applemango.runnerbe.domain.runningitem.filter.AgeFilter
+import team.applemango.runnerbe.domain.runningitem.model.common.Locate
+import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 import team.applemango.runnerbe.domain.constant.Gender
 import team.applemango.runnerbe.domain.constant.Job
 import team.applemango.runnerbe.shared.domain.extension.convertNullableString

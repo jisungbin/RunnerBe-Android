@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.domain.main.filter
+package team.applemango.runnerbe.domain.runningitem.filter
 
 /**
  * 키워드 검색 필터

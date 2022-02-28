@@ -10,7 +10,7 @@
 package team.applemango.runnerbe.data.main.mapper
 
 import team.applemango.runnerbe.data.main.model.runner.RunnerData
-import team.applemango.runnerbe.domain.main.model.runner.Runner
+import team.applemango.runnerbe.domain.runningitem.model.runner.Runner
 import team.applemango.runnerbe.domain.constant.AgeGroup
 import team.applemango.runnerbe.domain.constant.AgeGroupType
 import team.applemango.runnerbe.domain.constant.Diligence

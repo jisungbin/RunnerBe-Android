@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.domain.main.model.runner
+package team.applemango.runnerbe.domain.runningitem.model.runner
 
 import team.applemango.runnerbe.domain.constant.AgeGroup
 import team.applemango.runnerbe.domain.constant.Diligence

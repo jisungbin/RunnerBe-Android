@@ -12,11 +12,11 @@ package team.applemango.runnerbe.data.main.repository
 import team.applemango.runnerbe.data.main.mapper.toDomain
 import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
 import team.applemango.runnerbe.data.util.mainApi
-import team.applemango.runnerbe.domain.main.common.BaseResult
-import team.applemango.runnerbe.domain.main.model.runningitem.RunningItem
-import team.applemango.runnerbe.domain.main.model.runningitem.RunningItemApiBodyData
-import team.applemango.runnerbe.domain.main.model.runningitem.information.RunningItemInformation
-import team.applemango.runnerbe.domain.main.repository.RunningItemRepository
+import team.applemango.runnerbe.domain.runningitem.common.BaseResult
+import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
+import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItemApiBodyData
+import team.applemango.runnerbe.domain.runningitem.model.runningitem.information.RunningItemInformation
+import team.applemango.runnerbe.domain.runningitem.repository.RunningItemRepository
 
 class RunningItemRepositoryImpl : RunningItemRepository {
     override suspend fun loadRunningItems(

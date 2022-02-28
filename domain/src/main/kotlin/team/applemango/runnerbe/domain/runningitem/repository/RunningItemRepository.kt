@@ -7,12 +7,12 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.domain.main.repository
+package team.applemango.runnerbe.domain.runningitem.repository
 
-import team.applemango.runnerbe.domain.main.common.BaseResult
-import team.applemango.runnerbe.domain.main.model.runningitem.RunningItem
-import team.applemango.runnerbe.domain.main.model.runningitem.RunningItemApiBodyData
-import team.applemango.runnerbe.domain.main.model.runningitem.information.RunningItemInformation
+import team.applemango.runnerbe.domain.runningitem.common.BaseResult
+import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
+import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItemApiBodyData
+import team.applemango.runnerbe.domain.runningitem.model.runningitem.information.RunningItemInformation
 
 interface RunningItemRepository {
     /**

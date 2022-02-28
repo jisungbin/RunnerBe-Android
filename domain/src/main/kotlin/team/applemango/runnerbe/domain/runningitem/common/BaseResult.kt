@@ -7,12 +7,12 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.domain.main.common
+package team.applemango.runnerbe.domain.runningitem.common
 
-import team.applemango.runnerbe.domain.main.common.BaseResult.DatabaseError
-import team.applemango.runnerbe.domain.main.common.BaseResult.Exception
-import team.applemango.runnerbe.domain.main.common.BaseResult.NotYetVerify
-import team.applemango.runnerbe.domain.main.common.BaseResult.Success
+import team.applemango.runnerbe.domain.runningitem.common.BaseResult.DatabaseError
+import team.applemango.runnerbe.domain.runningitem.common.BaseResult.Exception
+import team.applemango.runnerbe.domain.runningitem.common.BaseResult.NotYetVerify
+import team.applemango.runnerbe.domain.runningitem.common.BaseResult.Success
 
 /**
  * 추후 다양한 result 를 확장하여 지원할 수 있도록 interface 로 설계
