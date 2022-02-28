@@ -68,4 +68,31 @@ interface RunningItemRepository {
         jwt: String,
         postId: Int,
     ): Boolean
+
+    /**
+     * 러닝 아이템 수정 (11번 API)
+     */
+    suspend fun edit(
+        jwt: String,
+        userId: Int,
+        postId: Int,
+        item: RunningItemApiBodyData,
+    ): Boolean
+
+    /**
+     * 러닝 아이템 삭제 (12번 API)
+     */
+    suspend fun delete()
+
+    /**
+     * 러닝 참여 신청 (러닝 아이템 작성자는 불가능, 18번 API)
+     */
+    suspend fun requestJoin()
+
+    /**
+     * 러닝 참여 신청 관리 (러닝 아이템 작성자 전용, 19번 API)
+     */
+    suspend fun joinManage()
+
+    suspend fun report()
 }
