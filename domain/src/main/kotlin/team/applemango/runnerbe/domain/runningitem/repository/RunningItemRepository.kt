@@ -71,6 +71,11 @@ interface RunningItemRepository {
 
     /**
      * 러닝 아이템 수정 (11번 API)
+     *
+     * @return 러닝 아이템을 수정하기 위해선 러닝 아이템을 작성해야 함
+     * 러닝 아이템을 작성하는건 인증된 회원만 가능하므로 이 API(러닝 아이템 수정)을
+     * 호출할 수 있는 상태는 무조건 유저가 인증이 된 상태임
+     * 따라서 수정 성공 여부를 나타내는 [Boolean] 값만 리턴함
      */
     suspend fun edit(
         jwt: String,
@@ -94,5 +99,8 @@ interface RunningItemRepository {
      */
     suspend fun joinManage()
 
+    /**
+     * 러닝 아이템 신고 (25번 API)
+     */
     suspend fun report()
 }
