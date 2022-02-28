@@ -61,15 +61,38 @@ interface RunningItemApi {
     @PATCH("/postings/{postId}")
     suspend fun edit(
         @Header("x-access-token") jwt: String,
-        @Query("userId") userId: Int,
         @Path("postId") postId: Int,
+        @Query("userId") userId: Int,
         @Body item: RunningItemApiBodyData,
     ): Response<DefaultResponse>
 
     @PATCH("/postings/{postId}/drop")
     suspend fun delete(
         @Header("x-access-token") jwt: String,
-        @Query("userId") userId: Int,
         @Path("postId") postId: Int,
+        @Query("userId") userId: Int,
+    ): Response<DefaultResponse>
+
+    @POST("/runnings/request/{postId}")
+    suspend fun requestJoin(
+        @Header("x-access-token") jwt: String,
+        @Path("postId") postId: Int,
+        @Query("userId") userId: Int,
+    ): Response<DefaultResponse>
+
+    @PATCH("/runnings/request/{postId}/handling/{applicantId}/{whetherAccept}")
+    suspend fun joinManage(
+        @Header("x-access-token") jwt: String,
+        @Path("postId") postId: Int,
+        @Path("applicantId") runnerId: Int,
+        @Path("whetherAccept") state: String,
+        @Query("userId") userId: Int,
+    ): Response<DefaultResponse>
+
+    @POST("/postings/{postId}/report/{userId}")
+    suspend fun report(
+        @Header("x-access-token") jwt: String,
+        @Path("postId") postId: Int,
+        @Path("userId") userId: Int,
     ): Response<DefaultResponse>
 }
