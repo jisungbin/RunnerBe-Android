@@ -10,6 +10,8 @@
 package team.applemango.runnerbe.domain.register.runnerbe.model
 
 /**
+ * API Call 에 Body 로 필요함
+ *
  * value class 로 하면 당연히 inline 되면서 그냥 String 으로 들어감
  */
 data class AccessToken(val accessToken: String)
