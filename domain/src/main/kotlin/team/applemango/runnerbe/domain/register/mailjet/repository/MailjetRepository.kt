@@ -12,6 +12,9 @@ package team.applemango.runnerbe.domain.register.mailjet.repository
 import team.applemango.runnerbe.domain.register.mailjet.model.MailjetTemplate
 import team.applemango.runnerbe.domain.register.mailjet.model.result.MailjetResult
 
+/**
+ * Mailjet API usage
+ */
 interface MailjetRepository {
     suspend fun send(mailjetTemplate: MailjetTemplate): MailjetResult
 }

@@ -23,7 +23,7 @@ interface UserRepository {
     /**
      * 찜 목록 조회 (21번 API)
      */
-    suspend fun getBookmarkItems()
+    suspend fun loadBookmarkItems()
 
     /**
      * 프로필 사진 변경 (22번 API)

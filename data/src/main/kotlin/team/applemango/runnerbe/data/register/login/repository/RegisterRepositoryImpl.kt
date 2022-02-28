@@ -45,7 +45,7 @@ class RegisterRepositoryImpl : RegisterRepository {
             .toSuccessValueBoolean()
     }
 
-    override suspend fun register(user: UserRegister): UserRegisterResult {
+    override suspend fun requestRegister(user: UserRegister): UserRegisterResult {
         return registerApi.requestRegister(user)
             .requireSuccessfulBody(
                 requestName = "registerApi.requestRegister",

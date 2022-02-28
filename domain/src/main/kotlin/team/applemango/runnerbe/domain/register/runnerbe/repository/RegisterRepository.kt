@@ -30,7 +30,7 @@ interface RegisterRepository {
      *
      * @return 가입 요청 응답 enum class
      */
-    suspend fun register(user: UserRegister): UserRegisterResult
+    suspend fun requestRegister(user: UserRegister): UserRegisterResult
 
     /**
      * 이메일 중복 확인 (4번 API)

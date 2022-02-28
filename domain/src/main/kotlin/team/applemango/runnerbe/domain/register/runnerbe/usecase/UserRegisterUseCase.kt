@@ -14,6 +14,6 @@ import team.applemango.runnerbe.domain.register.runnerbe.repository.RegisterRepo
 
 class UserRegisterUseCase(private val repo: RegisterRepository) {
     suspend operator fun invoke(user: UserRegister) = runCatching {
-        repo.register(user)
+        repo.requestRegister(user)
     }
 }

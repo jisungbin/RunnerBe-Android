@@ -18,7 +18,7 @@ interface RunningItemRepository {
     /**
      * 러닝 아이템 작성 (6번 API)
      *
-     * @return 인증 전 유저도 아이템 작성은 요청할 수 있으니
+     * @return 인증 전 유저도 러닝 아이템 작성은 요청할 수 있으니
      * `아직 인증되지 않음` 상태를 포함한 [BaseResult] 를 리턴함
      */
     suspend fun write(
@@ -100,13 +100,39 @@ interface RunningItemRepository {
 
     /**
      * 러닝 참여 신청 (러닝 아이템 작성자는 불가능, 18번 API)
+     *
+     * @return 인증 전 유저도 참여 신청은 할 수 있으니
+     * `아직 인증되지 않음` 상태를 포함한 [BaseResult] 를 리턴함
+     * 이전에 신청한 기록이 없을 때만 이 API 를 호출하는 버튼이
+     * 활성화 됨으로 중복 신청은 가능하지 않음
      */
-    suspend fun requestJoin()
+    suspend fun requestJoin(
+        jwt: String,
+        userId: Int,
+        postId: Int,
+    ): BaseResult
 
     /**
      * 러닝 참여 신청 관리 (러닝 아이템 작성자 전용, 19번 API)
+     *
+     * @param jwt 인증된 유저의 JWT
+     * @param userId 인증된 유저의 아이디
+     * @param postId 러닝 아이템 아이디
+     * @param runnerId 러닝 참여를 신청한 유저의 아이디
+     * @param state 참여 신청 관리 값 (true: 수락, false: 거절)
+     *
+     * @return 러닝 참여 신청 관리를 하기 위해선 러닝 아이템을 작성해야 함
+     * 러닝 아이템을 작성하는건 인증된 회원만 가능하므로 이 API(러닝 참여 신청 관리)을
+     * 호출할 수 있는 상태는 무조건 유저가 인증이 된 상태임
+     * 따라서 러닝 참여 신청 관리 성공 여부를 나타내는 [Boolean] 값만 리턴함
      */
-    suspend fun joinManage()
+    suspend fun joinManage(
+        jwt: String,
+        userId: Int,
+        postId: Int,
+        runnerId: String,
+        state: Boolean,
+    ): Boolean
 
     /**
      * 러닝 아이템 신고 (25번 API)
