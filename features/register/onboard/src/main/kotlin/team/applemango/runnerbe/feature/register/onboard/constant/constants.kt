@@ -12,4 +12,3 @@ package team.applemango.runnerbe.feature.register.onboard.constant
 internal const val PresentationPackage = "team.applemango.runnerbe"
 internal const val EmailVerifyCode = "runnerbeemailverifytrue"
 internal const val ApplicationMinSdkLevel = "21"
-internal const val FirebaseStoragePath = "EmployeeId"
