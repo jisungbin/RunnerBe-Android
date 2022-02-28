@@ -73,7 +73,7 @@ class RunningItemRepositoryImpl : RunningItemRepository {
         ).toDomain()
     }
 
-    override suspend fun getInformation(
+    override suspend fun loadInformation(
         jwt: String,
         userId: Int,
         postId: Int,

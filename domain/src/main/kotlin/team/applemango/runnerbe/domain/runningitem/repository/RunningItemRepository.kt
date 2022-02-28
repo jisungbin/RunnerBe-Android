@@ -47,7 +47,7 @@ interface RunningItemRepository {
      * @return 사원증 인증이 된 유저라면 [RunningItemInformation] 을 반환하고,
      * 그렇지 않은 유저라면 null 을 반환함
      */
-    suspend fun getInformation(
+    suspend fun loadInformation(
         jwt: String,
         userId: Int,
         postId: Int,
