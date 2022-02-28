@@ -9,6 +9,9 @@
 
 package team.applemango.runnerbe.domain.register.login.repository
 
+/**
+ * 소셜 로그인 액세스 토큰 발급 API -> 각 플랫폼별 로그인 SDK 사용
+ */
 interface AccessTokenRepository {
     suspend fun getKakao(): String
     suspend fun getNaver(): String

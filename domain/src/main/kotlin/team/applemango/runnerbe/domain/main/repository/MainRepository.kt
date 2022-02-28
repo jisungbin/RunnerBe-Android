@@ -15,6 +15,9 @@ import team.applemango.runnerbe.domain.main.model.runningitem.RunningItemApiBody
 import team.applemango.runnerbe.domain.main.model.runningitem.information.RunningItemInformation
 
 interface MainRepository {
+    /**
+     * 러닝 아이템 리스트 조회 (7번 API)
+     */
     suspend fun loadRunningItems(
         itemType: String,
         includeEndItems: Boolean,
@@ -29,12 +32,18 @@ interface MainRepository {
         keyword: String,
     ): List<RunningItem>
 
+    /**
+     * 러닝 아이템 작성 (6번 API)
+     */
     suspend fun writeRunningItem(
         jwt: String,
         userId: Int,
         item: RunningItemApiBodyData,
     ): BaseResult
 
+    /**
+     * 러닝 아이템 상세 정보 조회 (8번 API)
+     */
     suspend fun getRunningItemInformation(
         jwt: String,
         userId: Int,

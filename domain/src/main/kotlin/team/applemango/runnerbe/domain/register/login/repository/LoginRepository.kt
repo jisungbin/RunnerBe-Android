@@ -15,6 +15,9 @@ import team.applemango.runnerbe.domain.register.login.model.UserToken
 interface LoginRepository {
     /**
      * 로그인 요청 쿼리 (SNS 로그인)
+     *
+     * @param platformName 플랫폼 타입 (카카오 (1번 API), 네이버 (2번 API), 애플)
+     * @param accessToken 액세스 토큰 객체, API Call 할 때 Body 로 들어가서 data class 로 해야 함
      */
     suspend fun request(platformName: String, accessToken: AccessToken): UserToken
 }
