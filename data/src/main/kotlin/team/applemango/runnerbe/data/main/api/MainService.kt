@@ -12,7 +12,7 @@ package team.applemango.runnerbe.data.main.api
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.HeaderMap
+import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -39,14 +39,14 @@ interface MainService {
 
     @POST("/postings/{userId}")
     suspend fun writeRunningItem(
-        @HeaderMap jwtHeader: Map<String, String>,
+        @Header("x-access-token") jwt: String,
         @Path("userId") userId: Int,
         @Body item: RunningItemApiBodyData,
     ): Response<DefaultResponse>
 
     @GET("/postings/{postId}/{userId}")
     suspend fun getRunningItemInformation(
-        @HeaderMap jwtHeader: Map<String, String>,
+        @Header("x-access-token") jwt: String,
         @Path("postId") postId: Int,
         @Path("userId") userId: Int,
     ): Response<RunningItemInformationResponse>
