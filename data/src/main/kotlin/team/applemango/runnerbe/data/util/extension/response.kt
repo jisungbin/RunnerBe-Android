@@ -16,31 +16,21 @@ import team.applemango.runnerbe.data.register.login.model.login.LoginRequestResp
 private const val REQUEST_EXCEPTION =
     "The request is a success, but the server execution is failed. (or result field is null)"
 
-private fun <T : BaseResponse> Response<T>.toException(requestName: String) = Exception(
-    """
-    Request $requestName is fail.
-    Http message: ${errorBody()?.use { it.string() }}
-    Server message: ${body()?.message}
-    """.trimIndent()
-)
-
 internal fun <T : BaseResponse> Response<T>.requireSuccessfulBody(
     requestName: String,
-    checkBodyIsSuccess: Boolean = true,
     resultVerifyBuilder: (body: T) -> Boolean,
 ): T {
     val body = body()
-    if (isSuccessful && body != null) {
-        if (checkBodyIsSuccess && body.isSuccess != true) {
-            throw toException(requestName)
-        }
-        if (resultVerifyBuilder(body)) {
-            return body
-        } else {
-            throw toException(requestName)
-        }
+    return if (isSuccessful && body != null && resultVerifyBuilder(body)) {
+        body
     } else {
-        throw toException(requestName)
+        throw Exception(
+            """
+            Request $requestName is fail.
+            Http message: ${errorBody()?.use { it.string() }}
+            Server message: ${body()?.message}
+            """.trimIndent()
+        )
     }
 }
 
@@ -49,8 +39,8 @@ internal fun <T> Response<T>.requireSuccessfulBody(
     resultVerifyBuilder: (body: T) -> Boolean,
 ): T {
     val body = body()
-    if (isSuccessful && body != null && resultVerifyBuilder(body)) {
-        return body
+    return if (isSuccessful && body != null && resultVerifyBuilder(body)) {
+        body
     } else {
         throw Exception(
             """

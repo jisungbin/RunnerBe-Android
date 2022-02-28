@@ -13,6 +13,7 @@ import team.applemango.runnerbe.data.common.toSuccessValueBoolean
 import team.applemango.runnerbe.data.runningitem.constant.NotYetVerifyCode
 import team.applemango.runnerbe.data.runningitem.constant.SuccessCode
 import team.applemango.runnerbe.data.runningitem.mapper.toDomain
+import team.applemango.runnerbe.data.runningitem.mapper.toBaseResult
 import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
 import team.applemango.runnerbe.data.util.runningItemApi
 import team.applemango.runnerbe.domain.runningitem.common.BaseResult
@@ -37,7 +38,7 @@ class RunningItemRepositoryImpl : RunningItemRepository {
             resultVerifyBuilder = { body ->
                 body.code in listOf(SuccessCode, NotYetVerifyCode)
             }
-        ).toDomain()
+        ).toBaseResult()
     }
 
     override suspend fun loadItems(
@@ -99,7 +100,6 @@ class RunningItemRepositoryImpl : RunningItemRepository {
         )
         return request.requireSuccessfulBody(
             requestName = "runningItemApi.finish",
-            checkBodyIsSuccess = false,
             resultVerifyBuilder = { body ->
                 body.isSuccess != null // receive only isSuccess field
             }
@@ -120,7 +120,6 @@ class RunningItemRepositoryImpl : RunningItemRepository {
         )
         return request.requireSuccessfulBody(
             requestName = "runningItemApi.edit",
-            checkBodyIsSuccess = false,
             resultVerifyBuilder = { body ->
                 body.isSuccess != null // receive only isSuccess field
             }
@@ -139,7 +138,6 @@ class RunningItemRepositoryImpl : RunningItemRepository {
         )
         return request.requireSuccessfulBody(
             requestName = "runningItemApi.delete",
-            checkBodyIsSuccess = false,
             resultVerifyBuilder = { body ->
                 body.isSuccess != null // receive only isSuccess field
             }
@@ -158,11 +156,10 @@ class RunningItemRepositoryImpl : RunningItemRepository {
         )
         return request.requireSuccessfulBody(
             requestName = "runningItemApi.requestJoin",
-            checkBodyIsSuccess = false,
             resultVerifyBuilder = { body ->
                 body.isSuccess != null // receive only isSuccess field
             }
-        ).toDomain()
+        ).toBaseResult()
     }
 
     override suspend fun joinManage(
@@ -181,7 +178,6 @@ class RunningItemRepositoryImpl : RunningItemRepository {
         )
         return request.requireSuccessfulBody(
             requestName = "runningItemApi.joinManage",
-            checkBodyIsSuccess = false,
             resultVerifyBuilder = { body ->
                 body.isSuccess != null // receive only isSuccess field
             }
@@ -200,7 +196,6 @@ class RunningItemRepositoryImpl : RunningItemRepository {
         )
         return request.requireSuccessfulBody(
             requestName = "runningItemApi.report",
-            checkBodyIsSuccess = false,
             resultVerifyBuilder = { body ->
                 body.isSuccess != null // receive only isSuccess field
             }
