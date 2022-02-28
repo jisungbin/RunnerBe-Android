@@ -17,6 +17,9 @@ import team.applemango.runnerbe.domain.runningitem.model.runningitem.information
 interface RunningItemRepository {
     /**
      * 러닝 아이템 작성 (6번 API)
+     *
+     * @return 인증 전 유저도 아이템 작성은 요청할 수 있으니
+     * `아직 인증되지 않음` 상태를 포함한 [BaseResult] 를 리턴함
      */
     suspend fun write(
         jwt: String,
@@ -52,4 +55,17 @@ interface RunningItemRepository {
         userId: Int,
         postId: Int,
     ): RunningItemInformation?
+
+    /**
+     * 러너 모집 마감 (러닝 아이템 작성자 전용, 10번 API)
+     *
+     * @return 러너 모집을 마감하기 위해선 러닝 아이템을 작성해야 함
+     * 러닝 아이템을 작성하는건 인증된 회원만 가능하므로 이 API(러너 모집 마감)을
+     * 호출할 수 있는 상태는 무조건 유저가 인증이 된 상태임
+     * 따라서 마감 성공 여부를 나타내는 [Boolean] 값만 리턴함
+     */
+    suspend fun finish(
+        jwt: String,
+        postId: Int,
+    ): Boolean
 }
