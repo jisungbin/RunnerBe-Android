@@ -13,30 +13,24 @@ import android.graphics.Bitmap
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
-import java.io.ByteArrayOutputStream
 import javax.inject.Inject
-import kotlin.coroutines.resume
 import kotlin.random.Random
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.suspendCancellableCoroutine
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
-import team.applemango.runnerbe.domain.register.runnerbe.model.UserRegister
+import team.applemango.runnerbe.domain.constant.Gender
+import team.applemango.runnerbe.domain.register.mailjet.usecase.MailjetSendUseCase
 import team.applemango.runnerbe.domain.register.runnerbe.constant.UserRegisterResult
+import team.applemango.runnerbe.domain.register.runnerbe.model.UserRegister
 import team.applemango.runnerbe.domain.register.runnerbe.usecase.CheckUsableEmailUseCase
 import team.applemango.runnerbe.domain.register.runnerbe.usecase.UserRegisterUseCase
-import team.applemango.runnerbe.domain.register.mailjet.usecase.MailjetSendUseCase
-import team.applemango.runnerbe.feature.register.onboard.constant.FirebaseStoragePath
-import team.applemango.runnerbe.domain.constant.Gender
 import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterSideEffect
@@ -61,8 +55,6 @@ internal class OnboardViewModel @Inject constructor(
 
     private val _emailVerifyStateFlow = MutableStateFlow(false)
     val emailVerifyStateFlow = _emailVerifyStateFlow.asStateFlow()
-
-    private val storageRef by lazy { Firebase.storage.reference }
 
     suspend fun checkUsableEmail(email: String) =
         checkUsableEmailUseCase(email).getOrElse { exception ->
