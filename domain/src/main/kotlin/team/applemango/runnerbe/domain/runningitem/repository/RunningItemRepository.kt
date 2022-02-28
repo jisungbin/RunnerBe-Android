@@ -43,10 +43,13 @@ interface RunningItemRepository {
 
     /**
      * 러닝 아이템 상세 정보 조회 (8번 API)
+     *
+     * @return 사원증 인증이 된 유저라면 [RunningItemInformation] 을 반환하고,
+     * 그렇지 않은 유저라면 null 을 반환함
      */
     suspend fun getInformation(
         jwt: String,
         userId: Int,
         postId: Int,
-    ): RunningItemInformation
+    ): RunningItemInformation?
 }
