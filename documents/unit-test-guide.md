@@ -17,3 +17,9 @@ fun returnFailure() = """
 ```
 
 2. 위에서 만든 모든 응답 값에 대해 domain 으로 바꾸는 작업을 할 때 (mapping) 에러 없이 모두 예상한 대로 작동하면 테스트 성공
+
+# 레퍼런스
+
+테스트 커버리지 측정 및 테스트 방법에 참고가 될 수 있는 레포
+
+https://github.com/toss/maskking
