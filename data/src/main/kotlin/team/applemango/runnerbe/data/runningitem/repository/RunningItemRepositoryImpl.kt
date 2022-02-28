@@ -9,6 +9,7 @@
 
 package team.applemango.runnerbe.data.runningitem.repository
 
+import team.applemango.runnerbe.data.common.toSuccessValueBoolean
 import team.applemango.runnerbe.data.runningitem.constant.NotYetVerifyCode
 import team.applemango.runnerbe.data.runningitem.constant.SuccessCode
 import team.applemango.runnerbe.data.runningitem.mapper.toDomain
@@ -89,5 +90,67 @@ class RunningItemRepositoryImpl : RunningItemRepository {
                 body.code in 1015..1020 || body.code == NotYetVerifyCode
             }
         ).toDomain()
+    }
+
+    override suspend fun finish(jwt: String, postId: Int): Boolean {
+        val request = runningItemApi.finish(
+            jwt = jwt,
+            postId = postId
+        )
+        return request.requireSuccessfulBody(
+            requestName = "runningItemApi.finish",
+            checkBodyIsSuccess = false,
+            resultVerifyBuilder = { body ->
+                body.isSuccess != null
+            }
+        ).toSuccessValueBoolean()
+    }
+
+    override suspend fun edit(
+        jwt: String,
+        userId: Int,
+        postId: Int,
+        item: RunningItemApiBodyData,
+    ): Boolean {
+        val request = runningItemApi.edit(
+            jwt = jwt,
+            userId = userId,
+            postId = postId,
+            item = item
+        )
+        return request.requireSuccessfulBody(
+            requestName = "runningItemApi.edit",
+            checkBodyIsSuccess = false,
+            resultVerifyBuilder = { body ->
+                body.isSuccess != null
+            }
+        ).toSuccessValueBoolean()
+    }
+
+    override suspend fun delete(jwt: String, userId: Int, postId: Int): Boolean {
+        val request = runningItemApi.delete(
+            jwt = jwt,
+            userId = userId,
+            postId = postId,
+        )
+        return request.requireSuccessfulBody(
+            requestName = "runningItemApi.delete",
+            checkBodyIsSuccess = false,
+            resultVerifyBuilder = { body ->
+                body.isSuccess != null
+            }
+        ).toSuccessValueBoolean()
+    }
+
+    override suspend fun requestJoin() {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun joinManage() {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun report() {
+        TODO("Not yet implemented")
     }
 }
