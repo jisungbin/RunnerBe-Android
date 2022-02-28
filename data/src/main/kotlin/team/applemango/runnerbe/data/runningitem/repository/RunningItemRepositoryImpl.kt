@@ -76,13 +76,13 @@ class RunningItemRepositoryImpl : RunningItemRepository {
 
     override suspend fun loadInformation(
         jwt: String,
-        userId: Int,
         postId: Int,
+        userId: Int,
     ): RunningItemInformation? {
         val request = runningItemApi.loadInformation(
             jwt = jwt,
+            postId = postId,
             userId = userId,
-            postId = postId
         )
         return request.requireSuccessfulBody(
             requestName = "runningItemApi.getRunningItemInformation",
@@ -108,8 +108,8 @@ class RunningItemRepositoryImpl : RunningItemRepository {
 
     override suspend fun edit(
         jwt: String,
-        userId: Int,
         postId: Int,
+        userId: Int,
         item: RunningItemApiBodyData,
     ): Boolean {
         val request = runningItemApi.edit(
@@ -127,11 +127,15 @@ class RunningItemRepositoryImpl : RunningItemRepository {
         ).toSuccessValueBoolean()
     }
 
-    override suspend fun delete(jwt: String, userId: Int, postId: Int): Boolean {
+    override suspend fun delete(
+        jwt: String,
+        postId: Int,
+        userId: Int,
+    ): Boolean {
         val request = runningItemApi.delete(
             jwt = jwt,
-            userId = userId,
             postId = postId,
+            userId = userId,
         )
         return request.requireSuccessfulBody(
             requestName = "runningItemApi.delete",
@@ -142,15 +146,40 @@ class RunningItemRepositoryImpl : RunningItemRepository {
         ).toSuccessValueBoolean()
     }
 
-    override suspend fun requestJoin() {
+    override suspend fun requestJoin(
+        jwt: String,
+        postId: Int,
+        userId: Int,
+    ): BaseResult {
+        val request = runningItemApi.requestJoin(
+            jwt = jwt,
+            postId = postId,
+            userId = userId,
+        )
+        return request.requireSuccessfulBody(
+            requestName = "runningItemApi.delete",
+            checkBodyIsSuccess = false,
+            resultVerifyBuilder = { body ->
+                body.isSuccess != null
+            }
+        )
+    }
+
+    override suspend fun joinManage(
+        jwt: String,
+        postId: Int,
+        userId: Int,
+        runnerId: String,
+        state: Boolean,
+    ): Boolean {
         TODO("Not yet implemented")
     }
 
-    override suspend fun joinManage() {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun report() {
+    override suspend fun report(
+        jwt: String,
+        postId: Int,
+        userId: Int,
+    ): Boolean {
         TODO("Not yet implemented")
     }
 }

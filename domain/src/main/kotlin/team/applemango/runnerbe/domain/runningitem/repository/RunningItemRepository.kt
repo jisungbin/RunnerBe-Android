@@ -52,8 +52,8 @@ interface RunningItemRepository {
      */
     suspend fun loadInformation(
         jwt: String,
-        userId: Int,
         postId: Int,
+        userId: Int,
     ): RunningItemInformation?
 
     /**
@@ -79,8 +79,8 @@ interface RunningItemRepository {
      */
     suspend fun edit(
         jwt: String,
-        userId: Int,
         postId: Int,
+        userId: Int,
         item: RunningItemApiBodyData,
     ): Boolean
 
@@ -94,8 +94,8 @@ interface RunningItemRepository {
      */
     suspend fun delete(
         jwt: String,
-        userId: Int,
         postId: Int,
+        userId: Int,
     ): Boolean
 
     /**
@@ -108,16 +108,16 @@ interface RunningItemRepository {
      */
     suspend fun requestJoin(
         jwt: String,
-        userId: Int,
         postId: Int,
+        userId: Int,
     ): BaseResult
 
     /**
      * 러닝 참여 신청 관리 (러닝 아이템 작성자 전용, 19번 API)
      *
      * @param jwt 인증된 유저의 JWT
-     * @param userId 인증된 유저의 아이디
      * @param postId 러닝 아이템 아이디
+     * @param userId 인증된 유저의 아이디
      * @param runnerId 러닝 참여를 신청한 유저의 아이디
      * @param state 참여 신청 관리 값 (true: 수락, false: 거절)
      *
@@ -128,8 +128,8 @@ interface RunningItemRepository {
      */
     suspend fun joinManage(
         jwt: String,
-        userId: Int,
         postId: Int,
+        userId: Int,
         runnerId: String,
         state: Boolean,
     ): Boolean
@@ -142,7 +142,7 @@ interface RunningItemRepository {
      */
     suspend fun report(
         jwt: String,
-        userId: Int,
         postId: Int,
+        userId: Int,
     ): Boolean
 }
