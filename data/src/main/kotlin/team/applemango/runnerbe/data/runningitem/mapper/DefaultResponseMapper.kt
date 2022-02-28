@@ -14,10 +14,9 @@ import team.applemango.runnerbe.domain.runningitem.common.BaseResult
 import team.applemango.runnerbe.shared.domain.requireFieldExceptionMessage
 import team.applemango.runnerbe.shared.domain.resultCodeExceptionMessage
 
-internal fun DefaultResponse.toDomain() = when (
-    val code = requireNotNull(code) { requireFieldExceptionMessage("code") }
-) {
-    1000 -> BaseResult.Success
-    2044 -> BaseResult.NotYetVerify
-    else -> throw IllegalStateException(resultCodeExceptionMessage(code))
-}
+internal fun DefaultResponse.toDomain() =
+    when (checkNotNull(code) { requireFieldExceptionMessage("code") }) {
+        1000 -> BaseResult.Success
+        2044 -> BaseResult.NotYetVerify
+        else -> throw IllegalStateException(resultCodeExceptionMessage(code))
+    }

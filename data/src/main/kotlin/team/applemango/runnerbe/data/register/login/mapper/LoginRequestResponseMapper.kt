@@ -16,7 +16,7 @@ import team.applemango.runnerbe.shared.domain.resultCodeExceptionMessage
 
 internal fun LoginRequestResponse.toDomain(): UserToken {
     val loginResult = checkNotNull(loginResult) { requireFieldExceptionMessage("loginResult") }
-    return when (val code = checkNotNull(code) { requireFieldExceptionMessage("code") }) {
+    return when (checkNotNull(code) { requireFieldExceptionMessage("code") }) {
         1001 -> UserToken(jwt = requireNotNull(loginResult.jwt) { requireFieldExceptionMessage("jwt") }) // 회원
         1007 -> UserToken(uuid = requireNotNull(loginResult.uuid) { requireFieldExceptionMessage("uuid") }) // 비회원
         else -> throw IllegalStateException(resultCodeExceptionMessage(code))

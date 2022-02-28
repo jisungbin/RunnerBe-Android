@@ -17,7 +17,7 @@ import team.applemango.runnerbe.shared.domain.resultCodeExceptionMessage
 
 internal fun RunningItemInformationResponse.toDomain(): RunningItemInformation? {
     checkNotNull(result) { requireFieldExceptionMessage("result") }
-    val code = requireNotNull(code) { requireFieldExceptionMessage("code") }
+    checkNotNull(code) { requireFieldExceptionMessage("code") }
     check(code in 1015..1020 || code == NotYetVerifyCode) { resultCodeExceptionMessage(code) }
     if (code == NotYetVerifyCode) return null
     return RunningItemInformation(
