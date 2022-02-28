@@ -30,5 +30,5 @@ interface FirebaseRepository {
      * 현재는 return 값이 [String] 으로 고정돼 있지만,
      * 추후 다른 타입도 지원할 것인지 개발하면서 결정이 필요함
      */
-    suspend fun loadConfig(name: String): String
+    suspend fun loadConfigData(name: String): String
 }
