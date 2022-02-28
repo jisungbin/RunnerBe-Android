@@ -9,7 +9,7 @@
 
 package team.applemango.runnerbe.data.register.login.repository
 
-import team.applemango.runnerbe.data.register.login.mapper.toBoolean
+import team.applemango.runnerbe.data.common.toSuccessValueBoolean
 import team.applemango.runnerbe.data.register.login.mapper.toDomain
 import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
 import team.applemango.runnerbe.data.util.registerApi
@@ -42,7 +42,7 @@ class RegisterRepositoryImpl : RegisterRepository {
                     body.isSuccess != null // receive only isSuccess field
                 }
             )
-            .toBoolean()
+            .toSuccessValueBoolean()
     }
 
     override suspend fun register(user: UserRegister): UserRegisterResult {

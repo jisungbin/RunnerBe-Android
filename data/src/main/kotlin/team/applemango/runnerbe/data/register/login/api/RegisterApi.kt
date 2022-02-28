@@ -14,7 +14,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
-import team.applemango.runnerbe.data.register.login.model.email.CheckDuplicateEmailResponse
+import team.applemango.runnerbe.data.common.DefaultResponse
 import team.applemango.runnerbe.data.register.login.model.login.LoginRequestResponse
 import team.applemango.runnerbe.data.register.login.model.register.UserRegisterResponse
 import team.applemango.runnerbe.domain.register.runnerbe.model.AccessToken
@@ -30,7 +30,7 @@ internal interface RegisterApi {
     @GET("/users/email/check/{officeEmail}")
     suspend fun checkUsableEmail(
         @Path("officeEmail") email: String,
-    ): Response<CheckDuplicateEmailResponse>
+    ): Response<DefaultResponse>
 
     @POST("/users")
     suspend fun requestRegister(
