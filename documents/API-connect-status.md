@@ -7,7 +7,7 @@
 3. 회원가입 [✅] - 3번 API
 4. 이메일 중복 확인 [✅] - 4번 API
 
-### 유저 관련 - RunnerRepository
+### 유저 관련 - UserRepository
 
 1. 닉네임 설정 [✖️] - 5번 API
 2. JWT 로 사원증 인증 여부 확인 [✖️] - 9번 API
