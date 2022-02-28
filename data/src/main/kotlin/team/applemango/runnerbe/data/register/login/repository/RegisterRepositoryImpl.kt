@@ -12,17 +12,35 @@ package team.applemango.runnerbe.data.register.login.repository
 import team.applemango.runnerbe.data.register.login.mapper.toBoolean
 import team.applemango.runnerbe.data.register.login.mapper.toDomain
 import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
+import team.applemango.runnerbe.data.util.loginApi
 import team.applemango.runnerbe.data.util.registerApi
 import team.applemango.runnerbe.domain.register.login.constant.UserRegisterResult
+import team.applemango.runnerbe.domain.register.login.model.AccessToken
 import team.applemango.runnerbe.domain.register.login.model.UserRegister
+import team.applemango.runnerbe.domain.register.login.model.UserToken
 import team.applemango.runnerbe.domain.register.login.repository.RegisterRepository
 
 class RegisterRepositoryImpl : RegisterRepository {
+    override suspend fun login(platformName: String, accessToken: AccessToken): UserToken {
+        val request = loginApi.request(
+            platformName = platformName,
+            accessToken = accessToken
+        )
+        return request.requireSuccessfulBody(
+            requestName = "loginApi.request $platformName",
+            resultVerifyBuilder = { body ->
+                body.isSuccess == true && body.code in listOf(1001, 1007) && body.loginResult != null
+            }
+        ).toDomain()
+    }
+
     override suspend fun checkUsableEmail(email: String): Boolean {
         return registerApi.checkUsableEmail(email)
             .requireSuccessfulBody(
                 requestName = "registerApi.checkUsableEmail",
-                resultVerifyBuilder = { true } // receive only code
+                resultVerifyBuilder = { body ->
+                    body.isSuccess != null // receive only isSuccess field
+                }
             )
             .toBoolean()
     }
@@ -32,7 +50,7 @@ class RegisterRepositoryImpl : RegisterRepository {
             .requireSuccessfulBody(
                 requestName = "registerApi.requestRegister",
                 resultVerifyBuilder = { body ->
-                    body.jwt != null
+                    body.isSuccess == true && body.jwt != null
                 }
             )
             .toDomain()
