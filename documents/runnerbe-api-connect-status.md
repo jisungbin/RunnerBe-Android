@@ -1,4 +1,4 @@
-# API 연결 현황
+# 러너비 API 연결 현황
 
 ### 회원가입 관련 - RegisterRepository
 
