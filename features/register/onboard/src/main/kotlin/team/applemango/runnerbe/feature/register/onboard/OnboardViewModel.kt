@@ -147,31 +147,6 @@ internal class OnboardViewModel @Inject constructor(
         }
     }
 
-    /**
-     * 매우 좋지 않은 방식
-     * TODO: https://github.com/applemango-runnerbe/RunnerBe-Android/issues/36
-     *
-     * @return 성공시 이미지 주소, 실패시 null
-     */
-    private suspend fun uploadImage(photo: Bitmap, userUuid: String): String? =
-        suspendCancellableCoroutine { continuation ->
-            val baos = ByteArrayOutputStream()
-            photo.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-            val data = baos.toByteArray()
-            storageRef.child(FirebaseStoragePath).child(userUuid).run {
-                putBytes(data)
-                    .continueWithTask { downloadUrl }
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful && task.result != null) {
-                            continuation.resume(task.result.toString())
-                        } else {
-                            emitException(task.exception ?: ImageUpdateExceptionWithNull)
-                            continuation.resume(null)
-                        }
-                    }
-            }
-        }
-
     private fun requestUserRegister(user: UserRegister, nextStep: Step) = intent {
         userRegisterUseCase(user)
             .onSuccess { result ->
@@ -203,7 +178,7 @@ internal class OnboardViewModel @Inject constructor(
                             RegisterState.DuplicateEmail
                         }
                     }
-                    UserRegisterResult.DatabaseError -> {
+                    RegisterState.DatabaseError -> {
                         reduce {
                             RegisterState.DatabaseError
                         }
