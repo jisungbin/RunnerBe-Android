@@ -9,6 +9,6 @@
   
 ## KDoc
 
-- 모든 API repository 에 최소한의 KDoc 기록
+- 모든 API repository 에 최소한의 KDoc 은 기록
 - 헷갈릴 수 있는 return 이나 param 은 KDoc 을 기록 하되, param 의 경우 하나라도 붙으면
   모든 param 의 정보를 기록
