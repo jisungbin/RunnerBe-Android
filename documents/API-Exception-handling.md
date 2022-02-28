@@ -9,7 +9,7 @@
 
 # 규칙
 
-1. 만약 failure result code 를 오픈했을 경우, 위 2가지의 failure result code 오픈 케이스에 해당하더라도 
+- 만약 failure result code 를 오픈했을 경우, 위 2가지의 failure result code 오픈 케이스에 해당하더라도 
 왜 오픈 했는지 주석으로 명시 (추후 혼동 방지)
 
 # 오픈의 정의
