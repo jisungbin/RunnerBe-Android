@@ -15,7 +15,7 @@ import team.applemango.runnerbe.domain.user.constant.NicknameChangeResult
 import team.applemango.runnerbe.shared.domain.requireFieldExceptionMessage
 import team.applemango.runnerbe.shared.domain.resultCodeExceptionMessage
 
-fun DefaultResponse.toNicknameChangeResultDomain(): BaseResult {
+fun DefaultResponse.toNicknameChangeResult(): BaseResult {
     return when (checkNotNull(code) { requireFieldExceptionMessage("code") }) {
         1000 -> BaseResult.Success
         2044 -> BaseResult.NotYetVerify

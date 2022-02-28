@@ -9,7 +9,7 @@
 
 package team.applemango.runnerbe.data.register.login.repository
 
-import team.applemango.runnerbe.data.common.toSuccessValueBoolean
+import team.applemango.runnerbe.data.common.isSuccessNonNull
 import team.applemango.runnerbe.data.register.login.mapper.toDomain
 import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
 import team.applemango.runnerbe.data.util.registerApi
@@ -37,12 +37,11 @@ class RegisterRepositoryImpl : RegisterRepository {
         return registerApi.checkUsableEmail(email = email)
             .requireSuccessfulBody(
                 requestName = "registerApi.checkUsableEmail",
-                checkBodyIsSuccess = false,
                 resultVerifyBuilder = { body ->
                     body.isSuccess != null // receive only isSuccess field
                 }
             )
-            .toSuccessValueBoolean()
+            .isSuccessNonNull
     }
 
     override suspend fun requestRegister(user: UserRegister): UserRegisterResult {
