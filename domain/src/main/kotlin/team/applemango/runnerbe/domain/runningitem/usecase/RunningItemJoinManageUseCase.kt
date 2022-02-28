@@ -2,27 +2,29 @@
  * RunnerBe © 2022 Team AppleMango. all rights reserved.
  * RunnerBe license is under the MIT.
  *
- * [WriteRunningItemUseCase.kt] created by Ji Sungbin on 22. 2. 24. 오후 9:01
+ * [RunningItemJoinManageUseCase.kt] created by Ji Sungbin on 22. 2. 28. 오후 9:43
  *
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
 package team.applemango.runnerbe.domain.runningitem.usecase
 
-import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItemApiBody
 import team.applemango.runnerbe.domain.runningitem.repository.RunningItemRepository
-import team.applemango.runnerbe.domain.runningitem.util.toData
 
-class WriteRunningItemUseCase(private val repo: RunningItemRepository) {
+class RunningItemJoinManageUseCase(private val repo: RunningItemRepository) {
     suspend operator fun invoke(
         jwt: String,
+        postId: Int,
         userId: Int,
-        item: RunningItemApiBody,
+        runnerId: Int,
+        state: String,
     ) = runCatching {
-        repo.write(
+        repo.joinManage(
             jwt = jwt,
+            postId = postId,
             userId = userId,
-            item = item.toData()
+            runnerId = runnerId,
+            state = state
         )
     }
 }
