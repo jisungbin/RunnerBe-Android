@@ -1,5 +1,7 @@
 # 러너비 API 연결 현황
 
+> 모든 연결 완료(✅)의 기준은 repository, repositoryimpl, usecase 의 완성임
+
 ### 회원가입 관련 - RegisterRepository
 
 1. 카카오 로그인 [✅] - 1번 API
