@@ -20,6 +20,7 @@ import team.applemango.runnerbe.data.register.mailjet.api.MailjetApi
 import team.applemango.runnerbe.data.runningitem.api.RunningItemApi
 import team.applemango.runnerbe.data.secret.Mailjet
 import team.applemango.runnerbe.data.secret.RunnerbeHost
+import team.applemango.runnerbe.data.user.api.UserApi
 import team.applemango.runnerbe.data.util.extension.JacksonObjectMapper
 import team.applemango.runnerbe.data.util.interceptor.BasicAuthInterceptor
 
@@ -59,4 +60,5 @@ private val mailjetBaseApi = Retrofit.Builder()
 internal val registerApi = runnerbeBaseApi.create(RegisterApi::class.java)
 internal val mailjetApi = mailjetBaseApi.create(MailjetApi::class.java)
 
+internal val userApi = runnerbeBaseApi.create(UserApi::class.java)
 internal val runningItemApi = runnerbeBaseApi.create(RunningItemApi::class.java)
