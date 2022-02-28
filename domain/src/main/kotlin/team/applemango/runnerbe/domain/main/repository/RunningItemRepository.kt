@@ -14,7 +14,7 @@ import team.applemango.runnerbe.domain.main.model.runningitem.RunningItem
 import team.applemango.runnerbe.domain.main.model.runningitem.RunningItemApiBodyData
 import team.applemango.runnerbe.domain.main.model.runningitem.information.RunningItemInformation
 
-interface MainRepository {
+interface RunningItemRepository {
     /**
      * 러닝 아이템 리스트 조회 (7번 API)
      */

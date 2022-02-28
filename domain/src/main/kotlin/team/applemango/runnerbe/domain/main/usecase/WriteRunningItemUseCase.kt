@@ -13,9 +13,9 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 import team.applemango.runnerbe.domain.main.model.runningitem.RunningItemApiBody
 import team.applemango.runnerbe.domain.main.model.runningitem.RunningItemApiBodyData
-import team.applemango.runnerbe.domain.main.repository.MainRepository
+import team.applemango.runnerbe.domain.main.repository.RunningItemRepository
 
-class WriteRunningItemUseCase(private val repo: MainRepository) {
+class WriteRunningItemUseCase(private val repo: RunningItemRepository) {
     suspend operator fun invoke(
         jwt: String,
         userId: Int,
