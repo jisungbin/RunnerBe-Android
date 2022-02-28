@@ -2,20 +2,17 @@
  * RunnerBe © 2022 Team AppleMango. all rights reserved.
  * RunnerBe license is under the MIT.
  *
- * [RunningItemResponse.kt] created by Ji Sungbin on 22. 2. 24. 오전 2:57
+ * [DefaultResponse.kt] created by Ji Sungbin on 22. 2. 24. 오후 8:24
  *
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.data.main.model.runningitem
+package team.applemango.runnerbe.data.runningitem.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import team.applemango.runnerbe.data.common.BaseResponse
 
-data class RunningItemsResponse(
-    @field:JsonProperty("result")
-    val result: List<RunningItemData?>? = null,
-
+data class DefaultResponse(
     @field:JsonProperty("code")
     override val code: Int? = null,
 

@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.data.main.api
+package team.applemango.runnerbe.data.runningitem.api
 
 import retrofit2.Response
 import retrofit2.http.Body
@@ -16,9 +16,9 @@ import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
-import team.applemango.runnerbe.data.main.model.DefaultResponse
-import team.applemango.runnerbe.data.main.model.runningitem.RunningItemsResponse
-import team.applemango.runnerbe.data.main.model.runningitem.information.RunningItemInformationResponse
+import team.applemango.runnerbe.data.runningitem.model.DefaultResponse
+import team.applemango.runnerbe.data.runningitem.model.runningitem.RunningItemsResponse
+import team.applemango.runnerbe.data.runningitem.model.runningitem.information.RunningItemInformationResponse
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItemApiBodyData
 
 interface MainService {

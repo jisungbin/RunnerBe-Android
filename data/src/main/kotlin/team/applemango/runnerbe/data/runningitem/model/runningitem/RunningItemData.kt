@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.data.main.model.runningitem
+package team.applemango.runnerbe.data.runningitem.model.runningitem
 
 import com.fasterxml.jackson.annotation.JsonProperty
 

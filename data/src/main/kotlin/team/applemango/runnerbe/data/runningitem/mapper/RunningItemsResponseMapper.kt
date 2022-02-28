@@ -7,9 +7,9 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.data.main.mapper
+package team.applemango.runnerbe.data.runningitem.mapper
 
-import team.applemango.runnerbe.data.main.model.runningitem.RunningItemsResponse
+import team.applemango.runnerbe.data.runningitem.model.runningitem.RunningItemsResponse
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 import team.applemango.runnerbe.shared.domain.requireFieldExceptionMessage
 

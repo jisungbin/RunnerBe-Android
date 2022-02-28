@@ -7,11 +7,11 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.data.main.mapper
+package team.applemango.runnerbe.data.runningitem.mapper
 
-import team.applemango.runnerbe.data.main.mapper.MappingType.InformationApiFields
-import team.applemango.runnerbe.data.main.mapper.MappingType.MainPageApiFields
-import team.applemango.runnerbe.data.main.model.runningitem.RunningItemData
+import team.applemango.runnerbe.data.runningitem.mapper.MappingType.InformationApiFields
+import team.applemango.runnerbe.data.runningitem.mapper.MappingType.MainPageApiFields
+import team.applemango.runnerbe.data.runningitem.model.runningitem.RunningItemData
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.domain.runningitem.filter.AgeFilter
 import team.applemango.runnerbe.domain.runningitem.model.common.Locate

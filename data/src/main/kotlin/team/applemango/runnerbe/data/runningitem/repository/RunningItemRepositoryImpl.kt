@@ -7,9 +7,9 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.data.main.repository
+package team.applemango.runnerbe.data.runningitem.repository
 
-import team.applemango.runnerbe.data.main.mapper.toDomain
+import team.applemango.runnerbe.data.runningitem.mapper.toDomain
 import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
 import team.applemango.runnerbe.data.util.mainApi
 import team.applemango.runnerbe.domain.runningitem.common.BaseResult

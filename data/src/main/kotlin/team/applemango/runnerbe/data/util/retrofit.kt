@@ -15,7 +15,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
-import team.applemango.runnerbe.data.main.api.MainService
+import team.applemango.runnerbe.data.runningitem.api.MainService
 import team.applemango.runnerbe.data.register.login.api.LoginService
 import team.applemango.runnerbe.data.register.login.api.RegisterService
 import team.applemango.runnerbe.data.register.mailjet.api.MailjetService

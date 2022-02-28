@@ -7,11 +7,11 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.data.main.model.runningitem.information
+package team.applemango.runnerbe.data.runningitem.model.runningitem.information
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import team.applemango.runnerbe.data.main.model.runner.RunnerData
-import team.applemango.runnerbe.data.main.model.runningitem.RunningItemData
+import team.applemango.runnerbe.data.runningitem.model.runner.RunnerData
+import team.applemango.runnerbe.data.runningitem.model.runningitem.RunningItemData
 
 data class RunningItemInformationData(
     @field:JsonProperty("postingInfo")
