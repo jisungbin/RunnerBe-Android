@@ -14,7 +14,10 @@ import team.applemango.runnerbe.domain.register.runnerbe.model.AccessToken
 import team.applemango.runnerbe.domain.register.runnerbe.repository.RegisterRepository
 
 class LoginUseCase(private val repo: RegisterRepository) {
-    suspend operator fun invoke(platformType: PlatformType, accessToken: String) = runCatching {
+    suspend operator fun invoke(
+        platformType: PlatformType,
+        accessToken: String,
+    ) = runCatching {
         repo.login(
             platformName = platformType.name.lowercase(),
             accessToken = AccessToken(accessToken)
