@@ -136,6 +136,13 @@ interface RunningItemRepository {
 
     /**
      * 러닝 아이템 신고 (25번 API)
+     *
+     * @return 신고는 모든 회원이 가능해야 하므로
+     * 신고 성공 여부를 나타내는 [Boolean] 값만 리턴함
      */
-    suspend fun report()
+    suspend fun report(
+        jwt: String,
+        userId: Int,
+        postId: Int,
+    ): Boolean
 }
