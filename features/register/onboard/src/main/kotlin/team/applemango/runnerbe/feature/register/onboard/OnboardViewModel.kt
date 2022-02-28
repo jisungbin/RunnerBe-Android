@@ -30,10 +30,10 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
-import team.applemango.runnerbe.domain.register.login.model.UserRegister
-import team.applemango.runnerbe.domain.register.login.constant.UserRegisterResult
-import team.applemango.runnerbe.domain.register.login.usecase.CheckUsableEmailUseCase
-import team.applemango.runnerbe.domain.register.login.usecase.UserRegisterUseCase
+import team.applemango.runnerbe.domain.register.runnerbe.model.UserRegister
+import team.applemango.runnerbe.domain.register.runnerbe.constant.UserRegisterResult
+import team.applemango.runnerbe.domain.register.runnerbe.usecase.CheckUsableEmailUseCase
+import team.applemango.runnerbe.domain.register.runnerbe.usecase.UserRegisterUseCase
 import team.applemango.runnerbe.domain.register.mailjet.usecase.MailjetSendUseCase
 import team.applemango.runnerbe.feature.register.onboard.constant.FirebaseStoragePath
 import team.applemango.runnerbe.domain.constant.Gender

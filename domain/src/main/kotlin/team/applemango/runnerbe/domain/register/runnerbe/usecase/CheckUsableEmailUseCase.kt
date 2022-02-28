@@ -7,9 +7,9 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.domain.register.login.usecase
+package team.applemango.runnerbe.domain.register.runnerbe.usecase
 
-import team.applemango.runnerbe.domain.register.login.repository.RegisterRepository
+import team.applemango.runnerbe.domain.register.runnerbe.repository.RegisterRepository
 
 class CheckUsableEmailUseCase(private val repo: RegisterRepository) {
     suspend operator fun invoke(email: String) = runCatching {

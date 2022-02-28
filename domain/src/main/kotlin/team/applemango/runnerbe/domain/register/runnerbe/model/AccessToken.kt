@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.domain.register.login.model
+package team.applemango.runnerbe.domain.register.runnerbe.model
 
 /**
  * value class 로 하면 당연히 inline 되면서 그냥 String 으로 들어감

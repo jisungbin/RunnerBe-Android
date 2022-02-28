@@ -13,11 +13,11 @@ import team.applemango.runnerbe.data.register.login.mapper.toBoolean
 import team.applemango.runnerbe.data.register.login.mapper.toDomain
 import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
 import team.applemango.runnerbe.data.util.registerApi
-import team.applemango.runnerbe.domain.register.login.constant.UserRegisterResult
-import team.applemango.runnerbe.domain.register.login.model.AccessToken
-import team.applemango.runnerbe.domain.register.login.model.UserRegister
-import team.applemango.runnerbe.domain.register.login.model.UserToken
-import team.applemango.runnerbe.domain.register.login.repository.RegisterRepository
+import team.applemango.runnerbe.domain.register.runnerbe.constant.UserRegisterResult
+import team.applemango.runnerbe.domain.register.runnerbe.model.AccessToken
+import team.applemango.runnerbe.domain.register.runnerbe.model.UserRegister
+import team.applemango.runnerbe.domain.register.runnerbe.model.UserToken
+import team.applemango.runnerbe.domain.register.runnerbe.repository.RegisterRepository
 
 class RegisterRepositoryImpl : RegisterRepository {
     override suspend fun login(platformName: String, accessToken: AccessToken): UserToken {

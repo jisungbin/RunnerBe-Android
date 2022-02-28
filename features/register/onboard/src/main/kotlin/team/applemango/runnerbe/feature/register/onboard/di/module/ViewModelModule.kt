@@ -13,8 +13,8 @@ import androidx.lifecycle.ViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
-import team.applemango.runnerbe.domain.register.login.usecase.CheckUsableEmailUseCase
-import team.applemango.runnerbe.domain.register.login.usecase.UserRegisterUseCase
+import team.applemango.runnerbe.domain.register.runnerbe.usecase.CheckUsableEmailUseCase
+import team.applemango.runnerbe.domain.register.runnerbe.usecase.UserRegisterUseCase
 import team.applemango.runnerbe.domain.register.mailjet.usecase.MailjetSendUseCase
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.feature.register.onboard.di.qualifier.ViewModelKey

@@ -7,10 +7,10 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.domain.register.login.usecase
+package team.applemango.runnerbe.domain.register.runnerbe.usecase
 
-import team.applemango.runnerbe.domain.register.login.model.UserRegister
-import team.applemango.runnerbe.domain.register.login.repository.RegisterRepository
+import team.applemango.runnerbe.domain.register.runnerbe.model.UserRegister
+import team.applemango.runnerbe.domain.register.runnerbe.repository.RegisterRepository
 
 class UserRegisterUseCase(private val repo: RegisterRepository) {
     suspend operator fun invoke(user: UserRegister) = runCatching {

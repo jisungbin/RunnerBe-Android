@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.domain.register.login.constant
+package team.applemango.runnerbe.domain.register.runnerbe.constant
 
 /**
  * @property Success 가입 요청 성공 (1005, 1006)

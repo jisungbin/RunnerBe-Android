@@ -7,12 +7,12 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.domain.register.login.repository
+package team.applemango.runnerbe.domain.register.runnerbe.repository
 
-import team.applemango.runnerbe.domain.register.login.constant.UserRegisterResult
-import team.applemango.runnerbe.domain.register.login.model.AccessToken
-import team.applemango.runnerbe.domain.register.login.model.UserRegister
-import team.applemango.runnerbe.domain.register.login.model.UserToken
+import team.applemango.runnerbe.domain.register.runnerbe.constant.UserRegisterResult
+import team.applemango.runnerbe.domain.register.runnerbe.model.AccessToken
+import team.applemango.runnerbe.domain.register.runnerbe.model.UserRegister
+import team.applemango.runnerbe.domain.register.runnerbe.model.UserToken
 
 interface RegisterRepository {
     /**

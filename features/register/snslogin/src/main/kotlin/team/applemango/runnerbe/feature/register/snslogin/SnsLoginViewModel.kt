@@ -17,10 +17,10 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
-import team.applemango.runnerbe.domain.register.login.constant.PlatformType
-import team.applemango.runnerbe.domain.register.login.usecase.GetKakaoAccessTokenUseCase
-import team.applemango.runnerbe.domain.register.login.usecase.GetNaverAccessTokenUseCase
-import team.applemango.runnerbe.domain.register.login.usecase.LoginUseCase
+import team.applemango.runnerbe.domain.register.runnerbe.constant.PlatformType
+import team.applemango.runnerbe.domain.register.runnerbe.usecase.GetKakaoAccessTokenUseCase
+import team.applemango.runnerbe.domain.register.runnerbe.usecase.GetNaverAccessTokenUseCase
+import team.applemango.runnerbe.domain.register.runnerbe.usecase.LoginUseCase
 import team.applemango.runnerbe.feature.register.snslogin.constant.LoginState
 import team.applemango.runnerbe.feature.register.snslogin.mvi.LoginSideEffect
 import team.applemango.runnerbe.shared.base.BaseViewModel

@@ -11,9 +11,9 @@ package team.applemango.runnerbe.feature.register.onboard.di.module
 
 import dagger.Module
 import dagger.Provides
-import team.applemango.runnerbe.domain.register.login.repository.RegisterRepository
-import team.applemango.runnerbe.domain.register.login.usecase.CheckUsableEmailUseCase
-import team.applemango.runnerbe.domain.register.login.usecase.UserRegisterUseCase
+import team.applemango.runnerbe.domain.register.runnerbe.repository.RegisterRepository
+import team.applemango.runnerbe.domain.register.runnerbe.usecase.CheckUsableEmailUseCase
+import team.applemango.runnerbe.domain.register.runnerbe.usecase.UserRegisterUseCase
 import team.applemango.runnerbe.domain.register.mailjet.repository.MailjetRepository
 import team.applemango.runnerbe.domain.register.mailjet.usecase.MailjetSendUseCase
 

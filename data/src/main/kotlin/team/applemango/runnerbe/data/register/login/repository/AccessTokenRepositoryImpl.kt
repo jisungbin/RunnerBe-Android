@@ -17,7 +17,7 @@ import kotlin.Result.Companion.failure
 import kotlin.Result.Companion.success
 import kotlin.coroutines.resume
 import kotlinx.coroutines.suspendCancellableCoroutine
-import team.applemango.runnerbe.domain.register.login.repository.AccessTokenRepository
+import team.applemango.runnerbe.domain.register.runnerbe.repository.AccessTokenRepository
 
 private val EXCEPTION_NAVER_ACCESS_TOKEN_NULL = Exception("Naver access token is null.")
 private val EXCEPTION_RESPONSE_NOTHING = Exception("Kakao API response is nothing.")

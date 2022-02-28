@@ -7,9 +7,9 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.domain.register.login.usecase
+package team.applemango.runnerbe.domain.register.runnerbe.usecase
 
-import team.applemango.runnerbe.domain.register.login.repository.AccessTokenRepository
+import team.applemango.runnerbe.domain.register.runnerbe.repository.AccessTokenRepository
 
 class GetKakaoAccessTokenUseCase(private val repo: AccessTokenRepository) {
     suspend operator fun invoke() = runCatching {

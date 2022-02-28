@@ -17,8 +17,8 @@ import retrofit2.http.Path
 import team.applemango.runnerbe.data.register.login.model.email.CheckDuplicateEmailResponse
 import team.applemango.runnerbe.data.register.login.model.login.LoginRequestResponse
 import team.applemango.runnerbe.data.register.login.model.register.UserRegisterResponse
-import team.applemango.runnerbe.domain.register.login.model.AccessToken
-import team.applemango.runnerbe.domain.register.login.model.UserRegister
+import team.applemango.runnerbe.domain.register.runnerbe.model.AccessToken
+import team.applemango.runnerbe.domain.register.runnerbe.model.UserRegister
 
 internal interface RegisterApi {
     @POST("/users/{platformName}-login")

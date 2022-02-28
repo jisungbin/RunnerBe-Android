@@ -10,7 +10,7 @@
 package team.applemango.runnerbe.data.register.login.mapper
 
 import team.applemango.runnerbe.data.register.login.model.login.LoginRequestResponse
-import team.applemango.runnerbe.domain.register.login.model.UserToken
+import team.applemango.runnerbe.domain.register.runnerbe.model.UserToken
 import team.applemango.runnerbe.shared.domain.requireFieldExceptionMessage
 import team.applemango.runnerbe.shared.domain.resultCodeExceptionMessage
 

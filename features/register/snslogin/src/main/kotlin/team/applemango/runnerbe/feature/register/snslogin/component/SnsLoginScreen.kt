@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.skydoves.landscapist.rememberDrawablePainter
-import team.applemango.runnerbe.domain.register.login.constant.PlatformType
+import team.applemango.runnerbe.domain.register.runnerbe.constant.PlatformType
 import team.applemango.runnerbe.feature.register.snslogin.SnsLoginViewModel
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.FontAsset

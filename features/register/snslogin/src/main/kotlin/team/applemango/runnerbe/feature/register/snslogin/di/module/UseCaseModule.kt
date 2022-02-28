@@ -11,11 +11,11 @@ package team.applemango.runnerbe.feature.register.snslogin.di.module
 
 import dagger.Module
 import dagger.Provides
-import team.applemango.runnerbe.domain.register.login.repository.AccessTokenRepository
-import team.applemango.runnerbe.domain.register.login.repository.LoginRepository
-import team.applemango.runnerbe.domain.register.login.usecase.GetKakaoAccessTokenUseCase
-import team.applemango.runnerbe.domain.register.login.usecase.GetNaverAccessTokenUseCase
-import team.applemango.runnerbe.domain.register.login.usecase.LoginUseCase
+import team.applemango.runnerbe.domain.register.runnerbe.repository.AccessTokenRepository
+import team.applemango.runnerbe.domain.register.runnerbe.repository.LoginRepository
+import team.applemango.runnerbe.domain.register.runnerbe.usecase.GetKakaoAccessTokenUseCase
+import team.applemango.runnerbe.domain.register.runnerbe.usecase.GetNaverAccessTokenUseCase
+import team.applemango.runnerbe.domain.register.runnerbe.usecase.LoginUseCase
 
 @Module
 internal class UseCaseModule {
