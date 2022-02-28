@@ -70,14 +70,12 @@ dependencies {
     )
     features.forEach(::implementationProject)
 
-    // :features:register:onboard 에서 필요하기 때문에 api 로 설정
-    // DFM 에서 바로 implementation 해주면 exception 발생
-    api(platform(Dependencies.FirebaseBom))
+    implementation(platform(Dependencies.FirebaseBom))
+    implementation(Dependencies.FirebaseEachKtx.Analytics)
 
     implementation(Dependencies.Util.Erratum)
     Dependencies.Ui.forEach(::implementation)
     Dependencies.Login.forEach(::implementation)
-    implementation(Dependencies.FirebaseEachKtx.Analytics)
     Dependencies.PresentationOnlyKtx.forEach(::implementation)
 
     Dependencies.Debug.forEach(::debugImplementation)
