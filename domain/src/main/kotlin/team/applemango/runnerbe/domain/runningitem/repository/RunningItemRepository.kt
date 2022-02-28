@@ -119,7 +119,7 @@ interface RunningItemRepository {
      * @param postId 러닝 아이템 아이디
      * @param userId 인증된 유저의 아이디
      * @param runnerId 러닝 참여를 신청한 유저의 아이디
-     * @param state 참여 신청 관리 값 (true: 수락, false: 거절)
+     * @param state 참여 신청 관리 값 (Y: 수락, D: 거절)
      *
      * @return 러닝 참여 신청 관리를 하기 위해선 러닝 아이템을 작성해야 함
      * 러닝 아이템을 작성하는건 인증된 회원만 가능하므로 이 API(러닝 참여 신청 관리)을
@@ -130,8 +130,8 @@ interface RunningItemRepository {
         jwt: String,
         postId: Int,
         userId: Int,
-        runnerId: String,
-        state: Boolean,
+        runnerId: Int,
+        state: String,
     ): Boolean
 
     /**

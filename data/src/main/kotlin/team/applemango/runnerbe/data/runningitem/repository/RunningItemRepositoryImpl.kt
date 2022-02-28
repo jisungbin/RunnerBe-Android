@@ -157,22 +157,35 @@ class RunningItemRepositoryImpl : RunningItemRepository {
             userId = userId,
         )
         return request.requireSuccessfulBody(
-            requestName = "runningItemApi.delete",
+            requestName = "runningItemApi.requestJoin",
             checkBodyIsSuccess = false,
             resultVerifyBuilder = { body ->
                 body.isSuccess != null
             }
-        )
+        ).toDomain()
     }
 
     override suspend fun joinManage(
         jwt: String,
         postId: Int,
         userId: Int,
-        runnerId: String,
-        state: Boolean,
+        runnerId: Int,
+        state: String,
     ): Boolean {
-        TODO("Not yet implemented")
+        val request = runningItemApi.joinManage(
+            jwt = jwt,
+            postId = postId,
+            userId = userId,
+            runnerId = runnerId,
+            state = state
+        )
+        return request.requireSuccessfulBody(
+            requestName = "runningItemApi.joinManage",
+            checkBodyIsSuccess = false,
+            resultVerifyBuilder = { body ->
+                body.isSuccess != null
+            }
+        ).toSuccessValueBoolean()
     }
 
     override suspend fun report(
@@ -180,6 +193,17 @@ class RunningItemRepositoryImpl : RunningItemRepository {
         postId: Int,
         userId: Int,
     ): Boolean {
-        TODO("Not yet implemented")
+        val request = runningItemApi.report(
+            jwt = jwt,
+            postId = postId,
+            userId = userId,
+        )
+        return request.requireSuccessfulBody(
+            requestName = "runningItemApi.report",
+            checkBodyIsSuccess = false,
+            resultVerifyBuilder = { body ->
+                body.isSuccess != null
+            }
+        ).toSuccessValueBoolean()
     }
 }
