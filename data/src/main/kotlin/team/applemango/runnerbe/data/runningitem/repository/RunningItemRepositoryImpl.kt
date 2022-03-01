@@ -10,9 +10,9 @@
 package team.applemango.runnerbe.data.runningitem.repository
 
 import team.applemango.runnerbe.data.common.isSuccessNonNull
+import team.applemango.runnerbe.data.common.toBaseResult
 import team.applemango.runnerbe.data.runningitem.constant.NotYetVerifyCode
 import team.applemango.runnerbe.data.runningitem.constant.SuccessCode
-import team.applemango.runnerbe.data.runningitem.mapper.toBaseResult
 import team.applemango.runnerbe.data.runningitem.mapper.toDomain
 import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
 import team.applemango.runnerbe.data.util.runningItemApi
