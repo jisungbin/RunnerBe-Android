@@ -19,6 +19,7 @@ import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
 import team.applemango.runnerbe.data.util.userApi
 import team.applemango.runnerbe.domain.runningitem.common.BaseResult
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
+import team.applemango.runnerbe.domain.user.model.MyPageInformation
 import team.applemango.runnerbe.domain.user.model.wrapper.JobWrapper
 import team.applemango.runnerbe.domain.user.model.wrapper.NicknameWrapper
 import team.applemango.runnerbe.domain.user.model.wrapper.ProfileImageUrlWrapper
@@ -115,11 +116,18 @@ class UserRepositoryImpl : UserRepository {
         ).toJobChangeResult()
     }
 
-    override suspend fun loadMyPage() {
+    override suspend fun loadMyPage(
+        jwt: String,
+        userId: Int,
+    ): MyPageInformation {
         TODO("Not yet implemented")
     }
 
-    override suspend fun attendanceCheck() {
+    override suspend fun attendanceCheck(
+        jwt: String,
+        postId: Int,
+        userId: Int,
+    ): Boolean {
         TODO("Not yet implemented")
     }
 }

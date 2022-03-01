@@ -10,9 +10,9 @@
 package team.applemango.runnerbe.domain.runningitem.model.runner
 
 import team.applemango.runnerbe.domain.constant.AgeGroup
-import team.applemango.runnerbe.domain.constant.Tag
 import team.applemango.runnerbe.domain.constant.Gender
 import team.applemango.runnerbe.domain.constant.Job
+import team.applemango.runnerbe.domain.constant.Tag
 
 data class Runner(
     val id: Int,

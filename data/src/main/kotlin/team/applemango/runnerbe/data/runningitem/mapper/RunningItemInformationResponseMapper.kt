@@ -12,13 +12,19 @@ package team.applemango.runnerbe.data.runningitem.mapper
 import team.applemango.runnerbe.data.runningitem.constant.NotYetVerifyCode
 import team.applemango.runnerbe.data.runningitem.model.runningitem.information.RunningItemInformationResponse
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.information.RunningItemInformation
-import team.applemango.runnerbe.shared.domain.requireFieldNullMessage
 import team.applemango.runnerbe.shared.domain.notAllowedValueMessage
+import team.applemango.runnerbe.shared.domain.requireFieldNullMessage
 
 internal fun RunningItemInformationResponse.toDomain(): RunningItemInformation? {
-    checkNotNull(result) { requireFieldNullMessage("result") }
-    checkNotNull(code) { requireFieldNullMessage("code") }
-    check(code in 1015..1020 || code == NotYetVerifyCode) { notAllowedValueMessage(code) }
+    checkNotNull(result) {
+        requireFieldNullMessage("result")
+    }
+    checkNotNull(code) {
+        requireFieldNullMessage("code")
+    }
+    check(code in 1015..1020 || code == NotYetVerifyCode) {
+        notAllowedValueMessage(code)
+    }
     if (code == NotYetVerifyCode) return null
     return RunningItemInformation(
         isMyItem = when (code) {
@@ -39,13 +45,17 @@ internal fun RunningItemInformationResponse.toDomain(): RunningItemInformation? 
         joinRunners = requireNotNull(result.runnerInfo) {
             requireFieldNullMessage("runnerInfo")
         }.map { runner ->
-            checkNotNull(runner) { requireFieldNullMessage("runner") }
+            checkNotNull(runner) {
+                requireFieldNullMessage("runner")
+            }
             runner.toDomain()
         },
         waitingRunners = requireNotNull(result.waitingRunnerInfo) {
             requireFieldNullMessage("waitingRunnerInfo")
         }.map { runner ->
-            checkNotNull(runner) { requireFieldNullMessage("runner") }
+            checkNotNull(runner) {
+                requireFieldNullMessage("runner")
+            }
             runner.toDomain()
         },
     )

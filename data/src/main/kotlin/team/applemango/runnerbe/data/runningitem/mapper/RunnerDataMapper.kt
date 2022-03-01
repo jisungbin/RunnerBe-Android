@@ -10,26 +10,38 @@
 package team.applemango.runnerbe.data.runningitem.mapper
 
 import team.applemango.runnerbe.data.runningitem.model.runner.RunnerData
-import team.applemango.runnerbe.domain.runningitem.model.runner.Runner
 import team.applemango.runnerbe.domain.constant.AgeGroup
 import team.applemango.runnerbe.domain.constant.AgeGroupType
-import team.applemango.runnerbe.domain.constant.Tag
 import team.applemango.runnerbe.domain.constant.Gender
 import team.applemango.runnerbe.domain.constant.Job
+import team.applemango.runnerbe.domain.constant.Tag
+import team.applemango.runnerbe.domain.runningitem.model.runner.Runner
 import team.applemango.runnerbe.shared.domain.requireFieldNullMessage
 
 internal fun RunnerData.toDomain() = Runner(
-    id = requireNotNull(userId) { requireFieldNullMessage("userId") },
-    nickname = requireNotNull(nickName) { requireFieldNullMessage("nickName") },
+    id = requireNotNull(userId) {
+        requireFieldNullMessage("userId")
+    },
+    nickname = requireNotNull(nickName) {
+        requireFieldNullMessage("nickName")
+    },
     gender = Gender.values().first {
-        it.code == requireNotNull(gender) { requireFieldNullMessage("gender") }
+        it.code == requireNotNull(gender) {
+            requireFieldNullMessage("gender")
+        }
     },
     job = Job.values().first {
-        it.string == requireNotNull(job) { requireFieldNullMessage("job") }
+        it.string == requireNotNull(job) {
+            requireFieldNullMessage("job")
+        }
     },
-    profileImageUrl = requireNotNull(profileImageUrl) { requireFieldNullMessage("profileImageUrl") },
+    profileImageUrl = requireNotNull(profileImageUrl) {
+        requireFieldNullMessage("profileImageUrl")
+    },
     ageGroup = run {
-        val ageGroup = requireNotNull(age) { requireFieldNullMessage("age") }
+        val ageGroup = requireNotNull(age) {
+            requireFieldNullMessage("age")
+        }
         val (ageGroupString, ageGroupTypeString) = ageGroup.split(" ")
         AgeGroup(
             ageLevel = ageGroupString.split("대")[0].toInt(),
@@ -37,6 +49,8 @@ internal fun RunnerData.toDomain() = Runner(
         )
     },
     tag = Tag.values().first {
-        it.message == requireNotNull(diligence) { requireFieldNullMessage("diligence") }
+        it.message == requireNotNull(diligence) {
+            requireFieldNullMessage("diligence")
+        }
     }
 )

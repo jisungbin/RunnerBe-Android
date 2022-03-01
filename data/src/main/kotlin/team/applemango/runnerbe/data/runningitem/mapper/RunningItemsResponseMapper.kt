@@ -16,7 +16,9 @@ import team.applemango.runnerbe.shared.domain.requireFieldNullMessage
 internal fun RunningItemsResponse.toDomain(): List<RunningItem> {
     if (result.isNullOrEmpty()) return emptyList()
     return result.map { item ->
-        checkNotNull(item) { requireFieldNullMessage("RunningItemResponse.result item") }
+        checkNotNull(item) {
+            requireFieldNullMessage("RunningItemResponse.result item")
+        }
         item.toDomain(type = MappingType.MainPageApiFields)
     }
 }

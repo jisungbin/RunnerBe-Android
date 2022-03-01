@@ -13,6 +13,7 @@ import team.applemango.runnerbe.domain.runningitem.common.BaseResult
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 import team.applemango.runnerbe.domain.user.constant.JobChangeResult
 import team.applemango.runnerbe.domain.user.constant.NicknameChangeResult
+import team.applemango.runnerbe.domain.user.model.MyPageInformation
 import team.applemango.runnerbe.domain.user.model.wrapper.JobWrapper
 import team.applemango.runnerbe.domain.user.model.wrapper.NicknameWrapper
 import team.applemango.runnerbe.domain.user.model.wrapper.ProfileImageUrlWrapper
@@ -79,10 +80,22 @@ interface UserRepository {
     /**
      * 마이페이지 정보 조회 (24번 API)
      */
-    suspend fun loadMyPage()
+    suspend fun loadMyPage(
+        jwt: String,
+        userId: Int,
+    ): MyPageInformation
 
     /**
      * 출석 (27번 API)
+     *
+     * @return 출석 체크를 하기 위해선 러닝에 참여해야 함
+     * 러닝에 참여하는건 인증된 회원만 가능하므로 이 API(출석)을
+     * 호출할 수 있는 상태는 무조건 유저가 인증이 된 상태임
+     * 따라서 수정 성공 여부를 나타내는 [Boolean] 값만 리턴함
      */
-    suspend fun attendanceCheck()
+    suspend fun attendanceCheck(
+        jwt: String,
+        postId: Int,
+        userId: Int,
+    ): Boolean
 }

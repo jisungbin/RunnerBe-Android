@@ -9,6 +9,7 @@
 
 package team.applemango.runnerbe.domain.runningitem.usecase
 
+import team.applemango.runnerbe.domain.constant.Gender
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.domain.runningitem.filter.AgeFilter
 import team.applemango.runnerbe.domain.runningitem.filter.DistanceFilter
@@ -17,7 +18,6 @@ import team.applemango.runnerbe.domain.runningitem.filter.KeywordFilter
 import team.applemango.runnerbe.domain.runningitem.filter.RunningItemFilter
 import team.applemango.runnerbe.domain.runningitem.model.common.Locate
 import team.applemango.runnerbe.domain.runningitem.repository.RunningItemRepository
-import team.applemango.runnerbe.domain.constant.Gender
 
 class LoadRunningItemsUseCase(private val repo: RunningItemRepository) {
     suspend operator fun invoke(

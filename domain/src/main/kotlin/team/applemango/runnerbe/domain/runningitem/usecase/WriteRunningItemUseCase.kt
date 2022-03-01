@@ -9,9 +9,9 @@
 
 package team.applemango.runnerbe.domain.runningitem.usecase
 
+import team.applemango.runnerbe.domain.runningitem.mapper.toData
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItemApiBody
 import team.applemango.runnerbe.domain.runningitem.repository.RunningItemRepository
-import team.applemango.runnerbe.domain.runningitem.mapper.toData
 
 class WriteRunningItemUseCase(private val repo: RunningItemRepository) {
     suspend operator fun invoke(

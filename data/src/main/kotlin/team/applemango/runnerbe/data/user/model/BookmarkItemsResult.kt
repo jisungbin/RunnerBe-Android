@@ -12,7 +12,7 @@ package team.applemango.runnerbe.data.user.model
 import com.fasterxml.jackson.annotation.JsonProperty
 import team.applemango.runnerbe.data.runningitem.model.runningitem.RunningItemData
 
-data class LoadBookmarkItemsResult(
+data class BookmarkItemsResult(
     @field:JsonProperty("bookMarkList")
     val bookMarkList: List<RunningItemData?>? = null,
 

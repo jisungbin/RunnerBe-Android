@@ -9,9 +9,9 @@
 
 package team.applemango.runnerbe.domain.runningitem.filter
 
+import team.applemango.runnerbe.domain.constant.Job
 import team.applemango.runnerbe.domain.runningitem.filter.JobFilter.Create
 import team.applemango.runnerbe.domain.runningitem.filter.JobFilter.None
-import team.applemango.runnerbe.domain.constant.Job
 
 /**
  * 직군 필터

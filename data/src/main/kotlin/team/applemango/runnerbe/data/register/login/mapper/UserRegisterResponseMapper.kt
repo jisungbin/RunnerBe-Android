@@ -11,15 +11,20 @@ package team.applemango.runnerbe.data.register.login.mapper
 
 import team.applemango.runnerbe.data.register.login.model.register.UserRegisterResponse
 import team.applemango.runnerbe.domain.register.runnerbe.constant.UserRegisterResult
-import team.applemango.runnerbe.shared.domain.requireFieldNullMessage
 import team.applemango.runnerbe.shared.domain.notAllowedValueMessage
+import team.applemango.runnerbe.shared.domain.requireFieldNullMessage
 
 // 회원가입의 경우 처리가 어떻게 이뤄졌는지 사용자에게 나타내기 위해
 // 사용자가 만들 수 있는 failure state 만 open 함
 internal fun UserRegisterResponse.toDomain(): UserRegisterResult {
-    return when (checkNotNull(code)) {
+    checkNotNull(code) {
+        requireFieldNullMessage("code")
+    }
+    return when (code) {
         1005, 1006 -> {
-            val jwt = requireNotNull(jwt) { requireFieldNullMessage("jwt") }
+            val jwt = requireNotNull(jwt) {
+                requireFieldNullMessage("jwt")
+            }
             UserRegisterResult.Success(jwt)
         }
         3001 -> UserRegisterResult.DuplicateUuid

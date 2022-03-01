@@ -18,7 +18,9 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 import team.applemango.runnerbe.data.common.DefaultResponse
-import team.applemango.runnerbe.data.user.model.LoadBookmarkItemsResponse
+import team.applemango.runnerbe.data.user.model.BookmarkItemsResponse
+import team.applemango.runnerbe.data.user.model.MyPageInformationResponse
+import team.applemango.runnerbe.domain.user.model.MyPageInformation
 import team.applemango.runnerbe.domain.user.model.wrapper.JobWrapper
 import team.applemango.runnerbe.domain.user.model.wrapper.NicknameWrapper
 import team.applemango.runnerbe.domain.user.model.wrapper.ProfileImageUrlWrapper
@@ -43,7 +45,7 @@ interface UserApi {
     fun loadBookmarkItems(
         @Header("x-access-token") jwt: String,
         @Path("userId") userId: Int,
-    ): Response<LoadBookmarkItemsResponse>
+    ): Response<BookmarkItemsResponse>
 
     @PATCH("/users/{userId}/profileImage")
     fun updateProfileImage(
@@ -58,4 +60,10 @@ interface UserApi {
         @Path("userId") userId: Int,
         @Body jobCode: JobWrapper,
     ): Response<DefaultResponse>
+
+    @GET("/users/{userId}/myPage")
+    fun loadMyPage(
+        @Header("x-access-token") jwt: String,
+        @Path("userId") userId: Int,
+    ): Response<MyPageInformationResponse>
 }
