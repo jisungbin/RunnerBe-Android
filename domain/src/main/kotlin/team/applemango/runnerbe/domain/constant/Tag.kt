@@ -12,6 +12,6 @@ package team.applemango.runnerbe.domain.constant
 /**
  * 러너 성실도
  */
-enum class Diligence(val message: String) {
+enum class Tag(val message: String) {
     Effort("노력 러너")
 }

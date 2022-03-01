@@ -13,7 +13,7 @@ import team.applemango.runnerbe.data.runningitem.model.runner.RunnerData
 import team.applemango.runnerbe.domain.runningitem.model.runner.Runner
 import team.applemango.runnerbe.domain.constant.AgeGroup
 import team.applemango.runnerbe.domain.constant.AgeGroupType
-import team.applemango.runnerbe.domain.constant.Diligence
+import team.applemango.runnerbe.domain.constant.Tag
 import team.applemango.runnerbe.domain.constant.Gender
 import team.applemango.runnerbe.domain.constant.Job
 import team.applemango.runnerbe.shared.domain.requireFieldNullMessage
@@ -36,7 +36,7 @@ internal fun RunnerData.toDomain() = Runner(
             type = AgeGroupType.values().first { it.string == ageGroupTypeString }
         )
     },
-    diligence = Diligence.values().first {
+    tag = Tag.values().first {
         it.message == requireNotNull(diligence) { requireFieldNullMessage("diligence") }
     }
 )
