@@ -12,6 +12,7 @@
 - 코틀린 스타일 가이드는 [ktlint](https://ktlint.github.io/)를 적용하며, 코틀린 공식 스타일 가이드를 따름
 - 인자가 2개 이상인 경우, 각 인자마다 새로운 라인에 배치
 - 함수 괄호가 열린 경우, 새로운 라인에 코드 작성
+  단, filter function 과 같이 단순 boolean expression function 일 경우 예외를 가짐
 
 ## KDoc
 
