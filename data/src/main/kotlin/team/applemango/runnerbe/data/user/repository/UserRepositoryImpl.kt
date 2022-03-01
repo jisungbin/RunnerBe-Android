@@ -12,6 +12,7 @@ package team.applemango.runnerbe.data.user.repository
 import team.applemango.runnerbe.data.runningitem.constant.NotYetVerifyCode
 import team.applemango.runnerbe.data.runningitem.constant.SuccessCode
 import team.applemango.runnerbe.data.runningitem.mapper.toBaseResult
+import team.applemango.runnerbe.data.user.mapper.toDomain
 import team.applemango.runnerbe.data.user.mapper.toNicknameChangeResult
 import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
 import team.applemango.runnerbe.data.util.userApi
@@ -59,8 +60,20 @@ class UserRepositoryImpl : UserRepository {
         ).toBaseResult()
     }
 
-    override suspend fun loadBookmarkItems(): List<RunningItem> {
-        TODO("Not yet implemented")
+    override suspend fun loadBookmarkItems(
+        jwt: String,
+        userId: Int,
+    ): List<RunningItem> {
+        val request = userApi.loadBookmarkItems(
+            jwt = jwt,
+            userId = userId,
+        )
+        return request.requireSuccessfulBody(
+            requestName = "userApi.loadBookmarkItems",
+            resultVerifyBuilder = { body ->
+                body.code in listOf(SuccessCode, NotYetVerifyCode)
+            }
+        ).toDomain()
     }
 
     override suspend fun updateProfileImage() {

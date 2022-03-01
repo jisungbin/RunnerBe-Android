@@ -9,5 +9,5 @@
 
 package team.applemango.runnerbe.shared.domain
 
-fun requireFieldExceptionMessage(fieldName: String) = "Require `$fieldName` field is null."
+fun requireFieldNullMessage(fieldName: String) = "Require `$fieldName` field is null."
 fun resultCodeExceptionMessage(code: Int) = "Result code $code is not allowed here."

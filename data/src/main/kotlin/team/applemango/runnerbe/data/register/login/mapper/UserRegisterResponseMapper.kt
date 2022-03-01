@@ -11,7 +11,7 @@ package team.applemango.runnerbe.data.register.login.mapper
 
 import team.applemango.runnerbe.data.register.login.model.register.UserRegisterResponse
 import team.applemango.runnerbe.domain.register.runnerbe.constant.UserRegisterResult
-import team.applemango.runnerbe.shared.domain.requireFieldExceptionMessage
+import team.applemango.runnerbe.shared.domain.requireFieldNullMessage
 import team.applemango.runnerbe.shared.domain.resultCodeExceptionMessage
 
 // 회원가입의 경우 처리가 어떻게 이뤄졌는지 사용자에게 나타내기 위해
@@ -19,7 +19,7 @@ import team.applemango.runnerbe.shared.domain.resultCodeExceptionMessage
 internal fun UserRegisterResponse.toDomain(): UserRegisterResult {
     return when (checkNotNull(code)) {
         1005, 1006 -> {
-            val jwt = requireNotNull(jwt) { requireFieldExceptionMessage("jwt") }
+            val jwt = requireNotNull(jwt) { requireFieldNullMessage("jwt") }
             UserRegisterResult.Success(jwt)
         }
         3001 -> UserRegisterResult.DuplicateUuid

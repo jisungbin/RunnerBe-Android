@@ -23,7 +23,7 @@ import team.applemango.runnerbe.domain.runningitem.model.common.Locate
 import team.applemango.runnerbe.domain.runningitem.model.common.Time
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 import team.applemango.runnerbe.shared.domain.extension.convertNullableString
-import team.applemango.runnerbe.shared.domain.requireFieldExceptionMessage
+import team.applemango.runnerbe.shared.domain.requireFieldNullMessage
 
 /**
  * API Call 마다 불러오는 [RunningItem] 필드들이 다름
@@ -46,54 +46,54 @@ private const val DefaultProfileImageUrl =
     "https://github.com/applemango-runnerbe/applemango-runnerbe.github.io/blob/main/Profile_28.png?raw=true"
 
 internal fun RunningItemData.toDomain(type: MappingType) = RunningItem(
-    itemId = requireNotNull(postId) { requireFieldExceptionMessage("postId") },
-    ownerId = requireNotNull(postUserId) { requireFieldExceptionMessage("postUserId") },
+    itemId = requireNotNull(postId) { requireFieldNullMessage("postId") },
+    ownerId = requireNotNull(postUserId) { requireFieldNullMessage("postUserId") },
     ownerNickName = when (type) {
         MainPageApiFields, BookmarkApiFields -> requireNotNull(nickName) {
-            requireFieldExceptionMessage("nickName")
+            requireFieldNullMessage("nickName")
         }
         InformationApiFields -> ""
     },
     ownerProfileImageUrl = when (type) {
         MainPageApiFields, BookmarkApiFields -> requireNotNull(profileImageUrl) {
-            requireFieldExceptionMessage("profileImageUrl")
+            requireFieldNullMessage("profileImageUrl")
         }.convertNullableString() ?: DefaultProfileImageUrl
         InformationApiFields -> DefaultProfileImageUrl
     },
-    createdAt = requireNotNull(postingTime) { requireFieldExceptionMessage("postingTime") },
+    createdAt = requireNotNull(postingTime) { requireFieldNullMessage("postingTime") },
     bookmarkCount = when (type) {
         MainPageApiFields -> requireNotNull(bookMarkNumber) {
-            requireFieldExceptionMessage("bookMarkNumber")
+            requireFieldNullMessage("bookMarkNumber")
         }
         InformationApiFields, BookmarkApiFields -> DefaultIntValue
     },
     runningType = RunningItemType.values().first {
         val runningTypeCode = requireNotNull(runningTag) {
-            requireFieldExceptionMessage("runningTag")
+            requireFieldNullMessage("runningTag")
         }
         it.code == runningTypeCode
     },
     finish = when (type) {
         MainPageApiFields, BookmarkApiFields -> requireNotNull(whetherEnd) {
-            requireFieldExceptionMessage("whetherEnd")
+            requireFieldNullMessage("whetherEnd")
         }.toBoolean()
         InformationApiFields -> false
     },
     maxRunnerCount = when (type) {
         MainPageApiFields, BookmarkApiFields -> DefaultIntValue
         InformationApiFields -> requireNotNull(peopleNum) {
-            requireFieldExceptionMessage("peopleNum") // ex_최대 4명
+            requireFieldNullMessage("peopleNum") // ex_최대 4명
         }.split(" ")[1].split("명")[0].toInt()
     },
-    title = requireNotNull(title) { requireFieldExceptionMessage("title") },
+    title = requireNotNull(title) { requireFieldNullMessage("title") },
     gender = Gender.values().first {
         val genderCode = requireNotNull(gender) {
-            requireFieldExceptionMessage("gender")
+            requireFieldNullMessage("gender")
         }
         it.code == genderCode
     },
     jobs = when (type) {
-        MainPageApiFields -> requireNotNull(job) { requireFieldExceptionMessage("job") }
+        MainPageApiFields -> requireNotNull(job) { requireFieldNullMessage("job") }
             .split(",")
             .map { jobCode ->
                 Job.values().first { it.string == jobCode }
@@ -101,25 +101,25 @@ internal fun RunningItemData.toDomain(type: MappingType) = RunningItem(
         InformationApiFields, BookmarkApiFields -> emptyList()
     },
     ageFilter = run {
-        val age = requireNotNull(age) { requireFieldExceptionMessage("age") }
+        val age = requireNotNull(age) { requireFieldNullMessage("age") }
         val (minAge, maxAge) = age.split("-").map(String::toInt)
         AgeFilter(min = minAge, max = maxAge)
     },
     runningTime = requireNotNull(runningTime) {
-        requireFieldExceptionMessage("runningTime")
+        requireFieldNullMessage("runningTime")
     }.let { timeString ->
         val (hour, minute, second) = timeString.split(":").map(String::toInt)
         Time(hour = hour, minute = minute, second = second)
     },
     locate = run {
         val address = requireNotNull(locationInfo) {
-            requireFieldExceptionMessage("locationInfo")
+            requireFieldNullMessage("locationInfo")
         }
         val latitudeString = requireNotNull(gatherLatitude) {
-            requireFieldExceptionMessage("gatherLatitude")
+            requireFieldNullMessage("gatherLatitude")
         }
         val longitudeString = requireNotNull(gatherLongitude) {
-            requireFieldExceptionMessage("gatherLongitude")
+            requireFieldNullMessage("gatherLongitude")
         }
         Locate(
             address = address,
@@ -129,12 +129,12 @@ internal fun RunningItemData.toDomain(type: MappingType) = RunningItem(
     },
     distance = when (type) {
         MainPageApiFields -> requireNotNull(distance) {
-            requireFieldExceptionMessage("distance")
+            requireFieldNullMessage("distance")
         }.toFloat()
         InformationApiFields, BookmarkApiFields -> DefaultIntValue.toFloat()
     },
     meetingDate = requireNotNull(gatheringTime) {
-        requireFieldExceptionMessage("gatheringTime")
+        requireFieldNullMessage("gatheringTime")
     }.let { dateString ->
         val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
         format.parse(dateString)
@@ -143,7 +143,7 @@ internal fun RunningItemData.toDomain(type: MappingType) = RunningItem(
     message = when (type) {
         MainPageApiFields, BookmarkApiFields -> ""
         InformationApiFields -> requireNotNull(contents) {
-            requireFieldExceptionMessage("contents")
+            requireFieldNullMessage("contents")
         }
     }
 )

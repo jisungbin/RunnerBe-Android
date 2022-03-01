@@ -16,20 +16,20 @@ import team.applemango.runnerbe.domain.constant.AgeGroupType
 import team.applemango.runnerbe.domain.constant.Diligence
 import team.applemango.runnerbe.domain.constant.Gender
 import team.applemango.runnerbe.domain.constant.Job
-import team.applemango.runnerbe.shared.domain.requireFieldExceptionMessage
+import team.applemango.runnerbe.shared.domain.requireFieldNullMessage
 
 internal fun RunnerData.toDomain() = Runner(
-    id = requireNotNull(userId) { requireFieldExceptionMessage("userId") },
-    nickname = requireNotNull(nickName) { requireFieldExceptionMessage("nickName") },
+    id = requireNotNull(userId) { requireFieldNullMessage("userId") },
+    nickname = requireNotNull(nickName) { requireFieldNullMessage("nickName") },
     gender = Gender.values().first {
-        it.code == requireNotNull(gender) { requireFieldExceptionMessage("gender") }
+        it.code == requireNotNull(gender) { requireFieldNullMessage("gender") }
     },
     job = Job.values().first {
-        it.string == requireNotNull(job) { requireFieldExceptionMessage("job") }
+        it.string == requireNotNull(job) { requireFieldNullMessage("job") }
     },
-    profileImageUrl = requireNotNull(profileImageUrl) { requireFieldExceptionMessage("profileImageUrl") },
+    profileImageUrl = requireNotNull(profileImageUrl) { requireFieldNullMessage("profileImageUrl") },
     ageGroup = run {
-        val ageGroup = requireNotNull(age) { requireFieldExceptionMessage("age") }
+        val ageGroup = requireNotNull(age) { requireFieldNullMessage("age") }
         val (ageGroupString, ageGroupTypeString) = ageGroup.split(" ")
         AgeGroup(
             ageLevel = ageGroupString.split("대")[0].toInt(),
@@ -37,6 +37,6 @@ internal fun RunnerData.toDomain() = Runner(
         )
     },
     diligence = Diligence.values().first {
-        it.message == requireNotNull(diligence) { requireFieldExceptionMessage("diligence") }
+        it.message == requireNotNull(diligence) { requireFieldNullMessage("diligence") }
     }
 )

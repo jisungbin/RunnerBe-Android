@@ -24,7 +24,7 @@ import team.applemango.runnerbe.domain.register.runnerbe.usecase.LoginUseCase
 import team.applemango.runnerbe.feature.register.snslogin.constant.LoginState
 import team.applemango.runnerbe.feature.register.snslogin.mvi.LoginSideEffect
 import team.applemango.runnerbe.shared.base.BaseViewModel
-import team.applemango.runnerbe.shared.domain.requireFieldExceptionMessage
+import team.applemango.runnerbe.shared.domain.requireFieldNullMessage
 
 internal class SnsLoginViewModel @Inject constructor(
     private val getKakaoKakaoAccessTokenUseCase: GetKakaoAccessTokenUseCase,
@@ -45,14 +45,14 @@ internal class SnsLoginViewModel @Inject constructor(
                     .onSuccess { user ->
                         if (user.isAlreadyRegisterUser) { // 이미 가입후 회원가입까지 모두 마친 유저
                             val jwt =
-                                requireNotNull(user.jwt) { requireFieldExceptionMessage("jwt") }
+                                requireNotNull(user.jwt) { requireFieldNullMessage("jwt") }
                             postSideEffect(LoginSideEffect.SaveJwt(jwt))
                             reduce {
                                 LoginState.Registered
                             }
                         } else {
                             val uuid =
-                                requireNotNull(user.uuid) { requireFieldExceptionMessage("uuid") }
+                                requireNotNull(user.uuid) { requireFieldNullMessage("uuid") }
                             postSideEffect(LoginSideEffect.SaveUuid(uuid))
                             reduce {
                                 LoginState.Done

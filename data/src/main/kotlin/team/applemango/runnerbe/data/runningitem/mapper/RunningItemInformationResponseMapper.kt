@@ -12,12 +12,12 @@ package team.applemango.runnerbe.data.runningitem.mapper
 import team.applemango.runnerbe.data.runningitem.constant.NotYetVerifyCode
 import team.applemango.runnerbe.data.runningitem.model.runningitem.information.RunningItemInformationResponse
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.information.RunningItemInformation
-import team.applemango.runnerbe.shared.domain.requireFieldExceptionMessage
+import team.applemango.runnerbe.shared.domain.requireFieldNullMessage
 import team.applemango.runnerbe.shared.domain.resultCodeExceptionMessage
 
 internal fun RunningItemInformationResponse.toDomain(): RunningItemInformation? {
-    checkNotNull(result) { requireFieldExceptionMessage("result") }
-    checkNotNull(code) { requireFieldExceptionMessage("code") }
+    checkNotNull(result) { requireFieldNullMessage("result") }
+    checkNotNull(code) { requireFieldNullMessage("code") }
     check(code in 1015..1020 || code == NotYetVerifyCode) { resultCodeExceptionMessage(code) }
     if (code == NotYetVerifyCode) return null
     return RunningItemInformation(
@@ -32,20 +32,20 @@ internal fun RunningItemInformationResponse.toDomain(): RunningItemInformation? 
             else -> throw IllegalStateException(resultCodeExceptionMessage(code))
         },
         item = requireNotNull(result.postingInfo) {
-            requireFieldExceptionMessage("postingInfo")
+            requireFieldNullMessage("postingInfo")
         }.firstOrNull()
             ?.toDomain(type = MappingType.InformationApiFields)
-            ?: throw Exception(requireFieldExceptionMessage("postingInfo value")),
+            ?: throw Exception(requireFieldNullMessage("postingInfo value")),
         joinRunners = requireNotNull(result.runnerInfo) {
-            requireFieldExceptionMessage("runnerInfo")
+            requireFieldNullMessage("runnerInfo")
         }.map { runner ->
-            checkNotNull(runner) { requireFieldExceptionMessage("runner") }
+            checkNotNull(runner) { requireFieldNullMessage("runner") }
             runner.toDomain()
         },
         waitingRunners = requireNotNull(result.waitingRunnerInfo) {
-            requireFieldExceptionMessage("waitingRunnerInfo")
+            requireFieldNullMessage("waitingRunnerInfo")
         }.map { runner ->
-            checkNotNull(runner) { requireFieldExceptionMessage("runner") }
+            checkNotNull(runner) { requireFieldNullMessage("runner") }
             runner.toDomain()
         },
     )

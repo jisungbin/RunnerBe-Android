@@ -11,12 +11,12 @@ package team.applemango.runnerbe.data.runningitem.mapper
 
 import team.applemango.runnerbe.data.runningitem.model.runningitem.RunningItemsResponse
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
-import team.applemango.runnerbe.shared.domain.requireFieldExceptionMessage
+import team.applemango.runnerbe.shared.domain.requireFieldNullMessage
 
 internal fun RunningItemsResponse.toDomain(): List<RunningItem> {
     if (result.isNullOrEmpty()) return emptyList()
     return result.map { item ->
-        checkNotNull(item) { requireFieldExceptionMessage("RunningItemResponse.result item") }
+        checkNotNull(item) { requireFieldNullMessage("RunningItemResponse.result item") }
         item.toDomain(type = MappingType.MainPageApiFields)
     }
 }
