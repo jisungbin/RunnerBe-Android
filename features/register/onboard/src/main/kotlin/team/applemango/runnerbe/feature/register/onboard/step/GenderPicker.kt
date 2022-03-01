@@ -56,7 +56,7 @@ internal fun GenderPicker(genderSelectChanged: (isSelected: Boolean) -> Unit) {
             alignment = Alignment.CenterHorizontally
         )
     ) {
-        items(Gender.values()) { gender ->
+        items(Gender.values().filterNot { it == Gender.All }) { gender ->
             ToggleButton(
                 target = gender,
                 selectState = genderSelectState,
