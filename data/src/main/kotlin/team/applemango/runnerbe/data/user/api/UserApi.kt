@@ -66,7 +66,7 @@ interface UserApi {
         @Path("userId") userId: Int,
     ): Response<MyPageInformationResponse>
 
-    @GET("/runnings/{postId}/attendees/{userId}")
+    @PATCH("/runnings/{postId}/attendees/{userId}")
     fun attendanceCheck(
         @Header("x-access-token") jwt: String,
         @Path("postId") postId: Int,
