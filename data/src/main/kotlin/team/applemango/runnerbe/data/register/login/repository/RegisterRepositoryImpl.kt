@@ -28,7 +28,7 @@ class RegisterRepositoryImpl : RegisterRepository {
         return request.requireSuccessfulBody(
             requestName = "registerApi.login $platformName",
             resultVerifyBuilder = { body ->
-                body.code in listOf(1001, 1007) && body.loginResult != null
+                body.code in 1001..1002 && body.loginResult != null
             }
         ).toDomain()
     }
