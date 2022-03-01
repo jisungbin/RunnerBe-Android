@@ -11,6 +11,7 @@ package team.applemango.runnerbe.data.runningitem.mapper
 
 import java.text.SimpleDateFormat
 import java.util.Locale
+import team.applemango.runnerbe.data.runningitem.mapper.MappingType.BookmarkApiFields
 import team.applemango.runnerbe.data.runningitem.mapper.MappingType.InformationApiFields
 import team.applemango.runnerbe.data.runningitem.mapper.MappingType.MainPageApiFields
 import team.applemango.runnerbe.data.runningitem.model.runningitem.RunningItemData
@@ -31,10 +32,13 @@ import team.applemango.runnerbe.shared.domain.requireFieldExceptionMessage
  * - peopleNum, contents 필드 없음
  * @property InformationApiFields  게시글 상세 페이지 API Call result
  * - nickName, profileImageUrl, bookMarkNumber, whetherEnd, job, distance 필드 없음
+ * @property BookmarkApiFields 찜 목록 조회 API Call result
+ * - bookMarkNumber, peopleNum, job, distance, contents 필드 없음
  */
 internal enum class MappingType {
     MainPageApiFields,
     InformationApiFields,
+    BookmarkApiFields
 }
 
 private const val DefaultIntValue = -1
@@ -45,13 +49,13 @@ internal fun RunningItemData.toDomain(type: MappingType) = RunningItem(
     itemId = requireNotNull(postId) { requireFieldExceptionMessage("postId") },
     ownerId = requireNotNull(postUserId) { requireFieldExceptionMessage("postUserId") },
     ownerNickName = when (type) {
-        MainPageApiFields -> requireNotNull(nickName) {
+        MainPageApiFields, BookmarkApiFields -> requireNotNull(nickName) {
             requireFieldExceptionMessage("nickName")
         }
         InformationApiFields -> ""
     },
     ownerProfileImageUrl = when (type) {
-        MainPageApiFields -> requireNotNull(profileImageUrl) {
+        MainPageApiFields, BookmarkApiFields -> requireNotNull(profileImageUrl) {
             requireFieldExceptionMessage("profileImageUrl")
         }.convertNullableString() ?: DefaultProfileImageUrl
         InformationApiFields -> DefaultProfileImageUrl
@@ -61,7 +65,7 @@ internal fun RunningItemData.toDomain(type: MappingType) = RunningItem(
         MainPageApiFields -> requireNotNull(bookMarkNumber) {
             requireFieldExceptionMessage("bookMarkNumber")
         }
-        InformationApiFields -> DefaultIntValue
+        InformationApiFields, BookmarkApiFields -> DefaultIntValue
     },
     runningType = RunningItemType.values().first {
         val runningTypeCode = requireNotNull(runningTag) {
@@ -70,13 +74,13 @@ internal fun RunningItemData.toDomain(type: MappingType) = RunningItem(
         it.code == runningTypeCode
     },
     finish = when (type) {
-        MainPageApiFields -> requireNotNull(whetherEnd) {
+        MainPageApiFields, BookmarkApiFields -> requireNotNull(whetherEnd) {
             requireFieldExceptionMessage("whetherEnd")
         }.toBoolean()
         InformationApiFields -> false
     },
     maxRunnerCount = when (type) {
-        MainPageApiFields -> DefaultIntValue
+        MainPageApiFields, BookmarkApiFields -> DefaultIntValue
         InformationApiFields -> requireNotNull(peopleNum) {
             requireFieldExceptionMessage("peopleNum") // ex_최대 4명
         }.split(" ")[1].split("명")[0].toInt()
@@ -94,7 +98,7 @@ internal fun RunningItemData.toDomain(type: MappingType) = RunningItem(
             .map { jobCode ->
                 Job.values().first { it.string == jobCode }
             }
-        InformationApiFields -> emptyList()
+        InformationApiFields, BookmarkApiFields -> emptyList()
     },
     ageFilter = run {
         val age = requireNotNull(age) { requireFieldExceptionMessage("age") }
@@ -127,7 +131,7 @@ internal fun RunningItemData.toDomain(type: MappingType) = RunningItem(
         MainPageApiFields -> requireNotNull(distance) {
             requireFieldExceptionMessage("distance")
         }.toFloat()
-        InformationApiFields -> DefaultIntValue.toFloat()
+        InformationApiFields, BookmarkApiFields -> DefaultIntValue.toFloat()
     },
     meetingDate = requireNotNull(gatheringTime) {
         requireFieldExceptionMessage("gatheringTime")
@@ -137,7 +141,7 @@ internal fun RunningItemData.toDomain(type: MappingType) = RunningItem(
             ?: throw Exception("Server response time has not allowed pattern: $dateString")
     },
     message = when (type) {
-        MainPageApiFields -> ""
+        MainPageApiFields, BookmarkApiFields -> ""
         InformationApiFields -> requireNotNull(contents) {
             requireFieldExceptionMessage("contents")
         }

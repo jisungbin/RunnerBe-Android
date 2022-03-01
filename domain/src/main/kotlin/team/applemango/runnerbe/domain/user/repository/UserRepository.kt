@@ -10,6 +10,7 @@
 package team.applemango.runnerbe.domain.user.repository
 
 import team.applemango.runnerbe.domain.runningitem.common.BaseResult
+import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 import team.applemango.runnerbe.domain.user.constant.NicknameChangeResult
 import team.applemango.runnerbe.domain.user.model.Nickname
 
@@ -46,7 +47,10 @@ interface UserRepository {
     /**
      * 찜 목록 조회 (21번 API)
      */
-    suspend fun loadBookmarkItems()
+    suspend fun loadBookmarkItems(
+        jwt: String,
+        userId: Int,
+    ): List<RunningItem>
 
     /**
      * 프로필 사진 변경 (22번 API)

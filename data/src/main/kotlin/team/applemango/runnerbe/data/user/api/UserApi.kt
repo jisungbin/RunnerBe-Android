@@ -11,12 +11,14 @@ package team.applemango.runnerbe.data.user.api
 
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 import team.applemango.runnerbe.data.common.DefaultResponse
+import team.applemango.runnerbe.data.user.model.LoadBookmarkItemsResponse
 import team.applemango.runnerbe.domain.user.model.Nickname
 
 interface UserApi {
@@ -34,4 +36,10 @@ interface UserApi {
         @Path("userId") userId: Int,
         @Path("whetherAdd") whetherAdd: String,
     ): Response<DefaultResponse>
+
+    @GET("/users/{userId}/bookmarks")
+    fun loadBookmarkItems(
+        @Header("x-access-token") jwt: String,
+        @Path("userId") userId: Int,
+    ): Response<LoadBookmarkItemsResponse>
 }

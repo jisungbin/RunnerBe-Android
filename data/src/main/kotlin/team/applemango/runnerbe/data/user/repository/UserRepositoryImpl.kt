@@ -16,6 +16,7 @@ import team.applemango.runnerbe.data.user.mapper.toNicknameChangeResult
 import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
 import team.applemango.runnerbe.data.util.userApi
 import team.applemango.runnerbe.domain.runningitem.common.BaseResult
+import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 import team.applemango.runnerbe.domain.user.model.Nickname
 import team.applemango.runnerbe.domain.user.repository.UserRepository
 
@@ -58,7 +59,7 @@ class UserRepositoryImpl : UserRepository {
         ).toBaseResult()
     }
 
-    override suspend fun loadBookmarkItems() {
+    override suspend fun loadBookmarkItems(): List<RunningItem> {
         TODO("Not yet implemented")
     }
 
