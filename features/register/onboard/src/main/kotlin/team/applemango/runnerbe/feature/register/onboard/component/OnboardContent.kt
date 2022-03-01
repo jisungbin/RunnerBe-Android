@@ -38,6 +38,7 @@ import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.shared.compose.extension.parseHtml
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
+import team.applemango.runnerbe.shared.domain.constant.EmptyString
 import team.applemango.runnerbe.shared.domain.extension.runIf
 
 private val BottomCTAButtonShape = RoundedCornerShape(24.dp)
@@ -70,7 +71,7 @@ internal fun OnboardContent(
             Step.VerifyWithEmployeeId -> StringAsset.Subtitle.VerifyWithEmployeeId
             Step.VerifyWithEmailDone -> StringAsset.Subtitle.EmailVerifyDone
             Step.VerifyWithEmployeeIdRequestDone -> StringAsset.Subtitle.EmployeeIdVerifyRequestDone
-            else -> StringAsset.Empty
+            else -> EmptyString
         }
     }
     val bottomCTAButtonText = remember(step) {
