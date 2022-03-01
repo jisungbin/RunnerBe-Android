@@ -45,7 +45,7 @@
   
 # 🐛 아키텍처 이슈
   
-현재 아키텍처에 매우 심각한 이슈들이 존재합니다. 이슈 해결을 위한 이슈나 PR 은 항상 환영입니다.
+현재 아키텍처에 다양한 이슈들이 존재합니다. 이슈 해결을 위한 이슈나 PR 은 항상 환영입니다.
   
 - [#10: DFM resource 접근](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/10)
 - [#14: dagger 사용 최적화 및 보일러플레이트 해결](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/14) [close]
