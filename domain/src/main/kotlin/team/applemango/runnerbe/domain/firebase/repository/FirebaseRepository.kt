@@ -19,14 +19,13 @@ interface FirebaseRepository {
      * 인자에 들어가는 Bitmap 은 안드로이드에 platform aware 함
      * 이를 수정해야 함!! (related issue: [#38](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/38))
      *
-     * @return Firebase Storage 에 올라간 이미지 다운로드 주소 or 업로드 실패시 null
+     * @return Firebase Storage 에 올라간 이미지의 다운로드 주소
      */
     suspend fun uploadImage(
         image: Bitmap,
-        name: String,
+        path: String,
         userId: Int,
-        exceptionHandler: (exception: Throwable) -> Unit,
-    ): String?
+    ): String
 
     /**
      * Firebase Remote Config 조회 (현재는 업데이트 체크용으로 존재)

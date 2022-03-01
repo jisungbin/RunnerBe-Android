@@ -14,6 +14,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import java.io.ByteArrayOutputStream
 import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 import kotlinx.coroutines.suspendCancellableCoroutine
 import team.applemango.runnerbe.domain.firebase.repository.FirebaseRepository
 
@@ -27,25 +28,27 @@ class FirebaseRepositoryImpl : FirebaseRepository {
 
     override suspend fun uploadImage(
         image: Bitmap,
-        name: String,
+        path: String,
         userId: Int,
-        exceptionHandler: (exception: Throwable) -> Unit,
-    ): String? = suspendCancellableCoroutine { continuation ->
+    ): String = suspendCancellableCoroutine { continuation ->
         val baos = ByteArrayOutputStream()
         image.compress(Bitmap.CompressFormat.JPEG, 100, baos)
         val data = baos.toByteArray()
-        storageRef.child(FirebaseStoragePath).child(userId.toString()).run {
-            putBytes(data)
-                .continueWithTask { downloadUrl }
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful && task.result != null) {
-                        continuation.resume(task.result.toString())
-                    } else {
-                        exceptionHandler(task.exception ?: ImageUpdateExceptionWithNull)
-                        continuation.resume(null)
+        storageRef.child(FirebaseStoragePath)
+            .child(userId.toString())
+            .child(path)
+            .run {
+                putBytes(data)
+                    .continueWithTask { downloadUrl }
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful && task.result != null) {
+                            continuation.resume(task.result.toString())
+                        } else {
+                            val exception = task.exception ?: ImageUpdateExceptionWithNull
+                            continuation.resumeWithException(exception)
+                        }
                     }
-                }
-        }
+            }
     }
 
     override suspend fun loadConfigData(name: String): String {

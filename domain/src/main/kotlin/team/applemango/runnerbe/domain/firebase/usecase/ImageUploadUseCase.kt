@@ -12,16 +12,16 @@ package team.applemango.runnerbe.domain.firebase.usecase
 import android.graphics.Bitmap
 import team.applemango.runnerbe.domain.firebase.repository.FirebaseRepository
 
-class UploadImageUseCase(private val repo: FirebaseRepository) {
+class ImageUploadUseCase(private val repo: FirebaseRepository) {
     suspend operator fun invoke(
         image: Bitmap,
-        name: String,
+        path: String,
         userId: Int,
-        exceptionHandler: (exception: Throwable) -> Unit,
-    ): String? = repo.uploadImage(
-        image = image,
-        name = name,
-        userId = userId,
-        exceptionHandler = exceptionHandler
-    )
+    ) = runCatching {
+        repo.uploadImage(
+            image = image,
+            path = path,
+            userId = userId,
+        )
+    }
 }
