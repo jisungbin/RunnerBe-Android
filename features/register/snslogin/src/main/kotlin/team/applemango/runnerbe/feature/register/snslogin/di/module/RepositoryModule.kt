@@ -13,9 +13,9 @@ import android.app.Activity
 import dagger.Module
 import dagger.Provides
 import team.applemango.runnerbe.data.register.login.repository.AccessTokenRepositoryImpl
-import team.applemango.runnerbe.data.register.login.repository.LoginRepositoryImpl
+import team.applemango.runnerbe.data.register.login.repository.RegisterRepositoryImpl
 import team.applemango.runnerbe.domain.register.runnerbe.repository.AccessTokenRepository
-import team.applemango.runnerbe.domain.register.runnerbe.repository.LoginRepository
+import team.applemango.runnerbe.domain.register.runnerbe.repository.RegisterRepository
 
 @Module
 internal class RepositoryModule(private val activityContext: Activity) {
@@ -24,5 +24,5 @@ internal class RepositoryModule(private val activityContext: Activity) {
         AccessTokenRepositoryImpl(activityContext)
 
     @Provides
-    fun provideLoginRepository(): LoginRepository = LoginRepositoryImpl()
+    fun provideLoginRepository(): RegisterRepository = RegisterRepositoryImpl()
 }
