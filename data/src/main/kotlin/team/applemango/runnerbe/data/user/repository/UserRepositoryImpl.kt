@@ -9,6 +9,7 @@
 
 package team.applemango.runnerbe.data.user.repository
 
+import team.applemango.runnerbe.data.common.isSuccessNonNull
 import team.applemango.runnerbe.data.common.toBaseResult
 import team.applemango.runnerbe.data.common.toJobChangeResult
 import team.applemango.runnerbe.data.common.toNicknameChangeResult
@@ -120,7 +121,16 @@ class UserRepositoryImpl : UserRepository {
         jwt: String,
         userId: Int,
     ): MyPageInformation {
-        TODO("Not yet implemented")
+        val request = userApi.loadMyPage(
+            jwt = jwt,
+            userId = userId,
+        )
+        return request.requireSuccessfulBody(
+            requestName = "userApi.loadMyPage",
+            resultVerifyBuilder = { body ->
+                body.code == SuccessCode
+            }
+        ).toDomain()
     }
 
     override suspend fun attendanceCheck(
@@ -128,6 +138,16 @@ class UserRepositoryImpl : UserRepository {
         postId: Int,
         userId: Int,
     ): Boolean {
-        TODO("Not yet implemented")
+        val request = userApi.attendanceCheck(
+            jwt = jwt,
+            postId = postId,
+            userId = userId,
+        )
+        return request.requireSuccessfulBody(
+            requestName = "userApi.attendanceCheck",
+            resultVerifyBuilder = { body ->
+                body.code == SuccessCode
+            }
+        ).isSuccessNonNull
     }
 }

@@ -20,7 +20,6 @@ import retrofit2.http.Query
 import team.applemango.runnerbe.data.common.DefaultResponse
 import team.applemango.runnerbe.data.user.model.BookmarkItemsResponse
 import team.applemango.runnerbe.data.user.model.MyPageInformationResponse
-import team.applemango.runnerbe.domain.user.model.MyPageInformation
 import team.applemango.runnerbe.domain.user.model.wrapper.JobWrapper
 import team.applemango.runnerbe.domain.user.model.wrapper.NicknameWrapper
 import team.applemango.runnerbe.domain.user.model.wrapper.ProfileImageUrlWrapper
@@ -66,4 +65,11 @@ interface UserApi {
         @Header("x-access-token") jwt: String,
         @Path("userId") userId: Int,
     ): Response<MyPageInformationResponse>
+
+    @GET("/runnings/{postId}/attendees/{userId}")
+    fun attendanceCheck(
+        @Header("x-access-token") jwt: String,
+        @Path("postId") postId: Int,
+        @Path("userId") userId: Int,
+    ): Response<DefaultResponse>
 }
