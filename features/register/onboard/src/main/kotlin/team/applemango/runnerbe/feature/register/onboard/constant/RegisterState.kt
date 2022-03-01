@@ -14,6 +14,7 @@ import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState.
 import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState.DuplicateEmail
 import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState.DuplicateNickname
 import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState.DuplicateUuid
+import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState.ImageUploadError
 import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState.ImageUploading
 import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState.None
 import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState.NullInformation
@@ -25,6 +26,7 @@ import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState.
  *
  * @property None 아무것도 하지 않은 초기 상태
  * @property ImageUploading 이미지(사원증 사진) 업로드중
+ * @property ImageUploadError 이미지(사원증 사진) 업로드 실패
  * @property RegisterDone 가입 성공 (1000)
  * @property VerifyRequestDone 사원증으로 인증을 진행했을 경우, 인증 요청 완료한 상태 -> 가입 성공 X, 가입 대기 상태 O
  * @property DuplicateUuid 중복된 uuid (3001)
@@ -36,6 +38,7 @@ import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState.
 internal enum class RegisterState {
     None,
     ImageUploading,
+    ImageUploadError,
     RegisterDone,
     VerifyRequestDone,
     DuplicateUuid,
