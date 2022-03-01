@@ -7,6 +7,6 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.domain.user.model
+package team.applemango.runnerbe.domain.user.model.wrapper
 
 data class JobWrapper(val jobCode: String)

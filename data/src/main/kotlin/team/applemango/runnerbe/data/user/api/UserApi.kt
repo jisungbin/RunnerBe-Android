@@ -19,9 +19,9 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 import team.applemango.runnerbe.data.common.DefaultResponse
 import team.applemango.runnerbe.data.user.model.LoadBookmarkItemsResponse
-import team.applemango.runnerbe.domain.user.model.JobWrapper
-import team.applemango.runnerbe.domain.user.model.NicknameWrapper
-import team.applemango.runnerbe.domain.user.model.ProfileImageUrlWrapper
+import team.applemango.runnerbe.domain.user.model.wrapper.JobWrapper
+import team.applemango.runnerbe.domain.user.model.wrapper.NicknameWrapper
+import team.applemango.runnerbe.domain.user.model.wrapper.ProfileImageUrlWrapper
 
 interface UserApi {
     @PATCH("/users/{userId}/name")

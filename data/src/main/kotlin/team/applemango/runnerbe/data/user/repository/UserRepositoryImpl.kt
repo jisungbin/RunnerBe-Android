@@ -19,9 +19,9 @@ import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
 import team.applemango.runnerbe.data.util.userApi
 import team.applemango.runnerbe.domain.runningitem.common.BaseResult
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
-import team.applemango.runnerbe.domain.user.model.JobWrapper
-import team.applemango.runnerbe.domain.user.model.NicknameWrapper
-import team.applemango.runnerbe.domain.user.model.ProfileImageUrlWrapper
+import team.applemango.runnerbe.domain.user.model.wrapper.JobWrapper
+import team.applemango.runnerbe.domain.user.model.wrapper.NicknameWrapper
+import team.applemango.runnerbe.domain.user.model.wrapper.ProfileImageUrlWrapper
 import team.applemango.runnerbe.domain.user.repository.UserRepository
 
 class UserRepositoryImpl : UserRepository {
