@@ -17,6 +17,7 @@
 </p>
 
 ---
+  
 <!-- # 🚀🚀🚀 SUPER-FAST-DEV ON 🚀🚀🚀
 
 시간이 매우 촉박하여 퍼포먼스와 앱 스킬들을 다 무시하고 모놀리식 구성으로 [재개발](https://github.com/applemango-runnerbe/RunnerBe-Android-SuperFastDev)합니다.
@@ -41,7 +42,19 @@
 - WindowInsets
 - Feature별 모듈 분리
 - Complex Custom View
-
+  
+# 🐛 아키텍처 이슈
+  
+현재 아키텍처에 매우 심각한 이슈들이 존재합니다. 이슈 해결을 위한 이슈나 PR 은 항상 환영입니다.
+  
+- [#10: DFM resource 접근](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/10)
+- [#14: dagger 사용 최적화 및 보일러플레이트 해결](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/14) [close]
+- [#15: onboard navigation 보일러플레이트 코드](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/15)
+- [#19: DFM에서 android:exported="true" 로 설정](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/19)
+- [#38: platform aware 한 ViewModel](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/38) [close]
+- [#45: shared 모듈 3개](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/45)
+- [#46: [심각] platform aware 한 domain repository](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/46)
+  
 ---
 
 ## Tech Skill
