@@ -9,7 +9,7 @@
 
 package team.applemango.runnerbe.domain.user.usecase
 
-import team.applemango.runnerbe.domain.user.model.Nickname
+import team.applemango.runnerbe.domain.user.model.NicknameWrapper
 import team.applemango.runnerbe.domain.user.repository.UserRepository
 
 class SetNicknameUseCase(private val repo: UserRepository) {
@@ -21,7 +21,7 @@ class SetNicknameUseCase(private val repo: UserRepository) {
         repo.setNickname(
             jwt = jwt,
             userId = userId,
-            nickName = Nickname(nickname)
+            nickName = NicknameWrapper(nickname)
         )
     }
 }

@@ -9,7 +9,10 @@
 
 package team.applemango.runnerbe.data.common
 
+import team.applemango.runnerbe.data.runningitem.constant.NotYetVerifyCode
+import team.applemango.runnerbe.data.runningitem.constant.SuccessCode
 import team.applemango.runnerbe.domain.runningitem.common.BaseResult
+import team.applemango.runnerbe.domain.user.constant.JobChangeResult
 import team.applemango.runnerbe.domain.user.constant.NicknameChangeResult
 import team.applemango.runnerbe.shared.domain.requireFieldNullMessage
 import team.applemango.runnerbe.shared.domain.resultCodeExceptionMessage
@@ -21,17 +24,24 @@ internal val DefaultResponse.isSuccessNonNull
 
 internal fun DefaultResponse.toBaseResult() =
     when (checkNotNull(code) { requireFieldNullMessage("code") }) {
-        1000 -> BaseResult.Success
-        2044 -> BaseResult.NotYetVerify
+        SuccessCode -> BaseResult.Success
+        NotYetVerifyCode -> BaseResult.NotYetVerify
         else -> throw IllegalStateException(resultCodeExceptionMessage(code))
     }
 
-internal fun DefaultResponse.toNicknameChangeResult(): BaseResult {
-    return when (checkNotNull(code) { requireFieldNullMessage("code") }) {
-        1000 -> BaseResult.Success
-        2044 -> BaseResult.NotYetVerify
+internal fun DefaultResponse.toNicknameChangeResult() =
+    when (checkNotNull(code) { requireFieldNullMessage("code") }) {
+        SuccessCode -> BaseResult.Success
+        NotYetVerifyCode -> BaseResult.NotYetVerify
         3004 -> NicknameChangeResult.Duplicate
         3005 -> NicknameChangeResult.AlreadyChanged
         else -> throw IllegalStateException(resultCodeExceptionMessage(code))
     }
-}
+
+internal fun DefaultResponse.toJobChangeResult() =
+    when (checkNotNull(code) { requireFieldNullMessage("code") }) {
+        SuccessCode -> BaseResult.Success
+        NotYetVerifyCode -> BaseResult.NotYetVerify
+        2078 -> JobChangeResult.NotYetAvailable
+        else -> throw IllegalStateException(resultCodeExceptionMessage(code))
+    }
