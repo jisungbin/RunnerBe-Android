@@ -13,23 +13,23 @@ import team.applemango.runnerbe.data.runningitem.constant.NotYetVerifyCode
 import team.applemango.runnerbe.data.runningitem.model.runningitem.information.RunningItemInformationResponse
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.information.RunningItemInformation
 import team.applemango.runnerbe.shared.domain.requireFieldNullMessage
-import team.applemango.runnerbe.shared.domain.resultCodeExceptionMessage
+import team.applemango.runnerbe.shared.domain.notAllowedValueMessage
 
 internal fun RunningItemInformationResponse.toDomain(): RunningItemInformation? {
     checkNotNull(result) { requireFieldNullMessage("result") }
     checkNotNull(code) { requireFieldNullMessage("code") }
-    check(code in 1015..1020 || code == NotYetVerifyCode) { resultCodeExceptionMessage(code) }
+    check(code in 1015..1020 || code == NotYetVerifyCode) { notAllowedValueMessage(code) }
     if (code == NotYetVerifyCode) return null
     return RunningItemInformation(
         isMyItem = when (code) {
             in 1015..1018 -> false
             in 1019..1020 -> true
-            else -> throw IllegalStateException(resultCodeExceptionMessage(code))
+            else -> throw IllegalStateException(notAllowedValueMessage(code))
         },
         bookmarked = when (code) {
             1015, 1017, 1019 -> true
             1016, 1018, 1020 -> false
-            else -> throw IllegalStateException(resultCodeExceptionMessage(code))
+            else -> throw IllegalStateException(notAllowedValueMessage(code))
         },
         item = requireNotNull(result.postingInfo) {
             requireFieldNullMessage("postingInfo")

@@ -12,13 +12,13 @@ package team.applemango.runnerbe.data.register.login.mapper
 import team.applemango.runnerbe.data.register.login.model.login.LoginRequestResponse
 import team.applemango.runnerbe.domain.register.runnerbe.model.UserToken
 import team.applemango.runnerbe.shared.domain.requireFieldNullMessage
-import team.applemango.runnerbe.shared.domain.resultCodeExceptionMessage
+import team.applemango.runnerbe.shared.domain.notAllowedValueMessage
 
 internal fun LoginRequestResponse.toDomain(): UserToken {
     val loginResult = checkNotNull(loginResult) { requireFieldNullMessage("loginResult") }
     return when (checkNotNull(code) { requireFieldNullMessage("code") }) {
         1001 -> UserToken(jwt = requireNotNull(loginResult.jwt) { requireFieldNullMessage("jwt") }) // 회원
         1007 -> UserToken(uuid = requireNotNull(loginResult.uuid) { requireFieldNullMessage("uuid") }) // 비회원
-        else -> throw IllegalStateException(resultCodeExceptionMessage(code))
+        else -> throw IllegalStateException(notAllowedValueMessage(code))
     }
 }
