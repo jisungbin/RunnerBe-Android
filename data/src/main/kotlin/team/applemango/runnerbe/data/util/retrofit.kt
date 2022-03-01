@@ -38,9 +38,10 @@ private fun getHttpLoggingInterceptor() = HttpLoggingInterceptor { message ->
     level = HttpLoggingInterceptor.Level.BODY
 }
 
-private fun OkHttpClient.Builder.getDefaultTimeout() = connectTimeout(5, TimeUnit.SECONDS)
-    .readTimeout(5, TimeUnit.SECONDS)
-    .writeTimeout(5, TimeUnit.SECONDS)
+private fun OkHttpClient.Builder.setTimeout(second: Long = 5) =
+    connectTimeout(second, TimeUnit.SECONDS)
+        .readTimeout(second, TimeUnit.SECONDS)
+        .writeTimeout(second, TimeUnit.SECONDS)
 
 private fun buildClient(@RunnerbeDsl builder: ClientModel.() -> Unit): OkHttpClient {
     val clientModel = ClientModel().apply(builder)
@@ -59,7 +60,7 @@ private val runnerbeBaseApi = Retrofit.Builder()
     .client(
         buildClient {
             builder = {
-                getDefaultTimeout()
+                setTimeout()
             }
             interceptors = listOf(getHttpLoggingInterceptor())
         }
@@ -72,7 +73,7 @@ private val mailjetBaseApi = Retrofit.Builder()
     .client(
         buildClient {
             builder = {
-                getDefaultTimeout()
+                setTimeout()
             }
             interceptors = listOf(
                 getHttpLoggingInterceptor(),
