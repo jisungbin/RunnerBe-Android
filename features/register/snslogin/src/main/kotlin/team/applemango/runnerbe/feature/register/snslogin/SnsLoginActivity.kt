@@ -32,10 +32,6 @@ import team.applemango.runnerbe.activity.MainActivity
 import team.applemango.runnerbe.feature.register.snslogin.component.SnsLoginScreen
 import team.applemango.runnerbe.feature.register.snslogin.constant.LoginState
 import team.applemango.runnerbe.feature.register.snslogin.di.ViewModelFactory
-import team.applemango.runnerbe.feature.register.snslogin.di.component.DaggerViewModelComponent
-import team.applemango.runnerbe.feature.register.snslogin.di.module.RepositoryModule
-import team.applemango.runnerbe.feature.register.snslogin.di.module.UseCaseModule
-import team.applemango.runnerbe.feature.register.snslogin.di.module.ViewModelModule
 import team.applemango.runnerbe.feature.register.snslogin.mvi.LoginSideEffect
 import team.applemango.runnerbe.shared.base.WindowInsetActivity
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
@@ -58,13 +54,13 @@ class SnsLoginActivity : WindowInsetActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        DaggerViewModelComponent
-            .builder()
-            .repositoryModule(RepositoryModule(this)) // must activity context (startActivity calling)
-            .useCaseModule(UseCaseModule())
-            .viewModelModule(ViewModelModule())
-            .build()
-            .inject(this)
+        /* DaggerViewModelComponent
+             .builder()
+             .repositoryModule(RepositoryModule(this)) // must activity context (startActivity calling)
+             .useCaseModule(UseCaseModule())
+             .viewModelModule(ViewModelModule())
+             .build()
+             .inject(this)*/
 
         vm = ViewModelProvider(this, viewModelFactory)[SnsLoginViewModel::class.java]
         vm.observe(lifecycleOwner = this, state = ::handleState, sideEffect = ::handleSideEffect)

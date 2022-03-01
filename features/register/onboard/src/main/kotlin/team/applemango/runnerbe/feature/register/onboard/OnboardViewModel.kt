@@ -13,7 +13,6 @@ import android.graphics.Bitmap
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.viewModelScope
-import javax.inject.Inject
 import kotlin.random.Random
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -45,7 +44,7 @@ private val UserNullException =
 private const val DefaultEmployeeIdImagePath = "register-employee-id.jpg"
 
 // TODO: https://github.com/applemango-runnerbe/RunnerBe-Android/issues/38
-internal class OnboardViewModel @Inject constructor(
+internal class OnboardViewModel(
     private val checkUsableEmailUseCase: CheckUsableEmailUseCase,
     private val userRegisterUseCase: UserRegisterUseCase,
     private val mailjetSendUseCase: MailjetSendUseCase,

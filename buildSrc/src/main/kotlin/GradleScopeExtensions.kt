@@ -34,7 +34,7 @@ fun PluginDependenciesSpec.installLibraryDfmHiltTest(
 // dependencies
 fun DependencyHandler.installSharedComposeOrbitHiltTest(
     isSharedModule: Boolean = false,
-    useDagger: Boolean = false,
+    excludeHilt: Boolean = false,
 ) {
     if (!isSharedModule) {
         implementationProject(ProjectConstants.Shared)
@@ -47,13 +47,13 @@ fun DependencyHandler.installSharedComposeOrbitHiltTest(
     add("testDebugImplementation", Dependencies.Test.Hamcrest)
     add("testDebugImplementation", Dependencies.Test.Coroutine)
     add("testDebugImplementation", Dependencies.Orbit.Test)
-    if (!useDagger) {
+    if (!excludeHilt) {
         implementation(Dependencies.Di.Hilt)
         add("kapt", Dependencies.Compiler.Hilt)
-    } else {
+    } /* else {
         implementation(Dependencies.Di.Dagger)
         add("kapt", Dependencies.Compiler.Dagger)
-    }
+    }*/
 }
 
 fun DependencyHandler.implementationProject(path: String) {
