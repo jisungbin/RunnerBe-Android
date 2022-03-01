@@ -13,6 +13,7 @@ import team.applemango.runnerbe.domain.runningitem.common.BaseResult
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 import team.applemango.runnerbe.domain.user.constant.NicknameChangeResult
 import team.applemango.runnerbe.domain.user.model.Nickname
+import team.applemango.runnerbe.domain.user.model.ProfileImageUrl
 
 interface UserRepository {
     /**
@@ -55,12 +56,16 @@ interface UserRepository {
     /**
      * 프로필 사진 변경 (22번 API)
      */
-    suspend fun updateProfileImage()
+    suspend fun updateProfileImage(
+        jwt: String,
+        userId: Int,
+        profileImageUrl: ProfileImageUrl,
+    ): BaseResult
 
     /**
      * 직군 변경 (23번 API)
      */
-    suspend fun checkJob()
+    suspend fun changeJob()
 
     /**
      * 마이페이지 정보 조회 (24번 API)

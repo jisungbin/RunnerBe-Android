@@ -20,6 +20,7 @@ import retrofit2.http.Query
 import team.applemango.runnerbe.data.common.DefaultResponse
 import team.applemango.runnerbe.data.user.model.LoadBookmarkItemsResponse
 import team.applemango.runnerbe.domain.user.model.Nickname
+import team.applemango.runnerbe.domain.user.model.ProfileImageUrl
 
 interface UserApi {
     @PATCH("/users/{userId}/name")
@@ -42,4 +43,11 @@ interface UserApi {
         @Header("x-access-token") jwt: String,
         @Path("userId") userId: Int,
     ): Response<LoadBookmarkItemsResponse>
+
+    @PATCH("/users/{userId}/profileImage")
+    fun updateProfileImage(
+        @Header("x-access-token") jwt: String,
+        @Path("userId") userId: Int,
+        @Body profileImageUrl: ProfileImageUrl,
+    ): Response<DefaultResponse>
 }

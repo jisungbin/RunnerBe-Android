@@ -19,6 +19,7 @@ import team.applemango.runnerbe.data.util.userApi
 import team.applemango.runnerbe.domain.runningitem.common.BaseResult
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 import team.applemango.runnerbe.domain.user.model.Nickname
+import team.applemango.runnerbe.domain.user.model.ProfileImageUrl
 import team.applemango.runnerbe.domain.user.repository.UserRepository
 
 class UserRepositoryImpl : UserRepository {
@@ -76,11 +77,25 @@ class UserRepositoryImpl : UserRepository {
         ).toDomain()
     }
 
-    override suspend fun updateProfileImage() {
-        TODO("Not yet implemented")
+    override suspend fun updateProfileImage(
+        jwt: String,
+        userId: Int,
+        profileImageUrl: ProfileImageUrl,
+    ): BaseResult {
+        val request = userApi.updateProfileImage(
+            jwt = jwt,
+            userId = userId,
+            profileImageUrl = profileImageUrl
+        )
+        return request.requireSuccessfulBody(
+            requestName = "userApi.updateProfileImage",
+            resultVerifyBuilder = { body ->
+                body.code in listOf(SuccessCode, NotYetVerifyCode)
+            }
+        ).toBaseResult()
     }
 
-    override suspend fun checkJob() {
+    override suspend fun changeJob() {
         TODO("Not yet implemented")
     }
 
