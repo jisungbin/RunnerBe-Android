@@ -26,6 +26,7 @@ import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import team.applemango.runnerbe.domain.constant.Gender
+import team.applemango.runnerbe.domain.firebase.usecase.ImageUploadUseCase
 import team.applemango.runnerbe.domain.register.mailjet.usecase.MailjetSendUseCase
 import team.applemango.runnerbe.domain.register.runnerbe.constant.UserRegisterResult
 import team.applemango.runnerbe.domain.register.runnerbe.model.UserRegister
@@ -41,12 +42,14 @@ private val SendEmailExceptionWithNoMessage =
     Exception("user.sendEmailVerification is fail. But, exception message is null.")
 private val UserNullException =
     Exception("Firebase.auth.createUserWithEmailAndPassword success. But, current user is null.")
+private const val DefaultEmployeeIdImagePath = "register-employee-id.jpg"
 
 // TODO: https://github.com/applemango-runnerbe/RunnerBe-Android/issues/38
 internal class OnboardViewModel @Inject constructor(
     private val checkUsableEmailUseCase: CheckUsableEmailUseCase,
     private val userRegisterUseCase: UserRegisterUseCase,
     private val mailjetSendUseCase: MailjetSendUseCase,
+    private val imageUploadImageUseCase: ImageUploadUseCase,
 ) : BaseViewModel(), ContainerHost<RegisterState, RegisterSideEffect> {
 
     override val container = container<RegisterState, RegisterSideEffect>(RegisterState.None)
@@ -105,19 +108,31 @@ internal class OnboardViewModel @Inject constructor(
                 val job = preferences[DataStoreKey.Onboard.Job]
                 // StateFlow 로 저장되는 값이라 TextField 의 초기값인 "" (공백) 이 들어갈 수 있음
                 val officeEmail = preferences[DataStoreKey.Onboard.Email]?.ifEmpty { null }
-                if (listOf(uuid, year, gender, job).contains(null)) {
+                if (uuid == null || year == null || gender == null || job == null) {
                     reduce {
                         RegisterState.NullInformation
                     }
                 } else {
                     var photoUrl: String? = null
-                    val genderCode = Gender.values().first { it.string == gender!! }.code
+                    val genderCode = Gender.values().first { it.string == gender }.code
                     if (photo != null) { // 사원증을 통한 인증일 경우
                         reduce {
                             RegisterState.ImageUploading
                         }
-                        photoUrl = uploadImage(photo, uuid!!) ?: run {
-                            // uploadImage 내부에서 emitException 해주고 있음
+                        photoUrl = imageUploadImageUseCase(
+                            image = photo,
+                            path = DefaultEmployeeIdImagePath,
+                            userId = Random.nextInt(),
+                            exceptionHandler = { exception ->
+                                launch {
+                                    emitException(exception)
+                                    reduce {
+                                        RegisterState.ImageUploadError
+                                    }
+                                }
+                                return@imageUploadImageUseCase
+                            }
+                        ) ?: run {
                             cancel("user login data collect and register execute must be once.")
                             return@collect
                         }
@@ -166,17 +181,6 @@ internal class OnboardViewModel @Inject constructor(
                     UserRegisterResult.DuplicateEmail -> {
                         reduce {
                             RegisterState.DuplicateEmail
-                        }
-                    }
-                    RegisterState.DatabaseError -> {
-                        reduce {
-                            RegisterState.DatabaseError
-                        }
-                    }
-                    is UserRegisterResult.Exception -> {
-                        emitException(Exception("Server request fail: ${result.code}"))
-                        reduce {
-                            RegisterState.None
                         }
                     }
                 }
