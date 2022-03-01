@@ -10,6 +10,7 @@
 package team.applemango.runnerbe.data.util
 
 import io.github.jisungbin.logeukes.logeukes
+import java.util.concurrent.TimeUnit
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -40,10 +41,16 @@ private fun getHttpLoggingInterceptor() = HttpLoggingInterceptor { message ->
     level = HttpLoggingInterceptor.Level.BODY
 }
 
+private var TimeoutClient = OkHttpClient.Builder()
+    .connectTimeout(5, TimeUnit.SECONDS)
+    .readTimeout(5, TimeUnit.SECONDS)
+    .writeTimeout(5, TimeUnit.SECONDS)
+    .build()
+
 private val runnerbeBaseApi = Retrofit.Builder()
     .baseUrl(RunnerbeHost)
     .addConverterFactory(JacksonConverter)
-    .client(getInterceptor(getHttpLoggingInterceptor()))
+    .client(getInterceptor(getHttpLoggingInterceptor(), TimeoutClient))
     .build()
 
 private val mailjetBaseApi = Retrofit.Builder()
