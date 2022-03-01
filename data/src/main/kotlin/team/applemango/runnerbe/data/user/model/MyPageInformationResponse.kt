@@ -14,7 +14,7 @@ import team.applemango.runnerbe.data.common.BaseResponse
 
 data class MyPageInformationResponse(
     @field:JsonProperty("result")
-    val result: BookmarkItemsResult? = null,
+    val result: MyPageInformationResult? = null,
 
     @field:JsonProperty("code")
     override val code: Int? = null,
