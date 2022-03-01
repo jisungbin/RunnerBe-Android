@@ -25,22 +25,27 @@ import team.applemango.runnerbe.domain.runningitem.filter.AgeFilter
 import team.applemango.runnerbe.domain.runningitem.model.common.Locate
 import team.applemango.runnerbe.domain.runningitem.model.common.Time
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
+import team.applemango.runnerbe.shared.domain.constant.EmptyString
 import team.applemango.runnerbe.shared.domain.extension.convertNullableString
+import team.applemango.runnerbe.shared.domain.extension.toBoolean
 import team.applemango.runnerbe.shared.domain.requireFieldNullMessage
 
 /**
  * API Call 마다 불러오는 [RunningItem] 필드들이 다름
  *
  * @property MainPageApiFields 메인 페이지 API Call result
- * - peopleNum, contents, attendance 필드 없음
+ * - peopleNum, contents, attendance, bookmarked 필드 없음
  * @property InformationApiFields  게시글 상세 페이지 API Call result
- * - nickName, profileImageUrl, bookMarkNumber, whetherEnd, job, distance, attendance 필드 없음
+ * - nickName, profileImageUrl, bookMarkNumber, whetherEnd, job, distance,
+ * attendance, bookmarked 필드 없음
  * @property BookmarkApiFields 찜 목록 조회 API Call result
- * - bookMarkNumber, peopleNum, job, distance, contents, attendance 필드 없음
+ * - bookMarkNumber, peopleNum, job, distance, contents, attendance, bookmarked 필드 없음
  * @property MyPageOwnRunningItemFields 마이 페이지 정보 조회 API - myPosting 부분
- * postingTime,
+ * postingTime, bookMarkNumber, peopleNum, gatherLatitude, gatherLongitude,
+ * distance, contents, attendance, bookmarked
  * @property MyPageJoinRunningItemFields 마이 페이지 정보 조회 API - myRunning 부분
- * postingTime,
+ * postingTime, bookMarkNumber, peopleNum, gatherLatitude, gatherLongitude,
+ * distance, contents
  */
 internal enum class MappingType {
     MainPageApiFields,
@@ -50,7 +55,7 @@ internal enum class MappingType {
     MyPageJoinRunningItemFields
 }
 
-private const val DefaultIntValue = -1
+private const val DefaultIntValue = 0
 private const val DefaultProfileImageUrl =
     "https://github.com/applemango-runnerbe/applemango-runnerbe.github.io/blob/main/Profile_28.png?raw=true"
 
@@ -59,13 +64,19 @@ private val serverDateFormat by lazy {
 }
 
 internal fun RunningItemData.toDomain(type: MappingType) = RunningItem(
-    itemId = requireNotNull(postId) { requireFieldNullMessage("postId") },
-    ownerId = requireNotNull(postUserId) { requireFieldNullMessage("postUserId") },
+    itemId = requireNotNull(postId) {
+        requireFieldNullMessage("postId")
+    },
+    ownerId = requireNotNull(postUserId) {
+        requireFieldNullMessage("postUserId")
+    },
     ownerNickName = when (type) {
         MainPageApiFields, BookmarkApiFields,
         MyPageOwnRunningItemFields, MyPageJoinRunningItemFields,
-        -> requireNotNull(nickName) { requireFieldNullMessage("nickName") }
-        InformationApiFields -> ""
+        -> requireNotNull(nickName) {
+            requireFieldNullMessage("nickName")
+        }
+        InformationApiFields -> EmptyString
     },
     ownerProfileImageUrl = when (type) {
         MainPageApiFields, BookmarkApiFields,
@@ -78,7 +89,10 @@ internal fun RunningItemData.toDomain(type: MappingType) = RunningItem(
     createdAt = when (type) {
         MainPageApiFields, InformationApiFields,
         BookmarkApiFields,
-        -> requireNotNull(postingTime) { requireFieldNullMessage("postingTime") }.run {
+        -> run {
+            requireNotNull(postingTime) {
+                requireFieldNullMessage("postingTime")
+            }
             serverDateFormat.parse(postingTime)
                 ?: throw Exception("Server response time has not allowed pattern: $postingTime")
         }
@@ -88,7 +102,9 @@ internal fun RunningItemData.toDomain(type: MappingType) = RunningItem(
         MainPageApiFields -> requireNotNull(bookMarkNumber) {
             requireFieldNullMessage("bookMarkNumber")
         }
-        InformationApiFields, BookmarkApiFields -> DefaultIntValue
+        InformationApiFields, BookmarkApiFields,
+        MyPageOwnRunningItemFields, MyPageJoinRunningItemFields,
+        -> DefaultIntValue
     },
     runningType = RunningItemType.values().first {
         val runningTypeCode = requireNotNull(runningTag) {
@@ -96,19 +112,20 @@ internal fun RunningItemData.toDomain(type: MappingType) = RunningItem(
         }
         it.code == runningTypeCode
     },
-    finish = when (type) {
-        MainPageApiFields, BookmarkApiFields -> requireNotNull(whetherEnd) {
-            requireFieldNullMessage("whetherEnd")
-        }.toBoolean()
-        InformationApiFields -> false
-    },
+    finish = requireNotNull(whetherEnd) {
+        requireFieldNullMessage("whetherEnd")
+    }.toBoolean(),
     maxRunnerCount = when (type) {
-        MainPageApiFields, BookmarkApiFields -> DefaultIntValue
+        MainPageApiFields, BookmarkApiFields,
+        MyPageOwnRunningItemFields, MyPageJoinRunningItemFields,
+        -> DefaultIntValue
         InformationApiFields -> requireNotNull(peopleNum) {
             requireFieldNullMessage("peopleNum") // ex_최대 4명
         }.split(" ")[1].split("명")[0].toInt()
     },
-    title = requireNotNull(title) { requireFieldNullMessage("title") },
+    title = requireNotNull(title) {
+        requireFieldNullMessage("title")
+    },
     gender = Gender.values().first {
         val genderCode = requireNotNull(gender) {
             requireFieldNullMessage("gender")
@@ -116,15 +133,22 @@ internal fun RunningItemData.toDomain(type: MappingType) = RunningItem(
         it.code == genderCode
     },
     jobs = when (type) {
-        MainPageApiFields -> requireNotNull(job) { requireFieldNullMessage("job") }
-            .split(",")
-            .map { jobCode ->
+        MainPageApiFields,
+        MyPageOwnRunningItemFields, MyPageJoinRunningItemFields,
+        -> run {
+            requireNotNull(job) {
+                requireFieldNullMessage("job")
+            }
+            job.split(",").map { jobCode ->
                 Job.values().first { it.string == jobCode }
             }
+        }
         InformationApiFields, BookmarkApiFields -> emptyList()
     },
     ageFilter = run {
-        val age = requireNotNull(age) { requireFieldNullMessage("age") }
+        val age = requireNotNull(age) {
+            requireFieldNullMessage("age")
+        }
         val (minAge, maxAge) = age.split("-").map(String::toInt)
         AgeFilter(min = minAge, max = maxAge)
     },
@@ -136,11 +160,21 @@ internal fun RunningItemData.toDomain(type: MappingType) = RunningItem(
         val address = requireNotNull(locationInfo) {
             requireFieldNullMessage("locationInfo")
         }
-        val latitudeString = requireNotNull(gatherLatitude) {
-            requireFieldNullMessage("gatherLatitude")
+        val latitudeString = when (type) {
+            MainPageApiFields,
+            InformationApiFields, BookmarkApiFields,
+            -> requireNotNull(gatherLatitude) {
+                requireFieldNullMessage("gatherLatitude")
+            }
+            MyPageOwnRunningItemFields, MyPageJoinRunningItemFields -> DefaultIntValue.toString()
         }
-        val longitudeString = requireNotNull(gatherLongitude) {
-            requireFieldNullMessage("gatherLongitude")
+        val longitudeString = when (type) {
+            MainPageApiFields,
+            InformationApiFields, BookmarkApiFields,
+            -> requireNotNull(gatherLongitude) {
+                requireFieldNullMessage("gatherLongitude")
+            }
+            MyPageOwnRunningItemFields, MyPageJoinRunningItemFields -> DefaultIntValue.toString()
         }
         Locate(
             address = address,
@@ -152,20 +186,39 @@ internal fun RunningItemData.toDomain(type: MappingType) = RunningItem(
         MainPageApiFields -> requireNotNull(distance) {
             requireFieldNullMessage("distance")
         }.toFloat()
-        InformationApiFields, BookmarkApiFields -> DefaultIntValue.toFloat()
+        InformationApiFields, BookmarkApiFields,
+        MyPageOwnRunningItemFields, MyPageJoinRunningItemFields,
+        -> DefaultIntValue.toFloat()
     },
-    meetingDate = requireNotNull(gatheringTime) { requireFieldNullMessage("gatheringTime") }.run {
-        val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
-        format.parse(gatheringTime)
+    meetingDate = run {
+        requireNotNull(gatheringTime) {
+            requireFieldNullMessage("gatheringTime")
+        }
+        serverDateFormat.parse(gatheringTime)
             ?: throw Exception("Server response time has not allowed pattern: $gatheringTime")
     },
     message = when (type) {
-        MainPageApiFields, BookmarkApiFields -> ""
+        MainPageApiFields, BookmarkApiFields,
+        MyPageOwnRunningItemFields, MyPageJoinRunningItemFields,
+        -> EmptyString
         InformationApiFields -> requireNotNull(contents) {
             requireFieldNullMessage("contents")
         }
     },
     attendance = when (type) {
-
-    },
+        MainPageApiFields, BookmarkApiFields,
+        MyPageOwnRunningItemFields, InformationApiFields,
+        -> DefaultIntValue
+        MyPageJoinRunningItemFields -> requireNotNull(attendance) {
+            requireFieldNullMessage("attendance")
+        }
+    }.toBoolean(),
+    bookmarked = when (type) {
+        MainPageApiFields, BookmarkApiFields,
+        MyPageOwnRunningItemFields, InformationApiFields,
+        -> DefaultIntValue
+        MyPageJoinRunningItemFields -> requireNotNull(bookMark) {
+            requireFieldNullMessage("bookMark")
+        }
+    }.toBoolean(),
 )
