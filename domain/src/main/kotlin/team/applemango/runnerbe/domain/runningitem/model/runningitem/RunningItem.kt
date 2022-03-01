@@ -36,6 +36,7 @@ import team.applemango.runnerbe.domain.runningitem.model.common.Time
  * @property distance 모임 장소와 내 위치간 거리 (단위: KM)
  * @property meetingDate 모임 날짜 및 시간
  * @property message 게시글 메시지
+ * @property attendance 출석 여부
  *
  * 총 18개 필드
  */
@@ -44,7 +45,7 @@ data class RunningItem(
     val ownerId: Int,
     val ownerNickName: String,
     val ownerProfileImageUrl: String,
-    val createdAt: String,
+    val createdAt: Date,
     val bookmarkCount: Int,
     val runningType: RunningItemType,
     val finish: Boolean,
@@ -58,4 +59,5 @@ data class RunningItem(
     val distance: Float,
     val meetingDate: Date,
     val message: String,
+    val attendance: Boolean,
 )

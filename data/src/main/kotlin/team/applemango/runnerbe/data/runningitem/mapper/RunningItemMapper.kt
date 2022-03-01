@@ -10,10 +10,13 @@
 package team.applemango.runnerbe.data.runningitem.mapper
 
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 import team.applemango.runnerbe.data.runningitem.mapper.MappingType.BookmarkApiFields
 import team.applemango.runnerbe.data.runningitem.mapper.MappingType.InformationApiFields
 import team.applemango.runnerbe.data.runningitem.mapper.MappingType.MainPageApiFields
+import team.applemango.runnerbe.data.runningitem.mapper.MappingType.MyPageJoinRunningItemFields
+import team.applemango.runnerbe.data.runningitem.mapper.MappingType.MyPageOwnRunningItemFields
 import team.applemango.runnerbe.data.runningitem.model.runningitem.RunningItemData
 import team.applemango.runnerbe.domain.constant.Gender
 import team.applemango.runnerbe.domain.constant.Job
@@ -29,38 +32,58 @@ import team.applemango.runnerbe.shared.domain.requireFieldNullMessage
  * API Call 마다 불러오는 [RunningItem] 필드들이 다름
  *
  * @property MainPageApiFields 메인 페이지 API Call result
- * - peopleNum, contents 필드 없음
+ * - peopleNum, contents, attendance 필드 없음
  * @property InformationApiFields  게시글 상세 페이지 API Call result
- * - nickName, profileImageUrl, bookMarkNumber, whetherEnd, job, distance 필드 없음
+ * - nickName, profileImageUrl, bookMarkNumber, whetherEnd, job, distance, attendance 필드 없음
  * @property BookmarkApiFields 찜 목록 조회 API Call result
- * - bookMarkNumber, peopleNum, job, distance, contents 필드 없음
+ * - bookMarkNumber, peopleNum, job, distance, contents, attendance 필드 없음
+ * @property MyPageOwnRunningItemFields 마이 페이지 정보 조회 API - myPosting 부분
+ * postingTime,
+ * @property MyPageJoinRunningItemFields 마이 페이지 정보 조회 API - myRunning 부분
+ * postingTime,
  */
 internal enum class MappingType {
     MainPageApiFields,
     InformationApiFields,
-    BookmarkApiFields
+    BookmarkApiFields,
+    MyPageOwnRunningItemFields,
+    MyPageJoinRunningItemFields
 }
 
 private const val DefaultIntValue = -1
 private const val DefaultProfileImageUrl =
     "https://github.com/applemango-runnerbe/applemango-runnerbe.github.io/blob/main/Profile_28.png?raw=true"
 
+private val serverDateFormat by lazy {
+    SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+}
+
 internal fun RunningItemData.toDomain(type: MappingType) = RunningItem(
     itemId = requireNotNull(postId) { requireFieldNullMessage("postId") },
     ownerId = requireNotNull(postUserId) { requireFieldNullMessage("postUserId") },
     ownerNickName = when (type) {
-        MainPageApiFields, BookmarkApiFields -> requireNotNull(nickName) {
-            requireFieldNullMessage("nickName")
-        }
+        MainPageApiFields, BookmarkApiFields,
+        MyPageOwnRunningItemFields, MyPageJoinRunningItemFields,
+        -> requireNotNull(nickName) { requireFieldNullMessage("nickName") }
         InformationApiFields -> ""
     },
     ownerProfileImageUrl = when (type) {
-        MainPageApiFields, BookmarkApiFields -> requireNotNull(profileImageUrl) {
+        MainPageApiFields, BookmarkApiFields,
+        MyPageOwnRunningItemFields, MyPageJoinRunningItemFields,
+        -> requireNotNull(profileImageUrl) {
             requireFieldNullMessage("profileImageUrl")
         }.convertNullableString() ?: DefaultProfileImageUrl
         InformationApiFields -> DefaultProfileImageUrl
     },
-    createdAt = requireNotNull(postingTime) { requireFieldNullMessage("postingTime") },
+    createdAt = when (type) {
+        MainPageApiFields, InformationApiFields,
+        BookmarkApiFields,
+        -> requireNotNull(postingTime) { requireFieldNullMessage("postingTime") }.run {
+            serverDateFormat.parse(postingTime)
+                ?: throw Exception("Server response time has not allowed pattern: $postingTime")
+        }
+        MyPageOwnRunningItemFields, MyPageJoinRunningItemFields -> Date()
+    },
     bookmarkCount = when (type) {
         MainPageApiFields -> requireNotNull(bookMarkNumber) {
             requireFieldNullMessage("bookMarkNumber")
@@ -105,10 +128,8 @@ internal fun RunningItemData.toDomain(type: MappingType) = RunningItem(
         val (minAge, maxAge) = age.split("-").map(String::toInt)
         AgeFilter(min = minAge, max = maxAge)
     },
-    runningTime = requireNotNull(runningTime) {
-        requireFieldNullMessage("runningTime")
-    }.let { timeString ->
-        val (hour, minute, second) = timeString.split(":").map(String::toInt)
+    runningTime = requireNotNull(runningTime) { requireFieldNullMessage("runningTime") }.run {
+        val (hour, minute, second) = runningTime.split(":").map(String::toInt)
         Time(hour = hour, minute = minute, second = second)
     },
     locate = run {
@@ -133,17 +154,18 @@ internal fun RunningItemData.toDomain(type: MappingType) = RunningItem(
         }.toFloat()
         InformationApiFields, BookmarkApiFields -> DefaultIntValue.toFloat()
     },
-    meetingDate = requireNotNull(gatheringTime) {
-        requireFieldNullMessage("gatheringTime")
-    }.let { dateString ->
+    meetingDate = requireNotNull(gatheringTime) { requireFieldNullMessage("gatheringTime") }.run {
         val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
-        format.parse(dateString)
-            ?: throw Exception("Server response time has not allowed pattern: $dateString")
+        format.parse(gatheringTime)
+            ?: throw Exception("Server response time has not allowed pattern: $gatheringTime")
     },
     message = when (type) {
         MainPageApiFields, BookmarkApiFields -> ""
         InformationApiFields -> requireNotNull(contents) {
             requireFieldNullMessage("contents")
         }
-    }
+    },
+    attendance = when (type) {
+
+    },
 )
