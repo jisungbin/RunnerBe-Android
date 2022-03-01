@@ -9,15 +9,18 @@
 
 package team.applemango.runnerbe.data.runningitem.mapper
 
+import java.text.SimpleDateFormat
+import java.util.Locale
 import team.applemango.runnerbe.data.runningitem.mapper.MappingType.InformationApiFields
 import team.applemango.runnerbe.data.runningitem.mapper.MappingType.MainPageApiFields
 import team.applemango.runnerbe.data.runningitem.model.runningitem.RunningItemData
+import team.applemango.runnerbe.domain.constant.Gender
+import team.applemango.runnerbe.domain.constant.Job
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.domain.runningitem.filter.AgeFilter
 import team.applemango.runnerbe.domain.runningitem.model.common.Locate
+import team.applemango.runnerbe.domain.runningitem.model.common.Time
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
-import team.applemango.runnerbe.domain.constant.Gender
-import team.applemango.runnerbe.domain.constant.Job
 import team.applemango.runnerbe.shared.domain.extension.convertNullableString
 import team.applemango.runnerbe.shared.domain.requireFieldExceptionMessage
 
@@ -98,7 +101,12 @@ internal fun RunningItemData.toDomain(type: MappingType) = RunningItem(
         val (minAge, maxAge) = age.split("-").map(String::toInt)
         AgeFilter(min = minAge, max = maxAge)
     },
-    runningTime = requireNotNull(runningTime) { requireFieldExceptionMessage("runningTime") },
+    runningTime = requireNotNull(runningTime) {
+        requireFieldExceptionMessage("runningTime")
+    }.let { timeString ->
+        val (hour, minute, second) = timeString.split(":").map(String::toInt)
+        Time(hour = hour, minute = minute, second = second)
+    },
     locate = run {
         val address = requireNotNull(locationInfo) {
             requireFieldExceptionMessage("locationInfo")
@@ -121,7 +129,13 @@ internal fun RunningItemData.toDomain(type: MappingType) = RunningItem(
         }.toFloat()
         InformationApiFields -> DefaultIntValue.toFloat()
     },
-    meetingDate = requireNotNull(gatheringTime) { requireFieldExceptionMessage("gatheringTime") },
+    meetingDate = requireNotNull(gatheringTime) {
+        requireFieldExceptionMessage("gatheringTime")
+    }.let { dateString ->
+        val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+        format.parse(dateString)
+            ?: throw Exception("Server response time has not allowed pattern: $dateString")
+    },
     message = when (type) {
         MainPageApiFields -> ""
         InformationApiFields -> requireNotNull(contents) {

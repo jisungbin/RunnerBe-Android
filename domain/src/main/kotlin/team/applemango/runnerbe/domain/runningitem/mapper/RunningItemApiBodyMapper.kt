@@ -2,12 +2,12 @@
  * RunnerBe © 2022 Team AppleMango. all rights reserved.
  * RunnerBe license is under the MIT.
  *
- * [mapper.kt] created by Ji Sungbin on 22. 2. 28. 오후 9:38
+ * [RunningItemApiBodyMapper.kt] created by Ji Sungbin on 22. 2. 28. 오후 9:38
  *
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.domain.runningitem.util
+package team.applemango.runnerbe.domain.runningitem.mapper
 
 import java.text.SimpleDateFormat
 import java.util.Locale
