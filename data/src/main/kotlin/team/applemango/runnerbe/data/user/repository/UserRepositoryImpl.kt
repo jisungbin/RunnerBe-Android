@@ -9,11 +9,11 @@
 
 package team.applemango.runnerbe.data.user.repository
 
+import team.applemango.runnerbe.data.common.toBaseResult
+import team.applemango.runnerbe.data.common.toNicknameChangeResult
 import team.applemango.runnerbe.data.runningitem.constant.NotYetVerifyCode
 import team.applemango.runnerbe.data.runningitem.constant.SuccessCode
-import team.applemango.runnerbe.data.runningitem.mapper.toBaseResult
 import team.applemango.runnerbe.data.user.mapper.toDomain
-import team.applemango.runnerbe.data.user.mapper.toNicknameChangeResult
 import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
 import team.applemango.runnerbe.data.util.userApi
 import team.applemango.runnerbe.domain.runningitem.common.BaseResult
