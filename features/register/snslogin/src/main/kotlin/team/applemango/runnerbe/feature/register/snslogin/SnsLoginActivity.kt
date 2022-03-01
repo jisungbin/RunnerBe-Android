@@ -12,6 +12,7 @@ package team.applemango.runnerbe.feature.register.snslogin
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -20,18 +21,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.edit
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import io.github.jisungbin.logeukes.LoggerType
 import io.github.jisungbin.logeukes.logeukes
-import javax.inject.Inject
 import org.orbitmvi.orbit.viewmodel.observe
 import team.applemango.runnerbe.activity.MainActivity
 import team.applemango.runnerbe.feature.register.snslogin.component.SnsLoginScreen
 import team.applemango.runnerbe.feature.register.snslogin.constant.LoginState
-import team.applemango.runnerbe.feature.register.snslogin.di.ViewModelFactory
+import team.applemango.runnerbe.feature.register.snslogin.di.module.RepositoryModule
+import team.applemango.runnerbe.feature.register.snslogin.di.module.UseCaseModule
 import team.applemango.runnerbe.feature.register.snslogin.mvi.LoginSideEffect
 import team.applemango.runnerbe.shared.base.WindowInsetActivity
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
@@ -46,25 +48,28 @@ import team.applemango.runnerbe.util.DFMOnboardActivityAlias
 
 class SnsLoginActivity : WindowInsetActivity() {
 
-    @Inject
-    internal lateinit var viewModelFactory: ViewModelFactory
-
-    private lateinit var vm: SnsLoginViewModel
+    private val vm: SnsLoginViewModel by viewModels {
+        object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                val repositoryModule = RepositoryModule(this@SnsLoginActivity)
+                val useCaseModule = UseCaseModule(repositoryModule)
+                return SnsLoginViewModel(
+                    getKakaoAccessTokenUseCase = useCaseModule.provideGetKakaoAccessTokenUseCase(),
+                    getNaverAccessTokenUseCase = useCaseModule.provideGetNaverAccessTokenUseCase(),
+                    loginUseCase = useCaseModule.provideLoginUseCase()
+                ) as T
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        /* DaggerViewModelComponent
-             .builder()
-             .repositoryModule(RepositoryModule(this)) // must activity context (startActivity calling)
-             .useCaseModule(UseCaseModule())
-             .viewModelModule(ViewModelModule())
-             .build()
-             .inject(this)*/
-
-        vm = ViewModelProvider(this, viewModelFactory)[SnsLoginViewModel::class.java]
         vm.observe(lifecycleOwner = this, state = ::handleState, sideEffect = ::handleSideEffect)
-        vm.exceptionFlow.collectWithLifecycle(this) { handleException(it) }
+        vm.exceptionFlow.collectWithLifecycle(this) { exception ->
+            handleException(exception)
+        }
 
         setContent {
             ProvideWindowInsets {
@@ -89,7 +94,7 @@ class SnsLoginActivity : WindowInsetActivity() {
         when (state) {
             LoginState.Done -> changeActivityWithAnimation<DFMOnboardActivityAlias>()
             LoginState.Registered -> changeActivityWithAnimation<MainActivity>()
-            LoginState.None -> {}
+            LoginState.None -> return
         }
     }
 

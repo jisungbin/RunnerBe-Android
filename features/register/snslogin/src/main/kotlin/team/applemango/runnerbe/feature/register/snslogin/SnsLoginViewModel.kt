@@ -9,7 +9,6 @@
 
 package team.applemango.runnerbe.feature.register.snslogin
 
-import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.orbitmvi.orbit.ContainerHost
@@ -26,9 +25,9 @@ import team.applemango.runnerbe.feature.register.snslogin.mvi.LoginSideEffect
 import team.applemango.runnerbe.shared.base.BaseViewModel
 import team.applemango.runnerbe.shared.domain.requireFieldNullMessage
 
-internal class SnsLoginViewModel @Inject constructor(
-    private val getKakaoKakaoAccessTokenUseCase: GetKakaoAccessTokenUseCase,
-    private val getNaverKakaoAccessTokenUseCase: GetNaverAccessTokenUseCase,
+internal class SnsLoginViewModel(
+    private val getKakaoAccessTokenUseCase: GetKakaoAccessTokenUseCase,
+    private val getNaverAccessTokenUseCase: GetNaverAccessTokenUseCase,
     private val loginUseCase: LoginUseCase,
 ) : BaseViewModel(), ContainerHost<LoginState, LoginSideEffect> {
 
@@ -37,8 +36,8 @@ internal class SnsLoginViewModel @Inject constructor(
     fun login(platformType: PlatformType) = intent {
         withContext(Dispatchers.Main) { // 내부적으로 다이얼로그를 띄우는 로직이 있어서 UI Thread 에서 돌림
             when (platformType) {
-                PlatformType.Kakao -> getKakaoKakaoAccessTokenUseCase()
-                PlatformType.Naver -> getNaverKakaoAccessTokenUseCase()
+                PlatformType.Kakao -> getKakaoAccessTokenUseCase()
+                PlatformType.Naver -> getNaverAccessTokenUseCase()
                 else -> throw NotImplementedError()
             }.onSuccess { token ->
                 loginUseCase(platformType = platformType, accessToken = token)

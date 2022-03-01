@@ -59,7 +59,6 @@ import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.util.extension.dataStore
 import team.applemango.runnerbe.shared.util.extension.toast
 
-@OptIn(ExperimentalAnimationApi::class)
 class OnboardActivity : WindowInsetActivity() {
 
     private val vm: OnboardViewModel by viewModels {
@@ -76,11 +75,13 @@ class OnboardActivity : WindowInsetActivity() {
         }
     }
 
+    @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // CoroutineScope 에서 돌아가서 더블클론(::) 참조 안됨
-        vm.exceptionFlow.collectWithLifecycle(this) { handleException(it) }
+        vm.exceptionFlow.collectWithLifecycle(this) { exception ->
+            handleException(exception)
+        }
 
         setContent {
             ProvideWindowInsets {
@@ -110,7 +111,9 @@ class OnboardActivity : WindowInsetActivity() {
                     // 이메일 인증 임시 비활성화
                     applicationContext.dataStore.data.collectWithLifecycle(
                         lifecycleOwner = this@OnboardActivity,
-                        builder = { cancellable() }
+                        builder = {
+                            cancellable()
+                        }
                     ) { preferences ->
                         val terms = preferences[DataStoreKey.Onboard.TermsAllCheck]
                         val year = preferences[DataStoreKey.Onboard.Year]
@@ -123,7 +126,9 @@ class OnboardActivity : WindowInsetActivity() {
                             gender,
                             job,
                             // verifyWithEmail,
-                        ).indexOfLast { it != null }
+                        ).indexOfLast { step ->
+                            step != null
+                        }
                         if (lastStepIndex != -1) {
                             // NPE occurred
                             // TODO: 백스택 임의 생성
