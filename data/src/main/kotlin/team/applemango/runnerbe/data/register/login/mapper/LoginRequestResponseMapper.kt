@@ -14,6 +14,8 @@ import team.applemango.runnerbe.domain.register.runnerbe.model.UserToken
 import team.applemango.runnerbe.shared.domain.notAllowedValueMessage
 import team.applemango.runnerbe.shared.domain.requireFieldNullMessage
 
+// 1001, 1007 - JWT (회원)
+// 1002 - UUID (비회원)
 internal fun LoginRequestResponse.toDomain(): UserToken {
     checkNotNull(loginResult) {
         requireFieldNullMessage("loginResult")
@@ -22,12 +24,12 @@ internal fun LoginRequestResponse.toDomain(): UserToken {
         requireFieldNullMessage("code")
     }
     return when (code) {
-        1001 -> UserToken( // 회원
+        1001, 1007 -> UserToken( // 회원
             jwt = requireNotNull(loginResult.jwt) {
                 requireFieldNullMessage("jwt")
             }
         )
-        1007 -> UserToken( // 비회원
+        1002 -> UserToken( // 비회원
             uuid = requireNotNull(loginResult.uuid) {
                 requireFieldNullMessage("uuid")
             }
