@@ -10,6 +10,7 @@
 package team.applemango.runnerbe.data.user.repository
 
 import team.applemango.runnerbe.data.common.toBaseResult
+import team.applemango.runnerbe.data.common.toJobChangeResult
 import team.applemango.runnerbe.data.common.toNicknameChangeResult
 import team.applemango.runnerbe.data.runningitem.constant.NotYetVerifyCode
 import team.applemango.runnerbe.data.runningitem.constant.SuccessCode
@@ -18,15 +19,16 @@ import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
 import team.applemango.runnerbe.data.util.userApi
 import team.applemango.runnerbe.domain.runningitem.common.BaseResult
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
-import team.applemango.runnerbe.domain.user.model.Nickname
-import team.applemango.runnerbe.domain.user.model.ProfileImageUrl
+import team.applemango.runnerbe.domain.user.model.JobWrapper
+import team.applemango.runnerbe.domain.user.model.NicknameWrapper
+import team.applemango.runnerbe.domain.user.model.ProfileImageUrlWrapper
 import team.applemango.runnerbe.domain.user.repository.UserRepository
 
 class UserRepositoryImpl : UserRepository {
     override suspend fun setNickname(
         jwt: String,
         userId: Int,
-        nickName: Nickname,
+        nickName: NicknameWrapper,
     ): BaseResult {
         val request = userApi.setNickname(
             jwt = jwt,
@@ -80,7 +82,7 @@ class UserRepositoryImpl : UserRepository {
     override suspend fun updateProfileImage(
         jwt: String,
         userId: Int,
-        profileImageUrl: ProfileImageUrl,
+        profileImageUrl: ProfileImageUrlWrapper,
     ): BaseResult {
         val request = userApi.updateProfileImage(
             jwt = jwt,
@@ -95,8 +97,22 @@ class UserRepositoryImpl : UserRepository {
         ).toBaseResult()
     }
 
-    override suspend fun changeJob() {
-        TODO("Not yet implemented")
+    override suspend fun changeJob(
+        jwt: String,
+        userId: Int,
+        jobCode: JobWrapper,
+    ): BaseResult {
+        val request = userApi.changeJob(
+            jwt = jwt,
+            userId = userId,
+            jobCode = jobCode
+        )
+        return request.requireSuccessfulBody(
+            requestName = "userApi.changeJob",
+            resultVerifyBuilder = { body ->
+                body.code in listOf(SuccessCode, NotYetVerifyCode, 2078)
+            }
+        ).toJobChangeResult()
     }
 
     override suspend fun loadMyPage() {

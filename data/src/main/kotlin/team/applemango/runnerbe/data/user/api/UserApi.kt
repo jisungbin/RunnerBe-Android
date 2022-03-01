@@ -19,15 +19,16 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 import team.applemango.runnerbe.data.common.DefaultResponse
 import team.applemango.runnerbe.data.user.model.LoadBookmarkItemsResponse
-import team.applemango.runnerbe.domain.user.model.Nickname
-import team.applemango.runnerbe.domain.user.model.ProfileImageUrl
+import team.applemango.runnerbe.domain.user.model.JobWrapper
+import team.applemango.runnerbe.domain.user.model.NicknameWrapper
+import team.applemango.runnerbe.domain.user.model.ProfileImageUrlWrapper
 
 interface UserApi {
     @PATCH("/users/{userId}/name")
     fun setNickname(
         @Header("x-access-token") jwt: String,
         @Path("userId") userId: Int,
-        @Body nickname: Nickname,
+        @Body nickname: NicknameWrapper,
     ): Response<DefaultResponse>
 
     @POST("/users/{userId}/bookmarks/{whetherAdd}")
@@ -48,6 +49,13 @@ interface UserApi {
     fun updateProfileImage(
         @Header("x-access-token") jwt: String,
         @Path("userId") userId: Int,
-        @Body profileImageUrl: ProfileImageUrl,
+        @Body profileImageUrl: ProfileImageUrlWrapper,
+    ): Response<DefaultResponse>
+
+    @PATCH("/users/{userId}/job")
+    fun changeJob(
+        @Header("x-access-token") jwt: String,
+        @Path("userId") userId: Int,
+        @Body jobCode: JobWrapper,
     ): Response<DefaultResponse>
 }
