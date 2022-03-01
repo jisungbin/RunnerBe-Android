@@ -13,9 +13,10 @@ import androidx.lifecycle.ViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
+import team.applemango.runnerbe.domain.firebase.usecase.ImageUploadUseCase
+import team.applemango.runnerbe.domain.register.mailjet.usecase.MailjetSendUseCase
 import team.applemango.runnerbe.domain.register.runnerbe.usecase.CheckUsableEmailUseCase
 import team.applemango.runnerbe.domain.register.runnerbe.usecase.UserRegisterUseCase
-import team.applemango.runnerbe.domain.register.mailjet.usecase.MailjetSendUseCase
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.feature.register.onboard.di.qualifier.ViewModelKey
 
@@ -28,11 +29,13 @@ internal class ViewModelModule {
         checkUsableEmailUseCase: CheckUsableEmailUseCase,
         userRegisterUseCase: UserRegisterUseCase,
         mailjetSendUseCase: MailjetSendUseCase,
+        imageUploadUseCase: ImageUploadUseCase,
     ): ViewModel {
         return OnboardViewModel(
             checkUsableEmailUseCase = checkUsableEmailUseCase,
             userRegisterUseCase = userRegisterUseCase,
-            mailjetSendUseCase = mailjetSendUseCase
+            mailjetSendUseCase = mailjetSendUseCase,
+            imageUploadUseCase = imageUploadUseCase
         )
     }
 }

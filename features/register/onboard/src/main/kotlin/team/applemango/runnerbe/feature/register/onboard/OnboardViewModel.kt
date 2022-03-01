@@ -49,7 +49,7 @@ internal class OnboardViewModel @Inject constructor(
     private val checkUsableEmailUseCase: CheckUsableEmailUseCase,
     private val userRegisterUseCase: UserRegisterUseCase,
     private val mailjetSendUseCase: MailjetSendUseCase,
-    private val imageUploadImageUseCase: ImageUploadUseCase,
+    private val imageUploadUseCase: ImageUploadUseCase,
 ) : BaseViewModel(), ContainerHost<RegisterState, RegisterSideEffect> {
 
     override val container = container<RegisterState, RegisterSideEffect>(RegisterState.None)
@@ -119,40 +119,40 @@ internal class OnboardViewModel @Inject constructor(
                         reduce {
                             RegisterState.ImageUploading
                         }
-                        photoUrl = imageUploadImageUseCase(
+                        photoUrl = imageUploadUseCase(
                             image = photo,
                             path = DefaultEmployeeIdImagePath,
-                            userId = Random.nextInt(),
-                            exceptionHandler = { exception ->
-                                launch {
-                                    emitException(exception)
-                                    reduce {
-                                        RegisterState.ImageUploadError
-                                    }
-                                }
-                                return@imageUploadImageUseCase
+                            userId = Random.nextInt()
+                        ).getOrElse { exception ->
+                            emitException(exception)
+                            reduce {
+                                RegisterState.ImageUploadError
                             }
-                        ) ?: run {
-                            cancel("user login data collect and register execute must be once.")
                             return@collect
                         }
                     }
                     val user = UserRegister(
-                        uuid = uuid!!,
-                        birthday = year!!,
+                        uuid = uuid,
+                        birthday = year,
                         gender = genderCode,
-                        job = job!!,
+                        job = job,
                         officeEmail = officeEmail, // nullable
                         idCardImageUrl = photoUrl // nullable
                     )
-                    requestUserRegister(user, nextStep)
+                    requestUserRegister(
+                        user = user,
+                        nextStep = nextStep
+                    )
                 }
                 cancel("user login data collect and register execute must be once.")
             }
         }
     }
 
-    private fun requestUserRegister(user: UserRegister, nextStep: Step) = intent {
+    private fun requestUserRegister(
+        user: UserRegister,
+        nextStep: Step,
+    ) = intent {
         userRegisterUseCase(user)
             .onSuccess { result ->
                 when (result) {

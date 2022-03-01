@@ -11,11 +11,13 @@ package team.applemango.runnerbe.feature.register.onboard.di.module
 
 import dagger.Module
 import dagger.Provides
+import team.applemango.runnerbe.domain.firebase.repository.FirebaseRepository
+import team.applemango.runnerbe.domain.firebase.usecase.ImageUploadUseCase
+import team.applemango.runnerbe.domain.register.mailjet.repository.MailjetRepository
+import team.applemango.runnerbe.domain.register.mailjet.usecase.MailjetSendUseCase
 import team.applemango.runnerbe.domain.register.runnerbe.repository.RegisterRepository
 import team.applemango.runnerbe.domain.register.runnerbe.usecase.CheckUsableEmailUseCase
 import team.applemango.runnerbe.domain.register.runnerbe.usecase.UserRegisterUseCase
-import team.applemango.runnerbe.domain.register.mailjet.repository.MailjetRepository
-import team.applemango.runnerbe.domain.register.mailjet.usecase.MailjetSendUseCase
 
 @Module
 internal class UseCaseModule {
@@ -28,5 +30,10 @@ internal class UseCaseModule {
         UserRegisterUseCase(repo)
 
     @Provides
-    fun provideMailSendUseCase(repo: MailjetRepository): MailjetSendUseCase = MailjetSendUseCase(repo)
+    fun provideMailSendUseCase(repo: MailjetRepository): MailjetSendUseCase =
+        MailjetSendUseCase(repo)
+
+    @Provides
+    fun provideImageUploadUseCase(repo: FirebaseRepository): ImageUploadUseCase =
+        ImageUploadUseCase(repo)
 }

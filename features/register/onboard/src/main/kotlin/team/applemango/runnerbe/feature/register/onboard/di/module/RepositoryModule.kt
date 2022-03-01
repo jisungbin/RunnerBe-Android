@@ -11,10 +11,12 @@ package team.applemango.runnerbe.feature.register.onboard.di.module
 
 import dagger.Module
 import dagger.Provides
+import team.applemango.runnerbe.data.firebase.repository.FirebaseRepositoryImpl
 import team.applemango.runnerbe.data.register.login.repository.RegisterRepositoryImpl
 import team.applemango.runnerbe.data.register.mailjet.repository.MailjetRepositoryImpl
-import team.applemango.runnerbe.domain.register.runnerbe.repository.RegisterRepository
+import team.applemango.runnerbe.domain.firebase.repository.FirebaseRepository
 import team.applemango.runnerbe.domain.register.mailjet.repository.MailjetRepository
+import team.applemango.runnerbe.domain.register.runnerbe.repository.RegisterRepository
 
 @Module
 internal class RepositoryModule {
@@ -23,4 +25,7 @@ internal class RepositoryModule {
 
     @Provides
     fun provideMailRepository(): MailjetRepository = MailjetRepositoryImpl()
+
+    @Provides
+    fun provideFirebaseRepository(): FirebaseRepository = FirebaseRepositoryImpl()
 }
