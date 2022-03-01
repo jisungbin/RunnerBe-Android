@@ -74,4 +74,10 @@ data class RunningItemData(
 
     @field:JsonProperty("contents")
     val contents: String? = null,
+
+    @field:JsonProperty("attendance")
+    val attendance: Int? = null,
+
+    @field:JsonProperty("bookMark")
+    val bookMark: Int? = null,
 )
