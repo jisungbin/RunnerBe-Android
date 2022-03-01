@@ -41,7 +41,7 @@ interface UserRepository {
         postId: Int,
         userId: Int,
         whetherAdd: String,
-    ): Boolean
+    ): BaseResult
 
     /**
      * 찜 목록 조회 (21번 API)

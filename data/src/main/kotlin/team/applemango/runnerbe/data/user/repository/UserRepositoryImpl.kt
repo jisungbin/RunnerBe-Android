@@ -9,9 +9,9 @@
 
 package team.applemango.runnerbe.data.user.repository
 
-import team.applemango.runnerbe.data.common.isSuccessNonNull
 import team.applemango.runnerbe.data.runningitem.constant.NotYetVerifyCode
 import team.applemango.runnerbe.data.runningitem.constant.SuccessCode
+import team.applemango.runnerbe.data.runningitem.mapper.toBaseResult
 import team.applemango.runnerbe.data.user.mapper.toNicknameChangeResult
 import team.applemango.runnerbe.data.util.extension.requireSuccessfulBody
 import team.applemango.runnerbe.data.util.userApi
@@ -43,7 +43,7 @@ class UserRepositoryImpl : UserRepository {
         postId: Int,
         userId: Int,
         whetherAdd: String,
-    ): Boolean {
+    ): BaseResult {
         val request = userApi.updateBookmarkItem(
             jwt = jwt,
             postId = postId,
@@ -55,7 +55,7 @@ class UserRepositoryImpl : UserRepository {
             resultVerifyBuilder = { body ->
                 body.code in listOf(SuccessCode, NotYetVerifyCode)
             }
-        ).isSuccessNonNull
+        ).toBaseResult()
     }
 
     override suspend fun loadBookmarkItems() {
