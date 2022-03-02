@@ -9,6 +9,8 @@
 
 package team.applemango.runnerbe.feature.home.board
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -27,10 +29,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -40,42 +44,44 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
+import io.github.jisungbin.logeukes.LoggerType
+import io.github.jisungbin.logeukes.logeukes
 import org.orbitmvi.orbit.viewmodel.observe
 import team.applemango.runnerbe.domain.register.runnerbe.model.UserToken
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
+import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 import team.applemango.runnerbe.feature.home.board.di.module.RepositoryModule
 import team.applemango.runnerbe.feature.home.board.di.module.UseCaseModule
+import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState
 import team.applemango.runnerbe.shared.compose.component.ToggleTopBar
 import team.applemango.runnerbe.shared.compose.component.ToggleTopBarItem
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.FontAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
+import team.applemango.runnerbe.shared.domain.constant.EmptyString
+import team.applemango.runnerbe.shared.domain.extension.toMessage
 import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
+import team.applemango.runnerbe.shared.util.extension.toast
 
 @Composable
 fun MainBoard(
     modifier: Modifier = Modifier,
     isBookmark: Boolean = false,
     userToken: UserToken,
+    runningItems: List<RunningItem>,
 ) {
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+    val lifecycleOwner = LocalLifecycleOwner.current
     val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
         "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
     }
-    val lifecycleOwner = LocalLifecycleOwner.current
+
     val beforeText = stringResource(R.string.onboard_toggletopbaritem_before)
     val afterText = stringResource(R.string.onboard_toggletopbaritem_after)
     val offText = stringResource(R.string.onboard_toggletopbaritem_off)
     val appNameText = stringResource(R.string.mainboard_title_app_name)
     val bookmarkText = stringResource(R.string.mainboard_title_bookmark_list)
-    var selectedRunningItemType by remember { mutableStateOf(RunningItemType.Before) }
-    var includeFinishState by remember { mutableStateOf(false) }
-    val toggleTabBarItems = remember {
-        listOf(
-            ToggleTopBarItem(id = RunningItemType.Before, text = beforeText),
-            ToggleTopBarItem(id = RunningItemType.Before, text = afterText),
-            ToggleTopBarItem(id = RunningItemType.Before, text = offText),
-        )
-    }
     val titleText = remember(isBookmark) {
         when (isBookmark) {
             true -> bookmarkText
@@ -94,6 +100,18 @@ fun MainBoard(
             )
         }
     }
+    val toggleTabBarItems = remember {
+        listOf(
+            ToggleTopBarItem(id = RunningItemType.Before, text = beforeText),
+            ToggleTopBarItem(id = RunningItemType.Before, text = afterText),
+            ToggleTopBarItem(id = RunningItemType.Before, text = offText),
+        )
+    }
+
+    var includeFinishState by remember { mutableStateOf(false) }
+    var runningItemsState by remember { mutableStateOf(runningItems) }
+    var selectedRunningItemTypeState by remember { mutableStateOf(RunningItemType.Before) }
+
     val vm = remember(userToken) {
         val viewModelProvider = object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
@@ -116,11 +134,26 @@ fun MainBoard(
             factory = viewModelProvider
         )[MainBoardViewModel::class.java]
     }
-    // TODO
+
     LaunchedEffect(Unit) {
-        vm.exceptionFlow.collectWithLifecycle(lifecycleOwner = lifecycleOwner) {
+        vm.exceptionFlow.collectWithLifecycle(lifecycleOwner = lifecycleOwner) { exception ->
+            handleException(
+                context = context,
+                exception = exception
+            )
         }
-        vm.observe(lifecycleOwner = lifecycleOwner)
+        vm.observe(
+            lifecycleOwner = lifecycleOwner,
+            state = { state ->
+                handleState(
+                    context = context,
+                    state = state
+                )
+            },
+            sideEffect = { newRunningItems ->
+                runningItemsState = newRunningItems.items
+            }
+        )
     }
 
     Column(modifier = modifier.fillMaxSize()) {
@@ -130,7 +163,10 @@ fun MainBoard(
                 .height(56.dp),
             contentAlignment = Alignment.Center
         ) {
-            Text(text = titleText, style = titleTextStyle)
+            Text(
+                text = titleText,
+                style = titleTextStyle
+            )
             if (!isBookmark) { // 타이틀 오른쪽 검색, 알림 아이템들
                 Row(
                     modifier = Modifier.fillMaxSize(),
@@ -162,7 +198,7 @@ fun MainBoard(
             activateTextStyle = Typography.Body14M,
             inactivateTextStyle = Typography.Body14R,
             onItemClick = { runningItemType ->
-                selectedRunningItemType = runningItemType
+                selectedRunningItemTypeState = runningItemType
             }
         )
         if (!isBookmark) { // ToggleTopBar 아래 마감 포함, 거리순, 필터 아이템들
@@ -215,4 +251,19 @@ fun MainBoard(
             }
         }
     }
+}
+
+private fun handleState(context: Context, state: MainBoardState) {
+    val message = when (state) {
+        MainBoardState.None -> EmptyString
+        MainBoardState.NonRegisterUser -> "아직 가입되지 않은 유저는 둘러보기만 가능해요."
+    }
+    if (message.isNotEmpty()) {
+        toast(context, message)
+    }
+}
+
+private fun handleException(context: Context, exception: Throwable) {
+    toast(context, exception.toMessage(), Toast.LENGTH_LONG)
+    logeukes(type = LoggerType.E) { exception }
 }
