@@ -23,7 +23,6 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Checkbox
-import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -48,7 +47,7 @@ import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.util.Web
 import team.applemango.runnerbe.shared.compose.extension.presentationDrawableOf
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
-import team.applemango.runnerbe.shared.compose.theme.GradientAsset
+import team.applemango.runnerbe.shared.compose.theme.RunnerbeCheckBoxColors
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.dataStore
@@ -63,11 +62,6 @@ internal fun TermsTable(onAllTermsCheckStateChanged: (allChecked: Boolean) -> Un
     val coroutineScope = rememberCoroutineScope()
     var isAllTermsCheckedState by remember { mutableStateOf(false) }
     val termsCheckState = remember { mutableStateListOf(false, false, false) }
-    val termsCheckboxColor = CheckboxDefaults.colors(
-        checkedColor = ColorAsset.Primary,
-        uncheckedColor = ColorAsset.G4,
-        checkmarkColor = GradientAsset.BlackEndColor
-    )
 
     fun saveTermsAllCheckState() {
         coroutineScope.launch {
@@ -130,7 +124,7 @@ internal fun TermsTable(onAllTermsCheckStateChanged: (allChecked: Boolean) -> Un
                 onCheckedChange = {
                     toggleAllTermsCheck()
                 },
-                colors = termsCheckboxColor
+                colors = RunnerbeCheckBoxColors
             )
             Text(
                 modifier = Modifier.padding(start = HorizontalPadding),
@@ -181,7 +175,7 @@ internal fun TermsTable(onAllTermsCheckStateChanged: (allChecked: Boolean) -> Un
                                 termsCheckState[number] = !termsCheckState[number]
                                 checkAllChecked()
                             },
-                            colors = termsCheckboxColor
+                            colors = RunnerbeCheckBoxColors
                         )
                         Text(
                             modifier = Modifier.padding(start = HorizontalPadding),
