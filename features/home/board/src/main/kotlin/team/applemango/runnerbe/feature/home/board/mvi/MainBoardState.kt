@@ -14,7 +14,7 @@ package team.applemango.runnerbe.feature.home.board.mvi
  * 없기 때문에 None 하나로 모두 포함함
  * @property NonRegisterUser 비회원 유저로써 아직 이 기능 이용이 불기능함
  */
-enum class MainBoardState {
+internal enum class MainBoardState {
     None,
     NonRegisterUser
 }
