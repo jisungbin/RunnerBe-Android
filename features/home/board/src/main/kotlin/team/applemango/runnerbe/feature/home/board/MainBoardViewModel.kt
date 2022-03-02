@@ -45,6 +45,9 @@ import team.applemango.runnerbe.feature.home.board.mvi.UpdateRunningItemSideEffe
 import team.applemango.runnerbe.shared.base.BaseViewModel
 import team.applemango.runnerbe.shared.domain.unknownResultMessage
 
+/**
+ * TODO: https://github.com/applemango-runnerbe/RunnerBe-Android/issues/52
+ */
 internal class MainBoardViewModel @AssistedInject constructor(
     private val updateBookmarkItemUseCase: UpdateBookmarkItemUseCase,
     private val loadRunningItemsUseCase: LoadRunningItemsUseCase,
@@ -71,7 +74,7 @@ internal class MainBoardViewModel @AssistedInject constructor(
         }
     }
 
-    fun updateBookmarkState(postId: Int, bookmarked: Boolean) = intent {
+    fun updateBookmarkState(itemId: Int, bookmarked: Boolean) = intent {
         if (userToken.jwt == null || userToken.userId == null) {
             reduce {
                 MainBoardState.NonRegisterUser
@@ -82,7 +85,7 @@ internal class MainBoardViewModel @AssistedInject constructor(
         // because 'userToken.jwt' is a public API property declared in different module
         updateBookmarkItemUseCase(
             jwt = userToken.jwt!!,
-            postId = postId,
+            postId = itemId,
             userId = userToken.userId!!,
             bookmarked = bookmarked
         ).onSuccess { result ->
