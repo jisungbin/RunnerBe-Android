@@ -21,12 +21,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Checkbox
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -50,6 +53,7 @@ import org.orbitmvi.orbit.viewmodel.observe
 import team.applemango.runnerbe.domain.register.runnerbe.model.UserToken
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
+import team.applemango.runnerbe.feature.home.board.component.RunningItem
 import team.applemango.runnerbe.feature.home.board.di.module.RepositoryModule
 import team.applemango.runnerbe.feature.home.board.di.module.UseCaseModule
 import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState
@@ -66,7 +70,7 @@ import team.applemango.runnerbe.shared.util.extension.toast
 @Composable
 fun MainBoard(
     modifier: Modifier = Modifier,
-    isBookmark: Boolean = false,
+    isBookmarkPage: Boolean = false,
     userToken: UserToken,
     runningItems: List<RunningItem>,
 ) {
@@ -82,14 +86,14 @@ fun MainBoard(
     val offText = stringResource(R.string.onboard_toggletopbaritem_off)
     val appNameText = stringResource(R.string.mainboard_title_app_name)
     val bookmarkText = stringResource(R.string.mainboard_title_bookmark_list)
-    val titleText = remember(isBookmark) {
-        when (isBookmark) {
+    val titleText = remember(isBookmarkPage) {
+        when (isBookmarkPage) {
             true -> bookmarkText
             else -> appNameText
         }
     }
-    val titleTextStyle = remember(isBookmark) {
-        when (isBookmark) {
+    val titleTextStyle = remember(isBookmarkPage) {
+        when (isBookmarkPage) {
             true -> Typography.Body16R.copy(color = ColorAsset.G3)
             else -> TextStyle( // Custom, Typography 에 존재하지 않음
                 fontFamily = FontAsset.Aggro,
@@ -103,13 +107,16 @@ fun MainBoard(
     val toggleTabBarItems = remember {
         listOf(
             ToggleTopBarItem(id = RunningItemType.Before, text = beforeText),
-            ToggleTopBarItem(id = RunningItemType.Before, text = afterText),
-            ToggleTopBarItem(id = RunningItemType.Before, text = offText),
+            ToggleTopBarItem(id = RunningItemType.After, text = afterText),
+            ToggleTopBarItem(id = RunningItemType.Off, text = offText),
         )
     }
 
     var includeFinishState by remember { mutableStateOf(false) }
     var runningItemsState by remember { mutableStateOf(runningItems) }
+    val forEachItemsBookmarkedState = remember(runningItemsState.size) {
+        mutableStateListOf(*runningItemsState.map { it.bookmarked }.toTypedArray())
+    }
     var selectedRunningItemTypeState by remember { mutableStateOf(RunningItemType.Before) }
 
     val vm = remember(userToken) {
@@ -167,7 +174,7 @@ fun MainBoard(
                 text = titleText,
                 style = titleTextStyle
             )
-            if (!isBookmark) { // 타이틀 오른쪽 검색, 알림 아이템들
+            if (!isBookmarkPage) { // 타이틀 오른쪽 검색, 알림 아이템들
                 Row(
                     modifier = Modifier.fillMaxSize(),
                     horizontalArrangement = Arrangement.spacedBy(
@@ -201,7 +208,7 @@ fun MainBoard(
                 selectedRunningItemTypeState = runningItemType
             }
         )
-        if (!isBookmark) { // ToggleTopBar 아래 마감 포함, 거리순, 필터 아이템들
+        if (!isBookmarkPage) { // ToggleTopBar 아래 마감 포함, 거리순, 필터 아이템들
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -247,6 +254,17 @@ fun MainBoard(
                     painter = painterResource(R.drawable.ic_round_filter_24),
                     contentDescription = null,
                     tint = Color.Unspecified
+                )
+            }
+        }
+        LazyColumn(
+            modifier = Modifier,
+        ) {
+            items(items = runningItemsState) { item ->
+                RunningItem(
+                    item = item,
+                    bookmarkState = isBookmarkPage,
+
                 )
             }
         }
