@@ -7,13 +7,14 @@
   <a href="https://developer.android.com/about/versions/lollipop"><img alt="API 21+" src="https://img.shields.io/badge/API-21%2B-brightgreen.svg"/></a>
   <a href="https://github.com/applemango-runnerbe/RunnerBe-Android"><img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/applemango-runnerbe/RunnerBe-Android"/></a>
   <br/>
-  <a href="https://www.codefactor.io/repository/github/applemango-runnerbe/runnerbe-android/overview"><img src="https://www.codefactor.io/repository/github/applemango-runnerbe/runnerbe-android/badge" alt="CodeFactor"/></a>
-  <a href="https://sonarcloud.io/summary/new_code?id=applemango-runnerbe_RunnerBe-Android"><img src="https://sonarcloud.io/api/project_badges/measure?project=applemango-runnerbe_RunnerBe-Android&metric=sqale_rating" alt="Maintainability Rating"/>     
-  <a href="https://sonarcloud.io/summary/new_code?id=applemango-runnerbe_RunnerBe-Android"><img src="https://sonarcloud.io/api/project_badges/measure?project=applemango-runnerbe_RunnerBe-Android&metric=ncloc" alt="Lines of Code"/></a>
-  <br/>
   <a href="https://kotlin.link"><img src="https://kotlin.link/awesome-kotlin.svg" alt="awesome-kotlin"/></a>
   <a href="https://ktlint.github.io/"><img src="https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg" alt="ktlint"/></a>
   <a href="https://wakatime.com/badge/user/2da851dd-14d7-47dd-821a-7d902e52c1c2/project/eead2f63-3468-4e8a-98b2-12de1e4cebb2"><img src="https://wakatime.com/badge/user/2da851dd-14d7-47dd-821a-7d902e52c1c2/project/eead2f63-3468-4e8a-98b2-12de1e4cebb2.svg" alt="wakatime"></a>
+  <br/>
+  <a href="https://coveralls.io/github/applemango-runnerbe/RunnerBe-Android?branch=main"><img src="https://coveralls.io/repos/github/applemango-runnerbe/RunnerBe-Android/badge.svg?branch=main" alt="Coverage Status"/></a>
+  <a href="https://www.codefactor.io/repository/github/applemango-runnerbe/runnerbe-android/overview"><img src="https://www.codefactor.io/repository/github/applemango-runnerbe/runnerbe-android/badge" alt="CodeFactor"/></a>
+  <a href="https://sonarcloud.io/summary/new_code?id=applemango-runnerbe_RunnerBe-Android"><img src="https://sonarcloud.io/api/project_badges/measure?project=applemango-runnerbe_RunnerBe-Android&metric=sqale_rating" alt="Maintainability Rating"/>     
+  <a href="https://sonarcloud.io/summary/new_code?id=applemango-runnerbe_RunnerBe-Android"><img src="https://sonarcloud.io/api/project_badges/measure?project=applemango-runnerbe_RunnerBe-Android&metric=ncloc" alt="Lines of Code"/></a>
 </p>
 
 ---
@@ -28,6 +29,18 @@
 - TDD
 - Unit Test + [Test Coverage 100% 목표](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/35)
 
+# 🐛 아키텍처 이슈
+  
+현재 아키텍처에 다양한 이슈들이 존재합니다. 이슈 해결을 위한 이슈나 PR 은 항상 환영입니다.
+  
+- [#10: DFM resource 접근](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/10)
+- [#14: dagger 사용 최적화 및 보일러플레이트 해결](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/14) [close]
+- [#15: onboard navigation 보일러플레이트 코드](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/15)
+- [#19: DFM에서 android:exported="true" 로 설정](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/19)
+- [#38: platform aware 한 ViewModel](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/38) [close]
+- [#45: shared 모듈 3개](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/45)
+- [#46: [심각] platform aware 한 domain repository](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/46)  
+ 
 ---
 
 ## Tech Skill
