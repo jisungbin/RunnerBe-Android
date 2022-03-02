@@ -23,6 +23,7 @@ import androidx.compose.material.Checkbox
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,25 +31,37 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
+import org.orbitmvi.orbit.viewmodel.observe
 import team.applemango.runnerbe.domain.register.runnerbe.model.UserToken
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
+import team.applemango.runnerbe.feature.home.board.di.module.RepositoryModule
+import team.applemango.runnerbe.feature.home.board.di.module.UseCaseModule
 import team.applemango.runnerbe.shared.compose.component.ToggleTopBar
 import team.applemango.runnerbe.shared.compose.component.ToggleTopBarItem
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.FontAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
+import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
 
 @Composable
 fun MainBoard(
     modifier: Modifier = Modifier,
     isBookmark: Boolean = false,
-    userToken: UserToken
+    userToken: UserToken,
 ) {
+    val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
+        "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+    }
+    val lifecycleOwner = LocalLifecycleOwner.current
     val beforeText = stringResource(R.string.onboard_toggletopbaritem_before)
     val afterText = stringResource(R.string.onboard_toggletopbaritem_after)
     val offText = stringResource(R.string.onboard_toggletopbaritem_off)
@@ -81,6 +94,34 @@ fun MainBoard(
             )
         }
     }
+    val vm = remember(userToken) {
+        val viewModelProvider = object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                val userRepository = RepositoryModule.provideUserRepository()
+                val runningItemRunningItem = RepositoryModule.provideRunningItemRepository()
+                val updateBookmarkItemUseCase =
+                    UseCaseModule.provideUpdateBookmarkItemUseCase(userRepository)
+                val loadRunningItemsUseCase =
+                    UseCaseModule.provideLoadRunningItemsUseCase(runningItemRunningItem)
+                return MainBoardViewModel(
+                    updateBookmarkItemUseCase = updateBookmarkItemUseCase,
+                    loadRunningItemsUseCase = loadRunningItemsUseCase,
+                    userToken = userToken
+                ) as T
+            }
+        }
+        ViewModelProvider(
+            owner = viewModelStoreOwner,
+            factory = viewModelProvider
+        )[MainBoardViewModel::class.java]
+    }
+    // TODO
+    LaunchedEffect(Unit) {
+        vm.exceptionFlow.collectWithLifecycle(lifecycleOwner = lifecycleOwner) {
+        }
+        vm.observe(lifecycleOwner = lifecycleOwner)
+    }
 
     Column(modifier = modifier.fillMaxSize()) {
         Box( // ToolBar
@@ -99,12 +140,12 @@ fun MainBoard(
                     )
                 ) {
                     Icon(
-                        painter = painterResource(R.drawable.ic_round_search_24),
+                        painter = painterResource(R.drawable.ic_outlined_search_24),
                         contentDescription = null,
                         tint = Color.Unspecified
                     )
                     Icon(
-                        painter = painterResource(R.drawable.ic_round_bell_24),
+                        painter = painterResource(R.drawable.ic_outlined_bell_24),
                         contentDescription = null,
                         tint = Color.Unspecified
                     )

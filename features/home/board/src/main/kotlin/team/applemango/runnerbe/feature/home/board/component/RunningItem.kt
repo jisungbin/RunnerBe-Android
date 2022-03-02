@@ -9,6 +9,7 @@
 
 package team.applemango.runnerbe.feature.home.board.component
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -22,70 +23,59 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import com.skydoves.landscapist.coil.CoilImage
-import org.orbitmvi.orbit.viewmodel.observe
-import team.applemango.runnerbe.domain.register.runnerbe.model.UserToken
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
-import team.applemango.runnerbe.feature.home.board.MainBoardViewModel
 import team.applemango.runnerbe.feature.home.board.R
-import team.applemango.runnerbe.feature.home.board.di.module.RepositoryModule
-import team.applemango.runnerbe.feature.home.board.di.module.UseCaseModule
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
-import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
+import team.applemango.runnerbe.shared.domain.extension.format
+
+private data class DetailItem(
+    @DrawableRes val icon: Int,
+    val text: String,
+)
+
+private const val MeetingDateFormat = "M/d (E) a K:mm" // 3/31 (금) AM 6:00
+private const val RunningTimeFormat = ""
 
 @Composable
-internal fun RunningItem(item: RunningItem, userToken: UserToken) {
-    val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
-        "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+internal fun RunningItem(
+    item: RunningItem,
+    bookmarkState: Boolean,
+    requestToggleBookmarkState: () -> Unit,
+) {
+    val detailItems = remember(item) {
+        listOf(
+            DetailItem(
+                icon = R.drawable.ic_outlined_scheduled_24,
+                text = item.meetingDate.format(MeetingDateFormat)
+            ),
+            DetailItem(
+                icon = R.drawable.ic_outlined_place_24,
+                text = item.locate.address
+            ),
+            DetailItem(
+                icon = R.drawable.ic_outlined_time_24,
+                text = with(item.runningTime) {
+                    "${hour}시간 ${minute}분"
+                }
+            ),
+            DetailItem(
+                icon = R.drawable.ic_round_people_24,
+                text = with(item) {
+                    "${gender.string}만 · $ageFilter"
+                    // ageFilter has override toString method with ${min-max}
+                }
+            )
+        )
     }
-    val lifecycleOwner = LocalLifecycleOwner.current
-    // TODO: https://github.com/applemango-runnerbe/RunnerBe-Android/issues/52
-    val vm = remember {
-        val viewModelProvider = object : ViewModelProvider.Factory {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                val userRepository = RepositoryModule.provideUserRepository()
-                val runningItemRunningItem = RepositoryModule.provideRunningItemRepository()
-                val updateBookmarkItemUseCase =
-                    UseCaseModule.provideUpdateBookmarkItemUseCase(userRepository)
-                val loadRunningItemsUseCase =
-                    UseCaseModule.provideLoadRunningItemsUseCase(runningItemRunningItem)
-                return MainBoardViewModel(
-                    updateBookmarkItemUseCase = updateBookmarkItemUseCase,
-                    loadRunningItemsUseCase = loadRunningItemsUseCase,
-                    userToken = userToken
-                ) as T
-            }
-        }
-        ViewModelProvider(
-            owner = viewModelStoreOwner,
-            factory = viewModelProvider
-        )[MainBoardViewModel::class.java]
-    }
-
-    // TODO
-    LaunchedEffect(Unit) {
-        vm.exceptionFlow.collectWithLifecycle(lifecycleOwner = lifecycleOwner) {
-        }
-        vm.observe(lifecycleOwner = lifecycleOwner)
-    }
-
-    var bookmarkState by remember { mutableStateOf(item.bookmarked) }
 
     Column(
         modifier = Modifier
@@ -101,8 +91,8 @@ internal fun RunningItem(item: RunningItem, userToken: UserToken) {
                 .wrapContentHeight(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Row(
+        ) { // 1 (프사, 닉네임 + 북마크)
+            Row( // 프사, 닉네임
                 modifier = Modifier.wrapContentSize(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(4.dp)
@@ -116,12 +106,9 @@ internal fun RunningItem(item: RunningItem, userToken: UserToken) {
                     style = Typography.EngBody12M
                 )
             }
-            Icon(
+            Icon( // 북마크
                 modifier = Modifier.clickable {
-                    vm.updateBookmarkState(
-                        itemId = item.itemId,
-                        bookmarked = !bookmarkState
-                    )
+                    requestToggleBookmarkState()
                 },
                 painter = painterResource(
                     when (bookmarkState) {
@@ -131,6 +118,35 @@ internal fun RunningItem(item: RunningItem, userToken: UserToken) {
                 ),
                 contentDescription = null
             )
+        }
+        Text(
+            modifier = Modifier,
+            text = item.title
+        ) // 2 (제목)
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+        ) {
+            detailItems.chunked(2).forEach { items ->
+                items.forEach { item ->
+                    Row(
+                        modifier = Modifier.weight(1f),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            modifier = Modifier,
+                            painter = painterResource(item.icon),
+                            contentDescription = null,
+                            tint = Color.Unspecified
+                        )
+                        Text(
+                            modifier = Modifier,
+                            text = item.text
+                        )
+                    }
+                }
+            }
         }
     }
 }
