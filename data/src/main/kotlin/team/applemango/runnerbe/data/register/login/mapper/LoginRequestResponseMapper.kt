@@ -27,6 +27,9 @@ internal fun LoginRequestResponse.toDomain(): UserToken {
         1001, 1007 -> UserToken( // 회원
             jwt = requireNotNull(loginResult.jwt) {
                 requireFieldNullMessage("jwt")
+            },
+            userId = requireNotNull(loginResult.userId) {
+                requireFieldNullMessage("userId")
             }
         )
         1002 -> UserToken( // 비회원
