@@ -14,7 +14,7 @@
 - 함수 괄호가 열린 경우, 새로운 라인에 코드 작성 (코드 가독성을 위함)
   단, 아래와 같은 경우엔 예외를 가짐
     1. filter function 과 같이 단순 boolean expression function 일 경우
-    2. composable function 의 remember extension 일 경우
+    2. composable function 일 경우
     3. logeukes 함수의 content 인자일 경우
 - enum class when 에서 else 는 사용하지 않음 (코드 파악을 쉽게 하기 위함)
 
