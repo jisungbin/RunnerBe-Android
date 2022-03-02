@@ -66,7 +66,7 @@ fun MainBoard(
     val titleTextStyle = remember(isBookmark) {
         when (isBookmark) {
             true -> Typography.Body16R.copy(color = ColorAsset.G3)
-            else -> TextStyle(
+            else -> TextStyle( // Custom, Typography 에 존재하지 않음
                 fontFamily = FontAsset.Aggro,
                 color = ColorAsset.PrimaryDark,
                 fontSize = 16.sp,
@@ -84,7 +84,7 @@ fun MainBoard(
             contentAlignment = Alignment.Center
         ) {
             Text(text = titleText, style = titleTextStyle)
-            if (!isBookmark) {
+            if (!isBookmark) { // 타이틀 오른쪽 검색, 알림 아이템들
                 Row(
                     modifier = Modifier.fillMaxSize(),
                     horizontalArrangement = Arrangement.spacedBy(
@@ -118,7 +118,8 @@ fun MainBoard(
                 selectedRunningItemType = runningItemType
             }
         )
-        if (!isBookmark) {
+        if (!isBookmark) { // ToggleTopBar 아래 마감 포함, 거리순, 필터 아이템들
+
         }
     }
 }
