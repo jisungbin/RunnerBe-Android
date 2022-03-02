@@ -22,7 +22,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Checkbox
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -56,6 +56,7 @@ import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 import team.applemango.runnerbe.feature.home.board.component.RunningItem
 import team.applemango.runnerbe.feature.home.board.di.module.RepositoryModule
 import team.applemango.runnerbe.feature.home.board.di.module.UseCaseModule
+import team.applemango.runnerbe.feature.home.board.mvi.MainBoardSideEffect
 import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState
 import team.applemango.runnerbe.shared.compose.component.ToggleTopBar
 import team.applemango.runnerbe.shared.compose.component.ToggleTopBarItem
@@ -157,8 +158,16 @@ fun MainBoard(
                     state = state
                 )
             },
-            sideEffect = { newRunningItems ->
-                runningItemsState = newRunningItems.items
+            sideEffect = { sideEffect ->
+                when (sideEffect) {
+                    is MainBoardSideEffect.UpdateRunningItemSideEffect -> {
+                        runningItemsState = sideEffect.items
+                    }
+                    is MainBoardSideEffect.ToggleBookmarkState -> {
+                        forEachItemsBookmarkedState[sideEffect.itemIndex] =
+                            !forEachItemsBookmarkedState[sideEffect.itemIndex]
+                    }
+                }
             }
         )
     }
@@ -260,11 +269,17 @@ fun MainBoard(
         LazyColumn(
             modifier = Modifier,
         ) {
-            items(items = runningItemsState) { item ->
+            itemsIndexed(items = runningItemsState) { index, item ->
                 RunningItem(
                     item = item,
-                    bookmarkState = isBookmarkPage,
-
+                    bookmarkState = forEachItemsBookmarkedState[index],
+                    requestToggleBookmarkState = {
+                        vm.updateBookmarkState(
+                            itemIndex = index,
+                            itemId = item.itemId,
+                            bookmarked = !forEachItemsBookmarkedState[index]
+                        )
+                    }
                 )
             }
         }

@@ -40,8 +40,8 @@ import team.applemango.runnerbe.domain.runningitem.filter.RunningItemFilter
 import team.applemango.runnerbe.domain.runningitem.model.common.Locate
 import team.applemango.runnerbe.domain.runningitem.usecase.LoadRunningItemsUseCase
 import team.applemango.runnerbe.domain.user.usecase.UpdateBookmarkItemUseCase
+import team.applemango.runnerbe.feature.home.board.mvi.MainBoardSideEffect
 import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState
-import team.applemango.runnerbe.feature.home.board.mvi.UpdateRunningItemSideEffect
 import team.applemango.runnerbe.shared.base.BaseViewModel
 import team.applemango.runnerbe.shared.domain.unknownResultMessage
 
@@ -52,10 +52,10 @@ internal class MainBoardViewModel @AssistedInject constructor(
     private val updateBookmarkItemUseCase: UpdateBookmarkItemUseCase,
     private val loadRunningItemsUseCase: LoadRunningItemsUseCase,
     @Assisted private val userToken: UserToken,
-) : BaseViewModel(), ContainerHost<MainBoardState, UpdateRunningItemSideEffect> {
+) : BaseViewModel(), ContainerHost<MainBoardState, MainBoardSideEffect> {
 
     override val container =
-        container<MainBoardState, UpdateRunningItemSideEffect>(MainBoardState.None)
+        container<MainBoardState, MainBoardSideEffect>(MainBoardState.None)
 
     @AssistedFactory
     interface UserTokenAssistedFactory {
@@ -74,7 +74,11 @@ internal class MainBoardViewModel @AssistedInject constructor(
         }
     }
 
-    fun updateBookmarkState(itemId: Int, bookmarked: Boolean) = intent {
+    fun updateBookmarkState(
+        itemIndex: Int,
+        itemId: Int,
+        bookmarked: Boolean,
+    ) = intent {
         if (userToken.jwt == null || userToken.userId == null) {
             reduce {
                 MainBoardState.NonRegisterUser
@@ -90,7 +94,10 @@ internal class MainBoardViewModel @AssistedInject constructor(
             bookmarked = bookmarked
         ).onSuccess { result ->
             val newState = when (result) {
-                BaseResult.Success -> MainBoardState.None
+                BaseResult.Success -> {
+                    postSideEffect(MainBoardSideEffect.ToggleBookmarkState(itemIndex = itemIndex))
+                    MainBoardState.None
+                }
                 BaseResult.NotYetVerify -> MainBoardState.NonRegisterUser
                 // needs else block, because BaseResult is interface.
                 else -> throw IllegalStateException(unknownResultMessage(result))
@@ -128,7 +135,7 @@ internal class MainBoardViewModel @AssistedInject constructor(
             locate = locate,
             keywordFilter = keywordFilter
         ).onSuccess { items ->
-            postSideEffect(UpdateRunningItemSideEffect(items))
+            postSideEffect(MainBoardSideEffect.UpdateRunningItemSideEffect(items))
         }.onFailure { exception ->
             emitException(exception)
         }
