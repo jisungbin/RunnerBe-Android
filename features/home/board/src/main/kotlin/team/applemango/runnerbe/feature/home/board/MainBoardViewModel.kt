@@ -85,7 +85,7 @@ internal class MainBoardViewModel @AssistedInject constructor(
         // because 'userToken.jwt' is a public API property declared in different module
         updateBookmarkItemUseCase(
             jwt = userToken.jwt!!,
-            postId = itemId,
+            itemId = itemId,
             userId = userToken.userId!!,
             bookmarked = bookmarked
         ).onSuccess { result ->
