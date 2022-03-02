@@ -14,13 +14,13 @@ import team.applemango.runnerbe.domain.user.repository.UserRepository
 class UpdateBookmarkItemUseCase(private val repo: UserRepository) {
     suspend operator fun invoke(
         jwt: String,
-        postId: Int,
+        itemId: Int,
         userId: Int,
         bookmarked: Boolean,
     ) = runCatching {
         repo.updateBookmarkItem(
             jwt = jwt,
-            postId = postId,
+            postId = itemId,
             userId = userId,
             whetherAdd = when (bookmarked) {
                 true -> "Y"
