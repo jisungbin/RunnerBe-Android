@@ -107,10 +107,10 @@ internal fun RunningItemData.toDomain(type: MappingType) = RunningItem(
         -> DefaultIntValue
     },
     runningType = RunningItemType.values().first {
-        val runningTypeCode = requireNotNull(runningTag) {
+        requireNotNull(runningTag) {
             requireFieldNullMessage("runningTag")
         }
-        it.code == runningTypeCode
+        it.code == runningTag
     },
     finish = requireNotNull(whetherEnd) {
         requireFieldNullMessage("whetherEnd")
@@ -146,18 +146,21 @@ internal fun RunningItemData.toDomain(type: MappingType) = RunningItem(
         InformationApiFields, BookmarkApiFields -> emptyList()
     },
     ageFilter = run {
-        val age = requireNotNull(age) {
+        requireNotNull(age) {
             requireFieldNullMessage("age")
         }
         val (minAge, maxAge) = age.split("-").map(String::toInt)
         AgeFilter(min = minAge, max = maxAge)
     },
-    runningTime = requireNotNull(runningTime) { requireFieldNullMessage("runningTime") }.run {
+    runningTime = run {
+        requireNotNull(runningTime) {
+            requireFieldNullMessage("runningTime")
+        }
         val (hour, minute, second) = runningTime.split(":").map(String::toInt)
         Time(hour = hour, minute = minute, second = second)
     },
     locate = run {
-        val address = requireNotNull(locationInfo) {
+        requireNotNull(locationInfo) {
             requireFieldNullMessage("locationInfo")
         }
         val latitudeString = when (type) {
@@ -177,7 +180,7 @@ internal fun RunningItemData.toDomain(type: MappingType) = RunningItem(
             MyPageOwnRunningItemFields, MyPageJoinRunningItemFields -> DefaultIntValue.toString()
         }
         Locate(
-            address = address,
+            address = locationInfo,
             latitude = latitudeString.toDouble(),
             longitude = longitudeString.toDouble(),
         )
