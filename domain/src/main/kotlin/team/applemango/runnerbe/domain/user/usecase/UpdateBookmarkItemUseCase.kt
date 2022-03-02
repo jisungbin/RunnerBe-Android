@@ -16,13 +16,16 @@ class UpdateBookmarkItemUseCase(private val repo: UserRepository) {
         jwt: String,
         postId: Int,
         userId: Int,
-        whetherAdd: String,
+        bookmarked: Boolean,
     ) = runCatching {
         repo.updateBookmarkItem(
             jwt = jwt,
             postId = postId,
             userId = userId,
-            whetherAdd = whetherAdd
+            whetherAdd = when (bookmarked) {
+                true -> "Y"
+                else -> "N"
+            }
         )
     }
 }
