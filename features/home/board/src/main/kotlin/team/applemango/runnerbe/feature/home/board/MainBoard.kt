@@ -9,6 +9,7 @@
 
 package team.applemango.runnerbe.feature.home.board
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,6 +18,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.material.Checkbox
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -50,6 +53,7 @@ fun MainBoard(
     val appNameText = stringResource(R.string.mainboard_title_app_name)
     val bookmarkText = stringResource(R.string.mainboard_title_bookmark_list)
     var selectedRunningItemType by remember { mutableStateOf(RunningItemType.Before) }
+    var includeFinishState by remember { mutableStateOf(false) }
     val toggleTabBarItems = remember {
         listOf(
             ToggleTopBarItem(id = RunningItemType.Before, text = beforeText),
@@ -119,7 +123,53 @@ fun MainBoard(
             }
         )
         if (!isBookmark) { // ToggleTopBar 아래 마감 포함, 거리순, 필터 아이템들
-
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(top = 12.dp),
+                horizontalArrangement = Arrangement.spacedBy(
+                    space = 16.dp,
+                    alignment = Alignment.CenterHorizontally
+                ),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = "마감 포함",
+                        style = Typography.Body12R.copy(color = ColorAsset.G4)
+                    )
+                    Checkbox(
+                        modifier = Modifier.padding(start = 4.dp),
+                        checked = includeFinishState,
+                        onCheckedChange = { includeFinishState = it }
+                    )
+                }
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = "거리순",
+                        style = Typography.Body12R.copy(color = ColorAsset.G4),
+                    )
+                    Icon(
+                        modifier = Modifier
+                            .padding(start = 2.dp)
+                            .clickable {
+                                // TODO: sort
+                            },
+                        painter = painterResource(R.drawable.ic_round_chevron_down),
+                        contentDescription = null,
+                        tint = Color.Unspecified
+                    )
+                }
+                Icon(
+                    modifier = Modifier.clickable {
+                        // TODO: filter
+                    },
+                    painter = painterResource(R.drawable.ic_round_filter_24),
+                    contentDescription = null,
+                    tint = Color.Unspecified
+                )
+            }
         }
     }
 }
