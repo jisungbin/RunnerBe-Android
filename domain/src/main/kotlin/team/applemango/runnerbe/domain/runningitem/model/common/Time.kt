@@ -9,10 +9,4 @@
 
 package team.applemango.runnerbe.domain.runningitem.model.common
 
-import java.text.DecimalFormat
-
-data class Time(val hour: Int, val minute: Int, val second: Int) {
-    private val formatter = DecimalFormat("00")
-    override fun toString() =
-        "${formatter.format(hour)}:${formatter.format(minute)}:${formatter.format(second)}"
-}
+data class Time(val hour: Int, val minute: Int, val second: Int)
