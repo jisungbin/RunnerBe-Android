@@ -7,26 +7,17 @@
   <a href="https://developer.android.com/about/versions/lollipop"><img alt="API 21+" src="https://img.shields.io/badge/API-21%2B-brightgreen.svg"/></a>
   <a href="https://github.com/applemango-runnerbe/RunnerBe-Android"><img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/applemango-runnerbe/RunnerBe-Android"/></a>
   <br/>
-  <a href="https://www.codefactor.io/repository/github/applemango-runnerbe/runnerbe-android/overview"><img src="https://www.codefactor.io/repository/github/applemango-runnerbe/runnerbe-android/badge" alt="CodeFactor"/></a>
-  <a href="https://sonarcloud.io/summary/new_code?id=applemango-runnerbe_RunnerBe-Android"><img src="https://sonarcloud.io/api/project_badges/measure?project=applemango-runnerbe_RunnerBe-Android&metric=sqale_rating" alt="Maintainability Rating"/>     
-  <a href="https://sonarcloud.io/summary/new_code?id=applemango-runnerbe_RunnerBe-Android"><img src="https://sonarcloud.io/api/project_badges/measure?project=applemango-runnerbe_RunnerBe-Android&metric=ncloc" alt="Lines of Code"/></a>
-  <br/>
   <a href="https://kotlin.link"><img src="https://kotlin.link/awesome-kotlin.svg" alt="awesome-kotlin"/></a>
   <a href="https://ktlint.github.io/"><img src="https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg" alt="ktlint"/></a>
   <a href="https://wakatime.com/badge/user/2da851dd-14d7-47dd-821a-7d902e52c1c2/project/eead2f63-3468-4e8a-98b2-12de1e4cebb2"><img src="https://wakatime.com/badge/user/2da851dd-14d7-47dd-821a-7d902e52c1c2/project/eead2f63-3468-4e8a-98b2-12de1e4cebb2.svg" alt="wakatime"></a>
+  <br/>
+  <a href="https://coveralls.io/github/applemango-runnerbe/RunnerBe-Android?branch=main"><img src="https://coveralls.io/repos/github/applemango-runnerbe/RunnerBe-Android/badge.svg?branch=main" alt="Coverage Status"/></a>
+  <a href="https://www.codefactor.io/repository/github/applemango-runnerbe/runnerbe-android/overview"><img src="https://www.codefactor.io/repository/github/applemango-runnerbe/runnerbe-android/badge" alt="CodeFactor"/></a>
+  <a href="https://sonarcloud.io/summary/new_code?id=applemango-runnerbe_RunnerBe-Android"><img src="https://sonarcloud.io/api/project_badges/measure?project=applemango-runnerbe_RunnerBe-Android&metric=sqale_rating" alt="Maintainability Rating"/>     
+  <a href="https://sonarcloud.io/summary/new_code?id=applemango-runnerbe_RunnerBe-Android"><img src="https://sonarcloud.io/api/project_badges/measure?project=applemango-runnerbe_RunnerBe-Android&metric=ncloc" alt="Lines of Code"/></a>
 </p>
 
 ---
-  
-<!-- # 🚀🚀🚀 SUPER-FAST-DEV ON 🚀🚀🚀
-
-시간이 매우 촉박하여 퍼포먼스와 앱 스킬들을 다 무시하고 모놀리식 구성으로 [재개발](https://github.com/applemango-runnerbe/RunnerBe-Android-SuperFastDev)합니다.
-
-**따라서 코드가 매우 더러우며 코드 확인을 권장하지 않습니다.**
-
-프로젝트 기간이 끝난 이후, 이쁘고 아름답게 리펙토링 할 예정입니다. 
-
-현재 main 브런치 코드와 리드미에 적힌 스팩들은 SUPER-FAST-DEV 가 OFF 인 상태일 때 개발된 코드들 입니다. -->
 
 # 🥇 마지막 실력 향상 프로젝트
 
@@ -35,14 +26,9 @@
 따라서 **아키텍처가 다소 오버하게 적용**됐으며, 아래와 같은 기술들을 처음 적용합니다.
 
 - DFM
-- [CI](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/22)/CD
 - TDD
 - Unit Test + [Test Coverage 100% 목표](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/35)
-- DataStore
-- WindowInsets
-- Feature별 모듈 분리
-- Complex Custom View
-  
+
 # 🐛 아키텍처 이슈
   
 현재 아키텍처에 다양한 이슈들이 존재합니다. 이슈 해결을 위한 이슈나 PR 은 항상 환영입니다.
@@ -53,8 +39,8 @@
 - [#19: DFM에서 android:exported="true" 로 설정](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/19)
 - [#38: platform aware 한 ViewModel](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/38) [close]
 - [#45: shared 모듈 3개](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/45)
-- [#46: [심각] platform aware 한 domain repository](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/46)
-  
+- [#46: [심각] platform aware 한 domain repository](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/46)  
+ 
 ---
 
 ## Tech Skill
@@ -76,7 +62,6 @@
 - Hilt
 - Compose
 - DataStore
-- Navigation
 
 #### Test
 
@@ -87,6 +72,7 @@
 #### Etc
 
 - GMS
+- Dagger2 (for DFM)
 - WindowInsets
 - Coroutine/Flow
 - Retrofit, OkHttp
@@ -114,6 +100,12 @@
 - **[PM]** [@jisungbin](https://github.com/jisungbin)
 
 ---
+
+## 회고 중간 기록
+
+- develop 브런치 만들었어야 했는데 초기에 까먹고 main 브런치에 다 때려박아서 그냥 develop 브런치 버리고 main 으로 통합함
+- 세부 feature 별로 브런치 만들어서 진행해야 하는데 아직 feature 브런치에 익숙하지 않아 대분류 feature 만 브런치를 만들며 작업해서 아쉬움
+- [mapper](https://github.com/applemango-runnerbe/RunnerBe-Android/blob/f0855a490f90c1b0f668f9aeb2cd3b60e6c5fd75/data/src/main/kotlin/team/applemango/runnerbe/data/main/mapper/mapper.kt) 만드는게 제일 귀찮아...
 
 ## License
 
