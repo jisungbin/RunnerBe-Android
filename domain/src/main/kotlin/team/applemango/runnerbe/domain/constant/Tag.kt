@@ -11,7 +11,13 @@ package team.applemango.runnerbe.domain.constant
 
 /**
  * 러너 성실도
+ *
+ * 초보러너 | 불량러너(1~32)
+ * 노력러너(33~65) | 성실러너(66~100)
  */
 enum class Tag(val message: String) {
-    Effort("노력 러너")
+    Starter("초보 러너"),
+    Bad("불량 러너"),
+    Effort("노력 러너"),
+    Awesome("성실 러너")
 }
