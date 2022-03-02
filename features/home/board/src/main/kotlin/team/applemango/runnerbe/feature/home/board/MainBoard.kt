@@ -35,6 +35,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import team.applemango.runnerbe.domain.register.runnerbe.model.UserToken
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.shared.compose.component.ToggleTopBar
 import team.applemango.runnerbe.shared.compose.component.ToggleTopBarItem
@@ -46,6 +47,7 @@ import team.applemango.runnerbe.shared.compose.theme.Typography
 fun MainBoard(
     modifier: Modifier = Modifier,
     isBookmark: Boolean = false,
+    userToken: UserToken
 ) {
     val beforeText = stringResource(R.string.onboard_toggletopbaritem_before)
     val afterText = stringResource(R.string.onboard_toggletopbaritem_after)
