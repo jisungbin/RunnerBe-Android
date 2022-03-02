@@ -10,6 +10,7 @@
 package team.applemango.runnerbe.feature.home.board.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,19 +22,28 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.skydoves.landscapist.coil.CoilImage
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
+import team.applemango.runnerbe.feature.home.board.MainBoardViewModel
 import team.applemango.runnerbe.feature.home.board.R
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 
 @Composable
 internal fun RunningItem(item: RunningItem) {
+    val vm: MainBoardViewModel = viewModel()
+    var bookmarkState by remember { mutableStateOf(item.bookmarked) }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -64,10 +74,16 @@ internal fun RunningItem(item: RunningItem) {
                 )
             }
             Icon(
-                painter = when (item.bookmarked) {
-                                                 true -> painterResource(R.drawable.ic_)
-                                                 },
-                contentDescription =
+                modifier = Modifier.clickable {
+
+                },
+                painter = painterResource(
+                    when (bookmarkState) {
+                        true -> R.drawable.ic_round_bookmark_24
+                        else -> R.drawable.ic_outlined_bookmark_24
+                    }
+                ),
+                contentDescription = null
             )
         }
     }
