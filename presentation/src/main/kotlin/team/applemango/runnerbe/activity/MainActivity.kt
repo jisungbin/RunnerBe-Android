@@ -166,7 +166,7 @@ class MainActivity : ComponentActivity() {
                             Text(
                                 modifier = Modifier.padding(top = 30.dp),
                                 text = "이 기능은 아직 이용할 수 없어요!",
-                                style = Typography.Title18R
+                                style = Typography.Title18R.copy(color = ColorAsset.PrimaryDark)
                             )
                         }
                     }
