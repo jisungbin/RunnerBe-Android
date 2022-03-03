@@ -184,7 +184,6 @@ fun MainBoard(
                 modifier = modifier.fillMaxSize(),
                 floatingActionButton = {
                     FloatingActionButton(onClick = { /*TODO*/ }) {
-
                     }
                 }
             ) {
