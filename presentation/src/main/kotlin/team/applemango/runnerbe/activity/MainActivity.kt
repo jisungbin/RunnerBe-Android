@@ -14,7 +14,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -22,16 +26,21 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import io.github.jisungbin.logeukes.logeukes
 import kotlinx.coroutines.async
 import team.applemango.runnerbe.R
 import team.applemango.runnerbe.component.IconBottomBar
@@ -51,6 +60,7 @@ import team.applemango.runnerbe.domain.runningitem.usecase.LoadRunningItemsUseCa
 import team.applemango.runnerbe.feature.home.board.MainBoard
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
+import team.applemango.runnerbe.shared.compose.theme.Typography
 
 class MainActivity : ComponentActivity() {
 
@@ -101,8 +111,9 @@ class MainActivity : ComponentActivity() {
 
         LaunchedEffect(Unit) {
             runningItemsState = runningItems.await().getOrThrow()
-            logeukes(tag = "CCC") { runningItemsState }
         }
+
+        val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.bee))
 
         val bottomBarStateIcons = remember {
             listOf(
@@ -139,15 +150,25 @@ class MainActivity : ComponentActivity() {
             ) { screen ->
                 when (screen) {
                     ScreenType.Main -> {
-                        logeukes(tag = "BBB") { runningItemsState }
                         MainBoard(runningItemsState = runningItemsState)
                     }
-                    ScreenType.Bookmark -> {
-                        Text(text = "2")
-                    }
-                    ScreenType.Mail -> throw NotImplementedError()
-                    ScreenType.Mypage -> {
-                        Text(text = "3")
+                    else -> {
+                        Column(
+                            modifier = Modifier.fillMaxSize(),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            LottieAnimation(
+                                modifier = Modifier.size(250.dp),
+                                composition = composition,
+                                iterations = LottieConstants.IterateForever,
+                            )
+                            Text(
+                                modifier = Modifier.padding(top = 30.dp),
+                                text = "이 기능은 아직 이용할 수 없어요!",
+                                style = Typography.Title18R
+                            )
+                        }
                     }
                 }
             }

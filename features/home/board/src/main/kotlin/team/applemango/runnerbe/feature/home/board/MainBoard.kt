@@ -28,7 +28,6 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -56,6 +55,7 @@ import team.applemango.runnerbe.shared.compose.component.ToggleTopBar
 import team.applemango.runnerbe.shared.compose.component.ToggleTopBarItem
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.FontAsset
+import team.applemango.runnerbe.shared.compose.theme.RunnerbeCheckBoxColors
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
 import team.applemango.runnerbe.shared.domain.extension.toMessage
@@ -228,7 +228,12 @@ fun MainBoard(
                 ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                Row(
+                    modifier = Modifier.clickable {
+                        toast(context, "아직 준비중 이에요.")
+                    },
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Text(
                         text = "마감 포함",
                         style = Typography.Body12R.copy(color = ColorAsset.G4)
@@ -236,20 +241,22 @@ fun MainBoard(
                     Checkbox(
                         modifier = Modifier.padding(start = 4.dp),
                         checked = includeFinishState,
-                        onCheckedChange = { includeFinishState = it }
+                        onCheckedChange = { includeFinishState = it },
+                        colors = RunnerbeCheckBoxColors
                     )
                 }
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                Row(
+                    modifier = Modifier.clickable {
+                        toast(context, "아직 준비중 이에요.")
+                    },
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Text(
                         text = "거리순",
                         style = Typography.Body12R.copy(color = ColorAsset.G4),
                     )
                     Icon(
-                        modifier = Modifier
-                            .padding(start = 2.dp)
-                            .clickable {
-                                // TODO: sort
-                            },
+                        modifier = Modifier.padding(start = 2.dp),
                         painter = painterResource(R.drawable.ic_round_chevron_down),
                         contentDescription = null,
                         tint = Color.Unspecified
@@ -257,16 +264,13 @@ fun MainBoard(
                 }
                 Icon(
                     modifier = Modifier.clickable {
-                        // TODO: filter
+                        toast(context, "아직 준비중 이에요.")
                     },
                     painter = painterResource(R.drawable.ic_round_filter_24),
                     contentDescription = null,
                     tint = Color.Unspecified
                 )
             }
-        }
-        SideEffect {
-            logeukes(tag = "AAAA") { runningItemsState }
         }
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
@@ -282,6 +286,7 @@ fun MainBoard(
                             itemId = item.itemId,
                             bookmarked = !forEachItemsBookmarkedState[index]
                         )*/
+                        toast(context, "아직 준비중 이에요.")
                     }
                 )
             }
