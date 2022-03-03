@@ -222,7 +222,7 @@ fun MainBoard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
-                    .padding(top = 12.dp)
+                    .padding(top = 12.dp),
                 horizontalArrangement = Arrangement.spacedBy(
                     space = 16.dp,
                     alignment = Alignment.End
