@@ -24,7 +24,11 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Checkbox
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
+import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -68,6 +72,7 @@ import team.applemango.runnerbe.shared.domain.extension.toMessage
 import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.util.extension.toast
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MainBoard(
     modifier: Modifier = Modifier,
@@ -172,118 +177,132 @@ fun MainBoard(
         )
     }
 
-    Column(modifier = modifier.fillMaxSize()) {
-        Box( // ToolBar
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(56.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = titleText,
-                style = titleTextStyle
-            )
-            if (!isBookmarkPage) { // 타이틀 오른쪽 검색, 알림 아이템들
-                Row(
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalArrangement = Arrangement.spacedBy(
-                        space = 16.dp,
-                        alignment = Alignment.End
-                    )
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_outlined_search_24),
-                        contentDescription = null,
-                        tint = Color.Unspecified
-                    )
-                    Icon(
-                        painter = painterResource(R.drawable.ic_outlined_bell_24),
-                        contentDescription = null,
-                        tint = Color.Unspecified
-                    )
-                }
-            }
-        }
-        ToggleTopBar(
-            modifier = Modifier.padding(top = 4.dp),
-            toggleTopBarItems = toggleTabBarItems,
-            baseBackgroundColor = ColorAsset.G6,
-            activateBackgroundColor = ColorAsset.Primary,
-            activateTextColor = ColorAsset.G6,
-            inactivateTextColor = ColorAsset.G4_5,
-            activateTextStyle = Typography.Body14M,
-            inactivateTextStyle = Typography.Body14R,
-            onItemClick = { runningItemType ->
-                selectedRunningItemTypeState = runningItemType
-            }
-        )
-        if (!isBookmarkPage) { // ToggleTopBar 아래 마감 포함, 거리순, 필터 아이템들
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-                    .padding(top = 12.dp),
-                horizontalArrangement = Arrangement.spacedBy(
-                    space = 16.dp,
-                    alignment = Alignment.CenterHorizontally
-                ),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        text = "마감 포함",
-                        style = Typography.Body12R.copy(color = ColorAsset.G4)
-                    )
-                    Checkbox(
-                        modifier = Modifier.padding(start = 4.dp),
-                        checked = includeFinishState,
-                        onCheckedChange = { includeFinishState = it }
-                    )
-                }
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        text = "거리순",
-                        style = Typography.Body12R.copy(color = ColorAsset.G4),
-                    )
-                    Icon(
-                        modifier = Modifier
-                            .padding(start = 2.dp)
-                            .clickable {
-                                // TODO: sort
-                            },
-                        painter = painterResource(R.drawable.ic_round_chevron_down),
-                        contentDescription = null,
-                        tint = Color.Unspecified
-                    )
-                }
-                Icon(
-                    modifier = Modifier.clickable {
-                        // TODO: filter
-                    },
-                    painter = painterResource(R.drawable.ic_round_filter_24),
-                    contentDescription = null,
-                    tint = Color.Unspecified
-                )
-            }
-        }
-        LazyColumn(
-            modifier = Modifier,
-        ) {
-            itemsIndexed(items = runningItemsState) { index, item ->
-                RunningItem(
-                    item = item,
-                    bookmarkState = forEachItemsBookmarkedState[index],
-                    requestToggleBookmarkState = {
-                        vm.updateBookmarkState(
-                            itemIndex = index,
-                            itemId = item.itemId,
-                            bookmarked = !forEachItemsBookmarkedState[index]
-                        )
+    ModalBottomSheetLayout(
+        sheetContent = {}, // TODO
+        content = {
+            Scaffold(
+                modifier = modifier.fillMaxSize(),
+                floatingActionButton = {
+                    FloatingActionButton(onClick = { /*TODO*/ }) {
+
                     }
-                )
+                }
+            ) {
+                Column(modifier = modifier.fillMaxSize()) {
+                    Box( // ToolBar
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(56.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = titleText,
+                            style = titleTextStyle
+                        )
+                        if (!isBookmarkPage) { // 타이틀 오른쪽 검색, 알림 아이템들
+                            Row(
+                                modifier = Modifier.fillMaxSize(),
+                                horizontalArrangement = Arrangement.spacedBy(
+                                    space = 16.dp,
+                                    alignment = Alignment.End
+                                )
+                            ) {
+                                Icon(
+                                    painter = painterResource(R.drawable.ic_outlined_search_24),
+                                    contentDescription = null,
+                                    tint = Color.Unspecified
+                                )
+                                Icon(
+                                    painter = painterResource(R.drawable.ic_outlined_bell_24),
+                                    contentDescription = null,
+                                    tint = Color.Unspecified
+                                )
+                            }
+                        }
+                    }
+                    ToggleTopBar(
+                        modifier = Modifier.padding(top = 4.dp),
+                        toggleTopBarItems = toggleTabBarItems,
+                        baseBackgroundColor = ColorAsset.G6,
+                        activateBackgroundColor = ColorAsset.Primary,
+                        activateTextColor = ColorAsset.G6,
+                        inactivateTextColor = ColorAsset.G4_5,
+                        activateTextStyle = Typography.Body14M,
+                        inactivateTextStyle = Typography.Body14R,
+                        onItemClick = { runningItemType ->
+                            selectedRunningItemTypeState = runningItemType
+                        }
+                    )
+                    if (!isBookmarkPage) { // ToggleTopBar 아래 마감 포함, 거리순, 필터 아이템들
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .wrapContentHeight()
+                                .padding(top = 12.dp),
+                            horizontalArrangement = Arrangement.spacedBy(
+                                space = 16.dp,
+                                alignment = Alignment.CenterHorizontally
+                            ),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text(
+                                    text = "마감 포함",
+                                    style = Typography.Body12R.copy(color = ColorAsset.G4)
+                                )
+                                Checkbox(
+                                    modifier = Modifier.padding(start = 4.dp),
+                                    checked = includeFinishState,
+                                    onCheckedChange = { includeFinishState = it }
+                                )
+                            }
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text(
+                                    text = "거리순",
+                                    style = Typography.Body12R.copy(color = ColorAsset.G4),
+                                )
+                                Icon(
+                                    modifier = Modifier
+                                        .padding(start = 2.dp)
+                                        .clickable {
+                                            // TODO: sort
+                                        },
+                                    painter = painterResource(R.drawable.ic_round_chevron_down),
+                                    contentDescription = null,
+                                    tint = Color.Unspecified
+                                )
+                            }
+                            Icon(
+                                modifier = Modifier.clickable {
+                                    // TODO: filter
+                                },
+                                painter = painterResource(R.drawable.ic_round_filter_24),
+                                contentDescription = null,
+                                tint = Color.Unspecified
+                            )
+                        }
+                    }
+                    LazyColumn(
+                        modifier = Modifier,
+                    ) {
+                        itemsIndexed(items = runningItemsState) { index, item ->
+                            RunningItem(
+                                item = item,
+                                bookmarkState = forEachItemsBookmarkedState[index],
+                                requestToggleBookmarkState = {
+                                    vm.updateBookmarkState(
+                                        itemIndex = index,
+                                        itemId = item.itemId,
+                                        bookmarked = !forEachItemsBookmarkedState[index]
+                                    )
+                                }
+                            )
+                        }
+                    }
+                }
             }
         }
-    }
+    )
 }
 
 private fun handleState(context: Context, state: MainBoardState) {
