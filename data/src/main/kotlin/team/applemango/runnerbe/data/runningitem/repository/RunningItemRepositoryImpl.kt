@@ -43,7 +43,7 @@ class RunningItemRepositoryImpl : RunningItemRepository {
 
     override suspend fun loadItems(
         itemType: String,
-        includeEndItems: Boolean,
+        includeEndItems: String,
         itemFilter: String,
         distance: String,
         gender: String,

@@ -33,7 +33,10 @@ class LoadRunningItemsUseCase(private val repo: RunningItemRepository) {
     ) = runCatching {
         repo.loadItems(
             itemType = itemType.code,
-            includeEndItems = includeEndItems,
+            includeEndItems = when (includeEndItems) {
+                true -> "Y"
+                else -> "N"
+            },
             itemFilter = itemFilter.code,
             distance = distanceFilter.code,
             gender = genderFilter.code,

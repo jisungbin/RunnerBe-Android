@@ -33,7 +33,7 @@ interface RunningItemApi {
     @GET("/users/main/{runningTag}")
     suspend fun loadItems(
         @Path("runningTag") itemType: String,
-        @Query("whetherEnd") includeEndItems: Boolean,
+        @Query("whetherEnd") includeEndItems: String,
         @Query("filter") itemFilter: String,
         @Query("distanceFilter") distance: String,
         @Query("genderFilter") gender: String,
