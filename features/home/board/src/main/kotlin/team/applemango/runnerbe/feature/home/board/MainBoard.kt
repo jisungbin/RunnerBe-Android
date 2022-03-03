@@ -11,7 +11,6 @@ package team.applemango.runnerbe.feature.home.board
 
 import android.content.Context
 import android.widget.Toast
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -270,9 +269,8 @@ fun MainBoard(
             logeukes(tag = "AAAA") { runningItemsState }
         }
         LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-            // .background(color = Color.Red)
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             itemsIndexed(items = runningItemsState) { index, item ->
                 RunningItem(

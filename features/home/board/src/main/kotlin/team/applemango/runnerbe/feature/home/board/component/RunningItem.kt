@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -99,7 +100,9 @@ internal fun RunningItem(
                 horizontalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 CoilImage(
-                    modifier = Modifier.size(15.dp),
+                    modifier = Modifier
+                        .size(15.dp)
+                        .clip(CircleShape),
                     imageModel = item.ownerProfileImageUrl
                 )
                 Text(
@@ -118,7 +121,8 @@ internal fun RunningItem(
                         else -> R.drawable.ic_outlined_bookmark_24
                     }
                 ),
-                contentDescription = null
+                contentDescription = null,
+                tint = Color.Unspecified
             )
         }
         Text(
@@ -130,6 +134,7 @@ internal fun RunningItem(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
+                .background(color = Color.Blue)
         ) {
             detailItems.chunked(2).forEach { items ->
                 items.forEach { item ->
