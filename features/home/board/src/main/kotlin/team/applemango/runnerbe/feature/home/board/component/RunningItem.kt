@@ -107,7 +107,7 @@ internal fun RunningItem(
                 )
                 Text(
                     modifier = Modifier.padding(start = 4.dp),
-                    text = item.title,
+                    text = item.ownerNickName,
                     style = Typography.Caption10R.copy(color = ColorAsset.G3_5)
                 )
             }
@@ -134,25 +134,30 @@ internal fun RunningItem(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .background(color = Color.Blue)
         ) {
             detailItems.chunked(2).forEach { items ->
-                items.forEach { item ->
-                    Row(
-                        modifier = Modifier.weight(1f),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            modifier = Modifier.size(18.dp),
-                            painter = painterResource(item.icon),
-                            contentDescription = null,
-                            tint = Color.Unspecified
-                        )
-                        Text(
-                            modifier = Modifier.padding(start = 6.dp),
-                            text = item.text,
-                            style = Typography.Body12M.copy(color = ColorAsset.G2)
-                        )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                ) {
+                    items.forEach { item ->
+                        Row(
+                            modifier = Modifier.weight(1f),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                modifier = Modifier.size(18.dp),
+                                painter = painterResource(item.icon),
+                                contentDescription = null,
+                                tint = Color.Unspecified
+                            )
+                            Text(
+                                modifier = Modifier.padding(start = 6.dp),
+                                text = item.text,
+                                style = Typography.Body12M.copy(color = ColorAsset.G2)
+                            )
+                        }
                     }
                 }
             }
