@@ -19,6 +19,13 @@ package team.applemango.runnerbe.domain.runningitem.filter
  * @property max 최대 나이
  */
 data class AgeFilter(val min: Int?, val max: Int?) {
+    companion object {
+        val None = AgeFilter(
+            min = null,
+            max = null
+        )
+    }
+
     override fun toString() = "$min-$max"
     fun getCode(ageBuilder: AgeFilter.() -> Int?) = ageBuilder(this)?.toString() ?: "N"
 }

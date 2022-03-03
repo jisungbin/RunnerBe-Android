@@ -25,13 +25,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Checkbox
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
-import androidx.compose.material.ModalBottomSheetLayout
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -48,19 +44,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import io.github.jisungbin.logeukes.LoggerType
 import io.github.jisungbin.logeukes.logeukes
-import org.orbitmvi.orbit.viewmodel.observe
-import team.applemango.runnerbe.domain.register.runnerbe.model.UserToken
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 import team.applemango.runnerbe.feature.home.board.component.RunningItem
-import team.applemango.runnerbe.feature.home.board.di.module.RepositoryModule
-import team.applemango.runnerbe.feature.home.board.di.module.UseCaseModule
-import team.applemango.runnerbe.feature.home.board.mvi.MainBoardSideEffect
 import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState
 import team.applemango.runnerbe.shared.compose.component.ToggleTopBar
 import team.applemango.runnerbe.shared.compose.component.ToggleTopBarItem
@@ -69,7 +58,6 @@ import team.applemango.runnerbe.shared.compose.theme.FontAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
 import team.applemango.runnerbe.shared.domain.extension.toMessage
-import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.util.extension.toast
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -77,7 +65,7 @@ import team.applemango.runnerbe.shared.util.extension.toast
 fun MainBoard(
     modifier: Modifier = Modifier,
     isBookmarkPage: Boolean = false,
-    userToken: UserToken,
+    // userToken: UserToken,
     runningItems: List<RunningItem>,
 ) {
     val context = LocalContext.current
@@ -125,7 +113,7 @@ fun MainBoard(
     }
     var selectedRunningItemTypeState by remember { mutableStateOf(RunningItemType.Before) }
 
-    val vm = remember(userToken) {
+    /*val vm = remember(userToken) {
         val viewModelProvider = object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -146,9 +134,9 @@ fun MainBoard(
             owner = viewModelStoreOwner,
             factory = viewModelProvider
         )[MainBoardViewModel::class.java]
-    }
+    }*/
 
-    LaunchedEffect(Unit) {
+    /*LaunchedEffect(Unit) {
         vm.exceptionFlow.collectWithLifecycle(lifecycleOwner = lifecycleOwner) { exception ->
             handleException(
                 context = context,
@@ -175,133 +163,120 @@ fun MainBoard(
                 }
             }
         )
-    }
+    }*/
 
-    ModalBottomSheetLayout(
-        sheetContent = {}, // TODO
-        content = {
-            Scaffold(
-                modifier = modifier.fillMaxSize(),
-                floatingActionButton = {
-                    FloatingActionButton(onClick = { /*TODO*/ }) {
-                    }
-                }
-            ) {
-                Column(modifier = modifier.fillMaxSize()) {
-                    Box( // ToolBar
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(56.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = titleText,
-                            style = titleTextStyle
-                        )
-                        if (!isBookmarkPage) { // 타이틀 오른쪽 검색, 알림 아이템들
-                            Row(
-                                modifier = Modifier.fillMaxSize(),
-                                horizontalArrangement = Arrangement.spacedBy(
-                                    space = 16.dp,
-                                    alignment = Alignment.End
-                                )
-                            ) {
-                                Icon(
-                                    painter = painterResource(R.drawable.ic_outlined_search_24),
-                                    contentDescription = null,
-                                    tint = Color.Unspecified
-                                )
-                                Icon(
-                                    painter = painterResource(R.drawable.ic_outlined_bell_24),
-                                    contentDescription = null,
-                                    tint = Color.Unspecified
-                                )
-                            }
-                        }
-                    }
-                    ToggleTopBar(
-                        modifier = Modifier.padding(top = 4.dp),
-                        toggleTopBarItems = toggleTabBarItems,
-                        baseBackgroundColor = ColorAsset.G6,
-                        activateBackgroundColor = ColorAsset.Primary,
-                        activateTextColor = ColorAsset.G6,
-                        inactivateTextColor = ColorAsset.G4_5,
-                        activateTextStyle = Typography.Body14M,
-                        inactivateTextStyle = Typography.Body14R,
-                        onItemClick = { runningItemType ->
-                            selectedRunningItemTypeState = runningItemType
-                        }
+    Column(modifier = modifier.fillMaxSize()) {
+        Box( // ToolBar
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(56.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = titleText,
+                style = titleTextStyle
+            )
+            if (!isBookmarkPage) { // 타이틀 오른쪽 검색, 알림 아이템들
+                Row(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalArrangement = Arrangement.spacedBy(
+                        space = 16.dp,
+                        alignment = Alignment.End
                     )
-                    if (!isBookmarkPage) { // ToggleTopBar 아래 마감 포함, 거리순, 필터 아이템들
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .wrapContentHeight()
-                                .padding(top = 12.dp),
-                            horizontalArrangement = Arrangement.spacedBy(
-                                space = 16.dp,
-                                alignment = Alignment.CenterHorizontally
-                            ),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Text(
-                                    text = "마감 포함",
-                                    style = Typography.Body12R.copy(color = ColorAsset.G4)
-                                )
-                                Checkbox(
-                                    modifier = Modifier.padding(start = 4.dp),
-                                    checked = includeFinishState,
-                                    onCheckedChange = { includeFinishState = it }
-                                )
-                            }
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Text(
-                                    text = "거리순",
-                                    style = Typography.Body12R.copy(color = ColorAsset.G4),
-                                )
-                                Icon(
-                                    modifier = Modifier
-                                        .padding(start = 2.dp)
-                                        .clickable {
-                                            // TODO: sort
-                                        },
-                                    painter = painterResource(R.drawable.ic_round_chevron_down),
-                                    contentDescription = null,
-                                    tint = Color.Unspecified
-                                )
-                            }
-                            Icon(
-                                modifier = Modifier.clickable {
-                                    // TODO: filter
-                                },
-                                painter = painterResource(R.drawable.ic_round_filter_24),
-                                contentDescription = null,
-                                tint = Color.Unspecified
-                            )
-                        }
-                    }
-                    LazyColumn(
-                        modifier = Modifier,
-                    ) {
-                        itemsIndexed(items = runningItemsState) { index, item ->
-                            RunningItem(
-                                item = item,
-                                bookmarkState = forEachItemsBookmarkedState[index],
-                                requestToggleBookmarkState = {
-                                    vm.updateBookmarkState(
-                                        itemIndex = index,
-                                        itemId = item.itemId,
-                                        bookmarked = !forEachItemsBookmarkedState[index]
-                                    )
-                                }
-                            )
-                        }
-                    }
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_outlined_search_24),
+                        contentDescription = null,
+                        tint = Color.Unspecified
+                    )
+                    Icon(
+                        painter = painterResource(R.drawable.ic_outlined_bell_24),
+                        contentDescription = null,
+                        tint = Color.Unspecified
+                    )
                 }
             }
         }
-    )
+        ToggleTopBar(
+            modifier = Modifier.padding(top = 4.dp),
+            toggleTopBarItems = toggleTabBarItems,
+            baseBackgroundColor = ColorAsset.G6,
+            activateBackgroundColor = ColorAsset.Primary,
+            activateTextColor = ColorAsset.G6,
+            inactivateTextColor = ColorAsset.G4_5,
+            activateTextStyle = Typography.Body14M,
+            inactivateTextStyle = Typography.Body14R,
+            onItemClick = { runningItemType ->
+                selectedRunningItemTypeState = runningItemType
+            }
+        )
+        if (!isBookmarkPage) { // ToggleTopBar 아래 마감 포함, 거리순, 필터 아이템들
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(top = 12.dp),
+                horizontalArrangement = Arrangement.spacedBy(
+                    space = 16.dp,
+                    alignment = Alignment.CenterHorizontally
+                ),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = "마감 포함",
+                        style = Typography.Body12R.copy(color = ColorAsset.G4)
+                    )
+                    Checkbox(
+                        modifier = Modifier.padding(start = 4.dp),
+                        checked = includeFinishState,
+                        onCheckedChange = { includeFinishState = it }
+                    )
+                }
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = "거리순",
+                        style = Typography.Body12R.copy(color = ColorAsset.G4),
+                    )
+                    Icon(
+                        modifier = Modifier
+                            .padding(start = 2.dp)
+                            .clickable {
+                                // TODO: sort
+                            },
+                        painter = painterResource(R.drawable.ic_round_chevron_down),
+                        contentDescription = null,
+                        tint = Color.Unspecified
+                    )
+                }
+                Icon(
+                    modifier = Modifier.clickable {
+                        // TODO: filter
+                    },
+                    painter = painterResource(R.drawable.ic_round_filter_24),
+                    contentDescription = null,
+                    tint = Color.Unspecified
+                )
+            }
+        }
+        LazyColumn(
+            modifier = Modifier,
+        ) {
+            itemsIndexed(items = runningItemsState) { index, item ->
+                RunningItem(
+                    item = item,
+                    bookmarkState = forEachItemsBookmarkedState[index],
+                    requestToggleBookmarkState = {
+                        /*vm.updateBookmarkState(
+                            itemIndex = index,
+                            itemId = item.itemId,
+                            bookmarked = !forEachItemsBookmarkedState[index]
+                        )*/
+                    }
+                )
+            }
+        }
+    }
 }
 
 private fun handleState(context: Context, state: MainBoardState) {

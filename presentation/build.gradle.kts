@@ -70,6 +70,11 @@ dependencies {
     )
     features.forEach(::implementationProject)
 
+    val layers = listOf(
+        ProjectConstants.Domain,
+        ProjectConstants.Data,
+    ).forEach(::implementationProject)
+
     implementation(platform(Dependencies.FirebaseBom))
     implementation(Dependencies.FirebaseEachKtx.Analytics)
 

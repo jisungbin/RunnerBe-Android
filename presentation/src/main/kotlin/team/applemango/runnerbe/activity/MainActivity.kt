@@ -27,17 +27,52 @@ import androidx.compose.ui.graphics.Color
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.lifecycleScope
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import kotlinx.coroutines.async
 import team.applemango.runnerbe.R
 import team.applemango.runnerbe.component.IconBottomBar
 import team.applemango.runnerbe.component.StateIcon
 import team.applemango.runnerbe.constant.ScreenType
+import team.applemango.runnerbe.data.runningitem.repository.RunningItemRepositoryImpl
+import team.applemango.runnerbe.domain.constant.Gender
+import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
+import team.applemango.runnerbe.domain.runningitem.filter.AgeFilter
+import team.applemango.runnerbe.domain.runningitem.filter.DistanceFilter
+import team.applemango.runnerbe.domain.runningitem.filter.JobFilter
+import team.applemango.runnerbe.domain.runningitem.filter.KeywordFilter
+import team.applemango.runnerbe.domain.runningitem.filter.RunningItemFilter
+import team.applemango.runnerbe.domain.runningitem.model.common.Locate
+import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
+import team.applemango.runnerbe.domain.runningitem.usecase.LoadRunningItemsUseCase
+import team.applemango.runnerbe.feature.home.board.MainBoard
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 
 class MainActivity : ComponentActivity() {
+
+    val runningItems by lazy {
+        lifecycleScope.async {
+            LoadRunningItemsUseCase(RunningItemRepositoryImpl()).invoke(
+                itemType = RunningItemType.Before,
+                includeEndItems = true,
+                itemFilter = RunningItemFilter.New,
+                distanceFilter = DistanceFilter.None,
+                genderFilter = Gender.All,
+                ageFilter = AgeFilter.None,
+                jobFilter = JobFilter.None,
+                locate = Locate(
+                    address = "",
+                    latitude = 0.0,
+                    longitude = 0.0
+                ),
+                keywordFilter = KeywordFilter.None
+            )
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -61,6 +96,12 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     private fun MainScreen(modifier: Modifier) {
+        var runningItemsState = remember { emptyList<RunningItem>() }
+
+        LaunchedEffect(Unit) {
+            runningItemsState = runningItems.await().getOrDefault(emptyList())
+        }
+
         val bottomBarStateIcons = remember {
             listOf(
                 StateIcon(
@@ -96,7 +137,7 @@ class MainActivity : ComponentActivity() {
             ) { screen ->
                 when (screen) {
                     ScreenType.Main -> {
-                        Text(text = "1")
+                        MainBoard(runningItems = runningItemsState)
                     }
                     ScreenType.Bookmark -> {
                         Text(text = "2")
