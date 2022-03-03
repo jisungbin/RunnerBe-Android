@@ -11,6 +11,7 @@ package team.applemango.runnerbe.feature.home.board
 
 import android.content.Context
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,6 +29,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -66,7 +68,7 @@ fun MainBoard(
     modifier: Modifier = Modifier,
     isBookmarkPage: Boolean = false,
     // userToken: UserToken,
-    runningItems: List<RunningItem>,
+    runningItemsState: List<RunningItem>,
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
@@ -107,7 +109,7 @@ fun MainBoard(
     }
 
     var includeFinishState by remember { mutableStateOf(false) }
-    var runningItemsState by remember { mutableStateOf(runningItems) }
+    // var runningItemsState by remember { mutableStateOf(runningItems) }
     val forEachItemsBookmarkedState = remember(runningItemsState.size) {
         mutableStateListOf(*runningItemsState.map { it.bookmarked }.toTypedArray())
     }
@@ -165,7 +167,11 @@ fun MainBoard(
         )
     }*/
 
-    Column(modifier = modifier.fillMaxSize()) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
         Box( // ToolBar
             modifier = Modifier
                 .fillMaxWidth()
@@ -179,6 +185,7 @@ fun MainBoard(
             if (!isBookmarkPage) { // 타이틀 오른쪽 검색, 알림 아이템들
                 Row(
                     modifier = Modifier.fillMaxSize(),
+                    verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(
                         space = 16.dp,
                         alignment = Alignment.End
@@ -215,10 +222,11 @@ fun MainBoard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
-                    .padding(top = 12.dp),
+                    .padding(top = 12.dp)
+                    .background(color = Color.Blue),
                 horizontalArrangement = Arrangement.spacedBy(
                     space = 16.dp,
-                    alignment = Alignment.CenterHorizontally
+                    alignment = Alignment.End
                 ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -259,8 +267,13 @@ fun MainBoard(
                 )
             }
         }
+        SideEffect {
+            logeukes(tag = "AAAA") { runningItemsState }
+        }
         LazyColumn(
-            modifier = Modifier,
+            modifier = Modifier
+                .fillMaxSize()
+            // .background(color = Color.Red)
         ) {
             itemsIndexed(items = runningItemsState) { index, item ->
                 RunningItem(

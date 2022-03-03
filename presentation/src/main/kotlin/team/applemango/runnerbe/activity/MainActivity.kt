@@ -31,6 +31,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import io.github.jisungbin.logeukes.logeukes
 import kotlinx.coroutines.async
 import team.applemango.runnerbe.R
 import team.applemango.runnerbe.component.IconBottomBar
@@ -96,10 +97,11 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     private fun MainScreen(modifier: Modifier) {
-        var runningItemsState = remember { emptyList<RunningItem>() }
+        var runningItemsState by remember { mutableStateOf(emptyList<RunningItem>()) }
 
         LaunchedEffect(Unit) {
-            runningItemsState = runningItems.await().getOrDefault(emptyList())
+            runningItemsState = runningItems.await().getOrThrow()
+            logeukes(tag = "CCC") { runningItemsState }
         }
 
         val bottomBarStateIcons = remember {
@@ -137,7 +139,8 @@ class MainActivity : ComponentActivity() {
             ) { screen ->
                 when (screen) {
                     ScreenType.Main -> {
-                        MainBoard(runningItems = runningItemsState)
+                        logeukes(tag = "BBB") { runningItemsState }
+                        MainBoard(runningItemsState = runningItemsState)
                     }
                     ScreenType.Bookmark -> {
                         Text(text = "2")

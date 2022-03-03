@@ -99,9 +99,9 @@ internal fun RunningItemData.toDomain(type: MappingType) = RunningItem(
         MyPageOwnRunningItemFields, MyPageJoinRunningItemFields -> Date()
     },
     bookmarkCount = when (type) {
-        MainPageApiFields -> requireNotNull(bookMarkNumber) {
+        MainPageApiFields -> /*requireNotNull(bookMarkNumber) {
             requireFieldNullMessage("bookMarkNumber")
-        }
+        }*/ 1 // TODO: Fix me
         InformationApiFields, BookmarkApiFields,
         MyPageOwnRunningItemFields, MyPageJoinRunningItemFields,
         -> DefaultIntValue
@@ -130,7 +130,7 @@ internal fun RunningItemData.toDomain(type: MappingType) = RunningItem(
         val genderCode = requireNotNull(gender) {
             requireFieldNullMessage("gender")
         }
-        it.code == genderCode
+        it.string == genderCode
     },
     jobs = when (type) {
         MainPageApiFields,
@@ -140,7 +140,7 @@ internal fun RunningItemData.toDomain(type: MappingType) = RunningItem(
                 requireFieldNullMessage("job")
             }
             job.split(",").map { jobCode ->
-                Job.values().first { it.string == jobCode }
+                Job.values().first { it.name == jobCode }
             }
         }
         InformationApiFields, BookmarkApiFields -> emptyList()
