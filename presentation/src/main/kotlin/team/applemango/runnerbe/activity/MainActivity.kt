@@ -34,13 +34,12 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
-import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.skydoves.landscapist.coil.CoilImage
 import kotlinx.coroutines.async
 import team.applemango.runnerbe.R
 import team.applemango.runnerbe.component.IconBottomBar
@@ -158,10 +157,9 @@ class MainActivity : ComponentActivity() {
                             verticalArrangement = Arrangement.Center,
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            LottieAnimation(
+                            CoilImage(
                                 modifier = Modifier.size(250.dp),
-                                composition = composition,
-                                iterations = LottieConstants.IterateForever,
+                                imageModel = R.drawable.ic_logo_symbol
                             )
                             Text(
                                 modifier = Modifier.padding(top = 30.dp),
