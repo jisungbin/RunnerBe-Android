@@ -223,7 +223,6 @@ fun MainBoard(
                     .fillMaxWidth()
                     .wrapContentHeight()
                     .padding(top = 12.dp)
-                    .background(color = Color.Blue),
                 horizontalArrangement = Arrangement.spacedBy(
                     space = 16.dp,
                     alignment = Alignment.End

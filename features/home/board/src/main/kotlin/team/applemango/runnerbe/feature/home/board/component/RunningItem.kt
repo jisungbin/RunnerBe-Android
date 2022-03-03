@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -98,12 +99,13 @@ internal fun RunningItem(
                 horizontalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 CoilImage(
-                    modifier = Modifier,
+                    modifier = Modifier.size(15.dp),
                     imageModel = item.ownerProfileImageUrl
                 )
                 Text(
+                    modifier = Modifier.padding(start = 4.dp),
                     text = item.title,
-                    style = Typography.EngBody12M
+                    style = Typography.Caption10R.copy(color = ColorAsset.G3_5)
                 )
             }
             Icon( // 북마크
@@ -120,8 +122,9 @@ internal fun RunningItem(
             )
         }
         Text(
-            modifier = Modifier,
-            text = item.title
+            modifier = Modifier.padding(vertical = 8.dp),
+            text = item.title,
+            style = Typography.Title20R.copy(color = ColorAsset.G3)
         ) // 2 (제목)
         Column(
             modifier = Modifier
@@ -135,14 +138,15 @@ internal fun RunningItem(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
-                            modifier = Modifier,
+                            modifier = Modifier.size(18.dp),
                             painter = painterResource(item.icon),
                             contentDescription = null,
                             tint = Color.Unspecified
                         )
                         Text(
-                            modifier = Modifier,
-                            text = item.text
+                            modifier = Modifier.padding(start = 6.dp),
+                            text = item.text,
+                            style = Typography.Body12M.copy(color = ColorAsset.G2)
                         )
                     }
                 }
