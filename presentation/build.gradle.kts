@@ -46,12 +46,18 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
+        compose = true
     }
 
-    dynamicFeatures += setOf(
-        ProjectConstants.RegisterSnsLogin,
-        ProjectConstants.RegisterOnboard
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.Compose.Main
+    }
+
+    dynamicFeatures.addAll(
+        setOf(
+            ProjectConstants.RegisterSnsLogin,
+            ProjectConstants.RegisterOnboard
+        )
     )
 }
 
@@ -64,10 +70,13 @@ dependencies {
     )
     features.forEach(::implementationProject)
 
-    // :features:register:onboard 에서 필요하기 때문에 api 로 설정
-    // DFM 에서 바로 implementation 해주면 exception 발생
-    api(platform(Dependencies.FirebaseBom))
-    Dependencies.Firebase.forEach(::api)
+    val layers = listOf(
+        ProjectConstants.Domain,
+        ProjectConstants.Data,
+    ).forEach(::implementationProject)
+
+    implementation(platform(Dependencies.FirebaseBom))
+    implementation(Dependencies.FirebaseEachKtx.Analytics)
 
     implementation(Dependencies.Util.Erratum)
     Dependencies.Ui.forEach(::implementation)
@@ -75,5 +84,5 @@ dependencies {
     Dependencies.PresentationOnlyKtx.forEach(::implementation)
 
     Dependencies.Debug.forEach(::debugImplementation)
-    installSharedComposeOrbitHiltTest(excludeCompose = true)
+    installSharedComposeOrbitHiltTest()
 }

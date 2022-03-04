@@ -13,7 +13,7 @@ object Versions {
     const val FirebaseBom = "29.1.0"
 
     object Essential {
-        const val Gradle = "7.1.1"
+        const val Gradle = "7.1.2"
         const val Kotlin = "1.6.10"
         const val Coroutines = "1.6.0"
         const val GoogleService = "4.3.3"
@@ -88,15 +88,24 @@ object Versions {
 
 @Suppress("MemberVisibilityCanBePrivate")
 object Dependencies {
-    const val Orbit = "org.orbit-mvi:orbit-viewmodel:${Versions.Orbit}"
     const val Browser = "androidx.browser:browser:${Versions.Ui.Browser}"
     const val Coroutine =
         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.Essential.Coroutines}"
     const val FirebaseBom = "com.google.firebase:firebase-bom:${Versions.FirebaseBom}"
 
+    object Orbit {
+        const val Test = "org.orbit-mvi:orbit-test:${Versions.Orbit}"
+        const val Main = "org.orbit-mvi:orbit-viewmodel:${Versions.Orbit}"
+    }
+
     object Di { // Dagger 는 DFM 에서만 쓰임
         const val Dagger = "com.google.dagger:dagger:${Versions.Dagger}"
         const val Hilt = "com.google.dagger:hilt-android:${Versions.Jetpack.Hilt}"
+    }
+
+    object FirebaseEachKtx { // 각각 쓰이는 모듈이 다름
+        const val Analytics = "com.google.firebase:firebase-analytics"
+        const val Storage = "com.google.firebase:firebase-storage-ktx"
     }
 
     object EachKtx {
@@ -119,13 +128,6 @@ object Dependencies {
 
     val PresentationOnlyKtx = listOf(
         "com.google.android.play:core-ktx:${Versions.Ktx.PlayCore}",
-        "androidx.navigation:navigation-ui-ktx:${Versions.Ktx.Navigation}",
-        "androidx.navigation:navigation-fragment-ktx:${Versions.Ktx.Navigation}",
-    )
-
-    val Firebase = listOf(
-        "com.google.firebase:firebase-analytics",
-        "com.google.firebase:firebase-storage-ktx",
     )
 
     val Compose = listOf(
@@ -175,7 +177,7 @@ object Dependencies {
         const val Logeukes = "land.sungbin:logeukes:${Versions.Util.Logeukes}"
     }
 
-    object Jetpack {
+    object Jetpack { // TODO: room (offline-mode support)
         const val DataStore =
             "androidx.datastore:datastore-preferences:${Versions.Jetpack.DataStore}"
     }

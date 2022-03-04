@@ -9,7 +9,6 @@
 
 import org.gradle.api.artifacts.ProjectDependency
 import org.gradle.api.artifacts.dsl.DependencyHandler
-import org.gradle.kotlin.dsl.version
 import org.gradle.plugin.use.PluginDependenciesSpec
 
 // plugin
@@ -35,28 +34,26 @@ fun PluginDependenciesSpec.installLibraryDfmHiltTest(
 // dependencies
 fun DependencyHandler.installSharedComposeOrbitHiltTest(
     isSharedModule: Boolean = false,
-    useDagger: Boolean = false,
-    excludeCompose: Boolean = false,
+    excludeHilt: Boolean = false,
 ) {
     if (!isSharedModule) {
         implementationProject(ProjectConstants.Shared)
     }
-    if (!excludeCompose) {
-        implementationProject(ProjectConstants.SharedCompose)
-        Dependencies.Compose.forEach(::implementation)
-    }
-    implementation(Dependencies.Orbit)
+    implementation(Dependencies.Orbit.Main)
+    Dependencies.Compose.forEach(::implementation)
+    implementationProject(ProjectConstants.SharedCompose)
     add("testDebugImplementation", Dependencies.Test.JunitApi)
     add("testDebugRuntimeOnly", Dependencies.Test.JunitEngine)
     add("testDebugImplementation", Dependencies.Test.Hamcrest)
     add("testDebugImplementation", Dependencies.Test.Coroutine)
-    if (!useDagger) {
+    add("testDebugImplementation", Dependencies.Orbit.Test)
+    if (!excludeHilt) {
         implementation(Dependencies.Di.Hilt)
         add("kapt", Dependencies.Compiler.Hilt)
-    } else {
+    } /* else {
         implementation(Dependencies.Di.Dagger)
         add("kapt", Dependencies.Compiler.Dagger)
-    }
+    }*/
 }
 
 fun DependencyHandler.implementationProject(path: String) {

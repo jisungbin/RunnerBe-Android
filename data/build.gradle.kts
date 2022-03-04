@@ -17,9 +17,11 @@ dependencies {
     Dependencies.Jackson.forEach(::implementation)
     Dependencies.Network.forEach(::implementation)
 
-    implementation(Dependencies.Coroutine)
-    implementation(Dependencies.Util.Logeukes)
     implementationProject(ProjectConstants.Domain)
+    implementationProject(ProjectConstants.SharedDomain)
+
+    implementation(platform(Dependencies.FirebaseBom))
+    implementation(Dependencies.FirebaseEachKtx.Storage)
 
     testDebugImplementation(Dependencies.Test.JunitApi)
     testDebugRuntimeOnly(Dependencies.Test.JunitEngine)

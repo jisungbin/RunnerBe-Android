@@ -10,26 +10,25 @@
 package team.applemango.runnerbe.data.util
 
 import io.github.jisungbin.logeukes.logeukes
+import java.util.concurrent.TimeUnit
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.jackson.JacksonConverterFactory
-import team.applemango.runnerbe.data.login.api.LoginService
-import team.applemango.runnerbe.data.login.api.RegisterService
-import team.applemango.runnerbe.data.mail.api.MailjetService
+import team.applemango.runnerbe.data.register.login.api.RegisterApi
+import team.applemango.runnerbe.data.register.mailjet.api.MailjetApi
+import team.applemango.runnerbe.data.runningitem.api.RunningItemApi
 import team.applemango.runnerbe.data.secret.Mailjet
 import team.applemango.runnerbe.data.secret.RunnerbeHost
-import team.applemango.runnerbe.data.util.extension.mapper
+import team.applemango.runnerbe.data.user.api.UserApi
+import team.applemango.runnerbe.data.util.extension.JacksonConverter
 import team.applemango.runnerbe.data.util.interceptor.BasicAuthInterceptor
+import team.applemango.runnerbe.shared.domain.dsl.RunnerbeDsl
 
-private fun getInterceptor(vararg interceptors: Interceptor): OkHttpClient {
-    val builder = OkHttpClient.Builder()
-    for (interceptor in interceptors) builder.addInterceptor(interceptor)
-    return builder.build()
-}
-
-private val JacksonConverter = JacksonConverterFactory.create(mapper)
+internal data class ClientModel(
+    var interceptors: List<Interceptor> = emptyList(),
+    var builder: OkHttpClient.Builder.() -> OkHttpClient.Builder = { this },
+)
 
 private fun getHttpLoggingInterceptor() = HttpLoggingInterceptor { message ->
     if (message.isNotEmpty()) {
@@ -39,25 +38,53 @@ private fun getHttpLoggingInterceptor() = HttpLoggingInterceptor { message ->
     level = HttpLoggingInterceptor.Level.BODY
 }
 
+private fun OkHttpClient.Builder.setTimeout(second: Long = 5) =
+    connectTimeout(second, TimeUnit.SECONDS)
+        .readTimeout(second, TimeUnit.SECONDS)
+        .writeTimeout(second, TimeUnit.SECONDS)
+
+private fun buildClient(@RunnerbeDsl builder: ClientModel.() -> Unit): OkHttpClient {
+    val clientModel = ClientModel().apply(builder)
+    val client = OkHttpClient.Builder().apply {
+        clientModel.builder
+    }
+    for (interceptor in clientModel.interceptors) {
+        client.addInterceptor(interceptor)
+    }
+    return client.build()
+}
+
 private val runnerbeBaseApi = Retrofit.Builder()
     .baseUrl(RunnerbeHost)
     .addConverterFactory(JacksonConverter)
-    .client(getInterceptor(getHttpLoggingInterceptor()))
+    .client(
+        buildClient {
+            builder = {
+                setTimeout()
+            }
+            interceptors = listOf(getHttpLoggingInterceptor())
+        }
+    )
     .build()
 
 private val mailjetBaseApi = Retrofit.Builder()
     .baseUrl(Mailjet.Host)
     .addConverterFactory(JacksonConverter)
     .client(
-        getInterceptor(
-            getHttpLoggingInterceptor(),
-            BasicAuthInterceptor(Mailjet.ApiKey, Mailjet.SecretKey)
-        )
+        buildClient {
+            builder = {
+                setTimeout()
+            }
+            interceptors = listOf(
+                getHttpLoggingInterceptor(),
+                BasicAuthInterceptor(Mailjet.ApiKey, Mailjet.SecretKey)
+            )
+        }
     )
     .build()
 
-internal val loginApi = runnerbeBaseApi.create(LoginService::class.java)
+internal val registerApi = runnerbeBaseApi.create(RegisterApi::class.java)
+internal val mailjetApi = mailjetBaseApi.create(MailjetApi::class.java)
 
-internal val registerApi = runnerbeBaseApi.create(RegisterService::class.java)
-
-internal val mailjetApi = mailjetBaseApi.create(MailjetService::class.java)
+internal val userApi = runnerbeBaseApi.create(UserApi::class.java)
+internal val runningItemApi = runnerbeBaseApi.create(RunningItemApi::class.java)

@@ -28,7 +28,7 @@ import androidx.datastore.preferences.core.edit
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.launch
-import team.applemango.runnerbe.feature.register.onboard.constant.Gender
+import team.applemango.runnerbe.domain.constant.Gender
 import team.applemango.runnerbe.shared.compose.component.ToggleButton
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.dataStore
@@ -56,7 +56,7 @@ internal fun GenderPicker(genderSelectChanged: (isSelected: Boolean) -> Unit) {
             alignment = Alignment.CenterHorizontally
         )
     ) {
-        items(Gender.values()) { gender ->
+        items(Gender.values().filterNot { it == Gender.All }) { gender ->
             ToggleButton(
                 target = gender,
                 selectState = genderSelectState,

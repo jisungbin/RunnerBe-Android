@@ -9,13 +9,23 @@
 
 package team.applemango.runnerbe.feature.register.onboard.constant
 
+/**
+ * @property Terms 약관 동의
+ * @property Year 출생 년도
+ * @property Gender 성별
+ * @property Job 직군
+ * @property VerifyWithEmail 회사 이메일로 인증
+ * @property VerifyWithEmployeeId 사원증으로 인증
+ * @property VerifyWithEmailDone 회사 이메일로 인증 완료
+ * @property VerifyWithEmployeeIdRequestDone 사원증으로 인증 완료
+ */
 internal enum class Step(val index: Int) {
     Terms(0),
     Year(1),
     Gender(2),
-    Job(3), // 직군 확인
-    VerifyWithEmail(4), // 회사 이메일 인증
-    VerifyWithEmployeeId(5), // 사원증 인증
-    VerifyWithEmailDone(6), // 이메일 인증 완료 (register done X)
-    VerifyWithEmployeeIdRequestDone(7), // 사원증 인증 완료 (register done X)
+    Job(3),
+    VerifyWithEmail(4),
+    VerifyWithEmployeeId(5),
+    VerifyWithEmailDone(6),
+    VerifyWithEmployeeIdRequestDone(7),
 }

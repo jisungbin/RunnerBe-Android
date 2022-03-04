@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ RunnerBe © 2022 Team AppleMango. all rights reserved.
+  ~ RunnerBe license is under the MIT.
+  ~
+  ~ [strings.xml] created by Ji Sungbin on 22. 2. 24. 오전 2:25
+  ~
+  ~ Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
+  -->
+
+<resources>
+    <string name="mainboard_title_bookmark_list">찜 목록</string>
+    <string name="mainboard_title_app_name">러너비</string>
+    <string name="onboard_toggletopbaritem_before">출근 전</string>
+    <string name="onboard_toggletopbaritem_after">퇴근 후</string>
+    <string name="onboard_toggletopbaritem_off">휴일</string>
+</resources>

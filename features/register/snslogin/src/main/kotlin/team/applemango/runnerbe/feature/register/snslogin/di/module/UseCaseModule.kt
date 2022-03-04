@@ -9,24 +9,16 @@
 
 package team.applemango.runnerbe.feature.register.snslogin.di.module
 
-import dagger.Module
-import dagger.Provides
-import team.applemango.runnerbe.domain.login.repository.AccessTokenRepository
-import team.applemango.runnerbe.domain.login.repository.LoginRepository
-import team.applemango.runnerbe.domain.login.usecase.GetKakaoAccessTokenUseCase
-import team.applemango.runnerbe.domain.login.usecase.GetNaverAccessTokenUseCase
-import team.applemango.runnerbe.domain.login.usecase.LoginUseCase
+import team.applemango.runnerbe.domain.register.runnerbe.usecase.GetKakaoAccessTokenUseCase
+import team.applemango.runnerbe.domain.register.runnerbe.usecase.GetNaverAccessTokenUseCase
+import team.applemango.runnerbe.domain.register.runnerbe.usecase.LoginUseCase
 
-@Module
-internal class UseCaseModule {
-    @Provides
-    fun provideGetKakaoAccessTokenUseCase(repo: AccessTokenRepository): GetKakaoAccessTokenUseCase =
-        GetKakaoAccessTokenUseCase(repo)
+internal class UseCaseModule(private val repositoryModule: RepositoryModule) {
+    fun provideGetKakaoAccessTokenUseCase() =
+        GetKakaoAccessTokenUseCase(repositoryModule.provideAccessTokenRepository())
 
-    @Provides
-    fun provideGetNaverAccessTokenUseCase(repo: AccessTokenRepository): GetNaverAccessTokenUseCase =
-        GetNaverAccessTokenUseCase(repo)
+    fun provideGetNaverAccessTokenUseCase() =
+        GetNaverAccessTokenUseCase(repositoryModule.provideAccessTokenRepository())
 
-    @Provides
-    fun provideLoginUseCase(repo: LoginRepository): LoginUseCase = LoginUseCase(repo)
+    fun provideLoginUseCase() = LoginUseCase(repositoryModule.getLoginRepository)
 }

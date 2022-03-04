@@ -12,6 +12,7 @@ include(
     ":data",
     ":domain",
     ":shared",
+    ":shared-domain",
     ":shared-compose",
     ":xml:numberpicker",
     ":xml:photoeditor",

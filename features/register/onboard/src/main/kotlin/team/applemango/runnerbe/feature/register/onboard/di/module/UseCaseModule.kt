@@ -9,24 +9,21 @@
 
 package team.applemango.runnerbe.feature.register.onboard.di.module
 
-import dagger.Module
-import dagger.Provides
-import team.applemango.runnerbe.domain.login.repository.RegisterRepository
-import team.applemango.runnerbe.domain.login.usecase.CheckUsableEmailUseCase
-import team.applemango.runnerbe.domain.login.usecase.UserRegisterUseCase
-import team.applemango.runnerbe.domain.mail.repository.MailRepository
-import team.applemango.runnerbe.domain.mail.usecase.MailSendUseCase
+import team.applemango.runnerbe.domain.firebase.usecase.ImageUploadUseCase
+import team.applemango.runnerbe.domain.register.mailjet.usecase.MailjetSendUseCase
+import team.applemango.runnerbe.domain.register.runnerbe.usecase.CheckUsableEmailUseCase
+import team.applemango.runnerbe.domain.register.runnerbe.usecase.UserRegisterUseCase
 
-@Module
-internal class UseCaseModule {
-    @Provides
-    fun provideCheckUsableEmailUseCase(repo: RegisterRepository): CheckUsableEmailUseCase =
-        CheckUsableEmailUseCase(repo)
+internal object UseCaseModule {
+    fun provideCheckUsableEmailUseCase() =
+        CheckUsableEmailUseCase(RepositoryModule.getRegisterRepository)
 
-    @Provides
-    fun provideUserRegisterUseCase(repo: RegisterRepository): UserRegisterUseCase =
-        UserRegisterUseCase(repo)
+    fun provideUserRegisterUseCase() =
+        UserRegisterUseCase(RepositoryModule.getRegisterRepository)
 
-    @Provides
-    fun provideMailSendUseCase(repo: MailRepository): MailSendUseCase = MailSendUseCase(repo)
+    fun provideMailSendUseCase() =
+        MailjetSendUseCase(RepositoryModule.getMailRepository)
+
+    fun provideImageUploadUseCase() =
+        ImageUploadUseCase(RepositoryModule.getFirebaseRepository)
 }

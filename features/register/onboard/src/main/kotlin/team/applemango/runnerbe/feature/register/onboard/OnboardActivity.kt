@@ -13,6 +13,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.edit
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
 import com.google.accompanist.insets.ProvideWindowInsets
@@ -36,7 +38,6 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import io.github.jisungbin.logeukes.LoggerType
 import io.github.jisungbin.logeukes.logeukes
-import javax.inject.Inject
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.cancellable
 import org.orbitmvi.orbit.viewmodel.observe
@@ -45,44 +46,42 @@ import team.applemango.runnerbe.feature.register.onboard.component.OnboardRouter
 import team.applemango.runnerbe.feature.register.onboard.constant.EmailVerifyCode
 import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
-import team.applemango.runnerbe.feature.register.onboard.di.ViewModelFactory
-import team.applemango.runnerbe.feature.register.onboard.di.component.DaggerViewModelComponent
-import team.applemango.runnerbe.feature.register.onboard.di.module.RepositoryModule
 import team.applemango.runnerbe.feature.register.onboard.di.module.UseCaseModule
-import team.applemango.runnerbe.feature.register.onboard.di.module.ViewModelModule
 import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterSideEffect
 import team.applemango.runnerbe.shared.base.WindowInsetActivity
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.constant.DataStoreKey
+import team.applemango.runnerbe.shared.domain.constant.EmptyString
+import team.applemango.runnerbe.shared.domain.extension.toMessage
 import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.util.extension.dataStore
-import team.applemango.runnerbe.shared.util.extension.toMessage
 import team.applemango.runnerbe.shared.util.extension.toast
 
-@OptIn(ExperimentalAnimationApi::class)
 class OnboardActivity : WindowInsetActivity() {
 
-    @Inject
-    internal lateinit var viewModelFactory: ViewModelFactory
+    private val vm: OnboardViewModel by viewModels {
+        object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                return OnboardViewModel(
+                    checkUsableEmailUseCase = UseCaseModule.provideCheckUsableEmailUseCase(),
+                    userRegisterUseCase = UseCaseModule.provideUserRegisterUseCase(),
+                    mailjetSendUseCase = UseCaseModule.provideMailSendUseCase(),
+                    imageUploadUseCase = UseCaseModule.provideImageUploadUseCase()
+                ) as T
+            }
+        }
+    }
 
-    private lateinit var vm: OnboardViewModel
-
+    @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        DaggerViewModelComponent
-            .builder()
-            .repositoryModule(RepositoryModule())
-            .useCaseModule(UseCaseModule())
-            .viewModelModule(ViewModelModule())
-            .build()
-            .inject(this)
-
-        vm = ViewModelProvider(this, viewModelFactory)[OnboardViewModel::class.java]
-        // CoroutineScope 에서 돌아가서 더블클론(::) 참조 안됨
-        vm.exceptionFlow.collectWithLifecycle(this) { handleException(it) }
+        vm.exceptionFlow.collectWithLifecycle(this) { exception ->
+            handleException(exception)
+        }
 
         setContent {
             ProvideWindowInsets {
@@ -112,7 +111,9 @@ class OnboardActivity : WindowInsetActivity() {
                     // 이메일 인증 임시 비활성화
                     applicationContext.dataStore.data.collectWithLifecycle(
                         lifecycleOwner = this@OnboardActivity,
-                        builder = { cancellable() }
+                        builder = {
+                            cancellable()
+                        }
                     ) { preferences ->
                         val terms = preferences[DataStoreKey.Onboard.TermsAllCheck]
                         val year = preferences[DataStoreKey.Onboard.Year]
@@ -125,7 +126,9 @@ class OnboardActivity : WindowInsetActivity() {
                             gender,
                             job,
                             // verifyWithEmail,
-                        ).indexOfLast { it != null }
+                        ).indexOfLast { step ->
+                            step != null
+                        }
                         if (lastStepIndex != -1) {
                             // NPE occurred
                             // TODO: 백스택 임의 생성
@@ -143,6 +146,7 @@ class OnboardActivity : WindowInsetActivity() {
                         cancel("step restore execute must be once.")
                     }
                 }
+
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     scaffoldState = scaffoldState,
@@ -166,7 +170,7 @@ class OnboardActivity : WindowInsetActivity() {
                     OnboardRouter(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(brush = GradientAsset.RegisterCommonBackground)
+                            .background(brush = GradientAsset.BlackGradientBrush)
                             /*.statusBarsPadding()
                             .navigationBarsWithImePadding() // Step.VerifyWithEmail 단계에 TextField 있음*/
                             .systemBarsPadding(start = false, end = false)
@@ -183,10 +187,13 @@ class OnboardActivity : WindowInsetActivity() {
     private fun handleRegisterState(state: RegisterState) {
         val message = when (state) {
             RegisterState.None -> {
-                StringAsset.Empty
+                EmptyString
             }
             RegisterState.ImageUploading -> {
                 StringAsset.Toast.ImageUploading
+            }
+            RegisterState.ImageUploadError -> {
+                StringAsset.Toast.ImageUploadError
             }
             RegisterState.VerifyRequestDone -> {
                 StringAsset.Toast.EmployeeIdRegisterRequestDone

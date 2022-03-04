@@ -13,10 +13,10 @@ plugins {
 }
 
 dependencies {
-    api(Dependencies.Util.Logeukes)
+    Dependencies.SharedKtx.forEach(::api)
     api(Dependencies.Jetpack.DataStore)
     api(project(ProjectConstants.Data))
     api(project(ProjectConstants.Domain))
-    Dependencies.SharedKtx.forEach(::api)
+    api(project(ProjectConstants.SharedDomain))
     implementation(Dependencies.EachKtx.Activity)
 }

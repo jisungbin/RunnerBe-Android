@@ -10,22 +10,50 @@
 package team.applemango.runnerbe.data.util.extension
 
 import retrofit2.Response
-import team.applemango.runnerbe.data.login.model.LoginRequestResponse
+import team.applemango.runnerbe.data.common.BaseResponse
+import team.applemango.runnerbe.data.register.login.model.login.LoginRequestResponse
 
 private const val REQUEST_EXCEPTION =
     "The request is a success, but the server execution is failed. (or result field is null)"
 
-internal fun <T> Response<T>.requireSuccessfulBody(requestName: String): T {
+internal fun <T : BaseResponse> Response<T>.requireSuccessfulBody(
+    requestName: String,
+    resultVerifyBuilder: (body: T) -> Boolean,
+): T {
     val body = body()
-    if (isSuccessful && body != null) {
-        return body
+    return if (isSuccessful && body != null && resultVerifyBuilder(body)) {
+        body
     } else {
-        throw throw Exception("Request $requestName is fail. (${errorBody()?.use { it.string() }})")
+        throw Exception(
+            """
+            Request $requestName is fail.
+            Http message: ${errorBody()?.use { it.string() }}
+            Server message: ${body()?.message}
+            """.trimIndent()
+        )
     }
 }
 
+internal fun <T> Response<T>.requireSuccessfulBody(
+    requestName: String,
+    resultVerifyBuilder: (body: T) -> Boolean,
+): T {
+    val body = body()
+    return if (isSuccessful && body != null && resultVerifyBuilder(body)) {
+        body
+    } else {
+        throw Exception(
+            """
+            Request $requestName is fail.
+            Http message: ${errorBody()?.use { it.string() }}
+            """.trimIndent()
+        )
+    }
+}
+
+@Deprecated("Use the resultVerifyBuilder argument of the Response<T>.requireSuccessfulBody function instead.")
 internal fun Response<LoginRequestResponse>.requireSuccessfulLoginResponse(platformName: String): LoginRequestResponse {
-    val body = requireSuccessfulBody("$platformName login")
+    val body = requireSuccessfulBody("$platformName login") { true }
     if (body.isSuccess == true && body.code in 1001..1002 && body.loginResult != null) {
         return body
     } else {
