@@ -52,6 +52,7 @@ object Versions {
     }
 
     object Util {
+        const val Dokka = "1.6.10"
         const val Erratum = "1.0.1"
         const val Logeukes = "1.0.0"
         const val Jackson = "2.13.1"
