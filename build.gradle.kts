@@ -25,6 +25,7 @@ buildscript {
         classpath("com.google.android.gms:oss-licenses-plugin:${Versions.OssLicense.Classpath}")
         // classpath("com.vanniktech:gradle-dependency-graph-generator-plugin:${Versions.Util.DependencyGraphGenerator}")
         classpath("com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:${Versions.Util.SecretsGradlePlugin}")
+        classpath("org.jetbrains.dokka:dokka-gradle-plugin:1.6.10")
     }
 }
 
