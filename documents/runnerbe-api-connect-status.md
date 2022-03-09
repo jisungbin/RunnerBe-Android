@@ -2,14 +2,14 @@
 
 > 모든 연결 완료(✅)의 기준은 repository, repositoryimpl, usecase 의 완성임
 
-### 회원가입 관련 - RegisterRepository
+### 회원가입 관련 - [RegisterRepository](https://github.com/applemango-runnerbe/RunnerBe-Android/blob/develop/domain/src/main/kotlin/team/applemango/runnerbe/domain/register/runnerbe/repository/RegisterRepository.kt)
 
 1. 카카오 로그인 [✅] - 1번 API
 2. 네이버 로그인 [✅] - 2번 API
 3. 회원가입 [✅] - 3번 API
 4. 이메일 중복 확인 [✅] - 4번 API
 
-### 유저 관련 - UserRepository
+### 유저 관련 - [UserRepository](https://github.com/applemango-runnerbe/RunnerBe-Android/blob/develop/domain/src/main/kotlin/team/applemango/runnerbe/domain/user/repository/UserRepository.kt)
 
 1. 닉네임 설정 [✅] - 5번 API
 2. ~~JWT 로 사원증 인증 여부 확인 [✖️]~~ - 9번 API **[미사용]**
@@ -21,7 +21,7 @@
 8. ~~푸시 알림 [✖️]~~ - 26번 API, **[구현 후순위]**
 9. 출석 [✅] - 27번 API
 
-### 러닝 아이템 관련 - RunningItemRepository
+### 러닝 아이템 관련 - [RunningItemRepository](https://github.com/applemango-runnerbe/RunnerBe-Android/blob/develop/domain/src/main/kotlin/team/applemango/runnerbe/domain/runningitem/repository/RunningItemRepository.kt)
 
 1. 러닝 아이템 작성 [✅] - 6번 API
 2. 러닝 아이템 리스트 조회 [✅] - 7번 API
