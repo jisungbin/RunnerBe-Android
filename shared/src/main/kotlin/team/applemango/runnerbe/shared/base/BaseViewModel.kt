@@ -11,15 +11,15 @@ package team.applemango.runnerbe.shared.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 abstract class BaseViewModel : ViewModel() {
-    private val _exceptionFlow = MutableSharedFlow<Throwable>()
-    val exceptionFlow = _exceptionFlow.asSharedFlow()
+    private val _exceptionChannel = Channel<Throwable>()
+    val exceptionFlow = _exceptionChannel.receiveAsFlow()
 
     open fun emitException(exception: Throwable) = viewModelScope.launch {
-        _exceptionFlow.emit(exception)
+        _exceptionChannel.send(exception)
     }
 }
