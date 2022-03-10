@@ -10,21 +10,25 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
-    id("org.jetbrains.dokka")
+    id("org.jetbrains.dokka") version Versions.Util.Dokka
+}
+
+buildscript {
+    dependencies {
+        classpath("org.jetbrains.dokka:dokka-base:${Versions.Util.Dokka}")
+    }
 }
 
 tasks.register<org.jetbrains.dokka.gradle.DokkaTask>("dokkaCustomFormat") {
-    pluginsMapConfiguration.set(
-        mapOf(
-            "org.jetbrains.dokka.base.DokkaBase"
-                to
-                    """{ "footerMessage": "made with ❤ by <a href="https://github.com/jisungbin">@jisungbin</a>" }"""
-        )
-    )
+    pluginConfiguration<org.jetbrains.dokka.base.DokkaBase, org.jetbrains.dokka.base.DokkaBaseConfiguration> {
+        // footerMessage = """made with ❤ by <a href="https://github.com/jisungbin">@jisungbin</a>"""
+        footerMessage = "TEST"
+    }
 }
 
 tasks.dokkaHtml.configure {
-    moduleName.set("RunnerBe-Android: Domain")
+    // moduleName.set("RunnerBe-Android: Domain")
+    moduleName.set("TEST")
     dokkaSourceSets {
         configureEach {
             includeNonPublic.set(true)

@@ -17,9 +17,9 @@ buildscript {
 
     dependencies {
         // classpath("com.spotify.ruler:ruler-gradle-plugin:1.0.0")
-        classpath("org.jetbrains.dokka:dokka-base:${Versions.Util.Dokka}")
+//        classpath("org.jetbrains.dokka:dokka-base:${Versions.Util.Dokka}")
         classpath("com.android.tools.build:gradle:${Versions.Essential.Gradle}")
-        classpath("org.jetbrains.dokka:dokka-gradle-plugin:${Versions.Util.Dokka}")
+//        classpath("org.jetbrains.dokka:dokka-gradle-plugin:${Versions.Util.Dokka}")
         classpath("com.google.gms:google-services:${Versions.Essential.GoogleService}")
         classpath("com.google.dagger:hilt-android-gradle-plugin:${Versions.Jetpack.Hilt}")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.Essential.Kotlin}")
