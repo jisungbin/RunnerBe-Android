@@ -29,10 +29,10 @@ import androidx.constraintlayout.compose.Dimension
 import com.skydoves.landscapist.rememberDrawablePainter
 import team.applemango.runnerbe.domain.register.runnerbe.constant.PlatformType
 import team.applemango.runnerbe.feature.register.snslogin.SnsLoginViewModel
-import team.applemango.runnerbe.shared.compose.theme.ColorAsset
-import team.applemango.runnerbe.shared.compose.theme.FontAsset
 import team.applemango.runnerbe.shared.compose.extension.presentationDrawableOf
 import team.applemango.runnerbe.shared.compose.extension.presentationStringOf
+import team.applemango.runnerbe.shared.compose.theme.ColorAsset
+import team.applemango.runnerbe.shared.compose.theme.FontAsset
 
 @Composable
 internal fun SnsLoginScreen(modifier: Modifier, vm: SnsLoginViewModel) {

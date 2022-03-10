@@ -9,10 +9,10 @@
 
 package team.applemango.runnerbe.domain.runningitem.mapper
 
-import java.text.SimpleDateFormat
-import java.util.Locale
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItemApiBody
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItemApiBodyData
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 internal fun RunningItemApiBody.toData(): RunningItemApiBodyData {
     val meetingTime =

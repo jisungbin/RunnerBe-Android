@@ -9,9 +9,6 @@
 
 package team.applemango.runnerbe.data.runningitem.mapper
 
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 import team.applemango.runnerbe.data.runningitem.mapper.MappingType.BookmarkApiFields
 import team.applemango.runnerbe.data.runningitem.mapper.MappingType.InformationApiFields
 import team.applemango.runnerbe.data.runningitem.mapper.MappingType.MainPageApiFields
@@ -29,6 +26,9 @@ import team.applemango.runnerbe.shared.domain.constant.EmptyString
 import team.applemango.runnerbe.shared.domain.extension.convertNullableString
 import team.applemango.runnerbe.shared.domain.extension.toBoolean
 import team.applemango.runnerbe.shared.domain.requireFieldNullMessage
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 /**
  * API Call 마다 불러오는 [RunningItem] 필드들이 다름

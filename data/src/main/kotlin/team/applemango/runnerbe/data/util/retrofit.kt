@@ -10,7 +10,6 @@
 package team.applemango.runnerbe.data.util
 
 import io.github.jisungbin.logeukes.logeukes
-import java.util.concurrent.TimeUnit
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -24,6 +23,7 @@ import team.applemango.runnerbe.data.user.api.UserApi
 import team.applemango.runnerbe.data.util.extension.JacksonConverter
 import team.applemango.runnerbe.data.util.interceptor.BasicAuthInterceptor
 import team.applemango.runnerbe.shared.domain.dsl.RunnerbeDsl
+import java.util.concurrent.TimeUnit
 
 internal data class ClientModel(
     var interceptors: List<Interceptor> = emptyList(),

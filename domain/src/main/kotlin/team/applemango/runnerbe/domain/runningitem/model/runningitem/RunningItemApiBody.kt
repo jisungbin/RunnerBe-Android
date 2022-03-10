@@ -9,11 +9,11 @@
 
 package team.applemango.runnerbe.domain.runningitem.model.runningitem
 
-import java.util.Date
+import team.applemango.runnerbe.domain.constant.Gender
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.domain.runningitem.filter.AgeFilter
 import team.applemango.runnerbe.domain.runningitem.model.common.Locate
-import team.applemango.runnerbe.domain.constant.Gender
+import java.util.Date
 
 /**
  * API Call Body entry model
