@@ -1,0 +1,78 @@
+name: Android CI
+on:
+  pull_request:
+    branches: [ deploy-dev ]
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with: 
+          fetch-depth: 0
+
+      - name: Setup JDK 11
+        uses: actions/setup-java@v3
+        with:
+          distribution: "zulu"
+          java-version: 11
+          
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+            
+      - name: Cache Gradle packages
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+            
+      - name: Run ktlint
+        run:  ./gradlew ktlintCheck 
+        
+      - name: Run detekt
+        run: ./gradlew detektCheck
+          
+      - name: Run unit tests
+        run: ./gradlew testDebugUnitTest
+
+      - name: Create android test report
+        uses: asadmansr/android-test-report-action@v1.2.0
+        if: ${{ always() }}
+
+  CD:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with: 
+          fetch-depth: 0
+
+      - name: Setup JDK 11
+        uses: actions/setup-java@v3
+        with:
+          distribution: "zulu"
+          java-version: 11
+          
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+        
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+          
+      - name: Caching Ruby dependencies
+        uses: actions/cache@v2
+        with:
+          path: 'vendor/bundle'
+          key: ${{ runner.os }}-gems-${{ secrets.GEMS_CACHE_VERSION }}-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+            
+      - name: Install dependencies to support ruby project
+        run: |
+          bundle config --global set deploy_platform_default x86_64-linux
+          bundle install
