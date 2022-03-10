@@ -7,6 +7,9 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
+import org.jetbrains.dokka.base.DokkaBase
+import org.jetbrains.dokka.base.DokkaBaseConfiguration
+
 plugins {
     id("com.android.library")
     id("kotlin-android")
@@ -19,16 +22,12 @@ buildscript {
     }
 }
 
-tasks.register<org.jetbrains.dokka.gradle.DokkaTask>("dokkaCustomFormat") {
-    pluginConfiguration<org.jetbrains.dokka.base.DokkaBase, org.jetbrains.dokka.base.DokkaBaseConfiguration> {
-        // footerMessage = """made with ❤ by <a href="https://github.com/jisungbin">@jisungbin</a>"""
-        footerMessage = "TEST"
-    }
-}
-
 tasks.dokkaHtml.configure {
-    // moduleName.set("RunnerBe-Android: Domain")
-    moduleName.set("TEST")
+    moduleName.set("RunnerBe-Android: Domain")
+    pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
+        footerMessage = """made with ❤ by <a href="https://github.com/jisungbin">@jisungbin</a>"""
+        separateInheritedMembers = true
+    }
     dokkaSourceSets {
         configureEach {
             includeNonPublic.set(true)
