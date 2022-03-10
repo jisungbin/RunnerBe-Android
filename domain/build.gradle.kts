@@ -13,3 +13,17 @@ plugins {
     id("kotlin-android")
     id("org.jetbrains.dokka")
 }
+
+tasks.dokkaHtml.configure {
+    outputDirectory.set(File("../documentation/dokka"))
+    moduleName.set("RunnerBe-Android: Domain")
+
+    dokkaSourceSets {
+        configureEach {
+            includeNonPublic.set(true)
+            skipDeprecated.set(false)
+            skipEmptyPackages.set(false)
+            jdkVersion.set(11)
+        }
+    }
+}
