@@ -25,7 +25,8 @@ buildscript {
 tasks.dokkaHtml.configure {
     moduleName.set("RunnerBe-Android: Domain")
     pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
-        footerMessage = """made with ❤ by <a href="https://github.com/jisungbin">@jisungbin</a>"""
+        footerMessage =
+            """made with <span style="color: orange;">❤</span> by <a href="https://github.com/jisungbin">@jisungbin</a>"""
         separateInheritedMembers = true
     }
     dokkaSourceSets {
