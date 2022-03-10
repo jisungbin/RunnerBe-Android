@@ -2,25 +2,25 @@
  * RunnerBe © 2022 Team AppleMango. all rights reserved.
  * RunnerBe license is under the MIT.
  *
- * [ExampleUnitTest.kt] created by Ji Sungbin on 22. 2. 24. 오후 6:01
+ * [ExampleUnitTest.kt] created by Ji Sungbin on 22. 1. 31. 오후 9:32
  *
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.shared.domain
+package team.applemango.runnerbe.feature.home.write
 
-import org.junit.Test
-
-import org.junit.Assert.*
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.`is`
+import org.junit.jupiter.api.Test
 
 /**
  * Example local unit test, which will execute on the development machine (host).
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-class ExampleUnitTest {
+class BasicUnitTest {
     @Test
     fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+        assertThat("1", `is`("1"))
     }
 }
