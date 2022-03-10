@@ -19,7 +19,7 @@ import team.applemango.runnerbe.data.register.login.api.RegisterApi
 import team.applemango.runnerbe.data.register.mailjet.api.MailjetApi
 import team.applemango.runnerbe.data.runningitem.api.RunningItemApi
 import team.applemango.runnerbe.data.secret.Mailjet
-import team.applemango.runnerbe.data.secret.RunnerbeHost
+import team.applemango.runnerbe.data.secret.Runnerbe
 import team.applemango.runnerbe.data.user.api.UserApi
 import team.applemango.runnerbe.data.util.extension.JacksonConverter
 import team.applemango.runnerbe.data.util.interceptor.BasicAuthInterceptor
@@ -55,7 +55,7 @@ private fun buildClient(@RunnerbeDsl builder: ClientModel.() -> Unit): OkHttpCli
 }
 
 private val runnerbeBaseApi = Retrofit.Builder()
-    .baseUrl(RunnerbeHost)
+    .baseUrl(Runnerbe.Host)
     .addConverterFactory(JacksonConverter)
     .client(
         buildClient {
