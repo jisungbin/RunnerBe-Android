@@ -28,14 +28,13 @@ object Versions {
     }
 
     object Compose {
-        const val Main = "1.1.0"
-        const val Lottie = "5.0.1"
+        const val Main = "1.1.1"
+        const val Lottie = "5.0.3"
         const val Activity = "1.4.0"
-        const val Landscapist = "1.4.8"
-        const val Insets = "0.24.0-alpha"
+        const val Landscapist = "1.4.9"
         const val ConstraintLayout = "1.0.0"
-        const val LifecycleViewModel = "2.4.0"
-        const val Accompanist = "0.24.1-alpha"
+        const val LifecycleViewModel = "2.4.1"
+        const val Accompanist = "0.24.3-alpha"
     }
 
     object Ui {
@@ -136,7 +135,6 @@ object Dependencies {
         "androidx.compose.material:material:${Versions.Compose.Main}",
         "com.airbnb.android:lottie-compose:${Versions.Compose.Lottie}",
         "androidx.activity:activity-compose:${Versions.Compose.Activity}",
-        "com.google.accompanist:accompanist-insets:${Versions.Compose.Insets}",
         "com.github.skydoves:landscapist-coil:${Versions.Compose.Landscapist}",
         "com.google.accompanist:accompanist-insets:${Versions.Compose.Accompanist}",
         "com.google.accompanist:accompanist-systemuicontroller:${Versions.Compose.Accompanist}",
