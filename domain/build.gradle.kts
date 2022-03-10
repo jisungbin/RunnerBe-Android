@@ -7,17 +7,24 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-// 아무런 의존성도 필요 없음
 plugins {
     id("com.android.library")
     id("kotlin-android")
     id("org.jetbrains.dokka")
 }
 
-tasks.dokkaHtml.configure {
-    outputDirectory.set(File("../documentation/dokka"))
-    moduleName.set("RunnerBe-Android: Domain")
+tasks.register<org.jetbrains.dokka.gradle.DokkaTask>("dokkaCustomFormat") {
+    pluginsMapConfiguration.set(
+        mapOf(
+            "org.jetbrains.dokka.base.DokkaBase"
+                to
+                    """{ "footerMessage": "made with ❤ by <a href="https://github.com/jisungbin">@jisungbin</a>" }"""
+        )
+    )
+}
 
+tasks.dokkaHtml.configure {
+    moduleName.set("RunnerBe-Android: Domain")
     dokkaSourceSets {
         configureEach {
             includeNonPublic.set(true)
