@@ -1,0 +1,1018 @@
+[
+  {
+    "name": "RunnerBe-Android: Domain",
+    "description": null,
+    "location": "index.html",
+    "searchKeys": [
+      "RunnerBe-Android: Domain"
+    ]
+  },
+  {
+    "name": "team.applemango.runnerbe.domain.constant",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.constant/index.html",
+    "searchKeys": [
+      "team.applemango.runnerbe.domain.constant"
+    ]
+  },
+  {
+    "name": "AgeGroup",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.constant/-age-group/index.html",
+    "searchKeys": [
+      "AgeGroup"
+    ]
+  },
+  {
+    "name": "AgeGroupType",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.constant/-age-group-type/index.html",
+    "searchKeys": [
+      "AgeGroupType"
+    ]
+  },
+  {
+    "name": "End",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.constant/-age-group-type/-end/index.html",
+    "searchKeys": [
+      "End"
+    ]
+  },
+  {
+    "name": "Middle",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.constant/-age-group-type/-middle/index.html",
+    "searchKeys": [
+      "Middle"
+    ]
+  },
+  {
+    "name": "Start",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.constant/-age-group-type/-start/index.html",
+    "searchKeys": [
+      "Start"
+    ]
+  },
+  {
+    "name": "Gender",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.constant/-gender/index.html",
+    "searchKeys": [
+      "Gender"
+    ]
+  },
+  {
+    "name": "All",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.constant/-gender/-all/index.html",
+    "searchKeys": [
+      "All"
+    ]
+  },
+  {
+    "name": "Female",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.constant/-gender/-female/index.html",
+    "searchKeys": [
+      "Female"
+    ]
+  },
+  {
+    "name": "Male",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.constant/-gender/-male/index.html",
+    "searchKeys": [
+      "Male"
+    ]
+  },
+  {
+    "name": "Job",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.constant/-job/index.html",
+    "searchKeys": [
+      "Job"
+    ]
+  },
+  {
+    "name": "ACC",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.constant/-job/-a-c-c/index.html",
+    "searchKeys": [
+      "ACC"
+    ]
+  },
+  {
+    "name": "CUS",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.constant/-job/-c-u-s/index.html",
+    "searchKeys": [
+      "CUS"
+    ]
+  },
+  {
+    "name": "DES",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.constant/-job/-d-e-s/index.html",
+    "searchKeys": [
+      "DES"
+    ]
+  },
+  {
+    "name": "DEV",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.constant/-job/-d-e-v/index.html",
+    "searchKeys": [
+      "DEV"
+    ]
+  },
+  {
+    "name": "EDU",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.constant/-job/-e-d-u/index.html",
+    "searchKeys": [
+      "EDU"
+    ]
+  },
+  {
+    "name": "HUR",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.constant/-job/-h-u-r/index.html",
+    "searchKeys": [
+      "HUR"
+    ]
+  },
+  {
+    "name": "MED",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.constant/-job/-m-e-d/index.html",
+    "searchKeys": [
+      "MED"
+    ]
+  },
+  {
+    "name": "MPR",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.constant/-job/-m-p-r/index.html",
+    "searchKeys": [
+      "MPR"
+    ]
+  },
+  {
+    "name": "PRO",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.constant/-job/-p-r-o/index.html",
+    "searchKeys": [
+      "PRO"
+    ]
+  },
+  {
+    "name": "PSM",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.constant/-job/-p-s-m/index.html",
+    "searchKeys": [
+      "PSM"
+    ]
+  },
+  {
+    "name": "PSV",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.constant/-job/-p-s-v/index.html",
+    "searchKeys": [
+      "PSV"
+    ]
+  },
+  {
+    "name": "RES",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.constant/-job/-r-e-s/index.html",
+    "searchKeys": [
+      "RES"
+    ]
+  },
+  {
+    "name": "SAF",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.constant/-job/-s-a-f/index.html",
+    "searchKeys": [
+      "SAF"
+    ]
+  },
+  {
+    "name": "SER",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.constant/-job/-s-e-r/index.html",
+    "searchKeys": [
+      "SER"
+    ]
+  },
+  {
+    "name": "Tag",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.constant/-tag/index.html",
+    "searchKeys": [
+      "Tag"
+    ]
+  },
+  {
+    "name": "Awesome",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.constant/-tag/-awesome/index.html",
+    "searchKeys": [
+      "Awesome"
+    ]
+  },
+  {
+    "name": "Bad",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.constant/-tag/-bad/index.html",
+    "searchKeys": [
+      "Bad"
+    ]
+  },
+  {
+    "name": "Effort",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.constant/-tag/-effort/index.html",
+    "searchKeys": [
+      "Effort"
+    ]
+  },
+  {
+    "name": "Starter",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.constant/-tag/-starter/index.html",
+    "searchKeys": [
+      "Starter"
+    ]
+  },
+  {
+    "name": "team.applemango.runnerbe.domain.firebase.repository",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.firebase.repository/index.html",
+    "searchKeys": [
+      "team.applemango.runnerbe.domain.firebase.repository"
+    ]
+  },
+  {
+    "name": "FirebaseRepository",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.firebase.repository/-firebase-repository/index.html",
+    "searchKeys": [
+      "FirebaseRepository"
+    ]
+  },
+  {
+    "name": "team.applemango.runnerbe.domain.firebase.usecase",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.firebase.usecase/index.html",
+    "searchKeys": [
+      "team.applemango.runnerbe.domain.firebase.usecase"
+    ]
+  },
+  {
+    "name": "ImageUploadUseCase",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.firebase.usecase/-image-upload-use-case/index.html",
+    "searchKeys": [
+      "ImageUploadUseCase"
+    ]
+  },
+  {
+    "name": "team.applemango.runnerbe.domain.register.mailjet.model",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.register.mailjet.model/index.html",
+    "searchKeys": [
+      "team.applemango.runnerbe.domain.register.mailjet.model"
+    ]
+  },
+  {
+    "name": "MailjetFrom",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.register.mailjet.model/-mailjet-from/index.html",
+    "searchKeys": [
+      "MailjetFrom"
+    ]
+  },
+  {
+    "name": "MailjetTemplate",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.register.mailjet.model/-mailjet-template/index.html",
+    "searchKeys": [
+      "MailjetTemplate"
+    ]
+  },
+  {
+    "name": "MailjetTemplateItem",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.register.mailjet.model/-mailjet-template-item/index.html",
+    "searchKeys": [
+      "MailjetTemplateItem"
+    ]
+  },
+  {
+    "name": "MailjetTo",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.register.mailjet.model/-mailjet-to/index.html",
+    "searchKeys": [
+      "MailjetTo"
+    ]
+  },
+  {
+    "name": "team.applemango.runnerbe.domain.register.mailjet.model.result",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.register.mailjet.model.result/index.html",
+    "searchKeys": [
+      "team.applemango.runnerbe.domain.register.mailjet.model.result"
+    ]
+  },
+  {
+    "name": "MailjetErrorResult",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.register.mailjet.model.result/-mailjet-error-result/index.html",
+    "searchKeys": [
+      "MailjetErrorResult"
+    ]
+  },
+  {
+    "name": "MailjetResult",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.register.mailjet.model.result/-mailjet-result/index.html",
+    "searchKeys": [
+      "MailjetResult"
+    ]
+  },
+  {
+    "name": "team.applemango.runnerbe.domain.register.mailjet.repository",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.register.mailjet.repository/index.html",
+    "searchKeys": [
+      "team.applemango.runnerbe.domain.register.mailjet.repository"
+    ]
+  },
+  {
+    "name": "MailjetRepository",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.register.mailjet.repository/-mailjet-repository/index.html",
+    "searchKeys": [
+      "MailjetRepository"
+    ]
+  },
+  {
+    "name": "team.applemango.runnerbe.domain.register.mailjet.usecase",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.register.mailjet.usecase/index.html",
+    "searchKeys": [
+      "team.applemango.runnerbe.domain.register.mailjet.usecase"
+    ]
+  },
+  {
+    "name": "buildContent()",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.register.mailjet.usecase/build-content.html",
+    "searchKeys": [
+      "buildContent()"
+    ]
+  },
+  {
+    "name": "MailjetSendUseCase",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.register.mailjet.usecase/-mailjet-send-use-case/index.html",
+    "searchKeys": [
+      "MailjetSendUseCase"
+    ]
+  },
+  {
+    "name": "toLink()",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.register.mailjet.usecase/to-link.html",
+    "searchKeys": [
+      "toLink()"
+    ]
+  },
+  {
+    "name": "team.applemango.runnerbe.domain.register.runnerbe.constant",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.register.runnerbe.constant/index.html",
+    "searchKeys": [
+      "team.applemango.runnerbe.domain.register.runnerbe.constant"
+    ]
+  },
+  {
+    "name": "PlatformType",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.register.runnerbe.constant/-platform-type/index.html",
+    "searchKeys": [
+      "PlatformType"
+    ]
+  },
+  {
+    "name": "Apple",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.register.runnerbe.constant/-platform-type/-apple/index.html",
+    "searchKeys": [
+      "Apple"
+    ]
+  },
+  {
+    "name": "Kakao",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.register.runnerbe.constant/-platform-type/-kakao/index.html",
+    "searchKeys": [
+      "Kakao"
+    ]
+  },
+  {
+    "name": "Naver",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.register.runnerbe.constant/-platform-type/-naver/index.html",
+    "searchKeys": [
+      "Naver"
+    ]
+  },
+  {
+    "name": "UserRegisterResult",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.register.runnerbe.constant/-user-register-result/index.html",
+    "searchKeys": [
+      "UserRegisterResult"
+    ]
+  },
+  {
+    "name": "team.applemango.runnerbe.domain.register.runnerbe.model",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.register.runnerbe.model/index.html",
+    "searchKeys": [
+      "team.applemango.runnerbe.domain.register.runnerbe.model"
+    ]
+  },
+  {
+    "name": "AccessToken",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.register.runnerbe.model/-access-token/index.html",
+    "searchKeys": [
+      "AccessToken"
+    ]
+  },
+  {
+    "name": "UserRegister",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.register.runnerbe.model/-user-register/index.html",
+    "searchKeys": [
+      "UserRegister"
+    ]
+  },
+  {
+    "name": "UserToken",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.register.runnerbe.model/-user-token/index.html",
+    "searchKeys": [
+      "UserToken"
+    ]
+  },
+  {
+    "name": "team.applemango.runnerbe.domain.register.runnerbe.repository",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.register.runnerbe.repository/index.html",
+    "searchKeys": [
+      "team.applemango.runnerbe.domain.register.runnerbe.repository"
+    ]
+  },
+  {
+    "name": "AccessTokenRepository",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.register.runnerbe.repository/-access-token-repository/index.html",
+    "searchKeys": [
+      "AccessTokenRepository"
+    ]
+  },
+  {
+    "name": "RegisterRepository",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.register.runnerbe.repository/-register-repository/index.html",
+    "searchKeys": [
+      "RegisterRepository"
+    ]
+  },
+  {
+    "name": "team.applemango.runnerbe.domain.register.runnerbe.usecase",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.register.runnerbe.usecase/index.html",
+    "searchKeys": [
+      "team.applemango.runnerbe.domain.register.runnerbe.usecase"
+    ]
+  },
+  {
+    "name": "CheckUsableEmailUseCase",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.register.runnerbe.usecase/-check-usable-email-use-case/index.html",
+    "searchKeys": [
+      "CheckUsableEmailUseCase"
+    ]
+  },
+  {
+    "name": "GetKakaoAccessTokenUseCase",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.register.runnerbe.usecase/-get-kakao-access-token-use-case/index.html",
+    "searchKeys": [
+      "GetKakaoAccessTokenUseCase"
+    ]
+  },
+  {
+    "name": "GetNaverAccessTokenUseCase",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.register.runnerbe.usecase/-get-naver-access-token-use-case/index.html",
+    "searchKeys": [
+      "GetNaverAccessTokenUseCase"
+    ]
+  },
+  {
+    "name": "LoginUseCase",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.register.runnerbe.usecase/-login-use-case/index.html",
+    "searchKeys": [
+      "LoginUseCase"
+    ]
+  },
+  {
+    "name": "UserRegisterUseCase",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.register.runnerbe.usecase/-user-register-use-case/index.html",
+    "searchKeys": [
+      "UserRegisterUseCase"
+    ]
+  },
+  {
+    "name": "team.applemango.runnerbe.domain.runningitem.common",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.common/index.html",
+    "searchKeys": [
+      "team.applemango.runnerbe.domain.runningitem.common"
+    ]
+  },
+  {
+    "name": "BaseResult",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.common/-base-result/index.html",
+    "searchKeys": [
+      "BaseResult"
+    ]
+  },
+  {
+    "name": "RunningItemType",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.common/-running-item-type/index.html",
+    "searchKeys": [
+      "RunningItemType"
+    ]
+  },
+  {
+    "name": "After",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.common/-running-item-type/-after/index.html",
+    "searchKeys": [
+      "After"
+    ]
+  },
+  {
+    "name": "Before",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.common/-running-item-type/-before/index.html",
+    "searchKeys": [
+      "Before"
+    ]
+  },
+  {
+    "name": "Off",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.common/-running-item-type/-off/index.html",
+    "searchKeys": [
+      "Off"
+    ]
+  },
+  {
+    "name": "team.applemango.runnerbe.domain.runningitem.filter",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.filter/index.html",
+    "searchKeys": [
+      "team.applemango.runnerbe.domain.runningitem.filter"
+    ]
+  },
+  {
+    "name": "AgeFilter",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.filter/-age-filter/index.html",
+    "searchKeys": [
+      "AgeFilter"
+    ]
+  },
+  {
+    "name": "DistanceFilter",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.filter/-distance-filter/index.html",
+    "searchKeys": [
+      "DistanceFilter"
+    ]
+  },
+  {
+    "name": "JobFilter",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.filter/-job-filter/index.html",
+    "searchKeys": [
+      "JobFilter"
+    ]
+  },
+  {
+    "name": "KeywordFilter",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.filter/-keyword-filter/index.html",
+    "searchKeys": [
+      "KeywordFilter"
+    ]
+  },
+  {
+    "name": "RunningItemFilter",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.filter/-running-item-filter/index.html",
+    "searchKeys": [
+      "RunningItemFilter"
+    ]
+  },
+  {
+    "name": "Distance",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.filter/-running-item-filter/-distance/index.html",
+    "searchKeys": [
+      "Distance"
+    ]
+  },
+  {
+    "name": "Hot",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.filter/-running-item-filter/-hot/index.html",
+    "searchKeys": [
+      "Hot"
+    ]
+  },
+  {
+    "name": "New",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.filter/-running-item-filter/-new/index.html",
+    "searchKeys": [
+      "New"
+    ]
+  },
+  {
+    "name": "team.applemango.runnerbe.domain.runningitem.mapper",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.mapper/index.html",
+    "searchKeys": [
+      "team.applemango.runnerbe.domain.runningitem.mapper"
+    ]
+  },
+  {
+    "name": "toData()",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.mapper/to-data.html",
+    "searchKeys": [
+      "toData()"
+    ]
+  },
+  {
+    "name": "team.applemango.runnerbe.domain.runningitem.model.common",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.model.common/index.html",
+    "searchKeys": [
+      "team.applemango.runnerbe.domain.runningitem.model.common"
+    ]
+  },
+  {
+    "name": "Locate",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.model.common/-locate/index.html",
+    "searchKeys": [
+      "Locate"
+    ]
+  },
+  {
+    "name": "Time",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.model.common/-time/index.html",
+    "searchKeys": [
+      "Time"
+    ]
+  },
+  {
+    "name": "team.applemango.runnerbe.domain.runningitem.model.runner",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.model.runner/index.html",
+    "searchKeys": [
+      "team.applemango.runnerbe.domain.runningitem.model.runner"
+    ]
+  },
+  {
+    "name": "Runner",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.model.runner/-runner/index.html",
+    "searchKeys": [
+      "Runner"
+    ]
+  },
+  {
+    "name": "team.applemango.runnerbe.domain.runningitem.model.runningitem",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.model.runningitem/index.html",
+    "searchKeys": [
+      "team.applemango.runnerbe.domain.runningitem.model.runningitem"
+    ]
+  },
+  {
+    "name": "RunningItem",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.model.runningitem/-running-item/index.html",
+    "searchKeys": [
+      "RunningItem"
+    ]
+  },
+  {
+    "name": "RunningItemApiBody",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.model.runningitem/-running-item-api-body/index.html",
+    "searchKeys": [
+      "RunningItemApiBody"
+    ]
+  },
+  {
+    "name": "RunningItemApiBodyData",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.model.runningitem/-running-item-api-body-data/index.html",
+    "searchKeys": [
+      "RunningItemApiBodyData"
+    ]
+  },
+  {
+    "name": "team.applemango.runnerbe.domain.runningitem.model.runningitem.information",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.model.runningitem.information/index.html",
+    "searchKeys": [
+      "team.applemango.runnerbe.domain.runningitem.model.runningitem.information"
+    ]
+  },
+  {
+    "name": "RunningItemInformation",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.model.runningitem.information/-running-item-information/index.html",
+    "searchKeys": [
+      "RunningItemInformation"
+    ]
+  },
+  {
+    "name": "team.applemango.runnerbe.domain.runningitem.repository",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.repository/index.html",
+    "searchKeys": [
+      "team.applemango.runnerbe.domain.runningitem.repository"
+    ]
+  },
+  {
+    "name": "RunningItemRepository",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.repository/-running-item-repository/index.html",
+    "searchKeys": [
+      "RunningItemRepository"
+    ]
+  },
+  {
+    "name": "team.applemango.runnerbe.domain.runningitem.usecase",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.usecase/index.html",
+    "searchKeys": [
+      "team.applemango.runnerbe.domain.runningitem.usecase"
+    ]
+  },
+  {
+    "name": "LoadRunningItemInformationUseCase",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.usecase/-load-running-item-information-use-case/index.html",
+    "searchKeys": [
+      "LoadRunningItemInformationUseCase"
+    ]
+  },
+  {
+    "name": "LoadRunningItemsUseCase",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.usecase/-load-running-items-use-case/index.html",
+    "searchKeys": [
+      "LoadRunningItemsUseCase"
+    ]
+  },
+  {
+    "name": "RunningItemDeleteUseCase",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.usecase/-running-item-delete-use-case/index.html",
+    "searchKeys": [
+      "RunningItemDeleteUseCase"
+    ]
+  },
+  {
+    "name": "RunningItemEditUseCase",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.usecase/-running-item-edit-use-case/index.html",
+    "searchKeys": [
+      "RunningItemEditUseCase"
+    ]
+  },
+  {
+    "name": "RunningItemFinishUseCase",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.usecase/-running-item-finish-use-case/index.html",
+    "searchKeys": [
+      "RunningItemFinishUseCase"
+    ]
+  },
+  {
+    "name": "RunningItemJoinManageUseCase",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.usecase/-running-item-join-manage-use-case/index.html",
+    "searchKeys": [
+      "RunningItemJoinManageUseCase"
+    ]
+  },
+  {
+    "name": "RunningItemReportUseCase",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.usecase/-running-item-report-use-case/index.html",
+    "searchKeys": [
+      "RunningItemReportUseCase"
+    ]
+  },
+  {
+    "name": "RunningItemRequestJoinUseCase",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.usecase/-running-item-request-join-use-case/index.html",
+    "searchKeys": [
+      "RunningItemRequestJoinUseCase"
+    ]
+  },
+  {
+    "name": "WriteRunningItemUseCase",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.runningitem.usecase/-write-running-item-use-case/index.html",
+    "searchKeys": [
+      "WriteRunningItemUseCase"
+    ]
+  },
+  {
+    "name": "team.applemango.runnerbe.domain.user.constant",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.user.constant/index.html",
+    "searchKeys": [
+      "team.applemango.runnerbe.domain.user.constant"
+    ]
+  },
+  {
+    "name": "JobChangeResult",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.user.constant/-job-change-result/index.html",
+    "searchKeys": [
+      "JobChangeResult"
+    ]
+  },
+  {
+    "name": "NicknameChangeResult",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.user.constant/-nickname-change-result/index.html",
+    "searchKeys": [
+      "NicknameChangeResult"
+    ]
+  },
+  {
+    "name": "team.applemango.runnerbe.domain.user.model",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.user.model/index.html",
+    "searchKeys": [
+      "team.applemango.runnerbe.domain.user.model"
+    ]
+  },
+  {
+    "name": "MyPageInformation",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.user.model/-my-page-information/index.html",
+    "searchKeys": [
+      "MyPageInformation"
+    ]
+  },
+  {
+    "name": "team.applemango.runnerbe.domain.user.model.wrapper",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.user.model.wrapper/index.html",
+    "searchKeys": [
+      "team.applemango.runnerbe.domain.user.model.wrapper"
+    ]
+  },
+  {
+    "name": "JobWrapper",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.user.model.wrapper/-job-wrapper/index.html",
+    "searchKeys": [
+      "JobWrapper"
+    ]
+  },
+  {
+    "name": "NicknameWrapper",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.user.model.wrapper/-nickname-wrapper/index.html",
+    "searchKeys": [
+      "NicknameWrapper"
+    ]
+  },
+  {
+    "name": "ProfileImageUrlWrapper",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.user.model.wrapper/-profile-image-url-wrapper/index.html",
+    "searchKeys": [
+      "ProfileImageUrlWrapper"
+    ]
+  },
+  {
+    "name": "team.applemango.runnerbe.domain.user.repository",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.user.repository/index.html",
+    "searchKeys": [
+      "team.applemango.runnerbe.domain.user.repository"
+    ]
+  },
+  {
+    "name": "UserRepository",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.user.repository/-user-repository/index.html",
+    "searchKeys": [
+      "UserRepository"
+    ]
+  },
+  {
+    "name": "team.applemango.runnerbe.domain.user.usecase",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.user.usecase/index.html",
+    "searchKeys": [
+      "team.applemango.runnerbe.domain.user.usecase"
+    ]
+  },
+  {
+    "name": "AttendanceCheckUseCase",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.user.usecase/-attendance-check-use-case/index.html",
+    "searchKeys": [
+      "AttendanceCheckUseCase"
+    ]
+  },
+  {
+    "name": "ChangeJobUseCase",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.user.usecase/-change-job-use-case/index.html",
+    "searchKeys": [
+      "ChangeJobUseCase"
+    ]
+  },
+  {
+    "name": "LoadBookmarkListUseCase",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.user.usecase/-load-bookmark-list-use-case/index.html",
+    "searchKeys": [
+      "LoadBookmarkListUseCase"
+    ]
+  },
+  {
+    "name": "LoadMyPageUseCase",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.user.usecase/-load-my-page-use-case/index.html",
+    "searchKeys": [
+      "LoadMyPageUseCase"
+    ]
+  },
+  {
+    "name": "SetNicknameUseCase",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.user.usecase/-set-nickname-use-case/index.html",
+    "searchKeys": [
+      "SetNicknameUseCase"
+    ]
+  },
+  {
+    "name": "UpdateBookmarkItemUseCase",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.user.usecase/-update-bookmark-item-use-case/index.html",
+    "searchKeys": [
+      "UpdateBookmarkItemUseCase"
+    ]
+  },
+  {
+    "name": "UpdateProfileImageUseCase",
+    "description": null,
+    "location": "-runner-be--android[58] -domain/team.applemango.runnerbe.domain.user.usecase/-update-profile-image-use-case/index.html",
+    "searchKeys": [
+      "UpdateProfileImageUseCase"
+    ]
+  }
+]
