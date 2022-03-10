@@ -11,11 +11,13 @@ package team.applemango.runnerbe.feature.home.board
 
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers.`is`
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 class BasicUnitTest {
     @Test
-    fun addition_isCorrect() {
-        MatcherAssert.assertThat("1", `is`("1"))
+    @DisplayName("항상 실패하는 테스트 2")
+    fun testMustFailure() {
+        MatcherAssert.assertThat("1", `is`("3"))
     }
 }
