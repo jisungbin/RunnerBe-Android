@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Test
  */
 class BasicUnitTest {
     @Test
-    fun addition_isCorrect() {
-        assertThat("1", `is`("1"))
+    fun addition_must_fail() {
+        assertThat("1", `is`("2"))
     }
 }
