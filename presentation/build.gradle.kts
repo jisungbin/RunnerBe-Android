@@ -12,7 +12,7 @@ plugins {
     // id("com.spotify.ruler")
     id("com.google.gms.google-services")
     id("com.google.android.gms.oss-licenses-plugin")
-    id("name.remal.check-dependency-updates") version Versions.Util.CheckDependencyUpdates
+    id("name.remal.check-dependency-updates") version Versions.BuildUtil.CheckDependencyUpdates
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
     installLibraryDfmHiltTest(isLibrary = false)
 }

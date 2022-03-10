@@ -13,12 +13,12 @@ import org.jetbrains.dokka.base.DokkaBaseConfiguration
 plugins {
     id("com.android.library")
     id("kotlin-android")
-    id("org.jetbrains.dokka") version Versions.Util.Dokka
+    id("org.jetbrains.dokka") version Versions.BuildUtil.Dokka
 }
 
 buildscript {
     dependencies {
-        classpath("org.jetbrains.dokka:dokka-base:${Versions.Util.Dokka}")
+        classpath("org.jetbrains.dokka:dokka-base:${Versions.BuildUtil.Dokka}")
     }
 }
 

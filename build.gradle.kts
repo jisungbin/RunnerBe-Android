@@ -9,6 +9,11 @@
 
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+plugins {
+    id("io.gitlab.arturbosch.detekt") version Versions.BuildUtil.DeteKt
+    id("org.jlleitschuh.gradle.ktlint") version Versions.BuildUtil.KtLint
+}
+
 buildscript {
     repositories {
         google()
@@ -17,9 +22,7 @@ buildscript {
 
     dependencies {
         // classpath("com.spotify.ruler:ruler-gradle-plugin:1.0.0")
-//        classpath("org.jetbrains.dokka:dokka-base:${Versions.Util.Dokka}")
         classpath("com.android.tools.build:gradle:${Versions.Essential.Gradle}")
-//        classpath("org.jetbrains.dokka:dokka-gradle-plugin:${Versions.Util.Dokka}")
         classpath("com.google.gms:google-services:${Versions.Essential.GoogleService}")
         classpath("com.google.dagger:hilt-android-gradle-plugin:${Versions.Jetpack.Hilt}")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.Essential.Kotlin}")
@@ -47,6 +50,11 @@ allprojects {
                 )
             }
         }
+    }
+
+    apply {
+        plugin("io.gitlab.arturbosch.detekt")
+        plugin("org.jlleitschuh.gradle.ktlint")
     }
 
     /*configurations.all {
