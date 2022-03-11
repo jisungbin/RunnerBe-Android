@@ -29,24 +29,3 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 2.7
-
-      - name: Caching Ruby dependencies
-        uses: actions/cache@v2
-        with:
-          path: 'vendor/bundle'
-          key: ${{ runner.os }}-gems-${{ secrets.GEMS_CACHE_VERSION }}-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
-
-      - name: Install dependencies to support Ruby project
-        run: |
-          bundle config --global set deploy_platform_default x86_64-linux
-          bundle install
-
-      - name: Fastlane distribute
-        run: fastlane distribute
