@@ -40,7 +40,7 @@
 
 - [kotlin dokka 로 문서 자동 생성하기](https://jisungbin.medium.com/kotlin-dokka-%EB%A1%9C-%EB%AC%B8%EC%84%9C-%EC%9E%90%EB%8F%99-%EC%83%9D%EC%84%B1%ED%95%98%EA%B8%B0-84487e7e9f4)
 - [안드로이드12 스플래시 대응하기](https://sungbin.land/%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C12-%EC%8A%A4%ED%94%8C%EB%9E%98%EC%8B%9C-%EB%8C%80%EC%9D%91%ED%95%98%EA%B8%B0-1729f69dc33f)
-- [Fastlane + Firebase App Distribution = 🤩🚀](https://sungbin.land/fastlane-firebase-app-distribution-ff57c15793a4)
+- [안드로이드 테스트 앱 자동배포 하기](https://sungbin.land/fastlane-firebase-app-distribution-ff57c15793a4)
 - [Jetpack Compose 뒤로가기 이벤트 처리하기](https://sungbin.land/jetpack-compose-%EB%92%A4%EB%A1%9C%EA%B0%80%EA%B8%B0-%EC%9D%B4%EB%B2%A4%ED%8A%B8-%EC%B2%98%EB%A6%AC%ED%95%98%EA%B8%B0-69cbc47268ea)
 - [Jetpack Compose에서 Flow 효율적으로 수집하기](https://sungbin.land/jetpack-compose%EC%97%90%EC%84%9C-flow-%ED%9A%A8%EC%9C%A8%EC%A0%81%EC%9C%BC%EB%A1%9C-%EC%88%98%EC%A7%91%ED%95%98%EA%B8%B0-661fef213ced)
 - [안드로이드 프로젝트 의존 그래프 만들기](https://sungbin.land/%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%9D%98%EC%A1%B4-%EA%B7%B8%EB%9E%98%ED%94%84-%EB%A7%8C%EB%93%A4%EA%B8%B0-41adfe141622)
