@@ -1,2 +1,0 @@
-json_key_file("fastlane/service-key.json")
-package_name("team.applemango.runnerbe")
