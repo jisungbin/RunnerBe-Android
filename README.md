@@ -59,7 +59,7 @@
 #### Architecture
 
 - TDD
-- MVW Pattern
+- MVI Pattern
 - Layered Architecture
 - Dynamic Feature Module (:features:register)
 
