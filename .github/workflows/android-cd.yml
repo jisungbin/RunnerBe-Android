@@ -15,6 +15,7 @@ jobs:
         id: build
         with:
           name: presentation-release-universal
+          path: presentation/build/outputs/universal_apk/release
 
       - name: Upload apk to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
@@ -22,5 +23,5 @@ jobs:
           appId: ${{ secrets.FIREBASE_APP_ID }}
           token: ${{ secrets.FIREBASE_TOKEN }}
           groups: only-sungbin
-          file: ${{ steps.build.outputs.download-path }}
+          file: presentation/build/outputs/universal_apk/release/presentation-release-universal.apk
           releaseNotesFile: documents/release-note/default-note.txt
