@@ -4,7 +4,7 @@ on:
     branches: [ develop ]
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -33,8 +33,13 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: Decrypt secrets.tar.gpg
+        run: gpg —quiet —batch —yes —always-trust —decrypt —passphrase="$SECRET_GPG_PASSWORD" —output secrets.tar secrets.tar.gpg
+        env:
+          SECRET_GPG_PASSWORD: ${{ secrets.SECRET_GPG_PASSWORD }}
+
       - name: Run ktlint
-        run:  ./gradlew ktlintCheck
+        run: ./gradlew ktlintCheck
 
       - name: Run detekt
         run: ./gradlew detektCheck
@@ -45,3 +50,9 @@ jobs:
       - name: Create android test report
         uses: asadmansr/android-test-report-action@v1.2.0
         if: ${{ always() }}
+
+      - name: Unzip secrets.tar
+        run: tar xvf secrets.tar
+
+      - name: Build release universal APK
+        run: ./gradlew presentation:packageReleaseUniversalApk --stacktrace
