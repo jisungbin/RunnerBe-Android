@@ -51,7 +51,9 @@ internal fun <T> IconBottomBar(
     height: Dp = DefaultBottomBarHeight.dp,
     onIconClick: (iconId: T) -> Unit,
 ) {
-    require(stateIcons.isNotEmpty()) { "stateIcons size must be not zero." }
+    require(stateIcons.isNotEmpty()) {
+        "stateIcons size must be not zero."
+    }
     var selectedIconState by remember { mutableStateOf(stateIcons.first().id) }
 
     Row(

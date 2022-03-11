@@ -12,8 +12,8 @@ plugins {
     // id("com.spotify.ruler")
     id("com.google.gms.google-services")
     id("com.google.android.gms.oss-licenses-plugin")
-    id("name.remal.check-dependency-updates") version Versions.BuildUtil.CheckDependencyUpdates
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    id("name.remal.check-dependency-updates") version Versions.BuildUtil.CheckDependencyUpdates
     installLibraryDfmHiltTest(isLibrary = false)
 }
 
@@ -73,7 +73,8 @@ dependencies {
     val layers = listOf(
         ProjectConstants.Domain,
         ProjectConstants.Data,
-    ).forEach(::implementationProject)
+    )
+    layers.forEach(::implementationProject)
 
     implementation(platform(Dependencies.FirebaseBom))
     implementation(Dependencies.FirebaseEachKtx.Analytics)

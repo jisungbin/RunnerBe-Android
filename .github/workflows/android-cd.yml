@@ -11,21 +11,16 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup JDK 11
-        uses: actions/setup-java@v3
+      - uses: actions/download-artifact@v3
+        id: build
         with:
-          distribution: "zulu"
-          java-version: 11
+          name: presentation-release-universal
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v2
-
-      - name: Cache Gradle packages
-        uses: actions/cache@v2
+      - name: Upload apk to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+          appId: ${{ secrets.FIREBASE_APP_ID }}
+          token: ${{ secrets.FIREBASE_TOKEN }}
+          groups: only-sungbin
+          file: ${{ steps.build.outputs.download-path }}
+          releaseNotesFile: documents/release-note/default-note.txt
