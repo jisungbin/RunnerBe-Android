@@ -65,8 +65,8 @@
 
 #### CI/CD
 
-- Github Actions (unit test)
-- Fastlane + Firebase App Distribution
+- Github Actions
+- Firebase App Distribution
 
 #### Jetpack
 
