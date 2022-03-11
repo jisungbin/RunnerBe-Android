@@ -37,3 +37,9 @@ jobs:
 
       - name: Unzip secrets.tar
         run: tar xvf secrets.tar
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build release universal APK
+        run: ./gradlew presentation:packageReleaseUniversalApk --stacktrace
