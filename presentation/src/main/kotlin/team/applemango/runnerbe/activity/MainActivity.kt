@@ -34,8 +34,6 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
-import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.rememberLottieComposition
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -111,8 +109,6 @@ class MainActivity : ComponentActivity() {
         LaunchedEffect(Unit) {
             runningItemsState = runningItems.await().getOrThrow()
         }
-
-        val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.bee))
 
         val bottomBarStateIcons = remember {
             listOf(
