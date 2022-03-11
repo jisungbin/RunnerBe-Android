@@ -11,6 +11,12 @@ Ensure your change is properly formatted by running:
 ./gradlew detektCheck
 ```
 
+Also, it's need testing:
+
+```gradle
+./gradlew testDebugUnitTest
+```
+
 ## Code reviews
 
 All submissions, including submissions by project members, require review. We use GitHub pull requests for this purpose. Consult [GitHub Help](https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) for more information on using pull requests.
