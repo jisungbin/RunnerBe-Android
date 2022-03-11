@@ -34,7 +34,7 @@
 
 현재 아키텍처에 다양한 이슈들이 존재합니다. 이슈 해결을 포함한 모든 이슈나 PR 은 항상 환영입니다.
 
-[[architecture issue]](https://github.com/applemango-runnerbe/RunnerBe-Android/issues?q=is%3Aissue+is%3Aopen+label%3A%22architecture+issue%22)
+[![](https://img.shields.io/github/issues-raw/applemango-runnerbe/RunnerBe-Android/architecture%20issue?color=%23d876e3&label=architecture%20issue&style=for-the-badge)](https://github.com/applemango-runnerbe/RunnerBe-Android/issues?q=is%3Aissue+is%3Aopen+label%3A%22architecture+issue%22)
 
 # ✍️ 작성 아티클
 
