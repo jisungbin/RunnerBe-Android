@@ -23,6 +23,10 @@ import team.applemango.runnerbe.util.DFMOnboardActivityAlias
 
 class StartActivity : AppCompatActivity() {
 
+    private companion object {
+        const val SplashAnimationDuration = 200L
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
@@ -54,7 +58,7 @@ class StartActivity : AppCompatActivity() {
                     scaleX(0f)
                     scaleY(0f)
                     interpolator = AnticipateInterpolator()
-                    duration = 200L
+                    duration = SplashAnimationDuration
                     withEndAction { splashScreenView.remove() }
                     withLayer()
                     start()
