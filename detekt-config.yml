@@ -2,7 +2,10 @@ complexity:
   LongParameterList:
     active: false # for rest api call function
   LongMethod:
+    excludes: [ '**/mapper/**' ]
     ignoreAnnotated: [ 'Composable' ]
+  ComplexMethod:
+    excludes: [ '**/mapper/**' ]
 
 style:
   MagicNumber:
