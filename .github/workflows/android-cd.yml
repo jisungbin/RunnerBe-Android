@@ -1,4 +1,4 @@
-name: Android CI/CD
+name: Android CD
 on:
   pull_request:
     branches: [ deploy-dev ]
@@ -19,29 +19,16 @@ jobs:
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v2
-
+        
       - name: Cache Gradle packages
         uses: actions/cache@v2
         with:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          key: ${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-
-      - name: Run ktlint
-        run:  ./gradlew ktlintCheck
-
-      - name: Run detekt
-        run: ./gradlew detektCheck
-
-      - name: Run unit tests
-        run: ./gradlew testDebugUnitTest
-
-      - name: Create android test report
-        uses: asadmansr/android-test-report-action@v1.2.0
-        if: ${{ always() }}
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
@@ -60,3 +47,6 @@ jobs:
         run: |
           bundle config --global set deploy_platform_default x86_64-linux
           bundle install
+          
+      - name: Fastlane distribute
+        run: fastlane distribute
