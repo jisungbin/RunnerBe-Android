@@ -48,10 +48,5 @@ jobs:
         uses: asadmansr/android-test-report-action@v1.2.0
         if: ${{ always() }}
 
-      - name: Build release universal apk
-        run: ./gradlew presentation:packageReleaseUniversalApk
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: presentation-release-universal
-          path: presentation/build/outputs/universal_apk/release/presentation-release-universal.apk
+      - name: Build assemble release apk
+        run: ./gradlew assembleRelease
