@@ -34,6 +34,8 @@ buildscript {
 }
 
 allprojects {
+    val detektExcludePath = "**/xml/**"
+
     repositories {
         google()
         mavenCentral()
@@ -42,6 +44,18 @@ allprojects {
 
     afterEvaluate {
         project.apply("$rootDir/gradle/common.gradle")
+
+        detekt {
+            toolVersion = Versions.BuildUtil.DeteKt
+            buildUponDefaultConfig = true
+            config.setFrom(files("$rootDir/detekt-config.yml"))
+        }
+
+        tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+            jvmTarget = ApplicationConstants.jvmTarget
+            exclude(detektExcludePath)
+        }
+
         tasks.withType<KotlinCompile> {
             kotlinOptions {
                 freeCompilerArgs = freeCompilerArgs + listOf(
