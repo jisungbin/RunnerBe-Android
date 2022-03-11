@@ -26,7 +26,7 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties', '**/buildSrc/**/*.kt') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
 
@@ -54,4 +54,4 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: presentation-release-universal
-          path: presentation/build/outputs/universal_apk/release/presentation-release-universal.apk
+          path: presentation/build/outputs/universal_apk/release
