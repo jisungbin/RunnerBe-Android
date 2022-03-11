@@ -17,6 +17,7 @@
   <a href="https://sonarcloud.io/summary/new_code?id=applemango-runnerbe_RunnerBe-Android"><img src="https://sonarcloud.io/api/project_badges/measure?project=applemango-runnerbe_RunnerBe-Android&metric=ncloc" alt="Lines of Code"/></a>
 </p>
 
+
 ---
 
 # 🥇 마지막 실력 향상 프로젝트
@@ -30,11 +31,27 @@
 - Unit Test + [Test Coverage 100% 목표](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/35)
 
 # 🐛 아키텍처 이슈
-  
+
 현재 아키텍처에 다양한 이슈들이 존재합니다. 이슈 해결을 포함한 모든 이슈나 PR 은 항상 환영입니다.
-  
+
 [[architecture issue]](https://github.com/applemango-runnerbe/RunnerBe-Android/issues?q=is%3Aissue+is%3Aopen+label%3A%22architecture+issue%22)
- 
+
+# ✍️ 작성 아티클
+
+- [kotlin dokka 로 문서 자동 생성하기](https://jisungbin.medium.com/kotlin-dokka-%EB%A1%9C-%EB%AC%B8%EC%84%9C-%EC%9E%90%EB%8F%99-%EC%83%9D%EC%84%B1%ED%95%98%EA%B8%B0-84487e7e9f4)
+- [안드로이드12 스플래시 대응하기](https://sungbin.land/%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C12-%EC%8A%A4%ED%94%8C%EB%9E%98%EC%8B%9C-%EB%8C%80%EC%9D%91%ED%95%98%EA%B8%B0-1729f69dc33f)
+- [Fastlane + Firebase App Distribution = 🤩🚀](https://sungbin.land/fastlane-firebase-app-distribution-ff57c15793a4)
+- [Jetpack Compose 뒤로가기 이벤트 처리하기](https://sungbin.land/jetpack-compose-%EB%92%A4%EB%A1%9C%EA%B0%80%EA%B8%B0-%EC%9D%B4%EB%B2%A4%ED%8A%B8-%EC%B2%98%EB%A6%AC%ED%95%98%EA%B8%B0-69cbc47268ea)
+- [Jetpack Compose에서 Flow 효율적으로 수집하기](https://sungbin.land/jetpack-compose%EC%97%90%EC%84%9C-flow-%ED%9A%A8%EC%9C%A8%EC%A0%81%EC%9C%BC%EB%A1%9C-%EC%88%98%EC%A7%91%ED%95%98%EA%B8%B0-661fef213ced)
+- [안드로이드 프로젝트 의존 그래프 만들기](https://sungbin.land/%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%9D%98%EC%A1%B4-%EA%B7%B8%EB%9E%98%ED%94%84-%EB%A7%8C%EB%93%A4%EA%B8%B0-41adfe141622)
+- [안드로이드 Dynamic Feature Module 적용하기](https://sungbin.land/%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C-dynamic-feature-module-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0-6001654155d2)
+- [Jetpack Compose 완벽한 커스텀 다이얼로그 만들기](https://sungbin.land/jetpack-compose-%EC%99%84%EB%B2%BD%ED%95%9C-%EC%BB%A4%EC%8A%A4%ED%85%80-%EB%8B%A4%EC%9D%B4%EC%96%BC%EB%A1%9C%EA%B7%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0-79aab4c3023e)
+- [Jetpack Compose 갤러리/카메라 에서 사진 가져오기](https://sungbin.land/jetpack-compose-%EA%B0%A4%EB%9F%AC%EB%A6%AC-%EC%B9%B4%EB%A9%94%EB%9D%BC-%EC%97%90%EC%84%9C-%EC%82%AC%EC%A7%84-%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0-cf517eaca8bd)
+- [common.gradle 로 중복되는 그레이들 코드 없애기](https://sungbin.land/common-gradle-%EB%A1%9C-%EC%A4%91%EB%B3%B5%EB%90%98%EB%8A%94-%EA%B7%B8%EB%A0%88%EC%9D%B4%EB%93%A4-%EC%BD%94%EB%93%9C-%EC%97%86%EC%95%A0%EA%B8%B0-54ab069e1d15)
+- [누가 내 앱의 용량을 많이 차지하고 있을까?](https://sungbin.land/%EB%88%84%EA%B0%80-%EB%82%B4-%EC%95%B1%EC%9D%98-%EC%9A%A9%EB%9F%89%EC%9D%84-%EB%A7%8E%EC%9D%B4-%EC%B0%A8%EC%A7%80%ED%95%98%EA%B3%A0-%EC%9E%88%EC%9D%84%EA%B9%8C-3f2529200024)
+- ktlint, detekt 으로 코드 퀄리티 향상시키기 [예정]
+- Github Actions 으로 안드로이드 CI/CD 구성하기 [예정]
+
 ---
 
 ## Tech Skill
@@ -81,6 +98,7 @@
   <img src="https://img.shields.io/badge/Module-Dynamic%20Feature-%23c9baff" /> 
   <img src="https://img.shields.io/badge/Module-Android%20Library-%2381D4FA" />
 </p>
+
 
 #### Dependency Injection Graph
 
