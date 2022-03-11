@@ -47,6 +47,6 @@ jobs:
         run: |
           bundle config --global set deploy_platform_default x86_64-linux
           bundle install
-          
+
       - name: Fastlane distribute
         run: fastlane distribute
