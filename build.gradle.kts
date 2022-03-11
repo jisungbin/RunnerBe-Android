@@ -7,6 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
+import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -51,7 +52,7 @@ allprojects {
             config.setFrom(files("$rootDir/detekt-config.yml"))
         }
 
-        tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+        tasks.withType<Detekt>().configureEach {
             jvmTarget = ApplicationConstants.jvmTarget
             exclude(detektExcludePath)
         }
