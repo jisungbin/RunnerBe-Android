@@ -54,5 +54,5 @@ jobs:
       - name: Unzip secrets.tar
         run: tar xvf secrets.tar
 
-      - name: Build release universal APK
+      - name: Build release universal apk
         run: ./gradlew presentation:packageReleaseUniversalApk
