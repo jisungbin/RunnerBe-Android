@@ -1,11 +1,11 @@
 .gradle
-local.properties
 /.idea
 build/
 release/
-/secrets.tar
-/fastlane/Fastfile
+/keystore
+secrets.tar
+local.properties
 /fastlane/service-key.json
 /presentation/google-services.json
-/data/src/main/kotlin/team/applemango/runnerbe/data/secret/
 /buildSrc/src/main/kotlin/BuildConstants.kt
+/data/src/main/kotlin/team/applemango/runnerbe/data/secret/
