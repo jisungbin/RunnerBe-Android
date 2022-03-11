@@ -48,14 +48,14 @@ allprojects {
         detekt {
             toolVersion = Versions.BuildUtil.DeteKt
             buildUponDefaultConfig = true
+            config.setFrom(files("$rootDir/detekt-config.yml"))
         }
 
         tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
-            exclude(detektExcludePath) // but exclude our legacy internal package
+            jvmTarget = ApplicationConstants.jvmTarget
+            exclude(detektExcludePath)
         }
-        tasks.withType<io.gitlab.arturbosch.detekt.DetektCreateBaselineTask>().configureEach {
-            exclude(detektExcludePath) // but exclude our legacy internal package
-        }
+
         tasks.withType<KotlinCompile> {
             kotlinOptions {
                 freeCompilerArgs = freeCompilerArgs + listOf(
