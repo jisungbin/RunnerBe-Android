@@ -23,3 +23,4 @@ jobs:
           token: ${{ secrets.FIREBASE_TOKEN }}
           groups: only-sungbin
           file: ${{ steps.build.outputs.download-path }}
+          releaseNotesFile: documents/release-note/default-note.txt
