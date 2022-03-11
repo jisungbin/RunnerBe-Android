@@ -11,11 +11,38 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/download-artifact@v3
-        id: build
+      - name: Setup JDK 11
+        uses: actions/setup-java@v3
         with:
-          name: presentation-release-universal
-          path: presentation/build/outputs/universal_apk/release/presentation-release-universal.apk
+          distribution: "zulu"
+          java-version: 11
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties', '**/buildSrc/**/*.kt') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Decrypt secrets.tar.gpg
+        run: gpg --quiet --batch --yes --always-trust --decrypt --passphrase="$SECRET_GPG_PASSWORD" --output secrets.tar secrets.tar.gpg
+        env:
+          SECRET_GPG_PASSWORD: ${{ secrets.SECRET_GPG_PASSWORD }}
+
+      - name: Unzip secrets.tar
+        run: tar xvf secrets.tar
+
+      - name: Build release universal apk
+        run: ./gradlew presentation:packageReleaseUniversalApk
 
       - name: Upload apk to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
@@ -23,5 +50,5 @@ jobs:
           appId: ${{ secrets.FIREBASE_APP_ID }}
           token: ${{ secrets.FIREBASE_TOKEN }}
           groups: only-sungbin
-          file: ${{ steps.build.outputs.download-path }}
+          file: presentation/build/outputs/universal_apk/release/presentation-release-universal.apk
           releaseNotesFile: documents/release-note/default-note.txt
