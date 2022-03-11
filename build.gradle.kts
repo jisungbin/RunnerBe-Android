@@ -7,6 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
+import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -21,14 +22,14 @@ buildscript {
     }
 
     dependencies {
-        // classpath("com.spotify.ruler:ruler-gradle-plugin:1.0.0")
+        // classpath("com.spotify.ruler:ruler-gradle-plugin:${Versions.BuildUtil.Ruler}")
         classpath("com.android.tools.build:gradle:${Versions.Essential.Gradle}")
         classpath("com.google.gms:google-services:${Versions.Essential.GoogleService}")
         classpath("com.google.dagger:hilt-android-gradle-plugin:${Versions.Jetpack.Hilt}")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.Essential.Kotlin}")
         classpath("de.mannodermaus.gradle.plugins:android-junit5:${Versions.Test.JUnitGradle}")
         classpath("com.google.android.gms:oss-licenses-plugin:${Versions.OssLicense.Classpath}")
-        // classpath("com.vanniktech:gradle-dependency-graph-generator-plugin:${Versions.Util.DependencyGraphGenerator}")
+        // classpath("com.vanniktech:gradle-dependency-graph-generator-plugin:${Versions.BuildUtil.DependencyGraphGenerator}")
         classpath("com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:${Versions.Util.SecretsGradlePlugin}")
     }
 }
@@ -51,7 +52,7 @@ allprojects {
             config.setFrom(files("$rootDir/detekt-config.yml"))
         }
 
-        tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+        tasks.withType<Detekt>().configureEach {
             jvmTarget = ApplicationConstants.jvmTarget
             exclude(detektExcludePath)
         }
