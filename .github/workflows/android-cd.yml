@@ -10,3 +10,16 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
+
+      - uses: actions/download-artifact@v3
+        id: build
+        with:
+          name: presentation-release-universal
+
+      - name: Upload apk to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID }}
+          token: ${{ secrets.FIREBASE_TOKEN }}
+          groups: only-sungbin
+          file: ${{ steps.build.outputs.download-path }}
