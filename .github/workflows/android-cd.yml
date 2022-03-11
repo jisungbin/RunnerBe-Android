@@ -19,7 +19,7 @@ jobs:
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v2
-        
+
       - name: Cache Gradle packages
         uses: actions/cache@v2
         with:
