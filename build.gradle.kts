@@ -32,7 +32,7 @@ buildscript {
         classpath("com.google.android.gms:oss-licenses-plugin:${Versions.OssLicense.Classpath}")
         // classpath("com.vanniktech:gradle-dependency-graph-generator-plugin:${Versions.BuildUtil.DependencyGraphGenerator}")
         classpath("com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:${Versions.Util.SecretsGradlePlugin}")
-        classpath("com.dicedmelon.gradle:jacoco-android:0.1.5")
+        classpath("org.jacoco:org.jacoco.core:0.8.7")
     }
 }
 
@@ -72,7 +72,7 @@ allprojects {
     apply {
         plugin("io.gitlab.arturbosch.detekt")
         plugin("org.jlleitschuh.gradle.ktlint")
-        // plugin("com.dicedmelon.gradle.jacoco-android")
+        plugin("jacoco")
     }
 
     /*configurations.all {
