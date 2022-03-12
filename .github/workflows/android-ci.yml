@@ -54,7 +54,7 @@ jobs:
         id: jacoco
         uses: madrapps/jacoco-report@v1.2
         with:
-          paths: ${{ github.workspace }}/build/reports/jacoco/testCoverage/testCoverage.xml
+          paths: ${{ github.workspace }}/build/reports/jacoco/allDebugCoverage/allDebugCoverage.xml
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create android test report
