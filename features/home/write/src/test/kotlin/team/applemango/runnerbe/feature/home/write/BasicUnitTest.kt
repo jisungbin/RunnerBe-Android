@@ -11,7 +11,6 @@ package team.applemango.runnerbe.feature.home.write
 
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
-import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 /**

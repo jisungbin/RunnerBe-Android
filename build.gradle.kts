@@ -7,7 +7,6 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -73,6 +72,15 @@ allprojects {
         plugin("io.gitlab.arturbosch.detekt")
         plugin("org.jlleitschuh.gradle.ktlint")
         plugin("jacoco")
+    }
+
+    configurations.all {
+        resolutionStrategy.eachDependency {
+            if (requested.group == "org.jacoco") {
+                useVersion("0.8.7")
+                because("https://stackoverflow.com/q/70066092/14299073")
+            }
+        }
     }
 
     /*configurations.all {
