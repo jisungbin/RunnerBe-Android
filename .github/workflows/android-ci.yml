@@ -43,12 +43,19 @@ jobs:
 
       - name: Run ktlint
         run: ./gradlew ktlintCheck
-        
-      - name: Run detekt
-        run: ./gradlew detekt
 
-      - name: Run unit tests
-        run: ./gradlew testDebugUnitTest
+      - name: Get debug coverage
+        run: ./gradlew debugCoverage
+
+      - name: Get all debug coverage
+        run: ./gradlew allDebugCoverage
+
+      - name: Add coverage to PR
+        id: jacoco
+        uses: madrapps/jacoco-report@v1.2
+        with:
+          paths: ${{ github.workspace }}/build/reports/jacoco/allDebugCoverage/allDebugCoverage.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create android test report
         uses: asadmansr/android-test-report-action@v1.2.0
