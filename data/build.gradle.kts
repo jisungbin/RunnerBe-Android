@@ -10,7 +10,22 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
+    id("com.dicedmelon.gradle.jacoco-android")
 }
+
+jacoco {
+    toolVersion = "0.8.7"
+}
+
+jacocoAndroidUnitTestReport {
+    csv.enabled(true)
+    xml.enabled(true)
+    html.enabled(true)
+}
+
+/*tasks.withType<Test> {
+    jacoco.includeNoLocationClasses = true
+}*/
 
 dependencies {
     Dependencies.Login.forEach(::implementation)
