@@ -28,3 +28,5 @@ dependencies {
     testDebugImplementation(Dependencies.Test.Hamcrest)
     testDebugImplementation(Dependencies.Test.Coroutine)
 }
+
+apply(from = "$rootDir/gradle/jacoco/modules.gradle")
