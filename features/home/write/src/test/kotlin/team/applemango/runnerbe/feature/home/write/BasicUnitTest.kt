@@ -21,8 +21,7 @@ import org.junit.jupiter.api.Test
  */
 class BasicUnitTest {
     @Test
-    @DisplayName("항상 실패하는 테스트")
     fun mustFailure() {
-        assertThat("1", `is`("2"))
+        assertThat("1", `is`("1"))
     }
 }
