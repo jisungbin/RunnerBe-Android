@@ -45,5 +45,11 @@ if (hasLibraryPlugin || hasApplicationPlugin || hasDFMPlugin) {
         kotlinOptions {
             jvmTarget = ApplicationConstants.jvmTarget
         }
+
+        testOptions {
+            unitTests.all {
+                useJUnitPlatform()
+            }
+        }
     }
 }
