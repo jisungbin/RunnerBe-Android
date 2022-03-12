@@ -13,7 +13,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("io.gitlab.arturbosch.detekt") version Versions.BuildUtil.DeteKt
     id("org.jlleitschuh.gradle.ktlint") version Versions.BuildUtil.KtLint
-    jacoco
 }
 
 buildscript {
@@ -32,6 +31,7 @@ buildscript {
         classpath("com.google.android.gms:oss-licenses-plugin:${Versions.OssLicense.Classpath}")
         // classpath("com.vanniktech:gradle-dependency-graph-generator-plugin:${Versions.BuildUtil.DependencyGraphGenerator}")
         classpath("com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:${Versions.Util.SecretsGradlePlugin}")
+        classpath("com.dicedmelon.gradle:jacoco-android:0.1.5")
     }
 }
 
