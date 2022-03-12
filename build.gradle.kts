@@ -101,5 +101,5 @@ tasks.register("clean", Delete::class) {
 apply {
     // plugin("com.vanniktech.dependency.graph.generator")
     from("gradle/projectDependencyGraph.gradle")
-    from("gradle/jacoco.gradle")
+    from("gradle/jacoco/project.gradle")
 }
