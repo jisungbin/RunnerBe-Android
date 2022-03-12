@@ -10,58 +10,44 @@ tasks.withType(Test) {
 }
 
 project.afterEvaluate {
-    (android.hasProperty('applicationVariants') ? android.'applicationVariants' : android.'libraryVariants')
-            .all { variant ->
-                def variantName = variant.name
-                def capVariantName = variantName.capitalize()
-                def testTaskName = "test${capVariantName}UnitTest"
-                tasks.create(name: "${variantName}Coverage", type: JacocoReport, dependsOn: testTaskName) {
+    tasks.create(name: "debugCoverage", type: JacocoReport, dependsOn: "testDebugUnitTest") {
 
-                    group = "Reporting"
-                    description = "Generate Jacoco coverage reports for the ${variantName} build."
+        group = "Reporting"
+        description = "Generate Jacoco coverage reports for the debug build."
 
-                    reports {
-                        html.enabled(true)
-                        xml.enabled(true)
-                    }
+        reports {
+            html.enabled = true
+            xml.enabled = true
+        }
 
-                    def excludes = [
-                            '**/R.class',
-                            '**/R$*.class',
-                            '**/BuildConfig.*',
-                            '**/Manifest*.*',
-                            '**/*Test*.*',
-                            'android/**/*.*',
-                            'androidx/**/*.*',
-                            '**/*$ViewInjector*.*',
-                            '**/*Dagger*.*',
-                            '**/*MembersInjector*.*',
-                            '**/*_Factory.*',
-                            '**/*_Provide*Factory*.*',
-                            '**/*_ViewBinding*.*',
-                            '**/AutoValue_*.*',
-                            '**/R2.class',
-                            '**/R2$*.class',
-                            '**/*Directions$*',
-                            '**/*Directions.*',
-                            '**/*Binding.*'
-                    ]
+        def excludes = [
+                '**/R.class',
+                '**/R$*.class',
+                '**/BuildConfig.*',
+                '**/Manifest*.*',
+                '**/*Test*.*',
+                'android/**/*.*',
+                'androidx/**/*.*',
+                '**/*$ViewInjector*.*',
+                '**/*Dagger*.*',
+                '**/*MembersInjector*.*',
+                '**/*_Factory.*',
+                '**/*_Provide*Factory*.*',
+                '**/*_ViewBinding*.*',
+                '**/AutoValue_*.*',
+                '**/R2.class',
+                '**/R2$*.class',
+                '**/*Directions$*',
+                '**/*Directions.*',
+                '**/*Binding.*'
+        ]
 
-                    def kClasses = "${project.buildDir}/tmp/kotlin-classes/${variantName}"
-                    def kotlinClasses = fileTree(dir: kClasses, excludes: excludes)
+        def sourceDirs = ["${project.projectDir}/src/main/kotlin"]
+        def kClasses = "${project.buildDir}/tmp/kotlin-classes/debug"
+        def kotlinClasses = fileTree(dir: kClasses, excludes: excludes)
 
-                    classDirectories.from = files([kotlinClasses])
-                    def sourceDirs = ["${project.projectDir}/src/main/kotlin",
-                                      "${project.projectDir}/src/${variantName}/kotlin"]
-
-                    sourceDirectories.from = files(sourceDirs)
-                    executionData.from = files(["${project.buildDir}/jacoco/${testTaskName}.exec"])
-                }
-            }
-
-    tasks.register('coverAllVariants') {
-        dependsOn(provider {
-            tasks.findAll { task -> task.name.endsWith('Coverage') }
-        })
+        sourceDirectories.from = files(sourceDirs)
+        classDirectories.from = files([kotlinClasses])
+        executionData.from = files(["${project.buildDir}/jacoco/testDebugUnitTest.exec"])
     }
 }

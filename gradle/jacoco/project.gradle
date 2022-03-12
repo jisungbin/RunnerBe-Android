@@ -10,16 +10,14 @@ tasks.withType(Test) {
 }
 
 project.afterEvaluate {
-    def variants = ["debug", "prodNormalDebug"]
-
-    tasks.create(name: "allDebugCoverage", type: JacocoReport) {
+    tasks.create(name: "allDebugCoverage", type: JacocoReport, dependsOn: "debugCoverage") {
 
         group = "Reporting"
         description = "Generate overall Jacoco coverage report for the debug build."
 
         reports {
-            html.enabled(true)
-            xml.enabled(true)
+            html.enabled = true
+            xml.enabled = true
         }
 
         def excludes = [
@@ -45,32 +43,26 @@ project.afterEvaluate {
         ]
 
         def kClasses = subprojects.collect { proj ->
-            variants.collect { variant ->
-                "${proj.buildDir}/tmp/kotlin-classes/$variant"
-            }
-        }.flatten()
+            "${proj.buildDir}/tmp/kotlin-classes/debug"
+        }
 
         def kotlinClasses = kClasses.collect { path ->
             fileTree(dir: path, excludes: excludes)
         }
-        classDirectories.from = files([kotlinClasses])
 
         def sources = subprojects.collect { proj ->
-            variants.collect { variant ->
-                ["${proj.projectDir}/src/main/kotlin",
-                 "${proj.projectDir}/src/$variant/kotlin"]
-            }.flatten()
+            ["${proj.projectDir}/src/main/kotlin"]
         }.flatten()
-        sourceDirectories.from = files(sources)
 
-        def executions = subprojects.collect { proj ->
-            variants.collect { variant ->
-                def path = "${proj.buildDir}/jacoco/test${variant.capitalize()}UnitTest.exec"
-                if ((new File(path)).exists()) path else null
-            }
-        }.flatten()
-        executions.removeAll([null])
+        def executions = subprojects.findAll { proj ->
+            def path = "${proj.buildDir}/jacoco/testDebugUnitTest.exec"
+            (new File(path)).exists()
+        }.collect { proj ->
+            "${proj.buildDir}/jacoco/testDebugUnitTest.exec"
+        }
 
         executionData.from = files(executions)
+        sourceDirectories.from = files(sources)
+        classDirectories.from = files([kotlinClasses])
     }
 }
