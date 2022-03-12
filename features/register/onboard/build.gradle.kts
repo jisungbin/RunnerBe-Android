@@ -31,6 +31,6 @@ dependencies {
 
 tasks.withType<JacocoReport> {
     println("START")
-    classDirectories.joinToString("\n").forEach(::println)
+    println(classDirectories.asFileTree.files.joinToString("\n"))
     println("END")
 }
