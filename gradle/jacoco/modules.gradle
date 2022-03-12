@@ -1,21 +1,12 @@
-/*
- * RunnerBe © 2022 Team AppleMango. all rights reserved.
- * RunnerBe license is under the MIT.
- *
- * [module.gradle] created by Ji Sungbin on 22. 2. 19. 오후 10:26
- *
- * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
- */
-
 apply plugin: 'jacoco'
 
 jacoco {
     toolVersion '0.8.7'
-    reportsDir = file("$buildDir/reports/jacoco")
 }
 
 tasks.withType(Test) {
     jacoco.includeNoLocationClasses = true
+    jacoco.excludes = ['jdk.internal.*']
 }
 
 project.afterEvaluate {
@@ -48,16 +39,17 @@ project.afterEvaluate {
                 '**/R2$*.class',
                 '**/*Directions$*',
                 '**/*Directions.*',
-                '**/*Binding.*'
+                '**/*Binding.*',
+                '**/*\$Lambda$*.*',
+                '**/*\$inlined$*.*'
         ]
 
+        def sourceDirs = ["${project.projectDir}/src/main/kotlin"]
         def kClasses = "${project.buildDir}/tmp/kotlin-classes/debug"
         def kotlinClasses = fileTree(dir: kClasses, excludes: excludes)
-        classDirectories.from = files([kotlinClasses]) // must files array
 
-        def sourceDirs = "${project.projectDir}/src/main/kotlin"
-        sourceDirectories.from = file(sourceDirs)
-
-        executionData.from = file("${project.buildDir}/jacoco/testDebugUnitTest.exec")
+        sourceDirectories.from = files(sourceDirs)
+        classDirectories.from = files([kotlinClasses])
+        executionData.from = files(["${project.buildDir}/jacoco/testDebugUnitTest.exec"])
     }
 }

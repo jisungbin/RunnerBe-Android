@@ -10,6 +10,7 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
+    id("de.mannodermaus.android-junit5")
 }
 
 dependencies {
@@ -29,4 +30,4 @@ dependencies {
     testDebugImplementation(Dependencies.Test.Coroutine)
 }
 
-apply(from = "$rootDir/gradle/jacoco/module.gradle")
+apply(from = "$rootDir/gradle/jacoco/modules.gradle")

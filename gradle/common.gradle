@@ -13,6 +13,8 @@ def hasDFMPlugin = pluginManager.hasPlugin("com.android.dynamic-feature")
 def hasScabbardPlugin = pluginManager.hasPlugin("scabbard.gradle")
 
 if (hasLibraryPlugin || hasApplicationPlugin || hasDFMPlugin) {
+    // apply from: "$rootDir/gradle/jacoco/modules.gradle" (https://github.com/applemango-runnerbe/RunnerBe-Android/issues/84)
+
     if (hasScabbardPlugin) {
         scabbard {
             enabled = true
@@ -44,6 +46,12 @@ if (hasLibraryPlugin || hasApplicationPlugin || hasDFMPlugin) {
 
         kotlinOptions {
             jvmTarget = ApplicationConstants.jvmTarget
+        }
+
+        testOptions {
+            unitTests.all {
+                useJUnitPlatform()
+            }
         }
     }
 }

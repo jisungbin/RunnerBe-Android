@@ -11,7 +11,6 @@ package team.applemango.runnerbe.feature.home.write
 
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
-import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 /**
@@ -21,8 +20,7 @@ import org.junit.jupiter.api.Test
  */
 class BasicUnitTest {
     @Test
-    @DisplayName("항상 실패하는 테스트")
     fun mustFailure() {
-        assertThat("1", `is`("2"))
+        assertThat("1", `is`("1"))
     }
 }
