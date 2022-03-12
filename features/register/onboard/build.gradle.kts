@@ -30,7 +30,21 @@ dependencies {
 }
 
 tasks.withType<JacocoReport> {
-    println("START")
-    println(classDirectories.asFileTree.files.joinToString("\n"))
-    println("END")
+    afterEvaluate {
+        classDirectories.setFrom(
+            classDirectories.files.filter { file ->
+                file.nameWithoutExtension.contains("ViewModel")
+            }
+        )
+    }
+}
+
+tasks.withType<JacocoCoverageVerification> {
+    afterEvaluate {
+        classDirectories.setFrom(
+            classDirectories.files.filter { file ->
+                file.nameWithoutExtension.contains("ViewModel")
+            }
+        )
+    }
 }
