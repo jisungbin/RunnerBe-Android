@@ -39,7 +39,9 @@ project.afterEvaluate {
                 '**/R2$*.class',
                 '**/*Directions$*',
                 '**/*Directions.*',
-                '**/*Binding.*'
+                '**/*Binding.*',
+                '**/*\$Lambda$*.*',
+                '**/*\$inlined$*.*'
         ]
 
         def kClasses = subprojects.collect { proj ->
