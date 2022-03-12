@@ -31,7 +31,6 @@ buildscript {
         classpath("com.google.android.gms:oss-licenses-plugin:${Versions.OssLicense.Classpath}")
         // classpath("com.vanniktech:gradle-dependency-graph-generator-plugin:${Versions.BuildUtil.DependencyGraphGenerator}")
         classpath("com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:${Versions.Util.SecretsGradlePlugin}")
-        classpath("org.jacoco:org.jacoco.core:0.8.7")
     }
 }
 
@@ -71,17 +70,16 @@ allprojects {
     apply {
         plugin("io.gitlab.arturbosch.detekt")
         plugin("org.jlleitschuh.gradle.ktlint")
-        plugin("jacoco")
     }
 
-    configurations.all {
+    /*configurations.all {
         resolutionStrategy.eachDependency {
             if (requested.group == "org.jacoco") {
                 useVersion("0.8.7")
                 because("https://stackoverflow.com/q/70066092/14299073")
             }
         }
-    }
+    }*/
 
     /*configurations.all {
         resolutionStrategy.eachDependency {
@@ -102,6 +100,10 @@ subprojects {
     ) {
         generateSequence(parent) { project -> project.parent.takeIf { it != rootProject } }
             .forEach { evaluationDependsOn(it.path) }
+    }
+
+    apply {
+        plugin("jacoco")
     }
 }
 

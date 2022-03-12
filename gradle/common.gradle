@@ -45,13 +45,5 @@ if (hasLibraryPlugin || hasApplicationPlugin || hasDFMPlugin) {
         kotlinOptions {
             jvmTarget = ApplicationConstants.jvmTarget
         }
-
-        buildTypes {
-            debug {
-                testCoverageEnabled true
-            }
-        }
     }
-
-    apply from: "$project.rootDir/gradle/jacoco.gradle"
 }
