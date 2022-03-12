@@ -74,15 +74,6 @@ allprojects {
 
     /*configurations.all {
         resolutionStrategy.eachDependency {
-            if (requested.group == "org.jacoco") {
-                useVersion("0.8.7")
-                because("https://stackoverflow.com/q/70066092/14299073")
-            }
-        }
-    }*/
-
-    /*configurations.all {
-        resolutionStrategy.eachDependency {
             if (requested.group == "com.github.kittinunf.result" && requested.name == "result" && requested.version == "3.0.0") {
                 useVersion("3.0.1")
                 because("Transitive dependency of Scabbard, currently not available on mavenCentral()")
@@ -100,10 +91,6 @@ subprojects {
     ) {
         generateSequence(parent) { project -> project.parent.takeIf { it != rootProject } }
             .forEach { evaluationDependsOn(it.path) }
-    }
-
-    apply {
-        plugin("jacoco")
     }
 }
 
