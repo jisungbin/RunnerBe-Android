@@ -13,6 +13,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("io.gitlab.arturbosch.detekt") version Versions.BuildUtil.DeteKt
     id("org.jlleitschuh.gradle.ktlint") version Versions.BuildUtil.KtLint
+    jacoco
 }
 
 buildscript {
@@ -101,5 +102,4 @@ tasks.register("clean", Delete::class) {
 apply {
     // plugin("com.vanniktech.dependency.graph.generator")
     from("gradle/projectDependencyGraph.gradle")
-    from("gradle/jacoco/project.gradle")
 }
