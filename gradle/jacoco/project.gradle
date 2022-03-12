@@ -44,29 +44,21 @@ project.afterEvaluate {
                 '**/*Binding.*'
         ]
 
-        def jClasses = subprojects.collect { proj ->
-            variants.collect { variant ->
-                "${proj.buildDir}/intermediates/javac/$variant/classes"
-            }
-        }.flatten()
         def kClasses = subprojects.collect { proj ->
             variants.collect { variant ->
                 "${proj.buildDir}/tmp/kotlin-classes/$variant"
             }
         }.flatten()
 
-        def javaClasses = jClasses.collect { path ->
-            fileTree(dir: path, excludes: excludes)
-        }
         def kotlinClasses = kClasses.collect { path ->
             fileTree(dir: path, excludes: excludes)
         }
+        classDirectories.from = files([kotlinClasses])
 
-        classDirectories.from = files([javaClasses, kotlinClasses])
         def sources = subprojects.collect { proj ->
             variants.collect { variant ->
-                ["${proj.projectDir}/src/main/java", "${proj.projectDir}/src/main/kotlin",
-                 "${proj.projectDir}/src/$variant/java", "${proj.projectDir}/src/$variant/kotlin"]
+                ["${proj.projectDir}/src/main/kotlin",
+                 "${proj.projectDir}/src/$variant/kotlin"]
             }.flatten()
         }.flatten()
         sourceDirectories.from = files(sources)

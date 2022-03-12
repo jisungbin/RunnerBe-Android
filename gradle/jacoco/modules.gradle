@@ -10,7 +10,6 @@ tasks.withType(Test) {
 }
 
 project.afterEvaluate {
-
     (android.hasProperty('applicationVariants') ? android.'applicationVariants' : android.'libraryVariants')
             .all { variant ->
                 def variantName = variant.name
@@ -48,15 +47,12 @@ project.afterEvaluate {
                             '**/*Binding.*'
                     ]
 
-                    def jClasses = "${project.buildDir}/intermediates/javac/${variantName}/classes"
                     def kClasses = "${project.buildDir}/tmp/kotlin-classes/${variantName}"
-                    def javaClasses = fileTree(dir: jClasses, excludes: excludes)
-
                     def kotlinClasses = fileTree(dir: kClasses, excludes: excludes)
 
-                    classDirectories.from = files([javaClasses, kotlinClasses])
-                    def sourceDirs = ["${project.projectDir}/src/main/java", "${project.projectDir}/src/main/kotlin",
-                                      "${project.projectDir}/src/${variantName}/java", "${project.projectDir}/src/${variantName}/kotlin"]
+                    classDirectories.from = files([kotlinClasses])
+                    def sourceDirs = ["${project.projectDir}/src/main/kotlin",
+                                      "${project.projectDir}/src/${variantName}/kotlin"]
 
                     sourceDirectories.from = files(sourceDirs)
                     executionData.from = files(["${project.buildDir}/jacoco/${testTaskName}.exec"])
