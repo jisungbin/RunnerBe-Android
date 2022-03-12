@@ -28,3 +28,9 @@ dependencies {
     implementationProject(ProjectConstants.XmlNumberPicker)
     installSharedComposeOrbitHiltTest(excludeHilt = true)
 }
+
+tasks.withType<JacocoReport> {
+    println("START")
+    classDirectories.joinToString("\n").forEach(::println)
+    println("END")
+}
