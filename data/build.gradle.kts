@@ -29,4 +29,4 @@ dependencies {
     testDebugImplementation(Dependencies.Test.Coroutine)
 }
 
-apply(from = "$rootDir/gradle/jacoco/modules.gradle")
+// apply(from = "$rootDir/gradle/jacoco/modules.gradle")
