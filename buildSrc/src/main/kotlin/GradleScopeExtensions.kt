@@ -15,6 +15,7 @@ import org.gradle.plugin.use.PluginDependenciesSpec
 fun PluginDependenciesSpec.installLibraryDfmHiltTest(
     isLibrary: Boolean = true,
     isDFM: Boolean = false,
+    testNeeded: Boolean = true,
 ) {
     if (isLibrary && !isDFM) {
         id("com.android.library")
@@ -27,7 +28,9 @@ fun PluginDependenciesSpec.installLibraryDfmHiltTest(
     if (!isDFM) {
         id("dagger.hilt.android.plugin")
     }
-    id("de.mannodermaus.android-junit5")
+    if (testNeeded) {
+        id("de.mannodermaus.android-junit5")
+    }
     // id("scabbard.gradle") version Versions.Util.Scabbard
 }
 
@@ -35,6 +38,7 @@ fun PluginDependenciesSpec.installLibraryDfmHiltTest(
 fun DependencyHandler.installSharedComposeOrbitHiltTest(
     isSharedModule: Boolean = false,
     excludeHilt: Boolean = false,
+    testNeeded: Boolean = true,
 ) {
     if (!isSharedModule) {
         implementationProject(ProjectConstants.Shared)
@@ -42,11 +46,13 @@ fun DependencyHandler.installSharedComposeOrbitHiltTest(
     implementation(Dependencies.Orbit.Main)
     Dependencies.Compose.forEach(::implementation)
     implementationProject(ProjectConstants.SharedCompose)
-    add("testImplementation", Dependencies.Test.JunitApi)
-    add("testImplementation", Dependencies.Test.JunitEngine)
-    add("testImplementation", Dependencies.Test.Hamcrest)
-    add("testImplementation", Dependencies.Test.Coroutine)
-    add("testImplementation", Dependencies.Orbit.Test)
+    if (testNeeded) {
+        add("testDebugImplementation", Dependencies.Test.JunitApi)
+        add("testDebugRuntimeOnly", Dependencies.Test.JunitEngine)
+        add("testDebugImplementation", Dependencies.Test.Hamcrest)
+        add("testDebugImplementation", Dependencies.Test.Coroutine)
+        add("testDebugImplementation", Dependencies.Orbit.Test)
+    }
     if (!excludeHilt) {
         implementation(Dependencies.Di.Hilt)
         add("kapt", Dependencies.Compiler.Hilt)
