@@ -6,7 +6,7 @@ release/
 secrets.tar
 local.properties
 /fastlane/service-key.json
+/documents/coverage/jacoco/html
 /presentation/google-services.json
 /buildSrc/src/main/kotlin/BuildConstants.kt
-/documents/coverage/jacoco/allDebugCoverage/html/
 /data/src/main/kotlin/team/applemango/runnerbe/data/secret/

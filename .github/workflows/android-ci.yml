@@ -44,22 +44,20 @@ jobs:
       - name: Run ktlint
         run: ./gradlew ktlintCheck
 
-      - name: Get debug coverage
-        run: ./gradlew debugCoverage
+      - name: Run data layer test
+        run: ./gradlew :data:test
 
-      - name: Get all debug coverage
-        run: ./gradlew allDebugCoverage
-
-      - name: Add coverage to PR
-        id: jacoco
-        uses: madrapps/jacoco-report@v1.2
+      - name: Add coverage to PR comment
+        uses: Madrapps/jacoco-report@v1.2
         with:
-          paths: ${{ github.workspace }}/build/reports/jacoco/allDebugCoverage/allDebugCoverage.xml
+          paths: documents/coverage/jacoco/report.xml
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create android test report
-        uses: asadmansr/android-test-report-action@v1.2.0
-        if: ${{ always() }}
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2.1.0
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: documents/coverage/jacoco/report.xml
 
       - name: Build assemble release apk
         run: ./gradlew assembleRelease
