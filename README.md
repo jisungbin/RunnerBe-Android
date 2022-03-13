@@ -1,20 +1,20 @@
 <p align="center">
-  <img src="https://github.com/applemango-runnerbe/.github/blob/main/art/logo/signature_transparent.png?raw=true" width="15%" />
+  <img src="https://github.com/runner-be/.github/blob/main/art/logo/signature_transparent.png?raw=true" width="15%" />
 </p>
 <p align="center">직장인 타겟 러닝 모임 O2O 플랫폼 🐝</p>
 <p align="center">
-  <a href="https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/badge/License-MIT-blue"/></a>
+  <a href="https://github.com/runner-be/RunnerBe-Android/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/badge/License-MIT-blue"/></a>
   <a href="https://developer.android.com/about/versions/lollipop"><img alt="API 21+" src="https://img.shields.io/badge/API-21%2B-brightgreen.svg"/></a>
-  <a href="https://github.com/applemango-runnerbe/RunnerBe-Android"><img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/applemango-runnerbe/RunnerBe-Android"/></a>
+  <a href="https://github.com/runner-be/RunnerBe-Android"><img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/runner-be/RunnerBe-Android"/></a>
   <br/>
   <a href="https://kotlin.link"><img src="https://kotlin.link/awesome-kotlin.svg" alt="awesome-kotlin"/></a>
   <a href="https://ktlint.github.io/"><img src="https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg" alt="ktlint"/></a>
   <a href="https://wakatime.com/badge/user/2da851dd-14d7-47dd-821a-7d902e52c1c2/project/eead2f63-3468-4e8a-98b2-12de1e4cebb2"><img src="https://wakatime.com/badge/user/2da851dd-14d7-47dd-821a-7d902e52c1c2/project/eead2f63-3468-4e8a-98b2-12de1e4cebb2.svg" alt="wakatime"></a>
   <br/>
-  <a href="https://github.com/applemango-runnerbe/RunnerBe-Android/actions/workflows/android-ci.yml"><img src="https://github.com/applemango-runnerbe/RunnerBe-Android/actions/workflows/android-ci.yml/badge.svg?branch=develop" alt="CodeFactor"/></a>
-  <a href="https://sonarcloud.io/summary/new_code?id=applemango-runnerbe_RunnerBe-Android"><img src="https://sonarcloud.io/api/project_badges/measure?project=applemango-runnerbe_RunnerBe-Android&metric=sqale_rating" alt="Maintainability Rating"/></a> 
-  <a href="https://sonarcloud.io/summary/new_code?id=applemango-runnerbe_RunnerBe-Android"><img src="https://sonarcloud.io/api/project_badges/measure?project=applemango-runnerbe_RunnerBe-Android&metric=ncloc" alt="Lines of Code"/></a>
-  <a href="https://codecov.io/gh/applemango-runnerbe/RunnerBe-Android"><img src="https://codecov.io/gh/applemango-runnerbe/RunnerBe-Android/branch/develop/graph/badge.svg?token=Y9Q2N6RUW5" alt="codecov"/></a>
+  <a href="https://github.com/runner-be/RunnerBe-Android/actions/workflows/android-ci.yml"><img src="https://github.com/runner-be/RunnerBe-Android/actions/workflows/android-ci.yml/badge.svg?branch=develop" alt="CodeFactor"/></a>
+  <a href="https://sonarcloud.io/summary/new_code?id=runner-be_RunnerBe-Android"><img src="https://sonarcloud.io/api/project_badges/measure?project=runner-be_RunnerBe-Android&metric=sqale_rating" alt="Maintainability Rating"/></a> 
+  <a href="https://sonarcloud.io/summary/new_code?id=runner-be_RunnerBe-Android"><img src="https://sonarcloud.io/api/project_badges/measure?project=runner-be_RunnerBe-Android&metric=ncloc" alt="Lines of Code"/></a>
+  <a href="https://codecov.io/gh/runner-be/RunnerBe-Android"><img src="https://codecov.io/gh/runner-be/RunnerBe-Android/branch/develop/graph/badge.svg?token=Y9Q2N6RUW5" alt="codecov"/></a>
 </p>
 
 ---
@@ -27,13 +27,13 @@
 
 - DFM
 - TDD
-- Unit Test + [Test Coverage 100% 목표](https://github.com/applemango-runnerbe/RunnerBe-Android/issues/35)
+- Unit Test + [Test Coverage 100% 목표](https://github.com/runner-be/RunnerBe-Android/issues/35)
 
 # 🐛 아키텍처 이슈
 
 현재 아키텍처에 다양한 이슈들이 존재합니다. 이슈 해결을 포함한 모든 이슈나 PR 은 항상 환영입니다.
 
-[![](https://img.shields.io/github/issues-raw/applemango-runnerbe/RunnerBe-Android/architecture%20issue?color=%23d876e3&label=architecture%20issue&style=for-the-badge)](https://github.com/applemango-runnerbe/RunnerBe-Android/issues?q=is%3Aissue+is%3Aopen+label%3A%22architecture+issue%22)
+[![](https://img.shields.io/github/issues-raw/runner-be/RunnerBe-Android/architecture%20issue?color=%23d876e3&label=architecture%20issue&style=for-the-badge)](https://github.com/runner-be/RunnerBe-Android/issues?q=is%3Aissue+is%3Aopen+label%3A%22architecture+issue%22)
 
 # ✍️ 작성 아티클
 
@@ -116,9 +116,9 @@
 
 ## 회고 중간 기록
 
-- [mapper](https://github.com/applemango-runnerbe/RunnerBe-Android/blob/f0855a490f90c1b0f668f9aeb2cd3b60e6c5fd75/data/src/main/kotlin/team/applemango/runnerbe/data/main/mapper/mapper.kt) 만드는게 제일 귀찮아...
+- [mapper](https://github.com/runner-be/RunnerBe-Android/blob/f0855a490f90c1b0f668f9aeb2cd3b60e6c5fd75/data/src/main/kotlin/team/applemango/runnerbe/data/main/mapper/mapper.kt) 만드는게 제일 귀찮아...
 - Github Action CI, CD 세팅을 프로젝트 초기에 했어야 했는데, 프로젝트가 꽤 개발이 되고 설정을 하니까 너무 고쳐야 할 게 많다.. 너무 힘들어어억
 
 ## License
 
-RunnerBe는 MIT 라이선스를 따릅니다. 자세한 내용은 [LICENSE](https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE) 파일을 확인해 주세요.
+RunnerBe는 MIT 라이선스를 따릅니다. 자세한 내용은 [LICENSE](https://github.com/runner-be/RunnerBe-Android/blob/main/LICENSE) 파일을 확인해 주세요.
