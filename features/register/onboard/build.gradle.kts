@@ -28,4 +28,3 @@ dependencies {
     implementationProject(ProjectConstants.XmlNumberPicker)
     installSharedComposeOrbitHiltTest(excludeHilt = true)
 }
-
