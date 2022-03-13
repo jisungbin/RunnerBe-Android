@@ -2,7 +2,7 @@ apply plugin: 'jacoco'
 
 jacoco {
     toolVersion = '0.8.7'
-    reportsDirectory = layout.buildDirectory.dir('$rootDir/documents/coverage/jacoco')
+    reportsDirectory = layout.buildDirectory.dir('../documents/coverage/jacoco')
 }
 
 tasks.withType(Test) {
