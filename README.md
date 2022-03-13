@@ -116,7 +116,6 @@
 
 ## 회고 중간 기록
 
-- develop 브런치 만들었어야 했는데 초기에 까먹고 main 브런치에 다 때려박아서 그냥 develop 브런치 버리고 main 으로 통합함
 - 세부 feature 별로 브런치 만들어서 진행해야 하는데 아직 feature 브런치에 익숙하지 않아 대분류 feature 만 브런치를 만들며 작업해서 아쉬움
 - [mapper](https://github.com/applemango-runnerbe/RunnerBe-Android/blob/f0855a490f90c1b0f668f9aeb2cd3b60e6c5fd75/data/src/main/kotlin/team/applemango/runnerbe/data/main/mapper/mapper.kt) 만드는게 제일 귀찮아...
 - Github Action CI, CD 세팅을 프로젝트 초기에 했어야 했는데, 프로젝트가 꽤 개발이 되고 설정을 하니까 너무 고쳐야 할 게 많다.. 너무 힘들어어억
