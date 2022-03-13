@@ -51,6 +51,7 @@
 - [누가 내 앱의 용량을 많이 차지하고 있을까?](https://sungbin.land/%EB%88%84%EA%B0%80-%EB%82%B4-%EC%95%B1%EC%9D%98-%EC%9A%A9%EB%9F%89%EC%9D%84-%EB%A7%8E%EC%9D%B4-%EC%B0%A8%EC%A7%80%ED%95%98%EA%B3%A0-%EC%9E%88%EC%9D%84%EA%B9%8C-3f2529200024)
 - [ktlint, detekt 으로 코드 퀄리티 향상시키기](https://sungbin.land/ktlint-detekt-%EC%9C%BC%EB%A1%9C-%EC%BD%94%EB%93%9C-%ED%80%84%EB%A6%AC%ED%8B%B0-%ED%96%A5%EC%83%81%EC%8B%9C%ED%82%A4%EA%B8%B0-a085c7eba2cd)
 - [Github Actions 으로 안드로이드 CI/CD 구축하기](https://sungbin.land/github-actions-%EC%9C%BC%EB%A1%9C-%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C-ci-cd-%EA%B5%AC%EC%B6%95%ED%95%98%EA%B8%B0-1aaaa6595c4a)
+- gradle 멀티 모듈 프로젝트에 JaCoCo 설정하기 [예정]
 
 ---
 
