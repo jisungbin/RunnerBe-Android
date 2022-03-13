@@ -26,13 +26,3 @@ dependencies {
     implementationProject(ProjectConstants.HomeWrite)
     implementationProject(ProjectConstants.HomeNotification)
 }
-
-tasks.withType<JacocoReport> {
-    afterEvaluate {
-        classDirectories.setFrom(
-            classDirectories.files.filter { file ->
-                file.nameWithoutExtension.contains("ViewModel")
-            }
-        )
-    }
-}

@@ -29,22 +29,3 @@ dependencies {
     installSharedComposeOrbitHiltTest(excludeHilt = true)
 }
 
-tasks.withType<JacocoReport> {
-    afterEvaluate {
-        classDirectories.setFrom(
-            classDirectories.files.filter { file ->
-                file.nameWithoutExtension.contains("ViewModel")
-            }
-        )
-    }
-}
-
-tasks.withType<JacocoCoverageVerification> {
-    afterEvaluate {
-        classDirectories.setFrom(
-            classDirectories.files.filter { file ->
-                file.nameWithoutExtension.contains("ViewModel")
-            }
-        )
-    }
-}
