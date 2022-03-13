@@ -11,12 +11,11 @@
   <a href="https://ktlint.github.io/"><img src="https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg" alt="ktlint"/></a>
   <a href="https://wakatime.com/badge/user/2da851dd-14d7-47dd-821a-7d902e52c1c2/project/eead2f63-3468-4e8a-98b2-12de1e4cebb2"><img src="https://wakatime.com/badge/user/2da851dd-14d7-47dd-821a-7d902e52c1c2/project/eead2f63-3468-4e8a-98b2-12de1e4cebb2.svg" alt="wakatime"></a>
   <br/>
-  <a href="https://coveralls.io/github/applemango-runnerbe/RunnerBe-Android?branch=main"><img src="https://coveralls.io/repos/github/applemango-runnerbe/RunnerBe-Android/badge.svg?branch=main" alt="Coverage Status"/></a>
-  <a href="https://www.codefactor.io/repository/github/applemango-runnerbe/runnerbe-android/overview/develop"><img src="https://www.codefactor.io/repository/github/applemango-runnerbe/runnerbe-android/badge/develop" alt="CodeFactor" /></a>
-  <a href="https://sonarcloud.io/summary/new_code?id=applemango-runnerbe_RunnerBe-Android"><img src="https://sonarcloud.io/api/project_badges/measure?project=applemango-runnerbe_RunnerBe-Android&metric=sqale_rating" alt="Maintainability Rating"/>     
+  <a href="https://codecov.io/gh/applemango-runnerbe/RunnerBe-Android"><img src="https://codecov.io/gh/applemango-runnerbe/RunnerBe-Android/branch/develop/graph/badge.svg?token=Y9Q2N6RUW5" alt="codecov"/></a>
+  <a href="https://www.codefactor.io/repository/github/applemango-runnerbe/runnerbe-android/overview/develop"><img src="https://www.codefactor.io/repository/github/applemango-runnerbe/runnerbe-android/badge/develop" alt="CodeFactor"/></a>
+  <a href="https://sonarcloud.io/summary/new_code?id=applemango-runnerbe_RunnerBe-Android"><img src="https://sonarcloud.io/api/project_badges/measure?project=applemango-runnerbe_RunnerBe-Android&metric=sqale_rating" alt="Maintainability Rating"/></a> 
   <a href="https://sonarcloud.io/summary/new_code?id=applemango-runnerbe_RunnerBe-Android"><img src="https://sonarcloud.io/api/project_badges/measure?project=applemango-runnerbe_RunnerBe-Android&metric=ncloc" alt="Lines of Code"/></a>
 </p>
-
 
 ---
 
