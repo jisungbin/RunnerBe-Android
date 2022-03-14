@@ -10,19 +10,38 @@
 package team.applemango.runnerbe
 
 import android.app.Application
+import android.content.Intent
 import androidx.appcompat.app.AppCompatDelegate
+import com.github.anrwatchdog.ANRWatchDog
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.ktx.Firebase
 import com.kakao.sdk.common.KakaoSdk
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.log.NidLog
 import dagger.hilt.android.HiltAndroidApp
+import io.github.jisungbin.erratum.DefaultErratumExceptionActivity
 import io.github.jisungbin.erratum.Erratum
 import io.github.jisungbin.logeukes.Logeukes
+import io.github.jisungbin.logeukes.LoggerType
+import io.github.jisungbin.logeukes.logeukes
 
 @HiltAndroidApp
 class RunnerBe : Application() {
     override fun onCreate() {
         super.onCreate()
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+        Firebase.analytics
+        Firebase.crashlytics
+        ANRWatchDog()
+            .setIgnoreDebugger(true)
+            .setANRListener { error ->
+                Firebase.crashlytics.recordException(error)
+                throw error
+            }
+            .start()
+
         NidLog.init()
         NaverIdLoginSDK.initialize(
             applicationContext,
@@ -31,10 +50,20 @@ class RunnerBe : Application() {
             getString(R.string.app_name)
         )
         KakaoSdk.init(applicationContext, BuildConfig.KAKAO_API_KEY)
+
         if (BuildConfig.DEBUG) {
             Logeukes.setup()
-        } else {
-            Erratum.setup(application = this) // TODO: Set Exception Activity
         }
+        Erratum.setup(
+            application = this,
+            registerExceptionActivityIntent = { thread, throwable, lastActivity ->
+                Firebase.crashlytics.recordException(throwable)
+                logeukes(type = LoggerType.E) { throwable }
+                Intent(
+                    lastActivity,
+                    DefaultErratumExceptionActivity::class.java
+                )
+            }
+        )
     }
 }

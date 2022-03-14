@@ -61,6 +61,14 @@ import team.applemango.runnerbe.shared.compose.theme.Typography
 
 class MainActivity : ComponentActivity() {
 
+    // TODO: Firebase Analytics 설정
+    // https://firebase.google.com/docs/analytics/userid
+    // https://firebase.google.com/docs/analytics/user-properties
+    // https://firebase.google.com/docs/analytics/configure-data-collection
+
+    // TODO: Firebase Crashlytics 설정
+    // https://firebase.google.com/docs/crashlytics/customize-crash-reports
+
     val runningItems by lazy {
         lifecycleScope.async {
             LoadRunningItemsUseCase(RunningItemRepositoryImpl()).invoke(

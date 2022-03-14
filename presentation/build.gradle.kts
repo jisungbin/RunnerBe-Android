@@ -11,6 +11,8 @@ plugins {
     id("com.android.application")
     // id("com.spotify.ruler")
     id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
+    id("com.google.firebase.firebase-perf")
     id("com.google.android.gms.oss-licenses-plugin")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
     id("name.remal.check-dependency-updates") version Versions.BuildUtil.CheckDependencyUpdates
@@ -76,12 +78,15 @@ dependencies {
     )
     layers.forEach(::implementationProject)
 
+    implementation(Dependencies.Util.Erratum)
     implementation(platform(Dependencies.FirebaseBom))
     implementation(Dependencies.FirebaseEachKtx.Analytics)
+    implementation(Dependencies.FirebaseEachKtx.Performance)
+    implementation(Dependencies.FirebaseEachKtx.Crashlytics)
 
-    implementation(Dependencies.Util.Erratum)
     Dependencies.Ui.forEach(::implementation)
     Dependencies.Login.forEach(::implementation)
+    Dependencies.Analytics.forEach(::implementation)
     Dependencies.PresentationOnlyKtx.forEach(::implementation)
 
     Dependencies.Debug.forEach(::debugImplementation)
