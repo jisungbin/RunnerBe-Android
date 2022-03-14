@@ -72,6 +72,7 @@ object Versions {
         const val Acra = "5.9.0-rc2"
         const val AnrWatchDog = "1.4.0"
         const val FirebasePerformance = "1.4.1"
+        const val FirebaseCrashlytics = "2.8.1"
     }
 
     object Jetpack {
@@ -119,6 +120,7 @@ object Dependencies {
         const val Storage = "com.google.firebase:firebase-storage-ktx"
         const val Performance = "com.google.firebase:firebase-perf-ktx"
         const val Analytics = "com.google.firebase:firebase-analytics-ktx"
+        const val Crashlytics = "com.google.firebase:firebase-crashlytics-ktx"
     }
 
     object EachKtx {

@@ -11,6 +11,7 @@ plugins {
     id("com.android.application")
     // id("com.spotify.ruler")
     id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
     id("com.google.firebase.firebase-perf")
     id("com.google.android.gms.oss-licenses-plugin")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
@@ -80,6 +81,7 @@ dependencies {
     implementation(platform(Dependencies.FirebaseBom))
     implementation(Dependencies.FirebaseEachKtx.Analytics)
     implementation(Dependencies.FirebaseEachKtx.Performance)
+    implementation(Dependencies.FirebaseEachKtx.Crashlytics)
 
     implementation(Dependencies.Util.Erratum)
     Dependencies.Ui.forEach(::implementation)
