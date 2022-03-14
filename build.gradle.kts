@@ -22,6 +22,7 @@ buildscript {
     }
 
     dependencies {
+        classpath("org.jetbrains.dokka:dokka-base:${Versions.BuildUtil.Dokka}")
         classpath("com.android.tools.build:gradle:${Versions.Essential.Gradle}")
         classpath("com.google.gms:google-services:${Versions.Essential.GoogleService}")
         // classpath("com.spotify.ruler:ruler-gradle-plugin:${Versions.BuildUtil.Ruler}")
