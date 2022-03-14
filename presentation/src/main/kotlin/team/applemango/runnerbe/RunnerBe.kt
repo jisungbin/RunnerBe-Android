@@ -11,6 +11,8 @@ package team.applemango.runnerbe
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import com.kakao.sdk.common.KakaoSdk
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.log.NidLog
@@ -23,6 +25,8 @@ class RunnerBe : Application() {
     override fun onCreate() {
         super.onCreate()
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+        Firebase.analytics
         NidLog.init()
         NaverIdLoginSDK.initialize(
             applicationContext,
@@ -31,6 +35,7 @@ class RunnerBe : Application() {
             getString(R.string.app_name)
         )
         KakaoSdk.init(applicationContext, BuildConfig.KAKAO_API_KEY)
+
         if (BuildConfig.DEBUG) {
             Logeukes.setup()
         } else {
