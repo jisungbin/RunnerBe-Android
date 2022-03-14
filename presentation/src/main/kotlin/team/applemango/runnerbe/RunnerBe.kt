@@ -11,6 +11,7 @@ package team.applemango.runnerbe
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
+import com.github.anrwatchdog.ANRWatchDog
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import com.kakao.sdk.common.KakaoSdk
@@ -27,6 +28,13 @@ class RunnerBe : Application() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         Firebase.analytics
+        ANRWatchDog()
+            .setIgnoreDebugger(true)
+            .setANRListener { error ->
+                error.message
+            }
+            .start()
+
         NidLog.init()
         NaverIdLoginSDK.initialize(
             applicationContext,
