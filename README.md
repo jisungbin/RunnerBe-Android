@@ -27,7 +27,7 @@
 
 - DFM
 - TDD
-- Unit Test + [Test Coverage 100% 목표](https://github.com/runner-be/RunnerBe-Android/issues/35)
+- Test + [Test Coverage 100% 목표](https://github.com/runner-be/RunnerBe-Android/issues/35)
 
 # 🐛 아키텍처 이슈
 
