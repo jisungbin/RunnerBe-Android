@@ -14,7 +14,7 @@ Ensure your change is properly formatted by running:
 Also, it's need testing:
 
 ```gradle
-./gradlew testDebugUnitTest
+./gradlew test
 ```
 
 ## Code reviews
