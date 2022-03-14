@@ -68,10 +68,15 @@ object Versions {
         const val SecretsGradlePlugin = "2.0.0"
     }
 
+    object Analytics {
+        const val Acra = "5.9.0-rc2"
+        const val AnrWatchDog = "1.4.0"
+    }
+
     object Jetpack {
         const val Hilt = "2.41"
+        const val Room = "2.4.2"
         const val DataStore = "1.0.0"
-        // TODO: room (offline-mode support)
     }
 
     object Login {
@@ -173,24 +178,26 @@ object Dependencies {
         "com.navercorp.nid:oauth:${Versions.Login.Naver}"
     )
 
-    val Debug = listOf(
-        "com.squareup.leakcanary:leakcanary-android:${Versions.Util.LeakCanary}"
-    )
-
     object Util { // Erratum 은 :presentation 에서만 쓰임
         const val Erratum = "land.sungbin:erratum:${Versions.Util.Erratum}"
         const val Logeukes = "land.sungbin:logeukes:${Versions.Util.Logeukes}"
     }
 
-    object Jetpack { // TODO: room (offline-mode support)
+    val Analytics = listOf(
+        "ch.acra:acra-mail:${Versions.Analytics.Acra}",
+        "com.github.anrwatchdog:anrwatchdog:${Versions.Analytics.AnrWatchDog}"
+    )
+
+    object Jetpack {
+        const val Room = "androidx.room:room-ktx:${Versions.Jetpack.Room}"
         const val DataStore =
             "androidx.datastore:datastore-preferences:${Versions.Jetpack.DataStore}"
     }
 
     object Compiler {
         const val Dagger = "com.google.dagger:dagger-compiler:${Versions.Dagger}"
+        const val RoomKsp = "androidx.room:room-compiler:${Versions.Jetpack.Room}"
         const val Hilt = "com.google.dagger:hilt-android-compiler:${Versions.Jetpack.Hilt}"
-        // TODO: room (offline-mode support)
     }
 
     object Test { // dependency scope 가 각각 다름
@@ -200,4 +207,8 @@ object Dependencies {
         const val Coroutine =
             "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.Test.Coroutine}"
     }
+
+    val Debug = listOf(
+        "com.squareup.leakcanary:leakcanary-android:${Versions.Util.LeakCanary}"
+    )
 }
