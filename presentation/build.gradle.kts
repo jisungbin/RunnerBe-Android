@@ -83,6 +83,7 @@ dependencies {
     implementation(Dependencies.FirebaseEachKtx.Analytics)
     implementation(Dependencies.FirebaseEachKtx.Performance)
     implementation(Dependencies.FirebaseEachKtx.Crashlytics)
+    implementation(Dependencies.FirebaseEachKtx.RemoteConfig)
 
     Dependencies.Ui.forEach(::implementation)
     Dependencies.Login.forEach(::implementation)
