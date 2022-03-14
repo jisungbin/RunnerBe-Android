@@ -78,12 +78,12 @@ dependencies {
     )
     layers.forEach(::implementationProject)
 
+    implementation(Dependencies.Util.Erratum)
     implementation(platform(Dependencies.FirebaseBom))
     implementation(Dependencies.FirebaseEachKtx.Analytics)
     implementation(Dependencies.FirebaseEachKtx.Performance)
     implementation(Dependencies.FirebaseEachKtx.Crashlytics)
 
-    implementation(Dependencies.Util.Erratum)
     Dependencies.Ui.forEach(::implementation)
     Dependencies.Login.forEach(::implementation)
     Dependencies.Analytics.forEach(::implementation)

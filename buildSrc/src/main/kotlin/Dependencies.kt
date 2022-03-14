@@ -69,7 +69,6 @@ object Versions {
     }
 
     object Analytics {
-        const val Acra = "5.9.0-rc2"
         const val AnrWatchDog = "1.4.0"
         const val FirebasePerformance = "1.4.1"
         const val FirebaseCrashlytics = "2.8.1"
@@ -188,7 +187,6 @@ object Dependencies {
     }
 
     val Analytics = listOf(
-        "ch.acra:acra-mail:${Versions.Analytics.Acra}",
         "com.github.anrwatchdog:anrwatchdog:${Versions.Analytics.AnrWatchDog}"
     )
 
