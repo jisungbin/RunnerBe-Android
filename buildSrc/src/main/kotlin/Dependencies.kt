@@ -71,6 +71,7 @@ object Versions {
     object Analytics {
         const val Acra = "5.9.0-rc2"
         const val AnrWatchDog = "1.4.0"
+        const val FirebasePerformance = "1.4.1"
     }
 
     object Jetpack {
@@ -116,6 +117,7 @@ object Dependencies {
 
     object FirebaseEachKtx { // 각각 쓰이는 모듈이 다름
         const val Analytics = "com.google.firebase:firebase-analytics"
+        const val Performance = "com.google.firebase:firebase-perf-ktx"
         const val Storage = "com.google.firebase:firebase-storage-ktx"
     }
 
