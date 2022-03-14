@@ -116,9 +116,9 @@ object Dependencies {
     }
 
     object FirebaseEachKtx { // 각각 쓰이는 모듈이 다름
-        const val Analytics = "com.google.firebase:firebase-analytics"
-        const val Performance = "com.google.firebase:firebase-perf-ktx"
         const val Storage = "com.google.firebase:firebase-storage-ktx"
+        const val Performance = "com.google.firebase:firebase-perf-ktx"
+        const val Analytics = "com.google.firebase:firebase-analytics-ktx"
     }
 
     object EachKtx {
