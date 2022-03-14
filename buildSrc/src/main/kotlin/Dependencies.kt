@@ -119,6 +119,7 @@ object Dependencies {
         const val Storage = "com.google.firebase:firebase-storage-ktx"
         const val Performance = "com.google.firebase:firebase-perf-ktx"
         const val Analytics = "com.google.firebase:firebase-analytics-ktx"
+        const val RemoteConfig = "com.google.firebase:firebase-config-ktx"
         const val Crashlytics = "com.google.firebase:firebase-crashlytics-ktx"
     }
 

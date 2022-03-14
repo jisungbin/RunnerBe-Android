@@ -16,6 +16,8 @@ import com.github.anrwatchdog.ANRWatchDog
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.remoteconfig.ktx.remoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import com.kakao.sdk.common.KakaoSdk
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.log.NidLog
@@ -28,6 +30,11 @@ import io.github.jisungbin.logeukes.logeukes
 
 @HiltAndroidApp
 class RunnerBe : Application() {
+
+    companion object {
+        var remoteConfigReady = false
+    }
+
     override fun onCreate() {
         super.onCreate()
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
@@ -53,6 +60,10 @@ class RunnerBe : Application() {
 
         if (BuildConfig.DEBUG) {
             Logeukes.setup()
+            val configSettings = remoteConfigSettings {
+                minimumFetchIntervalInSeconds = 60 * 10 // 10분
+            }
+            Firebase.remoteConfig.setConfigSettingsAsync(configSettings)
         }
         Erratum.setup(
             application = this,
@@ -65,5 +76,14 @@ class RunnerBe : Application() {
                 )
             }
         )
+
+        Firebase.remoteConfig
+            .fetchAndActivate()
+            .addOnSuccessListener {
+                remoteConfigReady = true
+            }
+            .addOnFailureListener { exception ->
+                Firebase.crashlytics.recordException(exception)
+            }
     }
 }
