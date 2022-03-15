@@ -12,3 +12,7 @@ plugins {
     id("kotlin-android")
     id("org.jetbrains.dokka") version Versions.BuildUtil.Dokka
 }
+
+dependencies {
+    implementation(Dependencies.Coroutine)
+}
