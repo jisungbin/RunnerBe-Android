@@ -25,7 +25,6 @@ class BookmarkListRemoteDataSource : BookmarkListBaseDataSource {
         postId: Int,
         userId: Int,
         whetherAdd: String,
-        unregisterUser: Boolean,
     ): BaseResult {
         val request = userApi.updateBookmarkItem(
             jwt = jwt,
@@ -44,7 +43,6 @@ class BookmarkListRemoteDataSource : BookmarkListBaseDataSource {
     override suspend fun loadBookmarkItems(
         jwt: String,
         userId: Int,
-        unregisterUser: Boolean,
     ): List<RunningItem> {
         val request = userApi.loadBookmarkItems(
             jwt = jwt,

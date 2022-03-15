@@ -17,7 +17,7 @@ import androidx.room.Query
 
 @Dao
 interface BookmarkDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun add(bookmarkPostId: BookmarkPostId)
 
     @Delete
