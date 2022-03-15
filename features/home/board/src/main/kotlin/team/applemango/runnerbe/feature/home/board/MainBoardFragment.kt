@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.jisungbin.logeukes.LoggerType
 import io.github.jisungbin.logeukes.logeukes
@@ -32,7 +32,7 @@ import team.applemango.runnerbe.shared.util.extension.toast
 @AndroidEntryPoint
 class MainBoardFragment : Fragment() {
 
-    private val vm: MainBoardViewModel by viewModels()
+    private val vm: MainBoardViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
