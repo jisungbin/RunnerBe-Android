@@ -44,7 +44,6 @@ class MainBoardFragment : Fragment() {
             setContent {
                 MainBoardComposable(
                     modifier = Modifier.fillMaxSize(),
-                    runningItems =,
                     vm = vm,
                 )
             }
