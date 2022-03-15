@@ -73,6 +73,7 @@
 #### Jetpack
 
 - Hilt
+- Room
 - Compose
 - DataStore
 - Navigation
