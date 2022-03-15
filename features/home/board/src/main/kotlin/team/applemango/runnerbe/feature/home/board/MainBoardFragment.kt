@@ -18,6 +18,7 @@ import android.widget.Toast
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.jisungbin.logeukes.LoggerType
 import io.github.jisungbin.logeukes.logeukes
 import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState
@@ -25,7 +26,11 @@ import team.applemango.runnerbe.shared.domain.constant.EmptyString
 import team.applemango.runnerbe.shared.domain.extension.toMessage
 import team.applemango.runnerbe.shared.util.extension.toast
 
+@AndroidEntryPoint
 class MainBoardFragment : Fragment() {
+
+    private val vm: MainBoardViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
