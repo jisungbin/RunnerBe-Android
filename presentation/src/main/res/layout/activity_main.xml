@@ -26,6 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:backgroundTint="@color/G6"
+            app:menu="@menu/menu_main"
             app:itemIconTint="@null"
             app:itemRippleColor="@null"
             app:labelVisibilityMode="unlabeled"
