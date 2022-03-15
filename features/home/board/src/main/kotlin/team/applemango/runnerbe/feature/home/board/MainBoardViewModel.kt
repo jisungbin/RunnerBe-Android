@@ -18,11 +18,12 @@
 
 package team.applemango.runnerbe.feature.home.board
 
-import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
-import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import team.applemango.runnerbe.domain.constant.Gender
@@ -35,72 +36,18 @@ import team.applemango.runnerbe.domain.runningitem.filter.RunningItemFilter
 import team.applemango.runnerbe.domain.runningitem.model.common.Locate
 import team.applemango.runnerbe.domain.runningitem.usecase.LoadRunningItemsUseCase
 import team.applemango.runnerbe.domain.user.usecase.UpdateBookmarkItemUseCase
-import team.applemango.runnerbe.feature.home.board.mvi.MainBoardSideEffect
 import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState
 import team.applemango.runnerbe.shared.base.BaseViewModel
 
 @HiltViewModel
-internal class MainBoardViewModel @AssistedInject constructor(
+internal class MainBoardViewModel @Inject constructor(
     private val updateBookmarkItemUseCase: UpdateBookmarkItemUseCase,
     private val loadRunningItemsUseCase: LoadRunningItemsUseCase,
-    // @Assisted private val userToken: UserToken,
-) : BaseViewModel(), ContainerHost<MainBoardState, MainBoardSideEffect> {
+) : BaseViewModel(), ContainerHost<MainBoardState, Nothing> {
 
-    override val container = container<MainBoardState, MainBoardSideEffect>(MainBoardState.None)
-
-    /*@AssistedFactory
-    interface UserTokenAssistedFactory {
-        fun inject(userToken: UserToken): MainBoardViewModel
-    }
-
-    companion object {
-        fun provideFactory(
-            assistedFactory: UserTokenAssistedFactory,
-            userToken: UserToken,
-        ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return assistedFactory.inject(userToken) as T
-            }
-        }
-    }
-
-    fun updateBookmarkState(
-        itemId: Int,
-        bookmarked: Boolean,
-    ) = intent {
-        if (userToken.jwt == null || userToken.userId == null) {
-            reduce {
-                MainBoardState.NonRegisterUser
-            }
-            return@intent
-        }
-        // Smart cast to 'String' is impossible,
-        // because 'userToken.jwt' is a public API property declared in different module
-        updateBookmarkItemUseCase(
-            jwt = userToken.jwt!!,
-            itemId = itemId,
-            userId = userToken.userId!!,
-            bookmarked = bookmarked
-        ).onSuccess { result ->
-            val newState = when (result) {
-                BaseResult.Success -> {
-                    MainBoardState.None
-                }
-                BaseResult.NotYetVerify -> MainBoardState.NonRegisterUser
-                // needs else block, because BaseResult is interface.
-                else -> throw IllegalStateException(unknownResultMessage(result))
-            }
-            reduce {
-                newState
-            }
-        }.onFailure { exception ->
-            emitException(exception)
-            reduce {
-                MainBoardState.BookmarkToggleRequestFail
-            }
-        }
-    }*/
+    override val container = container<MainBoardState, Nothing>(MainBoardState.None)
+    private val _runningItems = MutableStateFlow(DataStore.runningItems)
+    val runningItems = _runningItems.asStateFlow()
 
     fun loadRunningItems(
         itemType: RunningItemType,
@@ -125,7 +72,7 @@ internal class MainBoardViewModel @AssistedInject constructor(
             keywordFilter = keywordFilter
         ).onSuccess { items ->
             if (items.isNotEmpty()) {
-                postSideEffect(MainBoardSideEffect.UpdateRunningItem(items))
+                _runningItems.value = items
             } else {
                 reduce {
                     MainBoardState.RunningItemEmpty

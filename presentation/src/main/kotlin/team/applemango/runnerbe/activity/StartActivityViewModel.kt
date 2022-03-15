@@ -11,6 +11,7 @@ package team.applemango.runnerbe.activity
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.domain.constant.Gender
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
@@ -26,7 +27,7 @@ import team.applemango.runnerbe.shared.base.BaseViewModel
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
 
 @HiltViewModel
-class StartActivityViewModel(
+class StartActivityViewModel @Inject constructor(
     private val loadRunningItemsUseCase: LoadRunningItemsUseCase,
 ) : BaseViewModel() {
 
