@@ -30,6 +30,7 @@ object Versions {
 
     object Ktx {
         const val Core = "1.7.0"
+        const val Fragment = "1.4.1"
         const val Activity = "1.4.0"
         const val PlayCore = "1.8.1"
         const val Lifecycle = "2.4.0"

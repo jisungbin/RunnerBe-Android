@@ -9,7 +9,6 @@
 
 @Suppress("MemberVisibilityCanBePrivate")
 object Dependencies {
-    const val Browser = "androidx.browser:browser:${Versions.Ui.Browser}"
     const val Ksp = "com.google.devtools.ksp:symbol-processing-api:${Versions.Ksp}"
     const val FirebaseBom = "com.google.firebase:firebase-bom:${Versions.FirebaseBom}"
     const val Coroutine =
@@ -30,11 +29,13 @@ object Dependencies {
 
     object EachKtx {
         const val Core = "androidx.core:core-ktx:${Versions.Ktx.Core}"
+        const val Fragment = "androidx.fragment:fragment-ktx:${Versions.Ktx.Fragment}"
         const val Activity = "androidx.activity:activity-ktx:${Versions.Ktx.Activity}"
         const val Lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.Ktx.Lifecycle}"
     }
 
     object EachUi {
+        const val Browser = "androidx.browser:browser:${Versions.Ui.Browser}"
         const val PhotoEditor = "com.burhanrashid52:photoeditor:${Versions.Ui.PhotoEditor}"
         const val ConstraintLayout =
             "androidx.constraintlayout:constraintlayout:${Versions.Ui.ConstraintLayout}"
