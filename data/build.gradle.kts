@@ -13,6 +13,16 @@ plugins {
     id("com.google.devtools.ksp") version Versions.Ksp
 }
 
+kotlin {
+    sourceSets.main {
+        kotlin.srcDir("build/generated/ksp/main/kotlin")
+    }
+}
+
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
+}
+
 dependencies {
     Dependencies.Login.forEach(::implementation)
     Dependencies.Jackson.forEach(::implementation)
