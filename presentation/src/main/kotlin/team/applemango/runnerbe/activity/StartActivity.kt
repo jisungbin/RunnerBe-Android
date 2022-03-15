@@ -14,6 +14,7 @@ import android.os.Bundle
 import android.view.animation.AnticipateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import dagger.hilt.android.AndroidEntryPoint
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.changeActivityWithAnimation
 import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
@@ -21,6 +22,7 @@ import team.applemango.runnerbe.shared.util.extension.dataStore
 import team.applemango.runnerbe.util.DFMLoginActivityAlias
 import team.applemango.runnerbe.util.DFMOnboardActivityAlias
 
+@AndroidEntryPoint
 class StartActivity : AppCompatActivity() {
 
     private companion object {
