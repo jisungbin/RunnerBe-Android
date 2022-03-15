@@ -117,10 +117,10 @@
 
 ## 회고 중간 기록
 
-- [mapper](https://github.com/runner-be/RunnerBe-Android/blob/f0855a490f90c1b0f668f9aeb2cd3b60e6c5fd75/data/src/main/kotlin/team/applemango/runnerbe/data/main/mapper/mapper.kt) 만드는게 제일 귀찮아...
+- [mapper](https://github.com/runner-be/RunnerBe-Android/blob/f0855a490f90c1b0f668f9aeb2cd3b60e6c5fd75/data/src/main/kotlin/team/applemango/runnerbe/data/main/mapper/mapper.kt) 만드는게 제일 귀찮다.
 - 실력 차이가 나는 팀원들끼리 프로젝트를 진행하게 되면 진짜 너무 답답하다.
-- 백엔드의 숙련도가 중요하다는걸 느꼈고, 왜 백엔드 경력만 5년 이상으로 뽑는지 알 거 같다.
-- 혼자서 이 큰 걸 개발하니까 아키텍처 설계에서 막히는 부분을 물어볼 사람이 없어서 너무 슬퍼..
+- 백엔드의 숙련도가 중요하다는걸 매우 느꼈고, 왜 백엔드 경력만 5년 이상으로 뽑는지 알 거 같다.
+- 혼자서 이 큰 걸 개발하니까 아키텍처 설계에서 막히는 부분을 물어볼 사람이 없어서 너무 슬프다.
 
 ## License
 
