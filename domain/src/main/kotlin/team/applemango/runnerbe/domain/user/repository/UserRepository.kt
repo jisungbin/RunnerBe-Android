@@ -56,6 +56,7 @@ interface UserRepository {
     suspend fun loadBookmarkItems(
         jwt: String,
         userId: Int,
+        unregisterUser: Boolean,
     ): List<RunningItem>
 
     /**
