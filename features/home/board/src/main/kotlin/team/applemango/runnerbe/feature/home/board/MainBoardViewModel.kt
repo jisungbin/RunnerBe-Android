@@ -19,6 +19,7 @@
 package team.applemango.runnerbe.feature.home.board
 
 import dagger.assisted.AssistedInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
@@ -38,9 +39,7 @@ import team.applemango.runnerbe.feature.home.board.mvi.MainBoardSideEffect
 import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState
 import team.applemango.runnerbe.shared.base.BaseViewModel
 
-/**
- * TODO: https://github.com/applemango-runnerbe/RunnerBe-Android/issues/52
- */
+@HiltViewModel
 internal class MainBoardViewModel @AssistedInject constructor(
     private val updateBookmarkItemUseCase: UpdateBookmarkItemUseCase,
     private val loadRunningItemsUseCase: LoadRunningItemsUseCase,
