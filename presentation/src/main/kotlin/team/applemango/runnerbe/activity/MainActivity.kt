@@ -11,6 +11,7 @@ package team.applemango.runnerbe.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import team.applemango.runnerbe.R
 
 class MainActivity : ComponentActivity() {
 
@@ -24,5 +25,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
     }
 }
