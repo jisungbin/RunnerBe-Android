@@ -38,7 +38,6 @@ interface UserRepository {
      * @param postId 북마크 할 러닝 아이템의 아이디
      * @param userId 유저 아이디
      * @param whetherAdd 북마크 상태 (Y: 등록 / N: 해제)
-     * @param unregisterUser 둘러보기 모드 여부 (DataSource 가 다름)
      *
      * @return 북마크 업데이트 반영 여부
      */
@@ -47,7 +46,6 @@ interface UserRepository {
         postId: Int,
         userId: Int,
         whetherAdd: String,
-        unregisterUser: Boolean,
     ): BaseResult
 
     /**
@@ -56,7 +54,6 @@ interface UserRepository {
     suspend fun loadBookmarkItems(
         jwt: String,
         userId: Int,
-        unregisterUser: Boolean,
     ): List<RunningItem>
 
     /**
