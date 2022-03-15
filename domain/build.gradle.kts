@@ -34,7 +34,7 @@ tasks.withType<Test> {
 }
 
 dependencies {
-    implementation(Dependencies.Coroutine)
+    implementationProject(ProjectConstants.SharedDomain)
 
     testRuntimeOnly(Dependencies.Test.JunitEngine)
     testImplementation(Dependencies.Test.JunitApi)
