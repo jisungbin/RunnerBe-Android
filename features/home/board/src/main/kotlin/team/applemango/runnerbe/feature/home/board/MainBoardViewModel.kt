@@ -54,8 +54,7 @@ internal class MainBoardViewModel @AssistedInject constructor(
     @Assisted private val userToken: UserToken,
 ) : BaseViewModel(), ContainerHost<MainBoardState, MainBoardSideEffect> {
 
-    override val container =
-        container<MainBoardState, MainBoardSideEffect>(MainBoardState.None)
+    override val container = container<MainBoardState, MainBoardSideEffect>(MainBoardState.None)
 
     @AssistedFactory
     interface UserTokenAssistedFactory {
@@ -135,7 +134,7 @@ internal class MainBoardViewModel @AssistedInject constructor(
             locate = locate,
             keywordFilter = keywordFilter
         ).onSuccess { items ->
-            postSideEffect(MainBoardSideEffect.UpdateRunningItemSideEffect(items))
+            postSideEffect(MainBoardSideEffect.UpdateRunningItem(items))
         }.onFailure { exception ->
             emitException(exception)
         }
