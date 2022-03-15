@@ -25,6 +25,7 @@ import androidx.compose.material.Checkbox
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,7 +37,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
-import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 import team.applemango.runnerbe.feature.home.board.component.RunningItem
 import team.applemango.runnerbe.shared.compose.component.ToggleTopBar
 import team.applemango.runnerbe.shared.compose.component.ToggleTopBarItem
@@ -48,9 +48,10 @@ import team.applemango.runnerbe.shared.compose.theme.Typography
 internal fun MainBoardComposable(
     modifier: Modifier = Modifier,
     isBookmarkPage: Boolean = false,
-    runningItems: List<RunningItem>,
     vm: MainBoardViewModel,
 ) {
+    val runningItems by vm.runningItems.collectAsState()
+
     val beforeText = stringResource(R.string.toggletopbaritem_before)
     val afterText = stringResource(R.string.toggletopbaritem_after)
     val offText = stringResource(R.string.toggletopbaritem_off)
