@@ -12,6 +12,5 @@ package team.applemango.runnerbe.feature.home.board.mvi
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 
 internal sealed class MainBoardSideEffect {
-    data class UpdateRunningItemSideEffect(val items: List<RunningItem>) : MainBoardSideEffect()
-    data class ToggleBookmarkState(val itemIndex: Int) : MainBoardSideEffect()
+    data class UpdateRunningItem(val items: List<RunningItem>) : MainBoardSideEffect()
 }
