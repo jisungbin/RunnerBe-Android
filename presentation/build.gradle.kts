@@ -74,12 +74,6 @@ dependencies {
     )
     features.forEach(::implementationProject)
 
-    val layers = listOf(
-        ProjectConstants.Domain,
-        ProjectConstants.Data,
-    )
-    layers.forEach(::implementationProject)
-
     implementation(Dependencies.Util.Erratum)
     implementation(platform(Dependencies.FirebaseBom))
     implementation(Dependencies.FirebaseEachKtx.Analytics)
