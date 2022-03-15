@@ -7,18 +7,30 @@
   ~ Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cl_container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bnv_menu"
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:labelVisibilityMode="unlabeled"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/menu_main" />
+        android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bnv_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:backgroundTint="@color/G6"
+            app:itemIconTint="@null"
+            app:itemRippleColor="@null"
+
+            app:labelVisibilityMode="unlabeled"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:menu="@menu/menu_main" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
