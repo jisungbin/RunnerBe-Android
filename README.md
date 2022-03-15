@@ -118,6 +118,7 @@
 
 - [mapper](https://github.com/runner-be/RunnerBe-Android/blob/f0855a490f90c1b0f668f9aeb2cd3b60e6c5fd75/data/src/main/kotlin/team/applemango/runnerbe/data/main/mapper/mapper.kt) 만드는게 제일 귀찮아...
 - Github Action CI, CD 세팅을 프로젝트 초기에 했어야 했는데, 프로젝트가 꽤 개발이 되고 설정을 하니까 너무 고쳐야 할 게 많다.. 너무 힘들어어억
+- 자퇴하고싶다
 
 ## License
 
