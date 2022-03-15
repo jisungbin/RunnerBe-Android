@@ -74,7 +74,6 @@ internal class MainBoardViewModel @AssistedInject constructor(
     }
 
     fun updateBookmarkState(
-        itemIndex: Int,
         itemId: Int,
         bookmarked: Boolean,
     ) = intent {
@@ -94,7 +93,6 @@ internal class MainBoardViewModel @AssistedInject constructor(
         ).onSuccess { result ->
             val newState = when (result) {
                 BaseResult.Success -> {
-                    postSideEffect(MainBoardSideEffect.ToggleBookmarkState(itemIndex = itemIndex))
                     MainBoardState.None
                 }
                 BaseResult.NotYetVerify -> MainBoardState.NonRegisterUser
@@ -107,7 +105,7 @@ internal class MainBoardViewModel @AssistedInject constructor(
         }.onFailure { exception ->
             emitException(exception)
             reduce {
-                MainBoardState.None
+                MainBoardState.BookmarkToggleRequestFail
             }
         }
     }
@@ -124,6 +122,7 @@ internal class MainBoardViewModel @AssistedInject constructor(
         keywordFilter: KeywordFilter,
     ) = intent {
         loadRunningItemsUseCase(
+            userToken = userToken,
             itemType = itemType,
             includeEndItems = includeEndItems,
             itemFilter = itemFilter,
@@ -134,7 +133,13 @@ internal class MainBoardViewModel @AssistedInject constructor(
             locate = locate,
             keywordFilter = keywordFilter
         ).onSuccess { items ->
-            postSideEffect(MainBoardSideEffect.UpdateRunningItem(items))
+            if (items.isNotEmpty()) {
+                postSideEffect(MainBoardSideEffect.UpdateRunningItem(items))
+            } else {
+                reduce {
+                    MainBoardState.RunningItemEmpty
+                }
+            }
         }.onFailure { exception ->
             emitException(exception)
         }
