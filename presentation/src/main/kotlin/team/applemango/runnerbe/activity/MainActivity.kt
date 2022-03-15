@@ -11,7 +11,9 @@ package team.applemango.runnerbe.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.databinding.DataBindingUtil
 import team.applemango.runnerbe.R
+import team.applemango.runnerbe.databinding.ActivityMainBinding
 
 class MainActivity : ComponentActivity() {
 
@@ -23,8 +25,11 @@ class MainActivity : ComponentActivity() {
     // TODO: Firebase Crashlytics 설정
     // https://firebase.google.com/docs/crashlytics/customize-crash-reports
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.bnvMenu.itemIconTintList = null
     }
 }
