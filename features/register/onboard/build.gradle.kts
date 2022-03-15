@@ -22,7 +22,7 @@ android {
 }
 
 dependencies {
-    implementation(Dependencies.Browser)
+    implementation(Dependencies.EachUi.Browser)
     implementationProject(ProjectConstants.HomeBoard)
     implementationProject(ProjectConstants.Presentation)
     implementationProject(ProjectConstants.XmlNumberPicker)
