@@ -13,11 +13,11 @@ import org.gradle.plugin.use.PluginDependenciesSpec
 
 // plugin
 fun PluginDependenciesSpec.installLibraryDfmHiltTest(
-    isLibrary: Boolean = true,
+    isPresentation: Boolean = false,
     isDFM: Boolean = false,
     testNeeded: Boolean = false,
 ) {
-    if (isLibrary && !isDFM) {
+    if (!isPresentation && !isDFM) {
         id("com.android.library")
     }
     if (isDFM) {
@@ -54,12 +54,9 @@ fun DependencyHandler.installSharedComposeOrbitHiltTest(
         // add("testDebugImplementation", Dependencies.Orbit.Test) (https://github.com/applemango-runnerbe/RunnerBe-Android/issues/84)
     }
     if (!excludeHilt) {
-        implementation(Dependencies.Di.Hilt)
+        implementation(Dependencies.Jetpack.Hilt)
         add("kapt", Dependencies.Compiler.Hilt)
-    } /* else {
-        implementation(Dependencies.Di.Dagger)
-        add("kapt", Dependencies.Compiler.Dagger)
-    }*/
+    }
 }
 
 fun DependencyHandler.implementationProject(path: String) {
