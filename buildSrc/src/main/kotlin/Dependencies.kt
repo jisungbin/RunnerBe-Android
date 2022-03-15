@@ -78,6 +78,7 @@ object Versions {
         const val Hilt = "2.41"
         const val Room = "2.4.2"
         const val DataStore = "1.0.0"
+        const val NavigationSafeArgs = "2.4.1"
     }
 
     object Login {
