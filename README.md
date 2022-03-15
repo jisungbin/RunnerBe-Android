@@ -49,10 +49,10 @@
 - [common.gradle 로 중복되는 그레이들 코드 없애기](https://sungbin.land/common-gradle-%EB%A1%9C-%EC%A4%91%EB%B3%B5%EB%90%98%EB%8A%94-%EA%B7%B8%EB%A0%88%EC%9D%B4%EB%93%A4-%EC%BD%94%EB%93%9C-%EC%97%86%EC%95%A0%EA%B8%B0-54ab069e1d15)
 - [누가 내 앱의 용량을 많이 차지하고 있을까?](https://sungbin.land/%EB%88%84%EA%B0%80-%EB%82%B4-%EC%95%B1%EC%9D%98-%EC%9A%A9%EB%9F%89%EC%9D%84-%EB%A7%8E%EC%9D%B4-%EC%B0%A8%EC%A7%80%ED%95%98%EA%B3%A0-%EC%9E%88%EC%9D%84%EA%B9%8C-3f2529200024)
 - [ktlint, detekt 으로 코드 퀄리티 향상시키기](https://sungbin.land/ktlint-detekt-%EC%9C%BC%EB%A1%9C-%EC%BD%94%EB%93%9C-%ED%80%84%EB%A6%AC%ED%8B%B0-%ED%96%A5%EC%83%81%EC%8B%9C%ED%82%A4%EA%B8%B0-a085c7eba2cd)
-- [Github Actions 으로 안드로이드 CI/CD 구축하기](https://sungbin.land/github-actions-%EC%9C%BC%EB%A1%9C-%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C-ci-cd-%EA%B5%AC%EC%B6%95%ED%95%98%EA%B8%B0-1aaaa6595c4a) 
+- [Github Actions 으로 안드로이드 CI/CD 구축하기](https://sungbin.land/github-actions-%EC%9C%BC%EB%A1%9C-%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C-ci-cd-%EA%B5%AC%EC%B6%95%ED%95%98%EA%B8%B0-1aaaa6595c4a)
 - [gradle 멀티 모듈 프로젝트에 JaCoCo 설정하기](https://jisungbin.medium.com/gradle-%EB%A9%80%ED%8B%B0-%EB%AA%A8%EB%93%88-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EC%97%90-jacoco-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0-76e69f2afb40)
 - 러너비 안드로이드 개발 회고 [예정]
-- 테스트 커버러지 100% 까지의 여정 [예정] 
+- 테스트 커버러지 100% 까지의 여정 [예정]
 
 ---
 
@@ -118,6 +118,7 @@
 
 - [mapper](https://github.com/runner-be/RunnerBe-Android/blob/f0855a490f90c1b0f668f9aeb2cd3b60e6c5fd75/data/src/main/kotlin/team/applemango/runnerbe/data/main/mapper/mapper.kt) 만드는게 제일 귀찮아...
 - Github Action CI, CD 세팅을 프로젝트 초기에 했어야 했는데, 프로젝트가 꽤 개발이 되고 설정을 하니까 너무 고쳐야 할 게 많다.. 너무 힘들어어억
+- 자퇴하고싶다.
 
 ## License
 
