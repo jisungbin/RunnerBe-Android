@@ -9,6 +9,7 @@
 
 <resources>
     <color name="primary">#ffe082</color>
+    <color name="G6">#292929</color>
     <color name="G5_5">#36342D</color>
     <color name="G4">#6f6d69</color>
 </resources>
