@@ -43,7 +43,7 @@ object Versions {
         const val Landscapist = "1.4.9"
         const val ConstraintLayout = "1.0.0"
         const val LifecycleViewModel = "2.4.1"
-        const val Accompanist = "0.24.3-alpha"
+        const val Accompanist = "0.24.4-alpha"
     }
 
     object Ui {
@@ -155,6 +155,7 @@ object Dependencies {
         "androidx.activity:activity-compose:${Versions.Compose.Activity}",
         "com.github.skydoves:landscapist-coil:${Versions.Compose.Landscapist}",
         "com.google.accompanist:accompanist-insets:${Versions.Compose.Accompanist}",
+        "com.google.accompanist:accompanist-swiperefresh:${Versions.Compose.Accompanist}",
         "com.google.accompanist:accompanist-systemuicontroller:${Versions.Compose.Accompanist}",
         "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.Compose.LifecycleViewModel}",
         "com.google.accompanist:accompanist-navigation-animation:${Versions.Compose.Accompanist}",
