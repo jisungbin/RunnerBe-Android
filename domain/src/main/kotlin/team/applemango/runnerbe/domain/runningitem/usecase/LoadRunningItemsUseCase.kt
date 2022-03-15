@@ -74,7 +74,10 @@ class LoadRunningItemsUseCase(
                 runningItemsAsync,
                 bookmarkItemsAsync
             ).awaitAll()
-
+            val bookmarkItemsId = bookmarkItems.map { it.itemId }
+            runningItems.map { item ->
+                item.copy(bookmarked = bookmarkItemsId.contains(item.itemId))
+            }
         }
     }
 }
