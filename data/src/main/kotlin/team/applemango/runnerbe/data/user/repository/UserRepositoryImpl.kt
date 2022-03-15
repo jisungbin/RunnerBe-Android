@@ -9,7 +9,6 @@
 
 package team.applemango.runnerbe.data.user.repository
 
-import androidx.room.RoomDatabase
 import team.applemango.runnerbe.data.common.isSuccessNonNull
 import team.applemango.runnerbe.data.common.toBaseResult
 import team.applemango.runnerbe.data.common.toJobChangeResult
@@ -27,9 +26,7 @@ import team.applemango.runnerbe.domain.user.model.wrapper.NicknameWrapper
 import team.applemango.runnerbe.domain.user.model.wrapper.ProfileImageUrlWrapper
 import team.applemango.runnerbe.domain.user.repository.UserRepository
 
-class UserRepositoryImpl(
-    private val database: RoomDatabase,
-) : UserRepository {
+class UserRepositoryImpl : UserRepository {
     override suspend fun setNickname(
         jwt: String,
         userId: Int,
