@@ -94,6 +94,7 @@ object Versions {
 
     object Test {
         const val JUnit = "5.8.2"
+        const val JaCoCo = "0.8.7"
         const val Hamcrest = "2.2"
         const val Coroutine = "1.6.0"
         const val JUnitGradle = "1.8.2.0"
