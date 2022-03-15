@@ -10,8 +10,19 @@
 package team.applemango.runnerbe.data.user.datasource.bookmark.room
 
 import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 
 @Dao
 interface BookmarkDao {
-    suspend fun
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun add(bookmarkPostId: BookmarkPostId)
+
+    @Delete
+    suspend fun delete(bookmarkPostId: BookmarkPostId)
+
+    @Query("SELECT * FROM BookmarkPostId")
+    suspend fun getAll(): List<BookmarkPostId>
 }
