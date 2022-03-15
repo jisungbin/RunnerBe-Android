@@ -45,7 +45,7 @@ import team.applemango.runnerbe.shared.compose.theme.RunnerbeCheckBoxColors
 import team.applemango.runnerbe.shared.compose.theme.Typography
 
 @Composable
-internal fun MainBoard(
+internal fun MainBoardComposable(
     modifier: Modifier = Modifier,
     isBookmarkPage: Boolean = false,
     runningItems: List<RunningItem>,
