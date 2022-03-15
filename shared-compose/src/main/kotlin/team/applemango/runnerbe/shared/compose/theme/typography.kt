@@ -138,4 +138,14 @@ object Typography {
         fontSize = 10.sp,
         letterSpacing = (-0.2).sp
     )
+
+    object Custom {
+        val MainBoardTitle = TextStyle(
+            fontFamily = FontAsset.Aggro,
+            color = ColorAsset.PrimaryDark,
+            fontSize = 16.sp,
+            lineHeight = 31.sp,
+            letterSpacing = (-0.4).sp
+        )
+    }
 }
