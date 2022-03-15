@@ -9,8 +9,6 @@
 
 package team.applemango.runnerbe.feature.home.board
 
-import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,7 +20,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Checkbox
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -34,37 +32,25 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import io.github.jisungbin.logeukes.LoggerType
-import io.github.jisungbin.logeukes.logeukes
-import team.applemango.runnerbe.domain.register.runnerbe.model.UserToken
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 import team.applemango.runnerbe.feature.home.board.component.RunningItem
-import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState
 import team.applemango.runnerbe.shared.compose.component.ToggleTopBar
 import team.applemango.runnerbe.shared.compose.component.ToggleTopBarItem
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.RunnerbeCheckBoxColors
 import team.applemango.runnerbe.shared.compose.theme.Typography
-import team.applemango.runnerbe.shared.domain.constant.EmptyString
-import team.applemango.runnerbe.shared.domain.extension.toMessage
-import team.applemango.runnerbe.shared.util.extension.toast
 
 @Composable
 internal fun MainBoard(
     modifier: Modifier = Modifier,
     isBookmarkPage: Boolean = false,
-    userToken: UserToken,
-    runningItemsState: List<RunningItem>,
-    vm: MainBoardViewModel = viewModel(),
+    runningItems: List<RunningItem>,
+    vm: MainBoardViewModel,
 ) {
-    val context = LocalContext.current
-
     val beforeText = stringResource(R.string.toggletopbaritem_before)
     val afterText = stringResource(R.string.toggletopbaritem_after)
     val offText = stringResource(R.string.toggletopbaritem_off)
@@ -203,35 +189,20 @@ internal fun MainBoard(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            itemsIndexed(items = runningItemsState) { index, item ->
+            items(
+                items = runningItems.filter { item ->
+                    item.runningType == selectedRunningItemTypeState
+                },
+                key = { it.itemId }
+            ) { item ->
                 RunningItem(
                     item = item,
-                    bookmarkState = forEachItemsBookmarkedState[index],
+                    bookmarkState = false,
                     requestToggleBookmarkState = {
-                        /*vm.updateBookmarkState(
-                            itemIndex = index,
-                            itemId = item.itemId,
-                            bookmarked = !forEachItemsBookmarkedState[index]
-                        )*/
-                        toast(context, "아직 준비중 이에요.")
+                        // TODO
                     }
                 )
             }
         }
     }
-}
-
-private fun handleState(context: Context, state: MainBoardState) {
-    val message = when (state) {
-        MainBoardState.None -> EmptyString
-        MainBoardState.NonRegisterUser -> "아직 가입되지 않은 유저는 둘러보기만 가능해요."
-    }
-    if (message.isNotEmpty()) {
-        toast(context, message)
-    }
-}
-
-private fun handleException(context: Context, exception: Throwable) {
-    toast(context, exception.toMessage(), Toast.LENGTH_LONG)
-    logeukes(type = LoggerType.E) { exception }
 }
