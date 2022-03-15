@@ -10,6 +10,7 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
+    id("com.google.devtools.ksp") version Versions.Ksp
 }
 
 dependencies {
@@ -20,6 +21,10 @@ dependencies {
     implementationProject(ProjectConstants.Domain)
     implementationProject(ProjectConstants.SharedDomain)
 
+    implementation(Dependencies.Ksp)
+    implementation(Dependencies.Jetpack.Room)
     implementation(platform(Dependencies.FirebaseBom))
     implementation(Dependencies.FirebaseEachKtx.Storage)
+
+    ksp(Dependencies.Compiler.RoomKsp)
 }
