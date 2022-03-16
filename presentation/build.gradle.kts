@@ -10,7 +10,7 @@
 plugins {
     // id("com.spotify.ruler")
     id("com.android.application")
-    id("androidx.navigation.safeargs")
+    // id("androidx.navigation.safeargs")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
     id("com.google.firebase.firebase-perf")
