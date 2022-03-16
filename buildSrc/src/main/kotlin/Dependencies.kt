@@ -57,7 +57,6 @@ object Dependencies {
         "com.airbnb.android:lottie-compose:${Versions.Compose.Lottie}",
         "androidx.activity:activity-compose:${Versions.Compose.Activity}",
         "com.github.skydoves:landscapist-coil:${Versions.Compose.Landscapist}",
-        "com.google.accompanist:accompanist-insets:${Versions.Compose.Accompanist}",
         "com.google.accompanist:accompanist-swiperefresh:${Versions.Compose.Accompanist}",
         "com.google.accompanist:accompanist-systemuicontroller:${Versions.Compose.Accompanist}",
         "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.Compose.LifecycleViewModel}",
