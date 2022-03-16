@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.feature.home.board.component.RunningItem
 import team.applemango.runnerbe.shared.compose.component.ToggleTopBar
+import team.applemango.runnerbe.shared.compose.component.ToggleTopBarColor
 import team.applemango.runnerbe.shared.compose.component.ToggleTopBarItem
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.RunnerbeCheckBoxColors
@@ -119,13 +120,15 @@ internal fun MainBoardComposable(
         }
         ToggleTopBar(
             modifier = Modifier.padding(top = 4.dp),
-            toggleTopBarItems = toggleTabBarItems,
-            baseBackgroundColor = ColorAsset.G6,
-            activateBackgroundColor = ColorAsset.Primary,
-            activateTextColor = ColorAsset.G6,
-            inactivateTextColor = ColorAsset.G4_5,
+            colors = ToggleTopBarColor(
+                baseBackground = ColorAsset.G6,
+                activateBackground = ColorAsset.Primary,
+                activateText = ColorAsset.G6,
+                inactivateText = ColorAsset.G4_5,
+            ),
             activateTextStyle = Typography.Body14M,
             inactivateTextStyle = Typography.Body14R,
+            toggleTopBarItems = toggleTabBarItems,
             onItemClick = { runningItemType ->
                 selectedRunningItemTypeState = runningItemType
             }
@@ -142,16 +145,10 @@ internal fun MainBoardComposable(
                 ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(
-                    modifier = Modifier.clickable {
-                        // TODO
-                    },
-                    verticalAlignment = Alignment.CenterVertically
+                ToggleTopBarSubItem(
+                    onClick = { /*TODO*/ },
+                    text = stringResource(R.string.mainboard_filter_include_finish)
                 ) {
-                    Text(
-                        text = stringResource(R.string.mainboard_filter_include_finish),
-                        style = Typography.Body12R.copy(color = ColorAsset.G4)
-                    )
                     Checkbox(
                         modifier = Modifier.padding(start = 4.dp),
                         checked = includeFinishState,
@@ -159,52 +156,65 @@ internal fun MainBoardComposable(
                         colors = RunnerbeCheckBoxColors
                     )
                 }
-                Row(
-                    modifier = Modifier.clickable {
-                        // TODO
-                    },
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = stringResource(R.string.mainboard_sort_nearby),
-                        style = Typography.Body12R.copy(color = ColorAsset.G4),
-                    )
-                    Icon(
-                        modifier = Modifier.padding(start = 2.dp),
-                        painter = painterResource(R.drawable.ic_round_chevron_down),
-                        contentDescription = null,
-                        tint = Color.Unspecified
-                    )
-                }
+            }
+            ToggleTopBarSubItem(
+                onClick = { /*TODO*/ },
+                text = stringResource(R.string.mainboard_sort_nearby)
+            ) {
                 Icon(
-                    modifier = Modifier.clickable {
-                        // TODO
-                    },
-                    painter = painterResource(R.drawable.ic_round_filter_24),
+                    modifier = Modifier.padding(start = 2.dp),
+                    painter = painterResource(R.drawable.ic_round_chevron_down),
                     contentDescription = null,
                     tint = Color.Unspecified
                 )
             }
-        }
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-        ) {
-            items(
-                items = runningItems.filter { item ->
-                    item.runningType == selectedRunningItemTypeState &&
-                        item.bookmarked == isBookmarkPage
+            Icon(
+                modifier = Modifier.clickable {
+                    // TODO
                 },
-                key = { it.itemId }
-            ) { item ->
-                RunningItem(
-                    item = item,
-                    bookmarkState = false,
-                    requestToggleBookmarkState = {
-                        // TODO
-                    }
-                )
-            }
+                painter = painterResource(R.drawable.ic_round_filter_24),
+                contentDescription = null,
+                tint = Color.Unspecified
+            )
         }
+    }
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        items(
+            items = runningItems.filter { item ->
+                item.runningType == selectedRunningItemTypeState &&
+                    item.bookmarked == isBookmarkPage
+            },
+            key = { it.itemId }
+        ) { item ->
+            RunningItem(
+                item = item,
+                bookmarkState = false,
+                requestToggleBookmarkState = {
+                    // TODO
+                }
+            )
+        }
+    }
+}
+
+@Composable
+private fun ToggleTopBarSubItem(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    text: String,
+    content: @Composable () -> Unit,
+) {
+    Row(
+        modifier = modifier.clickable { onClick() },
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = text,
+            style = Typography.Body12R.copy(color = ColorAsset.G4)
+        )
+        content()
     }
 }
