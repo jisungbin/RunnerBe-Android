@@ -11,9 +11,6 @@ package team.applemango.runnerbe
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
-import com.github.anrwatchdog.ANRWatchDog
-import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
@@ -34,7 +31,7 @@ class RunnerBe : Application() {
         super.onCreate()
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-        Firebase.analytics
+        /*Firebase.analytics
         Firebase.crashlytics
         ANRWatchDog()
             .setIgnoreDebugger(true)
@@ -42,7 +39,7 @@ class RunnerBe : Application() {
                 Firebase.crashlytics.recordException(error)
                 throw error
             }
-            .start()
+            .start()*/
 
         NidLog.init()
         NaverIdLoginSDK.initialize(
@@ -71,7 +68,7 @@ class RunnerBe : Application() {
                     DefaultErratumExceptionActivity::class.java
                 )
             }
-        )*/
+        )
 
         Firebase.remoteConfig
             .fetchAndActivate()
@@ -80,6 +77,6 @@ class RunnerBe : Application() {
             }
             .addOnFailureListener { exception ->
                 Firebase.crashlytics.recordException(exception)
-            }
+            }*/
     }
 }
