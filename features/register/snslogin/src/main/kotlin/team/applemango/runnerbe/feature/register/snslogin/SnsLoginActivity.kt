@@ -29,7 +29,6 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import io.github.jisungbin.logeukes.LoggerType
 import io.github.jisungbin.logeukes.logeukes
 import org.orbitmvi.orbit.viewmodel.observe
-import team.applemango.runnerbe.activity.MainActivity
 import team.applemango.runnerbe.feature.register.snslogin.component.SnsLoginScreen
 import team.applemango.runnerbe.feature.register.snslogin.constant.LoginState
 import team.applemango.runnerbe.feature.register.snslogin.di.module.RepositoryModule
@@ -93,7 +92,7 @@ class SnsLoginActivity : WindowInsetActivity() {
     private fun handleState(state: LoginState) {
         when (state) {
             LoginState.Done -> changeActivityWithAnimation<DFMOnboardActivityAlias>()
-            LoginState.Registered -> changeActivityWithAnimation<MainActivity>()
+            LoginState.Registered -> /*changeActivityWithAnimation<MainActivity>()*/ TODO() // TODO
             LoginState.None -> return
         }
     }

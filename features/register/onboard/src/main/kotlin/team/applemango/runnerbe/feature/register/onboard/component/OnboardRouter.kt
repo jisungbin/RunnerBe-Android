@@ -155,7 +155,8 @@ internal fun OnboardRouter(
                             modifier = Modifier.clickable { // X 온보딩 건너뛰기
                                 // TODO: Dialog
                                 toast(context, "todo: dialog")
-                                context.changeActivityWithAnimation<MainActivity>()
+                                // TODO
+                                // context.changeActivityWithAnimation<MainActivity>()
                             },
                             painter = rememberDrawablePainter(presentationDrawableOf("ic_round_close_24")),
                             contentDescription = null,
@@ -282,7 +283,8 @@ internal fun OnboardRouter(
                                 preferences[DataStoreKey.Login.RegisterDone] = true
                             }
                         }
-                        activity.changeActivityWithAnimation<MainActivity>()
+                        // TODO
+                        // activity.changeActivityWithAnimation<MainActivity>()
                     }
                 ) {
                     Text(
@@ -300,7 +302,8 @@ internal fun OnboardRouter(
                     step = Step.VerifyWithEmployeeIdRequestDone,
                     bottomCTAButtonEnabled = true,
                     onBottomCTAButtonAction = { // 메인 화면으로
-                        activity.changeActivityWithAnimation<MainActivity>()
+                        // TODO
+                        // activity.changeActivityWithAnimation<MainActivity>()
                     }
                 ) {
                     Text(
