@@ -192,7 +192,8 @@ internal fun MainBoardComposable(
         ) {
             items(
                 items = runningItems.filter { item ->
-                    item.runningType == selectedRunningItemTypeState
+                    item.runningType == selectedRunningItemTypeState &&
+                        item.bookmarked == isBookmarkPage
                 },
                 key = { it.itemId }
             ) { item ->
