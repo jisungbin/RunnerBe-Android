@@ -23,8 +23,6 @@ import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.google.accompanist.insets.ProvideWindowInsets
-import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import io.github.jisungbin.logeukes.LoggerType
 import io.github.jisungbin.logeukes.logeukes
@@ -35,6 +33,7 @@ import team.applemango.runnerbe.feature.register.snslogin.di.module.RepositoryMo
 import team.applemango.runnerbe.feature.register.snslogin.di.module.UseCaseModule
 import team.applemango.runnerbe.feature.register.snslogin.mvi.LoginSideEffect
 import team.applemango.runnerbe.shared.base.WindowInsetActivity
+import team.applemango.runnerbe.shared.compose.extension.verticalInsetsPadding
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.domain.extension.toMessage
@@ -72,20 +71,18 @@ class SnsLoginActivity : WindowInsetActivity() {
         }
 
         setContent {
-            ProvideWindowInsets {
-                val systemUiController = rememberSystemUiController()
-                LaunchedEffect(Unit) {
-                    systemUiController.setSystemBarsColor(Color.Transparent)
-                }
-                SnsLoginScreen(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(brush = GradientAsset.BlackGradientBrush)
-                        .systemBarsPadding(start = false, end = false)
-                        .padding(horizontal = 16.dp),
-                    vm = vm
-                )
+            val systemUiController = rememberSystemUiController()
+            LaunchedEffect(Unit) {
+                systemUiController.setSystemBarsColor(Color.Transparent)
             }
+            SnsLoginScreen(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(brush = GradientAsset.BlackGradientBrush)
+                    .verticalInsetsPadding()
+                    .padding(horizontal = 16.dp),
+                vm = vm
+            )
         }
     }
 

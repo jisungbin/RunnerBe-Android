@@ -38,7 +38,7 @@ object Versions {
     }
 
     object Compose {
-        const val Main = "1.1.1"
+        const val Main = "1.2.0-alpha05"
         const val Lottie = "5.0.3"
         const val Activity = "1.4.0"
         const val Landscapist = "1.4.9"

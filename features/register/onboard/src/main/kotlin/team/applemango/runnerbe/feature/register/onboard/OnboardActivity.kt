@@ -31,9 +31,6 @@ import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
-import com.google.accompanist.insets.ProvideWindowInsets
-import com.google.accompanist.insets.navigationBarsPadding
-import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import io.github.jisungbin.logeukes.LoggerType
@@ -49,6 +46,7 @@ import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.di.module.UseCaseModule
 import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterSideEffect
 import team.applemango.runnerbe.shared.base.WindowInsetActivity
+import team.applemango.runnerbe.shared.compose.extension.verticalInsetsPadding
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
@@ -84,102 +82,98 @@ class OnboardActivity : WindowInsetActivity() {
         }
 
         setContent {
-            ProvideWindowInsets {
-                val scaffoldState = rememberScaffoldState()
-                val navController = rememberAnimatedNavController()
-                val systemUiController = rememberSystemUiController()
+            val scaffoldState = rememberScaffoldState()
+            val navController = rememberAnimatedNavController()
+            val systemUiController = rememberSystemUiController()
 
-                LaunchedEffect(Unit) {
-                    systemUiController.setSystemBarsColor(Color.Transparent)
-                    vm.observe(
-                        lifecycleOwner = this@OnboardActivity,
-                        state = ::handleRegisterState,
-                        sideEffect = { sideEffect ->
-                            handleRegisterSideEffect(navController, sideEffect)
-                        }
-                    )
-                    // 이메일 인증 됨 -> photo null 로 회원가입 진행
-                    vm.emailVerifyStateFlow.collectWithLifecycle(this@OnboardActivity) { verified ->
-                        if (verified) {
-                            vm.registerUser(
-                                dataStore = applicationContext.dataStore,
-                                photo = null,
-                                nextStep = Step.VerifyWithEmailDone
+            LaunchedEffect(Unit) {
+                systemUiController.setSystemBarsColor(Color.Transparent)
+                vm.observe(
+                    lifecycleOwner = this@OnboardActivity,
+                    state = ::handleRegisterState,
+                    sideEffect = { sideEffect ->
+                        handleRegisterSideEffect(navController, sideEffect)
+                    }
+                )
+                // 이메일 인증 됨 -> photo null 로 회원가입 진행
+                vm.emailVerifyStateFlow.collectWithLifecycle(this@OnboardActivity) { verified ->
+                    if (verified) {
+                        vm.registerUser(
+                            dataStore = applicationContext.dataStore,
+                            photo = null,
+                            nextStep = Step.VerifyWithEmailDone
+                        )
+                    }
+                }
+                // 이메일 인증 임시 비활성화
+                applicationContext.dataStore.data.collectWithLifecycle(
+                    lifecycleOwner = this@OnboardActivity,
+                    builder = {
+                        cancellable()
+                    }
+                ) { preferences ->
+                    val terms = preferences[DataStoreKey.Onboard.TermsAllCheck]
+                    val year = preferences[DataStoreKey.Onboard.Year]
+                    val gender = preferences[DataStoreKey.Onboard.Gender]
+                    val job = preferences[DataStoreKey.Onboard.Job]
+                    // val verifyWithEmail = preferences[DataStoreKey.Onboard.Email]
+                    val lastStepIndex = listOf(
+                        terms,
+                        year,
+                        gender,
+                        job,
+                        // verifyWithEmail,
+                    ).indexOfLast { step ->
+                        step != null
+                    }
+                    if (lastStepIndex != -1) {
+                        // NPE occurred
+                        // TODO: 백스택 임의 생성
+                        // https://github.com/applemango-runnerbe/RunnerBe-Android/issues/16
+                        /*(1..lastStepIndex).forEach { backstackIndex ->
+                            navController.backQueue.addLast(
+                                NavBackStackEntry.create(
+                                    context = this@OnboardActivity,
+                                    destination = NavDestination(Step.values()[backstackIndex].name)
+                                )
+                            )
+                        }*/
+                        navController.navigate(Step.values()[lastStepIndex].name)
+                    }
+                    cancel("step restore execute must be once.")
+                }
+            }
+
+            Scaffold(
+                modifier = Modifier.fillMaxSize(),
+                scaffoldState = scaffoldState,
+                snackbarHost = { snackbarHostState ->
+                    SnackbarHost(
+                        modifier = Modifier
+                            .verticalInsetsPadding()
+                            .padding(bottom = 30.dp)
+                            .padding(horizontal = 30.dp),
+                        hostState = snackbarHostState
+                    ) { snackbarData ->
+                        Snackbar(backgroundColor = ColorAsset.G5) {
+                            Text(
+                                text = snackbarData.message,
+                                style = Typography.Body14R.copy(color = ColorAsset.Primary)
                             )
                         }
                     }
-                    // 이메일 인증 임시 비활성화
-                    applicationContext.dataStore.data.collectWithLifecycle(
-                        lifecycleOwner = this@OnboardActivity,
-                        builder = {
-                            cancellable()
-                        }
-                    ) { preferences ->
-                        val terms = preferences[DataStoreKey.Onboard.TermsAllCheck]
-                        val year = preferences[DataStoreKey.Onboard.Year]
-                        val gender = preferences[DataStoreKey.Onboard.Gender]
-                        val job = preferences[DataStoreKey.Onboard.Job]
-                        // val verifyWithEmail = preferences[DataStoreKey.Onboard.Email]
-                        val lastStepIndex = listOf(
-                            terms,
-                            year,
-                            gender,
-                            job,
-                            // verifyWithEmail,
-                        ).indexOfLast { step ->
-                            step != null
-                        }
-                        if (lastStepIndex != -1) {
-                            // NPE occurred
-                            // TODO: 백스택 임의 생성
-                            // https://github.com/applemango-runnerbe/RunnerBe-Android/issues/16
-                            /*(1..lastStepIndex).forEach { backstackIndex ->
-                                navController.backQueue.addLast(
-                                    NavBackStackEntry.create(
-                                        context = this@OnboardActivity,
-                                        destination = NavDestination(Step.values()[backstackIndex].name)
-                                    )
-                                )
-                            }*/
-                            navController.navigate(Step.values()[lastStepIndex].name)
-                        }
-                        cancel("step restore execute must be once.")
-                    }
                 }
-
-                Scaffold(
-                    modifier = Modifier.fillMaxSize(),
+            ) { // Scaffold 는 backgroundColor 로 Brush 가 안되서 이렇게 함
+                OnboardRouter(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(brush = GradientAsset.BlackGradientBrush)
+                        .verticalInsetsPadding()
+                        .padding(horizontal = 16.dp),
+                    navController = navController,
                     scaffoldState = scaffoldState,
-                    snackbarHost = { snackbarHostState ->
-                        SnackbarHost(
-                            modifier = Modifier
-                                .navigationBarsPadding()
-                                .padding(bottom = 30.dp)
-                                .padding(horizontal = 30.dp),
-                            hostState = snackbarHostState
-                        ) { snackbarData ->
-                            Snackbar(backgroundColor = ColorAsset.G5) {
-                                Text(
-                                    text = snackbarData.message,
-                                    style = Typography.Body14R.copy(color = ColorAsset.Primary)
-                                )
-                            }
-                        }
-                    }
-                ) { // Scaffold 는 backgroundColor 로 Brush 가 안되서 이렇게 함
-                    OnboardRouter(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(brush = GradientAsset.BlackGradientBrush)
-                            /*.statusBarsPadding()
-                            .navigationBarsWithImePadding() // Step.VerifyWithEmail 단계에 TextField 있음*/
-                            .systemBarsPadding(start = false, end = false)
-                            .padding(horizontal = 16.dp),
-                        navController = navController,
-                        scaffoldState = scaffoldState,
-                        vm = vm,
-                    )
-                }
+                    vm = vm,
+                )
             }
         }
     }
