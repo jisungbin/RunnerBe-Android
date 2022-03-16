@@ -12,8 +12,6 @@ package team.applemango.runnerbe.activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
 import team.applemango.runnerbe.R
 import team.applemango.runnerbe.databinding.ActivityMainBinding
 
@@ -33,6 +31,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.bnvMenu.itemIconTintList = null
-        binding.bnvMenu.setupWithNavController(binding.fcvMain.findNavController())
+        // binding.bnvMenu.setupWithNavController(binding.fcvMain.findNavController())
     }
 }
