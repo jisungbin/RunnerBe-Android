@@ -345,6 +345,7 @@ private fun UnregisterDialog(
 ) {
     val buttonShape = RoundedCornerShape(10.dp)
     val context = LocalContext.current as Activity
+    val coroutineScope = rememberCoroutineScope()
 
     RunnerbeDialog(
         visible = visible,
@@ -378,7 +379,14 @@ private fun UnregisterDialog(
             Text(
                 modifier = Modifier
                     .clip(buttonShape)
-                    .clickable { context.changeActivityWithAnimation<MainActivityAlias>() }
+                    .clickable {
+                        coroutineScope.launch {
+                            context.dataStore.edit { preferences ->
+                                preferences[DataStoreKey.Onboard.Unregister] = true
+                            }
+                        }
+                        context.changeActivityWithAnimation<MainActivityAlias>()
+                    }
                     .padding(12.dp),
                 text = StringAsset.Yes,
                 style = Typography.Body14M.copy(color = ColorAsset.Primary)

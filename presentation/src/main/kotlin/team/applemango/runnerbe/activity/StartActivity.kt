@@ -86,6 +86,11 @@ class StartActivity : AppCompatActivity() {
             .collectWithLifecycle(this) { preferences ->
                 val isSignedUser = preferences[DataStoreKey.Login.Jwt] != null
                 val isSnsLoginDone = preferences[DataStoreKey.Login.Uuid] != null
+                val isUnregistered = preferences[DataStoreKey.Onboard.Unregister] == true
+                if (isUnregistered) {
+                    changeActivityWithAnimation<MainActivity>()
+                    return@collectWithLifecycle
+                }
                 when {
                     isSignedUser -> { // JWT 존재
                         changeActivityWithAnimation<MainActivity>()
