@@ -9,49 +9,59 @@
 
 package team.applemango.runnerbe.shared.compose.component
 
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
+import team.applemango.runnerbe.shared.compose.theme.animatedColorState
 
 @Composable
 fun <T> ToggleButton(
+    modifier: Modifier = Modifier,
     target: T,
     selectState: T?,
     targetStringBuilder: () -> String,
     onClick: () -> Unit,
 ) {
-    @Composable
-    fun backgroundAnimateColor(target: T) = animateColorAsState(
-        if (target == selectState) ColorAsset.Primary else Color.Transparent
-    ).value
-
-    @Composable
-    fun borderAnimateColor(target: T) = animateColorAsState(
-        if (target == selectState) ColorAsset.Primary else ColorAsset.G4
-    ).value
-
-    @Composable
-    fun textAnimateColor(target: T) = animateColorAsState(
-        if (target == selectState) ColorAsset.G6 else ColorAsset.G3_5
-    ).value
-
     Button(
+        modifier = modifier,
         onClick = { onClick() },
         shape = RoundedCornerShape(20.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = backgroundAnimateColor(target)),
-        border = BorderStroke(width = 1.dp, color = borderAnimateColor(target))
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = animatedColorState(
+                target = target,
+                selectState = selectState,
+                defaultColor = Color.Transparent,
+                selectedColor = ColorAsset.Primary
+            )
+        ),
+        border = BorderStroke(
+            width = 1.dp,
+            color = animatedColorState(
+                target = target,
+                selectState = selectState,
+                defaultColor = ColorAsset.G4,
+                selectedColor = ColorAsset.Primary
+            )
+        )
     ) {
         Text(
             text = targetStringBuilder(),
-            style = Typography.Body14R.copy(color = textAnimateColor(target))
+            style = Typography.Body14R.copy(
+                color = animatedColorState(
+                    target = target,
+                    selectState = selectState,
+                    defaultColor = ColorAsset.G3_5,
+                    selectedColor = ColorAsset.G6
+                )
+            )
         )
     }
 }

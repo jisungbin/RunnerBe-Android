@@ -19,11 +19,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.LocalTextStyle
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.material.contentColorFor
-import androidx.compose.material.primarySurface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,23 +34,30 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import team.applemango.runnerbe.shared.compose.extension.noRippleClickable
+import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 
 private const val DefaultToggleTopBarRadius = 34
 private const val DefaultToggleTopBarHeight = 36
 
+@Immutable
 data class ToggleTopBarItem<T>(
     val id: T,
     val text: String,
 )
 
+@Immutable
+data class ToggleTopBarColor(
+    val baseBackground: Color = ColorAsset.Primary,
+    val activateBackground: Color = ColorAsset.PrimaryDarker,
+    val inactivateBackground: Color = baseBackground,
+    val activateText: Color = Color.DarkGray,
+    val inactivateText: Color = Color.LightGray,
+)
+
 @Composable
 fun <T> ToggleTopBar(
     modifier: Modifier = Modifier,
-    baseBackgroundColor: Color = MaterialTheme.colors.primarySurface,
-    activateBackgroundColor: Color,
-    inactivateBackgroundColor: Color = baseBackgroundColor,
-    activateTextColor: Color = contentColorFor(activateBackgroundColor),
-    inactivateTextColor: Color = contentColorFor(inactivateBackgroundColor),
+    colors: ToggleTopBarColor = ToggleTopBarColor(),
     activateTextStyle: TextStyle = LocalTextStyle.current,
     inactivateTextStyle: TextStyle = LocalTextStyle.current,
     height: Dp = DefaultToggleTopBarHeight.dp,
@@ -66,16 +71,16 @@ fun <T> ToggleTopBar(
     @Composable
     fun backgroundAnimateColor(itemId: T) = animateColorAsState(
         when (selectedItemState == itemId) {
-            true -> activateBackgroundColor
-            else -> inactivateBackgroundColor
+            true -> colors.activateBackground
+            else -> colors.inactivateBackground
         }
     ).value
 
     @Composable
     fun textAnimateColor(itemId: T) = animateColorAsState(
         when (selectedItemState == itemId) {
-            true -> activateTextColor
-            else -> inactivateTextColor
+            true -> colors.activateText
+            else -> colors.inactivateText
         }
     ).value
 
@@ -90,7 +95,7 @@ fun <T> ToggleTopBar(
             .fillMaxWidth()
             .height(height)
             .clip(RoundedCornerShape(radius))
-            .background(color = baseBackgroundColor),
+            .background(color = colors.baseBackground),
         verticalAlignment = Alignment.CenterVertically
     ) {
         toggleTopBarItems.forEach { item ->
