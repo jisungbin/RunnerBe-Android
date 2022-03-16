@@ -23,10 +23,13 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fcv_main"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            app:defaultNavHost="true"
             app:layout_constraintBottom_toTopOf="@+id/bnv_menu"
             app:layout_constraintTop_toTopOf="parent"
+            app:navGraph="@navigation/main_navigation"
             tools:background="@color/primary" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
