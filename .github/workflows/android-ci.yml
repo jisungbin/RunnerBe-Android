@@ -41,7 +41,7 @@ jobs:
       - name: Unzip secrets.tar
         run: tar xvf secrets.tar
 
-      - name: Run ktlint
+      - name: Check ktlint format
         run: ./gradlew ktlintCheck
 
       - name: Upload coverage to Codecov
