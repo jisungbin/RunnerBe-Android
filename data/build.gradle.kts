@@ -10,26 +10,17 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
-    id("de.mannodermaus.android-junit5")
-    jacoco
+    id("com.google.devtools.ksp") version Versions.Ksp
 }
 
-jacoco {
-    toolVersion = "0.8.7"
-}
-
-tasks.withType<JacocoReport> {
-    reports {
-        html.required.set(true)
-        html.outputLocation.set(layout.projectDirectory.dir("../documents/coverage/jacoco/html"))
-        xml.required.set(true) // codecov depends on xml format report
-        xml.outputLocation.set(layout.projectDirectory.file("../documents/coverage/jacoco/report.xml"))
+kotlin {
+    sourceSets.main {
+        kotlin.srcDir("build/generated/ksp/main/kotlin")
     }
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
-    finalizedBy("jacocoTestReport")
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
 }
 
 dependencies {
@@ -40,11 +31,10 @@ dependencies {
     implementationProject(ProjectConstants.Domain)
     implementationProject(ProjectConstants.SharedDomain)
 
+    implementation(Dependencies.Ksp)
+    implementation(Dependencies.Jetpack.Room)
     implementation(platform(Dependencies.FirebaseBom))
     implementation(Dependencies.FirebaseEachKtx.Storage)
 
-    testRuntimeOnly(Dependencies.Test.JunitEngine)
-    testImplementation(Dependencies.Test.JunitApi)
-    testImplementation(Dependencies.Test.Hamcrest)
-    testImplementation(Dependencies.Test.Coroutine)
+    ksp(Dependencies.Compiler.RoomKsp)
 }

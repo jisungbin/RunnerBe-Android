@@ -41,17 +41,8 @@ jobs:
       - name: Unzip secrets.tar
         run: tar xvf secrets.tar
 
-      - name: Run ktlint
+      - name: Check ktlint format
         run: ./gradlew ktlintCheck
-
-      - name: Run data layer test
-        run: ./gradlew :data:test
-
-      - name: Add coverage to PR comment
-        uses: Madrapps/jacoco-report@v1.2
-        with:
-          paths: documents/coverage/jacoco/report.xml
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2.1.0

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ RunnerBe © 2022 Team AppleMango. all rights reserved.
+  ~ RunnerBe license is under the MIT.
+  ~
+  ~ [selector_drawable_bookmark.xml] created by Ji Sungbin on 22. 3. 15. 오후 12:11
+  ~
+  ~ Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
+  -->
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/ic_round_bookmark_24" android:state_checked="true" />
+    <item android:drawable="@drawable/ic_outlined_bookmark_24" android:state_checked="false" />
+</selector>

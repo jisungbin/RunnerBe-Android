@@ -9,12 +9,26 @@
 
 package team.applemango.runnerbe.feature.home.board.mvi
 
+import team.applemango.runnerbe.feature.home.board.MainBoardViewModel
+import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState.BookmarkToggleRequestFail
+import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState.NonRegisterUser
+import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState.None
+import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState.RunningItemEmpty
+
 /**
  * @property None 성공, 초기, 에러 상태는 UI 에서 따로 취할 액션이
  * 없기 때문에 None 하나로 모두 포함함
- * @property NonRegisterUser 비회원 유저로써 아직 이 기능 이용이 불기능함
+ * @property NonRegisterUser 비회원 유저로써 아직 특정 기능 이용이 불기능함
+ * [MainBoardViewModel] 에서 UseCase 의 result 가 `아직 인증되지 않은 계정` 이라면
+ * [NonRegisterUser] state 를 쏴서 UI 처리를 해주기 위함
+ * @property RunningItemEmpty 등록된 러닝 아이템이 없음
+ * @property BookmarkToggleRequestFail 북마크 갱신 request fail 일 경우에,
+ * [BookmarkToggleRequestFail] state 를 쏴서 북마크 아이콘 composable toggle 을
+ * rollback 해주기 위함
  */
 internal enum class MainBoardState {
     None,
-    NonRegisterUser
+    NonRegisterUser,
+    RunningItemEmpty,
+    BookmarkToggleRequestFail
 }

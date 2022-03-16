@@ -2,14 +2,11 @@
   ~ RunnerBe © 2022 Team AppleMango. all rights reserved.
   ~ RunnerBe license is under the MIT.
   ~
-  ~ [colors.xml] created by Ji Sungbin on 22. 2. 6. 오후 5:26
+  ~ [nav_default_enter_anim.xml] created by Ji Sungbin on 22. 3. 16. 오후 3:22
   ~
   ~ Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
   -->
 
-<resources>
-    <color name="primary">#ffe082</color>
-    <color name="G6">#292929</color>
-    <color name="G5_5">#36342D</color>
-    <color name="G4">#6f6d69</color>
-</resources>
+<set>
+    <!--Empty to disable animation-->
+</set>

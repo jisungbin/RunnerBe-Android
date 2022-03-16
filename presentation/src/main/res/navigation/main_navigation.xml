@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ RunnerBe © 2022 Team AppleMango. all rights reserved.
+  ~ RunnerBe license is under the MIT.
+  ~
+  ~ [main_navigation.xml] created by Ji Sungbin on 22. 3. 16. 오전 9:14
+  ~
+  ~ Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
+  -->
+
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/mainboard">
+
+    <fragment
+        android:id="@+id/mainboard"
+        android:name="team.applemango.runnerbe.feature.home.board.MainBoardFragment"
+        android:label="MainBoardFragment" />
+
+    <fragment
+        android:id="@+id/bookmark"
+        android:name="team.applemango.runnerbe.feature.home.board.MainBoardFragment"
+        android:label="MainBoardFragment">
+
+        <argument
+            android:name="bookmark"
+            android:defaultValue="true"
+            app:argType="boolean" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/mypage"
+        android:name="team.applemango.runnerbe.feature.mypage.MypageFragment"
+        android:label="MypageFragment" />
+
+</navigation>

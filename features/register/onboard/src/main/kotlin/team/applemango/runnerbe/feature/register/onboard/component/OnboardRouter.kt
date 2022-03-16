@@ -48,7 +48,6 @@ import com.google.accompanist.navigation.animation.composable
 import com.skydoves.landscapist.rememberDrawablePainter
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import team.applemango.runnerbe.activity.MainActivity
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
@@ -66,6 +65,7 @@ import team.applemango.runnerbe.shared.util.extension.changeActivityWithAnimatio
 import team.applemango.runnerbe.shared.util.extension.dataStore
 import team.applemango.runnerbe.shared.util.extension.toast
 import team.applemango.runnerbe.util.DFMLoginActivityAlias
+import team.applemango.runnerbe.util.MainActivityAlias
 
 private var lastBackPressedTime = 0L
 
@@ -155,7 +155,7 @@ internal fun OnboardRouter(
                             modifier = Modifier.clickable { // X 온보딩 건너뛰기
                                 // TODO: Dialog
                                 toast(context, "todo: dialog")
-                                context.changeActivityWithAnimation<MainActivity>()
+                                context.changeActivityWithAnimation<MainActivityAlias>()
                             },
                             painter = rememberDrawablePainter(presentationDrawableOf("ic_round_close_24")),
                             contentDescription = null,
@@ -282,7 +282,7 @@ internal fun OnboardRouter(
                                 preferences[DataStoreKey.Login.RegisterDone] = true
                             }
                         }
-                        activity.changeActivityWithAnimation<MainActivity>()
+                        activity.changeActivityWithAnimation<MainActivityAlias>()
                     }
                 ) {
                     Text(
@@ -300,7 +300,7 @@ internal fun OnboardRouter(
                     step = Step.VerifyWithEmployeeIdRequestDone,
                     bottomCTAButtonEnabled = true,
                     onBottomCTAButtonAction = { // 메인 화면으로
-                        activity.changeActivityWithAnimation<MainActivity>()
+                        activity.changeActivityWithAnimation<MainActivityAlias>()
                     }
                 ) {
                     Text(

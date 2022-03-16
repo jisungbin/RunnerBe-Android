@@ -1,4 +1,4 @@
-# 코드 컨벤션
+# 러너비 안드로이드 코드 컨벤션
 
 ## API Naming
 
@@ -9,13 +9,14 @@
 
 ## 코드 스타일
 
-- 린트는 [ktlint](https://ktlint.github.io/)를 적용하며, 코틀린 공식 스타일 가이드를 따름
+- [안드로이드 공식 코틀린 스타일 가이드](https://developer.android.com/kotlin/style-guide)를 따름
 - 인자가 2개 이상인 경우, 각 인자마다 새로운 라인에 배치 (코드 가독성을 위함)
 - 함수 괄호가 열린 경우, 새로운 라인에 코드 작성 (코드 가독성을 위함)
   단, 아래와 같은 경우엔 예외를 가짐
     1. filter function 과 같이 단순 boolean expression function 일 경우
     2. composable function 일 경우
-    3. logeukes 함수의 content 인자일 경우
+    3. logeukes 함수의 경우
+    4. delegate 코드일 경우
 - enum class when 에서 else 는 사용하지 않음 (코드 파악을 쉽게 하기 위함)
 
 ## KDoc

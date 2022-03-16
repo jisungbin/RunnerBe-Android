@@ -25,6 +25,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,6 +40,7 @@ import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.domain.extension.format
 
+@Immutable
 private data class DetailItem(
     @DrawableRes val icon: Int,
     val text: String,
@@ -49,6 +51,7 @@ private const val RunningTimeFormat = ""
 
 @Composable
 internal fun RunningItem(
+    modifier: Modifier = Modifier,
     item: RunningItem,
     bookmarkState: Boolean,
     requestToggleBookmarkState: () -> Unit,
@@ -80,7 +83,7 @@ internal fun RunningItem(
     }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight()
             .clip(RoundedCornerShape(12.dp))

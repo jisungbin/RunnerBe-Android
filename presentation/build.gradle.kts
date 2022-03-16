@@ -9,15 +9,14 @@
 
 plugins {
     // id("com.spotify.ruler")
+    installLibraryDfmHiltTest(isPresentation = true)
     id("com.android.application")
-    id("androidx.navigation.safeargs")
     id("com.google.gms.google-services")
-    id("com.google.firebase.crashlytics")
+    // id("com.google.firebase.crashlytics")
     id("com.google.firebase.firebase-perf")
     id("com.google.android.gms.oss-licenses-plugin")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
     id("name.remal.check-dependency-updates") version Versions.BuildUtil.CheckDependencyUpdates
-    installLibraryDfmHiltTest(isLibrary = false)
 }
 
 /*ruler {
@@ -50,6 +49,7 @@ android {
 
     buildFeatures {
         compose = true
+        dataBinding = true
     }
 
     composeOptions {
@@ -73,22 +73,17 @@ dependencies {
     )
     features.forEach(::implementationProject)
 
-    val layers = listOf(
-        ProjectConstants.Domain,
-        ProjectConstants.Data,
-    )
-    layers.forEach(::implementationProject)
-
     implementation(Dependencies.Util.Erratum)
     implementation(platform(Dependencies.FirebaseBom))
     implementation(Dependencies.FirebaseEachKtx.Analytics)
     implementation(Dependencies.FirebaseEachKtx.Performance)
-    implementation(Dependencies.FirebaseEachKtx.Crashlytics)
+    // implementation(Dependencies.FirebaseEachKtx.Crashlytics)
     implementation(Dependencies.FirebaseEachKtx.RemoteConfig)
 
     Dependencies.Ui.forEach(::implementation)
     Dependencies.Login.forEach(::implementation)
     Dependencies.Analytics.forEach(::implementation)
+    Dependencies.Jetpack.Navigation.forEach(::implementation)
     Dependencies.PresentationOnlyKtx.forEach(::implementation)
 
     Dependencies.Debug.forEach(::debugImplementation)

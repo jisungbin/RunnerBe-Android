@@ -17,6 +17,10 @@
         https://stackoverflow.com/a/62377672/14299073 -->
     </style>
 
+    <style name="Theme.RunnerBe.Main" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:navigationBarColor">@color/G6</item>
+    </style>
+
     <style name="Theme.RunnerBe.Splash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/G5_5</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo_splash</item>

@@ -41,11 +41,11 @@ import java.util.Locale
  * @property BookmarkApiFields 찜 목록 조회 API Call result
  * - bookMarkNumber, peopleNum, job, distance, contents, attendance, bookmarked 필드 없음
  * @property MyPageOwnRunningItemFields 마이 페이지 정보 조회 API - myPosting 부분
- * postingTime, bookMarkNumber, peopleNum, gatherLatitude, gatherLongitude,
- * distance, contents, attendance, bookmarked
+ * - postingTime, bookMarkNumber, peopleNum, gatherLatitude, gatherLongitude,
+ * distance, contents, attendance, bookmarked 필드 없음
  * @property MyPageJoinRunningItemFields 마이 페이지 정보 조회 API - myRunning 부분
- * postingTime, bookMarkNumber, peopleNum, gatherLatitude, gatherLongitude,
- * distance, contents
+ * - postingTime, bookMarkNumber, peopleNum, gatherLatitude, gatherLongitude,
+ * distance, contents 필드 없음
  */
 internal enum class MappingType {
     MainPageApiFields,
@@ -101,7 +101,7 @@ internal fun RunningItemData.toDomain(type: MappingType) = RunningItem(
     bookmarkCount = when (type) {
         MainPageApiFields -> /*requireNotNull(bookMarkNumber) {
             requireFieldNullMessage("bookMarkNumber")
-        }*/ 1 // TODO: Fix me
+        }*/ 1 // TODO
         InformationApiFields, BookmarkApiFields,
         MyPageOwnRunningItemFields, MyPageJoinRunningItemFields,
         -> DefaultIntValue

@@ -21,4 +21,4 @@ internal fun BookmarkItemsResponse.toDomain() = requireNotNull(result) {
         requireFieldNullMessage("result")
     }
     item.toDomain(MappingType.BookmarkApiFields)
-} ?: throw Exception(requireFieldNullMessage("bookMarkList"))
+} ?: throw IllegalStateException(requireFieldNullMessage("bookMarkList"))
