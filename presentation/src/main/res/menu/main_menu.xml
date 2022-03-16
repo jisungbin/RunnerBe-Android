@@ -10,7 +10,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/home"
+        android:id="@+id/mainboard"
         android:icon="@drawable/selector_drawable_home"
         android:title="@string/app_name" />
 
@@ -20,7 +20,7 @@
         android:title="@string/app_name" />
 
     <item
-        android:id="@+id/me"
+        android:id="@+id/mypage"
         android:icon="@drawable/selector_drawable_me"
         android:title="@string/app_name" />
 
