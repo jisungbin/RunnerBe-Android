@@ -31,7 +31,7 @@ fun RunnerbeDialog(
 ) {
     if (visible) {
         CustomAlertDialog(
-            onDismissRequest = { onDismissRequest() },
+            onDismissRequest = onDismissRequest,
             properties = properties
         ) {
             Column(

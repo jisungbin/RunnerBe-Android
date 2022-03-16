@@ -286,7 +286,7 @@ private fun EmailVerifyLinkNoticeDialog(
 ) {
     RunnerbeDialog(
         visible = visible,
-        onDismissRequest = { onDismissRequest() }
+        onDismissRequest = onDismissRequest
     ) {
         Text(
             modifier = Modifier
