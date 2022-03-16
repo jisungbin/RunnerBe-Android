@@ -9,15 +9,15 @@
 
 plugins {
     // id("com.spotify.ruler")
+    installLibraryDfmHiltTest(isPresentation = true)
     id("com.android.application")
-    id("androidx.navigation.safeargs")
+    id("androidx.navigation.safeargs.kotlin")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
     id("com.google.firebase.firebase-perf")
     id("com.google.android.gms.oss-licenses-plugin")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
     id("name.remal.check-dependency-updates") version Versions.BuildUtil.CheckDependencyUpdates
-    installLibraryDfmHiltTest(isPresentation = true)
 }
 
 /*ruler {

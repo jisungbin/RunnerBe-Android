@@ -9,7 +9,7 @@
 
 plugins {
     installLibraryDfmHiltTest()
-    id("androidx.navigation.safeargs")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -19,6 +19,12 @@ android {
 
     composeOptions {
         kotlinCompilerExtensionVersion = Versions.Compose.Main
+    }
+
+    sourceSets {
+        getByName("main") {
+            java.srcDirs("build/generated/source/navigation-args")
+        }
     }
 }
 
