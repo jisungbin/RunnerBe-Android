@@ -19,6 +19,7 @@
 `:domain` 을 포함한 모든 모듈에서 쓰일 수 있으며, 순수 코틀린 의존성만 가지고 있음 (Coroutine, Logeukes)
 
 > domain 에서도 필요한 공통되는 함수들을 담기 위해 만들어 짐
+> 
 > Logeukes: 코틀린 로깅 라이브러리
 
 ### :shared-compose
