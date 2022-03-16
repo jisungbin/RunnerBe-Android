@@ -44,12 +44,6 @@ jobs:
       - name: Run ktlint
         run: ./gradlew ktlintCheck
 
-      - name: Add coverage to PR comment
-        uses: Madrapps/jacoco-report@v1.2
-        with:
-          paths: documents/coverage/jacoco/report.xml
-          token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2.1.0
         with:
