@@ -44,6 +44,7 @@ import team.applemango.runnerbe.shared.util.extension.dataStore
 import team.applemango.runnerbe.shared.util.extension.launchedWhenCreated
 import team.applemango.runnerbe.shared.util.extension.toast
 import team.applemango.runnerbe.util.DFMOnboardActivityAlias
+import team.applemango.runnerbe.util.MainActivityAlias
 
 class SnsLoginActivity : WindowInsetActivity() {
 
@@ -92,7 +93,7 @@ class SnsLoginActivity : WindowInsetActivity() {
     private fun handleState(state: LoginState) {
         when (state) {
             LoginState.Done -> changeActivityWithAnimation<DFMOnboardActivityAlias>()
-            LoginState.Registered -> /*changeActivityWithAnimation<MainActivity>()*/ TODO() // TODO
+            LoginState.Registered -> changeActivityWithAnimation<MainActivityAlias>()
             LoginState.None -> return
         }
     }

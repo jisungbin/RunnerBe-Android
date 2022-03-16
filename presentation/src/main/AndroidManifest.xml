@@ -55,6 +55,10 @@
 
         </activity>
 
+        <activity-alias
+            android:name="team.applemango.runnerbe.util.MainActivityAlias"
+            android:targetActivity=".activity.MainActivity" />
+
         <meta-data
             android:name="firebase_performance_logcat_enabled"
             android:value="true" />

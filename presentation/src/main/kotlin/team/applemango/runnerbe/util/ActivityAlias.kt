@@ -13,3 +13,4 @@ import android.app.Activity
 
 class DFMLoginActivityAlias : Activity()
 class DFMOnboardActivityAlias : Activity()
+class MainActivityAlias : Activity()
