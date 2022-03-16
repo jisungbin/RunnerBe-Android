@@ -1,4 +1,4 @@
-안녕하세요, 질문이 있습니다. 현재 모듈간 의존성이 아래와 같이 돼 있습니다.
+안녕하세요, 클릭헤 주셔서 감사합니다. 현재 모듈간 의존성이 아래와 같이 돼 있습니다.
 
 ![dependencies](https://github.com/runner-be/RunnerBe-Android/raw/develop/art/project-dependency-graph/graph.dot.png)
 
