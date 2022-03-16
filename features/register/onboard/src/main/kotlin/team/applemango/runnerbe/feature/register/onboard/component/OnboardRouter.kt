@@ -25,6 +25,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.ScaffoldState
@@ -37,7 +40,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.datastore.preferences.core.edit
@@ -57,13 +62,13 @@ import team.applemango.runnerbe.feature.register.onboard.step.GenderPicker
 import team.applemango.runnerbe.feature.register.onboard.step.JobPicker
 import team.applemango.runnerbe.feature.register.onboard.step.TermsTable
 import team.applemango.runnerbe.feature.register.onboard.step.YearPicker
+import team.applemango.runnerbe.shared.compose.component.RunnerbeDialog
 import team.applemango.runnerbe.shared.compose.extension.presentationDrawableOf
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.changeActivityWithAnimation
 import team.applemango.runnerbe.shared.util.extension.dataStore
-import team.applemango.runnerbe.shared.util.extension.toast
 import team.applemango.runnerbe.util.DFMLoginActivityAlias
 import team.applemango.runnerbe.util.MainActivityAlias
 
@@ -84,6 +89,7 @@ internal fun OnboardRouter(
     var stepIndexStringState by remember { mutableStateOf("") }
     var photoState by remember { mutableStateOf<Bitmap?>(null) }
     var enableGoNextStepState by remember { mutableStateOf(false) }
+    var unregisterDialogVisibleState by remember { mutableStateOf(false) }
 
     stepIndexState = when (navController.currentBackStackEntryAsState().value?.destination?.route) {
         Step.Terms.name -> 0
@@ -99,6 +105,13 @@ internal fun OnboardRouter(
     if (stepIndexState != 0) {
         stepIndexStringState = "$stepIndexState/4"
     }
+
+    UnregisterDialog(
+        visible = unregisterDialogVisibleState,
+        onDismissRequest = {
+            unregisterDialogVisibleState = false
+        }
+    )
 
     fun confirmFinish() {
         val nowBackPressedTime = System.currentTimeMillis()
@@ -154,9 +167,7 @@ internal fun OnboardRouter(
                         )
                         Icon(
                             modifier = Modifier.clickable { // X 온보딩 건너뛰기
-                                // TODO: Dialog
-                                toast(context, "todo: dialog")
-                                context.changeActivityWithAnimation<MainActivityAlias>()
+                                unregisterDialogVisibleState = true
                             },
                             painter = rememberDrawablePainter(presentationDrawableOf("ic_round_close_24")),
                             contentDescription = null,
@@ -325,4 +336,62 @@ internal fun OnboardRouter(
             }
         }
     }
+}
+
+@Composable
+private fun UnregisterDialog(
+    visible: Boolean,
+    onDismissRequest: () -> Unit,
+) {
+    val buttonShape = RoundedCornerShape(10.dp)
+    val context = LocalContext.current as Activity
+
+    RunnerbeDialog(
+        visible = visible,
+        onDismissRequest = onDismissRequest
+    ) {
+        Text(
+            modifier = Modifier
+                .padding(top = 24.dp, bottom = 12.dp)
+                .padding(horizontal = 24.dp),
+            text = StringAsset.Dialog.UnregisterNotice,
+            style = Typography.Title18R.copy(color = ColorAsset.G1)
+        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(bottom = 12.dp, end = 12.dp),
+            horizontalArrangement = Arrangement.spacedBy(
+                space = 12.dp,
+                alignment = Alignment.End
+            )
+        ) {
+            Text(
+                modifier = Modifier
+                    .clip(buttonShape)
+                    .clickable { onDismissRequest() }
+                    .padding(12.dp),
+                text = StringAsset.No,
+                style = Typography.Body14M.copy(color = ColorAsset.Primary)
+            )
+            Text(
+                modifier = Modifier
+                    .clip(buttonShape)
+                    .clickable { context.changeActivityWithAnimation<MainActivityAlias>() }
+                    .padding(12.dp),
+                text = StringAsset.Yes,
+                style = Typography.Body14M.copy(color = ColorAsset.Primary)
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun UnregisterDialogPreview() {
+    UnregisterDialog(
+        visible = true,
+        onDismissRequest = {}
+    )
 }
