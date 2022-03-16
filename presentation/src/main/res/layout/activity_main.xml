@@ -25,7 +25,9 @@
             android:id="@+id/fcv_main"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/bnv_menu" />
+            app:layout_constraintBottom_toTopOf="@+id/bnv_menu"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:background="@color/primary" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bnv_menu"
@@ -36,7 +38,9 @@
             app:itemRippleColor="@null"
             app:labelVisibilityMode="unlabeled"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:menu="@menu/main_menu" />
+            app:menu="@menu/main_menu"
+            tools:background="@color/G6"
+            tools:layout_height="80dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
