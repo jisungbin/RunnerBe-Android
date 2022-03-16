@@ -9,11 +9,13 @@
 
 package team.applemango.runnerbe.feature.home.board
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -41,7 +43,9 @@ import team.applemango.runnerbe.feature.home.board.component.RunningItem
 import team.applemango.runnerbe.shared.compose.component.ToggleTopBar
 import team.applemango.runnerbe.shared.compose.component.ToggleTopBarColor
 import team.applemango.runnerbe.shared.compose.component.ToggleTopBarItem
+import team.applemango.runnerbe.shared.compose.extension.noRippleClickable
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
+import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.compose.theme.RunnerbeCheckBoxColors
 import team.applemango.runnerbe.shared.compose.theme.Typography
 
@@ -84,6 +88,7 @@ internal fun MainBoardComposable(
     Column(
         modifier = modifier
             .fillMaxSize()
+            .background(color = GradientAsset.BlackStartColor)
             .padding(16.dp)
     ) {
         Box( // ToolBar
@@ -156,46 +161,46 @@ internal fun MainBoardComposable(
                         colors = RunnerbeCheckBoxColors
                     )
                 }
-            }
-            ToggleTopBarSubItem(
-                onClick = { /*TODO*/ },
-                text = stringResource(R.string.mainboard_sort_nearby)
-            ) {
+                ToggleTopBarSubItem(
+                    onClick = { /*TODO*/ },
+                    text = stringResource(R.string.mainboard_sort_nearby)
+                ) {
+                    Icon(
+                        modifier = Modifier.padding(start = 2.dp),
+                        painter = painterResource(R.drawable.ic_round_chevron_down),
+                        contentDescription = null,
+                        tint = Color.Unspecified
+                    )
+                }
                 Icon(
-                    modifier = Modifier.padding(start = 2.dp),
-                    painter = painterResource(R.drawable.ic_round_chevron_down),
+                    modifier = Modifier.clickable {
+                        // TODO
+                    },
+                    painter = painterResource(R.drawable.ic_round_filter_24),
                     contentDescription = null,
                     tint = Color.Unspecified
                 )
             }
-            Icon(
-                modifier = Modifier.clickable {
-                    // TODO
-                },
-                painter = painterResource(R.drawable.ic_round_filter_24),
-                contentDescription = null,
-                tint = Color.Unspecified
-            )
         }
-    }
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
-    ) {
-        items(
-            items = runningItems.filter { item ->
-                item.runningType == selectedRunningItemTypeState &&
-                    item.bookmarked == isBookmarkPage
-            },
-            key = { it.itemId }
-        ) { item ->
-            RunningItem(
-                item = item,
-                bookmarkState = false,
-                requestToggleBookmarkState = {
-                    // TODO
-                }
-            )
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            items(
+                items = runningItems.filter { item ->
+                    item.runningType == selectedRunningItemTypeState &&
+                        item.bookmarked == isBookmarkPage
+                },
+                key = { it.itemId }
+            ) { item ->
+                RunningItem(
+                    item = item,
+                    bookmarkState = false,
+                    requestToggleBookmarkState = {
+                        // TODO
+                    }
+                )
+            }
         }
     }
 }
@@ -205,10 +210,10 @@ private fun ToggleTopBarSubItem(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     text: String,
-    content: @Composable () -> Unit,
+    content: @Composable RowScope.() -> Unit,
 ) {
     Row(
-        modifier = modifier.clickable { onClick() },
+        modifier = modifier.noRippleClickable { onClick() },
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
