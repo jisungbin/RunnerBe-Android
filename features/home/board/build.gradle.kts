@@ -9,6 +9,7 @@
 
 plugins {
     installLibraryDfmHiltTest()
+    id("androidx.navigation.safeargs")
 }
 
 android {
