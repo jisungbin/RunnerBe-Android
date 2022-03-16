@@ -9,7 +9,6 @@
 
 plugins {
     installLibraryDfmHiltTest()
-    // id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -27,5 +26,4 @@ dependencies {
     implementation(Dependencies.EachKtx.Fragment)
     implementationProject(ProjectConstants.HomeWrite)
     implementationProject(ProjectConstants.HomeNotification)
-    // Dependencies.Jetpack.Navigation.forEach(::implementation)
 }
