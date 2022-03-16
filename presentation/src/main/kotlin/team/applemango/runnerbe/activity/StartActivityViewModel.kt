@@ -27,7 +27,7 @@ import team.applemango.runnerbe.shared.base.BaseViewModel
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
 
 @HiltViewModel
-class StartActivityViewModel @Inject constructor(
+internal class StartActivityViewModel @Inject constructor(
     private val loadRunningItemsUseCase: LoadRunningItemsUseCase,
 ) : BaseViewModel() {
 
