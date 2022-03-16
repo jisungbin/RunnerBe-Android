@@ -9,6 +9,7 @@
 
 package team.applemango.runnerbe.feature.home.board
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -49,6 +50,7 @@ import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.compose.theme.RunnerbeCheckBoxColors
 import team.applemango.runnerbe.shared.compose.theme.Typography
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun MainBoardComposable(
     modifier: Modifier = Modifier,
@@ -194,6 +196,7 @@ internal fun MainBoardComposable(
                 key = { it.itemId }
             ) { item ->
                 RunningItem(
+                    modifier = Modifier.animateItemPlacement(),
                     item = item,
                     bookmarkState = false,
                     requestToggleBookmarkState = {

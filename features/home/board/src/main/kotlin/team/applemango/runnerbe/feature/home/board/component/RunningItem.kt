@@ -51,6 +51,7 @@ private const val RunningTimeFormat = ""
 
 @Composable
 internal fun RunningItem(
+    modifier: Modifier = Modifier,
     item: RunningItem,
     bookmarkState: Boolean,
     requestToggleBookmarkState: () -> Unit,
@@ -82,7 +83,7 @@ internal fun RunningItem(
     }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight()
             .clip(RoundedCornerShape(12.dp))
