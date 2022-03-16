@@ -36,3 +36,7 @@ Jetpack Compose 의존성을 가지고 있으며, UI 모듈에서만 쓰일 수 
 <img width="455" alt="image" src="https://user-images.githubusercontent.com/40740128/158544649-1a11eda7-2d7d-4273-a1d0-439d6d4b2191.png">
 
 사용하는덴 문제가 없지만, 이런식으로 shared 모듈만 3개가 나오는게 맞는 구조인가 너무 찝찝해서 여쭤봅니다. 실무 환경에서도 필요에 따라서 이런식으로 모듈이 나오기도 하나요? 만약 개선할 수 있다면 어떤식으로 개선할 수 있을까요?
+
+---
+
+# https://github.com/runner-be/RunnerBe-Android/issues/45
