@@ -44,7 +44,7 @@ class MainBoardFragment : Fragment() {
             setContent {
                 MainBoardComposable(
                     modifier = Modifier.fillMaxSize(),
-                    isBookmarkPage = false,
+                    isBookmarkPage = arguments?.getBoolean("bookmark") ?: false,
                     vm = vm,
                 )
             }

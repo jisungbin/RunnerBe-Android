@@ -19,8 +19,15 @@
 
     <fragment
         android:id="@+id/bookmark"
-        android:name="team.applemango.runnerbe.feature.home.board.bookmark.BookmarkFragment"
-        android:label="MainBoardFragment" />
+        android:name="team.applemango.runnerbe.feature.home.board.MainBoardFragment"
+        android:label="MainBoardFragment">
+
+        <argument
+            android:name="bookmark"
+            android:defaultValue="true"
+            app:argType="boolean" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/mypage"
