@@ -2,12 +2,12 @@
  * RunnerBe © 2022 Team AppleMango. all rights reserved.
  * RunnerBe license is under the MIT.
  *
- * [MainBoardFragment.kt] created by Ji Sungbin on 22. 3. 15. 오후 6:48
+ * [BookmarkFragment.kt] created by Ji Sungbin on 22. 3. 16. 오전 9:18
  *
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.feature.home.board
+package team.applemango.runnerbe.feature.home.board.bookmark
 
 import android.content.Context
 import android.os.Bundle
@@ -24,13 +24,16 @@ import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.jisungbin.logeukes.LoggerType
 import io.github.jisungbin.logeukes.logeukes
+import team.applemango.runnerbe.feature.home.board.MainBoardComposable
+import team.applemango.runnerbe.feature.home.board.MainBoardViewModel
+import team.applemango.runnerbe.feature.home.board.R
 import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
 import team.applemango.runnerbe.shared.domain.extension.toMessage
 import team.applemango.runnerbe.shared.util.extension.toast
 
 @AndroidEntryPoint
-class MainBoardFragment : Fragment() {
+class BookmarkFragment : Fragment() {
 
     private val vm: MainBoardViewModel by activityViewModels()
 
@@ -44,7 +47,7 @@ class MainBoardFragment : Fragment() {
             setContent {
                 MainBoardComposable(
                     modifier = Modifier.fillMaxSize(),
-                    isBookmarkPage = false,
+                    isBookmarkPage = true,
                     vm = vm,
                 )
             }
