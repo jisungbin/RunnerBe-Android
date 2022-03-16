@@ -101,7 +101,7 @@ internal fun RunningItemData.toDomain(type: MappingType) = RunningItem(
     bookmarkCount = when (type) {
         MainPageApiFields -> /*requireNotNull(bookMarkNumber) {
             requireFieldNullMessage("bookMarkNumber")
-        }*/ 1 // TODO: Fix me
+        }*/ 1 // TODO
         InformationApiFields, BookmarkApiFields,
         MyPageOwnRunningItemFields, MyPageJoinRunningItemFields,
         -> DefaultIntValue
