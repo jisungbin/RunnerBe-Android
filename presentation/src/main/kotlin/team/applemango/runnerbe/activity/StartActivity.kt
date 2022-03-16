@@ -11,10 +11,14 @@ package team.applemango.runnerbe.activity
 
 import android.os.Build
 import android.os.Bundle
+import android.view.ViewTreeObserver
 import android.view.animation.AnticipateInterpolator
+import android.widget.LinearLayout
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import dagger.hilt.android.AndroidEntryPoint
+import team.applemango.runnerbe.feature.home.board.DataStore
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.util.extension.changeActivityWithAnimation
 import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
@@ -29,9 +33,24 @@ class StartActivity : AppCompatActivity() {
         const val SplashAnimationDuration = 200L
     }
 
+    private var isReady = false
+    private val vm: StartActivityViewModel by viewModels()
+    private val rootView by lazy { LinearLayout(this) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
+        vm.loadAllRunningItems { runningItems ->
+            DataStore.updateRunningItems(runningItems)
+            isReady = true
+        }
         super.onCreate(savedInstanceState)
+        setContentView(
+            rootView,
+            LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+            )
+        )
 
         // 무조건 다른 액티비티로 이동되므로 알아서 cancel 됨 (수동 cancel 불필요)
         applicationContext.dataStore.data.collectWithLifecycle(this) { preferences ->
@@ -52,6 +71,19 @@ class StartActivity : AppCompatActivity() {
                 }
             }
         }
+
+        rootView.viewTreeObserver.addOnPreDrawListener(
+            object : ViewTreeObserver.OnPreDrawListener {
+                override fun onPreDraw(): Boolean {
+                    return if (isReady) {
+                        rootView.viewTreeObserver.removeOnPreDrawListener(this)
+                        true
+                    } else {
+                        false
+                    }
+                }
+            }
+        )
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             splashScreen.setOnExitAnimationListener { splashScreenView ->
