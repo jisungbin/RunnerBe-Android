@@ -11,6 +11,8 @@
 
 package team.applemango.runnerbe.shared.compose.theme
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
@@ -39,3 +41,9 @@ object GradientAsset {
     val BlackEndColor = Color(27, 26, 23)
     val BlackGradientBrush = Brush.linearGradient(listOf(BlackStartColor, BlackEndColor))
 }
+
+@Composable
+fun <T> animatedColorState(target: T, selectState: T, defaultColor: Color, selectedColor: Color) =
+    animateColorAsState(
+        if (target == selectState) selectedColor else defaultColor
+    ).value
