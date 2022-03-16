@@ -21,6 +21,12 @@
         android:layout_height="match_parent"
         tools:theme="@style/Theme.RunnerBe.Main">
 
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fcv_main"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/bnv_menu" />
+
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bnv_menu"
             android:layout_width="match_parent"
