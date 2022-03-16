@@ -29,26 +29,46 @@ import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.edit
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.cancellable
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.domain.constant.Job
+import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.shared.compose.component.ToggleButton
 import team.applemango.runnerbe.shared.constant.DataStoreKey
+import team.applemango.runnerbe.shared.domain.flowExceptionMessage
 import team.applemango.runnerbe.shared.util.extension.dataStore
 
 @Composable
-internal fun JobPicker(jobSelectChanged: (isSelected: Boolean) -> Unit) {
+internal fun JobPicker(
+    vm: OnboardViewModel,
+    jobSelectChanged: (isSelected: Boolean) -> Unit,
+) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     var jobSelectState by remember { mutableStateOf<Job?>(null) }
 
     LaunchedEffect(Unit) {
-        context.dataStore.data.cancellable().collect { preferences ->
-            preferences[DataStoreKey.Onboard.Job]?.let { restoreJobCode ->
-                jobSelectChanged(true)
-                jobSelectState = Job.values().first { it.name == restoreJobCode }
-            } ?: jobSelectChanged(false)
-            cancel("onboard restore execute must be once.")
-        }
+        context
+            .dataStore
+            .data
+            .cancellable()
+            .catch { exception ->
+                vm.emitException(
+                    Exception(
+                        flowExceptionMessage(
+                            flowName = "JobPicker DataStore",
+                            exception = exception
+                        )
+                    )
+                )
+            }
+            .collect { preferences ->
+                preferences[DataStoreKey.Onboard.Job]?.let { restoreJobCode ->
+                    jobSelectChanged(true)
+                    jobSelectState = Job.values().first { it.name == restoreJobCode }
+                } ?: jobSelectChanged(false)
+                cancel("onboard restore execute must be once.")
+            }
     }
 
     // FlowLayout 은 디자인이 안이쁘게 되서 수동으로 작성 함

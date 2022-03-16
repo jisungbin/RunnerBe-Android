@@ -95,6 +95,7 @@ internal fun OnboardRouter(
         else -> stepIndexState
     }
 
+    // TODO: 로직 개선 - 굉장히 안 좋은 방법 같음
     if (stepIndexState != 0) {
         stepIndexStringState = "$stepIndexState/4"
     }
@@ -188,9 +189,12 @@ internal fun OnboardRouter(
                         navController.navigate(Step.Year.name)
                     }
                 ) {
-                    TermsTable(onAllTermsCheckStateChanged = { allChecked ->
-                        enableGoNextStepState = allChecked
-                    })
+                    TermsTable(
+                        vm = vm,
+                        onAllTermsCheckStateChanged = { allChecked ->
+                            enableGoNextStepState = allChecked
+                        }
+                    )
                 }
             }
             composable(route = Step.Year.name) {
@@ -201,9 +205,12 @@ internal fun OnboardRouter(
                         navController.navigate(Step.Gender.name)
                     }
                 ) {
-                    YearPicker(selectedYearChanged = { isAdult ->
-                        enableGoNextStepState = isAdult
-                    })
+                    YearPicker(
+                        vm = vm,
+                        selectedYearChanged = { isAdult ->
+                            enableGoNextStepState = isAdult
+                        }
+                    )
                 }
             }
             composable(route = Step.Gender.name) {
@@ -214,9 +221,12 @@ internal fun OnboardRouter(
                         navController.navigate(Step.Job.name)
                     }
                 ) {
-                    GenderPicker(genderSelectChanged = { isSelected ->
-                        enableGoNextStepState = isSelected
-                    })
+                    GenderPicker(
+                        vm = vm,
+                        genderSelectChanged = { isSelected ->
+                            enableGoNextStepState = isSelected
+                        }
+                    )
                 }
             }
             composable(route = Step.Job.name) {
@@ -227,9 +237,12 @@ internal fun OnboardRouter(
                         navController.navigate(/*Step.VerifyWithEmail.name*/ Step.VerifyWithEmployeeId.name)
                     }
                 ) {
-                    JobPicker(jobSelectChanged = { isSelected ->
-                        enableGoNextStepState = isSelected
-                    })
+                    JobPicker(
+                        vm = vm,
+                        jobSelectChanged = { isSelected ->
+                            enableGoNextStepState = isSelected
+                        }
+                    )
                 }
             }
             composable(route = Step.VerifyWithEmail.name) { // 회사 이메일로 직장 인증

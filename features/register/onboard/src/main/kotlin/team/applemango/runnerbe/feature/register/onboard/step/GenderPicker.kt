@@ -27,26 +27,46 @@ import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.edit
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.cancellable
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.domain.constant.Gender
+import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.shared.compose.component.ToggleButton
 import team.applemango.runnerbe.shared.constant.DataStoreKey
+import team.applemango.runnerbe.shared.domain.flowExceptionMessage
 import team.applemango.runnerbe.shared.util.extension.dataStore
 
 @Composable
-internal fun GenderPicker(genderSelectChanged: (isSelected: Boolean) -> Unit) {
+internal fun GenderPicker(
+    vm: OnboardViewModel,
+    genderSelectChanged: (isSelected: Boolean) -> Unit,
+) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     var genderSelectState by remember { mutableStateOf<Gender?>(null) }
 
     LaunchedEffect(Unit) {
-        context.dataStore.data.cancellable().collect { preferences ->
-            preferences[DataStoreKey.Onboard.Gender]?.let { restoreGenderString ->
-                genderSelectChanged(true)
-                genderSelectState = Gender.values().first { it.string == restoreGenderString }
-            } ?: genderSelectChanged(false)
-            cancel("onboard restore execute must be once.")
-        }
+        context
+            .dataStore
+            .data
+            .cancellable()
+            .catch { exception ->
+                vm.emitException(
+                    Exception(
+                        flowExceptionMessage(
+                            flowName = "GenderPicker DataStore",
+                            exception = exception
+                        )
+                    )
+                )
+            }
+            .collect { preferences ->
+                preferences[DataStoreKey.Onboard.Gender]?.let { restoreGenderString ->
+                    genderSelectChanged(true)
+                    genderSelectState = Gender.values().first { it.string == restoreGenderString }
+                } ?: genderSelectChanged(false)
+                cancel("onboard restore execute must be once.")
+            }
     }
 
     LazyRow(
