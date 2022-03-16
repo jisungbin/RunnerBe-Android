@@ -36,14 +36,17 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.cancellable
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
+import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.util.presentationColorOf
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.FontTypeface
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.constant.DataStoreKey
+import team.applemango.runnerbe.shared.domain.flowExceptionMessage
 import team.applemango.runnerbe.shared.util.extension.dataStore
 import team.applemango.runnerbe.xml.numberpicker.OnValueChangeListener
 import team.applemango.runnerbe.xml.numberpicker.WheelPicker
@@ -53,7 +56,10 @@ private val nowYear = Calendar.getInstance().get(Calendar.YEAR)
 
 @OptIn(FlowPreview::class)
 @Composable
-internal fun YearPicker(selectedYearChanged: (isAdult: Boolean) -> Unit) {
+internal fun YearPicker(
+    vm: OnboardViewModel,
+    selectedYearChanged: (isAdult: Boolean) -> Unit,
+) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val coroutineScope = rememberCoroutineScope()
@@ -72,14 +78,28 @@ internal fun YearPicker(selectedYearChanged: (isAdult: Boolean) -> Unit) {
     }
 
     LaunchedEffect(Unit) {
-        context.dataStore.data.cancellable().collect { preferences ->
-            preferences[DataStoreKey.Onboard.Year]?.let { restoreYear ->
-                wheelPicker.setValue(restoreYear)
-                yearSelectFlow.emit(restoreYear)
-                selectedYearChanged(nowYear - restoreYear > 19)
-            } ?: selectedYearChanged(false) // default year: ${nowYear} -> always isAdult: false
-            cancel("onboard restore execute must be once.")
-        }
+        context
+            .dataStore
+            .data
+            .cancellable()
+            .catch { exception ->
+                vm.emitException(
+                    Exception(
+                        flowExceptionMessage(
+                            flowName = "YearPicker DataStore",
+                            exception = exception
+                        )
+                    )
+                )
+            }
+            .collect { preferences ->
+                preferences[DataStoreKey.Onboard.Year]?.let { restoreYear ->
+                    wheelPicker.setValue(restoreYear)
+                    yearSelectFlow.emit(restoreYear)
+                    selectedYearChanged(nowYear - restoreYear > 19)
+                } ?: selectedYearChanged(false) // default year: ${nowYear} -> always isAdult: false
+                cancel("onboard restore execute must be once.")
+            }
     }
 
     LaunchedEffect(Unit) {

@@ -10,7 +10,6 @@
 package team.applemango.runnerbe.feature.register.snslogin
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
@@ -24,8 +23,6 @@ import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import io.github.jisungbin.logeukes.LoggerType
-import io.github.jisungbin.logeukes.logeukes
 import org.orbitmvi.orbit.viewmodel.observe
 import team.applemango.runnerbe.feature.register.snslogin.component.SnsLoginScreen
 import team.applemango.runnerbe.feature.register.snslogin.constant.LoginState
@@ -36,12 +33,10 @@ import team.applemango.runnerbe.shared.base.WindowInsetActivity
 import team.applemango.runnerbe.shared.compose.extension.verticalInsetsPadding
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.constant.DataStoreKey
-import team.applemango.runnerbe.shared.domain.extension.toMessage
 import team.applemango.runnerbe.shared.util.extension.changeActivityWithAnimation
 import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.util.extension.dataStore
 import team.applemango.runnerbe.shared.util.extension.launchedWhenCreated
-import team.applemango.runnerbe.shared.util.extension.toast
 import team.applemango.runnerbe.util.DFMOnboardActivityAlias
 import team.applemango.runnerbe.util.MainActivityAlias
 
@@ -67,7 +62,7 @@ class SnsLoginActivity : WindowInsetActivity() {
 
         vm.observe(lifecycleOwner = this, state = ::handleState, sideEffect = ::handleSideEffect)
         vm.exceptionFlow.collectWithLifecycle(this) { exception ->
-            handleException(exception)
+            basicExceptionHandler(exception)
         }
 
         setContent {
@@ -110,10 +105,5 @@ class SnsLoginActivity : WindowInsetActivity() {
                 }
             }
         }
-    }
-
-    private fun handleException(exception: Throwable) {
-        toast(exception.toMessage(), Toast.LENGTH_LONG)
-        logeukes(type = LoggerType.E) { exception }
     }
 }

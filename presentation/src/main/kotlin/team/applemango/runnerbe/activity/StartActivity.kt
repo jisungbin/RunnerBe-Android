@@ -14,17 +14,24 @@ import android.os.Bundle
 import android.view.ViewTreeObserver
 import android.view.animation.AnticipateInterpolator
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import dagger.hilt.android.AndroidEntryPoint
+import io.github.jisungbin.logeukes.LoggerType
+import io.github.jisungbin.logeukes.logeukes
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.cancellable
+import kotlinx.coroutines.flow.catch
 import team.applemango.runnerbe.feature.home.board.DataStore
 import team.applemango.runnerbe.shared.constant.DataStoreKey
+import team.applemango.runnerbe.shared.domain.extension.toMessage
+import team.applemango.runnerbe.shared.domain.flowExceptionMessage
 import team.applemango.runnerbe.shared.util.extension.changeActivityWithAnimation
 import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.util.extension.dataStore
+import team.applemango.runnerbe.shared.util.extension.toast
 import team.applemango.runnerbe.util.DFMLoginActivityAlias
 import team.applemango.runnerbe.util.DFMOnboardActivityAlias
 
@@ -50,6 +57,13 @@ class StartActivity : AppCompatActivity() {
             )
         )
 
+        vm.exceptionFlow
+            .catch { exception ->
+                handleException(exception)
+            }
+            .collectWithLifecycle(this) { exception ->
+                handleException(exception)
+            }
         vm.loadAllRunningItems { runningItems ->
             DataStore.updateRunningItems(runningItems)
             isReady = true
@@ -59,9 +73,24 @@ class StartActivity : AppCompatActivity() {
             .dataStore
             .data
             .cancellable()
+            .catch { exception ->
+                vm.emitException(
+                    Exception(
+                        flowExceptionMessage(
+                            flowName = "StartActivity DataStore",
+                            exception = exception
+                        )
+                    )
+                )
+            }
             .collectWithLifecycle(this) { preferences ->
                 val isSignedUser = preferences[DataStoreKey.Login.Jwt] != null
                 val isSnsLoginDone = preferences[DataStoreKey.Login.Uuid] != null
+                val isUnregistered = preferences[DataStoreKey.Onboard.Unregister] == true
+                if (isUnregistered) {
+                    changeActivityWithAnimation<MainActivity>()
+                    return@collectWithLifecycle
+                }
                 when {
                     isSignedUser -> { // JWT 존재
                         changeActivityWithAnimation<MainActivity>()
@@ -106,5 +135,10 @@ class StartActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun handleException(exception: Throwable) {
+        toast(exception.toMessage(), Toast.LENGTH_LONG)
+        logeukes(type = LoggerType.E) { exception }
     }
 }

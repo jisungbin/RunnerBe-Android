@@ -172,7 +172,7 @@ private fun PhotoTakenTypeDialog(
 ) {
     RunnerbeDialog(
         visible = visible,
-        onDismissRequest = { onDismissRequest() }
+        onDismissRequest = onDismissRequest
     ) {
         Text(
             modifier = Modifier.padding(24.dp),

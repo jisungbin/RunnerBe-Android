@@ -11,7 +11,6 @@ package team.applemango.runnerbe.feature.register.onboard
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -33,7 +32,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import io.github.jisungbin.logeukes.LoggerType
 import io.github.jisungbin.logeukes.logeukes
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.cancellable
@@ -52,7 +50,6 @@ import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
-import team.applemango.runnerbe.shared.domain.extension.toMessage
 import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.util.extension.dataStore
 import team.applemango.runnerbe.shared.util.extension.toast
@@ -78,7 +75,7 @@ class OnboardActivity : WindowInsetActivity() {
         super.onCreate(savedInstanceState)
 
         vm.exceptionFlow.collectWithLifecycle(this) { exception ->
-            handleException(exception)
+            basicExceptionHandler(exception)
         }
 
         setContent {
@@ -235,11 +232,6 @@ class OnboardActivity : WindowInsetActivity() {
                 navController.navigate(sideEffect.nextStep.name)
             }
         }
-    }
-
-    private fun handleException(exception: Throwable) {
-        toast(exception.toMessage(), Toast.LENGTH_LONG)
-        logeukes(type = LoggerType.E) { exception }
     }
 
     override fun onNewIntent(intent: Intent?) {

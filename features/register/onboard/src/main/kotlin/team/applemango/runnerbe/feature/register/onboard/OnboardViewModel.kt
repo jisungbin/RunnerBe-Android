@@ -17,6 +17,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.cancellable
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -35,6 +36,7 @@ import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterSideEffect
 import team.applemango.runnerbe.shared.base.BaseViewModel
 import team.applemango.runnerbe.shared.constant.DataStoreKey
+import team.applemango.runnerbe.shared.domain.flowExceptionMessage
 import kotlin.random.Random
 
 private val SendEmailExceptionWithNoMessage =
@@ -100,51 +102,64 @@ internal class OnboardViewModel(
             RegisterState.Request
         }*/
         viewModelScope.launch {
-            dataStore.data.cancellable().collect { preferences ->
-                val uuid = preferences[DataStoreKey.Login.Uuid]
-                val year = preferences[DataStoreKey.Onboard.Year]
-                val gender = preferences[DataStoreKey.Onboard.Gender]
-                val job = preferences[DataStoreKey.Onboard.Job]
-                // StateFlow 로 저장되는 값이라 TextField 의 초기값인 "" (공백) 이 들어갈 수 있음
-                val officeEmail = preferences[DataStoreKey.Onboard.Email]?.ifEmpty { null }
-                if (uuid == null || year == null || gender == null || job == null) {
-                    reduce {
-                        RegisterState.NullInformation
-                    }
-                } else {
-                    var photoUrl: String? = null
-                    val genderCode = Gender.values().first { it.string == gender }.code
-                    if (photo != null) { // 사원증을 통한 인증일 경우
-                        reduce {
-                            RegisterState.ImageUploading
-                        }
-                        photoUrl = imageUploadUseCase(
-                            image = photo,
-                            path = DefaultEmployeeIdImagePath,
-                            userId = Random.nextInt()
-                        ).getOrElse { exception ->
-                            emitException(exception)
-                            reduce {
-                                RegisterState.ImageUploadError
-                            }
-                            return@collect
-                        }
-                    }
-                    val user = UserRegister(
-                        uuid = uuid,
-                        birthday = year,
-                        gender = genderCode,
-                        job = job,
-                        officeEmail = officeEmail, // nullable
-                        idCardImageUrl = photoUrl // nullable
-                    )
-                    requestUserRegister(
-                        user = user,
-                        nextStep = nextStep
+            dataStore
+                .data
+                .cancellable()
+                .catch { exception ->
+                    emitException(
+                        Exception(
+                            flowExceptionMessage(
+                                flowName = "OnboardViewModel DataStore",
+                                exception = exception
+                            )
+                        )
                     )
                 }
-                cancel("user login data collect and register execute must be once.")
-            }
+                .collect { preferences ->
+                    val uuid = preferences[DataStoreKey.Login.Uuid]
+                    val year = preferences[DataStoreKey.Onboard.Year]
+                    val gender = preferences[DataStoreKey.Onboard.Gender]
+                    val job = preferences[DataStoreKey.Onboard.Job]
+                    // StateFlow 로 저장되는 값이라 TextField 의 초기값인 "" (공백) 이 들어갈 수 있음
+                    val officeEmail = preferences[DataStoreKey.Onboard.Email]?.ifEmpty { null }
+                    if (uuid == null || year == null || gender == null || job == null) {
+                        reduce {
+                            RegisterState.NullInformation
+                        }
+                    } else {
+                        var photoUrl: String? = null
+                        val genderCode = Gender.values().first { it.string == gender }.code
+                        if (photo != null) { // 사원증을 통한 인증일 경우
+                            reduce {
+                                RegisterState.ImageUploading
+                            }
+                            photoUrl = imageUploadUseCase(
+                                image = photo,
+                                path = DefaultEmployeeIdImagePath,
+                                userId = Random.nextInt()
+                            ).getOrElse { exception ->
+                                emitException(exception)
+                                reduce {
+                                    RegisterState.ImageUploadError
+                                }
+                                return@collect
+                            }
+                        }
+                        val user = UserRegister(
+                            uuid = uuid,
+                            birthday = year,
+                            gender = genderCode,
+                            job = job,
+                            officeEmail = officeEmail, // nullable
+                            idCardImageUrl = photoUrl // nullable
+                        )
+                        requestUserRegister(
+                            user = user,
+                            nextStep = nextStep
+                        )
+                    }
+                    cancel("user login data collect and register execute must be once.")
+                }
         }
     }
 

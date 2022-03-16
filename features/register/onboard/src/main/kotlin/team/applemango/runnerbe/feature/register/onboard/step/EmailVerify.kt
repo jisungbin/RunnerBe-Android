@@ -53,6 +53,7 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.cancellable
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
@@ -64,6 +65,7 @@ import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.domain.extension.runIf
 import team.applemango.runnerbe.shared.domain.extension.toMessage
+import team.applemango.runnerbe.shared.domain.flowExceptionMessage
 import team.applemango.runnerbe.shared.util.extension.dataStore
 
 private const val EmailVerifyStateDoneMessage = "EmailVerifyStateDone"
@@ -107,13 +109,28 @@ internal fun EmailVerify(vm: OnboardViewModel) {
     )
 
     LaunchedEffect(Unit) {
-        context.dataStore.data.cancellable().collect { preferences ->
-            preferences[DataStoreKey.Onboard.Email]?.let { restoreEmail ->
-                emailInputFlow.emit(restoreEmail)
-                emailSendButtonEnabledState = Patterns.EMAIL_ADDRESS.matcher(restoreEmail).matches()
+        context
+            .dataStore
+            .data
+            .cancellable()
+            .catch { exception ->
+                vm.emitException(
+                    Exception(
+                        flowExceptionMessage(
+                            flowName = "EmailVerify DataStore",
+                            exception = exception
+                        )
+                    )
+                )
             }
-            cancel("onboard restore execute must be once.")
-        }
+            .collect { preferences ->
+                preferences[DataStoreKey.Onboard.Email]?.let { restoreEmail ->
+                    emailInputFlow.emit(restoreEmail)
+                    emailSendButtonEnabledState =
+                        Patterns.EMAIL_ADDRESS.matcher(restoreEmail).matches()
+                }
+                cancel("onboard restore execute must be once.")
+            }
     }
 
     LaunchedEffect(Unit) {
@@ -269,7 +286,7 @@ private fun EmailVerifyLinkNoticeDialog(
 ) {
     RunnerbeDialog(
         visible = visible,
-        onDismissRequest = { onDismissRequest() }
+        onDismissRequest = onDismissRequest
     ) {
         Text(
             modifier = Modifier

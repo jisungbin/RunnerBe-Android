@@ -11,8 +11,13 @@ package team.applemango.runnerbe.shared.base
 
 import android.os.Bundle
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.core.view.WindowCompat
+import io.github.jisungbin.logeukes.LoggerType
+import io.github.jisungbin.logeukes.logeukes
+import team.applemango.runnerbe.shared.domain.extension.toMessage
+import team.applemango.runnerbe.shared.util.extension.toast
 
 abstract class WindowInsetActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,5 +27,10 @@ abstract class WindowInsetActivity : ComponentActivity() {
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
         WindowCompat.setDecorFitsSystemWindows(window, false)
+    }
+
+    fun basicExceptionHandler(exception: Throwable) {
+        toast(exception.toMessage(), Toast.LENGTH_LONG)
+        logeukes(type = LoggerType.E) { exception }
     }
 }

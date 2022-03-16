@@ -42,7 +42,9 @@ import androidx.datastore.preferences.core.edit
 import com.skydoves.landscapist.rememberDrawablePainter
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.cancellable
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
+import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.util.Web
 import team.applemango.runnerbe.shared.compose.extension.presentationDrawableOf
@@ -50,6 +52,7 @@ import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.RunnerbeCheckBoxColors
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.constant.DataStoreKey
+import team.applemango.runnerbe.shared.domain.flowExceptionMessage
 import team.applemango.runnerbe.shared.util.extension.dataStore
 
 private val VerticalPadding = 25.dp
@@ -57,7 +60,10 @@ private val HorizontalPadding = 12.dp
 private val TermsTableShape = RoundedCornerShape(10.dp)
 
 @Composable
-internal fun TermsTable(onAllTermsCheckStateChanged: (allChecked: Boolean) -> Unit) {
+internal fun TermsTable(
+    vm: OnboardViewModel,
+    onAllTermsCheckStateChanged: (allChecked: Boolean) -> Unit,
+) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     var isAllTermsCheckedState by remember { mutableStateOf(false) }
@@ -95,14 +101,28 @@ internal fun TermsTable(onAllTermsCheckStateChanged: (allChecked: Boolean) -> Un
 
     // 위치 고정 (toggleAllTermsCheck 함수 사용)
     LaunchedEffect(Unit) {
-        context.dataStore.data.cancellable().collect { preferences ->
-            if (preferences[DataStoreKey.Onboard.TermsAllCheck] == true) {
-                toggleAllTermsCheck(nowState = false) // state toggle -> false -> true
-            } else {
-                onAllTermsCheckStateChanged(false)
+        context
+            .dataStore
+            .data
+            .cancellable()
+            .catch { exception ->
+                vm.emitException(
+                    Exception(
+                        flowExceptionMessage(
+                            flowName = "TermsTable DataStore",
+                            exception = exception
+                        )
+                    )
+                )
             }
-            cancel("onboard restore execute must be once.")
-        }
+            .collect { preferences ->
+                if (preferences[DataStoreKey.Onboard.TermsAllCheck] == true) {
+                    toggleAllTermsCheck(nowState = false) // state toggle -> false -> true
+                } else {
+                    onAllTermsCheckStateChanged(false)
+                }
+                cancel("onboard restore execute must be once.")
+            }
     }
 
     Column(

@@ -19,6 +19,7 @@ import team.applemango.runnerbe.shared.constant.DataStoreKey.Onboard.Email
 import team.applemango.runnerbe.shared.constant.DataStoreKey.Onboard.Gender
 import team.applemango.runnerbe.shared.constant.DataStoreKey.Onboard.Job
 import team.applemango.runnerbe.shared.constant.DataStoreKey.Onboard.TermsAllCheck
+import team.applemango.runnerbe.shared.constant.DataStoreKey.Onboard.Unregister
 import team.applemango.runnerbe.shared.constant.DataStoreKey.Onboard.Year
 
 /**
@@ -39,6 +40,7 @@ object DataStoreKey {
     }
 
     /**
+     * @property Unregister 온보딩 건너뛰기 여부 - boolean
      * @property TermsAllCheck 모든 약관 동의 여부 - boolean
      * @property Year 출생 년도 - int
      * @property Gender 성별 enum class 는 아래와 같이 정의돼 있음
@@ -50,6 +52,7 @@ object DataStoreKey {
      * @property Email 입력한 이메일 - string
      */
     object Onboard {
+        val Unregister = booleanPreferencesKey("onboard-unregister")
         val TermsAllCheck = booleanPreferencesKey("onboard-terms_all_check") // 동의 여부 boolean
         val Year = intPreferencesKey("onboard-birthday") // 입력한 년도
         val Gender = stringPreferencesKey("onboard-gender") // Gender enum class string value
