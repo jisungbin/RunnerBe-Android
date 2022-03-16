@@ -11,7 +11,7 @@ plugins {
     // id("com.spotify.ruler")
     installLibraryDfmHiltTest(isPresentation = true)
     id("com.android.application")
-    id("androidx.navigation.safeargs.kotlin")
+    // id("androidx.navigation.safeargs.kotlin")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
     id("com.google.firebase.firebase-perf")
@@ -84,7 +84,7 @@ dependencies {
     Dependencies.Ui.forEach(::implementation)
     Dependencies.Login.forEach(::implementation)
     Dependencies.Analytics.forEach(::implementation)
-    Dependencies.Jetpack.Navigation.forEach(::implementation)
+    // Dependencies.Jetpack.Navigation.forEach(::implementation)
     Dependencies.PresentationOnlyKtx.forEach(::implementation)
 
     Dependencies.Debug.forEach(::debugImplementation)
