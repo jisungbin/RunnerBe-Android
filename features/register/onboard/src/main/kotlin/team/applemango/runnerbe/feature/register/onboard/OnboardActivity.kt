@@ -43,7 +43,7 @@ import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.di.module.UseCaseModule
 import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterSideEffect
-import team.applemango.runnerbe.shared.base.WindowInsetActivity
+import team.applemango.runnerbe.shared.base.WindowInsetsActivity
 import team.applemango.runnerbe.shared.compose.extension.verticalInsetsPadding
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
@@ -54,7 +54,7 @@ import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.util.extension.dataStore
 import team.applemango.runnerbe.shared.util.extension.toast
 
-class OnboardActivity : WindowInsetActivity() {
+class OnboardActivity : WindowInsetsActivity() {
 
     private val vm: OnboardViewModel by viewModels {
         object : ViewModelProvider.Factory {

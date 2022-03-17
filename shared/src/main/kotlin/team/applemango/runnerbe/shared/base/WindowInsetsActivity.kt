@@ -19,7 +19,7 @@ import io.github.jisungbin.logeukes.logeukes
 import team.applemango.runnerbe.shared.domain.extension.toMessage
 import team.applemango.runnerbe.shared.util.extension.toast
 
-abstract class WindowInsetActivity : ComponentActivity() {
+abstract class WindowInsetsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setFlags( // 네비게이션바까지 영역 확장하려면 필요

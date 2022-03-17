@@ -29,7 +29,7 @@ import team.applemango.runnerbe.feature.register.snslogin.constant.LoginState
 import team.applemango.runnerbe.feature.register.snslogin.di.module.RepositoryModule
 import team.applemango.runnerbe.feature.register.snslogin.di.module.UseCaseModule
 import team.applemango.runnerbe.feature.register.snslogin.mvi.LoginSideEffect
-import team.applemango.runnerbe.shared.base.WindowInsetActivity
+import team.applemango.runnerbe.shared.base.WindowInsetsActivity
 import team.applemango.runnerbe.shared.compose.extension.verticalInsetsPadding
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.constant.DataStoreKey
@@ -40,7 +40,7 @@ import team.applemango.runnerbe.shared.util.extension.launchedWhenCreated
 import team.applemango.runnerbe.util.DFMOnboardActivityAlias
 import team.applemango.runnerbe.util.MainActivityAlias
 
-class SnsLoginActivity : WindowInsetActivity() {
+class SnsLoginActivity : WindowInsetsActivity() {
 
     private val vm: SnsLoginViewModel by viewModels {
         object : ViewModelProvider.Factory {
