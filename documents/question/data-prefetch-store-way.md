@@ -59,3 +59,7 @@ data class RunningItem(
 
 1. room 을 통한 데이터 저장
 2. repository 에 데이터 캐싱 (`data` 라서 usecase 에서 하면 안됨)
+
+# 해결 방법
+
+2번 답변 채택

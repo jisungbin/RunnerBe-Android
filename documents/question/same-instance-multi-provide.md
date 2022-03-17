@@ -9,3 +9,7 @@
 # 답변
 
 <img src="https://user-images.githubusercontent.com/40740128/158842654-f303e1fc-6351-4275-bcba-5f8f1dd0cff6.png" width="33%" />
+
+# 해결 방법
+
+그냥 DI 전용 모듈을 따로 만들기로 함
