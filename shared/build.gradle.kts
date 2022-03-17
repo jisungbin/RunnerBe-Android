@@ -15,7 +15,6 @@ plugins {
 dependencies {
     Dependencies.SharedKtx.forEach(::api)
     api(Dependencies.Jetpack.DataStore)
-    api(project(ProjectConstants.Data))
     api(project(ProjectConstants.Domain))
     api(project(ProjectConstants.SharedDomain))
     implementation(Dependencies.EachKtx.Activity)

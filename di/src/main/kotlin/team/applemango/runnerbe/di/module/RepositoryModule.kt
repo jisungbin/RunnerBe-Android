@@ -7,26 +7,26 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.feature.home.board.di.module
+package team.applemango.runnerbe.di.module
 
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
-import dagger.hilt.android.scopes.ViewModelScoped
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 import team.applemango.runnerbe.data.runningitem.repository.RunningItemRepositoryImpl
 import team.applemango.runnerbe.data.user.repository.UserRepositoryImpl
 import team.applemango.runnerbe.domain.runningitem.repository.RunningItemRepository
 import team.applemango.runnerbe.domain.user.repository.UserRepository
 
 @Module
-@InstallIn(ViewModelComponent::class)
+@InstallIn(SingletonComponent::class)
 internal object RepositoryModule {
     @Provides
-    @ViewModelScoped
+    @Singleton
     fun provideUserRepository(): UserRepository = UserRepositoryImpl()
 
     @Provides
-    @ViewModelScoped
+    @Singleton
     fun provideRunningItemRepository(): RunningItemRepository = RunningItemRepositoryImpl()
 }
