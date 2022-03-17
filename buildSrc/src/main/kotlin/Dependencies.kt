@@ -52,7 +52,6 @@ object Dependencies {
     )
 
     val Compose = listOf(
-        "androidx.compose.ui:ui-tooling:${Versions.Compose.Main}",
         "androidx.compose.material:material:${Versions.Compose.Main}",
         "com.airbnb.android:lottie-compose:${Versions.Compose.Lottie}",
         "androidx.activity:activity-compose:${Versions.Compose.Activity}",
@@ -122,7 +121,12 @@ object Dependencies {
             "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.Test.Coroutine}"
     }
 
-    val Debug = listOf(
-        "com.squareup.leakcanary:leakcanary-android:${Versions.Util.LeakCanary}"
-    )
+    object Debug {
+        const val LeakCanary =
+            "com.squareup.leakcanary:leakcanary-android:${Versions.Util.LeakCanary}"
+        val Compose = listOf(
+            "androidx.compose.ui:ui-tooling:${Versions.Compose.Main}",
+            "androidx.compose.ui:ui-tooling-preview:${Versions.Compose.Main}"
+        )
+    }
 }

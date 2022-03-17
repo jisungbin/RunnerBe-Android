@@ -86,6 +86,6 @@ dependencies {
     Dependencies.Jetpack.Navigation.forEach(::implementation)
     Dependencies.PresentationOnlyKtx.forEach(::implementation)
 
-    Dependencies.Debug.forEach(::debugImplementation)
+    debugImplementation(Dependencies.Debug.LeakCanary)
     installSharedComposeOrbitHiltTest()
 }

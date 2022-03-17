@@ -45,6 +45,7 @@ fun DependencyHandler.installSharedComposeOrbitHiltTest(
     }
     implementation(Dependencies.Orbit.Main)
     Dependencies.Compose.forEach(::implementation)
+    Dependencies.Debug.Compose.forEach(::debugImplementation)
     implementationProject(ProjectConstants.SharedCompose)
     if (testNeeded) {
         add("testDebugImplementation", Dependencies.Test.JunitApi)
@@ -65,6 +66,10 @@ fun DependencyHandler.implementationProject(path: String) {
 
 private fun DependencyHandler.implementation(dependency: Any) {
     add("implementation", dependency)
+}
+
+private fun DependencyHandler.debugImplementation(dependency: Any) {
+    add("debugImplementation", dependency)
 }
 
 private fun DependencyHandler.project(path: String) =
