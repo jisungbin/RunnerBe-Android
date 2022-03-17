@@ -26,7 +26,7 @@
 따라서 **아키텍처가 다소 오버하게 적용**됐으며, 아래와 같은 기술들을 처음 적용합니다.
 
 - DFM
-- TDD
+- ~~TDD~~
 - Test + [Test Coverage 100% 목표](https://github.com/runner-be/RunnerBe-Android/issues/35)
 
 # 🐛 아키텍처 이슈
@@ -60,7 +60,7 @@
 
 #### Architecture
 
-- TDD
+- ~~TDD~~
 - MVI Pattern
 - Layered Architecture
 - Dynamic Feature Module (:features:register)
