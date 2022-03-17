@@ -13,9 +13,6 @@
 
     <data>
 
-        <import
-            alias="Height"
-            type="team.applemango.runnerbe.shared.constant.HeightKt" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
