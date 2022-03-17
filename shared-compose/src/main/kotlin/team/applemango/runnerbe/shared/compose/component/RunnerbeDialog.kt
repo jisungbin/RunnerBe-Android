@@ -33,6 +33,13 @@ import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.domain.dsl.RunnerbeDsl
 
+@Immutable
+data class DialogButton(
+    var text: String = "",
+    var textBuilder: @Composable () -> String = { "" },
+    var onClick: () -> Unit = {},
+)
+
 @Composable
 fun RunnerbeDialog(
     visible: Boolean,
@@ -57,13 +64,6 @@ fun RunnerbeDialog(
         }
     }
 }
-
-@Immutable
-data class DialogButton(
-    var text: String = "",
-    var textBuilder: @Composable () -> String = { "" },
-    var onClick: () -> Unit = {},
-)
 
 @Composable
 fun RunnerbeDialog(
