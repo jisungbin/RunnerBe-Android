@@ -1,6 +1,6 @@
 @file:Suppress("PrivatePropertyName")
 
-package team.applemango.runnerbe.xml.numberpicker
+package team.applemango.runnerbe.xml.superwheelpicker
 
 import android.content.Context
 import android.graphics.Canvas
@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat
 import java.util.* // ktlint-disable no-wildcard-imports
 import kotlin.math.abs
 import kotlin.math.max
+import team.applemango.runnerbe.xml.numberpicker.R
 
 /**
  * Created by wanglu on 3/10/18.
