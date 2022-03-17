@@ -12,6 +12,13 @@ plugins {
     id("kotlin-android")
 }
 
+android {
+    buildFeatures {
+        compose = true
+    }
+}
+
 dependencies {
     implementation(Dependencies.EachKtx.Core)
+    Dependencies.Compose.forEach(::implementation)
 }
