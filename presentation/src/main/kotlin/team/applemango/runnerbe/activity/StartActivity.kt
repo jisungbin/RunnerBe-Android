@@ -24,7 +24,6 @@ import io.github.jisungbin.logeukes.logeukes
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.catch
-import team.applemango.runnerbe.feature.home.board.MainBoardDataStore
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.domain.extension.toMessage
 import team.applemango.runnerbe.shared.domain.flowExceptionMessage
@@ -64,7 +63,7 @@ class StartActivity : AppCompatActivity() {
             .collectWithLifecycle(this) { exception ->
                 handleException(exception)
             }
-        vm.loadAllRunningItems { runningItems ->
+        vm.loadAllRunningItems {
             isReady = true
         }
 

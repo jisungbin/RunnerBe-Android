@@ -16,6 +16,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
@@ -24,6 +25,7 @@ import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.jisungbin.logeukes.LoggerType
 import io.github.jisungbin.logeukes.logeukes
+import kotlinx.coroutines.flow.MutableStateFlow
 import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
 import team.applemango.runnerbe.shared.domain.extension.toMessage
@@ -33,6 +35,7 @@ import team.applemango.runnerbe.shared.util.extension.toast
 class MainBoardFragment : Fragment() {
 
     private val vm: MainBoardViewModel by activityViewModels()
+    private val isEmptyState = MutableStateFlow(false)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,6 +49,7 @@ class MainBoardFragment : Fragment() {
                     modifier = Modifier.fillMaxSize(),
                     isBookmarkPage = arguments?.getBoolean("bookmark") ?: false,
                     vm = vm,
+                    isEmptyState = isEmptyState.collectAsState().value
                 )
             }
         }
@@ -55,7 +59,10 @@ class MainBoardFragment : Fragment() {
         val message = when (state) {
             MainBoardState.None -> EmptyString
             MainBoardState.NonRegisterUser -> getString(R.string.mainboard_toast_only_see_unregister_user)
-            MainBoardState.RunningItemEmpty -> EmptyString // TODO
+            MainBoardState.RunningItemEmpty -> {
+                isEmptyState.value = true
+                EmptyString
+            }
             MainBoardState.BookmarkToggleRequestFail -> EmptyString // TODO
         }
         if (message.isNotEmpty()) {

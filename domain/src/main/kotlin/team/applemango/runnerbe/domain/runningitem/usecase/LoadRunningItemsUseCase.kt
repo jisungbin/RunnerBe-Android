@@ -30,6 +30,7 @@ class LoadRunningItemsUseCase(private val repo: RunningItemRepository) {
         jobFilter: JobFilter,
         locate: Locate,
         keywordFilter: KeywordFilter,
+        useCaching: Boolean,
     ) = runCatching {
         repo.loadItems(
             itemType = itemType.code,
@@ -45,7 +46,8 @@ class LoadRunningItemsUseCase(private val repo: RunningItemRepository) {
             job = jobFilter.code,
             latitude = locate.latitude.toFloat(),
             longitude = locate.longitude.toFloat(),
-            keyword = keywordFilter.code
+            keyword = keywordFilter.code,
+            useCaching = useCaching
         )
     }
 }
