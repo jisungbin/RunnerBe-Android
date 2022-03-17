@@ -15,4 +15,5 @@
     <string name="runningitemwrite_placeholder_title">ex) A 직군 모여라, 묵언 러닝 하실 분</string>
     <string name="runningitemwrite_error_title_length">제목은 최대 30자까지 가능해요!</string>
     <string name="runningitemwrite_label_date">일시</string>
+    <string name="runningitemwrite_dialog_button_decision">결정</string>
 </resources>
