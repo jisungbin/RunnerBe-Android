@@ -16,8 +16,8 @@ import android.view.animation.AnticipateInterpolator
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.databinding.DataBindingUtil
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.jisungbin.logeukes.LoggerType
 import io.github.jisungbin.logeukes.logeukes
@@ -25,7 +25,6 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.catch
 import team.applemango.runnerbe.R
-import team.applemango.runnerbe.databinding.ActivityStartBinding
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.domain.extension.toMessage
 import team.applemango.runnerbe.shared.domain.flowExceptionMessage
@@ -44,13 +43,13 @@ class StartActivity : AppCompatActivity() {
     }
 
     private var isReady = false
-    private lateinit var binding: ActivityStartBinding
     private val vm: StartActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_start)
+        setContentView(R.layout.activity_start)
+        val rootView = findViewById<ConstraintLayout>(R.id.cl_container)
 
         vm.exceptionFlow
             .catch { exception ->
@@ -103,12 +102,12 @@ class StartActivity : AppCompatActivity() {
                 cancel("state check execute must be once.")
             }
 
-        binding.clContainer.viewTreeObserver.addOnPreDrawListener(
+        rootView.viewTreeObserver.addOnPreDrawListener(
             object : ViewTreeObserver.OnPreDrawListener {
                 override fun onPreDraw(): Boolean {
                     logeukes(tag = "isReady") { isReady }
                     return if (isReady) {
-                        binding.clContainer.viewTreeObserver.removeOnPreDrawListener(this)
+                        rootView.viewTreeObserver.removeOnPreDrawListener(this)
                         true
                     } else {
                         false
