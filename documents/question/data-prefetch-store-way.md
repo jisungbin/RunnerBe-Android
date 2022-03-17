@@ -51,3 +51,4 @@ data class RunningItem(
 
 1. 데이터는 스플래시에서 retrofit api 콜을 통해 불러옵니다.
 2. 스플래시가 표시되는 모듈하고, 메인 UI 들이 표시되는 모듈하고 다릅니다.
+3. 스플래시에서 api call 하는 코드는 [여기](https://github.com/runner-be/RunnerBe-Android/blob/core/fix-running-items-load/presentation/src/main/kotlin/team/applemango/runnerbe/activity/StartActivity.kt#L67)서 확인하실 수 있습니다.
