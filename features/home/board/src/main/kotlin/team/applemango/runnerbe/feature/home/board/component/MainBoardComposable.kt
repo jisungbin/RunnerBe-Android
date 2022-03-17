@@ -43,7 +43,7 @@ import androidx.compose.ui.unit.dp
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.feature.home.board.MainBoardViewModel
 import team.applemango.runnerbe.feature.home.board.R
-import team.applemango.runnerbe.shared.compose.component.RunningItemTypeSelectTopBar
+import team.applemango.runnerbe.shared.compose.component.RunningItemTypeToggleTopBar
 import team.applemango.runnerbe.shared.compose.extension.noRippleClickable
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
@@ -116,7 +116,7 @@ internal fun MainBoardComposable(
                 }
             }
         }
-        RunningItemTypeSelectTopBar(
+        RunningItemTypeToggleTopBar(
             modifier = Modifier.padding(top = 4.dp),
             onTabClick = { runningItemType ->
                 selectedRunningItemTypeState = runningItemType

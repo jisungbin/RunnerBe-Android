@@ -127,7 +127,7 @@ fun <T> ToggleTopBar(
 }
 
 @Composable
-fun RunningItemTypeSelectTopBar(
+fun RunningItemTypeToggleTopBar(
     modifier: Modifier = Modifier,
     onTabClick: (type: RunningItemType) -> Unit,
 ) {
