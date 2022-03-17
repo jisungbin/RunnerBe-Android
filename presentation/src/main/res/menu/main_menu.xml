@@ -20,6 +20,11 @@
         android:title="@string/app_name" />
 
     <item
+        android:id="@+id/mail"
+        android:icon="@drawable/selector_drawable_mail"
+        android:title="@string/app_name" />
+
+    <item
         android:id="@+id/mypage"
         android:icon="@drawable/selector_drawable_me"
         android:title="@string/app_name" />

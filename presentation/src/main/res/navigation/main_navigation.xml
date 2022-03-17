@@ -30,6 +30,11 @@
     </fragment>
 
     <fragment
+        android:id="@+id/mail"
+        android:name="team.applemango.runnerbe.feature.mail.MailFragment"
+        android:label="MailFragment" />
+
+    <fragment
         android:id="@+id/mypage"
         android:name="team.applemango.runnerbe.feature.mypage.MypageFragment"
         android:label="MypageFragment" />
