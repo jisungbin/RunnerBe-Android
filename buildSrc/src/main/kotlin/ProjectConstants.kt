@@ -10,6 +10,7 @@
 // enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS") 버그이씀 (새로운 모듈 인식 안됨)
 @Suppress("SpellCheckingInspection")
 object ProjectConstants {
+    const val Di = ":di"
     const val Data = ":data"
     const val Domain = ":domain"
     const val Shared = ":shared"
