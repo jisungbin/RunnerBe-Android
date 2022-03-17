@@ -10,7 +10,6 @@
 package team.applemango.runnerbe.shared.compose.component
 
 import androidx.annotation.Size
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -33,8 +32,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.shared.compose.extension.noRippleClickable
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
+import team.applemango.runnerbe.shared.compose.theme.Typography
+import team.applemango.runnerbe.shared.compose.theme.animatedColorState
+
+private val runnerbeDefaultToggleTabBarItems = listOf(
+    ToggleTopBarItem(id = RunningItemType.Before, text = "출근 전"),
+    ToggleTopBarItem(id = RunningItemType.After, text = "퇴근 후"),
+    ToggleTopBarItem(id = RunningItemType.Off, text = "휴일"),
+)
 
 private const val DefaultToggleTopBarRadius = 34
 private const val DefaultToggleTopBarHeight = 36
@@ -63,29 +71,13 @@ fun <T> ToggleTopBar(
     height: Dp = DefaultToggleTopBarHeight.dp,
     radius: Dp = DefaultToggleTopBarRadius.dp,
     @Size(min = 1) toggleTopBarItems: List<ToggleTopBarItem<T>>,
-    onItemClick: (itemId: T) -> Unit,
+    onTabClick: (itemId: T) -> Unit,
 ) {
     require(toggleTopBarItems.isNotEmpty()) { "topBarItems size must be not zero." }
     var selectedItemState by remember { mutableStateOf(toggleTopBarItems.first().id) }
 
     @Composable
-    fun backgroundAnimateColor(itemId: T) = animateColorAsState(
-        when (selectedItemState == itemId) {
-            true -> colors.activateBackground
-            else -> colors.inactivateBackground
-        }
-    ).value
-
-    @Composable
-    fun textAnimateColor(itemId: T) = animateColorAsState(
-        when (selectedItemState == itemId) {
-            true -> colors.activateText
-            else -> colors.inactivateText
-        }
-    ).value
-
-    @Composable
-    fun textStyle(itemId: T) = when (selectedItemState == itemId) {
+    fun selectedTextStyle(itemId: T) = when (selectedItemState == itemId) {
         true -> activateTextStyle
         else -> inactivateTextStyle
     }
@@ -104,18 +96,54 @@ fun <T> ToggleTopBar(
                     .weight(1f)
                     .fillMaxSize()
                     .clip(RoundedCornerShape(radius))
-                    .background(color = backgroundAnimateColor(item.id))
+                    .background(
+                        color = animatedColorState(
+                            target = item.id,
+                            selectState = selectedItemState,
+                            defaultColor = colors.inactivateBackground,
+                            selectedColor = colors.activateBackground
+                        )
+                    )
                     .noRippleClickable {
-                        onItemClick(item.id)
+                        onTabClick(item.id)
                         selectedItemState = item.id
                     },
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = item.text,
-                    style = textStyle(item.id).copy(color = textAnimateColor(item.id))
+                    style = selectedTextStyle(item.id).copy(
+                        color = animatedColorState(
+                            target = item.id,
+                            selectState = selectedItemState,
+                            defaultColor = colors.inactivateText,
+                            selectedColor = colors.activateText
+                        )
+                    )
                 )
             }
         }
     }
+}
+
+@Composable
+fun RunningItemTypeSelectTopBar(
+    modifier: Modifier = Modifier,
+    onTabClick: (type: RunningItemType) -> Unit,
+) {
+    ToggleTopBar(
+        modifier = modifier,
+        colors = ToggleTopBarColor(
+            baseBackground = ColorAsset.G6,
+            activateBackground = ColorAsset.Primary,
+            activateText = ColorAsset.G6,
+            inactivateText = ColorAsset.G4_5,
+        ),
+        activateTextStyle = Typography.Body14M,
+        inactivateTextStyle = Typography.Body14R,
+        toggleTopBarItems = runnerbeDefaultToggleTabBarItems,
+        onTabClick = { runningItemType ->
+            onTabClick(runningItemType)
+        }
+    )
 }

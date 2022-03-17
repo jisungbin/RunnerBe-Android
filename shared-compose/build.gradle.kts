@@ -25,6 +25,7 @@ android {
 dependencies {
     implementation(Dependencies.EachKtx.Core)
     implementation(Dependencies.EachKtx.Lifecycle)
+    implementationProject(ProjectConstants.Domain)
     implementationProject(ProjectConstants.SharedDomain)
     Dependencies.Compose.forEach(::implementation)
 }

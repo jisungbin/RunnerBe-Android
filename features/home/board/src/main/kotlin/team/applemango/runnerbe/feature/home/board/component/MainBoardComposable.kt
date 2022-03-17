@@ -43,9 +43,7 @@ import androidx.compose.ui.unit.dp
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.feature.home.board.MainBoardViewModel
 import team.applemango.runnerbe.feature.home.board.R
-import team.applemango.runnerbe.shared.compose.component.ToggleTopBar
-import team.applemango.runnerbe.shared.compose.component.ToggleTopBarColor
-import team.applemango.runnerbe.shared.compose.component.ToggleTopBarItem
+import team.applemango.runnerbe.shared.compose.component.RunningItemTypeSelectTopBar
 import team.applemango.runnerbe.shared.compose.extension.noRippleClickable
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
@@ -62,9 +60,6 @@ internal fun MainBoardComposable(
 ) {
     val runningItems by vm.runningItems.collectAsState()
 
-    val beforeText = stringResource(R.string.toggletopbaritem_before)
-    val afterText = stringResource(R.string.toggletopbaritem_after)
-    val offText = stringResource(R.string.toggletopbaritem_off)
     val appNameText = stringResource(R.string.mainboard_title_app_name)
     val bookmarkText = stringResource(R.string.mainboard_title_bookmark_list)
     val titleText = remember(isBookmarkPage) {
@@ -78,13 +73,6 @@ internal fun MainBoardComposable(
             true -> Typography.Body16R.copy(color = ColorAsset.G3)
             else -> Typography.Custom.MainBoardTitle
         }
-    }
-    val toggleTabBarItems = remember {
-        listOf(
-            ToggleTopBarItem(id = RunningItemType.Before, text = beforeText),
-            ToggleTopBarItem(id = RunningItemType.After, text = afterText),
-            ToggleTopBarItem(id = RunningItemType.Off, text = offText),
-        )
     }
 
     var includeFinishState by remember { mutableStateOf(false) }
@@ -128,18 +116,9 @@ internal fun MainBoardComposable(
                 }
             }
         }
-        ToggleTopBar(
+        RunningItemTypeSelectTopBar(
             modifier = Modifier.padding(top = 4.dp),
-            colors = ToggleTopBarColor(
-                baseBackground = ColorAsset.G6,
-                activateBackground = ColorAsset.Primary,
-                activateText = ColorAsset.G6,
-                inactivateText = ColorAsset.G4_5,
-            ),
-            activateTextStyle = Typography.Body14M,
-            inactivateTextStyle = Typography.Body14R,
-            toggleTopBarItems = toggleTabBarItems,
-            onItemClick = { runningItemType ->
+            onTabClick = { runningItemType ->
                 selectedRunningItemTypeState = runningItemType
             }
         )
