@@ -106,13 +106,17 @@ internal fun RunningItemWrite(
             )
         }
         RunningItemTypeToggleBar(
-            modifier = Modifier.padding(top = 8.dp),
+            modifier = Modifier
+                .padding(top = 8.dp)
+                .padding(horizontal = 16.dp),
             onTabClick = { type ->
                 selectedRunningItemType = type
             }
         )
         Crossfade(
-            modifier = Modifier.padding(top = 12.dp),
+            modifier = Modifier
+                .padding(top = 12.dp)
+                .padding(horizontal = 16.dp),
             targetState = writingLevel
         ) { level ->
             when (level) {
