@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.feature.register.onboard.step
+package team.applemango.runnerbe.feature.register.onboard.component.step
 
 import android.content.Context
 import androidx.compose.animation.AnimatedVisibility
@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.flowWithLifecycle
+import java.util.Calendar
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -49,7 +50,6 @@ import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.domain.flowExceptionMessage
 import team.applemango.runnerbe.shared.util.extension.dataStore
 import team.applemango.runnerbe.xml.superwheelpicker.SuperWheelPicker
-import java.util.Calendar
 
 private val nowYear = Calendar.getInstance().get(Calendar.YEAR)
 
