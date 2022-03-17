@@ -1,220 +1,115 @@
-@file:Suppress("PrivatePropertyName")
-
 package team.applemango.runnerbe.xml.superwheelpicker
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Typeface
-import android.os.Build
 import android.util.AttributeSet
-import android.view.* // ktlint-disable no-wildcard-imports
+import android.view.MotionEvent
+import android.view.VelocityTracker
+import android.view.View
+import android.view.ViewConfiguration
+import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.widget.OverScroller
 import androidx.annotation.ColorInt
-import androidx.core.content.ContextCompat
-import java.util.* // ktlint-disable no-wildcard-imports
 import kotlin.math.abs
 import kotlin.math.max
-import team.applemango.runnerbe.xml.numberpicker.R
+import kotlin.math.min
 
-/**
- * Created by wanglu on 3/10/18.
- */
-/**
- * Interface to listen for changes of the current value.
- */
-interface OnValueChangeListener {
-
-    /**
-     * Called upon a change of the current value.
-     *
-     * @param picker The NumberPicker associated with this listener.
-     * @param oldVal The previous value.
-     * @param newVal The new value.
-     */
-    fun onValueChange(picker: WheelPicker, oldVal: Int, newVal: Int)
-}
-
-interface OnScrollListener {
-    /**
-     * Callback invoked while the number picker scroll state has changed.
-     *
-     * @param view The view whose scroll state is being reported.
-     * @param scrollState The current scroll state. One of
-     * [.SCROLL_STATE_IDLE],
-     * [.SCROLL_STATE_TOUCH_SCROLL] or
-     * [.SCROLL_STATE_IDLE].
-     */
-    fun onScrollStateChange(view: WheelPicker, scrollState: Int)
-
-    companion object {
-
-        /**
-         * The view is not scrolling.
-         */
-        const val SCROLL_STATE_IDLE = 0
-
-        /**
-         * The user is scrolling using touch, and his finger is still on the screen.
-         */
-        const val SCROLL_STATE_TOUCH_SCROLL = 1
-
-        /**
-         * The user had previously been scrolling using touch and performed a fling.
-         */
-        const val SCROLL_STATE_FLING = 2
-    }
-}
-
-class WheelPicker @JvmOverloads constructor(
+class SuperWheelPicker @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
 ) : View(context, attrs, defStyleAttr) {
 
-    private val TOP_AND_BOTTOM_FADING_EDGE_STRENGTH = 0.9f
-    private val SNAP_SCROLL_DURATION = 300
-    private val SELECTOR_MAX_FLING_VELOCITY_ADJUSTMENT = 4
-    private val DEFAULT_ITEM_COUNT = 3
-    private val DEFAULT_TEXT_SIZE = 80
+    private companion object {
+        const val TOP_AND_BOTTOM_FADING_EDGE_STRENGTH = 0.9f
+        const val SNAP_SCROLL_DURATION = 300
+        const val SELECTOR_MAX_FLING_VELOCITY_ADJUSTMENT = 4
+        const val DEFAULT_ITEM_COUNT = 3
+        const val DEFAULT_TEXT_SIZE = 80
+        val DEFAULT_LAYOUT_PARAMS = ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+    }
 
-    private var mSelectorItemCount: Int
-    private var mSelectorVisibleItemCount: Int
-    private var mMinIndex: Int
-    private var mMaxIndex: Int
-    private var mMaxValidIndex: Int? = null
-    private var mMinValidIndex: Int? = null
+    private val configuration = ViewConfiguration.get(context)
+    private var onValueChangeListener: OnValueChangeListener? = null
+    private var onScrollListener: OnScrollListener? = null
+    private var onTextRenderListener: OnTextRenderListener? = null
 
-    private var mWheelMiddleItemIndex: Int
-    private var mWheelVisibleItemMiddleIndex: Int
-    private var mSelectorItemIndices: ArrayList<Int>
-    private var mSelectorItemValidStatus: ArrayList<Boolean>
-    private var mCurSelectedItemIndex = 0
-    private var mWrapSelectorWheelPreferred: Boolean
+    private var selectorItemCount = DEFAULT_ITEM_COUNT + 2
+    private var selectorVisibleItemCount = DEFAULT_ITEM_COUNT
+    private var minIndex = Int.MIN_VALUE
+    private var maxIndex = Int.MAX_VALUE
 
-    private var mTextPaint: Paint = Paint()
-    private var mSelectedTextColor: Int
-    private var mUnSelectedTextColor: Int
-    private var mTextSize: Int
-    private var mTextAlign: String
+    private var wheelMiddleItemIndex = (selectorVisibleItemCount - 1) / 2
+    private var wheelVisibleItemMiddleIndex = (selectorVisibleItemCount - 1) / 2
+    private var selectorItemIndices = ArrayList<Int>(selectorItemCount)
+    private var selectorItemValidStatus = ArrayList<Boolean>(selectorItemCount)
+    private var curSelectedItemIndex = 0
+    private var wrapSelectorWheelPreferred = false
 
-    private var mOverScroller: OverScroller? = null
-    private var mVelocityTracker: VelocityTracker? = null
-    private val mTouchSlop: Int
-    private val mMaximumVelocity: Int
-    private val mMinimumVelocity: Int
-    private var mLastY: Float = 0f
-    private var mIsDragging: Boolean = false
-    private var mCurrentFirstItemOffset: Int = 0
-    private var mInitialFirstItemOffset = Int.MIN_VALUE
-    private var mTextGapHeight: Int = 0
-    private var mItemHeight: Int = 0
-    private var mTextHeight: Int = 0
-    private var mPreviousScrollerY: Int = 0
-    private var mOnValueChangeListener: OnValueChangeListener? = null
-    private var mOnScrollListener: OnScrollListener? = null
-    private var mFadingEdgeEnabled = true
-    private var mSelectedTextScale = 0.3f
-    private var mTypefaceIndex: Int = 0
+    private var textPaint = Paint().apply {
+        isAntiAlias = true
+        style = Paint.Style.FILL_AND_STROKE
+        typeface = Typeface.DEFAULT
+    }
+    private var selectedTextColor = Color.BLACK
+    private var unSelectedTextColor = Color.LTGRAY
+    private var textSize = DEFAULT_TEXT_SIZE
+    private var textAlign = Paint.Align.CENTER
 
-    /**
-     * The current scroll state of the number picker.
-     */
-    private var mScrollState = OnScrollListener.SCROLL_STATE_IDLE
+    private var overScroller = OverScroller(context, DecelerateInterpolator(2.5f))
+    private var velocityTracker: VelocityTracker? = null
+    private val touchSlop = configuration.scaledTouchSlop
+    private val maximumVelocity =
+        configuration.scaledMaximumFlingVelocity / SELECTOR_MAX_FLING_VELOCITY_ADJUSTMENT
+    private val minimumVelocity = configuration.scaledMinimumFlingVelocity
+
+    private var lastY = 0f
+    private var isDragging = false
+    private var currentFirstItemOffset = 0
+    private var initialFirstItemOffset = Int.MIN_VALUE
+    private var textGapHeight = 0
+    private var itemHeight = 0
+    private var textHeight = 0
+    private var previousScrollerY = 0
+    private var fadingEdgeEnabled = true
+    private var selectedTextScale = 0.3f
+    private var scrollState = OnScrollListener.SCROLL_STATE_IDLE
 
     init {
-        val attributesArray =
-            context.obtainStyledAttributes(attrs, R.styleable.WheelPicker, defStyleAttr, 0)
-
-        mSelectorItemCount =
-            attributesArray.getInt(R.styleable.WheelPicker_wheelItemCount, DEFAULT_ITEM_COUNT) + 2
-        mWheelMiddleItemIndex = (mSelectorItemCount - 1) / 2
-        mSelectorVisibleItemCount = mSelectorItemCount - 2
-        mWheelVisibleItemMiddleIndex = (mSelectorVisibleItemCount - 1) / 2
-        mSelectorItemIndices = ArrayList(mSelectorItemCount)
-        mSelectorItemValidStatus = ArrayList(mSelectorItemCount)
-
-        mMinIndex = attributesArray.getInt(R.styleable.WheelPicker_min, Integer.MIN_VALUE)
-        mMaxIndex = attributesArray.getInt(R.styleable.WheelPicker_max, Integer.MAX_VALUE)
-        if (attributesArray.hasValue(R.styleable.WheelPicker_maxValidIndex))
-            mMaxValidIndex = attributesArray.getInt(R.styleable.WheelPicker_maxValidIndex, 0)
-        if (attributesArray.hasValue(R.styleable.WheelPicker_minValidIndex))
-            mMinValidIndex = attributesArray.getInt(R.styleable.WheelPicker_minValidIndex, 0)
-        mWrapSelectorWheelPreferred =
-            attributesArray.getBoolean(R.styleable.WheelPicker_wrapSelectorWheel, false)
-        mSelectedTextScale =
-            attributesArray.getFloat(R.styleable.WheelPicker_selectedTextScale, 0.3f)
-
-        mOverScroller = OverScroller(context, DecelerateInterpolator(2.5f))
-        val configuration = ViewConfiguration.get(context)
-        mTouchSlop = configuration.scaledTouchSlop
-        mMaximumVelocity =
-            configuration.scaledMaximumFlingVelocity / SELECTOR_MAX_FLING_VELOCITY_ADJUSTMENT
-        mMinimumVelocity = configuration.scaledMinimumFlingVelocity
-
-        mSelectedTextColor = attributesArray.getColor(
-            R.styleable.WheelPicker_selectedTextColor,
-            ContextCompat.getColor(context, R.color.color_4_blue)
-        )
-        mUnSelectedTextColor = attributesArray.getColor(
-            R.styleable.WheelPicker_textColor,
-            ContextCompat.getColor(context, R.color.color_3_dark_blue)
-        )
-        mTextSize = attributesArray.getDimensionPixelSize(
-            R.styleable.WheelPicker_textSize,
-            DEFAULT_TEXT_SIZE
-        )
-        val textAlignInt = attributesArray.getInt(R.styleable.WheelPicker_align, 1)
-        mTextAlign = when (textAlignInt) {
-            0 -> "LEFT"
-            1 -> "CENTER"
-            2 -> "RIGHT"
-            else -> "CENTER"
-        }
-        mFadingEdgeEnabled =
-            attributesArray.getBoolean(R.styleable.WheelPicker_fadingEdgeEnabled, true)
-        mTypefaceIndex = attributesArray.getInt(R.styleable.WheelPicker_typeface, 0)
-
-        mTextPaint.run {
-            isAntiAlias = true
-            isAntiAlias = true
-            textSize = mTextSize.toFloat()
-            textAlign = Paint.Align.valueOf(mTextAlign)
-            style = Paint.Style.FILL_AND_STROKE
-            typeface =
-                when (mTypefaceIndex) { // for the constant values please check the WheelPicker_typeface in the attrs.xml
-                    0 -> Typeface.DEFAULT
-                    1 -> Typeface.SANS_SERIF
-                    2 -> Typeface.SERIF
-                    else -> Typeface.DEFAULT
-                }
-        }
-
-        attributesArray.recycle()
-
+        updatePainter()
         initializeSelectorWheelIndices()
+    }
+
+    private fun updatePainter() {
+        textPaint = textPaint.apply {
+            textSize = this@SuperWheelPicker.textSize.toFloat()
+            textAlign = this@SuperWheelPicker.textAlign
+        }
+    }
+
+    fun setTextRenderListener(onTextRenderListener: OnTextRenderListener) {
+        this.onTextRenderListener = onTextRenderListener
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
 
         if (changed) {
-            // need to do all this when we know our size
             initializeSelectorWheel()
             initializeFadingEdges()
         }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        // Try greedily to fit the max width and height.
-        var lp: ViewGroup.LayoutParams? = layoutParams
-        if (lp == null)
-            lp = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
+        val lp = layoutParams ?: DEFAULT_LAYOUT_PARAMS
 
         var width = calculateSize(suggestedMinimumWidth, lp.width, widthMeasureSpec)
         var height = calculateSize(suggestedMinimumHeight, lp.height, heightMeasureSpec)
@@ -227,173 +122,152 @@ class WheelPicker @JvmOverloads constructor(
 
     override fun getSuggestedMinimumWidth(): Int {
         var suggested = super.getSuggestedMinimumHeight()
-        if (mSelectorVisibleItemCount > 0) {
-            suggested = Math.max(suggested, computeMaximumWidth())
+        if (selectorVisibleItemCount > 0) {
+            suggested = max(suggested, computeMaximumWidth())
         }
         return suggested
     }
 
     override fun getSuggestedMinimumHeight(): Int {
         var suggested = super.getSuggestedMinimumWidth()
-        if (mSelectorVisibleItemCount > 0) {
-            val fontMetricsInt = mTextPaint.fontMetricsInt
+        if (selectorVisibleItemCount > 0) {
+            val fontMetricsInt = textPaint.fontMetricsInt
             val height = fontMetricsInt.descent - fontMetricsInt.ascent
-            suggested = Math.max(suggested, height * mSelectorVisibleItemCount)
+            suggested = max(suggested, height * selectorVisibleItemCount)
         }
         return suggested
     }
 
     private fun computeMaximumWidth(): Int {
-        mTextPaint.textSize = mTextSize * 1.3f
-        val widthForMinIndex = mTextPaint.measureText(mMinIndex.toString()).toInt()
-        val widthForMaxIndex = mTextPaint.measureText(mMaxIndex.toString()).toInt()
-        mTextPaint.textSize = mTextSize * 1.0f
-        return if (widthForMinIndex > widthForMaxIndex)
-            widthForMinIndex
-        else
-            widthForMaxIndex
+        textPaint.textSize = textSize * 1.3f
+        val widthForMinIndex = textPaint.measureText(minIndex.toString()).toInt()
+        val widthForMaxIndex = textPaint.measureText(maxIndex.toString()).toInt()
+        textPaint.textSize = textSize * 1.0f
+        return max(widthForMinIndex, widthForMaxIndex)
     }
 
     private fun calculateSize(suggestedSize: Int, paramSize: Int, measureSpec: Int): Int {
-        var result = 0
         val size = MeasureSpec.getSize(measureSpec)
         val mode = MeasureSpec.getMode(measureSpec)
 
-        when (MeasureSpec.getMode(mode)) {
-            MeasureSpec.AT_MOST ->
-
-                if (paramSize == ViewGroup.LayoutParams.WRAP_CONTENT)
-                    result = Math.min(suggestedSize, size)
-                else if (paramSize == ViewGroup.LayoutParams.MATCH_PARENT)
-                    result = size
-                else {
-                    result = Math.min(paramSize, size)
+        return when (MeasureSpec.getMode(mode)) {
+            MeasureSpec.AT_MOST -> when (paramSize) {
+                ViewGroup.LayoutParams.WRAP_CONTENT -> min(suggestedSize, size)
+                ViewGroup.LayoutParams.MATCH_PARENT -> size
+                else -> min(paramSize, size)
+            }
+            MeasureSpec.EXACTLY -> size
+            MeasureSpec.UNSPECIFIED -> {
+                if (
+                    paramSize == ViewGroup.LayoutParams.WRAP_CONTENT ||
+                    paramSize == ViewGroup.LayoutParams.MATCH_PARENT
+                ) {
+                    suggestedSize
+                } else {
+                    paramSize
                 }
-            MeasureSpec.EXACTLY -> result = size
-            MeasureSpec.UNSPECIFIED ->
-
-                result =
-                    if (paramSize == ViewGroup.LayoutParams.WRAP_CONTENT || paramSize == ViewGroup.LayoutParams
-                        .MATCH_PARENT
-                    )
-                        suggestedSize
-                    else {
-                        paramSize
-                    }
+            }
+            else -> 0
         }
-
-        return result
     }
 
     private fun initializeSelectorWheel() {
-        mItemHeight = getItemHeight()
-        mTextHeight = computeTextHeight()
-        mTextGapHeight = getGapHeight()
+        itemHeight = getItemHeight()
+        textHeight = computeTextHeight()
+        textGapHeight = getGapHeight()
 
         val visibleMiddleItemPos =
-            mItemHeight * mWheelVisibleItemMiddleIndex + (mItemHeight + mTextHeight) / 2
-        mInitialFirstItemOffset = visibleMiddleItemPos - mItemHeight * mWheelMiddleItemIndex
-        mCurrentFirstItemOffset = mInitialFirstItemOffset
+            itemHeight * wheelVisibleItemMiddleIndex + (itemHeight + textHeight) / 2
+        initialFirstItemOffset = visibleMiddleItemPos - itemHeight * wheelMiddleItemIndex
+        currentFirstItemOffset = initialFirstItemOffset
     }
 
     private fun initializeFadingEdges() {
-        isVerticalFadingEdgeEnabled = mFadingEdgeEnabled
-        if (mFadingEdgeEnabled)
-            setFadingEdgeLength((bottom - top - mTextSize) / 2)
+        isVerticalFadingEdgeEnabled = fadingEdgeEnabled
+        if (fadingEdgeEnabled) {
+            setFadingEdgeLength((bottom - top - textSize) / 2)
+        }
     }
 
     private fun initializeSelectorWheelIndices() {
-        mSelectorItemIndices.clear()
-        mSelectorItemValidStatus.clear()
+        selectorItemIndices.clear()
+        selectorItemValidStatus.clear()
 
-        mCurSelectedItemIndex = if (mMinValidIndex == null || mMinValidIndex!! < mMinIndex) {
-            if (mMinIndex <= 0) {
-                0
-            } else {
-                mMinIndex
-            }
+        curSelectedItemIndex = if (minIndex <= 0) {
+            0
         } else {
-            if (mMinValidIndex!! <= 0) {
-                0
-            } else {
-                mMinValidIndex!!
-            }
+            minIndex
         }
-
-        for (i in 0 until mSelectorItemCount) {
-            var selectorIndex = mCurSelectedItemIndex + (i - mWheelMiddleItemIndex)
-            if (mWrapSelectorWheelPreferred) {
+        for (i in 0 until selectorItemCount) {
+            var selectorIndex = curSelectedItemIndex + (i - wheelMiddleItemIndex)
+            if (wrapSelectorWheelPreferred) {
                 selectorIndex = getWrappedSelectorIndex(selectorIndex)
             }
-            mSelectorItemIndices.add(selectorIndex)
-            mSelectorItemValidStatus.add(isValidPosition(selectorIndex))
+            selectorItemIndices.add(selectorIndex)
+            selectorItemValidStatus.add(true)
         }
     }
 
-    override fun getBottomFadingEdgeStrength(): Float {
-        return TOP_AND_BOTTOM_FADING_EDGE_STRENGTH
-    }
+    override fun getBottomFadingEdgeStrength() = TOP_AND_BOTTOM_FADING_EDGE_STRENGTH
 
-    override fun getTopFadingEdgeStrength(): Float {
-        return TOP_AND_BOTTOM_FADING_EDGE_STRENGTH
-    }
+    override fun getTopFadingEdgeStrength() = TOP_AND_BOTTOM_FADING_EDGE_STRENGTH
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         drawVertical(canvas)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         onTouchEventVertical(event)
         return true
     }
 
     private fun onTouchEventVertical(event: MotionEvent) {
-        if (mVelocityTracker == null) {
-            mVelocityTracker = VelocityTracker.obtain()
+        if (velocityTracker == null) {
+            velocityTracker = VelocityTracker.obtain()
         }
 
-        mVelocityTracker?.addMovement(event)
+        velocityTracker?.addMovement(event)
 
-        val action: Int = event.actionMasked
-        when (action) {
+        when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
-                if (!mOverScroller!!.isFinished)
-                    mOverScroller!!.forceFinished(true)
-
-                mLastY = event.y
-            }
-            MotionEvent.ACTION_MOVE -> {
-                var deltaY = event.y - mLastY
-                if (!mIsDragging && Math.abs(deltaY) > mTouchSlop) {
-                    parent?.requestDisallowInterceptTouchEvent(true)
-
-                    if (deltaY > 0) {
-                        deltaY -= mTouchSlop
-                    } else {
-                        deltaY += mTouchSlop
-                    }
-                    onScrollStateChange(OnScrollListener.SCROLL_STATE_TOUCH_SCROLL)
-                    mIsDragging = true
+                if (!overScroller.isFinished) {
+                    overScroller.forceFinished(true)
                 }
 
-                if (mIsDragging) {
+                lastY = event.y
+            }
+            MotionEvent.ACTION_MOVE -> {
+                var deltaY = event.y - lastY
+                if (!isDragging && abs(deltaY) > touchSlop) {
+                    parent?.requestDisallowInterceptTouchEvent(true)
+                    if (deltaY > 0) {
+                        deltaY -= touchSlop
+                    } else {
+                        deltaY += touchSlop
+                    }
+                    onScrollStateChange(OnScrollListener.SCROLL_STATE_TOUCH_SCROLL)
+                    isDragging = true
+                }
+
+                if (isDragging) {
                     scrollBy(0, deltaY.toInt())
                     invalidate()
-                    mLastY = event.y
+                    lastY = event.y
                 }
             }
             MotionEvent.ACTION_UP -> {
-                if (mIsDragging) {
-                    mIsDragging = false
+                if (isDragging) {
+                    isDragging = false
                     parent?.requestDisallowInterceptTouchEvent(false)
 
-                    mVelocityTracker?.computeCurrentVelocity(1000, mMaximumVelocity.toFloat())
-                    val velocity = mVelocityTracker?.yVelocity?.toInt()
+                    velocityTracker?.computeCurrentVelocity(1000, maximumVelocity.toFloat())
+                    val velocity = velocityTracker?.yVelocity?.toInt()
 
-                    if (Math.abs(velocity!!) > mMinimumVelocity) {
-                        mPreviousScrollerY = 0
-                        mOverScroller?.fling(
+                    if (abs(velocity!!) > minimumVelocity) {
+                        previousScrollerY = 0
+                        overScroller.fling(
                             scrollX, scrollY, 0, velocity, 0, 0, Integer.MIN_VALUE,
                             Integer.MAX_VALUE, 0, (getItemHeight() * 0.7).toInt()
                         )
@@ -402,15 +276,14 @@ class WheelPicker @JvmOverloads constructor(
                     }
                     recyclerVelocityTracker()
                 } else {
-                    // click event
                     val y = event.y.toInt()
                     handlerClickVertical(y)
                 }
             }
 
             MotionEvent.ACTION_CANCEL -> {
-                if (mIsDragging) {
-                    mIsDragging = false
+                if (isDragging) {
+                    isDragging = false
                 }
                 recyclerVelocityTracker()
             }
@@ -418,112 +291,104 @@ class WheelPicker @JvmOverloads constructor(
     }
 
     private fun handlerClickVertical(y: Int) {
-        val selectorIndexOffset = y / mItemHeight - mWheelVisibleItemMiddleIndex
+        val selectorIndexOffset = y / itemHeight - wheelVisibleItemMiddleIndex
         changeValueBySteps(selectorIndexOffset)
     }
 
     override fun scrollBy(x: Int, y: Int) {
-        if (y == 0)
-            return
+        if (y == 0) return
 
-        val gap = mTextGapHeight
+        val gap = textGapHeight
 
-        if (!mWrapSelectorWheelPreferred && y > 0 &&
-            (
-                mSelectorItemIndices[mWheelMiddleItemIndex] <= mMinIndex ||
-                    (mMinValidIndex != null && mSelectorItemIndices[mWheelMiddleItemIndex] <= mMinValidIndex!!)
-                )
+        if (
+            !wrapSelectorWheelPreferred && y > 0 &&
+            selectorItemIndices[wheelMiddleItemIndex] <= minIndex
         ) {
-            if (mCurrentFirstItemOffset + y - mInitialFirstItemOffset < gap / 2)
-                mCurrentFirstItemOffset += y
-            else {
-                mCurrentFirstItemOffset = mInitialFirstItemOffset + (gap / 2)
-                if (!mOverScroller!!.isFinished && !mIsDragging) {
-                    mOverScroller!!.abortAnimation()
+            if (currentFirstItemOffset + y - initialFirstItemOffset < gap / 2) {
+                currentFirstItemOffset += y
+            } else {
+                currentFirstItemOffset = initialFirstItemOffset + (gap / 2)
+                if (!overScroller.isFinished && !isDragging) {
+                    overScroller.abortAnimation()
                 }
             }
             return
         }
 
-        if (!mWrapSelectorWheelPreferred && y < 0 &&
-            (
-                mSelectorItemIndices[mWheelMiddleItemIndex] >= mMaxIndex ||
-                    (mMaxValidIndex != null && mSelectorItemIndices[mWheelMiddleItemIndex] >= mMaxValidIndex!!)
-                )
+        if (
+            !wrapSelectorWheelPreferred && y < 0 &&
+            selectorItemIndices[wheelMiddleItemIndex] >= maxIndex
         ) {
-            if (mCurrentFirstItemOffset + y - mInitialFirstItemOffset > -(gap / 2))
-                mCurrentFirstItemOffset += y
-            else {
-                mCurrentFirstItemOffset = mInitialFirstItemOffset - (gap / 2)
-                if (!mOverScroller!!.isFinished && !mIsDragging) {
-                    mOverScroller!!.abortAnimation()
+            if (currentFirstItemOffset + y - initialFirstItemOffset > -(gap / 2)) {
+                currentFirstItemOffset += y
+            } else {
+                currentFirstItemOffset = initialFirstItemOffset - (gap / 2)
+                if (!overScroller.isFinished && !isDragging) {
+                    overScroller.abortAnimation()
                 }
             }
             return
         }
 
-        mCurrentFirstItemOffset += y
+        currentFirstItemOffset += y
 
-        while (mCurrentFirstItemOffset - mInitialFirstItemOffset < -gap) {
-            mCurrentFirstItemOffset += mItemHeight
+        while (currentFirstItemOffset - initialFirstItemOffset < -gap) {
+            currentFirstItemOffset += itemHeight
             increaseSelectorsIndex()
-            if (!mWrapSelectorWheelPreferred &&
-                (
-                    mSelectorItemIndices[mWheelMiddleItemIndex] >= mMaxIndex ||
-                        (mMaxValidIndex != null && mSelectorItemIndices[mWheelMiddleItemIndex] >= mMaxValidIndex!!)
-                    )
+            if (
+                !wrapSelectorWheelPreferred &&
+                selectorItemIndices[wheelMiddleItemIndex] >= maxIndex
             ) {
-                mCurrentFirstItemOffset = mInitialFirstItemOffset
+                currentFirstItemOffset = initialFirstItemOffset
             }
         }
 
-        while (mCurrentFirstItemOffset - mInitialFirstItemOffset > gap) {
-            mCurrentFirstItemOffset -= mItemHeight
+        while (currentFirstItemOffset - initialFirstItemOffset > gap) {
+            currentFirstItemOffset -= itemHeight
             decreaseSelectorsIndex()
-            if (!mWrapSelectorWheelPreferred &&
-                (
-                    mSelectorItemIndices[mWheelMiddleItemIndex] <= mMinIndex ||
-                        (mMinValidIndex != null && mSelectorItemIndices[mWheelMiddleItemIndex] <= mMinValidIndex!!)
-                    )
+            if (
+                !wrapSelectorWheelPreferred &&
+                selectorItemIndices[wheelMiddleItemIndex] <= minIndex
             ) {
-                mCurrentFirstItemOffset = mInitialFirstItemOffset
+                currentFirstItemOffset = initialFirstItemOffset
             }
         }
-        onSelectionChanged(mSelectorItemIndices[mWheelMiddleItemIndex], true)
+        onSelectionChanged(selectorItemIndices[wheelMiddleItemIndex])
     }
 
     override fun computeScroll() {
         super.computeScroll()
-        if (mOverScroller!!.computeScrollOffset()) {
-            val x = mOverScroller!!.currX
-            val y = mOverScroller!!.currY
+        if (overScroller.computeScrollOffset()) {
+            val x = overScroller.currX
+            val y = overScroller.currY
 
-            if (mPreviousScrollerY == 0) {
-                mPreviousScrollerY = mOverScroller!!.startY
+            if (previousScrollerY == 0) {
+                previousScrollerY = overScroller.startY
             }
-            scrollBy(x, y - mPreviousScrollerY)
-            mPreviousScrollerY = y
+            scrollBy(x, y - previousScrollerY)
+            previousScrollerY = y
             invalidate()
         } else {
-            if (!mIsDragging)
-            // align item
+            if (!isDragging) {
                 adjustItemVertical()
+            }
         }
     }
 
     private fun adjustItemVertical() {
-        mPreviousScrollerY = 0
-        var deltaY = mInitialFirstItemOffset - mCurrentFirstItemOffset
+        previousScrollerY = 0
+        var deltaY = initialFirstItemOffset - currentFirstItemOffset
 
-        if (Math.abs(deltaY) > mItemHeight / 2) {
-            deltaY += if (deltaY > 0)
-                -mItemHeight
-            else
-                mItemHeight
+        if (abs(deltaY) > itemHeight / 2) {
+            deltaY += if (deltaY > 0) {
+                -itemHeight
+            } else {
+                itemHeight
+            }
         }
 
         if (deltaY != 0) {
-            mOverScroller!!.startScroll(scrollX, scrollY, 0, deltaY, 800)
+            overScroller.startScroll(scrollX, scrollY, 0, deltaY, 800)
             invalidateOnAnimation()
         }
 
@@ -531,85 +396,79 @@ class WheelPicker @JvmOverloads constructor(
     }
 
     private fun recyclerVelocityTracker() {
-        mVelocityTracker?.recycle()
-        mVelocityTracker = null
-    }
-
-    override fun onScrollChanged(l: Int, t: Int, oldl: Int, oldt: Int) {
-        super.onScrollChanged(l, t, oldl, oldt)
+        velocityTracker?.recycle()
+        velocityTracker = null
     }
 
     private fun onScrollStateChange(scrollState: Int) {
-        if (mScrollState == scrollState) {
+        if (this.scrollState == scrollState) {
             return
         }
-        mScrollState = scrollState
-        mOnScrollListener?.onScrollStateChange(this, scrollState)
+        this.scrollState = scrollState
+        onScrollListener?.onScrollStateChange(scrollState)
     }
 
-    private fun getItemHeight(): Int {
-        return height / (mSelectorItemCount - 2)
-    }
+    private fun getItemHeight() = height / (selectorItemCount - 2)
 
-    private fun getGapHeight(): Int {
-        return getItemHeight() - computeTextHeight()
-    }
+    private fun getGapHeight() = getItemHeight() - computeTextHeight()
 
     private fun computeTextHeight(): Int {
-        val metricsInt = mTextPaint.fontMetricsInt
-        return Math.abs(metricsInt.bottom + metricsInt.top)
+        val metricsInt = textPaint.fontMetricsInt
+        return abs(metricsInt.bottom + metricsInt.top)
     }
 
     private fun invalidateOnAnimation() {
-        if (Build.VERSION.SDK_INT >= 16)
-            postInvalidateOnAnimation()
-        else
-            invalidate()
+        postInvalidateOnAnimation()
     }
 
     private fun drawVertical(canvas: Canvas) {
-        if (mSelectorItemIndices.size == 0)
-            return
+        if (selectorItemIndices.size == 0) return
         val itemHeight = getItemHeight()
 
-        val x = when (mTextPaint.textAlign) {
+        val x = when (textPaint.textAlign) {
             Paint.Align.LEFT -> paddingLeft.toFloat()
             Paint.Align.CENTER -> ((right - left) / 2).toFloat()
             Paint.Align.RIGHT -> (right - left).toFloat() - paddingRight.toFloat()
             else -> ((right - left) / 2).toFloat()
         }
 
-        var y = mCurrentFirstItemOffset.toFloat()
-
+        var y = currentFirstItemOffset.toFloat()
         var i = 0
 
-        val topIndexDiffToMid = mWheelVisibleItemMiddleIndex
-        val bottomIndexDiffToMid = mSelectorVisibleItemCount - mWheelVisibleItemMiddleIndex - 1
+        val topIndexDiffToMid = wheelVisibleItemMiddleIndex
+        val bottomIndexDiffToMid = selectorVisibleItemCount - wheelVisibleItemMiddleIndex - 1
         val maxIndexDiffToMid = max(topIndexDiffToMid, bottomIndexDiffToMid)
 
-        while (i < mSelectorItemIndices.size) {
+        while (i < selectorItemIndices.size) {
             var scale = 1f
+            val value = getValue(selectorItemIndices[i])
 
             val offsetToMiddle =
-                abs(y - (mInitialFirstItemOffset + mWheelMiddleItemIndex * itemHeight).toFloat())
+                abs(y - (initialFirstItemOffset + wheelMiddleItemIndex * itemHeight).toFloat())
 
-            if (maxIndexDiffToMid != 0)
+            if (maxIndexDiffToMid != 0) {
                 scale =
-                    mSelectedTextScale * (itemHeight * maxIndexDiffToMid - offsetToMiddle) / (itemHeight * maxIndexDiffToMid) + 1
+                    selectedTextScale * (itemHeight * maxIndexDiffToMid - offsetToMiddle) / (itemHeight * maxIndexDiffToMid) + 1
+            }
 
-            if (mSelectorItemValidStatus[i]) {
-                if (offsetToMiddle < mItemHeight / 2) {
-                    mTextPaint.color = mSelectedTextColor
+            if (selectorItemValidStatus[i]) {
+                if (offsetToMiddle < this.itemHeight / 2) {
+                    textPaint.color = selectedTextColor
                 } else {
-                    mTextPaint.color = mUnSelectedTextColor
+                    textPaint.color = unSelectedTextColor
                 }
             } else {
-                mTextPaint.color = Color.LTGRAY
+                textPaint.color = Color.LTGRAY
             }
 
             canvas.save()
             canvas.scale(scale, scale, x, y)
-            canvas.drawText(getValue(mSelectorItemIndices[i]).toString(), x, y, mTextPaint)
+            canvas.drawText(
+                onTextRenderListener?.onTextRender(value) ?: value.toString(),
+                x,
+                y,
+                textPaint
+            )
             canvas.restore()
 
             y += itemHeight
@@ -626,113 +485,107 @@ class WheelPicker @JvmOverloads constructor(
     }
 
     private fun increaseSelectorsIndex() {
-        for (i in 0 until (mSelectorItemIndices.size - 1)) {
-            mSelectorItemIndices[i] = mSelectorItemIndices[i + 1]
-            mSelectorItemValidStatus[i] = mSelectorItemValidStatus[i + 1]
+        for (i in 0 until (selectorItemIndices.size - 1)) {
+            selectorItemIndices[i] = selectorItemIndices[i + 1]
+            selectorItemValidStatus[i] = selectorItemValidStatus[i + 1]
         }
-        var nextScrollSelectorIndex = mSelectorItemIndices[mSelectorItemIndices.size - 2] + 1
-        if (mWrapSelectorWheelPreferred && nextScrollSelectorIndex > mMaxIndex) {
-            nextScrollSelectorIndex = mMinIndex
+        var nextScrollSelectorIndex = selectorItemIndices[selectorItemIndices.size - 2] + 1
+        if (wrapSelectorWheelPreferred && nextScrollSelectorIndex > maxIndex) {
+            nextScrollSelectorIndex = minIndex
         }
-        mSelectorItemIndices[mSelectorItemIndices.size - 1] = nextScrollSelectorIndex
-        mSelectorItemValidStatus[mSelectorItemIndices.size - 1] =
-            isValidPosition(nextScrollSelectorIndex)
+        selectorItemIndices[selectorItemIndices.size - 1] = nextScrollSelectorIndex
+        selectorItemValidStatus[selectorItemIndices.size - 1] = true
     }
 
     private fun decreaseSelectorsIndex() {
-        for (i in mSelectorItemIndices.size - 1 downTo 1) {
-            mSelectorItemIndices[i] = mSelectorItemIndices[i - 1]
-            mSelectorItemValidStatus[i] = mSelectorItemValidStatus[i - 1]
+        for (i in selectorItemIndices.size - 1 downTo 1) {
+            selectorItemIndices[i] = selectorItemIndices[i - 1]
+            selectorItemValidStatus[i] = selectorItemValidStatus[i - 1]
         }
-        var nextScrollSelectorIndex = mSelectorItemIndices[1] - 1
-        if (mWrapSelectorWheelPreferred && nextScrollSelectorIndex < mMinIndex) {
-            nextScrollSelectorIndex = mMaxIndex
+        var nextScrollSelectorIndex = selectorItemIndices[1] - 1
+        if (wrapSelectorWheelPreferred && nextScrollSelectorIndex < minIndex) {
+            nextScrollSelectorIndex = maxIndex
         }
-        mSelectorItemIndices[0] = nextScrollSelectorIndex
-        mSelectorItemValidStatus[0] = isValidPosition(nextScrollSelectorIndex)
+        selectorItemIndices[0] = nextScrollSelectorIndex
+        selectorItemValidStatus[0] = true
     }
 
     private fun changeValueBySteps(steps: Int) {
-        mPreviousScrollerY = 0
-        mOverScroller!!.startScroll(0, 0, 0, -mItemHeight * steps, SNAP_SCROLL_DURATION)
+        previousScrollerY = 0
+        overScroller.startScroll(0, 0, 0, -itemHeight * steps, SNAP_SCROLL_DURATION)
         invalidate()
     }
 
-    private fun onSelectionChanged(current: Int, notifyChange: Boolean) {
-        val previous = mCurSelectedItemIndex
-        mCurSelectedItemIndex = current
-        if (notifyChange && previous != current) {
+    private fun onSelectionChanged(current: Int) {
+        val previous = curSelectedItemIndex
+        curSelectedItemIndex = current
+        if (previous != current) {
             notifyChange(previous, current)
         }
     }
 
     private fun getWrappedSelectorIndex(selectorIndex: Int): Int {
-        if (selectorIndex > mMaxIndex) {
-            return mMinIndex + (selectorIndex - mMaxIndex) % (mMaxIndex - mMinIndex + 1) - 1
-        } else if (selectorIndex < mMinIndex) {
-            return mMaxIndex - (mMinIndex - selectorIndex) % (mMaxIndex - mMinIndex + 1) + 1
+        if (selectorIndex > maxIndex) {
+            return minIndex + (selectorIndex - maxIndex) % (maxIndex - minIndex + 1) - 1
+        } else if (selectorIndex < minIndex) {
+            return maxIndex - (minIndex - selectorIndex) % (maxIndex - minIndex + 1) + 1
         }
         return selectorIndex
     }
 
     private fun notifyChange(previous: Int, current: Int) {
-        mOnValueChangeListener?.onValueChange(this, getValue(previous), getValue(current))
+        onValueChangeListener?.onValueChange(getValue(previous), getValue(current))
     }
 
     private fun validatePosition(position: Int): Int {
-        return if (!mWrapSelectorWheelPreferred) {
-            when {
-                mMaxValidIndex == null && position > mMaxIndex -> mMaxIndex
-                mMaxValidIndex != null && position > mMaxValidIndex!! -> mMaxValidIndex!!
-                mMinValidIndex == null && position < mMinIndex -> mMinIndex
-                mMinValidIndex != null && position < mMinValidIndex!! -> mMinValidIndex!!
-                else -> position
-            }
+        return if (!wrapSelectorWheelPreferred) {
+            position
         } else {
             getWrappedSelectorIndex(position)
         }
     }
 
     fun scrollTo(position: Int) {
-        if (mCurSelectedItemIndex == position)
+        if (curSelectedItemIndex == position)
             return
 
-        mCurSelectedItemIndex = position
-        mSelectorItemIndices.clear()
-        for (i in 0 until mSelectorItemCount) {
-            var selectorIndex = mCurSelectedItemIndex + (i - mWheelMiddleItemIndex)
-            if (mWrapSelectorWheelPreferred) {
+        curSelectedItemIndex = position
+        selectorItemIndices.clear()
+        for (i in 0 until selectorItemCount) {
+            var selectorIndex = curSelectedItemIndex + (i - wheelMiddleItemIndex)
+            if (wrapSelectorWheelPreferred) {
                 selectorIndex = getWrappedSelectorIndex(selectorIndex)
             }
-            mSelectorItemIndices.add(selectorIndex)
+            selectorItemIndices.add(selectorIndex)
         }
 
         invalidate()
     }
 
     fun setOnValueChangedListener(onValueChangeListener: OnValueChangeListener) {
-        mOnValueChangeListener = onValueChangeListener
+        this.onValueChangeListener = onValueChangeListener
     }
 
     fun setOnScrollListener(onScrollListener: OnScrollListener) {
-        mOnScrollListener = onScrollListener
+        this.onScrollListener = onScrollListener
     }
 
     fun smoothScrollTo(position: Int) {
         val realPosition = validatePosition(position)
-        changeValueBySteps(realPosition - mCurSelectedItemIndex)
+        changeValueBySteps(realPosition - curSelectedItemIndex)
     }
 
     fun smoothScrollToValue(value: Int) {
         smoothScrollTo(getPosition(value))
     }
 
+    @Suppress("MemberVisibilityCanBePrivate")
     fun scrollToValue(value: Int) {
         scrollTo(getPosition(value))
     }
 
     fun setUnselectedTextColor(@ColorInt color: Int) {
-        mUnSelectedTextColor = color
+        unSelectedTextColor = color
     }
 
     /**
@@ -742,7 +595,7 @@ class WheelPicker @JvmOverloads constructor(
      */
     fun setTypeface(typeface: Typeface?) {
         if (typeface != null) {
-            mTextPaint.typeface = typeface
+            textPaint.typeface = typeface
         }
     }
 
@@ -764,7 +617,7 @@ class WheelPicker @JvmOverloads constructor(
      * @param wrapSelectorWheel Whether to wrap.
      */
     fun setWrapSelectorWheel(wrap: Boolean) {
-        mWrapSelectorWheelPreferred = wrap
+        wrapSelectorWheelPreferred = wrap
         invalidate()
     }
 
@@ -777,19 +630,24 @@ class WheelPicker @JvmOverloads constructor(
      * @see .getMaxValue
      */
     fun getWrapSelectorWheel(): Boolean {
-        return mWrapSelectorWheelPreferred
+        return wrapSelectorWheelPreferred
+    }
+
+    fun setRange(range: IntRange) {
+        minIndex = range.first
+        maxIndex = range.last
     }
 
     /**
      * Set how many visible item show in the picker
      */
     fun setWheelItemCount(count: Int) {
-        mSelectorItemCount = count + 2
-        mWheelMiddleItemIndex = (mSelectorItemCount - 1) / 2
-        mSelectorVisibleItemCount = mSelectorItemCount - 2
-        mWheelVisibleItemMiddleIndex = (mSelectorVisibleItemCount - 1) / 2
-        mSelectorItemIndices = ArrayList(mSelectorItemCount)
-        mSelectorItemValidStatus = ArrayList(mSelectorItemCount)
+        selectorItemCount = count + 2
+        wheelMiddleItemIndex = (selectorItemCount - 1) / 2
+        selectorVisibleItemCount = selectorItemCount - 2
+        wheelVisibleItemMiddleIndex = (selectorVisibleItemCount - 1) / 2
+        selectorItemIndices = ArrayList(selectorItemCount)
+        selectorItemValidStatus = ArrayList(selectorItemCount)
         reset()
         invalidate()
     }
@@ -798,15 +656,15 @@ class WheelPicker @JvmOverloads constructor(
      * Set color for current selected item
      */
     fun setSelectedTextColor(@ColorInt color: Int) {
-        mSelectedTextColor = color
+        selectedTextColor = color
         invalidate()
     }
 
     fun getValue(position: Int): Int {
-        return if (!mWrapSelectorWheelPreferred) {
+        return if (!wrapSelectorWheelPreferred) {
             when {
-                position > mMaxIndex -> 0
-                position < mMinIndex -> 0
+                position > maxIndex -> 0
+                position < minIndex -> 0
                 else -> position
             }
         } else {
@@ -818,30 +676,6 @@ class WheelPicker @JvmOverloads constructor(
         scrollToValue(value)
     }
 
-    fun setMaxValue(max: Int) {
-        mMaxIndex = max
-    }
-
-    fun getMaxValue(): String {
-        return mMaxIndex.toString()
-    }
-
-    fun setMinValue(min: Int) {
-        mMinIndex = min
-    }
-
-    fun setMinValidValue(minValid: Int?) {
-        mMinValidIndex = minValid
-    }
-
-    fun setMaxValidValue(maxValid: Int?) {
-        mMaxValidIndex = maxValid
-    }
-
-    fun getMinValue(): String {
-        return mMinIndex.toString()
-    }
-
     private fun reset() {
         initializeSelectorWheelIndices()
         initializeSelectorWheel()
@@ -849,15 +683,7 @@ class WheelPicker @JvmOverloads constructor(
     }
 
     fun getCurrentItem(): Int {
-        return getValue(mCurSelectedItemIndex)
-    }
-
-    private fun isValidPosition(position: Int): Boolean {
-        return when {
-            mMinValidIndex != null && position < mMinValidIndex!! -> false
-            mMaxValidIndex != null && position > mMaxValidIndex!! -> false
-            else -> true
-        }
+        return getValue(curSelectedItemIndex)
     }
 }
 
