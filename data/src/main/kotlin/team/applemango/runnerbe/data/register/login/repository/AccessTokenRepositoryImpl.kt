@@ -23,6 +23,8 @@ private val EXCEPTION_NAVER_ACCESS_TOKEN_NULL = Exception("Naver access token is
 private val EXCEPTION_RESPONSE_NOTHING = Exception("Kakao API response is nothing.")
 
 // must be activity context
+// TODO: https://github.com/runner-be/RunnerBe-Android/issues/56
+// Activity usage.
 class AccessTokenRepositoryImpl(private val activityContext: Activity) : AccessTokenRepository {
     override suspend fun getKakao(): String {
         return if (UserApiClient.instance.isKakaoTalkLoginAvailable(activityContext)) {

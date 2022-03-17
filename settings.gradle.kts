@@ -9,6 +9,7 @@
 
 rootProject.name = "RunnerBe"
 include(
+    ":di",
     ":data",
     ":domain",
     ":shared",

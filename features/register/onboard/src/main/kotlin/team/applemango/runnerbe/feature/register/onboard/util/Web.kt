@@ -20,14 +20,13 @@ import team.applemango.runnerbe.shared.util.extension.toast
 
 internal object Web {
     enum class Link(val string: String) {
-        ServiceTerms("https://applemango-runnerbe.github.io/terms-of-service.txt"),
-        LocateTerms("https://applemango-runnerbe.github.io/location-based-service.txt"),
-        PersonalInformationTerms("https://applemango-runnerbe.github.io/personal-information-collection-and-usage-agreement.txt")
+        ServiceTerms("https://runnerbe.xyz/policy/service.txt"),
+        LocateTerms("https://runnerbe.xyz/policy/location.txt"),
+        PersonalInformationTerms("https://runnerbe.xyz/policy/privacy-collect.txt")
     }
 
     @Suppress("DEPRECATION")
     // None deprecated way usage: Didn't find class "androidx.browser.customtabs.CustomTabColorSchemeParams$Builder"
-    // Also trying: 'com.google.androidbrowserhelper:androidbrowserhelper:2.3.0' but same exception occur.
     // Issue: https://github.com/applemango-runnerbe/RunnerBe-Android/issues/17
     fun open(context: Context, link: Link) {
         try {

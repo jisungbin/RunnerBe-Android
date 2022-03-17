@@ -24,7 +24,6 @@ import io.github.jisungbin.logeukes.logeukes
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.catch
-import team.applemango.runnerbe.feature.home.board.DataStore
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.domain.extension.toMessage
 import team.applemango.runnerbe.shared.domain.flowExceptionMessage
@@ -64,8 +63,8 @@ class StartActivity : AppCompatActivity() {
             .collectWithLifecycle(this) { exception ->
                 handleException(exception)
             }
-        vm.loadAllRunningItems { runningItems ->
-            DataStore.updateRunningItems(runningItems)
+
+        vm.loadAllRunningItems {
             isReady = true
         }
 
@@ -111,6 +110,7 @@ class StartActivity : AppCompatActivity() {
         rootView.viewTreeObserver.addOnPreDrawListener(
             object : ViewTreeObserver.OnPreDrawListener {
                 override fun onPreDraw(): Boolean {
+                    logeukes(tag = "isReady") { isReady }
                     return if (isReady) {
                         rootView.viewTreeObserver.removeOnPreDrawListener(this)
                         true

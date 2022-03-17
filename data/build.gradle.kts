@@ -32,6 +32,7 @@ dependencies {
     implementationProject(ProjectConstants.SharedDomain)
 
     implementation(Dependencies.Ksp)
+    implementation(Dependencies.Util.NestEgg)
     implementation(Dependencies.Jetpack.Room)
     implementation(platform(Dependencies.FirebaseBom))
     implementation(Dependencies.FirebaseEachKtx.Storage)

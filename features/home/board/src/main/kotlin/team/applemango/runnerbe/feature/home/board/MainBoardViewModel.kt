@@ -19,6 +19,7 @@
 package team.applemango.runnerbe.feature.home.board
 
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.github.jisungbin.logeukes.logeukes
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import org.orbitmvi.orbit.ContainerHost
@@ -33,11 +34,14 @@ import team.applemango.runnerbe.domain.runningitem.filter.JobFilter
 import team.applemango.runnerbe.domain.runningitem.filter.KeywordFilter
 import team.applemango.runnerbe.domain.runningitem.filter.RunningItemFilter
 import team.applemango.runnerbe.domain.runningitem.model.common.Locate
+import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 import team.applemango.runnerbe.domain.runningitem.usecase.LoadRunningItemsUseCase
 import team.applemango.runnerbe.domain.user.usecase.UpdateBookmarkItemUseCase
 import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState
 import team.applemango.runnerbe.shared.base.BaseViewModel
 import javax.inject.Inject
+import kotlin.time.ExperimentalTime
+import kotlin.time.measureTime
 
 @HiltViewModel
 internal class MainBoardViewModel @Inject constructor(
@@ -46,9 +50,11 @@ internal class MainBoardViewModel @Inject constructor(
 ) : BaseViewModel(), ContainerHost<MainBoardState, Nothing> {
 
     override val container = container<MainBoardState, Nothing>(MainBoardState.None)
-    private val _runningItems = MutableStateFlow(DataStore.runningItems)
+
+    private val _runningItems = MutableStateFlow<List<RunningItem>>(emptyList())
     val runningItems = _runningItems.asStateFlow()
 
+    @OptIn(ExperimentalTime::class)
     fun loadRunningItems(
         itemType: RunningItemType,
         includeEndItems: Boolean,
@@ -59,27 +65,33 @@ internal class MainBoardViewModel @Inject constructor(
         jobFilter: JobFilter,
         locate: Locate,
         keywordFilter: KeywordFilter,
+        useCaching: Boolean,
     ) = intent {
-        loadRunningItemsUseCase(
-            itemType = itemType,
-            includeEndItems = includeEndItems,
-            itemFilter = itemFilter,
-            distanceFilter = distanceFilter,
-            genderFilter = genderFilter,
-            ageFilter = ageFilter,
-            jobFilter = jobFilter,
-            locate = locate,
-            keywordFilter = keywordFilter
-        ).onSuccess { items ->
-            if (items.isNotEmpty()) {
-                _runningItems.value = items
-            } else {
-                reduce {
-                    MainBoardState.RunningItemEmpty
+        logeukes(tag = "api call time") {
+            measureTime {
+                loadRunningItemsUseCase(
+                    itemType = itemType,
+                    includeEndItems = includeEndItems,
+                    itemFilter = itemFilter,
+                    distanceFilter = distanceFilter,
+                    genderFilter = genderFilter,
+                    ageFilter = ageFilter,
+                    jobFilter = jobFilter,
+                    locate = locate,
+                    keywordFilter = keywordFilter,
+                    useCaching = useCaching
+                ).onSuccess { runningItems ->
+                    if (runningItems.isNotEmpty()) {
+                        _runningItems.value = runningItems
+                    } else {
+                        reduce {
+                            MainBoardState.RunningItemEmpty
+                        }
+                    }
+                }.onFailure { exception ->
+                    emitException(exception)
                 }
             }
-        }.onFailure { exception ->
-            emitException(exception)
         }
     }
 }

@@ -25,9 +25,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.ScaffoldState
@@ -40,9 +37,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.datastore.preferences.core.edit
@@ -343,63 +338,29 @@ private fun UnregisterDialog(
     visible: Boolean,
     onDismissRequest: () -> Unit,
 ) {
-    val buttonShape = RoundedCornerShape(10.dp)
     val context = LocalContext.current as Activity
     val coroutineScope = rememberCoroutineScope()
 
     RunnerbeDialog(
         visible = visible,
-        onDismissRequest = onDismissRequest
-    ) {
-        Text(
-            modifier = Modifier
-                .padding(top = 24.dp, bottom = 12.dp)
-                .padding(horizontal = 24.dp),
-            text = StringAsset.Dialog.UnregisterNotice,
-            style = Typography.Title18R.copy(color = ColorAsset.G1)
-        )
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .padding(bottom = 12.dp, end = 12.dp),
-            horizontalArrangement = Arrangement.spacedBy(
-                space = 12.dp,
-                alignment = Alignment.End
-            )
-        ) {
-            Text(
-                modifier = Modifier
-                    .clip(buttonShape)
-                    .clickable { onDismissRequest() }
-                    .padding(12.dp),
-                text = StringAsset.No,
-                style = Typography.Body14M.copy(color = ColorAsset.Primary)
-            )
-            Text(
-                modifier = Modifier
-                    .clip(buttonShape)
-                    .clickable {
-                        coroutineScope.launch {
-                            context.dataStore.edit { preferences ->
-                                preferences[DataStoreKey.Onboard.Unregister] = true
-                            }
-                        }
-                        context.changeActivityWithAnimation<MainActivityAlias>()
+        onDismissRequest = onDismissRequest,
+        content = StringAsset.Dialog.UnregisterNotice,
+        positiveButton = {
+            text = StringAsset.Yes
+            onClick = {
+                coroutineScope.launch {
+                    context.dataStore.edit { preferences ->
+                        preferences[DataStoreKey.Onboard.Unregister] = true
                     }
-                    .padding(12.dp),
-                text = StringAsset.Yes,
-                style = Typography.Body14M.copy(color = ColorAsset.Primary)
-            )
+                }
+                context.changeActivityWithAnimation<MainActivityAlias>()
+            }
+        },
+        negativeButton = {
+            text = StringAsset.No
+            onClick = {
+                onDismissRequest()
+            }
         }
-    }
-}
-
-@Preview
-@Composable
-private fun UnregisterDialogPreview() {
-    UnregisterDialog(
-        visible = true,
-        onDismissRequest = {}
     )
 }
