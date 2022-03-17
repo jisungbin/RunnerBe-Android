@@ -3,6 +3,8 @@
 
 <img src="https://user-images.githubusercontent.com/40740128/158814398-97b76bbb-b279-49aa-bad6-1fdd6a8741b1.png" width="33%" />
 
+이 데이터들을 저장하는 object 클래스는 이렇게 생겼습니다.
+
 ```kotlin
 object MainBoardDataStore {
     private val _runningItems = MutableStateFlow<List<RunningItem>>(emptyList())
