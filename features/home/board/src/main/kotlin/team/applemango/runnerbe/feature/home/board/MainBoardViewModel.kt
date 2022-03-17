@@ -67,7 +67,7 @@ internal class MainBoardViewModel @Inject constructor(
         keywordFilter: KeywordFilter,
         useCaching: Boolean,
     ) = intent {
-        logeukes {
+        logeukes(tag = "api call time") {
             measureTime {
                 loadRunningItemsUseCase(
                     itemType = itemType,

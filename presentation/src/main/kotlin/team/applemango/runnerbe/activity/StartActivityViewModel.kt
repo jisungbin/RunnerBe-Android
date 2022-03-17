@@ -11,7 +11,10 @@ package team.applemango.runnerbe.activity
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.github.jisungbin.logeukes.logeukes
 import javax.inject.Inject
+import kotlin.time.ExperimentalTime
+import kotlin.time.measureTime
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.domain.constant.Gender
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
@@ -34,25 +37,33 @@ internal class StartActivityViewModel @Inject constructor(
         const val DefaultLocate = .0
     }
 
+    @OptIn(ExperimentalTime::class)
     fun loadAllRunningItems(done: () -> Unit) = viewModelScope.launch {
-        loadRunningItemsUseCase(
-            itemType = RunningItemType.Before,
-            includeEndItems = false,
-            itemFilter = RunningItemFilter.Distance,
-            distanceFilter = DistanceFilter.None,
-            genderFilter = Gender.All,
-            ageFilter = AgeFilter(min = null, max = null),
-            jobFilter = JobFilter.None,
-            locate = Locate(
-                address = EmptyString,
-                latitude = DefaultLocate,
-                longitude = DefaultLocate
-            ),
-            keywordFilter = KeywordFilter.None,
-            useCaching = true
-        ).onSuccess { done() }
-            .onFailure { exception ->
-                emitException(exception)
+        logeukes(tag = "api call time") {
+            measureTime {
+                loadRunningItemsUseCase(
+                    itemType = RunningItemType.Before,
+                    includeEndItems = false,
+                    itemFilter = RunningItemFilter.Distance,
+                    distanceFilter = DistanceFilter.None,
+                    genderFilter = Gender.All,
+                    ageFilter = AgeFilter(min = null, max = null),
+                    jobFilter = JobFilter.None,
+                    locate = Locate(
+                        address = EmptyString,
+                        latitude = DefaultLocate,
+                        longitude = DefaultLocate
+                    ),
+                    keywordFilter = KeywordFilter.None,
+                    useCaching = true
+                ).onSuccess {
+                    logeukes { "done!" }
+                    done()
+                }.onFailure { exception ->
+                    logeukes { "exception!" }
+                    emitException(exception)
+                }
             }
+        }
     }
 }
