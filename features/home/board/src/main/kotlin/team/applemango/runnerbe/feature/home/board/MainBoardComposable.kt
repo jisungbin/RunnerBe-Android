@@ -57,7 +57,7 @@ internal fun MainBoardComposable(
     isBookmarkPage: Boolean = false,
     vm: MainBoardViewModel,
 ) {
-    val runningItems by vm.runningItems.collectAsState()
+    val runningItems by MainBoardDataStore.runningItems.collectAsState()
 
     val beforeText = stringResource(R.string.toggletopbaritem_before)
     val afterText = stringResource(R.string.toggletopbaritem_after)

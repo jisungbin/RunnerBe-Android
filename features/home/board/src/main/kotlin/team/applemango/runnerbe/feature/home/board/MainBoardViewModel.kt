@@ -19,8 +19,7 @@
 package team.applemango.runnerbe.feature.home.board
 
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import javax.inject.Inject
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.reduce
@@ -37,7 +36,6 @@ import team.applemango.runnerbe.domain.runningitem.usecase.LoadRunningItemsUseCa
 import team.applemango.runnerbe.domain.user.usecase.UpdateBookmarkItemUseCase
 import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState
 import team.applemango.runnerbe.shared.base.BaseViewModel
-import javax.inject.Inject
 
 @HiltViewModel
 internal class MainBoardViewModel @Inject constructor(
@@ -46,8 +44,6 @@ internal class MainBoardViewModel @Inject constructor(
 ) : BaseViewModel(), ContainerHost<MainBoardState, Nothing> {
 
     override val container = container<MainBoardState, Nothing>(MainBoardState.None)
-    private val _runningItems = MutableStateFlow(DataStore.runningItems)
-    val runningItems = _runningItems.asStateFlow()
 
     fun loadRunningItems(
         itemType: RunningItemType,
@@ -72,7 +68,7 @@ internal class MainBoardViewModel @Inject constructor(
             keywordFilter = keywordFilter
         ).onSuccess { items ->
             if (items.isNotEmpty()) {
-                _runningItems.value = items
+                MainBoardDataStore.updateRunningItems(items)
             } else {
                 reduce {
                     MainBoardState.RunningItemEmpty
