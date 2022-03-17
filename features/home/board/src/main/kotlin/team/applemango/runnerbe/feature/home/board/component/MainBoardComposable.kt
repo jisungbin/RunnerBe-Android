@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.feature.home.board
+package team.applemango.runnerbe.feature.home.board.component
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -15,6 +15,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
@@ -40,7 +41,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
-import team.applemango.runnerbe.feature.home.board.component.RunningItem
+import team.applemango.runnerbe.feature.home.board.MainBoardViewModel
+import team.applemango.runnerbe.feature.home.board.R
 import team.applemango.runnerbe.shared.compose.component.ToggleTopBar
 import team.applemango.runnerbe.shared.compose.component.ToggleTopBarColor
 import team.applemango.runnerbe.shared.compose.component.ToggleTopBarItem
@@ -56,7 +58,7 @@ internal fun MainBoardComposable(
     modifier: Modifier = Modifier,
     isBookmarkPage: Boolean = false,
     vm: MainBoardViewModel,
-    isEmptyState: Boolean
+    isEmptyState: Boolean,
 ) {
     val runningItems by vm.runningItems.collectAsState()
 
@@ -185,24 +187,37 @@ internal fun MainBoardComposable(
                 )
             }
         }
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-        ) {
-            items(
-                items = runningItems.filter { item ->
-                    item.runningType == selectedRunningItemTypeState &&
-                        item.bookmarked == isBookmarkPage
-                },
-                key = { it.itemId }
-            ) { item ->
-                RunningItem(
-                    modifier = Modifier.animateItemPlacement(),
-                    item = item,
-                    bookmarkState = false,
-                    requestToggleBookmarkState = {
-                        // TODO
-                    }
+        if (!isEmptyState) {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                contentPadding = PaddingValues(vertical = 8.dp)
+            ) {
+                items(
+                    items = runningItems.filter { item ->
+                        item.runningType == selectedRunningItemTypeState &&
+                            item.bookmarked == isBookmarkPage
+                    },
+                    key = { it.itemId }
+                ) { item ->
+                    RunningItem(
+                        modifier = Modifier.animateItemPlacement(),
+                        item = item,
+                        bookmarkState = false,
+                        requestToggleBookmarkState = {
+                            // TODO
+                        }
+                    )
+                }
+            }
+        } else {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = stringResource(R.string.mainboard_running_item_empty),
+                    style = Typography.Title18R.copy(color = ColorAsset.G4)
                 )
             }
         }

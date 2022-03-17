@@ -26,6 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.github.jisungbin.logeukes.LoggerType
 import io.github.jisungbin.logeukes.logeukes
 import kotlinx.coroutines.flow.MutableStateFlow
+import team.applemango.runnerbe.feature.home.board.component.MainBoardComposable
 import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
 import team.applemango.runnerbe.shared.domain.extension.toMessage
