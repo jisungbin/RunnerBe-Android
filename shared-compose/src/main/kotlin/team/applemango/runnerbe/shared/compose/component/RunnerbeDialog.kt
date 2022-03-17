@@ -12,6 +12,8 @@ package team.applemango.runnerbe.shared.compose.component
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
@@ -59,6 +61,7 @@ fun RunnerbeDialog(
 @Immutable
 data class DialogButton(
     var text: String = "",
+    var textBuilder: @Composable () -> String = { "" },
     var onClick: () -> Unit = {},
 )
 
@@ -103,7 +106,7 @@ fun RunnerbeDialog(
                         .clip(buttonShape)
                         .clickable(onClick = negativeButtonData.onClick)
                         .padding(12.dp),
-                    text = negativeButtonData.text,
+                    text = negativeButtonData.text.ifEmpty { negativeButtonData.textBuilder() },
                     style = Typography.Body14M.copy(color = ColorAsset.Primary)
                 )
             }
@@ -112,7 +115,64 @@ fun RunnerbeDialog(
                     .clip(buttonShape)
                     .clickable(onClick = positiveButtonData.onClick)
                     .padding(12.dp),
-                text = positiveButtonData.text,
+                text = positiveButtonData.text.ifEmpty { positiveButtonData.textBuilder() },
+                style = Typography.Body14M.copy(color = ColorAsset.Primary)
+            )
+        }
+    }
+}
+
+@Composable
+fun RunnerbeDialog(
+    visible: Boolean,
+    onDismissRequest: () -> Unit,
+    properties: DialogProperties = DialogProperties(),
+    content: @Composable BoxScope.() -> Unit,
+    @RunnerbeDsl positiveButton: DialogButton.() -> Unit,
+    @RunnerbeDsl negativeButton: (DialogButton.() -> Unit)? = null,
+) {
+    val buttonShape = RoundedCornerShape(10.dp)
+    val positiveButtonData = DialogButton().apply(positiveButton)
+
+    RunnerbeDialog(
+        visible = visible,
+        onDismissRequest = onDismissRequest,
+        properties = properties
+    ) {
+        Box(
+            modifier = Modifier
+                .padding(top = 24.dp, bottom = 12.dp)
+                .padding(horizontal = 24.dp)
+        ) {
+            content()
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(bottom = 12.dp, end = 12.dp),
+            horizontalArrangement = Arrangement.spacedBy(
+                space = 12.dp,
+                alignment = Alignment.End
+            )
+        ) {
+            if (negativeButton != null) {
+                val negativeButtonData = DialogButton().apply(negativeButton)
+                Text(
+                    modifier = Modifier
+                        .clip(buttonShape)
+                        .clickable(onClick = negativeButtonData.onClick)
+                        .padding(12.dp),
+                    text = negativeButtonData.text.ifEmpty { negativeButtonData.textBuilder() },
+                    style = Typography.Body14M.copy(color = ColorAsset.Primary)
+                )
+            }
+            Text(
+                modifier = Modifier
+                    .clip(buttonShape)
+                    .clickable(onClick = positiveButtonData.onClick)
+                    .padding(12.dp),
+                text = positiveButtonData.text.ifEmpty { positiveButtonData.textBuilder() },
                 style = Typography.Body14M.copy(color = ColorAsset.Primary)
             )
         }
