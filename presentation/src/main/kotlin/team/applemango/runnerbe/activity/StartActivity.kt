@@ -13,17 +13,19 @@ import android.os.Build
 import android.os.Bundle
 import android.view.ViewTreeObserver
 import android.view.animation.AnticipateInterpolator
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.databinding.DataBindingUtil
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.jisungbin.logeukes.LoggerType
 import io.github.jisungbin.logeukes.logeukes
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.catch
+import team.applemango.runnerbe.R
+import team.applemango.runnerbe.databinding.ActivityMainBinding
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.domain.extension.toMessage
 import team.applemango.runnerbe.shared.domain.flowExceptionMessage
@@ -42,19 +44,13 @@ class StartActivity : AppCompatActivity() {
     }
 
     private var isReady = false
+    private lateinit var binding: ActivityMainBinding
     private val vm: StartActivityViewModel by viewModels()
-    private val rootView by lazy { LinearLayout(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
-        setContentView(
-            rootView,
-            LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT
-            )
-        )
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         vm.exceptionFlow
             .catch { exception ->
@@ -63,6 +59,7 @@ class StartActivity : AppCompatActivity() {
             .collectWithLifecycle(this) { exception ->
                 handleException(exception)
             }
+
         vm.loadAllRunningItems {
             isReady = true
         }
@@ -106,11 +103,12 @@ class StartActivity : AppCompatActivity() {
                 cancel("state check execute must be once.")
             }
 
-        rootView.viewTreeObserver.addOnPreDrawListener(
+        binding.clContainer.viewTreeObserver.addOnPreDrawListener(
             object : ViewTreeObserver.OnPreDrawListener {
                 override fun onPreDraw(): Boolean {
+                    logeukes(tag = "isReady") { isReady }
                     return if (isReady) {
-                        rootView.viewTreeObserver.removeOnPreDrawListener(this)
+                        binding.clContainer.viewTreeObserver.removeOnPreDrawListener(this)
                         true
                     } else {
                         false
