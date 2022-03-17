@@ -39,4 +39,6 @@ Jetpack Compose 의존성을 가지고 있으며, UI 모듈에서만 쓰일 수 
 
 ---
 
-# https://github.com/runner-be/RunnerBe-Android/issues/45
+# 답변
+
+#45
