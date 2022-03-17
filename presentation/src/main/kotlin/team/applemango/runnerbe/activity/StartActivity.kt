@@ -25,7 +25,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.catch
 import team.applemango.runnerbe.R
-import team.applemango.runnerbe.databinding.ActivityMainBinding
+import team.applemango.runnerbe.databinding.ActivityStartBinding
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.domain.extension.toMessage
 import team.applemango.runnerbe.shared.domain.flowExceptionMessage
@@ -44,13 +44,13 @@ class StartActivity : AppCompatActivity() {
     }
 
     private var isReady = false
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityStartBinding
     private val vm: StartActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_start)
 
         vm.exceptionFlow
             .catch { exception ->
