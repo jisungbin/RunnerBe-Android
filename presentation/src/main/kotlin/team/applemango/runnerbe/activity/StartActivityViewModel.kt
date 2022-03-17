@@ -12,9 +12,6 @@ package team.applemango.runnerbe.activity
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.jisungbin.logeukes.logeukes
-import javax.inject.Inject
-import kotlin.time.ExperimentalTime
-import kotlin.time.measureTime
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.domain.constant.Gender
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
@@ -27,6 +24,9 @@ import team.applemango.runnerbe.domain.runningitem.model.common.Locate
 import team.applemango.runnerbe.domain.runningitem.usecase.LoadRunningItemsUseCase
 import team.applemango.runnerbe.shared.base.BaseViewModel
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
+import javax.inject.Inject
+import kotlin.time.ExperimentalTime
+import kotlin.time.measureTime
 
 @HiltViewModel
 internal class StartActivityViewModel @Inject constructor(

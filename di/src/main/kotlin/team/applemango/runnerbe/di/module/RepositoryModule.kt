@@ -13,11 +13,11 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 import team.applemango.runnerbe.data.runningitem.repository.RunningItemRepositoryImpl
 import team.applemango.runnerbe.data.user.repository.UserRepositoryImpl
 import team.applemango.runnerbe.domain.runningitem.repository.RunningItemRepository
 import team.applemango.runnerbe.domain.user.repository.UserRepository
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)

@@ -12,11 +12,11 @@ package team.applemango.runnerbe.data.firebase.repository
 import android.graphics.Bitmap
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import kotlinx.coroutines.suspendCancellableCoroutine
+import team.applemango.runnerbe.domain.firebase.repository.FirebaseRepository
 import java.io.ByteArrayOutputStream
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
-import kotlinx.coroutines.suspendCancellableCoroutine
-import team.applemango.runnerbe.domain.firebase.repository.FirebaseRepository
 
 private const val FirebaseStoragePath = "user-content"
 private val ImageUpdateExceptionWithNull =
