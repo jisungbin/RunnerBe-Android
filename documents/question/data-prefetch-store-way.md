@@ -62,4 +62,4 @@ data class RunningItem(
 
 # 해결 방법
 
-2번 답변 채택
+2번 답변 채택 -> [nestegg](https://github.com/runner-be/nestegg) 라이브러리 사용
