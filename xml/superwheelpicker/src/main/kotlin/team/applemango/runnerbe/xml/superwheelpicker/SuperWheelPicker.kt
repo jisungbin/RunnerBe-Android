@@ -686,8 +686,3 @@ class SuperWheelPicker @JvmOverloads constructor(
         return getValue(curSelectedItemIndex)
     }
 }
-
-internal fun Int.clamp(min: Int, max: Int): Int {
-    if (this < min) return min
-    return if (this > max) max else this
-}
