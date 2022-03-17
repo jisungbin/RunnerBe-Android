@@ -48,8 +48,7 @@ import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.domain.flowExceptionMessage
 import team.applemango.runnerbe.shared.util.extension.dataStore
-import team.applemango.runnerbe.xml.numberpicker.OnValueChangeListener
-import team.applemango.runnerbe.xml.numberpicker.WheelPicker
+import team.applemango.runnerbe.xml.superwheelpicker.SuperWheelPicker
 import java.util.Calendar
 
 private val nowYear = Calendar.getInstance().get(Calendar.YEAR)
@@ -69,7 +68,7 @@ internal fun YearPicker(
     }
     val yearSelectStateWithLifecycle by yearSelectFlowWithLifecycle.collectAsState(nowYear)
     val wheelPicker = remember {
-        WheelPicker(context) { year ->
+        SuperWheelPicker(context) { year ->
             selectedYearChanged(nowYear - year > 19)
             coroutineScope.launch {
                 yearSelectFlow.emit(year)
@@ -138,25 +137,16 @@ internal fun YearPicker(
     }
 }
 
-private fun WheelPicker(
+private fun SuperWheelPicker(
     context: Context,
     onNumberChangeListener: (number: Int) -> Unit,
-) = WheelPicker(context).apply {
+) = SuperWheelPicker(context).apply {
     setSelectedTextColor(presentationColorOf(context, "primary"))
     setUnselectedTextColor(presentationColorOf(context, "G4"))
     setTypeface(FontTypeface.Roboto.medium(context)) // nullable
     setWrapSelectorWheel(true)
     setWheelItemCount(5)
-    setMinValue(nowYear - 80)
-    setMaxValue(nowYear)
+    setRange(nowYear - 80..nowYear)
     setValue(nowYear)
-    setOnValueChangedListener(object : OnValueChangeListener {
-        override fun onValueChange(
-            picker: WheelPicker,
-            oldVal: Int,
-            newVal: Int,
-        ) {
-            onNumberChangeListener(newVal)
-        }
-    })
+    setOnValueChangedListener { _, newValue -> onNumberChangeListener(newValue) }
 }

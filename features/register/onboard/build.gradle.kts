@@ -25,6 +25,6 @@ dependencies {
     implementation(Dependencies.EachUi.Browser)
     implementationProject(ProjectConstants.HomeBoard)
     implementationProject(ProjectConstants.Presentation)
-    implementationProject(ProjectConstants.XmlNumberPicker)
+    implementationProject(ProjectConstants.XmlSuperWheelPicker)
     installSharedComposeOrbitHiltTest(excludeHilt = true)
 }
