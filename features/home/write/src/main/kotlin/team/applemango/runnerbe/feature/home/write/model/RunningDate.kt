@@ -16,12 +16,36 @@ import team.applemango.runnerbe.feature.home.write.constant.TimeType
 import team.applemango.runnerbe.shared.domain.extension.format
 
 private const val RunningDateFormat = "M/dd (E)"
-
 internal fun Date.toDateString() = format(RunningDateFormat)
 
+private typealias TimeTypeModel = TimeType
+
+@Suppress("MemberVisibilityCanBePrivate")
 internal class RunningDate(baseDate: Date = Date()) {
     private val calendar = Calendar.getInstance().apply {
         time = baseDate
+    }
+
+    companion object {
+        sealed class Field {
+            data class Date(val value: String) : Field()
+            data class TimeType(val value: TimeTypeModel) : Field()
+            data class Hour(val value: Int) : Field()
+            data class Minute(val value: Int) : Field()
+        }
+    }
+
+    /**
+     * 날짜 설정
+     *
+     * @param dateString 입력받는 포멧은 {월/일 (요일)} 이지만 월/일 만 사용됨
+     * 캘린더의 월은 0 부터 시작이라 -1 을 해서 캘린더에 넣음
+     */
+    fun setDate(dateString: String) {
+        val date = dateString.split(" ")[0]
+        val (month, day) = date.split("/").map(String::toInt)
+        calendar.set(Calendar.MONTH, month - 1)
+        calendar.set(Calendar.DAY_OF_MONTH, day)
     }
 
     /**
@@ -29,8 +53,8 @@ internal class RunningDate(baseDate: Date = Date()) {
      *
      * @param timeType AM/PM 값 (캘린더 인자는 AM - 0, PM - 1 사용)
      */
-    fun setTimeType(timeType: TimeType) {
-        calendar.set(Calendar.AM_PM, TimeType.values().indexOf(timeType))
+    fun setTimeType(timeType: TimeTypeModel) {
+        calendar.set(Calendar.AM_PM, TimeTypeModel.values().indexOf(timeType))
     }
 
     /**
@@ -52,24 +76,11 @@ internal class RunningDate(baseDate: Date = Date()) {
     }
 
     /**
-     * 날짜 설정
-     *
-     * @param dateString 입력받는 포멧은 {월/일 (요일)} 이지만 월/일 만 사용됨
-     * 캘린더의 월은 0 부터 시작이라 -1 을 해서 캘린더에 넣음
-     */
-    fun setDate(dateString: String) {
-        val date = dateString.split(" ")[0]
-        val (month, day) = date.split("/").map(String::toInt)
-        calendar.set(Calendar.MONTH, month - 1)
-        calendar.set(Calendar.DAY_OF_MONTH, day)
-    }
-
-    /**
      * Date 객체 반환
      *
      * @return Date
      */
     fun toDate() = calendar.time ?: throw NullPointerException("Can't get time from calendar.")
 
-    operator fun compareTo(other: Date) = toDate().compareTo(other)
+    operator fun compareTo(other: RunningDate) = toDate().compareTo(other.toDate())
 }
