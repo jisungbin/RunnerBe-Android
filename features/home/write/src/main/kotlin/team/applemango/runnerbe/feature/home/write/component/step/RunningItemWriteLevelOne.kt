@@ -176,7 +176,7 @@ internal fun RunningItemWriteLevelOne(
             visible = titleErrorVisible
         ) {
             Text(
-                text = stringResource(R.string.runningitemwrite_error_title_length),
+                text = stringResource(R.string.runningitemwrite_error_max_title_length),
                 style = Typography.Body12R.copy(color = ColorAsset.ErrorLight)
             )
         }

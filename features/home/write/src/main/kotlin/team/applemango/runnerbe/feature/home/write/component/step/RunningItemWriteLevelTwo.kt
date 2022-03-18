@@ -49,7 +49,10 @@ import team.applemango.runnerbe.domain.constant.Gender
 import team.applemango.runnerbe.feature.home.write.R
 import team.applemango.runnerbe.feature.home.write.RunningItemWriteViewModel
 import team.applemango.runnerbe.feature.home.write.util.extension.toLatLng
+import team.applemango.runnerbe.shared.compose.component.LabelCheckbox
+import team.applemango.runnerbe.shared.compose.component.LabelText
 import team.applemango.runnerbe.shared.compose.component.ToggleButton
+import team.applemango.runnerbe.shared.compose.default.RunnerbeCheckBoxDefaults
 import team.applemango.runnerbe.shared.compose.default.RunnerbeToggleButtonDefaults
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
@@ -62,6 +65,7 @@ internal fun RunningItemWriteLevelTwo(
     vm: RunningItemWriteViewModel = viewModel(),
 ) {
 
+    var allAgeCheckState by remember { mutableStateOf(false) }
     var genderSelectState by remember { mutableStateOf<Gender?>(null) }
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(
@@ -87,7 +91,7 @@ internal fun RunningItemWriteLevelTwo(
                     .clip(RoundedCornerShape(8.dp))
                     .size(
                         width = 110.dp,
-                        height = 52.dp
+                        height = 60.dp
                     ),
                 cameraPositionState = cameraPositionState,
                 uiSettings = MapUiSettings(
@@ -151,9 +155,22 @@ internal fun RunningItemWriteLevelTwo(
                 modifier = Modifier.constrainAs(informations) {
                     start.linkTo(runningItemType.start)
                     bottom.linkTo(map.bottom)
-                }
+                },
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                // TODO
+                LabelText(
+                    iconRes = R.drawable.ic_round_schedule_24,
+                    iconSize = 18.dp,
+                    label = vm.runningDate.toString(),
+                    textStyle = Typography.Body12R.copy(color = ColorAsset.G3)
+                )
+                LabelText(
+                    iconRes = R.drawable.ic_round_time_24,
+                    iconSize = 18.dp,
+                    label = vm.runningTime.toString(withWhitespace = false),
+                    textStyle = Typography.Body12R.copy(color = ColorAsset.G3)
+                )
             }
         }
         Divider(
@@ -171,7 +188,7 @@ internal fun RunningItemWriteLevelTwo(
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 16.dp),
+                .padding(vertical = 12.dp),
             horizontalArrangement = Arrangement.spacedBy(
                 space = 16.dp,
                 alignment = Alignment.CenterHorizontally
@@ -188,5 +205,16 @@ internal fun RunningItemWriteLevelTwo(
                 }
             }
         }
+        Divider(modifier = Modifier.padding(vertical = 20.dp), color = ColorAsset.G6)
+        LabelCheckbox(
+            modifier = Modifier.fillMaxWidth(),
+            label = stringResource(R.string.runningitemwrite_label_all_age_range),
+            checkboxState = allAgeCheckState,
+            checkboxStateChange = { state ->
+                allAgeCheckState = state
+            },
+            checkboxColors = RunnerbeCheckBoxDefaults.colors(),
+            textStyle = Typography.Body12R.copy(color = ColorAsset.G3_5)
+        )
     }
 }
