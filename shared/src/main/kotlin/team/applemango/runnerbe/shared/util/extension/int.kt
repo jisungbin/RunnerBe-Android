@@ -11,5 +11,8 @@ import android.content.res.Resources
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-val Int.dp: Int
-    get() = (this * Resources.getSystem().displayMetrics.density + 0.5f).toInt()
+val Int.dp: Float
+    get() = (this * Resources.getSystem().displayMetrics.density + 0.5f)
+
+val Int.sp: Float
+    get() = (this * Resources.getSystem().displayMetrics.scaledDensity)
