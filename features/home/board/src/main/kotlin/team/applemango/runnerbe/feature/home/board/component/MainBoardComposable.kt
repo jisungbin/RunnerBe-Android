@@ -44,7 +44,7 @@ import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.feature.home.board.MainBoardViewModel
 import team.applemango.runnerbe.feature.home.board.R
 import team.applemango.runnerbe.shared.compose.component.RunningItemTypeToggleBar
-import team.applemango.runnerbe.shared.compose.default.RunnerbeCheckBoxColors
+import team.applemango.runnerbe.shared.compose.default.RunnerbeCheckBoxDefaults
 import team.applemango.runnerbe.shared.compose.extension.noRippleClickable
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
@@ -142,7 +142,7 @@ internal fun MainBoardComposable(
                         modifier = Modifier.padding(start = 4.dp),
                         checked = includeFinishState,
                         onCheckedChange = { includeFinishState = it },
-                        colors = RunnerbeCheckBoxColors
+                        colors = RunnerbeCheckBoxDefaults.colors()
                     )
                 }
                 ToggleTopBarSubItem(
