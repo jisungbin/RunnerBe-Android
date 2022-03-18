@@ -167,8 +167,7 @@ internal fun RunningItemWriteLevelOne(
 private fun RunningDatePickerDialog(
     visible: Boolean,
     onDismissRequest: () -> Unit,
-    runningDate: RunningDate,
-    onRunningDateChange: (runningDate: RunningDate) -> Unit,
+    onRunningDateChange: (field: RunningDate.Companion.Field) -> Unit,
 ) {
     RunnerbeDialog(
         visible = visible,
@@ -188,18 +187,18 @@ private fun RunningDatePickerDialog(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 DateStringPicker { dateString ->
-                    onRunningDateChange(runningDate.copy(dateString = dateString))
+                    onRunningDateChange(RunningDate.Companion.Field.Date(dateString))
                 }
                 TimeTypePicker { timeType ->
-                    onRunningDateChange(runningDate.copy(timeType = timeType))
+                    onRunningDateChange(RunningDate.Companion.Field.TimeType(timeType))
                 }
                 Row {
                     HourPicker { hour ->
-                        onRunningDateChange(runningDate.copy(hour = hour))
+                        onRunningDateChange(RunningDate.Companion.Field.Hour(hour))
                     }
                     Text(text = ":", style = Typography.Custom.SuperWheelPicker)
                     MinutePicker { minute ->
-                        onRunningDateChange(runningDate.copy(minute = minute))
+                        onRunningDateChange(RunningDate.Companion.Field.Minute(minute))
                     }
                 }
             }
