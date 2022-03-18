@@ -12,6 +12,7 @@ package team.applemango.runnerbe.feature.home.write.component.step
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -33,6 +34,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -282,7 +284,10 @@ internal fun RunningItemWriteLevelOne(
             )
         }
         Divider(modifier = Modifier.padding(vertical = 20.dp), color = ColorAsset.G6)
-        Row {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(space = 4.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Text(
                 text = stringResource(R.string.runningitebwrite_label_gather_place),
                 style = Typography.Body14R.copy(color = ColorAsset.G3_5)
