@@ -54,7 +54,7 @@ data class ToggleTopBarItem<T>(
 )
 
 @Immutable
-data class ToggleTopBarColor(
+data class ToggleTopBarColors(
     val baseBackground: Color = ColorAsset.Primary,
     val activateBackground: Color = ColorAsset.PrimaryDarker,
     val inactivateBackground: Color = baseBackground,
@@ -65,7 +65,7 @@ data class ToggleTopBarColor(
 @Composable
 fun <T> ToggleTopBar(
     modifier: Modifier = Modifier,
-    colors: ToggleTopBarColor = ToggleTopBarColor(),
+    colors: ToggleTopBarColors = ToggleTopBarColors(),
     activateTextStyle: TextStyle = LocalTextStyle.current,
     inactivateTextStyle: TextStyle = LocalTextStyle.current,
     height: Dp = DefaultToggleTopBarHeight.dp,
@@ -133,7 +133,7 @@ fun RunningItemTypeToggleBar(
 ) {
     ToggleTopBar(
         modifier = modifier,
-        colors = ToggleTopBarColor(
+        colors = ToggleTopBarColors(
             baseBackground = ColorAsset.G6,
             activateBackground = ColorAsset.Primary,
             activateText = ColorAsset.G6,
