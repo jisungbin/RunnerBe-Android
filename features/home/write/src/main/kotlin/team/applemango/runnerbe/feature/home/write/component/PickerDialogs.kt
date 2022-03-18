@@ -37,6 +37,7 @@ private val now = Date()
 @Composable
 internal fun RunningDatePickerDialog(
     visible: Boolean,
+    startDateIndex: Int,
     startTimeType: TimeType,
     startHour: Int,
     startMinute: Int,
@@ -60,10 +61,10 @@ internal fun RunningDatePickerDialog(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                DateStringPicker { dateString ->
+                DateStringPicker(startDateIndex = startDateIndex) { dateString ->
                     onRunningDateChange(RunningDate.Companion.Field.Date(dateString))
                 }
-                TimeTypePicker(startType = startTimeType) { timeType ->
+                TimeTypePicker(startTimeType = startTimeType) { timeType ->
                     onRunningDateChange(RunningDate.Companion.Field.TimeType(timeType))
                 }
                 Row {
@@ -135,9 +136,9 @@ internal fun RunningTimePickerDialog(
     )
 }
 
-// TODO: startDate
 @Composable
 private fun DateStringPicker(
+    startDateIndex: Int,
     onDateStringSelectChange: (dateString: String) -> Unit,
 ) {
     SuperWheelPicker(
@@ -147,8 +148,8 @@ private fun DateStringPicker(
             letterSpacing = (-0.18).em
         ),
         wheelItemCount = 5,
-        range = 0..6,
-        value = 0,
+        range = 0..7,
+        value = startDateIndex,
         onValueChange = { _, dayUpper ->
             val newDateString = now.plusDayAndCaching(dayUpper).toDateString()
             onDateStringSelectChange(newDateString)
@@ -161,7 +162,7 @@ private fun DateStringPicker(
 
 @Composable
 private fun TimeTypePicker(
-    startType: TimeType,
+    startTimeType: TimeType,
     onTimeTypeSelectChange: (timeType: TimeType) -> Unit,
 ) {
     SuperWheelPicker(
@@ -172,7 +173,7 @@ private fun TimeTypePicker(
         ),
         wheelItemCount = 2,
         range = 0..1,
-        value = TimeType.values().indexOf(startType),
+        value = TimeType.values().indexOf(startTimeType),
         onValueChange = { _, timeTypeIndex ->
             onTimeTypeSelectChange(TimeType.values()[timeTypeIndex])
         },
