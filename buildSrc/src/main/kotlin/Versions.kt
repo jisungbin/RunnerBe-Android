@@ -49,7 +49,7 @@ object Versions {
 
     object Ui {
         const val Browser = "1.3.0"
-        const val Material = "1.5.0"
+        const val Material = "1.6.0-alpha03"
         const val AppCompat = "1.4.1"
         const val PhotoEditor = "2.0.0"
         const val Splash = "1.0.0-beta01"
