@@ -40,6 +40,8 @@ internal class RunningDate(baseDate: Date = Date()) {
         }
 
         /**
+         * 기본 값 불러오기
+         *
          * 출근 전 - 06:00 AM, 퇴근 후 06:00 PM, 휴일 - 12:00 PM
          */
         fun getDefault(runningItemType: RunningItemType): RunningDate {
@@ -105,9 +107,32 @@ internal class RunningDate(baseDate: Date = Date()) {
     }
 
     /**
-     * Date 객체 반환
-     *
-     * @return Date
+     * 설정된 달 조회
+     */
+    fun getMonth() = calendar.get(Calendar.MONTH)
+
+    /**
+     * 설정된 일 조회
+     */
+    fun getDay() = calendar.get(Calendar.DAY_OF_MONTH)
+
+    /**
+     * 설정된 시간 타입 조회
+     */
+    fun getTimeType() = TimeType.values()[calendar.get(Calendar.AM_PM)]
+
+    /**
+     * 설정된 시(hour) 조회
+     */
+    fun getHour() = calendar.get(Calendar.HOUR)
+
+    /**
+     * 설정된 분(minute) 조회
+     */
+    fun getMinute() = calendar.get(Calendar.MINUTE)
+
+    /**
+     * Date 객체 변환
      */
     fun toDate() = calendar.time ?: throw NullPointerException("Can't get time from calendar.")
 
