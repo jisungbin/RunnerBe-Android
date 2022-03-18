@@ -34,7 +34,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
@@ -48,15 +47,15 @@ import team.applemango.runnerbe.feature.home.write.component.util.DateCache.plus
 import team.applemango.runnerbe.feature.home.write.constant.TimeType
 import team.applemango.runnerbe.feature.home.write.model.RunningDate
 import team.applemango.runnerbe.shared.compose.component.RunnerbeDialog
+import team.applemango.runnerbe.shared.compose.default.RunnerbeSuperWheelPickerColors
+import team.applemango.runnerbe.shared.compose.default.RunnerbeSuperWheelPickerTextStyle
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
-import team.applemango.runnerbe.shared.compose.theme.FontTypeface
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.domain.extension.format
 import team.applemango.runnerbe.shared.domain.extension.toCalendar
+import team.applemango.runnerbe.shared.domain.unit.em
 import team.applemango.runnerbe.shared.domain.unit.px
 import team.applemango.runnerbe.xml.superwheelpicker.integration.SuperWheelPicker
-import team.applemango.runnerbe.xml.superwheelpicker.integration.SuperWheelPickerColors
-import team.applemango.runnerbe.xml.superwheelpicker.integration.SuperWheelPickerTextStyle
 
 private val DefaultFieldShape = RoundedCornerShape(6.dp)
 
@@ -172,8 +171,6 @@ private fun RunningDatePickerDialog(
     runningDate: RunningDate,
     onRunningDateChange: (runningDate: RunningDate) -> Unit,
 ) {
-    val context = LocalContext.current
-
     RunnerbeDialog(
         visible = visible,
         onDismissRequest = onDismissRequest,
@@ -198,6 +195,9 @@ private fun RunningDatePickerDialog(
                     onRunningDateChange(runningDate.copy(timeType = timeType))
                 }
                 Row {
+                    HourPicker { hour ->
+                        onRunningDateChange(runningDate.copy(hour = hour))
+                    }
                     Text(text = ":", style = Typography.Custom.SuperWheelPicker)
                     MinutePicker { minute ->
                         onRunningDateChange(runningDate.copy(minute = minute))
@@ -212,15 +212,11 @@ private fun RunningDatePickerDialog(
 private fun DateStringPicker(
     onDateStringSelectChange: (dateString: String) -> Unit,
 ) {
-    val context = LocalContext.current
     SuperWheelPicker(
-        colors = SuperWheelPickerColors(
-            selectedTextColor = ColorAsset.Primary,
-            unselectedTextColor = ColorAsset.G4
-        ),
-        textStyle = SuperWheelPickerTextStyle(
-            typeface = FontTypeface.Roboto.medium(context),
-            textSize = 26.px,
+        colors = RunnerbeSuperWheelPickerColors,
+        textStyle = RunnerbeSuperWheelPickerTextStyle.copy(
+            textSize = 18.px,
+            letterSpacing = (-0.18).em
         ),
         wheelItemCount = 5,
         range = 0..6,
@@ -239,14 +235,11 @@ private fun DateStringPicker(
 private fun TimeTypePicker(
     onTimeTypeSelectChange: (timeType: TimeType) -> Unit,
 ) {
-    val context = LocalContext.current
     SuperWheelPicker(
-        colors = SuperWheelPickerColors(
-            selectedTextColor = ColorAsset.Primary,
-            unselectedTextColor = ColorAsset.G4
-        ),
-        textStyle = SuperWheelPickerTextStyle(
-            typeface = FontTypeface.Roboto.medium(context)
+        colors = RunnerbeSuperWheelPickerColors,
+        textStyle = RunnerbeSuperWheelPickerTextStyle.copy(
+            textSize = 18.px,
+            letterSpacing = (-0.18).em
         ),
         range = 0..1,
         value = 0,
@@ -264,14 +257,11 @@ private fun TimeTypePicker(
 private fun HourPicker(
     onHourSelectChange: (hour: Int) -> Unit,
 ) {
-    val context = LocalContext.current
     SuperWheelPicker(
-        colors = SuperWheelPickerColors(
-            selectedTextColor = ColorAsset.Primary,
-            unselectedTextColor = ColorAsset.G4
-        ),
-        textStyle = SuperWheelPickerTextStyle(
-            typeface = FontTypeface.Roboto.medium(context)
+        colors = RunnerbeSuperWheelPickerColors,
+        textStyle = RunnerbeSuperWheelPickerTextStyle.copy(
+            textSize = 18.px,
+            letterSpacing = (-0.18).em
         ),
         range = 0..11,
         value = now.toCalendar().get(Calendar.HOUR_OF_DAY),
@@ -286,14 +276,11 @@ private fun HourPicker(
 private fun MinutePicker(
     onMinuteSelectChange: (hour: Int) -> Unit,
 ) {
-    val context = LocalContext.current
     SuperWheelPicker(
-        colors = SuperWheelPickerColors(
-            selectedTextColor = ColorAsset.Primary,
-            unselectedTextColor = ColorAsset.G4
-        ),
-        textStyle = SuperWheelPickerTextStyle(
-            typeface = FontTypeface.Roboto.medium(context)
+        colors = RunnerbeSuperWheelPickerColors,
+        textStyle = RunnerbeSuperWheelPickerTextStyle.copy(
+            textSize = 18.px,
+            letterSpacing = (-0.18).em
         ),
         range = 0..12,
         value = now.toCalendar().get(Calendar.MINUTE),
