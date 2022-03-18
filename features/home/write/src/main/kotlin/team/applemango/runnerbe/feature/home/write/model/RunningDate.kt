@@ -136,6 +136,11 @@ internal class RunningDate(baseDate: Date = Date()) {
      */
     fun toDate() = calendar.time ?: throw NullPointerException("Can't get time from calendar.")
 
+    /**
+     * Jetpack Compose 용 새로운 인스턴스 생성
+     */
+    fun newInstance() = RunningDate(toDate())
+
     override fun toString(): String {
         val dateString = SimpleDateFormat(FullDateFormat, Locale.getDefault()).format(toDate())
         dateString ?: throw NullPointerException("Failed date formatting.")
