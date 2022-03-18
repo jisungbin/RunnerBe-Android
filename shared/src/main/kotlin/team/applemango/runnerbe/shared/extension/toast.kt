@@ -12,12 +12,22 @@ package team.applemango.runnerbe.shared.extension
 import android.app.Activity
 import android.content.Context
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 
 fun Activity.toast(
     message: String,
     length: Int = Toast.LENGTH_SHORT,
 ) = toastBuilder(
     context = applicationContext,
+    message = message,
+    length = length
+)
+
+fun Fragment.toast(
+    message: String,
+    length: Int = Toast.LENGTH_SHORT,
+) = toastBuilder(
+    context = requireContext(),
     message = message,
     length = length
 )
