@@ -42,6 +42,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.feature.home.write.R
 import team.applemango.runnerbe.feature.home.write.component.RunningDatePickerDialog
+import team.applemango.runnerbe.feature.home.write.component.RunningTimePickerDialog
 import team.applemango.runnerbe.feature.home.write.model.RunningDate
 import team.applemango.runnerbe.feature.home.write.model.RunningTime
 import team.applemango.runnerbe.feature.home.write.util.DateCache
@@ -60,7 +61,7 @@ internal fun RunningItemWriteLevelOne(
     val lifecycleOwner = LocalLifecycleOwner.current
 
     var titleField by remember { mutableStateOf(TextFieldValue()) }
-    var runningDateState by remember { mutableStateOf(RunningDate.getDefault(runningItemType)) }
+    val runningDateState by remember { mutableStateOf(RunningDate.getDefault(runningItemType)) }
     var runningTimeState by remember { mutableStateOf(RunningTime(hour = 0, minute = 20)) }
     val fieldsFillState = remember { mutableStateListOf(false, false, false) }
 
@@ -99,6 +100,17 @@ internal fun RunningItemWriteLevelOne(
                     }
                 }
             }
+        }
+    )
+
+    RunningTimePickerDialog(
+        visible = runningTimePickerDialogVisible,
+        onDismissRequest = { runningTimePickerDialogVisible = false },
+        startHour = runningTimeState.hour,
+        startMinute = runningTimeState.minute,
+        runningTime = runningTimeState,
+        onRunningTimeChange = { runningTime ->
+            runningTimeState = runningTime
         }
     )
 
