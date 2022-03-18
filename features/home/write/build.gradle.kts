@@ -22,5 +22,6 @@ android {
 }
 
 dependencies {
+    implementationProject(ProjectConstants.XmlSuperWheelPicker)
     installSharedComposeOrbitHiltTest()
 }
