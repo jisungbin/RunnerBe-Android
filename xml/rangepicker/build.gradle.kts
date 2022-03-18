@@ -24,5 +24,6 @@ android {
 
 dependencies {
     implementation(Dependencies.EachUi.Material)
+    implementationProject(ProjectConstants.SharedDomain)
     Dependencies.Compose.forEach(::implementation)
 }
