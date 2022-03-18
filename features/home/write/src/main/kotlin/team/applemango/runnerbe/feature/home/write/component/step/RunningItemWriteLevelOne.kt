@@ -53,7 +53,7 @@ import team.applemango.runnerbe.shared.compose.theme.FontTypeface
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.domain.extension.format
 import team.applemango.runnerbe.shared.domain.extension.toCalendar
-import team.applemango.runnerbe.shared.util.extension.sp
+import team.applemango.runnerbe.shared.domain.unit.px
 import team.applemango.runnerbe.xml.superwheelpicker.integration.SuperWheelPicker
 import team.applemango.runnerbe.xml.superwheelpicker.integration.SuperWheelPickerColors
 import team.applemango.runnerbe.xml.superwheelpicker.integration.SuperWheelPickerTextStyle
@@ -220,7 +220,7 @@ private fun DateStringPicker(
         ),
         textStyle = SuperWheelPickerTextStyle(
             typeface = FontTypeface.Roboto.medium(context),
-            textSize = 26.sp,
+            textSize = 26.px,
         ),
         wheelItemCount = 5,
         range = 0..6,

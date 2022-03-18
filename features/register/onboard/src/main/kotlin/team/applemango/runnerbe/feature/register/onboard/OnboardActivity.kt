@@ -50,9 +50,9 @@ import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
-import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
-import team.applemango.runnerbe.shared.util.extension.dataStore
-import team.applemango.runnerbe.shared.util.extension.toast
+import team.applemango.runnerbe.shared.extension.collectWithLifecycle
+import team.applemango.runnerbe.shared.extension.dataStore
+import team.applemango.runnerbe.shared.extension.toast
 
 class OnboardActivity : WindowInsetsActivity() {
 

@@ -33,10 +33,10 @@ import team.applemango.runnerbe.shared.base.WindowInsetsActivity
 import team.applemango.runnerbe.shared.compose.extension.verticalInsetsPadding
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.constant.DataStoreKey
-import team.applemango.runnerbe.shared.util.extension.changeActivityWithAnimation
-import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
-import team.applemango.runnerbe.shared.util.extension.dataStore
-import team.applemango.runnerbe.shared.util.extension.launchedWhenCreated
+import team.applemango.runnerbe.shared.extension.changeActivityWithAnimation
+import team.applemango.runnerbe.shared.extension.collectWithLifecycle
+import team.applemango.runnerbe.shared.extension.dataStore
+import team.applemango.runnerbe.shared.extension.launchedWhenCreated
 import team.applemango.runnerbe.util.DFMOnboardActivityAlias
 import team.applemango.runnerbe.util.MainActivityAlias
 

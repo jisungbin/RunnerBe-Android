@@ -11,7 +11,7 @@ package team.applemango.runnerbe.data.runningitem.mapper
 
 import team.applemango.runnerbe.data.runningitem.model.runningitem.RunningItemsResponse
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
-import team.applemango.runnerbe.shared.domain.requireFieldNullMessage
+import team.applemango.runnerbe.shared.domain.util.requireFieldNullMessage
 
 internal fun RunningItemsResponse.toDomain(): List<RunningItem> {
     if (result.isNullOrEmpty()) return emptyList()

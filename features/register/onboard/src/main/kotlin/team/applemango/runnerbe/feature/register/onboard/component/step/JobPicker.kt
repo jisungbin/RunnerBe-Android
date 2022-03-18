@@ -35,8 +35,8 @@ import team.applemango.runnerbe.domain.constant.Job
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.shared.compose.component.ToggleButton
 import team.applemango.runnerbe.shared.constant.DataStoreKey
-import team.applemango.runnerbe.shared.domain.flowExceptionMessage
-import team.applemango.runnerbe.shared.util.extension.dataStore
+import team.applemango.runnerbe.shared.domain.util.flowExceptionMessage
+import team.applemango.runnerbe.shared.extension.dataStore
 
 @Composable
 internal fun JobPicker(
@@ -75,11 +75,11 @@ internal fun JobPicker(
     /*FlowRow(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = (35 - 16).team.applemango.runnerbe.shared.util.extension.getDp),
+            .padding(horizontal = (35 - 16).team.applemango.runnerbe.shared.extension.getDp),
         mainAxisAlignment = FlowMainAxisAlignment.Center,
-        mainAxisSpacing = 12.team.applemango.runnerbe.shared.util.extension.getDp,
+        mainAxisSpacing = 12.team.applemango.runnerbe.shared.extension.getDp,
         crossAxisAlignment = FlowCrossAxisAlignment.Center,
-        crossAxisSpacing = 6.team.applemango.runnerbe.shared.util.extension.getDp,
+        crossAxisSpacing = 6.team.applemango.runnerbe.shared.extension.getDp,
     ) {
         Job.values().forEach { job ->
             ToggleButton(

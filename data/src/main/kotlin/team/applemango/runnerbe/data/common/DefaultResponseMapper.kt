@@ -14,8 +14,8 @@ import team.applemango.runnerbe.data.runningitem.constant.SuccessCode
 import team.applemango.runnerbe.domain.runningitem.common.BaseResult
 import team.applemango.runnerbe.domain.user.constant.JobChangeResult
 import team.applemango.runnerbe.domain.user.constant.NicknameChangeResult
-import team.applemango.runnerbe.shared.domain.notAllowedValueMessage
-import team.applemango.runnerbe.shared.domain.requireFieldNullMessage
+import team.applemango.runnerbe.shared.domain.util.notAllowedValueMessage
+import team.applemango.runnerbe.shared.domain.util.requireFieldNullMessage
 
 internal val DefaultResponse.isSuccessNonNull
     get() = requireNotNull(isSuccess) {

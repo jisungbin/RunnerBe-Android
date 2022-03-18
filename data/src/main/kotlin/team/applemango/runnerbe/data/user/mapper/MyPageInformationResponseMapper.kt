@@ -13,7 +13,7 @@ import team.applemango.runnerbe.data.runningitem.mapper.MappingType
 import team.applemango.runnerbe.data.runningitem.mapper.toDomain
 import team.applemango.runnerbe.data.user.model.MyPageInformationResponse
 import team.applemango.runnerbe.domain.user.model.MyPageInformation
-import team.applemango.runnerbe.shared.domain.requireFieldNullMessage
+import team.applemango.runnerbe.shared.domain.util.requireFieldNullMessage
 
 internal fun MyPageInformationResponse.toDomain(): MyPageInformation {
     requireNotNull(result) {

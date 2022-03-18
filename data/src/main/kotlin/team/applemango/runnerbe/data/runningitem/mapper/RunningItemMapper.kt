@@ -25,7 +25,7 @@ import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
 import team.applemango.runnerbe.shared.domain.extension.convertNullableString
 import team.applemango.runnerbe.shared.domain.extension.toBoolean
-import team.applemango.runnerbe.shared.domain.requireFieldNullMessage
+import team.applemango.runnerbe.shared.domain.util.requireFieldNullMessage
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale

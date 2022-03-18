@@ -11,8 +11,8 @@ package team.applemango.runnerbe.data.register.login.mapper
 
 import team.applemango.runnerbe.data.register.login.model.login.LoginRequestResponse
 import team.applemango.runnerbe.domain.register.runnerbe.model.UserToken
-import team.applemango.runnerbe.shared.domain.notAllowedValueMessage
-import team.applemango.runnerbe.shared.domain.requireFieldNullMessage
+import team.applemango.runnerbe.shared.domain.util.notAllowedValueMessage
+import team.applemango.runnerbe.shared.domain.util.requireFieldNullMessage
 
 // 1001, 1007 - JWT (회원)
 // 1002 - UUID (비회원)

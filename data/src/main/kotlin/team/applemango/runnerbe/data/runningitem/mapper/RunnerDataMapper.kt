@@ -16,7 +16,7 @@ import team.applemango.runnerbe.domain.constant.Gender
 import team.applemango.runnerbe.domain.constant.Job
 import team.applemango.runnerbe.domain.constant.Tag
 import team.applemango.runnerbe.domain.runningitem.model.runner.Runner
-import team.applemango.runnerbe.shared.domain.requireFieldNullMessage
+import team.applemango.runnerbe.shared.domain.util.requireFieldNullMessage
 
 internal fun RunnerData.toDomain() = Runner(
     id = requireNotNull(userId) {

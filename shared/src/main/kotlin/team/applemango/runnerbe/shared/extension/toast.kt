@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.shared.util.extension
+package team.applemango.runnerbe.shared.extension
 
 import android.app.Activity
 import android.content.Context

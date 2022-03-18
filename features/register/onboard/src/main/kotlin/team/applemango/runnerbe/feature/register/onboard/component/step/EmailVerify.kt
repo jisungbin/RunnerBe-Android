@@ -65,8 +65,8 @@ import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.domain.extension.runIf
 import team.applemango.runnerbe.shared.domain.extension.toMessage
-import team.applemango.runnerbe.shared.domain.flowExceptionMessage
-import team.applemango.runnerbe.shared.util.extension.dataStore
+import team.applemango.runnerbe.shared.domain.util.flowExceptionMessage
+import team.applemango.runnerbe.shared.extension.dataStore
 
 private const val EmailVerifyStateDoneMessage = "EmailVerifyStateDone"
 private val Shape = RoundedCornerShape(8.dp)

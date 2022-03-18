@@ -19,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import team.applemango.runnerbe.R
 import team.applemango.runnerbe.databinding.ActivityMainBinding
 import team.applemango.runnerbe.shared.constant.BottomNavigationBarHeight
-import team.applemango.runnerbe.shared.util.extension.dp
+import team.applemango.runnerbe.shared.domain.unit.dp
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
