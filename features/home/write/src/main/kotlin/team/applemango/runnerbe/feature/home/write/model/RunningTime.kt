@@ -9,6 +9,14 @@
 
 package team.applemango.runnerbe.feature.home.write.model
 
+private const val DefaultHour = 0
+private const val DefaultMinute = 0
+
+val DefaultRunningTime = RunningTime(
+    hour = DefaultHour,
+    minute = DefaultMinute
+)
+
 data class RunningTime(val hour: Int, val minute: Int) {
     override fun toString() = "$hour 시간 $minute 분"
 }
