@@ -20,15 +20,24 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -36,9 +45,12 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.rememberCameraPositionState
+import team.applemango.runnerbe.domain.constant.Gender
 import team.applemango.runnerbe.feature.home.write.R
 import team.applemango.runnerbe.feature.home.write.RunningItemWriteViewModel
 import team.applemango.runnerbe.feature.home.write.util.extension.toLatLng
+import team.applemango.runnerbe.shared.compose.component.ToggleButton
+import team.applemango.runnerbe.shared.compose.default.RunnerbeToggleButtonDefaults
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 
@@ -50,6 +62,7 @@ internal fun RunningItemWriteLevelTwo(
     vm: RunningItemWriteViewModel = viewModel(),
 ) {
 
+    var genderSelectState by remember { mutableStateOf<Gender?>(null) }
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(
             vm.locate.toLatLng(),
@@ -141,6 +154,38 @@ internal fun RunningItemWriteLevelTwo(
                 }
             ) {
                 // TODO
+            }
+        }
+        Divider(
+            modifier = Modifier
+                .graphicsLayer(clip = false)
+                .fillMaxWidth()
+                .padding(vertical = 20.dp),
+            color = ColorAsset.G6,
+            thickness = 10.dp
+        )
+        Text(
+            text = stringResource(R.string.runningitemwrite_label_gender),
+            style = Typography.Body14R.copy(color = ColorAsset.G3_5)
+        )
+        LazyRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(
+                space = 16.dp,
+                alignment = Alignment.CenterHorizontally
+            )
+        ) {
+            items(Gender.values()) { gender ->
+                ToggleButton(
+                    colors = RunnerbeToggleButtonDefaults.colors(),
+                    target = gender,
+                    selectState = genderSelectState,
+                    targetStringBuilder = { gender.string }
+                ) {
+                    genderSelectState = gender
+                }
             }
         }
     }
