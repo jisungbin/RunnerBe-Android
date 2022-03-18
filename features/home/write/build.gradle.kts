@@ -8,7 +8,7 @@
  */
 
 plugins {
-    installLibraryDfmHiltTest()
+    installLibraryDfmHiltTest(testNeeded = true)
 }
 
 android {
@@ -23,5 +23,5 @@ android {
 
 dependencies {
     implementationProject(ProjectConstants.XmlSuperWheelPicker)
-    installSharedComposeOrbitHiltTest()
+    installSharedComposeOrbitHiltTest(testNeeded = true)
 }
