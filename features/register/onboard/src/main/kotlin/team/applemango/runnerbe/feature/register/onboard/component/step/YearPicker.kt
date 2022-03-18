@@ -42,15 +42,14 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
+import team.applemango.runnerbe.shared.compose.default.RunnerbeSuperWheelPickerColors
+import team.applemango.runnerbe.shared.compose.default.RunnerbeSuperWheelPickerTextStyle
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
-import team.applemango.runnerbe.shared.compose.theme.FontTypeface
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.constant.DataStoreKey
-import team.applemango.runnerbe.shared.domain.flowExceptionMessage
-import team.applemango.runnerbe.shared.util.extension.dataStore
+import team.applemango.runnerbe.shared.domain.util.flowExceptionMessage
+import team.applemango.runnerbe.shared.extension.dataStore
 import team.applemango.runnerbe.xml.superwheelpicker.integration.SuperWheelPicker
-import team.applemango.runnerbe.xml.superwheelpicker.integration.SuperWheelPickerColors
-import team.applemango.runnerbe.xml.superwheelpicker.integration.SuperWheelPickerTextStyle
 
 private val nowYear = Calendar.getInstance().get(Calendar.YEAR)
 
@@ -114,13 +113,8 @@ internal fun YearPicker(
         Divider(modifier = Modifier.fillMaxWidth(), color = ColorAsset.G5, thickness = 1.dp)
         SuperWheelPicker(
             modifier = Modifier.height(250.dp),
-            colors = SuperWheelPickerColors(
-                selectedTextColor = ColorAsset.Primary,
-                unselectedTextColor = ColorAsset.G4
-            ),
-            textStyle = SuperWheelPickerTextStyle(
-                typeface = FontTypeface.Roboto.medium(context)
-            ),
+            colors = RunnerbeSuperWheelPickerColors,
+            textStyle = RunnerbeSuperWheelPickerTextStyle,
             range = nowYear - 80..nowYear,
             value = nowYearState,
             onValueChange = { _, newYear ->
