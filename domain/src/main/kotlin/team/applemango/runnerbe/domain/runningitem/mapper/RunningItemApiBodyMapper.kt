@@ -16,7 +16,7 @@ import java.util.Locale
 
 internal fun RunningItemApiBody.toData(): RunningItemApiBodyData {
     val meetingTime =
-        SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(meetingDate)
+        SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA).format(meetingDate)
     val (address, latitude, longitude) = locate
     val (minAge, maxAge) = ageFilter
     return RunningItemApiBodyData(

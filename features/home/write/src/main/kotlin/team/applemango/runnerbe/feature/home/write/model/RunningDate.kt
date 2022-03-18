@@ -142,7 +142,7 @@ internal class RunningDate(baseDate: Date = Date()) {
     fun newInstance() = RunningDate(toDate())
 
     override fun toString(): String {
-        val dateString = SimpleDateFormat(FullDateFormat, Locale.getDefault()).format(toDate())
+        val dateString = SimpleDateFormat(FullDateFormat, Locale.KOREA).format(toDate())
         dateString ?: throw NullPointerException("Failed date formatting.")
         return dateString
     }

@@ -60,7 +60,7 @@ private const val DefaultProfileImageUrl =
     "https://github.com/applemango-runnerbe/applemango-runnerbe.github.io/blob/main/Profile_28.png?raw=true"
 
 private val serverDateFormat by lazy {
-    SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+    SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.KOREA)
 }
 
 internal fun RunningItemData.toDomain(type: MappingType) = RunningItem(

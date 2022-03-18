@@ -15,7 +15,7 @@ import java.util.Date
 import java.util.Locale
 
 @Suppress("HasPlatformType")
-fun Date.format(format: String) = SimpleDateFormat(format, Locale.getDefault()).format(this)
+fun Date.format(format: String) = SimpleDateFormat(format, Locale.KOREA).format(this)
 
 @Suppress("HasPlatformType")
 fun Date.toCalendar() = Calendar.getInstance().apply { time = this@toCalendar }
