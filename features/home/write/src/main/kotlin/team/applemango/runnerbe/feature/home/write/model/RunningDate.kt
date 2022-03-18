@@ -9,11 +9,38 @@
 
 package team.applemango.runnerbe.feature.home.write.model
 
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import team.applemango.runnerbe.feature.home.write.constant.TimeType
+import team.applemango.runnerbe.shared.domain.extension.format
 
-data class RunningDate(
+private const val RunningDateFormat = "M/dd (E)"
+
+internal fun Date.toDateString() = format(RunningDateFormat)
+
+internal data class RunningDate(
     val dateString: String,
     val timeType: TimeType,
     val hour: Int,
     val minute: Int,
-)
+) {
+    private companion object {
+        const val Format = "$RunningDateFormat a h m"
+    }
+
+    override fun toString() = "$dateString ${timeType.string} $hour $minute"
+
+    private fun toDate(): Date {
+        val date = SimpleDateFormat(
+            Format,
+            Locale.getDefault()
+        ).parse(toString())
+        date ?: throw IllegalStateException("${toString()} is invalid format.")
+        return date
+    }
+
+    operator fun compareTo(other: Date): Int {
+        return other.compareTo(toDate())
+    }
+}
