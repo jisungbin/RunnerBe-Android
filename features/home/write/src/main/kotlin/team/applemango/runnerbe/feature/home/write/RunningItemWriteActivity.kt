@@ -24,7 +24,6 @@ class RunningItemWriteActivity : WindowInsetsActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-
         }
     }
 }
