@@ -54,17 +54,19 @@ class SuperWheelPicker @JvmOverloads constructor(
     private var curSelectedItemIndex = 0
     private var wrapSelectorWheelPreferred = false
 
+    private var selectedTextColor = Color.BLACK
+    private var unSelectedTextColor = Color.LTGRAY
+    private var textSize = DEFAULT_TEXT_SIZE
+    private var textAlign = Paint.Align.CENTER
+    private var letterSpacing = 0f
     private var textPaint = Paint().apply {
         isAntiAlias = true
         style = Paint.Style.FILL_AND_STROKE
         typeface = Typeface.DEFAULT
         textSize = this@SuperWheelPicker.textSize
         textAlign = this@SuperWheelPicker.textAlign
+        letterSpacing = this@SuperWheelPicker.letterSpacing
     }
-    private var selectedTextColor = Color.BLACK
-    private var unSelectedTextColor = Color.LTGRAY
-    private var textSize = DEFAULT_TEXT_SIZE
-    private var textAlign = Paint.Align.CENTER
 
     private var overScroller = OverScroller(context, DecelerateInterpolator(2.5f))
     private var velocityTracker: VelocityTracker? = null
@@ -537,6 +539,10 @@ class SuperWheelPicker @JvmOverloads constructor(
 
     fun setTextSize(textSize: Float) {
         textPaint.textSize = textSize
+    }
+
+    fun setTextLetterSpacing(letterSpacing: Float) {
+        textPaint.letterSpacing = letterSpacing
     }
 
     fun setTextRenderListener(onTextRenderListener: OnTextRenderListener) {
