@@ -30,6 +30,7 @@ data class SuperWheelPickerColors(
 @Immutable
 data class SuperWheelPickerTextStyle(
     val typeface: Typeface? = Typeface.DEFAULT,
+    val textSize: Float = SuperWheelPickerXml.DEFAULT_TEXT_SIZE,
 )
 
 @Composable
@@ -38,7 +39,7 @@ fun SuperWheelPicker(
     colors: SuperWheelPickerColors = SuperWheelPickerColors(),
     textStyle: SuperWheelPickerTextStyle = SuperWheelPickerTextStyle(),
     wrapSelectorWheel: Boolean = true,
-    wheelItemCount: Int = 5,
+    wheelItemCount: Int = SuperWheelPickerXml.DEFAULT_ITEM_COUNT,
     range: IntRange,
     value: Int = range.last / 2,
     onValueChange: OnValueChangeListener? = null,
@@ -50,6 +51,7 @@ fun SuperWheelPicker(
             setSelectedTextColor(colors.selectedTextColor.toArgb())
             setUnselectedTextColor(colors.unselectedTextColor.toArgb())
             setTypeface(textStyle.typeface) // nullable
+            setTextSize(textStyle.textSize)
             setWrapSelectorWheel(wrapSelectorWheel)
             setWheelItemCount(wheelItemCount)
             setRange(range)
