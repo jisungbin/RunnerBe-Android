@@ -10,8 +10,12 @@
 package team.applemango.runnerbe.shared.domain.extension
 
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
 @Suppress("HasPlatformType")
 fun Date.format(format: String) = SimpleDateFormat(format, Locale.getDefault()).format(this)
+
+@Suppress("HasPlatformType")
+fun Date.toCalendar() = Calendar.getInstance().apply { time = this@toCalendar }
