@@ -12,6 +12,7 @@ package team.applemango.runnerbe.feature.home.write.component.step
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,6 +30,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -51,6 +53,7 @@ import team.applemango.runnerbe.shared.compose.theme.FontTypeface
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.domain.extension.format
 import team.applemango.runnerbe.shared.domain.extension.toCalendar
+import team.applemango.runnerbe.shared.util.extension.sp
 import team.applemango.runnerbe.xml.superwheelpicker.integration.SuperWheelPicker
 import team.applemango.runnerbe.xml.superwheelpicker.integration.SuperWheelPickerColors
 import team.applemango.runnerbe.xml.superwheelpicker.integration.SuperWheelPickerTextStyle
@@ -163,11 +166,14 @@ internal fun RunningItemWriteLevelOne(
 }
 
 @Composable
-private fun DatePickerDialog(
+private fun RunningDatePickerDialog(
     visible: Boolean,
     onDismissRequest: () -> Unit,
+    runningDate: RunningDate,
     onRunningDateChange: (runningDate: RunningDate) -> Unit,
 ) {
+    val context = LocalContext.current
+
     RunnerbeDialog(
         visible = visible,
         onDismissRequest = onDismissRequest,
@@ -180,7 +186,23 @@ private fun DatePickerDialog(
             }
         },
         content = {
-            Row() {
+            Row(
+                modifier = Modifier.matchParentSize(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                DateStringPicker { dateString ->
+                    onRunningDateChange(runningDate.copy(dateString = dateString))
+                }
+                TimeTypePicker { timeType ->
+                    onRunningDateChange(runningDate.copy(timeType = timeType))
+                }
+                Row {
+                    Text(text = ":", style = Typography.Custom.SuperWheelPicker)
+                    MinutePicker { minute ->
+                        onRunningDateChange(runningDate.copy(minute = minute))
+                    }
+                }
             }
         }
     )
@@ -197,8 +219,10 @@ private fun DateStringPicker(
             unselectedTextColor = ColorAsset.G4
         ),
         textStyle = SuperWheelPickerTextStyle(
-            typeface = FontTypeface.Roboto.medium(context)
+            typeface = FontTypeface.Roboto.medium(context),
+            textSize = 26.sp,
         ),
+        wheelItemCount = 5,
         range = 0..6,
         value = 0,
         onValueChange = { _, dayUpper ->
