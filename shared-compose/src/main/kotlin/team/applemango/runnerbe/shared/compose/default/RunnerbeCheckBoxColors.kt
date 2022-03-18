@@ -2,15 +2,17 @@
  * RunnerBe © 2022 Team AppleMango. all rights reserved.
  * RunnerBe license is under the MIT.
  *
- * [style.kt] created by Ji Sungbin on 22. 3. 2. 오후 3:41
+ * [RunnerbeCheckBoxColors.kt] created by Ji Sungbin on 22. 3. 18. 오후 9:45
  *
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.shared.compose.theme
+package team.applemango.runnerbe.shared.compose.default
 
 import androidx.compose.material.CheckboxDefaults
 import androidx.compose.runtime.Composable
+import team.applemango.runnerbe.shared.compose.theme.ColorAsset
+import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 
 val RunnerbeCheckBoxColors
     @Composable
