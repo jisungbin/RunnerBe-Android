@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.feature.home.write.component.util
+package team.applemango.runnerbe.feature.home.write.util
 
 import java.util.Calendar
 import java.util.Date
