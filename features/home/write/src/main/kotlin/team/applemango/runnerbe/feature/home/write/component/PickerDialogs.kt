@@ -25,8 +25,7 @@ import team.applemango.runnerbe.feature.home.write.model.RunningTime
 import team.applemango.runnerbe.feature.home.write.model.toDateString
 import team.applemango.runnerbe.feature.home.write.util.DateCache.plusDayAndCaching
 import team.applemango.runnerbe.shared.compose.component.RunnerbeDialog
-import team.applemango.runnerbe.shared.compose.default.RunnerbeSuperWheelPickerColors
-import team.applemango.runnerbe.shared.compose.default.RunnerbeSuperWheelPickerTextStyle
+import team.applemango.runnerbe.shared.compose.default.RunnerbeSuperWheelPickerDefaults
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.domain.unit.em
 import team.applemango.runnerbe.shared.domain.unit.px
@@ -138,8 +137,8 @@ private fun DateStringPicker(
     onDateStringSelectChange: (dateString: String) -> Unit,
 ) {
     SuperWheelPicker(
-        colors = RunnerbeSuperWheelPickerColors,
-        textStyle = RunnerbeSuperWheelPickerTextStyle.copy(
+        colors = RunnerbeSuperWheelPickerDefaults.colors(),
+        textStyle = RunnerbeSuperWheelPickerDefaults.textStyle().copy(
             textSize = 18.px,
             letterSpacing = (-0.18).em
         ),
@@ -162,8 +161,8 @@ private fun TimeTypePicker(
     onTimeTypeSelectChange: (timeType: TimeType) -> Unit,
 ) {
     SuperWheelPicker(
-        colors = RunnerbeSuperWheelPickerColors,
-        textStyle = RunnerbeSuperWheelPickerTextStyle.copy(
+        colors = RunnerbeSuperWheelPickerDefaults.colors(),
+        textStyle = RunnerbeSuperWheelPickerDefaults.textStyle().copy(
             textSize = 18.px,
             letterSpacing = (-0.18).em
         ),
@@ -186,8 +185,8 @@ private fun HourPicker(
     onHourSelectChange: (hour: Int) -> Unit,
 ) {
     SuperWheelPicker(
-        colors = RunnerbeSuperWheelPickerColors,
-        textStyle = RunnerbeSuperWheelPickerTextStyle.copy(
+        colors = RunnerbeSuperWheelPickerDefaults.colors(),
+        textStyle = RunnerbeSuperWheelPickerDefaults.textStyle().copy(
             textSize = 18.px,
             letterSpacing = (-0.18).em
         ),
@@ -206,8 +205,8 @@ private fun MinutePicker(
     onMinuteSelectChange: (hour: Int) -> Unit,
 ) {
     SuperWheelPicker(
-        colors = RunnerbeSuperWheelPickerColors,
-        textStyle = RunnerbeSuperWheelPickerTextStyle.copy(
+        colors = RunnerbeSuperWheelPickerDefaults.colors(),
+        textStyle = RunnerbeSuperWheelPickerDefaults.textStyle().copy(
             textSize = 18.px,
             letterSpacing = (-0.18).em
         ),

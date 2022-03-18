@@ -42,8 +42,7 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
-import team.applemango.runnerbe.shared.compose.default.RunnerbeSuperWheelPickerColors
-import team.applemango.runnerbe.shared.compose.default.RunnerbeSuperWheelPickerTextStyle
+import team.applemango.runnerbe.shared.compose.default.RunnerbeSuperWheelPickerDefaults
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.constant.DataStoreKey
@@ -113,8 +112,8 @@ internal fun YearPicker(
         Divider(modifier = Modifier.fillMaxWidth(), color = ColorAsset.G5, thickness = 1.dp)
         SuperWheelPicker(
             modifier = Modifier.height(250.dp),
-            colors = RunnerbeSuperWheelPickerColors,
-            textStyle = RunnerbeSuperWheelPickerTextStyle,
+            colors = RunnerbeSuperWheelPickerDefaults.colors(),
+            textStyle = RunnerbeSuperWheelPickerDefaults.textStyle(),
             wheelItemCount = 5,
             range = nowYear - 80..nowYear,
             value = nowYearState,
