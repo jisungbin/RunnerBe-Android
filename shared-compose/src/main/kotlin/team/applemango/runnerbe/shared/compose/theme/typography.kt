@@ -147,5 +147,11 @@ object Typography {
             lineHeight = 31.sp,
             letterSpacing = (-0.4).sp
         )
+        val SuperWheelPicker = TextStyle(
+            fontFamily = FontAsset.Roboto.M,
+            color = ColorAsset.Primary,
+            fontSize = 26.sp,
+            letterSpacing = (-0.26).sp
+        )
     }
 }
