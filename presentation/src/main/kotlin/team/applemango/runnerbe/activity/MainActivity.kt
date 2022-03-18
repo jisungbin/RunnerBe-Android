@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.fcv_main) as NavHostFragment
         val navController = navHostFragment.navController
         binding.bnvMenu.updateLayoutParams {
-            height = BottomNavigationBarHeight.dp
+            height = BottomNavigationBarHeight.dp.toInt()
         }
         binding.bnvMenu.setupWithNavController(navController)
     }
