@@ -57,11 +57,10 @@ internal fun RunningItemWriteLevelOne(
     runningItemType: RunningItemType,
     fieldsAllInputStateChange: (state: Boolean) -> Unit,
 ) {
-    val runningDate = remember { RunningDate.getDefault(runningItemType) }
     val lifecycleOwner = LocalLifecycleOwner.current
 
     var titleField by remember { mutableStateOf(TextFieldValue()) }
-    val runningDateState by remember { mutableStateOf(RunningDate.getDefault(runningItemType)) }
+    var runningDateState by remember { mutableStateOf(RunningDate.getDefault(runningItemType)) }
     var runningTimeState by remember { mutableStateOf(RunningTime(hour = 0, minute = 20)) }
     val fieldsFillState = remember { mutableStateListOf(false, false, false) }
 
@@ -78,13 +77,16 @@ internal fun RunningItemWriteLevelOne(
 
     RunningDatePickerDialog(
         visible = runningDatePickerDialogVisible,
-        onDismissRequest = { runningDatePickerDialogVisible = false },
-        startDateIndex = DateCache.getCachedIndexFromDay(day = runningDate.getDay()),
-        startTimeType = runningDate.getTimeType(),
-        startHour = runningDate.getHour(),
-        startMinute = runningDate.getMinute(),
+        onDismissRequest = {
+            runningDateState = runningDateState.newInstance()
+            runningDatePickerDialogVisible = false
+        },
+        startDateIndex = DateCache.getCachedIndexFromDay(day = runningDateState.getDay()),
+        startTimeType = runningDateState.getTimeType(),
+        startHour = runningDateState.getHour(),
+        startMinute = runningDateState.getMinute(),
         onRunningDateChange = { field ->
-            with(runningDate) {
+            with(runningDateState) {
                 when (field) {
                     is RunningDate.Companion.Field.Date -> {
                         setDate(field.value)
