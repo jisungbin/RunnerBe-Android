@@ -88,7 +88,10 @@ internal fun RunningItemWriteLevelOne(
 
     val myLocate = remember { DataStore.lastLocate.toLatLng() }
     val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(myLocate, DefaultMapCameraZoom)
+        position = CameraPosition.fromLatLngZoom(
+            myLocate,
+            DefaultMapCameraZoom
+        )
     }
 
     LaunchedEffect(fieldsFillState) {
