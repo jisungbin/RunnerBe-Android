@@ -51,9 +51,7 @@ internal fun RunningDatePickerDialog(
             textBuilder = {
                 stringResource(R.string.runningitemwrite_dialog_button_decision)
             }
-            onClick = {
-                onDismissRequest()
-            }
+            onClick = onDismissRequest
         },
         content = {
             Row(
@@ -100,9 +98,7 @@ internal fun RunningTimePickerDialog(
             textBuilder = {
                 stringResource(R.string.runningitemwrite_dialog_button_decision)
             }
-            onClick = {
-                onDismissRequest()
-            }
+            onClick = onDismissRequest
         },
         content = {
             Row(
