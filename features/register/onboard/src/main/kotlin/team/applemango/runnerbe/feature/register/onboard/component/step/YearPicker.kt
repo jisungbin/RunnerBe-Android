@@ -115,6 +115,7 @@ internal fun YearPicker(
             modifier = Modifier.height(250.dp),
             colors = RunnerbeSuperWheelPickerColors,
             textStyle = RunnerbeSuperWheelPickerTextStyle,
+            wheelItemCount = 5,
             range = nowYear - 80..nowYear,
             value = nowYearState,
             onValueChange = { _, newYear ->
