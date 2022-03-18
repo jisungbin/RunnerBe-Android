@@ -13,7 +13,10 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -33,30 +36,43 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.MapProperties
+import com.google.maps.android.compose.MarkerInfoWindow
+import com.google.maps.android.compose.rememberCameraPositionState
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.feature.home.write.R
 import team.applemango.runnerbe.feature.home.write.component.RunningDatePickerDialog
 import team.applemango.runnerbe.feature.home.write.component.RunningTimePickerDialog
+import team.applemango.runnerbe.feature.home.write.datastore.DataStore
 import team.applemango.runnerbe.feature.home.write.model.RunningDate
 import team.applemango.runnerbe.feature.home.write.model.RunningTime
 import team.applemango.runnerbe.feature.home.write.util.DateCache
+import team.applemango.runnerbe.feature.home.write.util.extension.toAddress
+import team.applemango.runnerbe.feature.home.write.util.extension.toLatLng
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.extension.collectWithLifecycle
 
+private const val DefaultMapCameraZoom = 7f
 private val DefaultFieldShape = RoundedCornerShape(6.dp)
 
 @Composable
 internal fun RunningItemWriteLevelOne(
+    modifier: Modifier = Modifier,
     runningItemType: RunningItemType,
     fieldsAllInputStateChange: (state: Boolean) -> Unit,
 ) {
+    val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
     var titleField by remember { mutableStateOf(TextFieldValue()) }
@@ -67,6 +83,11 @@ internal fun RunningItemWriteLevelOne(
     var runningDatePickerDialogVisible by remember { mutableStateOf(false) }
     var runningTimePickerDialogVisible by remember { mutableStateOf(false) }
     var titleErrorVisible by remember { mutableStateOf(false) }
+
+    val myLocate = remember { DataStore.lastLocate.toLatLng() }
+    val cameraPositionState = rememberCameraPositionState {
+        position = CameraPosition.fromLatLngZoom(myLocate, DefaultMapCameraZoom)
+    }
 
     LaunchedEffect(fieldsFillState) {
         snapshotFlow { fieldsFillState }
@@ -116,7 +137,7 @@ internal fun RunningItemWriteLevelOne(
         }
     )
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = modifier) {
         Text(
             text = stringResource(R.string.runningitemwrite_label_title),
             style = Typography.Body14R.copy(color = ColorAsset.G3_5)
@@ -208,6 +229,10 @@ internal fun RunningItemWriteLevelOne(
             )
         }
         Divider(modifier = Modifier.padding(vertical = 20.dp), color = ColorAsset.G6)
+        Text(
+            text = stringResource(R.string.runningitemwrite_label_running_time),
+            style = Typography.Body14R.copy(color = ColorAsset.G3_5)
+        )
         ConstraintLayout(
             modifier = Modifier
                 .padding(top = 12.dp)
@@ -257,5 +282,47 @@ internal fun RunningItemWriteLevelOne(
             )
         }
         Divider(modifier = Modifier.padding(vertical = 20.dp), color = ColorAsset.G6)
+        Row {
+            Text(
+                text = stringResource(R.string.runningitebwrite_label_gather_place),
+                style = Typography.Body14R.copy(color = ColorAsset.G3_5)
+            )
+            Text(
+                text = stringResource(R.string.runningitemwrite_hint_full_address_visibility),
+                style = Typography.Body12R.copy(color = ColorAsset.PrimaryDarker)
+            )
+        }
+        GoogleMap(
+            modifier = Modifier
+                .padding(top = 12.dp)
+                .fillMaxWidth()
+                .height(220.dp),
+            cameraPositionState = cameraPositionState,
+            properties = MapProperties(
+                maxZoomPreference = 15f,
+                minZoomPreference = 5f
+            )
+        ) {
+            MarkerInfoWindow(
+                position = myLocate,
+                draggable = true,
+                icon = BitmapDescriptorFactory.fromResource(R.drawable.ic_round_map_marker_24)
+            ) { marker ->
+                Text(
+                    modifier = Modifier
+                        .padding(start = 120.dp)
+                        .clip(
+                            RoundedCornerShape(
+                                topStart = 5.dp,
+                                topEnd = 5.dp,
+                                bottomEnd = 5.dp
+                            )
+                        )
+                        .background(color = ColorAsset.G6),
+                    text = marker.position.toAddress(context),
+                    style = Typography.Custom.MapMarker
+                )
+            }
+        }
     }
 }
