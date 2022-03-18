@@ -98,6 +98,13 @@ object Dependencies {
         "com.github.anrwatchdog:anrwatchdog:${Versions.Analytics.AnrWatchDog}"
     )
 
+    val Location = listOf(
+        "com.github.BirjuVachhani:locus-android:${Versions.Location.Locus}",
+        "com.google.android.gms:play-services-maps:${Versions.Location.GmsMap}",
+        "om.google.maps.android:maps-compose:${Versions.Location.GoogleMapCompose}",
+        "com.google.android.gms:play-services-location:${Versions.Location.GmsLocation}",
+    )
+
     object Jetpack {
         const val Room = "androidx.room:room-ktx:${Versions.Jetpack.Room}"
         const val Hilt = "com.google.dagger:hilt-android:${Versions.Jetpack.Hilt}"
