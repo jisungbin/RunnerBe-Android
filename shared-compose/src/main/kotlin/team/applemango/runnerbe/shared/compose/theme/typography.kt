@@ -161,5 +161,12 @@ object Typography {
             lineHeight = 27.sp,
             letterSpacing = (-0.11).sp
         )
+        val MapMarker = TextStyle(
+            fontFamily = FontAsset.Roboto.R,
+            color = ColorAsset.G1,
+            fontSize = 12.sp,
+            lineHeight = 16.sp,
+            letterSpacing = (-0.12).sp
+        )
     }
 }
