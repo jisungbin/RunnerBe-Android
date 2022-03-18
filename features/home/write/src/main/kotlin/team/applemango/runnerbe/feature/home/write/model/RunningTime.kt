@@ -9,4 +9,6 @@
 
 package team.applemango.runnerbe.feature.home.write.model
 
-data class RunningTime(val hour: Int, val minute: Int)
+data class RunningTime(val hour: Int, val minute: Int) {
+    override fun toString() = "$hour 시간 $minute 분"
+}
