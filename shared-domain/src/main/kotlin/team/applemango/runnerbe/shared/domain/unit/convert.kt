@@ -19,8 +19,11 @@ val Int.dp
 val Int.sp
     get() = Sp(this * displayMetrics.scaledDensity)
 
+private val Double.sp
+    get() = this * displayMetrics.scaledDensity
+
 val Int.px
     get() = Px(dp.value * displayMetrics.density)
 
-val Int.em
-    get() = Em(this.sp.value * 0.05.toFloat())
+val Double.em
+    get() = Em((sp * 0.05).toFloat())
