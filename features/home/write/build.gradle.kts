@@ -22,6 +22,7 @@ android {
 }
 
 dependencies {
+    Dependencies.Location.forEach(::implementation)
     implementationProject(ProjectConstants.XmlSuperWheelPicker)
     installSharedComposeOrbitHiltTest(testNeeded = true)
 }
