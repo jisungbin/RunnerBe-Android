@@ -10,12 +10,17 @@
 package team.applemango.runnerbe.feature.home.write.model
 
 import androidx.annotation.IntRange
+import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
+import java.util.Locale
+import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.feature.home.write.constant.TimeType
 import team.applemango.runnerbe.shared.domain.extension.format
 
 private const val RunningDateFormat = "M/dd (E)"
+const val FullDateFormat = "$RunningDateFormat a h m"
+
 internal fun Date.toDateString() = format(RunningDateFormat)
 
 private typealias TimeTypeModel = TimeType
@@ -32,6 +37,30 @@ internal class RunningDate(baseDate: Date = Date()) {
             data class TimeType(val value: TimeTypeModel) : Field()
             data class Hour(val value: Int) : Field()
             data class Minute(val value: Int) : Field()
+        }
+
+        /**
+         * 출근 전 - 06:00 AM, 퇴근 후 06:00 PM, 휴일 - 12:00 PM
+         */
+        fun getDefault(runningItemType: RunningItemType): RunningDate {
+            val instance = RunningDate()
+            with(instance) {
+                when (runningItemType) {
+                    RunningItemType.Before -> {
+                        setTimeType(TimeType.AM)
+                        setHour(6)
+                    }
+                    RunningItemType.After -> {
+                        setTimeType(TimeType.PM)
+                        setHour(6)
+                    }
+                    RunningItemType.Off -> {
+                        setTimeType(TimeType.PM)
+                        setHour(12)
+                    }
+                }
+            }
+            return instance
         }
     }
 
@@ -81,6 +110,12 @@ internal class RunningDate(baseDate: Date = Date()) {
      * @return Date
      */
     fun toDate() = calendar.time ?: throw NullPointerException("Can't get time from calendar.")
+
+    override fun toString(): String {
+        val dateString = SimpleDateFormat(FullDateFormat, Locale.getDefault()).format(toDate())
+        dateString ?: throw NullPointerException("Failed date formatting.")
+        return dateString
+    }
 
     operator fun compareTo(other: RunningDate) = toDate().compareTo(other.toDate())
 }
