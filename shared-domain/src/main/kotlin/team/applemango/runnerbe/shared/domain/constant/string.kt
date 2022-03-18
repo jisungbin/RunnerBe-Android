@@ -10,3 +10,4 @@
 package team.applemango.runnerbe.shared.domain.constant
 
 const val EmptyString = ""
+const val CenterDot = "·"
