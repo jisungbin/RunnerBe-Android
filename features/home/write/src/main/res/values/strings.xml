@@ -19,6 +19,7 @@
     <string name="runningitebwrite_label_gather_place">모임 장소</string>
     <string name="runningitemwrite_label_gender">성별</string>
     <string name="runningitemwrite_label_age_range">연령</string>
+    <string name="runningitemwrite_label_all_age_range">모든 연령</string>
     <string name="runningitemwrite_label_people_count">인원</string>
     <string name="runningitemwrite_label_message">하고 싶은 말 (선택)</string>
 
@@ -29,6 +30,6 @@
     <string name="runningitemwrite_placeholder_title">ex) A 직군 모여라, 묵언 러닝 하실 분</string>
     <string name="runningitemwrite_placeholder_message">함께할 러너들에게 하실 말씀이 있나요?</string>
 
-    <string name="runningitemwrite_error_title_length">제목은 최대 30자까지 가능해요!</string>
+    <string name="runningitemwrite_error_max_title_length">제목은 최대 30자까지 가능해요!</string>
     <string name="runningitemwrite_hint_full_address_visibility">정확한 위치는 참여 러너에게만 보여요!</string>
 </resources>
