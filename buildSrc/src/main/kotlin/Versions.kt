@@ -77,6 +77,13 @@ object Versions {
         const val FirebaseCrashlytics = "2.8.1"
     }
 
+    object Location {
+        const val Locus = "4.0.1"
+        const val GmsMap = "18.0.2"
+        const val GmsLocation = "19.0.1"
+        const val GoogleMapCompose = "1.3.1"
+    }
+
     object Jetpack {
         const val Hilt = "2.41"
         const val Room = "2.4.2"
