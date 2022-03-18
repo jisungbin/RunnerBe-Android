@@ -46,12 +46,12 @@ import team.applemango.runnerbe.feature.home.write.R
 import team.applemango.runnerbe.feature.home.write.component.util.DateCache.plusDayAndCaching
 import team.applemango.runnerbe.feature.home.write.constant.TimeType
 import team.applemango.runnerbe.feature.home.write.model.RunningDate
+import team.applemango.runnerbe.feature.home.write.model.toDateString
 import team.applemango.runnerbe.shared.compose.component.RunnerbeDialog
 import team.applemango.runnerbe.shared.compose.default.RunnerbeSuperWheelPickerColors
 import team.applemango.runnerbe.shared.compose.default.RunnerbeSuperWheelPickerTextStyle
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
-import team.applemango.runnerbe.shared.domain.extension.format
 import team.applemango.runnerbe.shared.domain.extension.toCalendar
 import team.applemango.runnerbe.shared.domain.unit.em
 import team.applemango.runnerbe.shared.domain.unit.px
@@ -60,7 +60,6 @@ import team.applemango.runnerbe.xml.superwheelpicker.integration.SuperWheelPicke
 private val DefaultFieldShape = RoundedCornerShape(6.dp)
 
 private val now = Date()
-private fun Date.toDateString() = format("M/dd (E)")
 
 @Composable
 internal fun RunningItemWriteLevelOne(
@@ -241,9 +240,9 @@ private fun TimeTypePicker(
             textSize = 18.px,
             letterSpacing = (-0.18).em
         ),
+        wheelItemCount = 2,
         range = 0..1,
         value = 0,
-        wheelItemCount = 2,
         onValueChange = { _, timeTypeIndex ->
             onTimeTypeSelectChange(TimeType.values()[timeTypeIndex])
         },
@@ -263,9 +262,9 @@ private fun HourPicker(
             textSize = 18.px,
             letterSpacing = (-0.18).em
         ),
-        range = 0..11,
+        wheelItemCount = 5,
+        range = 1..12,
         value = now.toCalendar().get(Calendar.HOUR_OF_DAY),
-        wheelItemCount = 2,
         onValueChange = { _, hour ->
             onHourSelectChange(hour)
         },
@@ -282,9 +281,9 @@ private fun MinutePicker(
             textSize = 18.px,
             letterSpacing = (-0.18).em
         ),
+        wheelItemCount = 5,
         range = 0..12,
         value = now.toCalendar().get(Calendar.MINUTE),
-        wheelItemCount = 5,
         onValueChange = { _, minute ->
             onMinuteSelectChange(minute)
         },
