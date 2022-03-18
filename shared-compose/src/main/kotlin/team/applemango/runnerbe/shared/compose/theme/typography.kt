@@ -168,5 +168,11 @@ object Typography {
             lineHeight = 16.sp,
             letterSpacing = (-0.12).sp
         )
+        val WriteRunningItemType = TextStyle(
+            fontFamily = FontAsset.NotoSans.M,
+            color = ColorAsset.PrimaryDarker,
+            fontSize = 9.sp,
+            letterSpacing = (-0.39).sp
+        )
     }
 }
