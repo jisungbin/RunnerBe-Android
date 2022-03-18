@@ -9,7 +9,6 @@
 
 package team.applemango.runnerbe.feature.home.board
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.github.jisungbin.logeukes.LoggerType
 import io.github.jisungbin.logeukes.logeukes
 import kotlinx.coroutines.flow.MutableStateFlow
+import org.orbitmvi.orbit.viewmodel.observe
 import team.applemango.runnerbe.feature.home.board.component.MainBoardComposable
 import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
@@ -56,7 +56,16 @@ class MainBoardFragment : Fragment() {
         }
     }
 
-    private fun handleState(context: Context, state: MainBoardState) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        vm.observe(
+            lifecycleOwner = this.viewLifecycleOwner,
+            state = ::handleState,
+            sideEffect = ::handleException
+        )
+    }
+
+    private fun handleState(state: MainBoardState) {
         val message = when (state) {
             MainBoardState.None -> EmptyString
             MainBoardState.NonRegisterUser -> getString(R.string.mainboard_toast_only_see_unregister_user)
@@ -67,12 +76,12 @@ class MainBoardFragment : Fragment() {
             MainBoardState.BookmarkToggleRequestFail -> EmptyString // TODO
         }
         if (message.isNotEmpty()) {
-            toast(context, message)
+            toast(message)
         }
     }
 
-    private fun handleException(context: Context, exception: Throwable) {
-        toast(context, exception.toMessage(), Toast.LENGTH_LONG)
+    private fun handleException(exception: Throwable) {
+        toast(exception.toMessage(), Toast.LENGTH_LONG)
         logeukes(type = LoggerType.E) { exception }
     }
 }
