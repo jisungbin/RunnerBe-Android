@@ -18,5 +18,9 @@ val DefaultRunningTime = RunningTime(
 )
 
 data class RunningTime(val hour: Int, val minute: Int) {
-    override fun toString() = "$hour 시간 $minute 분"
+    override fun toString() = toString(withWhitespace = true)
+    fun toString(withWhitespace: Boolean = true) = when (withWhitespace) {
+        true -> "$hour 시간 $minute 분"
+        else -> "${hour}시간 ${minute}분"
+    }
 }
