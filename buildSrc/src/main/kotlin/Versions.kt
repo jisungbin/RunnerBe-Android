@@ -15,8 +15,8 @@ object Versions {
     object BuildUtil {
         const val Ruler = "1.0.0"
         const val Dokka = "1.6.10"
-        const val KtLint = "10.2.1"
-        const val DeteKt = "1.20.0-RC1"
+        const val Ktlint = "10.2.1"
+        const val Detekt = "1.20.0-RC1"
         const val CheckDependencyUpdates = "1.5.0"
         const val DependencyGraphGenerator = "0.7.0"
     }

@@ -11,8 +11,8 @@ import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("io.gitlab.arturbosch.detekt") version Versions.BuildUtil.DeteKt
-    id("org.jlleitschuh.gradle.ktlint") version Versions.BuildUtil.KtLint
+    id("io.gitlab.arturbosch.detekt") version Versions.BuildUtil.Detekt
+    id("org.jlleitschuh.gradle.ktlint") version Versions.BuildUtil.Ktlint
 }
 
 buildscript {
@@ -50,7 +50,7 @@ allprojects {
         project.apply("$rootDir/gradle/common.gradle")
 
         detekt {
-            toolVersion = Versions.BuildUtil.DeteKt
+            toolVersion = Versions.BuildUtil.Detekt
             buildUponDefaultConfig = true
             config.setFrom(files("$rootDir/detekt-config.yml"))
         }
