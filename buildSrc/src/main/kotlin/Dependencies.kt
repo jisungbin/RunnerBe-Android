@@ -101,7 +101,7 @@ object Dependencies {
     val Location = listOf(
         "com.github.BirjuVachhani:locus-android:${Versions.Location.Locus}",
         "com.google.android.gms:play-services-maps:${Versions.Location.GmsMap}",
-        "om.google.maps.android:maps-compose:${Versions.Location.GoogleMapCompose}",
+        "com.google.maps.android:maps-compose:${Versions.Location.GoogleMapCompose}",
         "com.google.android.gms:play-services-location:${Versions.Location.GmsLocation}",
     )
 
