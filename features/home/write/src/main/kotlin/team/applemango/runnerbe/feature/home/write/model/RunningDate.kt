@@ -9,38 +9,113 @@
 
 package team.applemango.runnerbe.feature.home.write.model
 
+import androidx.annotation.IntRange
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.feature.home.write.constant.TimeType
 import team.applemango.runnerbe.shared.domain.extension.format
 
 private const val RunningDateFormat = "M/dd (E)"
+const val FullDateFormat = "$RunningDateFormat a h m"
 
 internal fun Date.toDateString() = format(RunningDateFormat)
 
-internal data class RunningDate(
-    val dateString: String,
-    val timeType: TimeType,
-    val hour: Int,
-    val minute: Int,
-) {
-    private companion object {
-        const val FullDateFormat = "$RunningDateFormat a h m"
+private typealias TimeTypeModel = TimeType
+
+@Suppress("MemberVisibilityCanBePrivate")
+internal class RunningDate(baseDate: Date = Date()) {
+    private val calendar = Calendar.getInstance().apply {
+        time = baseDate
     }
 
-    override fun toString() = "$dateString ${timeType.string} $hour $minute"
+    companion object {
+        sealed class Field {
+            data class Date(val value: String) : Field()
+            data class TimeType(val value: TimeTypeModel) : Field()
+            data class Hour(val value: Int) : Field()
+            data class Minute(val value: Int) : Field()
+        }
 
-    private fun toDate(): Date {
-        val date = SimpleDateFormat(
-            FullDateFormat,
-            Locale.getDefault()
-        ).parse(toString())
-        date ?: throw IllegalStateException("${toString()} is invalid format.")
-        return date
+        /**
+         * 출근 전 - 06:00 AM, 퇴근 후 06:00 PM, 휴일 - 12:00 PM
+         */
+        fun getDefault(runningItemType: RunningItemType): RunningDate {
+            val instance = RunningDate()
+            with(instance) {
+                when (runningItemType) {
+                    RunningItemType.Before -> {
+                        setTimeType(TimeType.AM)
+                        setHour(6)
+                    }
+                    RunningItemType.After -> {
+                        setTimeType(TimeType.PM)
+                        setHour(6)
+                    }
+                    RunningItemType.Off -> {
+                        setTimeType(TimeType.PM)
+                        setHour(12)
+                    }
+                }
+            }
+            return instance
+        }
     }
 
-    operator fun compareTo(other: Date): Int {
-        return other.compareTo(toDate())
+    /**
+     * 날짜 설정
+     *
+     * @param dateString 입력받는 포멧은 {월/일 (요일)} 이지만 월/일 만 사용됨
+     * 캘린더의 월은 0 부터 시작이라 -1 을 해서 캘린더에 넣음
+     */
+    fun setDate(dateString: String) {
+        val date = dateString.split(" ")[0]
+        val (month, day) = date.split("/").map(String::toInt)
+        calendar.set(Calendar.MONTH, month - 1)
+        calendar.set(Calendar.DAY_OF_MONTH, day)
     }
+
+    /**
+     * AM/PM 설정
+     *
+     * @param timeType AM/PM 값 (캘린더 인자는 AM - 0, PM - 1 사용)
+     */
+    fun setTimeType(timeType: TimeTypeModel) {
+        calendar.set(Calendar.AM_PM, TimeTypeModel.values().indexOf(timeType))
+    }
+
+    /**
+     * 시간 설정
+     *
+     * @param hour 1-12 시간대 (캘린더 인자는 0-11 시간대 사용)
+     */
+    fun setHour(hour: Int) {
+        calendar.set(Calendar.HOUR, hour - 1)
+    }
+
+    /**
+     * 분 설정
+     *
+     * @param minute 분 (0 ~ 60)
+     */
+    fun setMinute(@IntRange(from = 0, to = 60) minute: Int) {
+        calendar.set(Calendar.MINUTE, minute)
+    }
+
+    /**
+     * Date 객체 반환
+     *
+     * @return Date
+     */
+    fun toDate() = calendar.time ?: throw NullPointerException("Can't get time from calendar.")
+
+    override fun toString(): String {
+        val dateString = SimpleDateFormat(FullDateFormat, Locale.getDefault()).format(toDate())
+        dateString ?: throw NullPointerException("Failed date formatting.")
+        return dateString
+    }
+
+    operator fun compareTo(other: RunningDate) = toDate().compareTo(other.toDate())
 }

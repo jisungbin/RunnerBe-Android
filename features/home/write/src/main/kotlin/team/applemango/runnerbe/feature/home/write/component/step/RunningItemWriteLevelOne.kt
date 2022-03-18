@@ -25,15 +25,18 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
@@ -55,6 +58,7 @@ import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.domain.extension.toCalendar
 import team.applemango.runnerbe.shared.domain.unit.em
 import team.applemango.runnerbe.shared.domain.unit.px
+import team.applemango.runnerbe.shared.extension.collectWithLifecycle
 import team.applemango.runnerbe.xml.superwheelpicker.integration.SuperWheelPicker
 
 private val DefaultFieldShape = RoundedCornerShape(6.dp)
@@ -66,12 +70,50 @@ internal fun RunningItemWriteLevelOne(
     runningItemType: RunningItemType,
     fieldsAllInputStateChange: (state: Boolean) -> Unit,
 ) {
+    val runningDate = remember { RunningDate() }
+    val lifecycleOwner = LocalLifecycleOwner.current
+
     var titleField by remember { mutableStateOf(TextFieldValue()) }
+    var runningDateStringState by remember { mutableStateOf<String?>(null) }
+    val runningDateStringDefaultState by remember {
+        mutableStateOf(RunningDate.getDefault(runningItemType).toString())
+    }
+    var runningTimeStringState by remember { mutableStateOf("0 시간 20 분") }
     val fieldsFillState = remember { mutableStateListOf(false, false, false) }
 
+    var runningDatePickerDialogVisible by remember { mutableStateOf(false) }
+    var runningTimePickerDialogVisible by remember { mutableStateOf(false) }
     var titleErrorVisible by remember { mutableStateOf(false) }
 
-    fieldsAllInputStateChange(fieldsFillState.all { true })
+    LaunchedEffect(fieldsFillState) {
+        snapshotFlow { fieldsFillState }
+            .collectWithLifecycle(lifecycleOwner) {
+                fieldsAllInputStateChange(fieldsFillState.all { true })
+            }
+    }
+
+    RunningDatePickerDialog(
+        visible = runningDatePickerDialogVisible,
+        onDismissRequest = { runningDatePickerDialogVisible = false },
+        onRunningDateChange = { field ->
+            with(runningDate) {
+                when (field) {
+                    is RunningDate.Companion.Field.Date -> {
+                        setDate(field.value)
+                    }
+                    is RunningDate.Companion.Field.TimeType -> {
+                        setTimeType(field.value)
+                    }
+                    is RunningDate.Companion.Field.Hour -> {
+                        setHour(field.value)
+                    }
+                    is RunningDate.Companion.Field.Minute -> {
+                        setMinute(field.value)
+                    }
+                }
+            }
+        }
+    )
 
     Column(modifier = Modifier.fillMaxSize()) {
         Text(
@@ -79,6 +121,7 @@ internal fun RunningItemWriteLevelOne(
             style = Typography.Body14R.copy(color = ColorAsset.G3_5)
         )
         TextField(
+            modifier = Modifier.padding(top = 12.dp),
             value = titleField,
             shape = DefaultFieldShape,
             colors = TextFieldDefaults.textFieldColors(backgroundColor = ColorAsset.G5_5),
@@ -110,15 +153,19 @@ internal fun RunningItemWriteLevelOne(
                 style = Typography.Body12R.copy(color = ColorAsset.ErrorLight)
             )
         }
-        Divider(modifier = Modifier.padding(vertical = 12.dp), color = ColorAsset.G6)
+        Divider(modifier = Modifier.padding(vertical = 20.dp), color = ColorAsset.G6)
         Text(
             text = stringResource(R.string.runningitemwrite_label_date),
             style = Typography.Body14R.copy(color = ColorAsset.G3_5)
         )
         ConstraintLayout(
             modifier = Modifier
+                .padding(top = 12.dp)
                 .fillMaxSize()
+                .clip(DefaultFieldShape)
+                .background(color = ColorAsset.G5_5)
                 .clickable {
+                    runningDatePickerDialogVisible = true
                 }
                 .padding(horizontal = 32.dp)
         ) {
@@ -142,9 +189,8 @@ internal fun RunningItemWriteLevelOne(
                         top.linkTo(parent.top)
                         bottom.linkTo(parent.bottom)
                     }
-                    .clip(DefaultFieldShape)
                     .background(color = ColorAsset.G5_5),
-                text = "${now.toDateString()} ${runningItemType.toDefaultDateTime()}",
+                text = runningDateStringState ?: runningDateStringDefaultState,
                 style = Typography.Body14R.copy(color = ColorAsset.G1)
             )
             Icon(
@@ -160,6 +206,56 @@ internal fun RunningItemWriteLevelOne(
                 tint = Color.Unspecified
             )
         }
+        Divider(modifier = Modifier.padding(vertical = 20.dp), color = ColorAsset.G6)
+        ConstraintLayout(
+            modifier = Modifier
+                .padding(top = 12.dp)
+                .fillMaxSize()
+                .clip(DefaultFieldShape)
+                .background(color = ColorAsset.G5_5)
+                .clickable {
+                    runningTimePickerDialogVisible = true
+                }
+                .padding(horizontal = 32.dp)
+        ) {
+            val (clockIcon, dateString, arrowIcon) = createRefs()
+            Icon(
+                modifier = Modifier
+                    .size(18.dp)
+                    .constrainAs(clockIcon) {
+                        start.linkTo(parent.start)
+                        top.linkTo(parent.top)
+                        bottom.linkTo(parent.bottom)
+                    },
+                painter = painterResource(R.drawable.ic_round_time_24),
+                contentDescription = null,
+                tint = Color.Unspecified
+            )
+            Text(
+                modifier = Modifier
+                    .constrainAs(dateString) {
+                        start.linkTo(clockIcon.end, 16.dp)
+                        top.linkTo(parent.top)
+                        bottom.linkTo(parent.bottom)
+                    }
+                    .background(color = ColorAsset.G5_5),
+                text = runningTimeStringState,
+                style = Typography.Body14R.copy(color = ColorAsset.G1)
+            )
+            Icon(
+                modifier = Modifier
+                    .size(18.dp)
+                    .constrainAs(arrowIcon) {
+                        start.linkTo(parent.end)
+                        top.linkTo(parent.top)
+                        bottom.linkTo(parent.bottom)
+                    },
+                painter = painterResource(R.drawable.ic_round_chevron_right),
+                contentDescription = null,
+                tint = Color.Unspecified
+            )
+        }
+        Divider(modifier = Modifier.padding(vertical = 20.dp), color = ColorAsset.G6)
     }
 }
 
@@ -167,8 +263,7 @@ internal fun RunningItemWriteLevelOne(
 private fun RunningDatePickerDialog(
     visible: Boolean,
     onDismissRequest: () -> Unit,
-    runningDate: RunningDate,
-    onRunningDateChange: (runningDate: RunningDate) -> Unit,
+    onRunningDateChange: (field: RunningDate.Companion.Field) -> Unit,
 ) {
     RunnerbeDialog(
         visible = visible,
@@ -188,18 +283,18 @@ private fun RunningDatePickerDialog(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 DateStringPicker { dateString ->
-                    onRunningDateChange(runningDate.copy(dateString = dateString))
+                    onRunningDateChange(RunningDate.Companion.Field.Date(dateString))
                 }
                 TimeTypePicker { timeType ->
-                    onRunningDateChange(runningDate.copy(timeType = timeType))
+                    onRunningDateChange(RunningDate.Companion.Field.TimeType(timeType))
                 }
                 Row {
                     HourPicker { hour ->
-                        onRunningDateChange(runningDate.copy(hour = hour))
+                        onRunningDateChange(RunningDate.Companion.Field.Hour(hour))
                     }
                     Text(text = ":", style = Typography.Custom.SuperWheelPicker)
                     MinutePicker { minute ->
-                        onRunningDateChange(runningDate.copy(minute = minute))
+                        onRunningDateChange(RunningDate.Companion.Field.Minute(minute))
                     }
                 }
             }

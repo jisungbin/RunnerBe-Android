@@ -16,7 +16,7 @@ import team.applemango.runnerbe.shared.domain.extension.toCalendar
 internal object DateCache {
     private val cachedPlusDate = HashMap<Int, Date>()
 
-    fun Date.plusDayAndCaching(plus: Int): Date {
+    fun Date.plusDayAndCaching(plus: Int = 1): Date {
         if (cachedPlusDate[plus] == null) {
             val calendar = toCalendar().apply {
                 add(Calendar.DAY_OF_MONTH, plus)
