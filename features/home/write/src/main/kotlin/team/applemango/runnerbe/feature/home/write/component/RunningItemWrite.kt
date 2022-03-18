@@ -36,6 +36,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.feature.home.write.R
 import team.applemango.runnerbe.feature.home.write.RunningItemWriteViewModel
+import team.applemango.runnerbe.feature.home.write.component.step.RunningItemWriteLevelOne
 import team.applemango.runnerbe.feature.home.write.constant.WritingLevel
 import team.applemango.runnerbe.shared.compose.component.RunningItemTypeToggleBar
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
@@ -82,8 +83,8 @@ internal fun RunningItemWrite(
                     .runIf(fieldsAllInputState[writingLevel.index]) {
                         clickable {
                             when (writingLevel) {
-                                WritingLevel.One -> writingLevel = WritingLevel.Two
-                                WritingLevel.Two -> {
+                                WritingLevel.One -> writingLevel = WritingLevel.Two // 다음 단계
+                                WritingLevel.Two -> { // 등록
                                     vm
                                 }
                             }
@@ -121,6 +122,12 @@ internal fun RunningItemWrite(
         ) { level ->
             when (level) {
                 WritingLevel.One -> {
+                    RunningItemWriteLevelOne(
+                        runningItemType = selectedRunningItemType,
+                        fieldsAllInputStateChange = { state ->
+                            fieldsAllInputState[writingLevel.index] = state
+                        }
+                    )
                 }
                 WritingLevel.Two -> {
                 }
