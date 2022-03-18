@@ -26,14 +26,14 @@ internal data class RunningDate(
     val minute: Int,
 ) {
     private companion object {
-        const val Format = "$RunningDateFormat a h m"
+        const val FullDateFormat = "$RunningDateFormat a h m"
     }
 
     override fun toString() = "$dateString ${timeType.string} $hour $minute"
 
     private fun toDate(): Date {
         val date = SimpleDateFormat(
-            Format,
+            FullDateFormat,
             Locale.getDefault()
         ).parse(toString())
         date ?: throw IllegalStateException("${toString()} is invalid format.")
