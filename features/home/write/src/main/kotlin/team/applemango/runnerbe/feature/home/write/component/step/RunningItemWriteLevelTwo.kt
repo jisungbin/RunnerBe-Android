@@ -356,7 +356,7 @@ internal fun RunningItemWriteLevelTwo(
         }
         TextField(
             modifier = Modifier
-                .padding(top = 12.dp, bottom = 45.dp)
+                .padding(top = 12.dp)
                 .fillMaxWidth()
                 .height(160.dp),
             shape = RoundedCornerShape(8.dp),
