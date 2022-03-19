@@ -9,6 +9,7 @@
 
 package team.applemango.runnerbe.xml.superwheelpicker.integration
 
+import android.content.Context
 import android.graphics.Typeface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -50,22 +51,44 @@ fun SuperWheelPicker(
 ) = AndroidView(
     modifier = modifier,
     factory = { context ->
-        SuperWheelPickerXml(context).apply {
-            setSelectedTextColor(colors.selectedTextColor.toArgb())
-            setUnselectedTextColor(colors.unselectedTextColor.toArgb())
-            setTypeface(textStyle.typeface) // nullable
-            setTextSize(textStyle.textSize.value)
-            setTextLetterSpacing(textStyle.letterSpacing.value)
-            setWrapSelectorWheel(wrapSelectorWheel)
-            setWheelItemCount(wheelItemCount)
-            setRange(range)
-            setValue(value)
-            if (onValueChange != null) {
-                setOnValueChangedListener(onValueChange)
-            }
-            if (onTextRender != null) {
-                setTextRenderListener(onTextRender)
-            }
-        }
+        SuperWheelPicker(
+            context = context,
+            colors = colors,
+            textStyle = textStyle,
+            wrapSelectorWheel = wrapSelectorWheel,
+            wheelItemCount = wheelItemCount,
+            range = range,
+            value = value,
+            onValueChange = onValueChange,
+            onTextRender = onTextRender
+        )
     }
 )
+
+private fun SuperWheelPicker(
+    context: Context,
+    colors: SuperWheelPickerColors = SuperWheelPickerColors(),
+    textStyle: SuperWheelPickerTextStyle = SuperWheelPickerTextStyle(),
+    wrapSelectorWheel: Boolean = true,
+    wheelItemCount: Int = SuperWheelPickerXml.DEFAULT_ITEM_COUNT,
+    range: IntRange,
+    value: Int = range.last / 2,
+    onValueChange: OnValueChangeListener? = null,
+    onTextRender: OnTextRenderListener? = null,
+) = SuperWheelPickerXml(context).apply {
+    setSelectedTextColor(colors.selectedTextColor.toArgb())
+    setUnselectedTextColor(colors.unselectedTextColor.toArgb())
+    setTypeface(textStyle.typeface) // nullable
+    setTextSize(textStyle.textSize.value)
+    setTextLetterSpacing(textStyle.letterSpacing.value)
+    setWrapSelectorWheel(wrapSelectorWheel)
+    setWheelItemCount(wheelItemCount)
+    setRange(range)
+    setValue(value)
+    if (onValueChange != null) {
+        setOnValueChangedListener(onValueChange)
+    }
+    if (onTextRender != null) {
+        setTextRenderListener(onTextRender)
+    }
+}
