@@ -48,6 +48,7 @@ data class RangePickerTick(
 @Composable
 fun RangePicker(
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     range: FloatRange,
     value: FloatRange,
     trackOption: RangePickerTrack = RangePickerTrack(),
@@ -67,6 +68,9 @@ fun RangePicker(
                 tickOption = tickOption,
                 onValueChange = onValueChange
             )
+        },
+        update = { rangeSlider ->
+            rangeSlider.isEnabled = enabled
         }
     )
 }
