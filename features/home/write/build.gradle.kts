@@ -23,6 +23,7 @@ android {
 
 dependencies {
     Dependencies.Location.forEach(::implementation)
+    implementationProject(ProjectConstants.XmlRangePicker)
     implementationProject(ProjectConstants.XmlSuperWheelPicker)
     installSharedComposeOrbitHiltTest(testNeeded = true)
 }
