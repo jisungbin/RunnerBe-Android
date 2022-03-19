@@ -49,7 +49,7 @@ class RunningItemWriteActivity : WindowInsetsActivity() {
                 )
                 vm.observe(
                     lifecycleOwner = this@RunningItemWriteActivity,
-                    state = ::handleRunningItemWriteState,
+                    state = ::handleState,
                 )
             }
 
@@ -62,7 +62,7 @@ class RunningItemWriteActivity : WindowInsetsActivity() {
         }
     }
 
-    private fun handleRunningItemWriteState(state: RunningItemWriteState) {
+    private fun handleState(state: RunningItemWriteState) {
         if (state == RunningItemWriteState.Done) {
             finishWithAnimation()
         }

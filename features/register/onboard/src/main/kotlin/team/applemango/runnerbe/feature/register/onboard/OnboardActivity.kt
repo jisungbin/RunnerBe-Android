@@ -86,7 +86,7 @@ class OnboardActivity : WindowInsetsActivity() {
                 systemUiController.setSystemBarsColor(Color.Transparent)
                 vm.observe(
                     lifecycleOwner = this@OnboardActivity,
-                    state = ::handleRegisterState,
+                    state = ::handleState,
                     sideEffect = { sideEffect ->
                         handleRegisterSideEffect(navController, sideEffect)
                     }
@@ -168,7 +168,7 @@ class OnboardActivity : WindowInsetsActivity() {
         }
     }
 
-    private fun handleRegisterState(state: RegisterState) {
+    private fun handleState(state: RegisterState) {
         val message = when (state) {
             RegisterState.None -> {
                 EmptyString
