@@ -10,6 +10,7 @@
 package team.applemango.runnerbe.feature.home.write
 
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.viewmodel.container
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
@@ -22,7 +23,6 @@ import team.applemango.runnerbe.feature.home.write.model.RunningTime
 import team.applemango.runnerbe.feature.home.write.mvi.RunningItemWriteState
 import team.applemango.runnerbe.shared.android.base.BaseViewModel
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
-import javax.inject.Inject
 
 @HiltViewModel
 internal class RunningItemWriteViewModel @Inject constructor(
