@@ -41,7 +41,7 @@ fun DependencyHandler.installSharedComposeOrbitHiltTest(
     testNeeded: Boolean = false,
 ) {
     if (!isSharedModule) {
-        implementationProject(ProjectConstants.Shared)
+        implementationProject(ProjectConstants.SharedAndroid)
     }
     implementation(Dependencies.Orbit.Main)
     Dependencies.Compose.forEach(::implementation)
