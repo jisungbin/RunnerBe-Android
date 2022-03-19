@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.di.module
+package team.applemango.runnerbe.di
 
 import dagger.Module
 import dagger.Provides
