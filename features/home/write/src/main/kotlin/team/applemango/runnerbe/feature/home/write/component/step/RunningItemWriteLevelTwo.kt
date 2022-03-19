@@ -9,6 +9,7 @@
 
 package team.applemango.runnerbe.feature.home.write.component.step
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -17,6 +18,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -27,6 +29,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -39,6 +42,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.google.android.gms.maps.model.CameraPosition
@@ -61,6 +65,7 @@ import team.applemango.runnerbe.shared.compose.extension.activityViewModel
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.compose.theme.animatedColorState
+import team.applemango.runnerbe.shared.domain.constant.EmptyString
 import team.applemango.runnerbe.xml.rangepicker.RangePicker
 
 private const val DefaultMapCameraZoom = 7f
@@ -76,6 +81,7 @@ internal fun RunningItemWriteLevelTwo(
     var allAgeCheckState by remember { mutableStateOf(false) }
     var peopleCountState by remember { mutableStateOf(4) }
     var peopleCountErrorTypeState by remember { mutableStateOf(PeopleCountErrorType.None) }
+    var messageFieldState by remember { mutableStateOf(TextFieldValue()) }
 
     val circleBorderTextColorState = animatedColorState(
         target = peopleCountErrorTypeState,
@@ -221,7 +227,10 @@ internal fun RunningItemWriteLevelTwo(
                 }
             }
         }
-        Divider(modifier = Modifier.padding(vertical = 20.dp), color = ColorAsset.G6)
+        Divider(
+            modifier = Modifier.padding(vertical = 20.dp),
+            color = ColorAsset.G6
+        )
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
@@ -254,17 +263,21 @@ internal fun RunningItemWriteLevelTwo(
                 ageRange = newAgeRange
             }
         )
-        Divider(modifier = Modifier.padding(vertical = 20.dp), color = ColorAsset.G6)
+        Divider(
+            modifier = Modifier.padding(vertical = 20.dp),
+            color = ColorAsset.G6
+        )
         Text(
             text = stringResource(R.string.runningitemwrite_label_people_count),
             style = Typography.Body14R.copy(color = ColorAsset.G3_5)
         )
-        Box(
+        Column(
             modifier = Modifier
                 .padding(top = 12.dp)
                 .fillMaxWidth()
                 .wrapContentHeight(),
-            contentAlignment = Alignment.Center
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(
                 modifier = Modifier.wrapContentSize(),
@@ -304,6 +317,62 @@ internal fun RunningItemWriteLevelTwo(
                     }
                 )
             }
+            AnimatedVisibility(
+                modifier = Modifier.padding(top = 20.dp),
+                visible = peopleCountErrorTypeState != PeopleCountErrorType.None
+            ) {
+                Text(
+                    text = when (peopleCountErrorTypeState) {
+                        PeopleCountErrorType.Min -> stringResource(R.string.runningitemwrite_error_min_people_count)
+                        PeopleCountErrorType.Max -> stringResource(R.string.runningitemwrite_error_max_people_count)
+                        PeopleCountErrorType.None -> EmptyString
+                    },
+                    style = Typography.Body12R.copy(color = ColorAsset.ErrorLight)
+                )
+            }
         }
+        Divider(
+            modifier = Modifier.padding(vertical = 20.dp),
+            color = ColorAsset.G6
+        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = stringResource(R.string.runningitemwrite_label_message),
+                style = Typography.Body14R.copy(color = ColorAsset.G3_5)
+            )
+            Text(
+                text = "${messageFieldState.text.length}/500",
+                style = Typography.Body14R.copy(
+                    color = when (messageFieldState.text.length == 500) {
+                        true -> ColorAsset.ErrorLight
+                        else -> ColorAsset.G4
+                    }
+                )
+            )
+        }
+        TextField(
+            modifier = Modifier
+                .padding(top = 12.dp, bottom = 45.dp)
+                .fillMaxWidth()
+                .height(160.dp),
+            shape = RoundedCornerShape(8.dp),
+            value = messageFieldState,
+            onValueChange = { message ->
+                if (message.text.length <= 500) {
+                    messageFieldState = message
+                }
+            },
+            placeholder = {
+                Text(
+                    text = stringResource(R.string.runningitemwrite_placeholder_message),
+                    style = Typography.Body16R.copy(color = ColorAsset.G3_5)
+                )
+            },
+            textStyle = Typography.Body16R.copy(color = ColorAsset.G1)
+        )
     }
 }
