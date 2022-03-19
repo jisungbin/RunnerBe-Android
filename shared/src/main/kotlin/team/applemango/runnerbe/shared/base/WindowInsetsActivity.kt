@@ -17,7 +17,7 @@ import androidx.core.view.WindowCompat
 import io.github.jisungbin.logeukes.LoggerType
 import io.github.jisungbin.logeukes.logeukes
 import team.applemango.runnerbe.shared.domain.extension.toMessage
-import team.applemango.runnerbe.shared.util.extension.toast
+import team.applemango.runnerbe.shared.extension.toast
 
 abstract class WindowInsetsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +30,10 @@ abstract class WindowInsetsActivity : ComponentActivity() {
     }
 
     fun basicExceptionHandler(exception: Throwable) {
-        toast(exception.toMessage(), Toast.LENGTH_LONG)
+        toast(
+            message = exception.toMessage(),
+            length = Toast.LENGTH_LONG
+        )
         logeukes(type = LoggerType.E) { exception }
     }
 }

@@ -15,5 +15,13 @@ package team.applemango.runnerbe.domain.runningitem.common
  * @property Off 휴일
  */
 enum class RunningItemType(val code: String) {
-    Before("B"), After("A"), Off("H")
+    Before("B"),
+    After("A"),
+    Off("H");
+
+    override fun toString() = when (this) {
+        Before -> "출근 전"
+        After -> "퇴근 후"
+        Off -> "휴일"
+    }
 }

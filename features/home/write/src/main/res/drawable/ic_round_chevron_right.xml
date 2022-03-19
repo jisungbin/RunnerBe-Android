@@ -1,0 +1,20 @@
+<!--
+  ~ RunnerBe © 2022 Team AppleMango. all rights reserved.
+  ~ RunnerBe license is under the MIT.
+  ~
+  ~ [ic_round_chevron_right.xml] created by Ji Sungbin on 22. 3. 18. 오전 8:00
+  ~
+  ~ Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="16"
+    android:viewportHeight="16">
+    <path
+        android:fillColor="#6F6F6F"
+        android:pathData="M9.916,8.006a0.548,0.548 0,0 1,-0.126 0.35l-2.738,3.286a0.549,0.549 0,0 1,-0.843 -0.7l2.453,-2.936 -2.365,-2.935a0.547,0.547 0,0 1,0.082 -0.772,0.548 0.548,0 0,1 0.8,0.076l2.644,3.286a0.548,0.548 0,0 1,0.093 0.345z"
+        android:strokeWidth=".1"
+        android:strokeColor="#6F6F6F" />
+</vector>

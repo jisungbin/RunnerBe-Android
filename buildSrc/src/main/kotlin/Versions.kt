@@ -15,8 +15,8 @@ object Versions {
     object BuildUtil {
         const val Ruler = "1.0.0"
         const val Dokka = "1.6.10"
-        const val KtLint = "10.2.1"
-        const val DeteKt = "1.20.0-RC1"
+        const val Ktlint = "10.2.1"
+        const val Detekt = "1.20.0-RC1"
         const val CheckDependencyUpdates = "1.5.0"
         const val DependencyGraphGenerator = "0.7.0"
     }
@@ -49,7 +49,7 @@ object Versions {
 
     object Ui {
         const val Browser = "1.3.0"
-        const val Material = "1.5.0"
+        const val Material = "1.6.0-alpha03"
         const val AppCompat = "1.4.1"
         const val PhotoEditor = "2.0.0"
         const val Splash = "1.0.0-beta01"
@@ -75,6 +75,13 @@ object Versions {
         const val AnrWatchDog = "1.4.0"
         const val FirebasePerformance = "1.4.1"
         const val FirebaseCrashlytics = "2.8.1"
+    }
+
+    object Location {
+        const val Locus = "4.0.1"
+        const val GmsMap = "18.0.2"
+        const val GmsLocation = "19.0.1"
+        const val GoogleMapCompose = "1.3.1"
     }
 
     object Jetpack {

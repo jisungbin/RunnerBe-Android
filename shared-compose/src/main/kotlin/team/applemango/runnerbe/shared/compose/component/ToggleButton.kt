@@ -15,19 +15,35 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.compose.theme.animatedColorState
+
+@Immutable
+data class ToggleButtonColors(
+    val backgroundDefaultColor: Color = Color.Transparent,
+    val backgroundSelectedColor: Color = Color.Black,
+    val borderDefaultColor: Color = backgroundDefaultColor,
+    val borderSelectedColor: Color = backgroundSelectedColor,
+)
+
+@Immutable
+data class ToggleButtonTextStyle(
+    val defaultColor: Color = Color.LightGray,
+    val selectedColor: Color = Color.Black,
+)
 
 @Composable
 fun <T> ToggleButton(
     modifier: Modifier = Modifier,
     target: T,
     selectState: T?,
-    targetStringBuilder: () -> String,
+    targetStringBuilder: (target: T) -> String,
+    colors: ToggleButtonColors = ToggleButtonColors(),
+    textStyle: ToggleButtonTextStyle = ToggleButtonTextStyle(),
     onClick: () -> Unit,
 ) {
     Button(
@@ -38,8 +54,8 @@ fun <T> ToggleButton(
             backgroundColor = animatedColorState(
                 target = target,
                 selectState = selectState,
-                defaultColor = Color.Transparent,
-                selectedColor = ColorAsset.Primary
+                defaultColor = colors.backgroundDefaultColor,
+                selectedColor = colors.backgroundSelectedColor
             )
         ),
         border = BorderStroke(
@@ -47,19 +63,19 @@ fun <T> ToggleButton(
             color = animatedColorState(
                 target = target,
                 selectState = selectState,
-                defaultColor = ColorAsset.G4,
-                selectedColor = ColorAsset.Primary
+                defaultColor = colors.borderDefaultColor,
+                selectedColor = colors.borderSelectedColor
             )
         )
     ) {
         Text(
-            text = targetStringBuilder(),
+            text = targetStringBuilder(target),
             style = Typography.Body14R.copy(
                 color = animatedColorState(
                     target = target,
                     selectState = selectState,
-                    defaultColor = ColorAsset.G3_5,
-                    selectedColor = ColorAsset.G6
+                    defaultColor = textStyle.defaultColor,
+                    selectedColor = textStyle.selectedColor
                 )
             )
         )

@@ -2,6 +2,15 @@
  * RunnerBe © 2022 Team AppleMango. all rights reserved.
  * RunnerBe license is under the MIT.
  *
+ * [RunningItemWrite.kt] created by Ji Sungbin on 22. 3. 19. 오후 11:20
+ *
+ * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
+ */
+
+/*
+ * RunnerBe © 2022 Team AppleMango. all rights reserved.
+ * RunnerBe license is under the MIT.
+ *
  * [RunningItemWrite.kt] created by Ji Sungbin on 22. 3. 18. 오전 6:41
  *
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
@@ -16,6 +25,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.Icon
@@ -32,12 +42,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.feature.home.write.R
 import team.applemango.runnerbe.feature.home.write.RunningItemWriteViewModel
+import team.applemango.runnerbe.feature.home.write.component.step.RunningItemWriteLevelOne
+import team.applemango.runnerbe.feature.home.write.component.step.RunningItemWriteLevelTwo
 import team.applemango.runnerbe.feature.home.write.constant.WritingLevel
 import team.applemango.runnerbe.shared.compose.component.RunningItemTypeToggleBar
+import team.applemango.runnerbe.shared.compose.extension.activityViewModel
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.compose.theme.animatedColorState
@@ -46,7 +58,7 @@ import team.applemango.runnerbe.shared.domain.extension.runIf
 @Composable
 internal fun RunningItemWrite(
     modifier: Modifier = Modifier,
-    vm: RunningItemWriteViewModel = viewModel(),
+    vm: RunningItemWriteViewModel = activityViewModel(),
 ) {
     val context = LocalContext.current
     val activity = context as Activity
@@ -81,9 +93,11 @@ internal fun RunningItemWrite(
                     .padding(16.dp)
                     .runIf(fieldsAllInputState[writingLevel.index]) {
                         clickable {
+                            @Suppress("UNUSED_EXPRESSION") // vm
                             when (writingLevel) {
-                                WritingLevel.One -> writingLevel = WritingLevel.Two
-                                WritingLevel.Two -> {
+                                WritingLevel.One -> writingLevel = WritingLevel.Two // 다음 단계
+                                WritingLevel.Two -> { // 등록
+                                    // TODO
                                     vm
                                 }
                             }
@@ -121,8 +135,17 @@ internal fun RunningItemWrite(
         ) { level ->
             when (level) {
                 WritingLevel.One -> {
+                    RunningItemWriteLevelOne(
+                        runningItemType = selectedRunningItemType,
+                        fieldsAllInputStateChange = { state ->
+                            fieldsAllInputState[writingLevel.index] = state
+                        }
+                    )
                 }
                 WritingLevel.Two -> {
+                    RunningItemWriteLevelTwo(
+                        modifier = Modifier.imePadding() // include TextField at bottom
+                    )
                 }
             }
         }

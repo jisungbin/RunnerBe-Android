@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.shared.util.extension
+package team.applemango.runnerbe.shared.extension
 
 import android.app.Activity
 import android.content.Intent
@@ -16,4 +16,9 @@ inline fun <reified T : Activity> Activity.changeActivityWithAnimation() {
     startActivity(Intent(this, T::class.java))
     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     finish()
+}
+
+fun Activity.finishWithAnimation() {
+    finish()
+    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
 }

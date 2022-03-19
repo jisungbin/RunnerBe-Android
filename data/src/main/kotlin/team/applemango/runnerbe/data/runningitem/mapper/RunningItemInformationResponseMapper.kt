@@ -12,8 +12,8 @@ package team.applemango.runnerbe.data.runningitem.mapper
 import team.applemango.runnerbe.data.runningitem.constant.NotYetVerifyCode
 import team.applemango.runnerbe.data.runningitem.model.runningitem.information.RunningItemInformationResponse
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.information.RunningItemInformation
-import team.applemango.runnerbe.shared.domain.notAllowedValueMessage
-import team.applemango.runnerbe.shared.domain.requireFieldNullMessage
+import team.applemango.runnerbe.shared.domain.util.notAllowedValueMessage
+import team.applemango.runnerbe.shared.domain.util.requireFieldNullMessage
 
 internal fun RunningItemInformationResponse.toDomain(): RunningItemInformation? {
     checkNotNull(result) {

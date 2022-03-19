@@ -26,11 +26,11 @@ import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.catch
 import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.domain.extension.toMessage
-import team.applemango.runnerbe.shared.domain.flowExceptionMessage
-import team.applemango.runnerbe.shared.util.extension.changeActivityWithAnimation
-import team.applemango.runnerbe.shared.util.extension.collectWithLifecycle
-import team.applemango.runnerbe.shared.util.extension.dataStore
-import team.applemango.runnerbe.shared.util.extension.toast
+import team.applemango.runnerbe.shared.domain.util.flowExceptionMessage
+import team.applemango.runnerbe.shared.extension.changeActivityWithAnimation
+import team.applemango.runnerbe.shared.extension.collectWithLifecycle
+import team.applemango.runnerbe.shared.extension.dataStore
+import team.applemango.runnerbe.shared.extension.toast
 import team.applemango.runnerbe.util.DFMLoginActivityAlias
 import team.applemango.runnerbe.util.DFMOnboardActivityAlias
 

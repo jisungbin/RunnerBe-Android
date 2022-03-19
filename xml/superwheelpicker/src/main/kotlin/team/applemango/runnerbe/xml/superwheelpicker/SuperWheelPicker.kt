@@ -25,13 +25,13 @@ class SuperWheelPicker @JvmOverloads constructor(
     defStyleAttr: Int = 0,
 ) : View(context, attrs, defStyleAttr) {
 
-    private companion object {
-        const val TOP_AND_BOTTOM_FADING_EDGE_STRENGTH = 0.9f
-        const val SNAP_SCROLL_DURATION = 300
-        const val SELECTOR_MAX_FLING_VELOCITY_ADJUSTMENT = 4
+    companion object {
+        private const val TOP_AND_BOTTOM_FADING_EDGE_STRENGTH = 0.9f
+        private const val SNAP_SCROLL_DURATION = 300
+        private const val SELECTOR_MAX_FLING_VELOCITY_ADJUSTMENT = 4
         const val DEFAULT_ITEM_COUNT = 3
-        const val DEFAULT_TEXT_SIZE = 80
-        val DEFAULT_LAYOUT_PARAMS = ViewGroup.LayoutParams(
+        const val DEFAULT_TEXT_SIZE = 80f
+        private val DEFAULT_LAYOUT_PARAMS = ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
@@ -54,15 +54,19 @@ class SuperWheelPicker @JvmOverloads constructor(
     private var curSelectedItemIndex = 0
     private var wrapSelectorWheelPreferred = false
 
-    private var textPaint = Paint().apply {
-        isAntiAlias = true
-        style = Paint.Style.FILL_AND_STROKE
-        typeface = Typeface.DEFAULT
-    }
     private var selectedTextColor = Color.BLACK
     private var unSelectedTextColor = Color.LTGRAY
     private var textSize = DEFAULT_TEXT_SIZE
     private var textAlign = Paint.Align.CENTER
+    private var letterSpacing = 0f
+    private var textPaint = Paint().apply {
+        isAntiAlias = true
+        style = Paint.Style.FILL_AND_STROKE
+        typeface = Typeface.DEFAULT
+        textSize = this@SuperWheelPicker.textSize
+        textAlign = this@SuperWheelPicker.textAlign
+        letterSpacing = this@SuperWheelPicker.letterSpacing
+    }
 
     private var overScroller = OverScroller(context, DecelerateInterpolator(2.5f))
     private var velocityTracker: VelocityTracker? = null
@@ -84,19 +88,7 @@ class SuperWheelPicker @JvmOverloads constructor(
     private var scrollState = OnScrollListener.SCROLL_STATE_IDLE
 
     init {
-        updatePainter()
         initializeSelectorWheelIndices()
-    }
-
-    private fun updatePainter() {
-        textPaint = textPaint.apply {
-            textSize = this@SuperWheelPicker.textSize.toFloat()
-            textAlign = this@SuperWheelPicker.textAlign
-        }
-    }
-
-    fun setTextRenderListener(onTextRenderListener: OnTextRenderListener) {
-        this.onTextRenderListener = onTextRenderListener
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
@@ -185,7 +177,7 @@ class SuperWheelPicker @JvmOverloads constructor(
     private fun initializeFadingEdges() {
         isVerticalFadingEdgeEnabled = fadingEdgeEnabled
         if (fadingEdgeEnabled) {
-            setFadingEdgeLength((bottom - top - textSize) / 2)
+            setFadingEdgeLength((bottom - top - textSize.toInt()) / 2)
         }
     }
 
@@ -543,6 +535,18 @@ class SuperWheelPicker @JvmOverloads constructor(
         } else {
             getWrappedSelectorIndex(position)
         }
+    }
+
+    fun setTextSize(textSize: Float) {
+        textPaint.textSize = textSize
+    }
+
+    fun setTextLetterSpacing(letterSpacing: Float) {
+        textPaint.letterSpacing = letterSpacing
+    }
+
+    fun setTextRenderListener(onTextRenderListener: OnTextRenderListener) {
+        this.onTextRenderListener = onTextRenderListener
     }
 
     fun scrollTo(position: Int) {

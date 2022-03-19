@@ -9,7 +9,6 @@
 
 package team.applemango.runnerbe.feature.register.onboard.component.step
 
-import android.content.Context
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,17 +21,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.flowWithLifecycle
-import java.util.Calendar
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -42,14 +41,14 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
-import team.applemango.runnerbe.feature.register.onboard.util.presentationColorOf
+import team.applemango.runnerbe.shared.compose.default.RunnerbeSuperWheelPickerDefaults
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
-import team.applemango.runnerbe.shared.compose.theme.FontTypeface
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.constant.DataStoreKey
-import team.applemango.runnerbe.shared.domain.flowExceptionMessage
-import team.applemango.runnerbe.shared.util.extension.dataStore
-import team.applemango.runnerbe.xml.superwheelpicker.SuperWheelPicker
+import team.applemango.runnerbe.shared.domain.util.flowExceptionMessage
+import team.applemango.runnerbe.shared.extension.dataStore
+import team.applemango.runnerbe.xml.superwheelpicker.integration.SuperWheelPicker
+import java.util.Calendar
 
 private val nowYear = Calendar.getInstance().get(Calendar.YEAR)
 
@@ -67,14 +66,7 @@ internal fun YearPicker(
         yearSelectFlow.flowWithLifecycle(lifecycleOwner.lifecycle)
     }
     val yearSelectStateWithLifecycle by yearSelectFlowWithLifecycle.collectAsState(nowYear)
-    val wheelPicker = remember {
-        SuperWheelPicker(context) { year ->
-            selectedYearChanged(nowYear - year > 19)
-            coroutineScope.launch {
-                yearSelectFlow.emit(year)
-            }
-        }
-    }
+    var nowYearState by remember { mutableStateOf(nowYear) }
 
     LaunchedEffect(Unit) {
         context
@@ -93,7 +85,7 @@ internal fun YearPicker(
             }
             .collect { preferences ->
                 preferences[DataStoreKey.Onboard.Year]?.let { restoreYear ->
-                    wheelPicker.setValue(restoreYear)
+                    nowYearState = restoreYear
                     yearSelectFlow.emit(restoreYear)
                     selectedYearChanged(nowYear - restoreYear > 19)
                 } ?: selectedYearChanged(false) // default year: ${nowYear} -> always isAdult: false
@@ -118,9 +110,19 @@ internal fun YearPicker(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Divider(modifier = Modifier.fillMaxWidth(), color = ColorAsset.G5, thickness = 1.dp)
-        AndroidView(
+        SuperWheelPicker(
             modifier = Modifier.height(250.dp),
-            factory = { wheelPicker }
+            colors = RunnerbeSuperWheelPickerDefaults.colors(),
+            textStyle = RunnerbeSuperWheelPickerDefaults.textStyle(),
+            wheelItemCount = 5,
+            range = nowYear - 80..nowYear,
+            value = nowYearState,
+            onValueChange = { _, newYear ->
+                selectedYearChanged(nowYear - newYear > 19)
+                coroutineScope.launch {
+                    yearSelectFlow.emit(newYear)
+                }
+            }
         )
         Divider(modifier = Modifier.fillMaxWidth(), color = ColorAsset.G5, thickness = 1.dp)
         AnimatedVisibility(
@@ -135,18 +137,4 @@ internal fun YearPicker(
             )
         }
     }
-}
-
-private fun SuperWheelPicker(
-    context: Context,
-    onNumberChangeListener: (number: Int) -> Unit,
-) = SuperWheelPicker(context).apply {
-    setSelectedTextColor(presentationColorOf(context, "primary"))
-    setUnselectedTextColor(presentationColorOf(context, "G4"))
-    setTypeface(FontTypeface.Roboto.medium(context)) // nullable
-    setWrapSelectorWheel(true)
-    setWheelItemCount(5)
-    setRange(nowYear - 80..nowYear)
-    setValue(nowYear)
-    setOnValueChangedListener { _, newValue -> onNumberChangeListener(newValue) }
 }

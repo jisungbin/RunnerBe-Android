@@ -50,20 +50,20 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
-import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.component.step.EmailVerify
 import team.applemango.runnerbe.feature.register.onboard.component.step.EmployeeIdVerify
 import team.applemango.runnerbe.feature.register.onboard.component.step.GenderPicker
 import team.applemango.runnerbe.feature.register.onboard.component.step.JobPicker
 import team.applemango.runnerbe.feature.register.onboard.component.step.TermsTable
 import team.applemango.runnerbe.feature.register.onboard.component.step.YearPicker
+import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.shared.compose.component.RunnerbeDialog
 import team.applemango.runnerbe.shared.compose.extension.presentationDrawableOf
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.constant.DataStoreKey
-import team.applemango.runnerbe.shared.util.extension.changeActivityWithAnimation
-import team.applemango.runnerbe.shared.util.extension.dataStore
+import team.applemango.runnerbe.shared.extension.changeActivityWithAnimation
+import team.applemango.runnerbe.shared.extension.dataStore
 import team.applemango.runnerbe.util.DFMLoginActivityAlias
 import team.applemango.runnerbe.util.MainActivityAlias
 

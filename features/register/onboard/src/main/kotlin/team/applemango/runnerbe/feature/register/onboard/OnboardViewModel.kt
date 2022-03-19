@@ -36,7 +36,7 @@ import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterSideEffect
 import team.applemango.runnerbe.shared.base.BaseViewModel
 import team.applemango.runnerbe.shared.constant.DataStoreKey
-import team.applemango.runnerbe.shared.domain.flowExceptionMessage
+import team.applemango.runnerbe.shared.domain.util.flowExceptionMessage
 import kotlin.random.Random
 
 private val SendEmailExceptionWithNoMessage =

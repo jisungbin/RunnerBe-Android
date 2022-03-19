@@ -74,6 +74,7 @@ dependencies {
     features.forEach(::implementationProject)
 
     implementation(Dependencies.Util.Erratum)
+    implementation(Dependencies.EachUi.Material)
     implementation(platform(Dependencies.FirebaseBom))
     implementation(Dependencies.FirebaseEachKtx.Analytics)
     implementation(Dependencies.FirebaseEachKtx.Performance)

@@ -41,6 +41,7 @@ object FontAsset {
 object FontTypeface {
     object Roboto {
         fun medium(context: Context) = ResourcesCompat.getFont(context, font.roboto_m)
+        fun regular(context: Context) = ResourcesCompat.getFont(context, font.roboto_r)
     }
 }
 
@@ -146,6 +147,32 @@ object Typography {
             fontSize = 16.sp,
             lineHeight = 31.sp,
             letterSpacing = (-0.4).sp
+        )
+        val SuperWheelPickerBold = TextStyle(
+            fontFamily = FontAsset.Roboto.M,
+            color = ColorAsset.Primary,
+            fontSize = 26.sp,
+            letterSpacing = (-0.26).sp
+        )
+        val SuperWheelPickerRegular = TextStyle(
+            fontFamily = FontAsset.Roboto.R,
+            color = ColorAsset.Primary,
+            fontSize = 18.sp,
+            lineHeight = 27.sp,
+            letterSpacing = (-0.11).sp
+        )
+        val MapMarker = TextStyle(
+            fontFamily = FontAsset.Roboto.R,
+            color = ColorAsset.G1,
+            fontSize = 12.sp,
+            lineHeight = 16.sp,
+            letterSpacing = (-0.12).sp
+        )
+        val WriteRunningItemType = TextStyle(
+            fontFamily = FontAsset.NotoSans.M,
+            color = ColorAsset.PrimaryDarker,
+            fontSize = 9.sp,
+            letterSpacing = (-0.39).sp
         )
     }
 }

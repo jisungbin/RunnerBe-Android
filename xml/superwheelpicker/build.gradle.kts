@@ -12,6 +12,18 @@ plugins {
     id("kotlin-android")
 }
 
+android {
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.Compose.Main
+    }
+}
+
 dependencies {
     implementation(Dependencies.EachKtx.Core)
+    implementationProject(ProjectConstants.SharedDomain)
+    Dependencies.Compose.forEach(::implementation)
 }

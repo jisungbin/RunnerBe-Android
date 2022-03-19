@@ -23,7 +23,7 @@ import team.applemango.runnerbe.domain.register.runnerbe.usecase.LoginUseCase
 import team.applemango.runnerbe.feature.register.snslogin.constant.LoginState
 import team.applemango.runnerbe.feature.register.snslogin.mvi.LoginSideEffect
 import team.applemango.runnerbe.shared.base.BaseViewModel
-import team.applemango.runnerbe.shared.domain.requireFieldNullMessage
+import team.applemango.runnerbe.shared.domain.util.requireFieldNullMessage
 
 internal class SnsLoginViewModel(
     private val getKakaoAccessTokenUseCase: GetKakaoAccessTokenUseCase,

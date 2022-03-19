@@ -59,7 +59,7 @@ import team.applemango.runnerbe.shared.compose.extension.parseHtml
 import team.applemango.runnerbe.shared.compose.extension.presentationDrawableOf
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
-import team.applemango.runnerbe.shared.util.extension.toast
+import team.applemango.runnerbe.shared.extension.toast
 
 private val PhotoContainerModifier = Modifier
     .fillMaxWidth()

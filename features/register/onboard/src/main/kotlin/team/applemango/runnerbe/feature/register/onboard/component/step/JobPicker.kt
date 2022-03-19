@@ -34,9 +34,10 @@ import kotlinx.coroutines.launch
 import team.applemango.runnerbe.domain.constant.Job
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.shared.compose.component.ToggleButton
+import team.applemango.runnerbe.shared.compose.default.RunnerbeToggleButtonDefaults
 import team.applemango.runnerbe.shared.constant.DataStoreKey
-import team.applemango.runnerbe.shared.domain.flowExceptionMessage
-import team.applemango.runnerbe.shared.util.extension.dataStore
+import team.applemango.runnerbe.shared.domain.util.flowExceptionMessage
+import team.applemango.runnerbe.shared.extension.dataStore
 
 @Composable
 internal fun JobPicker(
@@ -72,32 +73,6 @@ internal fun JobPicker(
     }
 
     // FlowLayout 은 디자인이 안이쁘게 되서 수동으로 작성 함
-    /*FlowRow(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = (35 - 16).team.applemango.runnerbe.shared.util.extension.getDp),
-        mainAxisAlignment = FlowMainAxisAlignment.Center,
-        mainAxisSpacing = 12.team.applemango.runnerbe.shared.util.extension.getDp,
-        crossAxisAlignment = FlowCrossAxisAlignment.Center,
-        crossAxisSpacing = 6.team.applemango.runnerbe.shared.util.extension.getDp,
-    ) {
-        Job.values().forEach { job ->
-            ToggleButton(
-                target = job,
-                selectState = jobSelectState,
-                targetStringBuilder = { job.string }
-            ) {
-                jobSelectState = job
-                jobSelectChanged(true)
-                coroutineScope.launch {
-                    context.dataStore.edit { preferences ->
-                        preferences[DataStoreKey.Onboard.Job] = job.name // code
-                    }
-                }
-            }
-        }
-    }*/
-
     val jobLists = listOf(
         listOf(Job.PSV, Job.EDU, Job.DEV),
         listOf(Job.PSM, Job.DES),
@@ -117,6 +92,7 @@ internal fun JobPicker(
             LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 items(jobList) { job ->
                     ToggleButton(
+                        colors = RunnerbeToggleButtonDefaults.colors(),
                         target = job,
                         selectState = jobSelectState,
                         targetStringBuilder = { job.string }
