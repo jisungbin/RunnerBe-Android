@@ -32,13 +32,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.feature.home.write.R
 import team.applemango.runnerbe.feature.home.write.RunningItemWriteViewModel
 import team.applemango.runnerbe.feature.home.write.component.step.RunningItemWriteLevelOne
+import team.applemango.runnerbe.feature.home.write.component.step.RunningItemWriteLevelTwo
 import team.applemango.runnerbe.feature.home.write.constant.WritingLevel
 import team.applemango.runnerbe.shared.compose.component.RunningItemTypeToggleBar
+import team.applemango.runnerbe.shared.compose.extension.activityViewModel
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.compose.theme.animatedColorState
@@ -47,7 +48,7 @@ import team.applemango.runnerbe.shared.domain.extension.runIf
 @Composable
 internal fun RunningItemWrite(
     modifier: Modifier = Modifier,
-    vm: RunningItemWriteViewModel = viewModel(),
+    vm: RunningItemWriteViewModel = activityViewModel(),
 ) {
     val context = LocalContext.current
     val activity = context as Activity
@@ -82,9 +83,11 @@ internal fun RunningItemWrite(
                     .padding(16.dp)
                     .runIf(fieldsAllInputState[writingLevel.index]) {
                         clickable {
+                            @Suppress("UNUSED_EXPRESSION") // vm
                             when (writingLevel) {
                                 WritingLevel.One -> writingLevel = WritingLevel.Two // 다음 단계
                                 WritingLevel.Two -> { // 등록
+                                    // TODO
                                     vm
                                 }
                             }
@@ -130,6 +133,7 @@ internal fun RunningItemWrite(
                     )
                 }
                 WritingLevel.Two -> {
+                    RunningItemWriteLevelTwo()
                 }
             }
         }

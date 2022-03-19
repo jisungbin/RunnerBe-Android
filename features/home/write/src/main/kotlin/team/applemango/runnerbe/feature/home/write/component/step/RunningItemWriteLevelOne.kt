@@ -53,6 +53,7 @@ import com.google.maps.android.compose.MarkerInfoWindow
 import com.google.maps.android.compose.rememberCameraPositionState
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.feature.home.write.R
+import team.applemango.runnerbe.feature.home.write.RunningItemWriteViewModel
 import team.applemango.runnerbe.feature.home.write.component.RunningDatePickerDialog
 import team.applemango.runnerbe.feature.home.write.component.RunningTimePickerDialog
 import team.applemango.runnerbe.feature.home.write.datastore.DataStore
@@ -61,6 +62,7 @@ import team.applemango.runnerbe.feature.home.write.model.RunningTime
 import team.applemango.runnerbe.feature.home.write.util.DateCache
 import team.applemango.runnerbe.feature.home.write.util.extension.toAddress
 import team.applemango.runnerbe.feature.home.write.util.extension.toLatLng
+import team.applemango.runnerbe.shared.compose.extension.activityViewModel
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.extension.collectWithLifecycle
@@ -72,6 +74,7 @@ private val DefaultFieldShape = RoundedCornerShape(6.dp)
 internal fun RunningItemWriteLevelOne(
     modifier: Modifier = Modifier,
     runningItemType: RunningItemType,
+    vm: RunningItemWriteViewModel = activityViewModel(),
     fieldsAllInputStateChange: (state: Boolean) -> Unit,
 ) {
     val context = LocalContext.current
