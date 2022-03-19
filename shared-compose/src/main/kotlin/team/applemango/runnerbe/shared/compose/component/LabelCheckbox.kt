@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 fun LabelCheckbox(
     modifier: Modifier = Modifier,
     label: String,
-    textStyle: TextStyle = LocalTextStyle.current,
+    labelStyle: TextStyle = LocalTextStyle.current,
     checkboxStartPadding: Dp = 4.dp,
     checkboxColors: CheckboxColors = CheckboxDefaults.colors(),
     checkboxState: Boolean,
@@ -39,7 +39,7 @@ fun LabelCheckbox(
     ) {
         Text(
             text = label,
-            style = textStyle
+            style = labelStyle
         )
         Checkbox(
             modifier = Modifier.padding(start = checkboxStartPadding),
