@@ -56,6 +56,7 @@ import team.applemango.runnerbe.shared.compose.default.RunnerbeCheckBoxDefaults
 import team.applemango.runnerbe.shared.compose.default.RunnerbeToggleButtonDefaults
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
+import team.applemango.runnerbe.xml.rangepicker.RangePicker
 
 private const val DefaultMapCameraZoom = 7f
 
@@ -66,6 +67,7 @@ internal fun RunningItemWriteLevelTwo(
 ) {
 
     var allAgeCheckState by remember { mutableStateOf(false) }
+    var ageRange = remember { 30f..40f }
     var genderSelectState by remember { mutableStateOf<Gender?>(null) }
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(
@@ -215,6 +217,15 @@ internal fun RunningItemWriteLevelTwo(
             },
             checkboxColors = RunnerbeCheckBoxDefaults.colors(),
             textStyle = Typography.Body12R.copy(color = ColorAsset.G3_5)
+        )
+        RangePicker( // TODO: default colors
+            modifier = Modifier.padding(top = 12.dp),
+            range = 20f..65f,
+            value = ageRange,
+            step = 5f,
+            onValueChange = { newAgeRange ->
+                ageRange = newAgeRange
+            }
         )
     }
 }
