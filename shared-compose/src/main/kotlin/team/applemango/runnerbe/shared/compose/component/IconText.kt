@@ -26,12 +26,12 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun LabelText(
+fun IconText(
     modifier: Modifier = Modifier,
     @DrawableRes iconRes: Int,
     iconTint: Color = Color.Unspecified,
     iconSize: Dp = 24.dp,
-    label: String,
+    text: String,
     textStyle: TextStyle = LocalTextStyle.current,
     labelStartPadding: Dp = 4.dp,
 ) {
@@ -47,7 +47,7 @@ fun LabelText(
         )
         Text(
             modifier = Modifier.padding(start = labelStartPadding),
-            text = label,
+            text = text,
             style = textStyle
         )
     }
