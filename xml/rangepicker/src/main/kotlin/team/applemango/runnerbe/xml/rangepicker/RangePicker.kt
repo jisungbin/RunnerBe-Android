@@ -28,6 +28,7 @@ data class Track(
     val colorActive: Color = Color.Black,
     val colorInactive: Color = Color.Gray,
     val height: Dp = 4.dp,
+    val step: Float = 0f,
 )
 
 @Immutable
@@ -49,7 +50,6 @@ fun RangePicker(
     modifier: Modifier = Modifier,
     range: FloatRange,
     value: FloatRange,
-    step: Float,
     trackOption: Track = Track(),
     thumbOption: Thumb = Thumb(),
     tickOption: Tick = Tick(),
@@ -62,7 +62,6 @@ fun RangePicker(
                 context = context,
                 range = range,
                 value = value,
-                step = step,
                 trackOption = trackOption,
                 thumbOption = thumbOption,
                 tickOption = tickOption,
@@ -76,7 +75,6 @@ private fun RangeSlider(
     context: Context,
     range: FloatRange,
     value: FloatRange,
-    step: Float,
     trackOption: Track = Track(),
     thumbOption: Thumb = Thumb(),
     tickOption: Tick = Tick(),
@@ -85,7 +83,7 @@ private fun RangeSlider(
     valueFrom = range.start
     valueTo = range.endInclusive
     values = listOf(value.start, value.endInclusive)
-    stepSize = step
+    stepSize = trackOption.step
     trackActiveTintList = ColorStateList.valueOf(trackOption.colorActive.toArgb())
     trackInactiveTintList = ColorStateList.valueOf(trackOption.colorInactive.toArgb())
     trackHeight = trackOption.height.value.toInt()
