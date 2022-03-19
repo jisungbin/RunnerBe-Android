@@ -61,9 +61,9 @@ import team.applemango.runnerbe.shared.compose.component.RunnerbeDialog
 import team.applemango.runnerbe.shared.compose.extension.presentationDrawableOf
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
-import team.applemango.runnerbe.shared.constant.DataStoreKey
-import team.applemango.runnerbe.shared.extension.changeActivityWithAnimation
-import team.applemango.runnerbe.shared.extension.dataStore
+import team.applemango.runnerbe.shared.android.constant.DataStoreKey
+import team.applemango.runnerbe.shared.android.extension.changeActivityWithAnimation
+import team.applemango.runnerbe.shared.android.extension.dataStore
 import team.applemango.runnerbe.util.DFMLoginActivityAlias
 import team.applemango.runnerbe.util.MainActivityAlias
 

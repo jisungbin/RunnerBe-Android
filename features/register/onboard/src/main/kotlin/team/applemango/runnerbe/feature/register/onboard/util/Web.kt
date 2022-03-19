@@ -16,7 +16,7 @@ import androidx.core.net.toUri
 import io.github.jisungbin.logeukes.LoggerType
 import io.github.jisungbin.logeukes.logeukes
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
-import team.applemango.runnerbe.shared.extension.toast
+import team.applemango.runnerbe.shared.android.extension.toast
 
 internal object Web {
     enum class Link(val string: String) {

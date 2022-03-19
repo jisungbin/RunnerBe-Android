@@ -22,7 +22,7 @@ import team.applemango.runnerbe.domain.runningitem.filter.KeywordFilter
 import team.applemango.runnerbe.domain.runningitem.filter.RunningItemFilter
 import team.applemango.runnerbe.domain.runningitem.model.common.Locate
 import team.applemango.runnerbe.domain.runningitem.usecase.LoadRunningItemsUseCase
-import team.applemango.runnerbe.shared.base.BaseViewModel
+import team.applemango.runnerbe.shared.android.base.BaseViewModel
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
 import javax.inject.Inject
 import kotlin.time.ExperimentalTime

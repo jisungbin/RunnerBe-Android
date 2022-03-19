@@ -42,16 +42,16 @@ import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.di.module.UseCaseModule
 import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterSideEffect
-import team.applemango.runnerbe.shared.base.WindowInsetsActivity
+import team.applemango.runnerbe.shared.android.base.WindowInsetsActivity
 import team.applemango.runnerbe.shared.compose.extension.verticalInsetsPadding
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
-import team.applemango.runnerbe.shared.constant.DataStoreKey
+import team.applemango.runnerbe.shared.android.constant.DataStoreKey
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
-import team.applemango.runnerbe.shared.extension.collectWithLifecycle
-import team.applemango.runnerbe.shared.extension.dataStore
-import team.applemango.runnerbe.shared.extension.toast
+import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
+import team.applemango.runnerbe.shared.android.extension.dataStore
+import team.applemango.runnerbe.shared.android.extension.toast
 
 class OnboardActivity : WindowInsetsActivity() {
 

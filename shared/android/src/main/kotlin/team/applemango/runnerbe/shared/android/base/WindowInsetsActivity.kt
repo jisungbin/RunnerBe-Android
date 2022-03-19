@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.shared.base
+package team.applemango.runnerbe.shared.android.base
 
 import android.os.Bundle
 import android.view.WindowManager
@@ -16,8 +16,8 @@ import androidx.activity.ComponentActivity
 import androidx.core.view.WindowCompat
 import io.github.jisungbin.logeukes.LoggerType
 import io.github.jisungbin.logeukes.logeukes
+import team.applemango.runnerbe.shared.android.extension.toast
 import team.applemango.runnerbe.shared.domain.extension.toMessage
-import team.applemango.runnerbe.shared.extension.toast
 
 abstract class WindowInsetsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

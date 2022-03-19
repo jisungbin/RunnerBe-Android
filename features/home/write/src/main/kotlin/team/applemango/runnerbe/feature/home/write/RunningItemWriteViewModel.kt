@@ -20,7 +20,7 @@ import team.applemango.runnerbe.feature.home.write.model.DefaultRunningTime
 import team.applemango.runnerbe.feature.home.write.model.RunningDate
 import team.applemango.runnerbe.feature.home.write.model.RunningTime
 import team.applemango.runnerbe.feature.home.write.mvi.RunningItemWriteState
-import team.applemango.runnerbe.shared.base.BaseViewModel
+import team.applemango.runnerbe.shared.android.base.BaseViewModel
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
 import javax.inject.Inject
 

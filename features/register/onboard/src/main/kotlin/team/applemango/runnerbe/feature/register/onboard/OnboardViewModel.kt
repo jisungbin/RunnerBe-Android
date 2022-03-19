@@ -34,8 +34,8 @@ import team.applemango.runnerbe.domain.register.runnerbe.usecase.UserRegisterUse
 import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterSideEffect
-import team.applemango.runnerbe.shared.base.BaseViewModel
-import team.applemango.runnerbe.shared.constant.DataStoreKey
+import team.applemango.runnerbe.shared.android.base.BaseViewModel
+import team.applemango.runnerbe.shared.android.constant.DataStoreKey
 import team.applemango.runnerbe.shared.domain.util.flowExceptionMessage
 import kotlin.random.Random
 

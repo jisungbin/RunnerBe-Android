@@ -51,9 +51,9 @@ import team.applemango.runnerbe.shared.compose.extension.presentationDrawableOf
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.RunnerbeCheckBoxColors
 import team.applemango.runnerbe.shared.compose.theme.Typography
-import team.applemango.runnerbe.shared.constant.DataStoreKey
+import team.applemango.runnerbe.shared.android.constant.DataStoreKey
 import team.applemango.runnerbe.shared.domain.util.flowExceptionMessage
-import team.applemango.runnerbe.shared.extension.dataStore
+import team.applemango.runnerbe.shared.android.extension.dataStore
 
 private val VerticalPadding = 25.dp
 private val HorizontalPadding = 12.dp
