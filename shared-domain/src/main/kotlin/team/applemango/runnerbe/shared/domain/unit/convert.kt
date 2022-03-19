@@ -14,7 +14,7 @@ import android.content.res.Resources
 private val displayMetrics by lazy { Resources.getSystem().displayMetrics }
 
 val Int.dp
-    get() = Dp(this * displayMetrics.density + 0.5f)
+    get() = Dp(this * displayMetrics.density)
 
 val Int.sp
     get() = Sp(this * displayMetrics.scaledDensity)
