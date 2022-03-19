@@ -183,7 +183,10 @@ internal fun RunningItemWriteLevelOne(
                 style = Typography.Body12R.copy(color = ColorAsset.ErrorLight)
             )
         }
-        Divider(modifier = Modifier.padding(vertical = 20.dp), color = ColorAsset.G6)
+        Divider(
+            modifier = Modifier.padding(vertical = 20.dp),
+            color = ColorAsset.G6
+        )
         Text(
             text = stringResource(R.string.runningitemwrite_label_date),
             style = Typography.Body14R.copy(color = ColorAsset.G3_5)
@@ -236,7 +239,10 @@ internal fun RunningItemWriteLevelOne(
                 tint = Color.Unspecified
             )
         }
-        Divider(modifier = Modifier.padding(vertical = 20.dp), color = ColorAsset.G6)
+        Divider(
+            modifier = Modifier.padding(vertical = 20.dp),
+            color = ColorAsset.G6
+        )
         Text(
             text = stringResource(R.string.runningitemwrite_label_running_time),
             style = Typography.Body14R.copy(color = ColorAsset.G3_5)
@@ -289,7 +295,10 @@ internal fun RunningItemWriteLevelOne(
                 tint = Color.Unspecified
             )
         }
-        Divider(modifier = Modifier.padding(vertical = 20.dp), color = ColorAsset.G6)
+        Divider(
+            modifier = Modifier.padding(vertical = 20.dp),
+            color = ColorAsset.G6
+        )
         Row(
             horizontalArrangement = Arrangement.spacedBy(space = 4.dp),
             verticalAlignment = Alignment.CenterVertically
