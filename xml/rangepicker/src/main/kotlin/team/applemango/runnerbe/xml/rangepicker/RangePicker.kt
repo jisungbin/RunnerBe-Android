@@ -45,10 +45,29 @@ data class Tick(
 )
 
 @Composable
-fun RangePicker(modifier: Modifier = Modifier) {
+fun RangePicker(
+    modifier: Modifier = Modifier,
+    range: FloatRange,
+    value: FloatRange,
+    step: Float,
+    trackOption: Track = Track(),
+    thumbOption: Thumb = Thumb(),
+    tickOption: Tick = Tick(),
+    onValueChange: (range: FloatRange) -> Unit,
+) {
     AndroidView(
         modifier = modifier,
         factory = { context ->
+            RangeSlider(
+                context = context,
+                range = range,
+                value = value,
+                step = step,
+                trackOption = trackOption,
+                thumbOption = thumbOption,
+                tickOption = tickOption,
+                onValueChange = onValueChange
+            )
         }
     )
 }
@@ -61,29 +80,27 @@ private fun RangeSlider(
     trackOption: Track = Track(),
     thumbOption: Thumb = Thumb(),
     tickOption: Tick = Tick(),
-): RangeSlider {
-    RangeSlider(context).apply {
-        valueFrom = range.start
-        valueTo = range.endInclusive
-        values = listOf(value.start, value.endInclusive)
-        stepSize = step
-        trackActiveTintList = ColorStateList.valueOf(trackOption.colorActive.toArgb())
-        trackInactiveTintList = ColorStateList.valueOf(trackOption.colorInactive.toArgb())
-        trackHeight = trackOption.height.value.toInt()
-        thumbTintList = ColorStateList.valueOf(thumbOption.color.toArgb())
-        thumbRadius = thumbOption.radius.value.toInt()
-        thumbElevation = thumbOption.elevation.value
-        haloTintList = ColorStateList.valueOf(thumbOption.haloColor.toArgb())
-        haloRadius = thumbOption.haloRadius.value.toInt()
-        tickTintList = ColorStateList.valueOf(tickOption.color.toArgb())
-        addOnSliderTouchListener(object : RangeSlider.OnSliderTouchListener {
-            override fun onStartTrackingTouch(slider: RangeSlider) {
-                TODO("Not yet implemented")
-            }
+    onValueChange: (range: FloatRange) -> Unit,
+) = RangeSlider(context).apply {
+    valueFrom = range.start
+    valueTo = range.endInclusive
+    values = listOf(value.start, value.endInclusive)
+    stepSize = step
+    trackActiveTintList = ColorStateList.valueOf(trackOption.colorActive.toArgb())
+    trackInactiveTintList = ColorStateList.valueOf(trackOption.colorInactive.toArgb())
+    trackHeight = trackOption.height.value.toInt()
+    thumbTintList = ColorStateList.valueOf(thumbOption.color.toArgb())
+    thumbRadius = thumbOption.radius.value.toInt()
+    thumbElevation = thumbOption.elevation.value
+    haloTintList = ColorStateList.valueOf(thumbOption.haloColor.toArgb())
+    haloRadius = thumbOption.haloRadius.value.toInt()
+    tickTintList = ColorStateList.valueOf(tickOption.color.toArgb())
+    addOnSliderTouchListener(object : RangeSlider.OnSliderTouchListener {
+        override fun onStartTrackingTouch(slider: RangeSlider) {}
 
-            override fun onStopTrackingTouch(slider: RangeSlider) {
-                TODO("Not yet implemented")
-            }
-        })
-    }
+        override fun onStopTrackingTouch(slider: RangeSlider) {
+            val newValue = slider.values
+            onValueChange(newValue.first()..newValue.last())
+        }
+    })
 }
