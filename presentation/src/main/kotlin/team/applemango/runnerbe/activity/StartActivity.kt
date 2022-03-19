@@ -21,13 +21,15 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.jisungbin.logeukes.LoggerType
 import io.github.jisungbin.logeukes.logeukes
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
+import org.orbitmvi.orbit.viewmodel.observe
+import team.applemango.runnerbe.mvi.StartActivityState
 import team.applemango.runnerbe.shared.android.constant.DataStoreKey
 import team.applemango.runnerbe.shared.android.extension.changeActivityWithAnimation
 import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.android.extension.dataStore
+import team.applemango.runnerbe.shared.android.extension.launchedWhenCreated
 import team.applemango.runnerbe.shared.android.extension.toast
 import team.applemango.runnerbe.shared.domain.extension.toMessage
 import team.applemango.runnerbe.shared.domain.util.flowExceptionMessage
@@ -45,6 +47,7 @@ class StartActivity : AppCompatActivity() {
     private val vm: StartActivityViewModel by viewModels()
     private val rootView by lazy { LinearLayout(this) }
 
+    @Suppress("KotlinConstantConditions") // `!isSnsLoginDone` is always true
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
@@ -63,54 +66,54 @@ class StartActivity : AppCompatActivity() {
             .collectWithLifecycle(this) { exception ->
                 handleException(exception)
             }
+        vm.observe(
+            lifecycleOwner = this,
+            state = ::handleState
+        )
+        vm.loadAllRunningItems()
 
-        vm.loadAllRunningItems {
-            isReady = true
-        }
-
-        applicationContext
-            .dataStore
-            .data
-            .cancellable()
-            .catch { exception ->
-                vm.emitException(
-                    Exception(
-                        flowExceptionMessage(
-                            flowName = "StartActivity DataStore",
-                            exception = exception
+        launchedWhenCreated {
+            val preferences = applicationContext
+                .dataStore
+                .data
+                .catch { exception ->
+                    vm.emitException(
+                        Exception(
+                            flowExceptionMessage(
+                                flowName = "StartActivity DataStore",
+                                exception = exception
+                            )
                         )
                     )
-                )
+                }
+                .first()
+
+            val isSignedUser = preferences[DataStoreKey.Login.Jwt] != null
+            val isSnsLoginDone = preferences[DataStoreKey.Login.Uuid] != null
+            val isUnregistered = preferences[DataStoreKey.Onboard.Unregister] == true
+            if (isUnregistered) {
+                changeActivityWithAnimation<MainActivity>()
+                return@launchedWhenCreated
             }
-            .collectWithLifecycle(this) { preferences ->
-                val isSignedUser = preferences[DataStoreKey.Login.Jwt] != null
-                val isSnsLoginDone = preferences[DataStoreKey.Login.Uuid] != null
-                val isUnregistered = preferences[DataStoreKey.Onboard.Unregister] == true
-                if (isUnregistered) {
+            when {
+                isSignedUser -> { // JWT 존재
                     changeActivityWithAnimation<MainActivity>()
-                    return@collectWithLifecycle
+                    return@launchedWhenCreated
                 }
-                when {
-                    isSignedUser -> { // JWT 존재
-                        changeActivityWithAnimation<MainActivity>()
-                        return@collectWithLifecycle
-                    }
-                    isSnsLoginDone -> { // SNS 로그인 완료 -> 온보딩 페이지로 이동
-                        changeActivityWithAnimation<DFMOnboardActivityAlias>()
-                        return@collectWithLifecycle
-                    }
-                    !isSnsLoginDone -> { // SNS 로그인 하기 전
-                        changeActivityWithAnimation<DFMLoginActivityAlias>()
-                        return@collectWithLifecycle
-                    }
+                isSnsLoginDone -> { // SNS 로그인 완료 -> 온보딩 페이지로 이동
+                    changeActivityWithAnimation<DFMOnboardActivityAlias>()
+                    return@launchedWhenCreated
                 }
-                cancel("state check execute must be once.")
+                !isSnsLoginDone -> { // SNS 로그인 하기 전
+                    changeActivityWithAnimation<DFMLoginActivityAlias>()
+                    return@launchedWhenCreated
+                }
             }
+        }
 
         rootView.viewTreeObserver.addOnPreDrawListener(
             object : ViewTreeObserver.OnPreDrawListener {
                 override fun onPreDraw(): Boolean {
-                    logeukes(tag = "isReady") { isReady }
                     return if (isReady) {
                         rootView.viewTreeObserver.removeOnPreDrawListener(this)
                         true
@@ -134,6 +137,12 @@ class StartActivity : AppCompatActivity() {
                     start()
                 }
             }
+        }
+    }
+
+    private fun handleState(state: StartActivityState) {
+        if (state == StartActivityState.Loaded) {
+            isReady = true
         }
     }
 
