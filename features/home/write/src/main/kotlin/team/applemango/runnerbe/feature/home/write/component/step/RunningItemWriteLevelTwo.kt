@@ -50,9 +50,10 @@ import team.applemango.runnerbe.feature.home.write.R
 import team.applemango.runnerbe.feature.home.write.RunningItemWriteViewModel
 import team.applemango.runnerbe.feature.home.write.util.extension.toLatLng
 import team.applemango.runnerbe.shared.compose.component.LabelCheckbox
-import team.applemango.runnerbe.shared.compose.component.LabelText
+import team.applemango.runnerbe.shared.compose.component.IconText
 import team.applemango.runnerbe.shared.compose.component.ToggleButton
 import team.applemango.runnerbe.shared.compose.default.RunnerbeCheckBoxDefaults
+import team.applemango.runnerbe.shared.compose.default.RunnerbeRangePickerDefaults
 import team.applemango.runnerbe.shared.compose.default.RunnerbeToggleButtonDefaults
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
@@ -82,7 +83,7 @@ internal fun RunningItemWriteLevelTwo(
                 .fillMaxWidth()
                 .wrapContentHeight()
         ) {
-            val (map, runningItemType, title, informations) = createRefs()
+            val (map, runningItemType, title, information) = createRefs()
             GoogleMap(
                 modifier = Modifier
                     .constrainAs(map) {
@@ -154,23 +155,23 @@ internal fun RunningItemWriteLevelTwo(
                 style = Typography.Body16R.copy(color = ColorAsset.PrimaryDarker)
             )
             Row(
-                modifier = Modifier.constrainAs(informations) {
+                modifier = Modifier.constrainAs(information) {
                     start.linkTo(runningItemType.start)
                     bottom.linkTo(map.bottom)
                 },
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                LabelText(
+                IconText(
                     iconRes = R.drawable.ic_round_schedule_24,
                     iconSize = 18.dp,
-                    label = vm.runningDate.toString(),
+                    text = vm.runningDate.toString(),
                     textStyle = Typography.Body12R.copy(color = ColorAsset.G3)
                 )
-                LabelText(
+                IconText(
                     iconRes = R.drawable.ic_round_time_24,
                     iconSize = 18.dp,
-                    label = vm.runningTime.toString(withWhitespace = false),
+                    text = vm.runningTime.toString(withWhitespace = false),
                     textStyle = Typography.Body12R.copy(color = ColorAsset.G3)
                 )
             }
@@ -220,8 +221,12 @@ internal fun RunningItemWriteLevelTwo(
         )
         RangePicker( // TODO: default colors
             modifier = Modifier.padding(top = 12.dp),
+            enabled = !allAgeCheckState,
             range = 20f..65f,
             value = ageRange,
+            trackOption = RunnerbeRangePickerDefaults.track(),
+            thumbOption = RunnerbeRangePickerDefaults.thumb(),
+            tickOption = RunnerbeRangePickerDefaults.tick(),
             onValueChange = { newAgeRange ->
                 ageRange = newAgeRange
             }
