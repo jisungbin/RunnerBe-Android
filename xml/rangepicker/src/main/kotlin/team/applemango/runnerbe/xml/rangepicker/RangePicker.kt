@@ -24,7 +24,7 @@ import team.applemango.runnerbe.shared.domain.unit.dp
 private typealias FloatRange = ClosedFloatingPointRange<Float>
 
 @Immutable
-data class Track(
+data class RangePickerTrack(
     val colorActive: Color = Color.Black,
     val colorInactive: Color = Color.Gray,
     val height: Dp = 4.dp,
@@ -32,7 +32,7 @@ data class Track(
 )
 
 @Immutable
-data class Thumb(
+data class RangePickerThumb(
     val color: Color = Color.Black,
     val radius: Dp = 10.dp,
     val elevation: Dp = 1.dp,
@@ -41,7 +41,7 @@ data class Thumb(
 )
 
 @Immutable
-data class Tick(
+data class RangePickerTick(
     val color: Color = Color.DarkGray,
 )
 
@@ -50,9 +50,9 @@ fun RangePicker(
     modifier: Modifier = Modifier,
     range: FloatRange,
     value: FloatRange,
-    trackOption: Track = Track(),
-    thumbOption: Thumb = Thumb(),
-    tickOption: Tick = Tick(),
+    trackOption: RangePickerTrack = RangePickerTrack(),
+    thumbOption: RangePickerThumb = RangePickerThumb(),
+    tickOption: RangePickerTick = RangePickerTick(),
     onValueChange: (range: FloatRange) -> Unit,
 ) {
     AndroidView(
@@ -75,9 +75,9 @@ private fun RangeSlider(
     context: Context,
     range: FloatRange,
     value: FloatRange,
-    trackOption: Track = Track(),
-    thumbOption: Thumb = Thumb(),
-    tickOption: Tick = Tick(),
+    trackOption: RangePickerTrack = RangePickerTrack(),
+    thumbOption: RangePickerThumb = RangePickerThumb(),
+    tickOption: RangePickerTick = RangePickerTick(),
     onValueChange: (range: FloatRange) -> Unit,
 ) = RangeSlider(context).apply {
     valueFrom = range.start
