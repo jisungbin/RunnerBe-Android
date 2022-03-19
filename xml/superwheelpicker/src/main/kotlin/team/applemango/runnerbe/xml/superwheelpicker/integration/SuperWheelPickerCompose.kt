@@ -40,6 +40,7 @@ data class SuperWheelPickerTextStyle(
 @Composable
 fun SuperWheelPicker(
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     colors: SuperWheelPickerColors = SuperWheelPickerColors(),
     textStyle: SuperWheelPickerTextStyle = SuperWheelPickerTextStyle(),
     wrapSelectorWheel: Boolean = true,
@@ -62,6 +63,9 @@ fun SuperWheelPicker(
             onValueChange = onValueChange,
             onTextRender = onTextRender
         )
+    },
+    update = { superWheelPicker ->
+        superWheelPicker.isEnabled = enabled
     }
 )
 
