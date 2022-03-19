@@ -24,9 +24,9 @@ import org.orbitmvi.orbit.viewmodel.observe
 import team.applemango.runnerbe.feature.home.write.component.RunningItemWrite
 import team.applemango.runnerbe.feature.home.write.mvi.RunningItemWriteState
 import team.applemango.runnerbe.shared.android.base.WindowInsetsActivity
-import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.android.extension.finishWithAnimation
+import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 
 @AndroidEntryPoint
 class RunningItemWriteActivity : WindowInsetsActivity() {

@@ -30,13 +30,13 @@ import team.applemango.runnerbe.feature.register.snslogin.di.module.RepositoryMo
 import team.applemango.runnerbe.feature.register.snslogin.di.module.UseCaseModule
 import team.applemango.runnerbe.feature.register.snslogin.mvi.LoginSideEffect
 import team.applemango.runnerbe.shared.android.base.WindowInsetsActivity
-import team.applemango.runnerbe.shared.compose.extension.verticalInsetsPadding
-import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.android.constant.DataStoreKey
 import team.applemango.runnerbe.shared.android.extension.changeActivityWithAnimation
 import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.android.extension.dataStore
 import team.applemango.runnerbe.shared.android.extension.launchedWhenCreated
+import team.applemango.runnerbe.shared.compose.extension.verticalInsetsPadding
+import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.util.DFMOnboardActivityAlias
 import team.applemango.runnerbe.util.MainActivityAlias
 

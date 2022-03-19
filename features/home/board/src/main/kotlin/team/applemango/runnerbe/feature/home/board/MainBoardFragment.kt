@@ -28,9 +28,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import org.orbitmvi.orbit.viewmodel.observe
 import team.applemango.runnerbe.feature.home.board.component.MainBoardComposable
 import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState
+import team.applemango.runnerbe.shared.android.extension.toast
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
 import team.applemango.runnerbe.shared.domain.extension.toMessage
-import team.applemango.runnerbe.shared.android.extension.toast
 
 @AndroidEntryPoint
 class MainBoardFragment : Fragment() {
