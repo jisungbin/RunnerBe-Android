@@ -9,10 +9,12 @@
 
 package team.applemango.runnerbe.activity
 
-import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.github.jisungbin.logeukes.logeukes
-import kotlinx.coroutines.launch
+import javax.inject.Inject
+import org.orbitmvi.orbit.ContainerHost
+import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.reduce
+import org.orbitmvi.orbit.viewmodel.container
 import team.applemango.runnerbe.domain.constant.Gender
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.domain.runningitem.filter.AgeFilter
@@ -22,48 +24,41 @@ import team.applemango.runnerbe.domain.runningitem.filter.KeywordFilter
 import team.applemango.runnerbe.domain.runningitem.filter.RunningItemFilter
 import team.applemango.runnerbe.domain.runningitem.model.common.Locate
 import team.applemango.runnerbe.domain.runningitem.usecase.LoadRunningItemsUseCase
+import team.applemango.runnerbe.mvi.StartActivityState
 import team.applemango.runnerbe.shared.android.base.BaseViewModel
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
-import javax.inject.Inject
-import kotlin.time.ExperimentalTime
-import kotlin.time.measureTime
 
 @HiltViewModel
 internal class StartActivityViewModel @Inject constructor(
     private val loadRunningItemsUseCase: LoadRunningItemsUseCase,
-) : BaseViewModel() {
+) : BaseViewModel(), ContainerHost<StartActivityState, Nothing> {
 
     private companion object {
         const val DefaultLocate = .0
     }
 
-    @OptIn(ExperimentalTime::class)
-    fun loadAllRunningItems(done: () -> Unit) = viewModelScope.launch {
-        logeukes(tag = "api call time") {
-            measureTime {
-                loadRunningItemsUseCase(
-                    itemType = RunningItemType.Before,
-                    includeEndItems = false,
-                    itemFilter = RunningItemFilter.Distance,
-                    distanceFilter = DistanceFilter.None,
-                    genderFilter = Gender.All,
-                    ageFilter = AgeFilter(min = null, max = null),
-                    jobFilter = JobFilter.None,
-                    locate = Locate(
-                        address = EmptyString,
-                        latitude = DefaultLocate,
-                        longitude = DefaultLocate
-                    ),
-                    keywordFilter = KeywordFilter.None,
-                    useCaching = true
-                ).onSuccess {
-                    logeukes { "done!" }
-                    done()
-                }.onFailure { exception ->
-                    logeukes { "exception!" }
-                    emitException(exception)
-                }
+    override val container = container<StartActivityState, Nothing>(StartActivityState.None)
+
+    fun loadAllRunningItems() = intent {
+        loadRunningItemsUseCase(
+            itemType = RunningItemType.Before,
+            includeEndItems = false,
+            itemFilter = RunningItemFilter.Distance,
+            distanceFilter = DistanceFilter.None,
+            genderFilter = Gender.All,
+            ageFilter = AgeFilter(min = null, max = null),
+            jobFilter = JobFilter.None,
+            locate = Locate(
+                address = EmptyString, latitude = DefaultLocate, longitude = DefaultLocate
+            ),
+            keywordFilter = KeywordFilter.None,
+            useCaching = true
+        ).onSuccess {
+            reduce {
+                StartActivityState.Loaded
             }
+        }.onFailure { exception ->
+            emitException(exception)
         }
     }
 }
