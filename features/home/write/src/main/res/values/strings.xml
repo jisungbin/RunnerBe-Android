@@ -30,6 +30,9 @@
     <string name="runningitemwrite_placeholder_title">ex) A 직군 모여라, 묵언 러닝 하실 분</string>
     <string name="runningitemwrite_placeholder_message">함께할 러너들에게 하실 말씀이 있나요?</string>
 
-    <string name="runningitemwrite_error_max_title_length">제목은 최대 30자까지 가능해요!</string>
     <string name="runningitemwrite_hint_full_address_visibility">정확한 위치는 참여 러너에게만 보여요!</string>
+
+    <string name="runningitemwrite_error_max_title_length">제목은 최대 30자까지 가능해요!</string>
+    <string name="runningitemwrite_error_min_people_count">모임 인원은 최소 2명부터 가능해요!</string>
+    <string name="runningitemwrite_error_max_people_count">모임 인원은 최대 8명까지 가능해요!</string>
 </resources>
