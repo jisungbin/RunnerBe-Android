@@ -17,3 +17,8 @@ inline fun <reified T : Activity> Activity.changeActivityWithAnimation() {
     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     finish()
 }
+
+fun Activity.finishWithAnimation() {
+    finish()
+    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+}
