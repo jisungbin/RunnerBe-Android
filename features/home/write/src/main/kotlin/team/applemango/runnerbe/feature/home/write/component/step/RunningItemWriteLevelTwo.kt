@@ -222,7 +222,6 @@ internal fun RunningItemWriteLevelTwo(
             modifier = Modifier.padding(top = 12.dp),
             range = 20f..65f,
             value = ageRange,
-            step = 5f,
             onValueChange = { newAgeRange ->
                 ageRange = newAgeRange
             }
