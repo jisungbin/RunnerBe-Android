@@ -2,6 +2,15 @@
  * RunnerBe © 2022 Team AppleMango. all rights reserved.
  * RunnerBe license is under the MIT.
  *
+ * [RunningItemWrite.kt] created by Ji Sungbin on 22. 3. 19. 오후 11:20
+ *
+ * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
+ */
+
+/*
+ * RunnerBe © 2022 Team AppleMango. all rights reserved.
+ * RunnerBe license is under the MIT.
+ *
  * [RunningItemWrite.kt] created by Ji Sungbin on 22. 3. 18. 오전 6:41
  *
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
@@ -16,6 +25,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.Icon
@@ -133,7 +143,9 @@ internal fun RunningItemWrite(
                     )
                 }
                 WritingLevel.Two -> {
-                    RunningItemWriteLevelTwo()
+                    RunningItemWriteLevelTwo(
+                        modifier = Modifier.imePadding() // include TextField at bottom
+                    )
                 }
             }
         }

@@ -33,8 +33,7 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import io.github.jisungbin.logeukes.logeukes
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.cancellable
+import kotlinx.coroutines.flow.first
 import org.orbitmvi.orbit.viewmodel.observe
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.component.OnboardRouter
@@ -70,7 +69,7 @@ class OnboardActivity : WindowInsetsActivity() {
         }
     }
 
-    @OptIn(ExperimentalAnimationApi::class)
+    @OptIn(ExperimentalAnimationApi::class) // rememberAnimatedNavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -103,12 +102,7 @@ class OnboardActivity : WindowInsetsActivity() {
                     }
                 }
                 // 이메일 인증 임시 비활성화
-                applicationContext.dataStore.data.collectWithLifecycle(
-                    lifecycleOwner = this@OnboardActivity,
-                    builder = {
-                        cancellable()
-                    }
-                ) { preferences ->
+                applicationContext.dataStore.data.first().let { preferences ->
                     val terms = preferences[DataStoreKey.Onboard.TermsAllCheck]
                     val year = preferences[DataStoreKey.Onboard.Year]
                     val gender = preferences[DataStoreKey.Onboard.Gender]
@@ -137,7 +131,6 @@ class OnboardActivity : WindowInsetsActivity() {
                         }*/
                         navController.navigate(Step.values()[lastStepIndex].name)
                     }
-                    cancel("step restore execute must be once.")
                 }
             }
 

@@ -30,7 +30,10 @@ abstract class WindowInsetsActivity : ComponentActivity() {
     }
 
     fun basicExceptionHandler(exception: Throwable) {
-        toast(exception.toMessage(), Toast.LENGTH_LONG)
+        toast(
+            message = exception.toMessage(),
+            length = Toast.LENGTH_LONG
+        )
         logeukes(type = LoggerType.E) { exception }
     }
 }
