@@ -37,6 +37,7 @@ object Dependencies {
     object EachUi {
         const val Browser = "androidx.browser:browser:${Versions.Ui.Browser}"
         const val PhotoEditor = "com.burhanrashid52:photoeditor:${Versions.Ui.PhotoEditor}"
+        const val Material = "com.google.android.material:material:${Versions.Ui.Material}"
         const val ConstraintLayout =
             "androidx.constraintlayout:constraintlayout:${Versions.Ui.ConstraintLayout}"
     }
@@ -66,7 +67,6 @@ object Dependencies {
     val Ui = listOf(
         "androidx.appcompat:appcompat:${Versions.Ui.AppCompat}",
         "androidx.core:core-splashscreen:${Versions.Ui.Splash}",
-        "com.google.android.material:material:${Versions.Ui.Material}",
         "com.google.android.gms:play-services-oss-licenses:${Versions.OssLicense.Main}"
     )
 

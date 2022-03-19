@@ -26,4 +26,5 @@ object ProjectConstants {
     const val RegisterOnboard = ":features:register:onboard"
     const val XmlSuperWheelPicker = ":xml:superwheelpicker"
     const val XmlPhotoEditor = ":xml:photoeditor"
+    const val XmlRangePicker = ":xml:rangepicker"
 }
