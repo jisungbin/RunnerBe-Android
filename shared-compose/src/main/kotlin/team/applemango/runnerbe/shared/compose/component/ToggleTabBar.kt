@@ -72,8 +72,8 @@ fun <T> ToggleTabBar(
     require(toggleTopBarItems.isNotEmpty()) { "topBarItems size must be not zero." }
     var selectedItemState by remember { mutableStateOf(toggleTopBarItems.first().id) }
 
-    @Composable
     @Stable
+    @Composable
     fun selectedTextStyle(itemId: T) = when (selectedItemState == itemId) {
         true -> activateTextStyle
         else -> inactivateTextStyle
