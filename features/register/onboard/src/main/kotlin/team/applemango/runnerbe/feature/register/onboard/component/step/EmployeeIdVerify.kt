@@ -53,13 +53,13 @@ import com.skydoves.landscapist.coil.CoilImage
 import com.skydoves.landscapist.rememberDrawablePainter
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.component.OnboardContent
+import team.applemango.runnerbe.shared.android.extension.toast
 import team.applemango.runnerbe.shared.compose.component.RunnerbeDialog
 import team.applemango.runnerbe.shared.compose.extension.noRippleClickable
 import team.applemango.runnerbe.shared.compose.extension.parseHtml
 import team.applemango.runnerbe.shared.compose.extension.presentationDrawableOf
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
-import team.applemango.runnerbe.shared.android.extension.toast
 
 private val PhotoContainerModifier = Modifier
     .fillMaxWidth()

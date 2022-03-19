@@ -57,13 +57,13 @@ import team.applemango.runnerbe.feature.register.onboard.component.step.JobPicke
 import team.applemango.runnerbe.feature.register.onboard.component.step.TermsTable
 import team.applemango.runnerbe.feature.register.onboard.component.step.YearPicker
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
+import team.applemango.runnerbe.shared.android.constant.DataStoreKey
+import team.applemango.runnerbe.shared.android.extension.changeActivityWithAnimation
+import team.applemango.runnerbe.shared.android.extension.dataStore
 import team.applemango.runnerbe.shared.compose.component.RunnerbeDialog
 import team.applemango.runnerbe.shared.compose.extension.presentationDrawableOf
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
-import team.applemango.runnerbe.shared.android.constant.DataStoreKey
-import team.applemango.runnerbe.shared.android.extension.changeActivityWithAnimation
-import team.applemango.runnerbe.shared.android.extension.dataStore
 import team.applemango.runnerbe.util.DFMLoginActivityAlias
 import team.applemango.runnerbe.util.MainActivityAlias
 
