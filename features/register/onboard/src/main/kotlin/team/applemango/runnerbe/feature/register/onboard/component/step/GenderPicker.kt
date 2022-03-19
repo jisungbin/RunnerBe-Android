@@ -33,9 +33,9 @@ import team.applemango.runnerbe.domain.constant.Gender
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.shared.compose.component.ToggleButton
 import team.applemango.runnerbe.shared.compose.default.RunnerbeToggleButtonDefaults
-import team.applemango.runnerbe.shared.constant.DataStoreKey
+import team.applemango.runnerbe.shared.android.constant.DataStoreKey
 import team.applemango.runnerbe.shared.domain.util.flowExceptionMessage
-import team.applemango.runnerbe.shared.extension.dataStore
+import team.applemango.runnerbe.shared.android.extension.dataStore
 
 @Composable
 internal fun GenderPicker(

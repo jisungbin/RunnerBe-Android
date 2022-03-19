@@ -47,13 +47,13 @@ import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.util.Web
+import team.applemango.runnerbe.shared.android.constant.DataStoreKey
+import team.applemango.runnerbe.shared.android.extension.dataStore
+import team.applemango.runnerbe.shared.compose.default.RunnerbeCheckBoxDefaults
 import team.applemango.runnerbe.shared.compose.extension.presentationDrawableOf
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
-import team.applemango.runnerbe.shared.compose.theme.RunnerbeCheckBoxColors
 import team.applemango.runnerbe.shared.compose.theme.Typography
-import team.applemango.runnerbe.shared.constant.DataStoreKey
 import team.applemango.runnerbe.shared.domain.util.flowExceptionMessage
-import team.applemango.runnerbe.shared.extension.dataStore
 
 private val VerticalPadding = 25.dp
 private val HorizontalPadding = 12.dp
@@ -144,7 +144,7 @@ internal fun TermsTable(
                 onCheckedChange = {
                     toggleAllTermsCheck()
                 },
-                colors = RunnerbeCheckBoxColors
+                colors = RunnerbeCheckBoxDefaults.colors()
             )
             Text(
                 modifier = Modifier.padding(start = HorizontalPadding),
@@ -195,7 +195,7 @@ internal fun TermsTable(
                                 termsCheckState[number] = !termsCheckState[number]
                                 checkAllChecked()
                             },
-                            colors = RunnerbeCheckBoxColors
+                            colors = RunnerbeCheckBoxDefaults.colors()
                         )
                         Text(
                             modifier = Modifier.padding(start = HorizontalPadding),

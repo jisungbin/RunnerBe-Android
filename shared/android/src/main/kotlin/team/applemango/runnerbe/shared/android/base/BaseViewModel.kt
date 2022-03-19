@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.shared.base
+package team.applemango.runnerbe.shared.android.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

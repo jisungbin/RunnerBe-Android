@@ -65,7 +65,7 @@ import team.applemango.runnerbe.feature.home.write.util.extension.toLatLng
 import team.applemango.runnerbe.shared.compose.extension.activityViewModel
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
-import team.applemango.runnerbe.shared.extension.collectWithLifecycle
+import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
 
 private const val DefaultMapCameraZoom = 7f
 private val DefaultFieldShape = RoundedCornerShape(6.dp)

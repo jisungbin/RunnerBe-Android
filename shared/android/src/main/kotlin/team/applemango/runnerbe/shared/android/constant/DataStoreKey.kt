@@ -7,20 +7,20 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.shared.constant
+package team.applemango.runnerbe.shared.android.constant
 
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
-import team.applemango.runnerbe.shared.constant.DataStoreKey.Login.Jwt
-import team.applemango.runnerbe.shared.constant.DataStoreKey.Login.RegisterDone
-import team.applemango.runnerbe.shared.constant.DataStoreKey.Login.Uuid
-import team.applemango.runnerbe.shared.constant.DataStoreKey.Onboard.Email
-import team.applemango.runnerbe.shared.constant.DataStoreKey.Onboard.Gender
-import team.applemango.runnerbe.shared.constant.DataStoreKey.Onboard.Job
-import team.applemango.runnerbe.shared.constant.DataStoreKey.Onboard.TermsAllCheck
-import team.applemango.runnerbe.shared.constant.DataStoreKey.Onboard.Unregister
-import team.applemango.runnerbe.shared.constant.DataStoreKey.Onboard.Year
+import team.applemango.runnerbe.shared.android.constant.DataStoreKey.Login.Jwt
+import team.applemango.runnerbe.shared.android.constant.DataStoreKey.Login.RegisterDone
+import team.applemango.runnerbe.shared.android.constant.DataStoreKey.Login.Uuid
+import team.applemango.runnerbe.shared.android.constant.DataStoreKey.Onboard.Email
+import team.applemango.runnerbe.shared.android.constant.DataStoreKey.Onboard.Gender
+import team.applemango.runnerbe.shared.android.constant.DataStoreKey.Onboard.Job
+import team.applemango.runnerbe.shared.android.constant.DataStoreKey.Onboard.TermsAllCheck
+import team.applemango.runnerbe.shared.android.constant.DataStoreKey.Onboard.Unregister
+import team.applemango.runnerbe.shared.android.constant.DataStoreKey.Onboard.Year
 
 /**
  * DataStore Key 모음

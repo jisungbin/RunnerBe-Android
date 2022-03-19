@@ -67,7 +67,7 @@ android {
 dependencies {
     val features = listOf(
         ProjectConstants.Mail,
-        ProjectConstants.Shared,
+        ProjectConstants.SharedAndroid,
         ProjectConstants.MyPage,
         ProjectConstants.HomeBoard
     )

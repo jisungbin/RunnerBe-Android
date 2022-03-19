@@ -7,6 +7,6 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.shared.constant
+package team.applemango.runnerbe.shared.android.constant
 
 const val BottomNavigationBarHeight = 56
