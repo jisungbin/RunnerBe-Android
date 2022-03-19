@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -40,7 +41,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapUiSettings
@@ -48,15 +48,19 @@ import com.google.maps.android.compose.rememberCameraPositionState
 import team.applemango.runnerbe.domain.constant.Gender
 import team.applemango.runnerbe.feature.home.write.R
 import team.applemango.runnerbe.feature.home.write.RunningItemWriteViewModel
+import team.applemango.runnerbe.feature.home.write.component.CircleBorderText
+import team.applemango.runnerbe.feature.home.write.constant.PeopleCountErrorType
 import team.applemango.runnerbe.feature.home.write.util.extension.toLatLng
-import team.applemango.runnerbe.shared.compose.component.LabelCheckbox
 import team.applemango.runnerbe.shared.compose.component.IconText
+import team.applemango.runnerbe.shared.compose.component.LabelCheckbox
 import team.applemango.runnerbe.shared.compose.component.ToggleButton
 import team.applemango.runnerbe.shared.compose.default.RunnerbeCheckBoxDefaults
 import team.applemango.runnerbe.shared.compose.default.RunnerbeRangePickerDefaults
 import team.applemango.runnerbe.shared.compose.default.RunnerbeToggleButtonDefaults
+import team.applemango.runnerbe.shared.compose.extension.activityViewModel
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
+import team.applemango.runnerbe.shared.compose.theme.animatedColorState
 import team.applemango.runnerbe.xml.rangepicker.RangePicker
 
 private const val DefaultMapCameraZoom = 7f
@@ -64,12 +68,21 @@ private const val DefaultMapCameraZoom = 7f
 @Composable
 internal fun RunningItemWriteLevelTwo(
     modifier: Modifier = Modifier,
-    vm: RunningItemWriteViewModel = viewModel(),
+    vm: RunningItemWriteViewModel = activityViewModel(),
 ) {
-
-    var allAgeCheckState by remember { mutableStateOf(false) }
     var ageRange = remember { 30f..40f }
+
     var genderSelectState by remember { mutableStateOf<Gender?>(null) }
+    var allAgeCheckState by remember { mutableStateOf(false) }
+    var peopleCountState by remember { mutableStateOf(4) }
+    var peopleCountErrorTypeState by remember { mutableStateOf(PeopleCountErrorType.None) }
+
+    val circleBorderTextColorState = animatedColorState(
+        target = peopleCountErrorTypeState,
+        selectState = PeopleCountErrorType.None,
+        defaultColor = ColorAsset.G4_5,
+        selectedColor = ColorAsset.G3_5
+    )
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(
             vm.locate.toLatLng(),
@@ -209,16 +222,26 @@ internal fun RunningItemWriteLevelTwo(
             }
         }
         Divider(modifier = Modifier.padding(vertical = 20.dp), color = ColorAsset.G6)
-        LabelCheckbox(
+        Row(
             modifier = Modifier.fillMaxWidth(),
-            label = stringResource(R.string.runningitemwrite_label_all_age_range),
-            checkboxState = allAgeCheckState,
-            checkboxStateChange = { state ->
-                allAgeCheckState = state
-            },
-            checkboxColors = RunnerbeCheckBoxDefaults.colors(),
-            textStyle = Typography.Body12R.copy(color = ColorAsset.G3_5)
-        )
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = stringResource(R.string.runningitemwrite_label_age_range),
+                style = Typography.Body14R.copy(color = ColorAsset.G3_5)
+            )
+            LabelCheckbox(
+                modifier = Modifier.fillMaxWidth(),
+                label = stringResource(R.string.runningitemwrite_label_all_age_range),
+                labelStyle = Typography.Body12R.copy(color = ColorAsset.G3_5),
+                checkboxState = allAgeCheckState,
+                checkboxStateChange = { state ->
+                    allAgeCheckState = state
+                },
+                checkboxColors = RunnerbeCheckBoxDefaults.colors(),
+            )
+        }
         RangePicker( // TODO: default colors
             modifier = Modifier.padding(top = 12.dp),
             enabled = !allAgeCheckState,
@@ -231,5 +254,56 @@ internal fun RunningItemWriteLevelTwo(
                 ageRange = newAgeRange
             }
         )
+        Divider(modifier = Modifier.padding(vertical = 20.dp), color = ColorAsset.G6)
+        Text(
+            text = stringResource(R.string.runningitemwrite_label_people_count),
+            style = Typography.Body14R.copy(color = ColorAsset.G3_5)
+        )
+        Box(
+            modifier = Modifier
+                .padding(top = 12.dp)
+                .fillMaxWidth()
+                .wrapContentHeight(),
+            contentAlignment = Alignment.Center
+        ) {
+            Row(
+                modifier = Modifier.wrapContentSize(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(32.dp)
+            ) {
+                CircleBorderText(
+                    enabled = peopleCountErrorTypeState != PeopleCountErrorType.Min,
+                    text = "-",
+                    style = Typography.Title18R.copy(color = circleBorderTextColorState),
+                    borderColor = circleBorderTextColorState,
+                    onClick = {
+                        peopleCountErrorTypeState = if (peopleCountState > 2) {
+                            peopleCountState--
+                            PeopleCountErrorType.None
+                        } else {
+                            PeopleCountErrorType.Min
+                        }
+                    }
+                )
+                Text(
+                    text = peopleCountState.toString(),
+                    style = Typography.EngBody16R.copy(color = ColorAsset.Primary)
+                )
+                CircleBorderText(
+                    enabled = peopleCountErrorTypeState != PeopleCountErrorType.Max,
+                    text = "+",
+                    style = Typography.Title18R.copy(color = circleBorderTextColorState),
+                    borderColor = circleBorderTextColorState,
+                    onClick = {
+                        peopleCountErrorTypeState = if (peopleCountState < 8) {
+                            peopleCountState++
+                            PeopleCountErrorType.None
+                        } else {
+                            PeopleCountErrorType.Max
+                        }
+                    }
+                )
+            }
+        }
     }
 }
