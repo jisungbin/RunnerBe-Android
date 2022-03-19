@@ -26,6 +26,7 @@ import team.applemango.runnerbe.feature.home.write.mvi.RunningItemWriteState
 import team.applemango.runnerbe.shared.base.WindowInsetsActivity
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.extension.collectWithLifecycle
+import team.applemango.runnerbe.shared.extension.finishWithAnimation
 
 @AndroidEntryPoint
 class RunningItemWriteActivity : WindowInsetsActivity() {
@@ -62,9 +63,8 @@ class RunningItemWriteActivity : WindowInsetsActivity() {
     }
 
     private fun handleRunningItemWriteState(state: RunningItemWriteState) {
-        when (state) {
-            RunningItemWriteState.None -> {}
-            RunningItemWriteState.Done -> {}
+        if (state == RunningItemWriteState.Done) {
+            finishWithAnimation()
         }
     }
 }
