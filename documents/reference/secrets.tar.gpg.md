@@ -6,4 +6,6 @@ tar cvf secrets.tar presentation/google-services.json data/src/main/kotlin/team/
 
 # 2. GPG 암호화
 
+```
 gpg -c secrets.tar
+```
