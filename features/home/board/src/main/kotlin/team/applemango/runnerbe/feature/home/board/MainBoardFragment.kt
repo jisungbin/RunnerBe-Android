@@ -13,13 +13,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.catch
@@ -30,6 +36,7 @@ import team.applemango.runnerbe.shared.android.extension.basicExceptionHandler
 import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.android.extension.setWindowInsets
 import team.applemango.runnerbe.shared.android.extension.toast
+import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
 
 @AndroidEntryPoint
@@ -45,8 +52,17 @@ class MainBoardFragment : Fragment() {
     ) = ComposeView(requireActivity()).apply {
         setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
         setContent {
+            val systemUiController = rememberSystemUiController()
+
+            LaunchedEffect(Unit) {
+                systemUiController.setStatusBarColor(color = Color.Transparent)
+            }
+
             MainBoardComposable(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(brush = GradientAsset.BlackGradientBrush)
+                    .padding(16.dp),
                 isBookmarkPage = arguments?.getBoolean("bookmark") ?: false,
                 isEmptyState = isEmptyState.collectAsState().value
             )
