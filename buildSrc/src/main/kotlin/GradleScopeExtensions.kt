@@ -38,25 +38,28 @@ fun PluginDependenciesSpec.installLibraryDfmHiltTest(
 fun DependencyHandler.installSharedComposeOrbitHiltTest(
     isSharedModule: Boolean = false,
     excludeHilt: Boolean = false,
+    excludeCompose: Boolean = false,
     testNeeded: Boolean = false,
 ) {
+    implementation(Dependencies.Orbit.Main)
     if (!isSharedModule) {
         implementationProject(ProjectConstants.SharedAndroid)
-    }
-    implementation(Dependencies.Orbit.Main)
-    Dependencies.Compose.forEach(::implementation)
-    Dependencies.Debug.Compose.forEach(::debugImplementation)
-    implementationProject(ProjectConstants.SharedCompose)
-    if (testNeeded) {
-        add("testDebugImplementation", Dependencies.Test.JunitApi)
-        add("testDebugRuntimeOnly", Dependencies.Test.JunitEngine)
-        add("testDebugImplementation", Dependencies.Test.Hamcrest)
-        add("testDebugImplementation", Dependencies.Test.Coroutine)
-        // add("testDebugImplementation", Dependencies.Orbit.Test) (https://github.com/applemango-runnerbe/RunnerBe-Android/issues/84)
     }
     if (!excludeHilt) {
         implementation(Dependencies.Jetpack.Hilt)
         add("kapt", Dependencies.Compiler.Hilt)
+    }
+    if (!excludeCompose) {
+        Dependencies.Compose.forEach(::implementation)
+        Dependencies.Debug.Compose.forEach(::debugImplementation)
+        implementationProject(ProjectConstants.SharedCompose)
+    }
+    if (testNeeded) {
+        add("testImplementation", Dependencies.Test.JunitApi)
+        add("testRuntimeOnly", Dependencies.Test.JunitEngine)
+        add("testImplementation", Dependencies.Test.Hamcrest)
+        add("testImplementation", Dependencies.Test.Coroutine)
+        // add("testDebugImplementation", Dependencies.Orbit.Test) (https://github.com/applemango-runnerbe/RunnerBe-Android/issues/84)
     }
 }
 
