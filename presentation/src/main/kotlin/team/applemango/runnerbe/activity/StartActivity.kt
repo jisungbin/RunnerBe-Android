@@ -14,24 +14,20 @@ import android.os.Bundle
 import android.view.ViewTreeObserver
 import android.view.animation.AnticipateInterpolator
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import dagger.hilt.android.AndroidEntryPoint
-import io.github.jisungbin.logeukes.LoggerType
-import io.github.jisungbin.logeukes.logeukes
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import org.orbitmvi.orbit.viewmodel.observe
 import team.applemango.runnerbe.mvi.StartActivityState
 import team.applemango.runnerbe.shared.android.constant.DataStoreKey
+import team.applemango.runnerbe.shared.android.extension.basicExceptionHandler
 import team.applemango.runnerbe.shared.android.extension.changeActivityWithAnimation
 import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.android.extension.dataStore
 import team.applemango.runnerbe.shared.android.extension.launchedWhenCreated
-import team.applemango.runnerbe.shared.android.extension.toast
-import team.applemango.runnerbe.shared.domain.extension.toMessage
 import team.applemango.runnerbe.shared.domain.util.flowExceptionMessage
 import team.applemango.runnerbe.util.DFMLoginActivityAlias
 import team.applemango.runnerbe.util.DFMOnboardActivityAlias
@@ -61,10 +57,10 @@ class StartActivity : AppCompatActivity() {
 
         vm.exceptionFlow
             .catch { exception ->
-                handleException(exception)
+                basicExceptionHandler(exception)
             }
             .collectWithLifecycle(this) { exception ->
-                handleException(exception)
+                basicExceptionHandler(exception)
             }
         vm.observe(
             lifecycleOwner = this,
@@ -144,10 +140,5 @@ class StartActivity : AppCompatActivity() {
         if (state == StartActivityState.Loaded) {
             isReady = true
         }
-    }
-
-    private fun handleException(exception: Throwable) {
-        toast(exception.toMessage(), Toast.LENGTH_LONG)
-        logeukes(type = LoggerType.E) { exception }
     }
 }
