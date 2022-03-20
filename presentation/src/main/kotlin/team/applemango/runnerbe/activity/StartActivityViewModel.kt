@@ -10,7 +10,6 @@
 package team.applemango.runnerbe.activity
 
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.reduce
@@ -27,6 +26,7 @@ import team.applemango.runnerbe.domain.runningitem.usecase.LoadRunningItemsUseCa
 import team.applemango.runnerbe.mvi.StartActivityState
 import team.applemango.runnerbe.shared.android.base.BaseViewModel
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
+import javax.inject.Inject
 
 @HiltViewModel
 internal class StartActivityViewModel @Inject constructor(
