@@ -19,6 +19,7 @@
         android:id="@+id/cl_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fitsSystemWindows="false"
         tools:theme="@style/Theme.RunnerBe.Main">
 
         <androidx.fragment.app.FragmentContainerView
@@ -28,13 +29,15 @@
             android:layout_height="match_parent"
             app:defaultNavHost="true"
             app:navGraph="@navigation/main_navigation"
-            tools:background="@color/primary" />
+            tools:background="@color/primary"
+            tools:layout="@layout/browser_actions_context_menu_page" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bnv_menu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:backgroundTint="@color/G6"
+            app:elevation="0dp"
             app:itemIconTint="@null"
             app:itemRippleColor="@null"
             app:labelVisibilityMode="unlabeled"
@@ -42,6 +45,14 @@
             app:menu="@menu/main_menu"
             tools:background="@color/G6"
             tools:layout_height="56dp" />
+
+        <!--<View
+            android:id="@+id/view_navigationbar_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/G6"
+            app:layout_constraintBottom_toBottomOf="@+id/fcv_main"
+            tools:layout_height="50dp" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
