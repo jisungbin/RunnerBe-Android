@@ -48,12 +48,7 @@ android {
     }
 
     buildFeatures {
-        compose = true
         dataBinding = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = Versions.Compose.Main
     }
 
     dynamicFeatures.addAll(
@@ -88,5 +83,5 @@ dependencies {
     Dependencies.PresentationOnlyKtx.forEach(::implementation)
 
     debugImplementation(Dependencies.Debug.LeakCanary)
-    installSharedComposeOrbitHiltTest()
+    installSharedComposeOrbitHiltTest(excludeCompose = true)
 }

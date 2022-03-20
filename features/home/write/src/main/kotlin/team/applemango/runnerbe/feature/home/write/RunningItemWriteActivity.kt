@@ -10,6 +10,7 @@
 package team.applemango.runnerbe.feature.home.write
 
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
@@ -23,24 +24,26 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.orbitmvi.orbit.viewmodel.observe
 import team.applemango.runnerbe.feature.home.write.component.RunningItemWrite
 import team.applemango.runnerbe.feature.home.write.mvi.RunningItemWriteState
-import team.applemango.runnerbe.shared.android.base.WindowInsetsActivity
+import team.applemango.runnerbe.shared.android.extension.basicExceptionHandler
 import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.android.extension.finishWithAnimation
+import team.applemango.runnerbe.shared.android.extension.setWindowInsets
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 
 @AndroidEntryPoint
-class RunningItemWriteActivity : WindowInsetsActivity() {
+class RunningItemWriteActivity : ComponentActivity() {
 
     private val vm: RunningItemWriteViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setWindowInsets()
         setContent {
             val systemUiController = rememberSystemUiController()
 
             LaunchedEffect(Unit) {
-                systemUiController.setSystemBarsColor(Color.Transparent)
+                systemUiController.setSystemBarsColor(color = Color.Transparent)
                 vm.exceptionFlow.collectWithLifecycle(
                     lifecycleOwner = this@RunningItemWriteActivity,
                     action = { exception ->

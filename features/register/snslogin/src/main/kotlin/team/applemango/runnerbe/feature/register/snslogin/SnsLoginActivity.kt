@@ -10,6 +10,7 @@
 package team.applemango.runnerbe.feature.register.snslogin
 
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
@@ -29,18 +30,19 @@ import team.applemango.runnerbe.feature.register.snslogin.constant.LoginState
 import team.applemango.runnerbe.feature.register.snslogin.di.module.RepositoryModule
 import team.applemango.runnerbe.feature.register.snslogin.di.module.UseCaseModule
 import team.applemango.runnerbe.feature.register.snslogin.mvi.LoginSideEffect
-import team.applemango.runnerbe.shared.android.base.WindowInsetsActivity
 import team.applemango.runnerbe.shared.android.constant.DataStoreKey
+import team.applemango.runnerbe.shared.android.extension.basicExceptionHandler
 import team.applemango.runnerbe.shared.android.extension.changeActivityWithAnimation
 import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.android.extension.dataStore
 import team.applemango.runnerbe.shared.android.extension.launchedWhenCreated
+import team.applemango.runnerbe.shared.android.extension.setWindowInsets
 import team.applemango.runnerbe.shared.compose.extension.verticalInsetsPadding
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.util.DFMOnboardActivityAlias
 import team.applemango.runnerbe.util.MainActivityAlias
 
-class SnsLoginActivity : WindowInsetsActivity() {
+class SnsLoginActivity : ComponentActivity() {
 
     private val vm: SnsLoginViewModel by viewModels {
         object : ViewModelProvider.Factory {
@@ -60,6 +62,7 @@ class SnsLoginActivity : WindowInsetsActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setWindowInsets()
         vm.observe(lifecycleOwner = this, state = ::handleState, sideEffect = ::handleSideEffect)
         vm.exceptionFlow.collectWithLifecycle(this) { exception ->
             basicExceptionHandler(exception)
@@ -68,7 +71,7 @@ class SnsLoginActivity : WindowInsetsActivity() {
         setContent {
             val systemUiController = rememberSystemUiController()
             LaunchedEffect(Unit) {
-                systemUiController.setSystemBarsColor(Color.Transparent)
+                systemUiController.setSystemBarsColor(color = Color.Transparent)
             }
             SnsLoginScreen(
                 modifier = Modifier

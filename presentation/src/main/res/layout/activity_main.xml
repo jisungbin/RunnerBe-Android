@@ -2,6 +2,15 @@
   ~ RunnerBe © 2022 Team AppleMango. all rights reserved.
   ~ RunnerBe license is under the MIT.
   ~
+  ~ [activity_main.xml] created by Ji Sungbin on 22. 3. 20. 오후 11:11
+  ~
+  ~ Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
+  -->
+
+<!--
+  ~ RunnerBe © 2022 Team AppleMango. all rights reserved.
+  ~ RunnerBe license is under the MIT.
+  ~
   ~ [activity_main.xml] created by Ji Sungbin on 22. 3. 15. 오전 11:58
   ~
   ~ Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
@@ -19,7 +28,8 @@
         android:id="@+id/cl_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:theme="@style/Theme.RunnerBe.Main">
+        android:fitsSystemWindows="false"
+        tools:theme="@style/Theme.RunnerBe">
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fcv_main"
@@ -28,20 +38,30 @@
             android:layout_height="match_parent"
             app:defaultNavHost="true"
             app:navGraph="@navigation/main_navigation"
-            tools:background="@color/primary" />
+            tools:background="@color/primary"
+            tools:layout="@layout/browser_actions_context_menu_page" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bnv_menu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:backgroundTint="@color/G6"
+            app:elevation="0dp"
             app:itemIconTint="@null"
             app:itemRippleColor="@null"
             app:labelVisibilityMode="unlabeled"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/view_navigation_bar_color"
             app:menu="@menu/main_menu"
             tools:background="@color/G6"
             tools:layout_height="56dp" />
+
+        <View
+            android:id="@+id/view_navigation_bar_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/G6"
+            app:layout_constraintBottom_toBottomOf="@+id/fcv_main"
+            tools:layout_height="50dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

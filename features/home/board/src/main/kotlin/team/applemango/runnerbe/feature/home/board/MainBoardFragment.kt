@@ -2,6 +2,15 @@
  * RunnerBe © 2022 Team AppleMango. all rights reserved.
  * RunnerBe license is under the MIT.
  *
+ * [MainBoardFragment.kt] created by Ji Sungbin on 22. 3. 20. 오후 11:02
+ *
+ * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
+ */
+
+/*
+ * RunnerBe © 2022 Team AppleMango. all rights reserved.
+ * RunnerBe license is under the MIT.
+ *
  * [MainBoardFragment.kt] created by Ji Sungbin on 22. 3. 15. 오후 6:48
  *
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
@@ -13,24 +22,29 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
-import io.github.jisungbin.logeukes.LoggerType
-import io.github.jisungbin.logeukes.logeukes
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.catch
 import org.orbitmvi.orbit.viewmodel.observe
 import team.applemango.runnerbe.feature.home.board.component.MainBoardComposable
 import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState
+import team.applemango.runnerbe.shared.android.extension.basicExceptionHandler
+import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
+import team.applemango.runnerbe.shared.android.extension.setWindowInsets
 import team.applemango.runnerbe.shared.android.extension.toast
+import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
-import team.applemango.runnerbe.shared.domain.extension.toMessage
 
 @AndroidEntryPoint
 class MainBoardFragment : Fragment() {
@@ -42,26 +56,32 @@ class MainBoardFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View {
-        return ComposeView(requireActivity()).apply {
-            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-            setContent {
-                MainBoardComposable(
-                    modifier = Modifier.fillMaxSize(),
-                    isBookmarkPage = arguments?.getBoolean("bookmark") ?: false,
-                    vm = vm,
-                    isEmptyState = isEmptyState.collectAsState().value
-                )
-            }
+    ) = ComposeView(requireActivity()).apply {
+        setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+        setContent {
+            MainBoardComposable(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(brush = GradientAsset.BlackGradientBrush)
+                    .statusBarsPadding()
+                    .padding(16.dp),
+                isBookmarkPage = arguments?.getBoolean("bookmark") ?: false,
+                isEmptyState = isEmptyState.collectAsState().value
+            )
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().setWindowInsets()
+        vm.exceptionFlow.catch { exception ->
+            requireActivity().basicExceptionHandler(exception)
+        }.collectWithLifecycle(viewLifecycleOwner) { exception ->
+            requireActivity().basicExceptionHandler(exception)
+        }
         vm.observe(
             lifecycleOwner = this.viewLifecycleOwner,
             state = ::handleState,
-            sideEffect = ::handleException
         )
     }
 
@@ -78,10 +98,5 @@ class MainBoardFragment : Fragment() {
         if (message.isNotEmpty()) {
             toast(message)
         }
-    }
-
-    private fun handleException(exception: Throwable) {
-        toast(exception.toMessage(), Toast.LENGTH_LONG)
-        logeukes(type = LoggerType.E) { exception }
     }
 }

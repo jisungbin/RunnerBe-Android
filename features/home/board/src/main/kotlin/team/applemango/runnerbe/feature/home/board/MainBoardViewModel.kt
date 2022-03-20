@@ -19,7 +19,7 @@
 package team.applemango.runnerbe.feature.home.board
 
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.github.jisungbin.logeukes.logeukes
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import org.orbitmvi.orbit.ContainerHost
@@ -39,9 +39,6 @@ import team.applemango.runnerbe.domain.runningitem.usecase.LoadRunningItemsUseCa
 import team.applemango.runnerbe.domain.user.usecase.UpdateBookmarkItemUseCase
 import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState
 import team.applemango.runnerbe.shared.android.base.BaseViewModel
-import javax.inject.Inject
-import kotlin.time.ExperimentalTime
-import kotlin.time.measureTime
 
 @HiltViewModel
 internal class MainBoardViewModel @Inject constructor(
@@ -54,7 +51,6 @@ internal class MainBoardViewModel @Inject constructor(
     private val _runningItems = MutableStateFlow<List<RunningItem>>(emptyList())
     val runningItems = _runningItems.asStateFlow()
 
-    @OptIn(ExperimentalTime::class)
     fun loadRunningItems(
         itemType: RunningItemType,
         includeEndItems: Boolean,
@@ -67,31 +63,27 @@ internal class MainBoardViewModel @Inject constructor(
         keywordFilter: KeywordFilter,
         useCaching: Boolean,
     ) = intent {
-        logeukes(tag = "api call time") {
-            measureTime {
-                loadRunningItemsUseCase(
-                    itemType = itemType,
-                    includeEndItems = includeEndItems,
-                    itemFilter = itemFilter,
-                    distanceFilter = distanceFilter,
-                    genderFilter = genderFilter,
-                    ageFilter = ageFilter,
-                    jobFilter = jobFilter,
-                    locate = locate,
-                    keywordFilter = keywordFilter,
-                    useCaching = useCaching
-                ).onSuccess { runningItems ->
-                    if (runningItems.isNotEmpty()) {
-                        _runningItems.value = runningItems
-                    } else {
-                        reduce {
-                            MainBoardState.RunningItemEmpty
-                        }
-                    }
-                }.onFailure { exception ->
-                    emitException(exception)
+        loadRunningItemsUseCase(
+            itemType = itemType,
+            includeEndItems = includeEndItems,
+            itemFilter = itemFilter,
+            distanceFilter = distanceFilter,
+            genderFilter = genderFilter,
+            ageFilter = ageFilter,
+            jobFilter = jobFilter,
+            locate = locate,
+            keywordFilter = keywordFilter,
+            useCaching = useCaching
+        ).onSuccess { runningItems ->
+            if (runningItems.isNotEmpty()) {
+                _runningItems.value = runningItems
+            } else {
+                reduce {
+                    MainBoardState.RunningItemEmpty
                 }
             }
+        }.onFailure { exception ->
+            emitException(exception)
         }
     }
 }
