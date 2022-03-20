@@ -33,14 +33,18 @@ import team.applemango.runnerbe.domain.constant.Job
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.shared.android.constant.DataStoreKey
 import team.applemango.runnerbe.shared.android.extension.dataStore
-import team.applemango.runnerbe.shared.android.extension.defaultCatch
 import team.applemango.runnerbe.shared.compose.component.ToggleButton
 import team.applemango.runnerbe.shared.compose.default.RunnerbeToggleButtonDefaults
-import team.applemango.runnerbe.shared.compose.extension.activityViewModel
+import team.applemango.runnerbe.shared.domain.extension.defaultCatch
 
+// `vm: OnboardViewModel = activityViewModels()` 안한 이유:
+// DFM 는 의존성이 반대로 되서 hilt 를 사용하지 못함
+// 따라서 직접 factory 로 인자를 주입해 줘야 함
+// 이는 OnboardActivity 에서 해주고 있으므로,
+// OnboardActivity 에서 vm 를 가져와야 함
 @Composable
 internal fun JobPicker(
-    vm: OnboardViewModel = activityViewModel(),
+    vm: OnboardViewModel,
     jobSelectChanged: (isSelected: Boolean) -> Unit,
 ) {
     val context = LocalContext.current.applicationContext
@@ -51,7 +55,7 @@ internal fun JobPicker(
         val preferences = context
             .dataStore
             .data
-            .defaultCatch(vm = vm)
+            .defaultCatch(action = vm::emitException)
             .first()
 
         preferences[DataStoreKey.Onboard.Job]?.let { restoreJobCode ->

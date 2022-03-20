@@ -60,20 +60,26 @@ import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.constant.EmailVerifyState
 import team.applemango.runnerbe.shared.android.constant.DataStoreKey
 import team.applemango.runnerbe.shared.android.extension.dataStore
-import team.applemango.runnerbe.shared.android.extension.defaultCatch
 import team.applemango.runnerbe.shared.compose.component.RunnerbeDialog
-import team.applemango.runnerbe.shared.compose.extension.activityViewModel
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
+import team.applemango.runnerbe.shared.domain.extension.defaultCatch
 import team.applemango.runnerbe.shared.domain.extension.runIf
 import team.applemango.runnerbe.shared.domain.extension.toMessage
 
 private const val EmailVerifyStateDoneMessage = "EmailVerifyStateDone"
 private val Shape = RoundedCornerShape(8.dp)
 
+// `vm: OnboardViewModel = activityViewModels()` 안한 이유:
+// DFM 는 의존성이 반대로 되서 hilt 를 사용하지 못함
+// 따라서 직접 factory 로 인자를 주입해 줘야 함
+// 이는 OnboardActivity 에서 해주고 있으므로,
+// OnboardActivity 에서 vm 를 가져와야 함
 @OptIn(FlowPreview::class) // Flow<T>.debounce
 @Composable
-internal fun EmailVerify(vm: OnboardViewModel = activityViewModel()) {
+internal fun EmailVerify(
+    vm: OnboardViewModel
+) {
     val context = LocalContext.current.applicationContext
     val focusManager = LocalFocusManager.current
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -82,7 +88,7 @@ internal fun EmailVerify(vm: OnboardViewModel = activityViewModel()) {
     val emailInputFlow = remember { MutableStateFlow(TextFieldValue()) }
     val emailInputFlowWithLifecycle = remember(emailInputFlow, lifecycleOwner) {
         emailInputFlow
-            .defaultCatch(vm = vm)
+            .defaultCatch(action = vm::emitException)
             .flowWithLifecycle(lifecycle = lifecycleOwner.lifecycle)
     }
     val emailInputStateWithLifecycle by emailInputFlowWithLifecycle.collectAsState(TextFieldValue())
@@ -116,7 +122,7 @@ internal fun EmailVerify(vm: OnboardViewModel = activityViewModel()) {
         val preferences = context
             .dataStore
             .data
-            .defaultCatch(vm = vm)
+            .defaultCatch(action = vm::emitException)
             .first()
         preferences[DataStoreKey.Onboard.Email]?.let { restoreEmail ->
             emailInputFlow.emit(TextFieldValue(text = restoreEmail))

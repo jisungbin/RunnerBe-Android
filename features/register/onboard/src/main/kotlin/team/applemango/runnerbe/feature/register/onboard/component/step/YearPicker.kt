@@ -42,19 +42,23 @@ import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.shared.android.constant.DataStoreKey
 import team.applemango.runnerbe.shared.android.extension.dataStore
-import team.applemango.runnerbe.shared.android.extension.defaultCatch
 import team.applemango.runnerbe.shared.compose.default.RunnerbeSuperWheelPickerDefaults
-import team.applemango.runnerbe.shared.compose.extension.activityViewModel
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
+import team.applemango.runnerbe.shared.domain.extension.defaultCatch
 import team.applemango.runnerbe.xml.superwheelpicker.integration.SuperWheelPicker
 
 private val nowYear = Calendar.getInstance().get(Calendar.YEAR)
 
+// `vm: OnboardViewModel = activityViewModels()` 안한 이유:
+// DFM 는 의존성이 반대로 되서 hilt 를 사용하지 못함
+// 따라서 직접 factory 로 인자를 주입해 줘야 함
+// 이는 OnboardActivity 에서 해주고 있으므로,
+// OnboardActivity 에서 vm 를 가져와야 함
 @OptIn(FlowPreview::class) // Flow<T>.debounce
 @Composable
 internal fun YearPicker(
-    vm: OnboardViewModel = activityViewModel(),
+    vm: OnboardViewModel,
     selectedYearChanged: (isAdult: Boolean) -> Unit,
 ) {
     val context = LocalContext.current.applicationContext
@@ -64,7 +68,7 @@ internal fun YearPicker(
     val yearSelectFlow = remember { MutableStateFlow(nowYear) }
     val yearSelectFlowWithLifecycle = remember(yearSelectFlow, lifecycleOwner) {
         yearSelectFlow
-            .defaultCatch(vm = vm)
+            .defaultCatch(action = vm::emitException)
             .flowWithLifecycle(lifecycle = lifecycleOwner.lifecycle)
     }
     val yearSelectStateWithLifecycle by yearSelectFlowWithLifecycle.collectAsState(nowYear)
@@ -75,7 +79,7 @@ internal fun YearPicker(
         val preferences = context
             .dataStore
             .data
-            .defaultCatch(vm = vm)
+            .defaultCatch(action = vm::emitException)
             .first()
 
         preferences[DataStoreKey.Onboard.Year]?.let { restoreYear ->

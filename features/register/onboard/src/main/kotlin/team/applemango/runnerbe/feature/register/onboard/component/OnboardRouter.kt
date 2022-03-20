@@ -65,25 +65,29 @@ import team.applemango.runnerbe.shared.android.constant.DataStoreKey
 import team.applemango.runnerbe.shared.android.extension.changeActivityWithAnimation
 import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.android.extension.dataStore
-import team.applemango.runnerbe.shared.android.extension.defaultCatch
 import team.applemango.runnerbe.shared.compose.component.RunnerbeDialog
-import team.applemango.runnerbe.shared.compose.extension.activityViewModel
 import team.applemango.runnerbe.shared.compose.extension.getActivity
 import team.applemango.runnerbe.shared.compose.extension.presentationDrawableOf
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
+import team.applemango.runnerbe.shared.domain.extension.defaultCatch
 import team.applemango.runnerbe.util.DFMLoginActivityAlias
 import team.applemango.runnerbe.util.MainActivityAlias
 
 private var lastBackPressedTime = 0L
 
+// `vm: OnboardViewModel = activityViewModels()` 안한 이유:
+// DFM 는 의존성이 반대로 되서 hilt 를 사용하지 못함
+// 따라서 직접 factory 로 인자를 주입해 줘야 함
+// 이는 OnboardActivity 에서 해주고 있으므로,
+// OnboardActivity 에서 vm 를 가져와야 함
 @Composable
 @OptIn(ExperimentalAnimationApi::class) // AnimatedNavHost
 internal fun OnboardRouter(
     modifier: Modifier = Modifier,
     navController: NavHostController,
     scaffoldState: ScaffoldState,
-    vm: OnboardViewModel = activityViewModel(),
+    vm: OnboardViewModel,
 ) {
     val context = LocalContext.current.applicationContext
     val activity = getActivity()
@@ -108,7 +112,7 @@ internal fun OnboardRouter(
 
     LaunchedEffect(Unit) {
         snapshotFlow { stepIndexState }
-            .defaultCatch(vm = vm)
+            .defaultCatch(action = vm::emitException)
             .collectWithLifecycle(lifecycleOwner = lifecycleOwner) { stepIndex ->
                 if (stepIndex != 0) {
                     stepIndexStringState = "$stepIndex/4"
@@ -213,6 +217,7 @@ internal fun OnboardRouter(
                     }
                 ) {
                     TermsTable(
+                        vm = vm,
                         onAllTermsCheckStateChanged = { allChecked ->
                             enableGoNextStepState = allChecked
                         }
@@ -228,6 +233,7 @@ internal fun OnboardRouter(
                     }
                 ) {
                     YearPicker(
+                        vm = vm,
                         selectedYearChanged = { isAdult ->
                             enableGoNextStepState = isAdult
                         }
@@ -243,6 +249,7 @@ internal fun OnboardRouter(
                     }
                 ) {
                     GenderPicker(
+                        vm = vm,
                         genderSelectChanged = { isSelected ->
                             enableGoNextStepState = isSelected
                         }
@@ -258,6 +265,7 @@ internal fun OnboardRouter(
                     }
                 ) {
                     JobPicker(
+                        vm = vm,
                         jobSelectChanged = { isSelected ->
                             enableGoNextStepState = isSelected
                         }
@@ -274,7 +282,7 @@ internal fun OnboardRouter(
                         navController.navigate(Step.VerifyWithEmployeeId.name)
                     }
                 ) {
-                    EmailVerify()
+                    EmailVerify(vm = vm)
                 }
             }
             composable(route = Step.VerifyWithEmployeeId.name) { // 사원증으로 인증

@@ -16,14 +16,11 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import org.orbitmvi.orbit.viewmodel.observe
 import team.applemango.runnerbe.feature.register.snslogin.component.SnsLoginScreen
 import team.applemango.runnerbe.feature.register.snslogin.constant.LoginState
@@ -39,6 +36,7 @@ import team.applemango.runnerbe.shared.android.extension.launchedWhenCreated
 import team.applemango.runnerbe.shared.android.extension.setWindowInsets
 import team.applemango.runnerbe.shared.compose.extension.verticalInsetsPadding
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
+import team.applemango.runnerbe.shared.domain.extension.defaultCatch
 import team.applemango.runnerbe.util.DFMOnboardActivityAlias
 import team.applemango.runnerbe.util.MainActivityAlias
 
@@ -64,15 +62,13 @@ class SnsLoginActivity : ComponentActivity() {
 
         setWindowInsets()
         vm.observe(lifecycleOwner = this, state = ::handleState, sideEffect = ::handleSideEffect)
-        vm.exceptionFlow.collectWithLifecycle(this) { exception ->
-            basicExceptionHandler(exception)
-        }
+        vm.exceptionFlow
+            .defaultCatch(action = ::basicExceptionHandler)
+            .collectWithLifecycle(this) { exception ->
+                basicExceptionHandler(exception)
+            }
 
         setContent {
-            val systemUiController = rememberSystemUiController()
-            LaunchedEffect(Unit) {
-                systemUiController.setSystemBarsColor(color = Color.Transparent)
-            }
             SnsLoginScreen(
                 modifier = Modifier
                     .fillMaxSize()

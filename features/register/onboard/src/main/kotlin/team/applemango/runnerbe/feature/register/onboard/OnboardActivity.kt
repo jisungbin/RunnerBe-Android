@@ -45,7 +45,6 @@ import team.applemango.runnerbe.shared.android.constant.DataStoreKey
 import team.applemango.runnerbe.shared.android.extension.basicExceptionHandler
 import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.android.extension.dataStore
-import team.applemango.runnerbe.shared.android.extension.defaultCatch
 import team.applemango.runnerbe.shared.android.extension.setWindowInsets
 import team.applemango.runnerbe.shared.android.extension.toast
 import team.applemango.runnerbe.shared.compose.extension.verticalInsetsPadding
@@ -53,6 +52,7 @@ import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
+import team.applemango.runnerbe.shared.domain.extension.defaultCatch
 
 class OnboardActivity : ComponentActivity() {
 
@@ -75,9 +75,11 @@ class OnboardActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setWindowInsets()
-        vm.exceptionFlow.collectWithLifecycle(this) { exception ->
-            basicExceptionHandler(exception)
-        }
+        vm.exceptionFlow
+            .defaultCatch(action = ::basicExceptionHandler)
+            .collectWithLifecycle(this) { exception ->
+                basicExceptionHandler(exception)
+            }
 
         setContent {
             val scaffoldState = rememberScaffoldState()
@@ -93,7 +95,7 @@ class OnboardActivity : ComponentActivity() {
                 )
                 // 이메일 인증 됨 -> photo null 로 회원가입 진행
                 vm.emailVerifyStateFlow
-                    .defaultCatch(vm = vm)
+                    .defaultCatch(action = vm::emitException)
                     .collectWithLifecycle(this@OnboardActivity) { verified ->
                         if (verified) {
                             vm.registerUser(
@@ -107,7 +109,7 @@ class OnboardActivity : ComponentActivity() {
                 val preferences = applicationContext
                     .dataStore
                     .data
-                    .defaultCatch(vm = vm)
+                    .defaultCatch(action = vm::emitException)
                     .first()
                 val terms = preferences[DataStoreKey.Onboard.TermsAllCheck]
                 val year = preferences[DataStoreKey.Onboard.Year]
@@ -167,6 +169,7 @@ class OnboardActivity : ComponentActivity() {
                         .padding(horizontal = 16.dp),
                     navController = navController,
                     scaffoldState = scaffoldState,
+                    vm = vm
                 )
             }
         }
