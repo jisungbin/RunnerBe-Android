@@ -58,7 +58,6 @@ object Dependencies {
         "androidx.activity:activity-compose:${Versions.Compose.Activity}",
         "com.github.skydoves:landscapist-coil:${Versions.Compose.Landscapist}",
         "com.google.accompanist:accompanist-swiperefresh:${Versions.Compose.Accompanist}",
-        "com.google.accompanist:accompanist-systemuicontroller:${Versions.Compose.Accompanist}",
         "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.Compose.LifecycleViewModel}",
         "com.google.accompanist:accompanist-navigation-animation:${Versions.Compose.Accompanist}",
         "androidx.constraintlayout:constraintlayout-compose:${Versions.Compose.ConstraintLayout}"
