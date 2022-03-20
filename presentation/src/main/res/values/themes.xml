@@ -2,6 +2,15 @@
   ~ RunnerBe © 2022 Team AppleMango. all rights reserved.
   ~ RunnerBe license is under the MIT.
   ~
+  ~ [themes.xml] created by Ji Sungbin on 22. 3. 20. 오후 11:04
+  ~
+  ~ Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
+  -->
+
+<!--
+  ~ RunnerBe © 2022 Team AppleMango. all rights reserved.
+  ~ RunnerBe license is under the MIT.
+  ~
   ~ [themes.xml] created by Ji Sungbin on 22. 2. 5. 오후 7:43
   ~
   ~ Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
@@ -17,14 +26,10 @@
         https://stackoverflow.com/a/62377672/14299073 -->
     </style>
 
-    <style name="Theme.RunnerBe.Main" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="android:navigationBarColor">@color/G6</item>
-    </style>
-
     <style name="Theme.RunnerBe.Splash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/G5_5</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo_splash</item>
-        <item name="postSplashScreenTheme">@style/Theme.RunnerBe.Main</item>
+        <item name="postSplashScreenTheme">@style/Theme.RunnerBe</item>
         <item name="android:statusBarColor">@color/G5_5</item>
         <item name="android:navigationBarColor">@color/G5_5</item>
     </style>
