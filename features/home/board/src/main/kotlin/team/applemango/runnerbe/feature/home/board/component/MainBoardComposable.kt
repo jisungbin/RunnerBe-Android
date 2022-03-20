@@ -45,6 +45,7 @@ import team.applemango.runnerbe.feature.home.board.MainBoardViewModel
 import team.applemango.runnerbe.feature.home.board.R
 import team.applemango.runnerbe.shared.compose.component.RunningItemTypeToggleBar
 import team.applemango.runnerbe.shared.compose.default.RunnerbeCheckBoxDefaults
+import team.applemango.runnerbe.shared.compose.extension.activityViewModel
 import team.applemango.runnerbe.shared.compose.extension.noRippleClickable
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
@@ -55,7 +56,7 @@ import team.applemango.runnerbe.shared.compose.theme.Typography
 internal fun MainBoardComposable(
     modifier: Modifier = Modifier,
     isBookmarkPage: Boolean = false,
-    vm: MainBoardViewModel,
+    vm: MainBoardViewModel = activityViewModel(),
     isEmptyState: Boolean,
 ) {
     val runningItems by vm.runningItems.collectAsState()
