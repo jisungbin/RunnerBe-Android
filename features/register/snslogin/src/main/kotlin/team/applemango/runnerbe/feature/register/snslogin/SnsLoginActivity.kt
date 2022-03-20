@@ -61,7 +61,11 @@ class SnsLoginActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setWindowInsets()
-        vm.observe(lifecycleOwner = this, state = ::handleState, sideEffect = ::handleSideEffect)
+        vm.observe(
+            lifecycleOwner = this,
+            state = ::handleState,
+            sideEffect = ::handleSideEffect
+        )
         vm.exceptionFlow
             .defaultCatch(action = ::basicExceptionHandler)
             .collectWithLifecycle(this) { exception ->
