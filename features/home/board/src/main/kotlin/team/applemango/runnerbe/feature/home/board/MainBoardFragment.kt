@@ -13,7 +13,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
@@ -22,15 +21,16 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
-import io.github.jisungbin.logeukes.LoggerType
-import io.github.jisungbin.logeukes.logeukes
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.catch
 import org.orbitmvi.orbit.viewmodel.observe
 import team.applemango.runnerbe.feature.home.board.component.MainBoardComposable
 import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState
+import team.applemango.runnerbe.shared.android.extension.basicExceptionHandler
+import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
+import team.applemango.runnerbe.shared.android.extension.setWindowInsets
 import team.applemango.runnerbe.shared.android.extension.toast
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
-import team.applemango.runnerbe.shared.domain.extension.toMessage
 
 @AndroidEntryPoint
 class MainBoardFragment : Fragment() {
@@ -42,26 +42,30 @@ class MainBoardFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View {
-        return ComposeView(requireActivity()).apply {
-            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-            setContent {
-                MainBoardComposable(
-                    modifier = Modifier.fillMaxSize(),
-                    isBookmarkPage = arguments?.getBoolean("bookmark") ?: false,
-                    vm = vm,
-                    isEmptyState = isEmptyState.collectAsState().value
-                )
-            }
+    ) = ComposeView(requireActivity()).apply {
+        setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+        setContent {
+            MainBoardComposable(
+                modifier = Modifier.fillMaxSize(),
+                isBookmarkPage = arguments?.getBoolean("bookmark") ?: false,
+                isEmptyState = isEmptyState.collectAsState().value
+            )
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().setWindowInsets()
+        vm.exceptionFlow
+            .catch { exception ->
+                requireActivity().basicExceptionHandler(exception)
+            }
+            .collectWithLifecycle(viewLifecycleOwner) { exception ->
+                requireActivity().basicExceptionHandler(exception)
+            }
         vm.observe(
             lifecycleOwner = this.viewLifecycleOwner,
             state = ::handleState,
-            sideEffect = ::handleException
         )
     }
 
@@ -78,10 +82,5 @@ class MainBoardFragment : Fragment() {
         if (message.isNotEmpty()) {
             toast(message)
         }
-    }
-
-    private fun handleException(exception: Throwable) {
-        toast(exception.toMessage(), Toast.LENGTH_LONG)
-        logeukes(type = LoggerType.E) { exception }
     }
 }
