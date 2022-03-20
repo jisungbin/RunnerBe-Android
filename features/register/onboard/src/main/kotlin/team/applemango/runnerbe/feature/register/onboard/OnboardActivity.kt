@@ -11,6 +11,7 @@ package team.applemango.runnerbe.feature.register.onboard
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -42,10 +43,11 @@ import team.applemango.runnerbe.feature.register.onboard.constant.RegisterState
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.feature.register.onboard.di.module.UseCaseModule
 import team.applemango.runnerbe.feature.register.onboard.mvi.RegisterSideEffect
-import team.applemango.runnerbe.shared.android.base.WindowInsetsActivity
 import team.applemango.runnerbe.shared.android.constant.DataStoreKey
+import team.applemango.runnerbe.shared.android.extension.basicExceptionHandler
 import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.android.extension.dataStore
+import team.applemango.runnerbe.shared.android.extension.setWindowInsets
 import team.applemango.runnerbe.shared.android.extension.toast
 import team.applemango.runnerbe.shared.compose.extension.verticalInsetsPadding
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
@@ -53,7 +55,7 @@ import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
 
-class OnboardActivity : WindowInsetsActivity() {
+class OnboardActivity : ComponentActivity() {
 
     private val vm: OnboardViewModel by viewModels {
         object : ViewModelProvider.Factory {
@@ -73,6 +75,7 @@ class OnboardActivity : WindowInsetsActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setWindowInsets()
         vm.exceptionFlow.collectWithLifecycle(this) { exception ->
             basicExceptionHandler(exception)
         }
