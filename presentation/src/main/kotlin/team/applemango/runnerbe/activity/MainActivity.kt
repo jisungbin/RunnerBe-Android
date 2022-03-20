@@ -2,6 +2,15 @@
  * RunnerBe © 2022 Team AppleMango. all rights reserved.
  * RunnerBe license is under the MIT.
  *
+ * [MainActivity.kt] created by Ji Sungbin on 22. 3. 20. 오후 11:08
+ *
+ * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
+ */
+
+/*
+ * RunnerBe © 2022 Team AppleMango. all rights reserved.
+ * RunnerBe license is under the MIT.
+ *
  * [BoardActivity.kt] created by Ji Sungbin on 22. 2. 9. 오전 1:06
  *
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
@@ -9,13 +18,11 @@
 
 package team.applemango.runnerbe.activity
 
-import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
-import androidx.core.view.updatePadding
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -56,17 +63,12 @@ class MainActivity : AppCompatActivity() {
         }
         binding.bnvMenu.setupWithNavController(navController)
 
-        window.navigationBarColor = Color.BLUE
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, windowInsets ->
             val types = WindowInsetsCompat.Type.systemBars()
             val systemBarsInset = windowInsets.getInsets(types)
-            view.updatePadding(
-                top = systemBarsInset.top,
-                bottom = systemBarsInset.bottom
-            )
-            /*binding.viewNavigationBarColor.updateLayoutParams {
+            binding.viewNavigationBarColor.updateLayoutParams {
                 height = systemBarsInset.bottom
-            }*/
+            }
             windowInsets
         }
     }
