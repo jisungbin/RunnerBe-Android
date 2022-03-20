@@ -35,7 +35,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.catch
 import org.orbitmvi.orbit.viewmodel.observe
 import team.applemango.runnerbe.feature.home.board.component.MainBoardComposable
 import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState
@@ -45,6 +44,7 @@ import team.applemango.runnerbe.shared.android.extension.setWindowInsets
 import team.applemango.runnerbe.shared.android.extension.toast
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
+import team.applemango.runnerbe.shared.domain.extension.defaultCatch
 
 @AndroidEntryPoint
 class MainBoardFragment : Fragment() {
@@ -74,11 +74,12 @@ class MainBoardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().setWindowInsets()
-        vm.exceptionFlow.catch { exception ->
-            requireActivity().basicExceptionHandler(exception)
-        }.collectWithLifecycle(viewLifecycleOwner) { exception ->
-            requireActivity().basicExceptionHandler(exception)
-        }
+        vm.exceptionFlow
+            .defaultCatch { exception ->
+                requireActivity().basicExceptionHandler(exception)
+            }.collectWithLifecycle(lifecycleOwner = viewLifecycleOwner) { exception ->
+                requireActivity().basicExceptionHandler(exception)
+            }
         vm.observe(
             lifecycleOwner = this.viewLifecycleOwner,
             state = ::handleState,

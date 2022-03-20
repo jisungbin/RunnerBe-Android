@@ -13,12 +13,12 @@ import android.app.Activity
 import com.kakao.sdk.user.UserApiClient
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.OAuthLoginCallback
+import kotlinx.coroutines.suspendCancellableCoroutine
+import team.applemango.runnerbe.domain.register.runnerbe.repository.AccessTokenRepository
 import java.lang.ref.WeakReference
 import kotlin.Result.Companion.failure
 import kotlin.Result.Companion.success
 import kotlin.coroutines.resume
-import kotlinx.coroutines.suspendCancellableCoroutine
-import team.applemango.runnerbe.domain.register.runnerbe.repository.AccessTokenRepository
 
 private val EXCEPTION_NAVER_ACCESS_TOKEN_NULL = Exception("Naver access token is null.")
 private val EXCEPTION_RESPONSE_NOTHING = Exception("Kakao API response is nothing.")

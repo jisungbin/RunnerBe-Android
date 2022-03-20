@@ -40,9 +40,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.edit
 import com.skydoves.landscapist.rememberDrawablePainter
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.cancellable
-import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
@@ -53,18 +51,23 @@ import team.applemango.runnerbe.shared.compose.default.RunnerbeCheckBoxDefaults
 import team.applemango.runnerbe.shared.compose.extension.presentationDrawableOf
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
-import team.applemango.runnerbe.shared.domain.util.flowExceptionMessage
+import team.applemango.runnerbe.shared.domain.extension.defaultCatch
 
 private val VerticalPadding = 25.dp
 private val HorizontalPadding = 12.dp
 private val TermsTableShape = RoundedCornerShape(10.dp)
 
+// `vm: OnboardViewModel = activityViewModels()` 안한 이유:
+// DFM 는 의존성이 반대로 되서 hilt 를 사용하지 못함
+// 따라서 직접 factory 로 인자를 주입해 줘야 함
+// 이는 OnboardActivity 에서 해주고 있으므로,
+// OnboardActivity 에서 vm 를 가져와야 함
 @Composable
 internal fun TermsTable(
     vm: OnboardViewModel,
     onAllTermsCheckStateChanged: (allChecked: Boolean) -> Unit,
 ) {
-    val context = LocalContext.current
+    val context = LocalContext.current.applicationContext
     val coroutineScope = rememberCoroutineScope()
     var isAllTermsCheckedState by remember { mutableStateOf(false) }
     val termsCheckState = remember { mutableStateListOf(false, false, false) }
@@ -101,28 +104,17 @@ internal fun TermsTable(
 
     // 위치 고정 (toggleAllTermsCheck 함수 사용)
     LaunchedEffect(Unit) {
-        context
+        val preferences = context
             .dataStore
             .data
-            .cancellable()
-            .catch { exception ->
-                vm.emitException(
-                    Exception(
-                        flowExceptionMessage(
-                            flowName = "TermsTable DataStore",
-                            exception = exception
-                        )
-                    )
-                )
-            }
-            .collect { preferences ->
-                if (preferences[DataStoreKey.Onboard.TermsAllCheck] == true) {
-                    toggleAllTermsCheck(nowState = false) // state toggle -> false -> true
-                } else {
-                    onAllTermsCheckStateChanged(false)
-                }
-                cancel("onboard restore execute must be once.")
-            }
+            .defaultCatch(action = vm::emitException)
+            .first()
+
+        if (preferences[DataStoreKey.Onboard.TermsAllCheck] == true) {
+            toggleAllTermsCheck(nowState = false) // state toggle: false -> true
+        } else {
+            onAllTermsCheckStateChanged(false)
+        }
     }
 
     Column(
@@ -165,7 +157,7 @@ internal fun TermsTable(
                 .padding(horizontal = HorizontalPadding),
             verticalArrangement = Arrangement.spacedBy(18.dp)
         ) {
-            items(3) { number ->
+            items(count = 3) { number ->
                 val label: String
                 val link: Web.Link
                 when (number) {
@@ -204,7 +196,9 @@ internal fun TermsTable(
                         )
                     }
                     Icon(
-                        modifier = Modifier.clickable { Web.open(context, link) },
+                        modifier = Modifier.clickable {
+                            Web.open(context, link)
+                        },
                         painter = rememberDrawablePainter(presentationDrawableOf("ic_round_arrow_right_24")),
                         contentDescription = null,
                         tint = ColorAsset.G4

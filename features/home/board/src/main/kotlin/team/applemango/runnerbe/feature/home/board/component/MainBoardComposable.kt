@@ -55,7 +55,7 @@ internal fun MainBoardComposable(
     modifier: Modifier = Modifier,
     isBookmarkPage: Boolean = false,
     vm: MainBoardViewModel = activityViewModel(),
-    isEmptyState: Boolean,
+    isEmptyState: Boolean = false,
 ) {
     val runningItems by vm.runningItems.collectAsState()
 

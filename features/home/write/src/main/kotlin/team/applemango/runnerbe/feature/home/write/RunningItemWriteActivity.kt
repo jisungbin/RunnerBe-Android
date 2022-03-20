@@ -18,8 +18,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 import org.orbitmvi.orbit.viewmodel.observe
 import team.applemango.runnerbe.feature.home.write.component.RunningItemWrite
@@ -29,6 +27,7 @@ import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.android.extension.finishWithAnimation
 import team.applemango.runnerbe.shared.android.extension.setWindowInsets
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
+import team.applemango.runnerbe.shared.domain.extension.defaultCatch
 
 @AndroidEntryPoint
 class RunningItemWriteActivity : ComponentActivity() {
@@ -40,16 +39,15 @@ class RunningItemWriteActivity : ComponentActivity() {
 
         setWindowInsets()
         setContent {
-            val systemUiController = rememberSystemUiController()
-
             LaunchedEffect(Unit) {
-                systemUiController.setSystemBarsColor(color = Color.Transparent)
-                vm.exceptionFlow.collectWithLifecycle(
-                    lifecycleOwner = this@RunningItemWriteActivity,
-                    action = { exception ->
-                        basicExceptionHandler(exception)
-                    }
-                )
+                vm.exceptionFlow
+                    .defaultCatch(action = ::basicExceptionHandler)
+                    .collectWithLifecycle(
+                        lifecycleOwner = this@RunningItemWriteActivity,
+                        action = { exception ->
+                            basicExceptionHandler(exception)
+                        }
+                    )
                 vm.observe(
                     lifecycleOwner = this@RunningItemWriteActivity,
                     state = ::handleState,

@@ -9,7 +9,6 @@
 
 package team.applemango.runnerbe.feature.register.onboard.component
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -43,7 +42,6 @@ import team.applemango.runnerbe.shared.domain.extension.runIf
 
 private val BottomCTAButtonShape = RoundedCornerShape(24.dp)
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 internal fun OnboardContent(
     step: Step,
@@ -162,9 +160,16 @@ internal fun OnboardContent(
                     )
                 }
                 .runIf(step == Step.VerifyWithEmail) {
-                    border(width = 1.dp, color = ColorAsset.Primary, shape = BottomCTAButtonShape)
+                    border(
+                        width = 1.dp,
+                        color = ColorAsset.Primary,
+                        shape = BottomCTAButtonShape
+                    )
                 }
-                .background(color = bottomCTAButtonBackgroundColor, shape = BottomCTAButtonShape),
+                .background(
+                    color = bottomCTAButtonBackgroundColor,
+                    shape = BottomCTAButtonShape
+                ),
             contentAlignment = Alignment.Center
         ) {
             Text(

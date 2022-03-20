@@ -22,12 +22,11 @@ fun <T> Flow<T>.collectWithLifecycle(
     action: suspend CoroutineScope.(T) -> Unit,
 ) {
     lifecycleOwner.lifecycleScope.launchWhenCreated {
-        builder()
-            .flowWithLifecycle(
-                lifecycle = lifecycleOwner.lifecycle,
-                minActiveState = Lifecycle.State.CREATED
-            ).collect { value ->
-                action(value)
-            }
+        builder().flowWithLifecycle(
+            lifecycle = lifecycleOwner.lifecycle,
+            minActiveState = Lifecycle.State.CREATED
+        ).collect { value ->
+            action(value)
+        }
     }
 }

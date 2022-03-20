@@ -89,8 +89,11 @@ private val takePhotoFromAlbumIntent =
  * -> 사진 업로드 및 회원가입 요청은 [OnboardContent] 의 `onBottomCTAButtonAction` 에서 진행함
  */
 @Composable
-internal fun EmployeeIdVerify(photo: Bitmap?, onPhotoChanged: (photo: Bitmap?) -> Unit) {
-    val context = LocalContext.current
+internal fun EmployeeIdVerify(
+    photo: Bitmap?,
+    onPhotoChanged: (photo: Bitmap?) -> Unit
+) {
+    val context = LocalContext.current.applicationContext
     var photoTakenTypeDialogVisibleState by remember { mutableStateOf(false) }
 
     val takePhotoFromCameraLauncher =
@@ -153,7 +156,7 @@ internal fun EmployeeIdVerify(photo: Bitmap?, onPhotoChanged: (photo: Bitmap?) -
             modifier = Modifier.padding(top = 20.dp),
             verticalArrangement = Arrangement.spacedBy(2.dp)
         ) {
-            items(noticeTexts) { notice ->
+            items(items = noticeTexts) { notice ->
                 Text(
                     text = notice.parseHtml(),
                     style = Typography.Body14R.copy(color = ColorAsset.G2_5)

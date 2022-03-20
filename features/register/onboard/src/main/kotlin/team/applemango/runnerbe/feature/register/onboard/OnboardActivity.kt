@@ -25,14 +25,12 @@ import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import io.github.jisungbin.logeukes.logeukes
 import kotlinx.coroutines.flow.first
 import org.orbitmvi.orbit.viewmodel.observe
@@ -54,6 +52,7 @@ import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
+import team.applemango.runnerbe.shared.domain.extension.defaultCatch
 
 class OnboardActivity : ComponentActivity() {
 
@@ -76,17 +75,17 @@ class OnboardActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setWindowInsets()
-        vm.exceptionFlow.collectWithLifecycle(this) { exception ->
-            basicExceptionHandler(exception)
-        }
+        vm.exceptionFlow
+            .defaultCatch(action = ::basicExceptionHandler)
+            .collectWithLifecycle(this) { exception ->
+                basicExceptionHandler(exception)
+            }
 
         setContent {
             val scaffoldState = rememberScaffoldState()
             val navController = rememberAnimatedNavController()
-            val systemUiController = rememberSystemUiController()
 
             LaunchedEffect(Unit) {
-                systemUiController.setSystemBarsColor(color = Color.Transparent)
                 vm.observe(
                     lifecycleOwner = this@OnboardActivity,
                     state = ::handleState,
@@ -95,45 +94,50 @@ class OnboardActivity : ComponentActivity() {
                     }
                 )
                 // 이메일 인증 됨 -> photo null 로 회원가입 진행
-                vm.emailVerifyStateFlow.collectWithLifecycle(this@OnboardActivity) { verified ->
-                    if (verified) {
-                        vm.registerUser(
-                            dataStore = applicationContext.dataStore,
-                            photo = null,
-                            nextStep = Step.VerifyWithEmailDone
-                        )
-                    }
-                }
-                // 이메일 인증 임시 비활성화
-                applicationContext.dataStore.data.first().let { preferences ->
-                    val terms = preferences[DataStoreKey.Onboard.TermsAllCheck]
-                    val year = preferences[DataStoreKey.Onboard.Year]
-                    val gender = preferences[DataStoreKey.Onboard.Gender]
-                    val job = preferences[DataStoreKey.Onboard.Job]
-                    // val verifyWithEmail = preferences[DataStoreKey.Onboard.Email]
-                    val lastStepIndex = listOf(
-                        terms,
-                        year,
-                        gender,
-                        job,
-                        // verifyWithEmail,
-                    ).indexOfLast { step ->
-                        step != null
-                    }
-                    if (lastStepIndex != -1) {
-                        // NPE occurred
-                        // TODO: 백스택 임의 생성
-                        // https://github.com/applemango-runnerbe/RunnerBe-Android/issues/16
-                        /*(1..lastStepIndex).forEach { backstackIndex ->
-                            navController.backQueue.addLast(
-                                NavBackStackEntry.create(
-                                    context = this@OnboardActivity,
-                                    destination = NavDestination(Step.values()[backstackIndex].name)
-                                )
+                vm.emailVerifyStateFlow
+                    .defaultCatch(action = vm::emitException)
+                    .collectWithLifecycle(this@OnboardActivity) { verified ->
+                        if (verified) {
+                            vm.registerUser(
+                                dataStore = applicationContext.dataStore,
+                                photo = null,
+                                nextStep = Step.VerifyWithEmailDone
                             )
-                        }*/
-                        navController.navigate(Step.values()[lastStepIndex].name)
+                        }
                     }
+                // 이메일 인증 임시 비활성화
+                val preferences = applicationContext
+                    .dataStore
+                    .data
+                    .defaultCatch(action = vm::emitException)
+                    .first()
+                val terms = preferences[DataStoreKey.Onboard.TermsAllCheck]
+                val year = preferences[DataStoreKey.Onboard.Year]
+                val gender = preferences[DataStoreKey.Onboard.Gender]
+                val job = preferences[DataStoreKey.Onboard.Job]
+                // val verifyWithEmail = preferences[DataStoreKey.Onboard.Email]
+                val lastStepIndex = listOf(
+                    terms,
+                    year,
+                    gender,
+                    job,
+                    // verifyWithEmail,
+                ).indexOfLast { step ->
+                    step != null
+                }
+                if (lastStepIndex != -1) {
+                    // NPE occurred
+                    // TODO: 백스택 임의 생성
+                    // https://github.com/applemango-runnerbe/RunnerBe-Android/issues/16
+                    /*(1..lastStepIndex).forEach { backstackIndex ->
+                        navController.backQueue.addLast(
+                            NavBackStackEntry.create(
+                                context = this@OnboardActivity,
+                                destination = NavDestination(Step.values()[backstackIndex].name)
+                            )
+                        )
+                    }*/
+                    navController.navigate(Step.values()[lastStepIndex].name)
                 }
             }
 
@@ -165,7 +169,7 @@ class OnboardActivity : ComponentActivity() {
                         .padding(horizontal = 16.dp),
                     navController = navController,
                     scaffoldState = scaffoldState,
-                    vm = vm,
+                    vm = vm
                 )
             }
         }
