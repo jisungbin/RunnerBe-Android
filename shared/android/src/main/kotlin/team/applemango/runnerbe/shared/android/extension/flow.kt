@@ -15,6 +15,8 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import team.applemango.runnerbe.shared.android.base.BaseViewModel
 
 fun <T> Flow<T>.collectWithLifecycle(
     lifecycleOwner: LifecycleOwner,
@@ -30,4 +32,13 @@ fun <T> Flow<T>.collectWithLifecycle(
                 action(value)
             }
     }
+}
+
+fun <T> Flow<T>.defaultCatch(
+    name: String? = null,
+    vm: BaseViewModel
+) = catch { cause ->
+    val exception =
+        IllegalStateException("${name ?: cause.tag} flow collect exception: ${cause.message}")
+    vm.emitException(exception)
 }
