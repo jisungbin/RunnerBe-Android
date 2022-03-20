@@ -9,9 +9,13 @@
 
 package team.applemango.runnerbe.activity
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -19,6 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import team.applemango.runnerbe.R
 import team.applemango.runnerbe.databinding.ActivityMainBinding
 import team.applemango.runnerbe.shared.android.constant.BottomNavigationBarHeight
+import team.applemango.runnerbe.shared.android.extension.setWindowInsets
 import team.applemango.runnerbe.shared.domain.unit.dp
 import team.applemango.runnerbe.shared.domain.unit.toInt
 
@@ -37,7 +42,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setWindowInsets()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.lifecycleOwner = this
         binding.bnvMenu.itemIconTintList = null
 
         val navHostFragment =
@@ -47,5 +55,19 @@ class MainActivity : AppCompatActivity() {
             height = BottomNavigationBarHeight.dp.toInt()
         }
         binding.bnvMenu.setupWithNavController(navController)
+
+        window.navigationBarColor = Color.BLUE
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, windowInsets ->
+            val types = WindowInsetsCompat.Type.systemBars()
+            val systemBarsInset = windowInsets.getInsets(types)
+            view.updatePadding(
+                top = systemBarsInset.top,
+                bottom = systemBarsInset.bottom
+            )
+            /*binding.viewNavigationBarColor.updateLayoutParams {
+                height = systemBarsInset.bottom
+            }*/
+            windowInsets
+        }
     }
 }
