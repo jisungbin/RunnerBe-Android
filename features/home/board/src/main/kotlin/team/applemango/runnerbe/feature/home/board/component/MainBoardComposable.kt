@@ -10,7 +10,6 @@
 package team.applemango.runnerbe.feature.home.board.component
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -48,7 +47,6 @@ import team.applemango.runnerbe.shared.compose.default.RunnerbeCheckBoxDefaults
 import team.applemango.runnerbe.shared.compose.extension.activityViewModel
 import team.applemango.runnerbe.shared.compose.extension.noRippleClickable
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
-import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -79,12 +77,7 @@ internal fun MainBoardComposable(
     var includeFinishState by remember { mutableStateOf(false) }
     var selectedRunningItemTypeState by remember { mutableStateOf(RunningItemType.Before) }
 
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .background(color = GradientAsset.BlackStartColor)
-            .padding(16.dp)
-    ) {
+    Column(modifier = modifier) {
         Box( // ToolBar
             modifier = Modifier
                 .fillMaxWidth()
