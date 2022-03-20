@@ -86,7 +86,7 @@ class OnboardActivity : ComponentActivity() {
             val systemUiController = rememberSystemUiController()
 
             LaunchedEffect(Unit) {
-                systemUiController.setSystemBarsColor(Color.Transparent)
+                systemUiController.setSystemBarsColor(color = Color.Transparent)
                 vm.observe(
                     lifecycleOwner = this@OnboardActivity,
                     state = ::handleState,

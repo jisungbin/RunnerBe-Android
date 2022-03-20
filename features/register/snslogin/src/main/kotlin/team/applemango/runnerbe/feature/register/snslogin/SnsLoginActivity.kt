@@ -71,7 +71,7 @@ class SnsLoginActivity : ComponentActivity() {
         setContent {
             val systemUiController = rememberSystemUiController()
             LaunchedEffect(Unit) {
-                systemUiController.setSystemBarsColor(Color.Transparent)
+                systemUiController.setSystemBarsColor(color = Color.Transparent)
             }
             SnsLoginScreen(
                 modifier = Modifier
