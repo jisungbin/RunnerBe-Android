@@ -32,65 +32,57 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.flowWithLifecycle
+import java.util.Calendar
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.cancellable
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.shared.android.constant.DataStoreKey
 import team.applemango.runnerbe.shared.android.extension.dataStore
+import team.applemango.runnerbe.shared.android.extension.defaultCatch
 import team.applemango.runnerbe.shared.compose.default.RunnerbeSuperWheelPickerDefaults
+import team.applemango.runnerbe.shared.compose.extension.activityViewModel
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
-import team.applemango.runnerbe.shared.domain.util.flowExceptionMessage
 import team.applemango.runnerbe.xml.superwheelpicker.integration.SuperWheelPicker
-import java.util.Calendar
 
 private val nowYear = Calendar.getInstance().get(Calendar.YEAR)
 
-@OptIn(FlowPreview::class)
+@OptIn(FlowPreview::class) // Flow<T>.debounce
 @Composable
 internal fun YearPicker(
-    vm: OnboardViewModel,
+    vm: OnboardViewModel = activityViewModel(),
     selectedYearChanged: (isAdult: Boolean) -> Unit,
 ) {
-    val context = LocalContext.current
+    val context = LocalContext.current.applicationContext
     val lifecycleOwner = LocalLifecycleOwner.current
     val coroutineScope = rememberCoroutineScope()
+
     val yearSelectFlow = remember { MutableStateFlow(nowYear) }
     val yearSelectFlowWithLifecycle = remember(yearSelectFlow, lifecycleOwner) {
-        yearSelectFlow.flowWithLifecycle(lifecycleOwner.lifecycle)
+        yearSelectFlow
+            .defaultCatch(vm = vm)
+            .flowWithLifecycle(lifecycle = lifecycleOwner.lifecycle)
     }
     val yearSelectStateWithLifecycle by yearSelectFlowWithLifecycle.collectAsState(nowYear)
+
     var nowYearState by remember { mutableStateOf(nowYear) }
 
     LaunchedEffect(Unit) {
-        context
+        val preferences = context
             .dataStore
             .data
-            .cancellable()
-            .catch { exception ->
-                vm.emitException(
-                    Exception(
-                        flowExceptionMessage(
-                            flowName = "YearPicker DataStore",
-                            exception = exception
-                        )
-                    )
-                )
-            }
-            .collect { preferences ->
-                preferences[DataStoreKey.Onboard.Year]?.let { restoreYear ->
-                    nowYearState = restoreYear
-                    yearSelectFlow.emit(restoreYear)
-                    selectedYearChanged(nowYear - restoreYear > 19)
-                } ?: selectedYearChanged(false) // default year: ${nowYear} -> always isAdult: false
-                cancel("onboard restore execute must be once.")
-            }
+            .defaultCatch(vm = vm)
+            .first()
+
+        preferences[DataStoreKey.Onboard.Year]?.let { restoreYear ->
+            nowYearState = restoreYear
+            yearSelectFlow.emit(restoreYear)
+            selectedYearChanged(nowYear - restoreYear > 19)
+        } ?: selectedYearChanged(false) // default year: ${nowYear} -> always isAdult: false
     }
 
     LaunchedEffect(Unit) {
@@ -109,7 +101,11 @@ internal fun YearPicker(
             .wrapContentHeight(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Divider(modifier = Modifier.fillMaxWidth(), color = ColorAsset.G5, thickness = 1.dp)
+        Divider(
+            modifier = Modifier.fillMaxWidth(),
+            color = ColorAsset.G5,
+            thickness = 1.dp
+        )
         SuperWheelPicker(
             modifier = Modifier.height(250.dp),
             colors = RunnerbeSuperWheelPickerDefaults.colors(),
@@ -124,7 +120,11 @@ internal fun YearPicker(
                 }
             }
         )
-        Divider(modifier = Modifier.fillMaxWidth(), color = ColorAsset.G5, thickness = 1.dp)
+        Divider(
+            modifier = Modifier.fillMaxWidth(),
+            color = ColorAsset.G5,
+            thickness = 1.dp
+        )
         AnimatedVisibility(
             modifier = Modifier
                 .fillMaxWidth()

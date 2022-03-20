@@ -25,49 +25,37 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.edit
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.cancellable
-import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.domain.constant.Gender
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.shared.android.constant.DataStoreKey
 import team.applemango.runnerbe.shared.android.extension.dataStore
+import team.applemango.runnerbe.shared.android.extension.defaultCatch
 import team.applemango.runnerbe.shared.compose.component.ToggleButton
 import team.applemango.runnerbe.shared.compose.default.RunnerbeToggleButtonDefaults
-import team.applemango.runnerbe.shared.domain.util.flowExceptionMessage
+import team.applemango.runnerbe.shared.compose.extension.activityViewModel
 
 @Composable
 internal fun GenderPicker(
-    vm: OnboardViewModel,
+    vm: OnboardViewModel = activityViewModel(),
     genderSelectChanged: (isSelected: Boolean) -> Unit,
 ) {
-    val context = LocalContext.current
+    val context = LocalContext.current.applicationContext
     val coroutineScope = rememberCoroutineScope()
     var genderSelectState by remember { mutableStateOf<Gender?>(null) }
 
     LaunchedEffect(Unit) {
-        context
+        val preferences = context
             .dataStore
             .data
-            .cancellable()
-            .catch { exception ->
-                vm.emitException(
-                    Exception(
-                        flowExceptionMessage(
-                            flowName = "GenderPicker DataStore",
-                            exception = exception
-                        )
-                    )
-                )
-            }
-            .collect { preferences ->
-                preferences[DataStoreKey.Onboard.Gender]?.let { restoreGenderString ->
-                    genderSelectChanged(true)
-                    genderSelectState = Gender.values().first { it.string == restoreGenderString }
-                } ?: genderSelectChanged(false)
-                cancel("onboard restore execute must be once.")
-            }
+            .defaultCatch(vm = vm)
+            .first()
+
+        preferences[DataStoreKey.Onboard.Gender]?.let { restoreGenderString ->
+            genderSelectChanged(true)
+            genderSelectState = Gender.values().first { it.string == restoreGenderString }
+        } ?: genderSelectChanged(false)
     }
 
     LazyRow(
@@ -77,7 +65,7 @@ internal fun GenderPicker(
             alignment = Alignment.CenterHorizontally
         )
     ) {
-        items(Gender.values().filterNot { it == Gender.All }) { gender ->
+        items(items = Gender.values().filterNot { it == Gender.All }) { gender ->
             ToggleButton(
                 colors = RunnerbeToggleButtonDefaults.colors(),
                 target = gender,

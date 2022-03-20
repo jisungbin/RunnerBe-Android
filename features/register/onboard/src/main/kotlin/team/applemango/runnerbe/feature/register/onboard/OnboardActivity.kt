@@ -167,7 +167,6 @@ class OnboardActivity : ComponentActivity() {
                         .padding(horizontal = 16.dp),
                     navController = navController,
                     scaffoldState = scaffoldState,
-                    vm = vm,
                 )
             }
         }

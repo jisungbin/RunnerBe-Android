@@ -27,52 +27,40 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.edit
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.cancellable
-import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.domain.constant.Job
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.shared.android.constant.DataStoreKey
 import team.applemango.runnerbe.shared.android.extension.dataStore
+import team.applemango.runnerbe.shared.android.extension.defaultCatch
 import team.applemango.runnerbe.shared.compose.component.ToggleButton
 import team.applemango.runnerbe.shared.compose.default.RunnerbeToggleButtonDefaults
-import team.applemango.runnerbe.shared.domain.util.flowExceptionMessage
+import team.applemango.runnerbe.shared.compose.extension.activityViewModel
 
 @Composable
 internal fun JobPicker(
-    vm: OnboardViewModel,
+    vm: OnboardViewModel = activityViewModel(),
     jobSelectChanged: (isSelected: Boolean) -> Unit,
 ) {
-    val context = LocalContext.current
+    val context = LocalContext.current.applicationContext
     val coroutineScope = rememberCoroutineScope()
     var jobSelectState by remember { mutableStateOf<Job?>(null) }
 
     LaunchedEffect(Unit) {
-        context
+        val preferences = context
             .dataStore
             .data
-            .cancellable()
-            .catch { exception ->
-                vm.emitException(
-                    Exception(
-                        flowExceptionMessage(
-                            flowName = "JobPicker DataStore",
-                            exception = exception
-                        )
-                    )
-                )
-            }
-            .collect { preferences ->
-                preferences[DataStoreKey.Onboard.Job]?.let { restoreJobCode ->
-                    jobSelectChanged(true)
-                    jobSelectState = Job.values().first { it.name == restoreJobCode }
-                } ?: jobSelectChanged(false)
-                cancel("onboard restore execute must be once.")
-            }
+            .defaultCatch(vm = vm)
+            .first()
+
+        preferences[DataStoreKey.Onboard.Job]?.let { restoreJobCode ->
+            jobSelectChanged(true)
+            jobSelectState = Job.values().first { it.name == restoreJobCode }
+        } ?: jobSelectChanged(false)
     }
 
-    // FlowLayout 은 디자인이 안이쁘게 되서 수동으로 작성 함
+    // FlowLayout 은 디자인이 안이쁘게 되서 직접 작성 함
     val jobLists = listOf(
         listOf(Job.PSV, Job.EDU, Job.DEV),
         listOf(Job.PSM, Job.DES),
@@ -88,9 +76,9 @@ internal fun JobPicker(
         verticalArrangement = Arrangement.spacedBy(space = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        items(jobLists) { jobList ->
-            LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                items(jobList) { job ->
+        items(items = jobLists) { jobList ->
+            LazyRow(horizontalArrangement = Arrangement.spacedBy(space = 12.dp)) {
+                items(items = jobList) { job ->
                     ToggleButton(
                         colors = RunnerbeToggleButtonDefaults.colors(),
                         target = job,

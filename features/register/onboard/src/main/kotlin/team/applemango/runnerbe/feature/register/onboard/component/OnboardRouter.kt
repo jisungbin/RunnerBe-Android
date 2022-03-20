@@ -30,14 +30,17 @@ import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.datastore.preferences.core.edit
@@ -46,6 +49,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.skydoves.landscapist.rememberDrawablePainter
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
@@ -59,8 +63,12 @@ import team.applemango.runnerbe.feature.register.onboard.component.step.YearPick
 import team.applemango.runnerbe.feature.register.onboard.constant.Step
 import team.applemango.runnerbe.shared.android.constant.DataStoreKey
 import team.applemango.runnerbe.shared.android.extension.changeActivityWithAnimation
+import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.android.extension.dataStore
+import team.applemango.runnerbe.shared.android.extension.defaultCatch
 import team.applemango.runnerbe.shared.compose.component.RunnerbeDialog
+import team.applemango.runnerbe.shared.compose.extension.activityViewModel
+import team.applemango.runnerbe.shared.compose.extension.getActivity
 import team.applemango.runnerbe.shared.compose.extension.presentationDrawableOf
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
@@ -70,16 +78,18 @@ import team.applemango.runnerbe.util.MainActivityAlias
 private var lastBackPressedTime = 0L
 
 @Composable
-@OptIn(ExperimentalAnimationApi::class)
+@OptIn(ExperimentalAnimationApi::class) // AnimatedNavHost
 internal fun OnboardRouter(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     navController: NavHostController,
     scaffoldState: ScaffoldState,
-    vm: OnboardViewModel,
+    vm: OnboardViewModel = activityViewModel(),
 ) {
-    val context = LocalContext.current
-    val activity = context as Activity
+    val context = LocalContext.current.applicationContext
+    val activity = getActivity()
+    val lifecycleOwner = LocalLifecycleOwner.current
     val coroutineScope = rememberCoroutineScope()
+
     var stepIndexState by remember { mutableStateOf(0) }
     var stepIndexStringState by remember { mutableStateOf("") }
     var photoState by remember { mutableStateOf<Bitmap?>(null) }
@@ -96,9 +106,14 @@ internal fun OnboardRouter(
         else -> stepIndexState
     }
 
-    // TODO: 로직 개선 - 굉장히 안 좋은 방법 같음
-    if (stepIndexState != 0) {
-        stepIndexStringState = "$stepIndexState/4"
+    LaunchedEffect(Unit) {
+        snapshotFlow { stepIndexState }
+            .defaultCatch(vm = vm)
+            .collectWithLifecycle(lifecycleOwner = lifecycleOwner) { stepIndex ->
+                if (stepIndex != 0) {
+                    stepIndexStringState = "$stepIndex/4"
+                }
+            }
     }
 
     UnregisterDialog(
@@ -108,19 +123,21 @@ internal fun OnboardRouter(
         }
     )
 
-    fun confirmFinish() {
+    suspend fun confirmFinish() {
         val nowBackPressedTime = System.currentTimeMillis()
         if (nowBackPressedTime - lastBackPressedTime <= 2000) { // 2로 내에 다시 누름
             activity.finish()
         } else {
-            coroutineScope.launch {
-                lastBackPressedTime = nowBackPressedTime
-                scaffoldState.snackbarHostState.showSnackbar(StringAsset.Snackbar.ConfirmFinish)
-            }
-            // snackbarHostState.showSnackbar keeps the coroutine scope in the suspended state until the snackbar is dismissed.
-            coroutineScope.launch {
-                delay(2000)
-                scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
+            coroutineScope {
+                launch {
+                    lastBackPressedTime = nowBackPressedTime
+                    scaffoldState.snackbarHostState.showSnackbar(StringAsset.Snackbar.ConfirmFinish)
+                }
+                // snackbarHostState.showSnackbar keeps the coroutine scope in the suspended state until the snackbar is dismissed.
+                launch {
+                    delay(2000)
+                    scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
+                }
             }
         }
     }
@@ -196,7 +213,6 @@ internal fun OnboardRouter(
                     }
                 ) {
                     TermsTable(
-                        vm = vm,
                         onAllTermsCheckStateChanged = { allChecked ->
                             enableGoNextStepState = allChecked
                         }
@@ -212,7 +228,6 @@ internal fun OnboardRouter(
                     }
                 ) {
                     YearPicker(
-                        vm = vm,
                         selectedYearChanged = { isAdult ->
                             enableGoNextStepState = isAdult
                         }
@@ -228,7 +243,6 @@ internal fun OnboardRouter(
                     }
                 ) {
                     GenderPicker(
-                        vm = vm,
                         genderSelectChanged = { isSelected ->
                             enableGoNextStepState = isSelected
                         }
@@ -244,7 +258,6 @@ internal fun OnboardRouter(
                     }
                 ) {
                     JobPicker(
-                        vm = vm,
                         jobSelectChanged = { isSelected ->
                             enableGoNextStepState = isSelected
                         }
@@ -261,7 +274,7 @@ internal fun OnboardRouter(
                         navController.navigate(Step.VerifyWithEmployeeId.name)
                     }
                 ) {
-                    EmailVerify(vm = vm)
+                    EmailVerify()
                 }
             }
             composable(route = Step.VerifyWithEmployeeId.name) { // 사원증으로 인증
@@ -290,7 +303,9 @@ internal fun OnboardRouter(
             }
             composable(route = Step.VerifyWithEmailDone.name) { // 이메일 인증 완료 -> 회원가입 끝
                 BackHandler {
-                    confirmFinish()
+                    coroutineScope.launch {
+                        confirmFinish()
+                    }
                 }
                 OnboardContent(
                     step = Step.VerifyWithEmailDone,
@@ -313,7 +328,9 @@ internal fun OnboardRouter(
             }
             composable(route = Step.VerifyWithEmployeeIdRequestDone.name) { // 사원증 제출 완료 -> 회원가입 요청 완료
                 BackHandler {
-                    confirmFinish()
+                    coroutineScope.launch {
+                        confirmFinish()
+                    }
                 }
                 OnboardContent(
                     step = Step.VerifyWithEmployeeIdRequestDone,

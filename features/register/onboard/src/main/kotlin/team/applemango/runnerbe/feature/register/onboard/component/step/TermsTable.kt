@@ -40,20 +40,19 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.edit
 import com.skydoves.landscapist.rememberDrawablePainter
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.cancellable
-import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.util.Web
 import team.applemango.runnerbe.shared.android.constant.DataStoreKey
 import team.applemango.runnerbe.shared.android.extension.dataStore
+import team.applemango.runnerbe.shared.android.extension.defaultCatch
 import team.applemango.runnerbe.shared.compose.default.RunnerbeCheckBoxDefaults
+import team.applemango.runnerbe.shared.compose.extension.activityViewModel
 import team.applemango.runnerbe.shared.compose.extension.presentationDrawableOf
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
-import team.applemango.runnerbe.shared.domain.util.flowExceptionMessage
 
 private val VerticalPadding = 25.dp
 private val HorizontalPadding = 12.dp
@@ -61,10 +60,10 @@ private val TermsTableShape = RoundedCornerShape(10.dp)
 
 @Composable
 internal fun TermsTable(
-    vm: OnboardViewModel,
+    vm: OnboardViewModel = activityViewModel(),
     onAllTermsCheckStateChanged: (allChecked: Boolean) -> Unit,
 ) {
-    val context = LocalContext.current
+    val context = LocalContext.current.applicationContext
     val coroutineScope = rememberCoroutineScope()
     var isAllTermsCheckedState by remember { mutableStateOf(false) }
     val termsCheckState = remember { mutableStateListOf(false, false, false) }
@@ -101,28 +100,17 @@ internal fun TermsTable(
 
     // 위치 고정 (toggleAllTermsCheck 함수 사용)
     LaunchedEffect(Unit) {
-        context
+        val preferences = context
             .dataStore
             .data
-            .cancellable()
-            .catch { exception ->
-                vm.emitException(
-                    Exception(
-                        flowExceptionMessage(
-                            flowName = "TermsTable DataStore",
-                            exception = exception
-                        )
-                    )
-                )
-            }
-            .collect { preferences ->
-                if (preferences[DataStoreKey.Onboard.TermsAllCheck] == true) {
-                    toggleAllTermsCheck(nowState = false) // state toggle -> false -> true
-                } else {
-                    onAllTermsCheckStateChanged(false)
-                }
-                cancel("onboard restore execute must be once.")
-            }
+            .defaultCatch(vm = vm)
+            .first()
+
+        if (preferences[DataStoreKey.Onboard.TermsAllCheck] == true) {
+            toggleAllTermsCheck(nowState = false) // state toggle: false -> true
+        } else {
+            onAllTermsCheckStateChanged(false)
+        }
     }
 
     Column(
@@ -165,7 +153,7 @@ internal fun TermsTable(
                 .padding(horizontal = HorizontalPadding),
             verticalArrangement = Arrangement.spacedBy(18.dp)
         ) {
-            items(3) { number ->
+            items(count = 3) { number ->
                 val label: String
                 val link: Web.Link
                 when (number) {
@@ -204,7 +192,9 @@ internal fun TermsTable(
                         )
                     }
                     Icon(
-                        modifier = Modifier.clickable { Web.open(context, link) },
+                        modifier = Modifier.clickable {
+                            Web.open(context, link)
+                        },
                         painter = rememberDrawablePainter(presentationDrawableOf("ic_round_arrow_right_24")),
                         contentDescription = null,
                         tint = ColorAsset.G4

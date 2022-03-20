@@ -44,46 +44,50 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.flowWithLifecycle
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.cancellable
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.feature.register.onboard.OnboardViewModel
 import team.applemango.runnerbe.feature.register.onboard.asset.StringAsset
 import team.applemango.runnerbe.feature.register.onboard.constant.EmailVerifyState
 import team.applemango.runnerbe.shared.android.constant.DataStoreKey
 import team.applemango.runnerbe.shared.android.extension.dataStore
+import team.applemango.runnerbe.shared.android.extension.defaultCatch
 import team.applemango.runnerbe.shared.compose.component.RunnerbeDialog
+import team.applemango.runnerbe.shared.compose.extension.activityViewModel
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.domain.extension.runIf
 import team.applemango.runnerbe.shared.domain.extension.toMessage
-import team.applemango.runnerbe.shared.domain.util.flowExceptionMessage
 
 private const val EmailVerifyStateDoneMessage = "EmailVerifyStateDone"
 private val Shape = RoundedCornerShape(8.dp)
 
-@OptIn(FlowPreview::class)
+@OptIn(FlowPreview::class) // Flow<T>.debounce
 @Composable
-internal fun EmailVerify(vm: OnboardViewModel) {
-    val context = LocalContext.current
+internal fun EmailVerify(vm: OnboardViewModel = activityViewModel()) {
+    val context = LocalContext.current.applicationContext
     val focusManager = LocalFocusManager.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val coroutineScope = rememberCoroutineScope()
-    var emailSentState by remember { mutableStateOf(false) }
-    val emailInputFlow = remember { MutableStateFlow("") }
+
+    val emailInputFlow = remember { MutableStateFlow(TextFieldValue()) }
     val emailInputFlowWithLifecycle = remember(emailInputFlow, lifecycleOwner) {
-        emailInputFlow.flowWithLifecycle(lifecycleOwner.lifecycle)
+        emailInputFlow
+            .defaultCatch(vm = vm)
+            .flowWithLifecycle(lifecycle = lifecycleOwner.lifecycle)
     }
-    val emailInputStateWithLifecycle by emailInputFlowWithLifecycle.collectAsState("")
+    val emailInputStateWithLifecycle by emailInputFlowWithLifecycle.collectAsState(TextFieldValue())
+
+    var emailSentState by remember { mutableStateOf(false) }
     var emailVerifyState by remember { mutableStateOf<EmailVerifyState>(EmailVerifyState.None) }
     var emailSendButtonEnabledState by remember { mutableStateOf(false) }
     var emailVerifyNoticeDialogVisibleState by remember { mutableStateOf(true) }
@@ -109,36 +113,21 @@ internal fun EmailVerify(vm: OnboardViewModel) {
     )
 
     LaunchedEffect(Unit) {
-        context
+        val preferences = context
             .dataStore
             .data
-            .cancellable()
-            .catch { exception ->
-                vm.emitException(
-                    Exception(
-                        flowExceptionMessage(
-                            flowName = "EmailVerify DataStore",
-                            exception = exception
-                        )
-                    )
-                )
-            }
-            .collect { preferences ->
-                preferences[DataStoreKey.Onboard.Email]?.let { restoreEmail ->
-                    emailInputFlow.emit(restoreEmail)
-                    emailSendButtonEnabledState =
-                        Patterns.EMAIL_ADDRESS.matcher(restoreEmail).matches()
-                }
-                cancel("onboard restore execute must be once.")
-            }
-    }
+            .defaultCatch(vm = vm)
+            .first()
+        preferences[DataStoreKey.Onboard.Email]?.let { restoreEmail ->
+            emailInputFlow.emit(TextFieldValue(text = restoreEmail))
+            emailSendButtonEnabledState = Patterns.EMAIL_ADDRESS.matcher(restoreEmail).matches()
+        }
 
-    LaunchedEffect(Unit) {
         emailInputFlowWithLifecycle
             .debounce(300L)
             .collect { email ->
                 context.dataStore.edit { preferences ->
-                    preferences[DataStoreKey.Onboard.Email] = email
+                    preferences[DataStoreKey.Onboard.Email] = email.text
                 }
             }
     }
@@ -161,9 +150,9 @@ internal fun EmailVerify(vm: OnboardViewModel) {
                     if (emailVerifyState == EmailVerifyState.Sent) {
                         emailVerifyState = EmailVerifyState.None
                     }
-                    if (!inputEmail.contains(" ")) {
+                    if (!inputEmail.text.contains(" ")) {
                         emailSendButtonEnabledState =
-                            Patterns.EMAIL_ADDRESS.matcher(inputEmail).matches()
+                            Patterns.EMAIL_ADDRESS.matcher(inputEmail.text).matches()
                         coroutineScope.launch {
                             emailInputFlow.emit(inputEmail)
                         }
@@ -207,12 +196,13 @@ internal fun EmailVerify(vm: OnboardViewModel) {
                             indication = rememberRipple(),
                             interactionSource = remember { MutableInteractionSource() },
                             onClick = {
+                                // TODO: reduce depth
                                 coroutineScope.launch {
                                     emailVerifyState = EmailVerifyState.Loading
                                     val email = emailInputFlow.value
-                                    if (vm.checkUsableEmail(email)) {
+                                    if (vm.checkUsableEmail(email.text)) {
                                         vm.sendVerifyMail(
-                                            email = email,
+                                            email = email.text,
                                             onSuccess = {
                                                 emailSentState = true
                                                 emailVerifyState = EmailVerifyState.Sent
