@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.shared.android.extension
+package team.applemango.runnerbe.shared.domain.extension
 
 import android.os.Build
 import java.util.regex.Pattern
