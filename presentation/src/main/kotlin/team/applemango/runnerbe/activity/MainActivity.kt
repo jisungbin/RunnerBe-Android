@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         }
         binding.bnvMenu.setupWithNavController(navController)
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, windowInsets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, windowInsets ->
             val types = WindowInsetsCompat.Type.systemBars()
             val systemBarsInset = windowInsets.getInsets(types)
             binding.viewNavigationBarColor.updateLayoutParams {
