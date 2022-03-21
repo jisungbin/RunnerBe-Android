@@ -46,10 +46,14 @@ import team.applemango.runnerbe.shared.compose.component.RunningItemTypeToggleBa
 import team.applemango.runnerbe.shared.compose.default.RunnerbeCheckBoxDefaults
 import team.applemango.runnerbe.shared.compose.extension.activityViewModel
 import team.applemango.runnerbe.shared.compose.extension.noRippleClickable
+import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(
+    ExperimentalFoundationApi::class, // Modifier.animateItemPlacement()
+    LocalActivityUsageApi::class // activityViewModel()
+)
 @Composable
 internal fun MainBoardComposable(
     modifier: Modifier = Modifier,

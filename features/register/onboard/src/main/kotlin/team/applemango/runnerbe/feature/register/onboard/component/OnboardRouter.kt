@@ -9,7 +9,6 @@
 
 package team.applemango.runnerbe.feature.register.onboard.component
 
-import android.app.Activity
 import android.graphics.Bitmap
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.Crossfade
@@ -66,8 +65,9 @@ import team.applemango.runnerbe.shared.android.extension.changeActivityWithAnima
 import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.android.extension.dataStore
 import team.applemango.runnerbe.shared.compose.component.RunnerbeDialog
-import team.applemango.runnerbe.shared.compose.extension.getActivity
+import team.applemango.runnerbe.shared.compose.extension.LocalActivity
 import team.applemango.runnerbe.shared.compose.extension.presentationDrawableOf
+import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.domain.extension.defaultCatch
@@ -82,7 +82,10 @@ private var lastBackPressedTime = 0L
 // 이는 OnboardActivity 에서 해주고 있으므로,
 // OnboardActivity 에서 vm 를 가져와야 함
 @Composable
-@OptIn(ExperimentalAnimationApi::class) // AnimatedNavHost
+@OptIn(
+    ExperimentalAnimationApi::class, // AnimatedNavHost
+    LocalActivityUsageApi::class // LocalActivity
+)
 internal fun OnboardRouter(
     modifier: Modifier = Modifier,
     navController: NavHostController,
@@ -90,7 +93,7 @@ internal fun OnboardRouter(
     vm: OnboardViewModel,
 ) {
     val context = LocalContext.current.applicationContext
-    val activity = getActivity()
+    val activity = LocalActivity.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val coroutineScope = rememberCoroutineScope()
 
@@ -358,12 +361,14 @@ internal fun OnboardRouter(
     }
 }
 
+@OptIn(LocalActivityUsageApi::class) // LocalActivity
 @Composable
 private fun UnregisterDialog(
     visible: Boolean,
     onDismissRequest: () -> Unit,
 ) {
-    val context = LocalContext.current as Activity
+    val context = LocalContext.current.applicationContext
+    val activity = LocalActivity.current
     val coroutineScope = rememberCoroutineScope()
 
     RunnerbeDialog(
@@ -378,7 +383,7 @@ private fun UnregisterDialog(
                         preferences[DataStoreKey.Onboard.Unregister] = true
                     }
                 }
-                context.changeActivityWithAnimation<MainActivityAlias>()
+                activity.changeActivityWithAnimation<MainActivityAlias>()
             }
         },
         negativeButton = {

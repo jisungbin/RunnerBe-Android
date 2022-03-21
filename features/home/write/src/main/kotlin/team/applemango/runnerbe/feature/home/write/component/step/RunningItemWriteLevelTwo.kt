@@ -62,6 +62,7 @@ import team.applemango.runnerbe.shared.compose.default.RunnerbeCheckBoxDefaults
 import team.applemango.runnerbe.shared.compose.default.RunnerbeRangePickerDefaults
 import team.applemango.runnerbe.shared.compose.default.RunnerbeToggleButtonDefaults
 import team.applemango.runnerbe.shared.compose.extension.activityViewModel
+import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.compose.theme.animatedColorState
@@ -70,6 +71,7 @@ import team.applemango.runnerbe.xml.rangepicker.RangePicker
 
 private const val DefaultMapCameraZoom = 7f
 
+@OptIn(LocalActivityUsageApi::class) // activityViewModel()
 @Composable
 internal fun RunningItemWriteLevelTwo(
     modifier: Modifier = Modifier,

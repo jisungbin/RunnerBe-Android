@@ -26,6 +26,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
@@ -42,6 +43,8 @@ import team.applemango.runnerbe.shared.android.extension.basicExceptionHandler
 import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.android.extension.setWindowInsets
 import team.applemango.runnerbe.shared.android.extension.toast
+import team.applemango.runnerbe.shared.compose.extension.LocalActivity
+import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
 import team.applemango.runnerbe.shared.domain.extension.defaultCatch
@@ -52,6 +55,7 @@ class MainBoardFragment : Fragment() {
     private val vm: MainBoardViewModel by activityViewModels()
     private val isEmptyState = MutableStateFlow(false)
 
+    @OptIn(LocalActivityUsageApi::class) // LocalActivity usage
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -59,15 +63,17 @@ class MainBoardFragment : Fragment() {
     ) = ComposeView(requireActivity()).apply {
         setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
         setContent {
-            MainBoardComposable(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(brush = GradientAsset.BlackGradientBrush)
-                    .statusBarsPadding()
-                    .padding(16.dp),
-                isBookmarkPage = arguments?.getBoolean("bookmark") ?: false,
-                isEmptyState = isEmptyState.collectAsState().value
-            )
+            CompositionLocalProvider(LocalActivity provides requireActivity()) {
+                MainBoardComposable(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(brush = GradientAsset.BlackGradientBrush)
+                        .statusBarsPadding()
+                        .padding(16.dp),
+                    isBookmarkPage = arguments?.getBoolean("bookmark") ?: false,
+                    isEmptyState = isEmptyState.collectAsState().value
+                )
+            }
         }
     }
 

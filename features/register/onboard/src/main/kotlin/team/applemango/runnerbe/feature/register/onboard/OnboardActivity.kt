@@ -23,6 +23,7 @@ import androidx.compose.material.Snackbar
 import androidx.compose.material.SnackbarHost
 import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -47,7 +48,9 @@ import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.android.extension.dataStore
 import team.applemango.runnerbe.shared.android.extension.setWindowInsets
 import team.applemango.runnerbe.shared.android.extension.toast
+import team.applemango.runnerbe.shared.compose.extension.LocalActivity
 import team.applemango.runnerbe.shared.compose.extension.verticalInsetsPadding
+import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
@@ -70,7 +73,10 @@ class OnboardActivity : ComponentActivity() {
         }
     }
 
-    @OptIn(ExperimentalAnimationApi::class) // rememberAnimatedNavController
+    @OptIn(
+        ExperimentalAnimationApi::class, // rememberAnimatedNavController
+        LocalActivityUsageApi::class // LocalActivity usage
+    )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -82,54 +88,55 @@ class OnboardActivity : ComponentActivity() {
             }
 
         setContent {
-            val scaffoldState = rememberScaffoldState()
-            val navController = rememberAnimatedNavController()
+            CompositionLocalProvider(LocalActivity provides this) {
+                val scaffoldState = rememberScaffoldState()
+                val navController = rememberAnimatedNavController()
 
-            LaunchedEffect(Unit) {
-                vm.observe(
-                    lifecycleOwner = this@OnboardActivity,
-                    state = ::handleState,
-                    sideEffect = { sideEffect ->
-                        handleRegisterSideEffect(navController, sideEffect)
-                    }
-                )
-                // 이메일 인증 됨 -> photo null 로 회원가입 진행
-                vm.emailVerifyStateFlow
-                    .defaultCatch(action = vm::emitException)
-                    .collectWithLifecycle(this@OnboardActivity) { verified ->
-                        if (verified) {
-                            vm.registerUser(
-                                dataStore = applicationContext.dataStore,
-                                photo = null,
-                                nextStep = Step.VerifyWithEmailDone
-                            )
+                LaunchedEffect(Unit) {
+                    vm.observe(
+                        lifecycleOwner = this@OnboardActivity,
+                        state = ::handleState,
+                        sideEffect = { sideEffect ->
+                            handleRegisterSideEffect(navController, sideEffect)
                         }
+                    )
+                    // 이메일 인증 됨 -> photo null 로 회원가입 진행
+                    vm.emailVerifyStateFlow
+                        .defaultCatch(action = vm::emitException)
+                        .collectWithLifecycle(this@OnboardActivity) { verified ->
+                            if (verified) {
+                                vm.registerUser(
+                                    dataStore = applicationContext.dataStore,
+                                    photo = null,
+                                    nextStep = Step.VerifyWithEmailDone
+                                )
+                            }
+                        }
+                    // 이메일 인증 임시 비활성화
+                    val preferences = applicationContext
+                        .dataStore
+                        .data
+                        .defaultCatch(action = vm::emitException)
+                        .first()
+                    val terms = preferences[DataStoreKey.Onboard.TermsAllCheck]
+                    val year = preferences[DataStoreKey.Onboard.Year]
+                    val gender = preferences[DataStoreKey.Onboard.Gender]
+                    val job = preferences[DataStoreKey.Onboard.Job]
+                    // val verifyWithEmail = preferences[DataStoreKey.Onboard.Email]
+                    val lastStepIndex = listOf(
+                        terms,
+                        year,
+                        gender,
+                        job,
+                        // verifyWithEmail,
+                    ).indexOfLast { step ->
+                        step != null
                     }
-                // 이메일 인증 임시 비활성화
-                val preferences = applicationContext
-                    .dataStore
-                    .data
-                    .defaultCatch(action = vm::emitException)
-                    .first()
-                val terms = preferences[DataStoreKey.Onboard.TermsAllCheck]
-                val year = preferences[DataStoreKey.Onboard.Year]
-                val gender = preferences[DataStoreKey.Onboard.Gender]
-                val job = preferences[DataStoreKey.Onboard.Job]
-                // val verifyWithEmail = preferences[DataStoreKey.Onboard.Email]
-                val lastStepIndex = listOf(
-                    terms,
-                    year,
-                    gender,
-                    job,
-                    // verifyWithEmail,
-                ).indexOfLast { step ->
-                    step != null
-                }
-                if (lastStepIndex != -1) {
-                    // NPE occurred
-                    // TODO: 백스택 임의 생성
-                    // https://github.com/applemango-runnerbe/RunnerBe-Android/issues/16
-                    /*(1..lastStepIndex).forEach { backstackIndex ->
+                    if (lastStepIndex != -1) {
+                        // NPE occurred
+                        // TODO: 백스택 임의 생성
+                        // https://github.com/applemango-runnerbe/RunnerBe-Android/issues/16
+                        /*(1..lastStepIndex).forEach { backstackIndex ->
                         navController.backQueue.addLast(
                             NavBackStackEntry.create(
                                 context = this@OnboardActivity,
@@ -137,40 +144,41 @@ class OnboardActivity : ComponentActivity() {
                             )
                         )
                     }*/
-                    navController.navigate(Step.values()[lastStepIndex].name)
-                }
-            }
-
-            Scaffold(
-                modifier = Modifier.fillMaxSize(),
-                scaffoldState = scaffoldState,
-                snackbarHost = { snackbarHostState ->
-                    SnackbarHost(
-                        modifier = Modifier
-                            .verticalInsetsPadding()
-                            .padding(bottom = 30.dp)
-                            .padding(horizontal = 30.dp),
-                        hostState = snackbarHostState
-                    ) { snackbarData ->
-                        Snackbar(backgroundColor = ColorAsset.G5) {
-                            Text(
-                                text = snackbarData.message,
-                                style = Typography.Body14R.copy(color = ColorAsset.Primary)
-                            )
-                        }
+                        navController.navigate(Step.values()[lastStepIndex].name)
                     }
                 }
-            ) { // Scaffold 는 backgroundColor 로 Brush 가 안되서 이렇게 함
-                OnboardRouter(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(brush = GradientAsset.BlackGradientBrush)
-                        .verticalInsetsPadding()
-                        .padding(horizontal = 16.dp),
-                    navController = navController,
+
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
                     scaffoldState = scaffoldState,
-                    vm = vm
-                )
+                    snackbarHost = { snackbarHostState ->
+                        SnackbarHost(
+                            modifier = Modifier
+                                .verticalInsetsPadding()
+                                .padding(bottom = 30.dp)
+                                .padding(horizontal = 30.dp),
+                            hostState = snackbarHostState
+                        ) { snackbarData ->
+                            Snackbar(backgroundColor = ColorAsset.G5) {
+                                Text(
+                                    text = snackbarData.message,
+                                    style = Typography.Body14R.copy(color = ColorAsset.Primary)
+                                )
+                            }
+                        }
+                    }
+                ) { // Scaffold 는 backgroundColor 로 Brush 가 안되서 이렇게 함
+                    OnboardRouter(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(brush = GradientAsset.BlackGradientBrush)
+                            .verticalInsetsPadding()
+                            .padding(horizontal = 16.dp),
+                        navController = navController,
+                        scaffoldState = scaffoldState,
+                        vm = vm
+                    )
+                }
             }
         }
     }

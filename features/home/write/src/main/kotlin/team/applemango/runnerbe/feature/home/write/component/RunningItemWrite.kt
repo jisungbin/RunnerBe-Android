@@ -18,7 +18,6 @@
 
 package team.applemango.runnerbe.feature.home.write.component
 
-import android.app.Activity
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -38,7 +37,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -49,19 +47,21 @@ import team.applemango.runnerbe.feature.home.write.component.step.RunningItemWri
 import team.applemango.runnerbe.feature.home.write.component.step.RunningItemWriteLevelTwo
 import team.applemango.runnerbe.feature.home.write.constant.WritingLevel
 import team.applemango.runnerbe.shared.compose.component.RunningItemTypeToggleBar
+import team.applemango.runnerbe.shared.compose.extension.LocalActivity
 import team.applemango.runnerbe.shared.compose.extension.activityViewModel
+import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.compose.theme.animatedColorState
 import team.applemango.runnerbe.shared.domain.extension.runIf
 
+@OptIn(LocalActivityUsageApi::class) // activityViewModel()
 @Composable
 internal fun RunningItemWrite(
     modifier: Modifier = Modifier,
     vm: RunningItemWriteViewModel = activityViewModel(),
 ) {
-    val context = LocalContext.current
-    val activity = context as Activity
+    val activity = LocalActivity.current
     var selectedRunningItemType = remember { RunningItemType.Before }
     val fieldsAllInputState = remember { mutableStateListOf(false, false) }
     var writingLevel by remember { mutableStateOf(WritingLevel.One) }
