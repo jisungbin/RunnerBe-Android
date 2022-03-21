@@ -9,25 +9,27 @@
 
 package team.applemango.runnerbe.shared.compose.extension
 
-import android.app.Activity
+import android.content.res.Resources
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
+import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 
 private const val PresentationPackage = "team.applemango.runnerbe"
 
+@LocalActivityUsageApi
 @Composable
-fun presentationDrawableOf(name: String) = (LocalContext.current as Activity).run {
+fun presentationDrawableOf(name: String) = LocalActivity.current.run {
     getDrawable(
         resources.getIdentifier(
             name,
             "drawable",
             PresentationPackage
         )
-    ) ?: throw Exception("$name resource is unavailable.")
+    ) ?: throw Resources.NotFoundException("$name resource is unavailable.")
 }
 
+@LocalActivityUsageApi
 @Composable
-fun presentationStringOf(name: String) = (LocalContext.current as Activity).run {
+fun presentationStringOf(name: String) = LocalActivity.current.run {
     getString(
         resources.getIdentifier(
             name,

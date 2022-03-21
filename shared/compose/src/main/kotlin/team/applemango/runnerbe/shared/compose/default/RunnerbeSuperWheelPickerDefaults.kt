@@ -26,7 +26,9 @@ object RunnerbeSuperWheelPickerDefaults {
 
     @Composable
     fun textStyle(): SuperWheelPickerTextStyle {
-        val context = LocalContext.current
+        // Resource load 는 Application Context 에서 해도 됨
+        // See: https://blog.naver.com/dauni6/222647078598
+        val context = LocalContext.current.applicationContext
         return SuperWheelPickerTextStyle(
             typeface = FontTypeface.Roboto.regular(context),
             textSize = 24.px,

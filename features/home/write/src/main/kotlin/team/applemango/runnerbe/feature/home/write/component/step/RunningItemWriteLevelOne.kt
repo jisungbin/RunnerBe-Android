@@ -64,12 +64,14 @@ import team.applemango.runnerbe.feature.home.write.util.extension.toAddress
 import team.applemango.runnerbe.feature.home.write.util.extension.toLatLng
 import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.compose.extension.activityViewModel
+import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 
 private const val DefaultMapCameraZoom = 7f
 private val DefaultFieldShape = RoundedCornerShape(6.dp)
 
+@OptIn(LocalActivityUsageApi::class) // activityViewModel()
 @Composable
 internal fun RunningItemWriteLevelOne(
     modifier: Modifier = Modifier,
@@ -77,7 +79,7 @@ internal fun RunningItemWriteLevelOne(
     vm: RunningItemWriteViewModel = activityViewModel(),
     fieldsAllInputStateChange: (state: Boolean) -> Unit,
 ) {
-    val context = LocalContext.current
+    val context = LocalContext.current.applicationContext
     val lifecycleOwner = LocalLifecycleOwner.current
 
     var titleField by remember { mutableStateOf(TextFieldValue()) }
