@@ -61,7 +61,6 @@ object Dependencies {
     }
 
     val SharedKtx = listOf(
-        "androidx.core:core-ktx:${Versions.Ktx.Core}",
         "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.Ktx.Lifecycle}",
         "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.Ktx.Lifecycle}"
     )

@@ -13,6 +13,7 @@ plugins {
 }
 
 dependencies {
+    api(Dependencies.EachKtx.Core)
     api(project(ProjectConstants.Di))
     api(Dependencies.Jetpack.DataStore)
     api(project(ProjectConstants.Domain))
