@@ -8,7 +8,7 @@
 
 # 답변
 
-<img src="https://user-images.githubusercontent.com/40740128/158842654-f303e1fc-6351-4275-bcba-5f8f1dd0cff6.png" width="33%" />
+<img src="https://user-images.githubusercontent.com/40740128/158842654-f303e1fc-6351-4275-bcba-5f8f1dd0cff6.png" width="33%" alt="answer" />
 
 # 해결 방법
 

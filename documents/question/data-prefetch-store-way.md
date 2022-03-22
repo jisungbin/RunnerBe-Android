@@ -1,7 +1,7 @@
 안녕하세요! 스플래시에서 데이터를 prefetch 해주고 있는데, 이렇게 저장한 데이터를 코틀린의 object 클래스에 저장하고 있습니다.
 이때 불러오는 데이터의 목적은 메인 화면에서 아래 사진처럼 보여질 리스트들의 데이터 입니다.
 
-<img src="https://user-images.githubusercontent.com/40740128/158814398-97b76bbb-b279-49aa-bad6-1fdd6a8741b1.png" width="33%" />
+<img src="https://user-images.githubusercontent.com/40740128/158814398-97b76bbb-b279-49aa-bad6-1fdd6a8741b1.png" width="33%" alt="preview"/>
 
 이 데이터들을 저장하는 object 클래스는 이렇게 생겼습니다.
 
