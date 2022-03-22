@@ -16,7 +16,6 @@ import androidx.compose.ui.platform.LocalContext
 @Composable
 internal fun BoardDetail(
     modifier: Modifier = Modifier,
-    isLoading: Boolean,
 ) {
     val context = LocalContext.current
 }

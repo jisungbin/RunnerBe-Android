@@ -12,13 +12,30 @@ package team.applemango.runnerbe.feature.home.detail
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
+import androidx.compose.animation.Crossfade
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import dagger.hilt.android.AndroidEntryPoint
+import org.orbitmvi.orbit.viewmodel.observe
+import team.applemango.runnerbe.domain.runningitem.model.runningitem.information.RunningItemInformation
+import team.applemango.runnerbe.feature.home.detail.mvi.DetailLoadState
+import team.applemango.runnerbe.feature.home.detail.mvi.DetailSideEffect
+import team.applemango.runnerbe.shared.android.extension.basicExceptionHandler
+import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.android.extension.finishWithAnimation
 import team.applemango.runnerbe.shared.android.extension.setWindowInsets
 import team.applemango.runnerbe.shared.android.extension.toast
 import team.applemango.runnerbe.shared.domain.constant.Intent
+import team.applemango.runnerbe.shared.domain.extension.defaultCatch
 
+@AndroidEntryPoint
 class DetailActivity : ComponentActivity() {
 
+    private val vm: DetailViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,10 +47,75 @@ class DetailActivity : ComponentActivity() {
             return
         }
 
+        vm.exceptionFlow
+            .defaultCatch(action = ::basicExceptionHandler)
+            .collectWithLifecycle(lifecycleOwner = this) { exception ->
+                basicExceptionHandler(exception)
+            }
+
         setWindowInsets()
         setContent {
+            var loadState by remember { mutableStateOf(DetailLoadState.Load) }
+            var runningItemInformation by remember { mutableStateOf<RunningItemInformation?>(null) }
 
+            LaunchedEffect(Unit) {
+                vm.observe(
+                    lifecycleOwner = this@DetailActivity,
+                    state = { state ->
+                        handleState(
+                            state = state,
+                            updateLoadState = { newState ->
+                                loadState = newState
+                            }
+                        )
+                    },
+                    sideEffect = { sideEffect ->
+                        handleSideEffect(
+                            sideEffect = sideEffect,
+                            updateRunningItemInformation = { loadedRunningItemInformation ->
+                                runningItemInformation = loadedRunningItemInformation
+                            }
+                        )
+                    }
+                )
+            }
+
+            Crossfade(targetState = runningItemInformation != null) { isLoaded ->
+                when (isLoaded) {
+                    true -> {
+                        // TODO: DetailView Composable (use BoardDetail composable)
+                    }
+                    else -> {
+                        // TODO: Loading Composable
+                    }
+                }
+            }
         }
     }
 
+    private fun handleState(
+        state: DetailLoadState,
+        updateLoadState: (state: DetailLoadState) -> Unit,
+    ) {
+        when (state) {
+            DetailLoadState.Load, DetailLoadState.Done -> {
+                updateLoadState(state)
+            }
+            DetailLoadState.NotVerified -> {
+                toast(getString(R.string.detail_toast_not_verified_account))
+                finishWithAnimation()
+            }
+        }
+    }
+
+    private fun handleSideEffect(
+        sideEffect: DetailSideEffect,
+        updateRunningItemInformation: (item: RunningItemInformation) -> Unit,
+    ) {
+        when (sideEffect) {
+            is DetailSideEffect.LoadDone -> {
+                updateRunningItemInformation(sideEffect.item)
+            }
+        }
+    }
 }
