@@ -56,7 +56,7 @@
 
 # 🔖 코드 설명
 
-> 작성 중
+[documents/code-guide](https://github.com/runner-be/RunnerBe-Android/tree/develop/documents/code-guide) 를 확인해 주세요.
 
 ---
 
