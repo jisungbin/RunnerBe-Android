@@ -39,4 +39,4 @@
 
 ![](/art/project-dependency-graph/graph.dot.png)
 
-> 점선은 `api` 를 뜻하고, 실선은 `implementation` 을 뜻합니다. 
+> 점선은 `implementation` 을 뜻하고, 실선은 `api` 를 뜻합니다. 
