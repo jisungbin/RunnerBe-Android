@@ -1,11 +1,4 @@
-/*
- * RunnerBe © 2022 Team AppleMango. all rights reserved.
- * RunnerBe license is under the MIT.
- *
- * [tag.kt] created by Ji Sungbin on 22. 3. 20. 오후 11:34
- *
- * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
- */
+// Thanks: https://github.com/JakeWharton/timber/blob/trunk/timber/src/main/java/timber/log/Timber.kt#L204
 
 package team.applemango.runnerbe.shared.domain.extension
 
