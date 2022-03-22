@@ -15,6 +15,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
 import team.applemango.runnerbe.domain.runningitem.repository.RunningItemRepository
+import team.applemango.runnerbe.domain.runningitem.usecase.LoadRunningItemDetailUseCase
 import team.applemango.runnerbe.domain.runningitem.usecase.LoadRunningItemsUseCase
 import team.applemango.runnerbe.domain.runningitem.usecase.WriteRunningItemUseCase
 
@@ -30,4 +31,9 @@ object RunningItemUseCaseModule {
     @ViewModelScoped
     fun provideWriteRunningItemUseCase(repo: RunningItemRepository): WriteRunningItemUseCase =
         WriteRunningItemUseCase(repo)
+
+    @Provides
+    @ViewModelScoped
+    fun provideLoadRunningItemDetailUseCase(repo: RunningItemRepository): LoadRunningItemDetailUseCase =
+        LoadRunningItemDetailUseCase(repo)
 }
