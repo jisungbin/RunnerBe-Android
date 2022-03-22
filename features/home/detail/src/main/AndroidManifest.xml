@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ RunnerBe © 2022 Team AppleMango. all rights reserved.
+  ~ RunnerBe license is under the MIT.
+  ~
+  ~ [AndroidManifest.xml] created by Ji Sungbin on 22. 3. 22. 오후 10:07
+  ~
+  ~ Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
+  -->
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="team.applemango.runnerbe.feature.home.detail">
+
+    <application tools:ignore="MissingApplicationIcon">
+        <activity android:name=".DetailActivity" />
+    </application>
+
+</manifest>
