@@ -50,13 +50,3 @@ internal fun <T> Response<T>.requireSuccessfulBody(
         )
     }
 }
-
-@Deprecated("Use the resultVerifyBuilder argument of the Response<T>.requireSuccessfulBody function instead.")
-internal fun Response<LoginRequestResponse>.requireSuccessfulLoginResponse(platformName: String): LoginRequestResponse {
-    val body = requireSuccessfulBody("$platformName login") { true }
-    if (body.isSuccess == true && body.code in 1001..1002 && body.loginResult != null) {
-        return body
-    } else {
-        throw Exception(body.message ?: REQUEST_EXCEPTION)
-    }
-}
