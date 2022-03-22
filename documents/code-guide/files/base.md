@@ -32,7 +32,7 @@
 - WindowInsets
   - UI 디테일을 위해 기본 WindowInsets 들을 모두 사용하지 않습니다.
 - Coroutine/Flow
-  - Rx 와 비교하여 Coroutines 이 좀 더 익숙하기에 Rx 대신에 사용하였습니다.
+  - Rx 와 비교하여 Coroutines 이 숙련도가 꽤 있기에, Rx 대신에 사용하였습니다.
 - Retrofit, OkHttp
 
 ## Project Dependencies Graph
