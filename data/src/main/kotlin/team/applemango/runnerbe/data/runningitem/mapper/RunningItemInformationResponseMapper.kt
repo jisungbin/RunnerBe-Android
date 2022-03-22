@@ -15,6 +15,12 @@ import team.applemango.runnerbe.domain.runningitem.model.runningitem.information
 import team.applemango.runnerbe.shared.domain.util.notAllowedValueMessage
 import team.applemango.runnerbe.shared.domain.util.requireFieldNullMessage
 
+/**
+ * [RunningItemInformationResponse] doamin 으로 변경
+ *
+ * @return 만약 아직 인증이 되지 않은 유저라면 null 리턴,
+ * 그렇지 않다면 [RunningItemInformation] 리턴
+ */
 internal fun RunningItemInformationResponse.toDomain(): RunningItemInformation? {
     checkNotNull(result) {
         requireFieldNullMessage("result")
@@ -22,7 +28,7 @@ internal fun RunningItemInformationResponse.toDomain(): RunningItemInformation? 
     checkNotNull(code) {
         requireFieldNullMessage("code")
     }
-    check(code in 1015..1020 || code == NotYetVerifyCode) {
+    check(code in 1015..1020) {
         notAllowedValueMessage(code)
     }
     if (code == NotYetVerifyCode) return null

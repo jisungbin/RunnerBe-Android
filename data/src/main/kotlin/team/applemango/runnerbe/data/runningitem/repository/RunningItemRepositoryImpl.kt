@@ -101,22 +101,39 @@ class RunningItemRepositoryImpl : RunningItemRepository {
         }
     }
 
-    override suspend fun loadInformation(
+    override suspend fun loadDetail(
         jwt: String,
         postId: Int,
         userId: Int,
+        useCaching: Boolean,
     ): RunningItemInformation? {
-        val request = runningItemApi.loadInformation(
-            jwt = jwt,
-            postId = postId,
-            userId = userId,
-        )
-        return request.requireSuccessfulBody(
-            requestName = "runningItemApi.getRunningItemInformation",
-            resultVerifyBuilder = { body ->
-                body.code in 1015..1020 || body.code == NotYetVerifyCode
+        suspend fun fetch(): RunningItemInformation? {
+            val request = runningItemApi.loadInformation(
+                jwt = jwt,
+                postId = postId,
+                userId = userId,
+            )
+            return request.requireSuccessfulBody(
+                requestName = "runningItemApi.getRunningItemInformation",
+                resultVerifyBuilder = { body ->
+                    body.code in 1015..1020 || body.code == NotYetVerifyCode
+                }
+            ).toDomain()
+        }
+        return when (useCaching) {
+            true -> {
+                pickOrSuspendEgg(
+                    jwt,
+                    postId.toString(),
+                    userId.toString()
+                ) {
+                    fetch()
+                }
             }
-        ).toDomain()
+            else -> {
+                fetch()
+            }
+        }
     }
 
     override suspend fun finish(jwt: String, postId: Int): Boolean {
