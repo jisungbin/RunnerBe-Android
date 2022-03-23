@@ -1,0 +1,29 @@
+<!--
+  ~ RunnerBe © 2022 Team AppleMango. all rights reserved.
+  ~ RunnerBe license is under the MIT.
+  ~
+  ~ [ic_outlined_bell_24.xml] created by Ji Sungbin on 22. 3. 23. 오전 10:35
+  ~
+  ~ Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M14.9999,19C14.9999,19.7957 14.6838,20.5587 14.1212,21.1213C13.5586,21.6839 12.7955,22 11.9999,22C11.2042,22 10.4412,21.6839 9.8785,21.1213C9.3159,20.5587 8.9999,19.7957 8.9999,19M12.7209,5.003L11.2549,5C7.9109,4.992 5.0079,7.709 4.9849,11V14.79C4.9849,15.58 4.8849,16.351 4.4539,17.008L4.1669,17.446C3.7299,18.11 4.1999,19 4.9849,19H19.0149C19.7999,19 20.2689,18.11 19.8329,17.446L19.5459,17.008C19.1159,16.351 19.0149,15.579 19.0149,14.789V11.001C18.9749,7.709 16.0649,5.011 12.7209,5.003V5.003Z"
+        android:strokeWidth="1.5"
+        android:strokeColor="#6F6F6F"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M12,2C12.5304,2 13.0391,2.2107 13.4142,2.5858C13.7893,2.9609 14,3.4696 14,4V5H10V4C10,3.4696 10.2107,2.9609 10.5858,2.5858C10.9609,2.2107 11.4696,2 12,2Z"
+        android:strokeWidth="1.5"
+        android:strokeColor="#6F6F6F"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+</vector>
