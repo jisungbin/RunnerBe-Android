@@ -10,18 +10,13 @@
 package team.applemango.runnerbe.feature.home.write.model
 
 import androidx.annotation.IntRange
-import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
-import team.applemango.runnerbe.feature.home.write.constant.TimeType
-import team.applemango.runnerbe.shared.domain.extension.format
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
-
-private const val RunningDateFormat = "M/dd (E)"
-const val FullDateFormat = "$RunningDateFormat a h m"
-
-internal fun Date.toDateString() = format(RunningDateFormat)
+import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
+import team.applemango.runnerbe.feature.home.write.constant.TimeType
+import team.applemango.runnerbe.shared.domain.constant.FullDateFormat
 
 private typealias TimeTypeModel = TimeType
 
