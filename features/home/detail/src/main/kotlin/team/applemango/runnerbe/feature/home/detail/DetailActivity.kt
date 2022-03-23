@@ -14,14 +14,17 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import dagger.hilt.android.AndroidEntryPoint
 import org.orbitmvi.orbit.viewmodel.observe
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.information.RunningItemInformation
+import team.applemango.runnerbe.feature.home.detail.component.BoardDetail
 import team.applemango.runnerbe.feature.home.detail.mvi.DetailLoadState
 import team.applemango.runnerbe.feature.home.detail.mvi.DetailSideEffect
 import team.applemango.runnerbe.shared.android.extension.basicExceptionHandler
@@ -80,10 +83,16 @@ class DetailActivity : ComponentActivity() {
                 )
             }
 
-            Crossfade(targetState = runningItemInformation != null) { isLoaded ->
+            Crossfade(
+                modifier = Modifier.fillMaxSize(),
+                targetState = runningItemInformation != null
+            ) { isLoaded ->
                 when (isLoaded) {
                     true -> {
-                        // TODO: DetailView Composable (use BoardDetail composable)
+                        BoardDetail(
+                            modifier = Modifier.fillMaxSize(),
+                            item = runningItemInformation!!
+                        )
                     }
                     else -> {
                         // TODO: Loading Composable
