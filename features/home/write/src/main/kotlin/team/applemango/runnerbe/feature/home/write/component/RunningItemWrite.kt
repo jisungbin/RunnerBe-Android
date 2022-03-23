@@ -63,7 +63,7 @@ internal fun RunningItemWrite(
                         .clickable {
                             activity.finish()
                         },
-                    painter = painterResource(R.drawable.ic_round_left_arrow_24),
+                    painter = painterResource(R.drawable.ic_round_arrow_left_24),
                     contentDescription = null,
                     tint = Color.Unspecified
                 )
