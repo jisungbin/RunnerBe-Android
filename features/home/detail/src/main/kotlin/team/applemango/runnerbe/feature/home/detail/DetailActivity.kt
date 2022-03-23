@@ -98,7 +98,7 @@ class DetailActivity : ComponentActivity() {
                         true -> {
                             BoardDetail(
                                 modifier = Modifier.fillMaxSize(),
-                                item = runningItemInformation!!
+                                runningItemInformation = runningItemInformation!!
                             )
                         }
                         else -> {
