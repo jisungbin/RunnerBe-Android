@@ -55,7 +55,6 @@ interface RunningItemRepository {
         jwt: String,
         postId: Int,
         userId: Int,
-        useCaching: Boolean,
     ): RunningItemInformation?
 
     /**

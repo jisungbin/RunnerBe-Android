@@ -20,7 +20,7 @@ class LoadRunningItemDetailUseCase(private val repo: RunningItemRepository) {
         repo.loadDetail(
             jwt = jwt,
             postId = postId,
-            userId = userId
+            userId = userId,
         )
     }
 }

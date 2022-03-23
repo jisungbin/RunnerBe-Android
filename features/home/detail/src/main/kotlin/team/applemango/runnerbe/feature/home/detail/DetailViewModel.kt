@@ -23,7 +23,7 @@ import team.applemango.runnerbe.shared.android.base.BaseViewModel
 
 @HiltViewModel
 internal class DetailViewModel @Inject constructor(
-    @Inject private val loadRunningItemDetailUseCase: LoadRunningItemDetailUseCase,
+    private val loadRunningItemDetailUseCase: LoadRunningItemDetailUseCase,
 ) : BaseViewModel(), ContainerHost<DetailLoadState, DetailSideEffect> {
 
     override val container = container<DetailLoadState, DetailSideEffect>(DetailLoadState.Load)
@@ -36,7 +36,8 @@ internal class DetailViewModel @Inject constructor(
         loadRunningItemDetailUseCase(
             jwt = jwt,
             postId = postId,
-            userId = userId
+            userId = userId,
+            useCatching = true
         ).onSuccess { detail ->
             if (detail == null) {
                 reduce {
