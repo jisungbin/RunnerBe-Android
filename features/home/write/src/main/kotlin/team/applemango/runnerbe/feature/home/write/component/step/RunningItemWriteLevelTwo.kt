@@ -52,9 +52,10 @@ import com.google.maps.android.compose.rememberCameraPositionState
 import team.applemango.runnerbe.domain.constant.Gender
 import team.applemango.runnerbe.feature.home.write.R
 import team.applemango.runnerbe.feature.home.write.RunningItemWriteViewModel
-import team.applemango.runnerbe.feature.home.write.component.CircleBorderText
 import team.applemango.runnerbe.feature.home.write.constant.PeopleCountErrorType
 import team.applemango.runnerbe.feature.home.write.util.extension.toLatLng
+import team.applemango.runnerbe.shared.compose.component.BorderOption
+import team.applemango.runnerbe.shared.compose.component.CircleBorderText
 import team.applemango.runnerbe.shared.compose.component.IconText
 import team.applemango.runnerbe.shared.compose.component.LabelCheckbox
 import team.applemango.runnerbe.shared.compose.component.ToggleButton
@@ -290,7 +291,7 @@ internal fun RunningItemWriteLevelTwo(
                     enabled = peopleCountErrorTypeState != PeopleCountErrorType.Min,
                     text = "-",
                     style = Typography.Title18R.copy(color = circleBorderTextColorState),
-                    borderColor = circleBorderTextColorState,
+                    borderOption = BorderOption(color = circleBorderTextColorState),
                     onClick = {
                         peopleCountErrorTypeState = if (peopleCountState > 2) {
                             peopleCountState--
@@ -308,7 +309,7 @@ internal fun RunningItemWriteLevelTwo(
                     enabled = peopleCountErrorTypeState != PeopleCountErrorType.Max,
                     text = "+",
                     style = Typography.Title18R.copy(color = circleBorderTextColorState),
-                    borderColor = circleBorderTextColorState,
+                    borderOption = BorderOption(color = circleBorderTextColorState),
                     onClick = {
                         peopleCountErrorTypeState = if (peopleCountState < 8) {
                             peopleCountState++
