@@ -174,5 +174,11 @@ object Typography {
             fontSize = 9.sp,
             letterSpacing = (-0.39).sp
         )
+        val RunningItemDetailTitle = TextStyle(
+            fontFamily = FontAsset.NotoSans.R,
+            color = ColorAsset.G1,
+            fontSize = 22.sp,
+            letterSpacing = (-0.22).sp
+        )
     }
 }
