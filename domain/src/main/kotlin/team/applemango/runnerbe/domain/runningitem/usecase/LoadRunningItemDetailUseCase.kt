@@ -16,13 +16,11 @@ class LoadRunningItemDetailUseCase(private val repo: RunningItemRepository) {
         jwt: String,
         postId: Int,
         userId: Int,
-        useCatching: Boolean,
     ) = runCatching {
         repo.loadDetail(
             jwt = jwt,
             postId = postId,
             userId = userId,
-            useCaching = useCatching
         )
     }
 }
