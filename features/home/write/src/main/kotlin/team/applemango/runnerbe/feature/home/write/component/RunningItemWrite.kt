@@ -2,15 +2,6 @@
  * RunnerBe © 2022 Team AppleMango. all rights reserved.
  * RunnerBe license is under the MIT.
  *
- * [RunningItemWrite.kt] created by Ji Sungbin on 22. 3. 19. 오후 11:20
- *
- * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
- */
-
-/*
- * RunnerBe © 2022 Team AppleMango. all rights reserved.
- * RunnerBe license is under the MIT.
- *
  * [RunningItemWrite.kt] created by Ji Sungbin on 22. 3. 18. 오전 6:41
  *
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
@@ -20,13 +11,9 @@ package team.applemango.runnerbe.feature.home.write.component
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -47,6 +34,7 @@ import team.applemango.runnerbe.feature.home.write.component.step.RunningItemWri
 import team.applemango.runnerbe.feature.home.write.component.step.RunningItemWriteLevelTwo
 import team.applemango.runnerbe.feature.home.write.constant.WritingLevel
 import team.applemango.runnerbe.shared.compose.component.RunningItemTypeToggleBar
+import team.applemango.runnerbe.shared.compose.component.TopBar
 import team.applemango.runnerbe.shared.compose.extension.LocalActivity
 import team.applemango.runnerbe.shared.compose.extension.activityViewModel
 import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
@@ -67,58 +55,59 @@ internal fun RunningItemWrite(
     var writingLevel by remember { mutableStateOf(WritingLevel.One) }
 
     Column(modifier = modifier) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Icon(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .clickable {
-                        activity.finish()
-                    },
-                painter = painterResource(R.drawable.ic_round_left_arrow_24),
-                contentDescription = null,
-                tint = Color.Unspecified
-            )
-            Text(
-                modifier = Modifier.padding(16.dp),
-                text = stringResource(R.string.runningitemwrite_title),
-                style = Typography.Body16R.copy(color = ColorAsset.G3)
-            )
-            Text(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .runIf(fieldsAllInputState[writingLevel.index]) {
-                        clickable {
-                            @Suppress("UNUSED_EXPRESSION") // vm
-                            when (writingLevel) {
-                                WritingLevel.One -> writingLevel = WritingLevel.Two // 다음 단계
-                                WritingLevel.Two -> { // 등록
-                                    // TODO
-                                    vm
+        TopBar(
+            startContent = {
+                Icon(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .clickable {
+                            activity.finish()
+                        },
+                    painter = painterResource(R.drawable.ic_round_left_arrow_24),
+                    contentDescription = null,
+                    tint = Color.Unspecified
+                )
+            },
+            centerContent = {
+                Text(
+                    modifier = Modifier.padding(16.dp),
+                    text = stringResource(R.string.runningitemwrite_title),
+                    style = Typography.Body16R.copy(color = ColorAsset.G3)
+                )
+            },
+            endContent = {
+                Text(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .runIf(fieldsAllInputState[writingLevel.index]) {
+                            clickable {
+                                @Suppress("UNUSED_EXPRESSION") // vm
+                                when (writingLevel) {
+                                    WritingLevel.One -> writingLevel = WritingLevel.Two // 다음 단계
+                                    WritingLevel.Two -> { // 등록
+                                        // TODO
+                                        vm
+                                    }
                                 }
                             }
+                        },
+                    text = stringResource(
+                        when (writingLevel) {
+                            WritingLevel.One -> R.string.runningitemwrite_button_next
+                            WritingLevel.Two -> R.string.runningitemwrite_button_publish
                         }
-                    },
-                text = stringResource(
-                    when (writingLevel) {
-                        WritingLevel.One -> R.string.runningitemwrite_button_next
-                        WritingLevel.Two -> R.string.runningitemwrite_button_publish
-                    }
-                ),
-                style = Typography.Body16R.copy(
-                    color = animatedColorState(
-                        target = true,
-                        selectState = fieldsAllInputState[writingLevel.index],
-                        defaultColor = ColorAsset.G4,
-                        selectedColor = ColorAsset.Primary
+                    ),
+                    style = Typography.Body16R.copy(
+                        color = animatedColorState(
+                            target = true,
+                            selectState = fieldsAllInputState[writingLevel.index],
+                            defaultColor = ColorAsset.G4,
+                            selectedColor = ColorAsset.Primary
+                        )
                     )
                 )
-            )
-        }
+            }
+        )
         RunningItemTypeToggleBar(
             modifier = Modifier
                 .padding(top = 8.dp)
