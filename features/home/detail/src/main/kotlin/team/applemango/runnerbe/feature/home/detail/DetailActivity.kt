@@ -38,7 +38,7 @@ import team.applemango.runnerbe.shared.domain.extension.defaultCatch
 @AndroidEntryPoint
 class DetailActivity : ComponentActivity() {
 
-    val vm: DetailViewModel by viewModels()
+    internal val vm: DetailViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
