@@ -10,7 +10,6 @@
 package team.applemango.runnerbe.feature.home.detail
 
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
@@ -20,6 +19,7 @@ import team.applemango.runnerbe.domain.runningitem.usecase.LoadRunningItemDetail
 import team.applemango.runnerbe.feature.home.detail.mvi.DetailLoadState
 import team.applemango.runnerbe.feature.home.detail.mvi.DetailSideEffect
 import team.applemango.runnerbe.shared.android.base.BaseViewModel
+import javax.inject.Inject
 
 @HiltViewModel
 internal class DetailViewModel @Inject constructor(

@@ -11,11 +11,11 @@
 
 package team.applemango.runnerbe.shared.domain.extension
 
+import team.applemango.runnerbe.shared.domain.constant.RunningDateFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
-import team.applemango.runnerbe.shared.domain.constant.RunningDateFormat
 
 fun Date.format(format: String) = SimpleDateFormat(format, Locale.KOREA).format(this)
 
