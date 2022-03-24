@@ -23,5 +23,5 @@ android {
 
 dependencies {
     installSharedComposeOrbitHiltTest()
-    Dependencies.Location.forEach(::implementation)
+    Dependencies.GoogleMap.forEach(::implementation)
 }

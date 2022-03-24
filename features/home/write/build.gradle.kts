@@ -22,7 +22,7 @@ android {
 }
 
 dependencies {
-    Dependencies.Location.forEach(::implementation)
+    Dependencies.GoogleMap.forEach(::implementation)
     implementationProject(ProjectConstants.XmlRangePicker)
     implementationProject(ProjectConstants.XmlSuperWheelPicker)
     installSharedComposeOrbitHiltTest(testNeeded = true)

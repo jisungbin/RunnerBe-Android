@@ -2,30 +2,11 @@
  * RunnerBe © 2022 Team AppleMango. all rights reserved.
  * RunnerBe license is under the MIT.
  *
- * [Dependencies.kt] created by Ji Sungbin on 22. 3. 20. 오후 11:10
- *
- * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
- */
-
-/*
- * RunnerBe © 2022 Team AppleMango. all rights reserved.
- * RunnerBe license is under the MIT.
- *
- * [Dependencies.kt] created by Ji Sungbin on 22. 3. 20. 오후 11:10
- *
- * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
- */
-
-/*
- * RunnerBe © 2022 Team AppleMango. all rights reserved.
- * RunnerBe license is under the MIT.
- *
  * [Dependencies.kt] created by Ji Sungbin on 22. 1. 31. 오후 10:01
  *
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-@Suppress("MemberVisibilityCanBePrivate")
 object Dependencies {
     const val Ksp = "com.google.devtools.ksp:symbol-processing-api:${Versions.Ksp}"
     const val FirebaseBom = "com.google.firebase:firebase-bom:${Versions.FirebaseBom}"
@@ -105,6 +86,7 @@ object Dependencies {
     )
 
     object Util { // Erratum 은 :presentation 에서만 쓰임
+        const val Locus = "com.github.BirjuVachhani:locus-android:${Versions.Location.Locus}"
         const val NestEgg = "xyz.runnerbe:nestegg:${Versions.Util.NestEgg}"
         const val Erratum = "land.sungbin:erratum:${Versions.Util.Erratum}"
         const val Logeukes = "land.sungbin:logeukes:${Versions.Util.Logeukes}"
@@ -114,8 +96,7 @@ object Dependencies {
         "com.github.anrwatchdog:anrwatchdog:${Versions.Analytics.AnrWatchDog}"
     )
 
-    val Location = listOf(
-        "com.github.BirjuVachhani:locus-android:${Versions.Location.Locus}",
+    val GoogleMap = listOf(
         "com.google.android.gms:play-services-maps:${Versions.Location.GmsMap}",
         "com.google.maps.android:maps-compose:${Versions.Location.GoogleMapCompose}",
         "com.google.android.gms:play-services-location:${Versions.Location.GmsLocation}",

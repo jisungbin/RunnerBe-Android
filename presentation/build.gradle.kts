@@ -68,6 +68,7 @@ dependencies {
     )
     features.forEach(::implementationProject)
 
+    implementation(Dependencies.Util.Locus)
     implementation(Dependencies.Util.Erratum)
     implementation(Dependencies.EachUi.Material)
     implementation(platform(Dependencies.FirebaseBom))
