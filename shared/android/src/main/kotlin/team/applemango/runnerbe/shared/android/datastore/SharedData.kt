@@ -12,5 +12,9 @@ package team.applemango.runnerbe.shared.android.datastore
 import team.applemango.runnerbe.domain.runningitem.model.common.Locate
 
 object SharedData {
-    lateinit var myLocate: Locate
+    var myLocate: Locate? = null
+        get() = run {
+            if (field == null) throw IllegalStateException("myLocation hasn't loaded yet. ")
+            else field!!
+        }
 }
