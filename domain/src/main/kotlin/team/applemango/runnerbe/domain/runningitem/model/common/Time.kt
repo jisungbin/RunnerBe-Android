@@ -9,4 +9,6 @@
 
 package team.applemango.runnerbe.domain.runningitem.model.common
 
-data class Time(val hour: Int, val minute: Int, val second: Int)
+data class Time(val hour: Int, val minute: Int, val second: Int) {
+    override fun toString() = "${hour}시간 ${minute}분 ${second}초"
+}

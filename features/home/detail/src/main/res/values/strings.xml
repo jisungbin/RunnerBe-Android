@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ RunnerBe © 2022 Team AppleMango. all rights reserved.
+  ~ RunnerBe license is under the MIT.
+  ~
+  ~ [strings.xml] created by Ji Sungbin on 22. 3. 22. 오후 10:52
+  ~
+  ~ Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
+  -->
+
+<resources>
+    <string name="detail_toast_fail_load_item">상세보기 조회에 실패했어요 \uD83D\uDE22\n잠시 후 다시 시도해 주세요.</string>
+    <string name="detail_toast_not_verified_account">아직 인증되지 않은 계정은 둘러보기만 가능해요.</string>
+    <string name="detail_button_register">신청하기</string>
+</resources>

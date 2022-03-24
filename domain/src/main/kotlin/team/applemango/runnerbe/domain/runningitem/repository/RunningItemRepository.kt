@@ -42,7 +42,7 @@ interface RunningItemRepository {
         latitude: Float,
         longitude: Float,
         keyword: String,
-        useCaching: Boolean
+        useCaching: Boolean,
     ): List<RunningItem>
 
     /**
@@ -51,7 +51,7 @@ interface RunningItemRepository {
      * @return 사원증 인증이 된 유저라면 [RunningItemInformation] 을 반환하고,
      * 그렇지 않은 유저라면 null 을 반환함
      */
-    suspend fun loadInformation(
+    suspend fun loadDetail(
         jwt: String,
         postId: Int,
         userId: Int,

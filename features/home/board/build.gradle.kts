@@ -25,5 +25,6 @@ dependencies {
     installSharedComposeOrbitHiltTest()
     implementation(Dependencies.EachKtx.Fragment)
     implementationProject(ProjectConstants.HomeWrite)
+    implementationProject(ProjectConstants.HomeDetail)
     implementationProject(ProjectConstants.HomeNotification)
 }

@@ -1,0 +1,20 @@
+<!--
+  ~ RunnerBe © 2022 Team AppleMango. all rights reserved.
+  ~ RunnerBe license is under the MIT.
+  ~
+  ~ [ic_round_chevron_down.xml] created by Ji Sungbin on 22. 3. 23. 오전 10:35
+  ~
+  ~ Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="16dp"
+    android:height="16dp"
+    android:viewportWidth="16"
+    android:viewportHeight="16">
+    <path
+        android:fillColor="#6F6F6F"
+        android:pathData="M7.9941,9.9163C7.8662,9.9166 7.7422,9.872 7.6437,9.7904L4.358,7.0523C4.2462,6.9594 4.1758,6.8258 4.1625,6.681C4.1491,6.5362 4.1938,6.392 4.2868,6.2802C4.3797,6.1684 4.5133,6.098 4.6581,6.0847C4.8029,6.0713 4.9471,6.116 5.0589,6.209L7.9941,8.6623L10.9293,6.2966C10.9854,6.2511 11.0498,6.2172 11.119,6.1967C11.1882,6.1762 11.2607,6.1695 11.3325,6.1772C11.4042,6.1848 11.4738,6.2066 11.5371,6.2411C11.6004,6.2757 11.6563,6.3225 11.7015,6.3788C11.7516,6.4351 11.7896,6.5011 11.813,6.5728C11.8365,6.6445 11.8449,6.7202 11.8377,6.7953C11.8305,6.8703 11.8078,6.9431 11.7712,7.009C11.7346,7.0749 11.6847,7.1325 11.6248,7.1783L8.3391,9.8232C8.2378,9.892 8.1163,9.9248 7.9941,9.9163Z"
+        android:strokeWidth="0.1"
+        android:strokeColor="#6F6F6F" />
+</vector>

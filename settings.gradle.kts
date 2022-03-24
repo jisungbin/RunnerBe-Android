@@ -23,6 +23,7 @@ include(
     ":features:mypage",
     ":features:home:write",
     ":features:home:board",
+    ":features:home:detail",
     ":features:home:notification",
     ":features:register:snslogin",
     ":features:register:onboard"

@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.feature.home.write.component
+package team.applemango.runnerbe.shared.compose.component
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -16,6 +16,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -25,24 +26,34 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import team.applemango.runnerbe.shared.domain.extension.runIf
 
+@Immutable
+data class BorderOption(
+    val width: Dp = 1.dp,
+    val color: Color = Color.White,
+)
+
+@Immutable
+data class TextOption(
+    val overflow: TextOverflow = TextOverflow.Clip,
+    val softWrap: Boolean = true,
+    val maxLines: Int = Int.MAX_VALUE,
+)
+
 @Composable
-internal fun CircleBorderText(
+fun CircleBorderText(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     innerPadding: Dp = 10.dp,
     text: String,
     style: TextStyle = LocalTextStyle.current,
-    borderWidth: Dp = 1.dp,
-    borderColor: Color = Color.White,
-    overflow: TextOverflow = TextOverflow.Clip,
-    softWrap: Boolean = true,
-    maxLines: Int = Int.MAX_VALUE,
+    borderOption: BorderOption = BorderOption(),
+    textOption: TextOption = TextOption(),
     onClick: (() -> Unit)? = null,
 ) {
     Text(
         modifier = Modifier
             .clip(CircleShape)
-            .border(width = borderWidth, color = borderColor)
+            .border(width = borderOption.width, color = borderOption.color)
             .runIf(onClick != null) {
                 clickable(
                     enabled = enabled,
@@ -53,8 +64,8 @@ internal fun CircleBorderText(
             .then(modifier),
         text = text,
         style = style,
-        overflow = overflow,
-        softWrap = softWrap,
-        maxLines = maxLines
+        overflow = textOption.overflow,
+        softWrap = textOption.softWrap,
+        maxLines = textOption.maxLines
     )
 }

@@ -101,7 +101,7 @@ class RunningItemRepositoryImpl : RunningItemRepository {
         }
     }
 
-    override suspend fun loadInformation(
+    override suspend fun loadDetail(
         jwt: String,
         postId: Int,
         userId: Int,

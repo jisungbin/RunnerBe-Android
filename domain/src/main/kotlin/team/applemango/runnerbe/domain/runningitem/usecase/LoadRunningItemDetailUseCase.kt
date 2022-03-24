@@ -11,16 +11,16 @@ package team.applemango.runnerbe.domain.runningitem.usecase
 
 import team.applemango.runnerbe.domain.runningitem.repository.RunningItemRepository
 
-class LoadRunningItemInformationUseCase(private val repo: RunningItemRepository) {
+class LoadRunningItemDetailUseCase(private val repo: RunningItemRepository) {
     suspend operator fun invoke(
         jwt: String,
         postId: Int,
         userId: Int,
     ) = runCatching {
-        repo.loadInformation(
+        repo.loadDetail(
             jwt = jwt,
             postId = postId,
-            userId = userId
+            userId = userId,
         )
     }
 }

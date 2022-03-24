@@ -1,0 +1,25 @@
+<!--
+  ~ RunnerBe © 2022 Team AppleMango. all rights reserved.
+  ~ RunnerBe license is under the MIT.
+  ~
+  ~ [ic_outlined_place_24.xml] created by Ji Sungbin on 22. 3. 23. 오전 10:35
+  ~
+  ~ Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M18.6733,10.7289C18.6733,15.4956 12,19.9444 12,19.9444C12,19.9444 5.3267,15.4956 5.3267,10.7289C5.3267,8.959 6.0297,7.2616 7.2812,6.0101C8.5327,4.7586 10.2301,4.0556 12,4.0556C13.7699,4.0556 15.4673,4.7586 16.7188,6.0101C17.9702,7.2616 18.6733,8.959 18.6733,10.7289V10.7289Z"
+        android:strokeWidth="1.4"
+        android:strokeColor="#8D8D8D"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <path
+        android:fillColor="#8D8D8D"
+        android:pathData="M12,12.5135C13.0126,12.5135 13.8334,11.6927 13.8334,10.6801C13.8334,9.6675 13.0126,8.8466 12,8.8466C10.9874,8.8466 10.1665,9.6675 10.1665,10.6801C10.1665,11.6927 10.9874,12.5135 12,12.5135Z" />
+</vector>
