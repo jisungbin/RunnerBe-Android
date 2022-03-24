@@ -19,6 +19,7 @@
 - [:features:home:board](files/:features:home:board.md)
 - [:features:home:notification](files/:features:home:notification.md)
 - [:features:home:write](files/:features:home:write.md)
+- [:features:home:detail](files/:features:home:detail.md)
 - [:features:mail](files/:features:mail.md)
 - [:features:mypage](files/:features:mypage.md)
 - [:features:register:onboard](files/:features:register:onboard.md)
