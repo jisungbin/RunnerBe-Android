@@ -1,0 +1,16 @@
+/*
+ * RunnerBe © 2022 Team AppleMango. all rights reserved.
+ * RunnerBe license is under the MIT.
+ *
+ * [SharedData.kt] created by Ji Sungbin on 22. 3. 24. 오후 8:35
+ *
+ * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
+ */
+
+package team.applemango.runnerbe.shared.android.datastore
+
+import team.applemango.runnerbe.domain.runningitem.model.common.Locate
+
+object SharedData {
+    lateinit var myLocate: Locate
+}
