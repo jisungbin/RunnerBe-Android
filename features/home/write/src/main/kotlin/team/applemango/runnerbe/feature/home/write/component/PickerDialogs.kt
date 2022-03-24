@@ -17,19 +17,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import java.util.Date
 import team.applemango.runnerbe.feature.home.write.R
 import team.applemango.runnerbe.feature.home.write.constant.TimeType
 import team.applemango.runnerbe.feature.home.write.model.RunningDate
 import team.applemango.runnerbe.feature.home.write.model.RunningTime
-import team.applemango.runnerbe.feature.home.write.model.toDateString
 import team.applemango.runnerbe.feature.home.write.util.DateCache.plusDayAndCaching
 import team.applemango.runnerbe.shared.compose.component.RunnerbeDialog
 import team.applemango.runnerbe.shared.compose.default.RunnerbeSuperWheelPickerDefaults
 import team.applemango.runnerbe.shared.compose.theme.Typography
+import team.applemango.runnerbe.shared.domain.extension.toRunningDateString
 import team.applemango.runnerbe.shared.domain.unit.em
 import team.applemango.runnerbe.shared.domain.unit.px
 import team.applemango.runnerbe.xml.superwheelpicker.integration.SuperWheelPicker
-import java.util.Date
 
 private val now = Date()
 
@@ -146,11 +146,11 @@ private fun DateStringPicker(
         range = 0..7,
         value = startDateIndex,
         onValueChange = { _, dayUpper ->
-            val newDateString = now.plusDayAndCaching(dayUpper).toDateString()
+            val newDateString = now.plusDayAndCaching(dayUpper).toRunningDateString()
             onDateStringSelectChange(newDateString)
         },
         onTextRender = { value ->
-            now.plusDayAndCaching(value).toDateString()
+            now.plusDayAndCaching(value).toRunningDateString()
         }
     )
 }
