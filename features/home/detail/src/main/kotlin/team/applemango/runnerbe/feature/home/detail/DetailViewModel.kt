@@ -37,7 +37,6 @@ internal class DetailViewModel @Inject constructor(
             jwt = jwt,
             postId = postId,
             userId = userId,
-            useCatching = true
         ).onSuccess { detail ->
             if (detail == null) {
                 reduce {
