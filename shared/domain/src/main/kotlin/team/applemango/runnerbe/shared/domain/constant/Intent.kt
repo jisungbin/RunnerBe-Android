@@ -2,7 +2,7 @@
  * RunnerBe © 2022 Team AppleMango. all rights reserved.
  * RunnerBe license is under the MIT.
  *
- * [intent.kt] created by Ji Sungbin on 22. 3. 22. 오후 10:49
+ * [Intent.kt] created by Ji Sungbin on 22. 3. 22. 오후 10:49
  *
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
