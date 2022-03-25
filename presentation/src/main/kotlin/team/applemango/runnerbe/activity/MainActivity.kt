@@ -31,7 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import team.applemango.runnerbe.R
 import team.applemango.runnerbe.databinding.ActivityMainBinding
 import team.applemango.runnerbe.shared.android.constant.BottomNavigationBarHeight
-import team.applemango.runnerbe.shared.android.datastore.SharedData
+import team.applemango.runnerbe.shared.android.datastore.Me
 import team.applemango.runnerbe.shared.android.extension.setWindowInsets
 import team.applemango.runnerbe.shared.domain.unit.dp
 import team.applemango.runnerbe.shared.domain.unit.toInt
@@ -52,24 +52,15 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (!SharedData::myLocate.isInitialized) {
-            // getCurrentLocate 로 하면 작동하지 않음
-            Locus.startLocationUpdates(this) { result ->
-                result.location?.let { location ->
-                    location.tryParseAddress()?.let { address ->
-                        vm.lastAddress = address
-                        binding.tvLocate.text = address.toString()
-                        // vm.importAllSchedules(address)
-                    }
-                    Locus.stopLocationUpdates()
-                }
-                result.error?.let { exception ->
-                    vm.emitException(exception)
-                }
+        // getCurrentLocate 로 하면 작동하지 않음
+        Locus.startLocationUpdates(this) { result ->
+            result.location?.let { location ->
+                Me.locate = Me.locate.copy(
+                    latitude = location.latitude,
+                    longitude = location.longitude
+                )
+                Locus.stopLocationUpdates()
             }
-        } else {
-            vm.importAllSchedules(vm.lastAddress!!)
-            binding.tvLocate.text = vm.lastAddress.toString()
         }
 
         setWindowInsets()
