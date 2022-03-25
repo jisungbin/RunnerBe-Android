@@ -19,6 +19,6 @@ internal fun RunningItemsResponse.toDomain(): List<RunningItem> {
         checkNotNull(item) {
             requireFieldNullMessage("RunningItemResponse.result item")
         }
-        item.toDomain(type = MappingType.MainPageApiFields)
+        item.toDomain()
     }
 }

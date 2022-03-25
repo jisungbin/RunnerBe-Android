@@ -9,9 +9,13 @@
 
 package team.applemango.runnerbe.data.util.extension
 
+import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import retrofit2.converter.jackson.JacksonConverterFactory
 
-internal val JacksonObjectMapper = ObjectMapper().registerKotlinModule()
+internal val JacksonObjectMapper = ObjectMapper()
+    .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+    .registerKotlinModule()
+
 internal val JacksonConverter = JacksonConverterFactory.create(JacksonObjectMapper)
