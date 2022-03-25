@@ -9,9 +9,6 @@
 
 package team.applemango.runnerbe.data.runningitem.mapper
 
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 import team.applemango.runnerbe.data.runningitem.model.runningitem.RunningItemData
 import team.applemango.runnerbe.domain.constant.Gender
 import team.applemango.runnerbe.domain.constant.Job
@@ -24,6 +21,9 @@ import team.applemango.runnerbe.shared.domain.constant.EmptyString
 import team.applemango.runnerbe.shared.domain.extension.convertNullableString
 import team.applemango.runnerbe.shared.domain.extension.toBoolean
 import team.applemango.runnerbe.shared.domain.util.requireFieldNullMessage
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 private const val DefaultIntValue = 0
 private const val DefaultProfileImageUrl = "https://runnerbe.xyz/assets/image/default_profile.png"
