@@ -86,7 +86,6 @@ object Dependencies {
     )
 
     object Util { // Erratum 은 :presentation 에서만 쓰임
-        const val Locus = "com.github.BirjuVachhani:locus-android:${Versions.Location.Locus}"
         const val NestEgg = "xyz.runnerbe:nestegg:${Versions.Util.NestEgg}"
         const val Erratum = "land.sungbin:erratum:${Versions.Util.Erratum}"
         const val Logeukes = "land.sungbin:logeukes:${Versions.Util.Logeukes}"
@@ -96,10 +95,14 @@ object Dependencies {
         "com.github.anrwatchdog:anrwatchdog:${Versions.Analytics.AnrWatchDog}"
     )
 
+    val Location = listOf(
+        "com.github.BirjuVachhani:locus-android:${Versions.Location.Locus}",
+        "com.google.android.gms:play-services-location:${Versions.Location.GmsLocation}",
+    )
+
     val GoogleMap = listOf(
         "com.google.android.gms:play-services-maps:${Versions.Location.GmsMap}",
         "com.google.maps.android:maps-compose:${Versions.Location.GoogleMapCompose}",
-        "com.google.android.gms:play-services-location:${Versions.Location.GmsLocation}",
     )
 
     object Jetpack {
