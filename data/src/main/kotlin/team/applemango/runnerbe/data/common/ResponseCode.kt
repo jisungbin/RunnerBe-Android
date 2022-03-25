@@ -32,10 +32,43 @@ internal const val SuccessOwnerAndBookmarked = 1019
 internal const val SuccessOwnerAndNotBookmark = 1020
 internal const val SuccessJwtVerification = 1100
 
-internal const val FailJwtProcessing = 2000
-internal const val FailUuidProcessing = 2001
-internal const val FailBirthdayProcessing = 2002
-internal const val FailGenderProcessing = 2003
-internal const val FailJobProcessing = 2004
+internal const val FailJwtRead = 2000
+internal const val FailUuidRead = 2001
+internal const val FailBirthdayRead = 2002
+internal const val FailGenderRead = 2003
+internal const val FailJobCodeRead = 2004
+internal const val FailUnknownGenderType = 2005
+internal const val FailUnknownJobCode = 2006
+internal const val FailUnknownEmailType = 2007
+internal const val FailNicknameReadWhenSignup = 2008
+internal const val FailOverflowNicknameLength = 2009
+internal const val FailMatchJwtUserId = 2010
+internal const val FailUserIdRead = 2011
+internal const val FailUnknownUserIdType = 2012
+internal const val FailNicknameReadWhenChange = 2013
+internal const val FailRunningItemTitleRead = 2014
+internal const val FailRunningItemMeetingTimeRead = 2015
+internal const val FailRunningItemRunningTimeRead = 2016
+internal const val FailRunningItemMeetingLongitudeRead = 2017
+internal const val FailRunningItemMeetingLatitudeRead = 2018
+internal const val FailRunningItemMeetingAddressRead = 2019
+internal const val FailRunningItemTypeRead = 2020
+internal const val FailRunningItemMinAgeRead = 2021
+internal const val FailRunningItemMaxAgeRead = 2022
+internal const val FailRunningItemMaxPeopleCountRead = 2023
+internal const val FailRunningItemAllowGenderRead = 2024
+internal const val FailOverflowRunningItemTitle = 2025
+internal const val FailOverflowRunningItemContent = 2026
+internal const val FailUnknownRunningItemMinAgeType = 2027
+internal const val FailUnknownRunningItemMaxAgeType = 2028
+internal const val FailUnknownRunningItemMaxPeopleCount = 2029
+internal const val FailUnknownRunningItemType = 2030
+internal const val FailUnknownRunningItemAllowGenderType = 2031
+internal const val FailEmployeeIdUrlRead = 2032
 
 internal const val FailJwtVerification = 3000
+
+// TODO: ResponseCode 다 추가
+// 현재는 너무 똑같은 역할을 하는 코드들이 많아서
+// 이걸 다 추가하는건 엄청난 비효율 같음
+// 백엔드 개발자의 경력이 중요해...
