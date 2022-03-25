@@ -9,6 +9,14 @@
 
 <resources>
     <string name="app_name">러너비</string>
+
     <string name="dist_dfm_register_snslogin">SNS 로그인</string>
     <string name="dist_dfm_register_onboard">추가 정보 입력</string>
+
+    <string name="locus_rationale_title">위치 권한 필요</string>
+    <string name="locus_rationale_message">내 위치를 기준으로 한 탐색과, 글 작성을 위해 위치 권한이 필요해요.</string>
+    <string name="locus_permission_blocked_title">위치 권한 거절됨</string>
+    <string name="locus_permission_blocked_message">러닝 검색, 글쓰기, 출석 체크 시 정확하지 않은 서비스가 제공될 수 있어요.</string>
+    <string name="locus_location_resolution_title">위치 사용 불가</string>
+    <string name="locus_location_resolution_message">현재 시스템의 위치 기능이 꺼져있어요.\n러너비의 모든 기능을 원활하게 사용하기 위해 위치 기능을 사용해 주세요.</string>
 </resources>

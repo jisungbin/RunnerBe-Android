@@ -26,10 +26,12 @@ import androidx.core.view.updateLayoutParams
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.birjuvachhani.locus.Locus
 import dagger.hilt.android.AndroidEntryPoint
 import team.applemango.runnerbe.R
 import team.applemango.runnerbe.databinding.ActivityMainBinding
 import team.applemango.runnerbe.shared.android.constant.BottomNavigationBarHeight
+import team.applemango.runnerbe.shared.android.datastore.Me
 import team.applemango.runnerbe.shared.android.extension.setWindowInsets
 import team.applemango.runnerbe.shared.domain.unit.dp
 import team.applemango.runnerbe.shared.domain.unit.toInt
@@ -49,6 +51,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // getCurrentLocate 로 하면 작동하지 않음
+        Locus.startLocationUpdates(this) { result ->
+            result.location?.let { location ->
+                Me.locate = Me.locate.copy(
+                    latitude = location.latitude,
+                    longitude = location.longitude
+                )
+                Locus.stopLocationUpdates()
+            }
+        }
 
         setWindowInsets()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)

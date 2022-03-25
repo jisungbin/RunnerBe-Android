@@ -2,30 +2,11 @@
  * RunnerBe © 2022 Team AppleMango. all rights reserved.
  * RunnerBe license is under the MIT.
  *
- * [Dependencies.kt] created by Ji Sungbin on 22. 3. 20. 오후 11:10
- *
- * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
- */
-
-/*
- * RunnerBe © 2022 Team AppleMango. all rights reserved.
- * RunnerBe license is under the MIT.
- *
- * [Dependencies.kt] created by Ji Sungbin on 22. 3. 20. 오후 11:10
- *
- * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
- */
-
-/*
- * RunnerBe © 2022 Team AppleMango. all rights reserved.
- * RunnerBe license is under the MIT.
- *
  * [Dependencies.kt] created by Ji Sungbin on 22. 1. 31. 오후 10:01
  *
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-@Suppress("MemberVisibilityCanBePrivate")
 object Dependencies {
     const val Ksp = "com.google.devtools.ksp:symbol-processing-api:${Versions.Ksp}"
     const val FirebaseBom = "com.google.firebase:firebase-bom:${Versions.FirebaseBom}"
@@ -116,9 +97,12 @@ object Dependencies {
 
     val Location = listOf(
         "com.github.BirjuVachhani:locus-android:${Versions.Location.Locus}",
+        "com.google.android.gms:play-services-location:${Versions.Location.GmsLocation}",
+    )
+
+    val GoogleMap = listOf(
         "com.google.android.gms:play-services-maps:${Versions.Location.GmsMap}",
         "com.google.maps.android:maps-compose:${Versions.Location.GoogleMapCompose}",
-        "com.google.android.gms:play-services-location:${Versions.Location.GmsLocation}",
     )
 
     object Jetpack {

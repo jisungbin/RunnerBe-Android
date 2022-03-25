@@ -78,6 +78,7 @@ dependencies {
 
     Dependencies.Ui.forEach(::implementation)
     Dependencies.Login.forEach(::implementation)
+    Dependencies.Location.forEach(::implementation)
     Dependencies.Analytics.forEach(::implementation)
     Dependencies.Jetpack.Navigation.forEach(::implementation)
     Dependencies.PresentationOnlyKtx.forEach(::implementation)
