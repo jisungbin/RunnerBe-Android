@@ -9,16 +9,27 @@
 
 package team.applemango.runnerbe.shared.android.datastore
 
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import team.applemango.runnerbe.domain.register.runnerbe.model.UserToken
 import team.applemango.runnerbe.domain.runningitem.model.common.Locate
 
 object Me {
     // 37.5284197, 126.9327389
-    var locate = Locate(
-        address = "여의도 한강공원",
-        latitude = 126.9327389,
-        longitude = 37.5284197
+    @Suppress("ObjectPropertyName")
+    private var _locate = MutableStateFlow(
+        Locate(
+            address = "여의도 한강공원",
+            latitude = 126.9327389,
+            longitude = 37.5284197
+        )
     )
+    val locate = _locate.asStateFlow()
 
+    // TODO
     var token = UserToken()
+
+    fun updateLocate(locate: Locate) {
+        _locate.value = locate
+    }
 }

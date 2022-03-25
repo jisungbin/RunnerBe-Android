@@ -55,9 +55,11 @@ class MainActivity : AppCompatActivity() {
         // getCurrentLocate 로 하면 작동하지 않음
         Locus.startLocationUpdates(this) { result ->
             result.location?.let { location ->
-                Me.locate = Me.locate.copy(
-                    latitude = location.latitude,
-                    longitude = location.longitude
+                Me.updateLocate(
+                    Me.locate.value.copy(
+                        latitude = location.latitude,
+                        longitude = location.longitude
+                    )
                 )
                 Locus.stopLocationUpdates()
             }
