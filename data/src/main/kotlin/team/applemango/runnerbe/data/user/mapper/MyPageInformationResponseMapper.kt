@@ -9,7 +9,6 @@
 
 package team.applemango.runnerbe.data.user.mapper
 
-import team.applemango.runnerbe.data.runningitem.mapper.MappingType
 import team.applemango.runnerbe.data.runningitem.mapper.toDomain
 import team.applemango.runnerbe.data.user.model.MyPageInformationResponse
 import team.applemango.runnerbe.domain.user.model.MyPageInformation
@@ -27,13 +26,13 @@ internal fun MyPageInformationResponse.toDomain(): MyPageInformation {
             checkNotNull(item) {
                 requireFieldNullMessage("myPosting item")
             }
-            item.toDomain(MappingType.MyPageOwnRunningItemFields)
+            item.toDomain()
         } ?: throw IllegalStateException(requireFieldNullMessage("myPosting")),
         joinRunnings = result.myRunning?.map { item ->
             checkNotNull(item) {
                 requireFieldNullMessage("myRunning item")
             }
-            item.toDomain(MappingType.MyPageJoinRunningItemFields)
+            item.toDomain()
         } ?: throw IllegalStateException(requireFieldNullMessage("myRunning"))
     )
 }
