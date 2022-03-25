@@ -14,21 +14,16 @@ import android.os.Bundle
 import android.view.ViewTreeObserver
 import android.view.animation.AnticipateInterpolator
 import android.widget.LinearLayout
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
-import org.orbitmvi.orbit.viewmodel.observe
-import team.applemango.runnerbe.mvi.StartActivityState
 import team.applemango.runnerbe.shared.android.constant.DataStoreKey
 import team.applemango.runnerbe.shared.android.extension.basicExceptionHandler
 import team.applemango.runnerbe.shared.android.extension.changeActivityWithAnimation
-import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.android.extension.dataStore
 import team.applemango.runnerbe.shared.android.extension.launchedWhenCreated
-import team.applemango.runnerbe.shared.domain.util.flowExceptionMessage
+import team.applemango.runnerbe.shared.domain.extension.defaultCatch
 import team.applemango.runnerbe.util.DFMLoginActivityAlias
 import team.applemango.runnerbe.util.DFMOnboardActivityAlias
 
@@ -39,8 +34,6 @@ class StartActivity : AppCompatActivity() {
         const val SplashAnimationDuration = 200L
     }
 
-    private var isReady = false
-    private val vm: StartActivityViewModel by viewModels()
     private val rootView by lazy { LinearLayout(this) }
 
     @Suppress("KotlinConstantConditions") // `!isSnsLoginDone` is always true
@@ -55,33 +48,11 @@ class StartActivity : AppCompatActivity() {
             )
         )
 
-        vm.exceptionFlow
-            .catch { exception ->
-                basicExceptionHandler(exception)
-            }
-            .collectWithLifecycle(this) { exception ->
-                basicExceptionHandler(exception)
-            }
-        vm.observe(
-            lifecycleOwner = this,
-            state = ::handleState
-        )
-        vm.loadAllRunningItems()
-
         launchedWhenCreated {
             val preferences = applicationContext
                 .dataStore
                 .data
-                .catch { exception ->
-                    vm.emitException(
-                        Exception(
-                            flowExceptionMessage(
-                                flowName = "StartActivity DataStore",
-                                exception = exception
-                            )
-                        )
-                    )
-                }
+                .defaultCatch(action = ::basicExceptionHandler)
                 .first()
 
             val isSignedUser = preferences[DataStoreKey.Login.Jwt] != null
@@ -110,12 +81,8 @@ class StartActivity : AppCompatActivity() {
         rootView.viewTreeObserver.addOnPreDrawListener(
             object : ViewTreeObserver.OnPreDrawListener {
                 override fun onPreDraw(): Boolean {
-                    return if (isReady) {
-                        rootView.viewTreeObserver.removeOnPreDrawListener(this)
-                        true
-                    } else {
-                        false
-                    }
+                    rootView.viewTreeObserver.removeOnPreDrawListener(this)
+                    return true
                 }
             }
         )
@@ -133,12 +100,6 @@ class StartActivity : AppCompatActivity() {
                     start()
                 }
             }
-        }
-    }
-
-    private fun handleState(state: StartActivityState) {
-        if (state == StartActivityState.Loaded) {
-            isReady = true
         }
     }
 }
