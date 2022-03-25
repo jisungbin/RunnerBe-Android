@@ -9,12 +9,16 @@
 
 package team.applemango.runnerbe.shared.android.datastore
 
+import team.applemango.runnerbe.domain.register.runnerbe.model.UserToken
 import team.applemango.runnerbe.domain.runningitem.model.common.Locate
 
-object SharedData {
-    var myLocate: Locate? = null
-        get() = run {
-            if (field == null) throw IllegalStateException("myLocation hasn't loaded yet. ")
-            else field!!
-        }
+object Me {
+    // 37.5284197, 126.9327389
+    var locate = Locate(
+        address = "여의도 한강공원",
+        latitude = 126.9327389,
+        longitude = 37.5284197
+    )
+
+    var token = UserToken()
 }
