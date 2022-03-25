@@ -9,7 +9,6 @@
 
 package team.applemango.runnerbe.data.user.mapper
 
-import team.applemango.runnerbe.data.runningitem.mapper.MappingType
 import team.applemango.runnerbe.data.runningitem.mapper.toDomain
 import team.applemango.runnerbe.data.user.model.BookmarkItemsResponse
 import team.applemango.runnerbe.shared.domain.util.requireFieldNullMessage
@@ -20,5 +19,5 @@ internal fun BookmarkItemsResponse.toDomain() = requireNotNull(result) {
     checkNotNull(item) {
         requireFieldNullMessage("result")
     }
-    item.toDomain(MappingType.BookmarkApiFields)
+    item.toDomain()
 } ?: throw IllegalStateException(requireFieldNullMessage("bookMarkList"))

@@ -46,7 +46,7 @@ internal fun RunningItemInformationResponse.toDomain(): RunningItemInformation? 
         item = requireNotNull(result.postingInfo) {
             requireFieldNullMessage("postingInfo")
         }.firstOrNull()
-            ?.toDomain(type = MappingType.InformationApiFields)
+            ?.toDomain()
             ?: throw Exception(requireFieldNullMessage("postingInfo value")),
         joinRunners = requireNotNull(result.runnerInfo) {
             requireFieldNullMessage("runnerInfo")
