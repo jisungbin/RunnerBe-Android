@@ -10,7 +10,6 @@
 package team.applemango.runnerbe.feature.home.board
 
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.reduce
@@ -27,6 +26,7 @@ import team.applemango.runnerbe.domain.runningitem.usecase.LoadRunningItemsUseCa
 import team.applemango.runnerbe.domain.user.usecase.UpdateBookmarkItemUseCase
 import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState
 import team.applemango.runnerbe.shared.android.base.BaseViewModel
+import javax.inject.Inject
 
 @HiltViewModel
 internal class MainBoardViewModel @Inject constructor(

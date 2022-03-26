@@ -61,6 +61,7 @@ class MainBoardFragment : Fragment() {
         setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
         setContent {
             var runningItemsState by remember { mutableStateOf<RunningItemsState>(RunningItemsState.Loading) }
+
             LaunchedEffect(Unit) {
                 vm.observe(
                     lifecycleOwner = viewLifecycleOwner,
