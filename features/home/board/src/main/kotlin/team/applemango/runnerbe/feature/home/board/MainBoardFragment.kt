@@ -19,7 +19,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,10 +41,10 @@ import team.applemango.runnerbe.shared.android.extension.setWindowInsets
 import team.applemango.runnerbe.shared.android.extension.toast
 import team.applemango.runnerbe.shared.compose.extension.LocalActivity
 import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
+import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
 import team.applemango.runnerbe.shared.domain.extension.defaultCatch
-import team.applemango.runnerbe.shared.domain.unit.Em
 
 @AndroidEntryPoint
 class MainBoardFragment : Fragment() {
@@ -69,15 +68,26 @@ class MainBoardFragment : Fragment() {
                         var message = EmptyString
                         when (state) {
                             MainBoardState.NonRegisterUser -> {
-                                message = getString(R.string.mainboard_toast_only_see_unregister_user)
+                                message =
+                                    getString(R.string.mainboard_toast_only_see_registered_user)
                             }
                             MainBoardState.RunningItemLoading -> {
                                 runningItemsState = RunningItemsState.Loading
                             }
                             MainBoardState.RunningItemLoadFail -> {
-                                runningItemsState.
+                                runningItemsState = RunningItemsState.Loaded(emptyList())
                             }
-                            MainBoardState.BookmarkToggleRequestFail -> EmptyString // TODO
+                            is MainBoardState.RunningItemLoaded -> {
+                                val items = state.items
+                                runningItemsState = if (items.isNotEmpty()) {
+                                    RunningItemsState.Loaded(state.items)
+                                } else {
+                                    RunningItemsState.Empty
+                                }
+                            }
+                            MainBoardState.BookmarkToggleRequestFail -> {
+                                EmptyString // TODO: 북마크 롤백 및 토스트 메시지
+                            }
                         }
                         if (message.isNotEmpty()) {
                             toast(message)
@@ -94,11 +104,13 @@ class MainBoardFragment : Fragment() {
                         .statusBarsPadding()
                         .padding(16.dp)
                         .placeholder(
-                            visible = runningItemsFlow.collectAsState(initial = emptyList()).value.is
+                            visible = runningItemsState == RunningItemsState.Loading,
+                            color = ColorAsset.Primary,
                         ),
-                    runningItems = runningItemsFlow.collectAsState(initial = emptyList()).value,
+                    runningItems = (runningItemsState as? RunningItemsState.Loaded)?.items
+                        ?: emptyList(),
                     isBookmarkPage = arguments?.getBoolean("bookmark") ?: false,
-                    isEmptyState = isEmptyStateFlow.collectAsState(initial = false).value
+                    isEmptyState = runningItemsState == RunningItemsState.Empty
                 )
             }
         }
