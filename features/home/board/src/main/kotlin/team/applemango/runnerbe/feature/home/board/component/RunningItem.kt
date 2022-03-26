@@ -36,8 +36,6 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.fade
 import com.google.accompanist.placeholder.placeholder
-import java.util.Date
-import kotlin.random.Random
 import team.applemango.runnerbe.domain.constant.Gender
 import team.applemango.runnerbe.domain.constant.Job
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
@@ -51,6 +49,8 @@ import team.applemango.runnerbe.shared.compose.default.RunnerbePlaceholderDefaul
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.domain.extension.format
+import java.util.Date
+import kotlin.random.Random
 
 @Immutable
 private data class DetailItem(
