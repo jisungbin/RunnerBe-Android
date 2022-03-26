@@ -9,6 +9,7 @@
 
 package team.applemango.runnerbe.shared.compose.default
 
+import androidx.compose.runtime.Stable
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.shared.compose.component.ToggleTopBarColors
 import team.applemango.runnerbe.shared.compose.component.ToggleTopBarItem
@@ -21,6 +22,7 @@ object RunnerbeToggleTabBarDefaults {
         ToggleTopBarItem(id = RunningItemType.Off, text = RunningItemType.Off.toString()),
     )
 
+    @Stable
     fun colors() = ToggleTopBarColors(
         baseBackground = ColorAsset.G6,
         activateBackground = ColorAsset.Primary,

@@ -10,6 +10,7 @@
 package team.applemango.runnerbe.shared.compose.default
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.platform.LocalContext
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.FontTypeface
@@ -19,15 +20,17 @@ import team.applemango.runnerbe.xml.superwheelpicker.integration.SuperWheelPicke
 import team.applemango.runnerbe.xml.superwheelpicker.integration.SuperWheelPickerTextStyle
 
 object RunnerbeSuperWheelPickerDefaults {
+    @Stable
     fun colors() = SuperWheelPickerColors(
         selectedTextColor = ColorAsset.Primary,
         unselectedTextColor = ColorAsset.G4
     )
 
+    @Stable
     @Composable
     fun textStyle(): SuperWheelPickerTextStyle {
         // Resource load 는 Application Context 에서 해도 됨
-        // See: https://blog.naver.com/dauni6/222647078598
+        // See: https://medium.com/@joaofoltran/what-really-is-context-in-android-2034561fff39
         val context = LocalContext.current.applicationContext
         return SuperWheelPickerTextStyle(
             typeface = FontTypeface.Roboto.regular(context),

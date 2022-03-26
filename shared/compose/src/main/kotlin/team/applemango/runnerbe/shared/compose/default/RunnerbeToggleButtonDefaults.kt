@@ -9,12 +9,14 @@
 
 package team.applemango.runnerbe.shared.compose.default
 
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.Color
 import team.applemango.runnerbe.shared.compose.component.ToggleButtonColors
 import team.applemango.runnerbe.shared.compose.component.ToggleButtonTextStyle
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 
 object RunnerbeToggleButtonDefaults {
+    @Stable
     fun colors() = ToggleButtonColors(
         backgroundDefaultColor = Color.Transparent,
         backgroundSelectedColor = ColorAsset.Primary,
@@ -22,6 +24,7 @@ object RunnerbeToggleButtonDefaults {
         borderSelectedColor = ColorAsset.Primary,
     )
 
+    @Stable
     fun textStyle() = ToggleButtonTextStyle(
         defaultColor = ColorAsset.G3_5,
         selectedColor = ColorAsset.G6
