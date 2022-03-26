@@ -119,8 +119,8 @@ class MainBoardFragment : Fragment() {
                     modifier = Modifier
                         .fillMaxSize()
                         .background(brush = GradientAsset.BlackGradientBrush)
-                        .statusBarsPadding()
-                        .padding(16.dp),
+                        .statusBarsPadding() // without navigationBar: because use BottomSheetView inner
+                        .padding(horizontal = 16.dp),
                     runningItems = (runningItemsState as? RunningItemsState.Loaded)?.items
                         ?: emptyList(),
                     isBookmarkPage = arguments?.getBoolean("bookmark") ?: false,
