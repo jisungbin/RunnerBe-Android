@@ -42,6 +42,10 @@ android {
     }
 
     buildTypes {
+        debug {
+            aaptOptions.cruncherEnabled = false // png optimization (default: true)
+        }
+
         release {
             signingConfig = signingConfigs.getByName("release")
         }
