@@ -29,7 +29,6 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.google.accompanist.placeholder.placeholder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.orbitmvi.orbit.viewmodel.observe
@@ -49,7 +48,6 @@ import team.applemango.runnerbe.shared.android.extension.setWindowInsets
 import team.applemango.runnerbe.shared.android.extension.toast
 import team.applemango.runnerbe.shared.compose.extension.LocalActivity
 import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
-import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
 import team.applemango.runnerbe.shared.domain.extension.defaultCatch
@@ -122,11 +120,7 @@ class MainBoardFragment : Fragment() {
                         .fillMaxSize()
                         .background(brush = GradientAsset.BlackGradientBrush)
                         .statusBarsPadding()
-                        .padding(16.dp)
-                        .placeholder(
-                            visible = runningItemsState == RunningItemsState.Loading,
-                            color = ColorAsset.Primary,
-                        ),
+                        .padding(16.dp),
                     runningItems = (runningItemsState as? RunningItemsState.Loaded)?.items
                         ?: emptyList(),
                     isBookmarkPage = arguments?.getBoolean("bookmark") ?: false,
