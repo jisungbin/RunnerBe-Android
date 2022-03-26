@@ -33,8 +33,16 @@ import com.google.accompanist.placeholder.placeholder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.orbitmvi.orbit.viewmodel.observe
+import team.applemango.runnerbe.domain.constant.Gender
+import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
+import team.applemango.runnerbe.domain.runningitem.filter.AgeFilter
+import team.applemango.runnerbe.domain.runningitem.filter.DistanceFilter
+import team.applemango.runnerbe.domain.runningitem.filter.JobFilter
+import team.applemango.runnerbe.domain.runningitem.filter.KeywordFilter
+import team.applemango.runnerbe.domain.runningitem.filter.RunningItemFilter
 import team.applemango.runnerbe.feature.home.board.component.MainBoardComposable
 import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState
+import team.applemango.runnerbe.shared.android.datastore.Me
 import team.applemango.runnerbe.shared.android.extension.basicExceptionHandler
 import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.android.extension.setWindowInsets
@@ -63,6 +71,17 @@ class MainBoardFragment : Fragment() {
             var runningItemsState by remember { mutableStateOf<RunningItemsState>(RunningItemsState.Loading) }
 
             LaunchedEffect(Unit) {
+                vm.loadRunningItems(
+                    itemType = RunningItemType.Before,
+                    includeEndItems = false,
+                    itemFilter = RunningItemFilter.Distance,
+                    distanceFilter = DistanceFilter.None,
+                    genderFilter = Gender.All,
+                    ageFilter = AgeFilter(min = null, max = null),
+                    jobFilter = JobFilter.None,
+                    locate = Me.locate.value,
+                    keywordFilter = KeywordFilter.None
+                )
                 vm.observe(
                     lifecycleOwner = viewLifecycleOwner,
                     state = { state ->
