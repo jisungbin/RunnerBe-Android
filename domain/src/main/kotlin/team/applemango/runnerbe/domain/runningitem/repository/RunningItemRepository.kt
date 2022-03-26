@@ -42,7 +42,6 @@ interface RunningItemRepository {
         latitude: Float,
         longitude: Float,
         keyword: String,
-        useCaching: Boolean,
     ): List<RunningItem>
 
     /**

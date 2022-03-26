@@ -21,7 +21,6 @@ import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItemApiBodyData
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.information.RunningItemInformation
 import team.applemango.runnerbe.domain.runningitem.repository.RunningItemRepository
-import xyz.runnerbe.nestegg.pickOrSuspendEgg
 
 class RunningItemRepositoryImpl : RunningItemRepository {
     override suspend fun write(
@@ -54,51 +53,26 @@ class RunningItemRepositoryImpl : RunningItemRepository {
         latitude: Float,
         longitude: Float,
         keyword: String,
-        useCaching: Boolean,
     ): List<RunningItem> {
-        suspend fun fetch(): List<RunningItem> {
-            val request = runningItemApi.loadItems(
-                itemType = itemType,
-                includeEndItems = includeEndItems,
-                itemFilter = itemFilter,
-                distance = distance,
-                gender = gender,
-                minAge = minAge,
-                maxAge = maxAge,
-                job = job,
-                latitude = latitude,
-                longitude = longitude,
-                keyword = keyword
-            )
-            return request.requireSuccessfulBody(
-                requestName = "runningItemApi.loadRunningItems",
-                resultVerifyBuilder = { body ->
-                    body.code in listOf(SuccessCode, NotYetVerifyCode)
-                }
-            ).toDomain()
-        }
-        return when (useCaching) {
-            true -> {
-                pickOrSuspendEgg(
-                    itemType,
-                    includeEndItems,
-                    itemFilter,
-                    distance,
-                    gender,
-                    minAge,
-                    maxAge,
-                    job,
-                    latitude.toString(),
-                    longitude.toString(),
-                    keyword
-                ) {
-                    fetch()
-                }
+        val request = runningItemApi.loadItems(
+            itemType = itemType,
+            includeEndItems = includeEndItems,
+            itemFilter = itemFilter,
+            distance = distance,
+            gender = gender,
+            minAge = minAge,
+            maxAge = maxAge,
+            job = job,
+            latitude = latitude,
+            longitude = longitude,
+            keyword = keyword
+        )
+        return request.requireSuccessfulBody(
+            requestName = "runningItemApi.loadRunningItems",
+            resultVerifyBuilder = { body ->
+                body.code in listOf(SuccessCode, NotYetVerifyCode)
             }
-            else -> {
-                fetch()
-            }
-        }
+        ).toDomain()
     }
 
     override suspend fun loadDetail(
