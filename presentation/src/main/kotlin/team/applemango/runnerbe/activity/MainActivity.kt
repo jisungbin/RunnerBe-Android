@@ -33,7 +33,7 @@ import team.applemango.runnerbe.databinding.ActivityMainBinding
 import team.applemango.runnerbe.shared.android.constant.BottomNavigationBarHeight
 import team.applemango.runnerbe.shared.android.datastore.Me
 import team.applemango.runnerbe.shared.android.extension.setWindowInsets
-import team.applemango.runnerbe.shared.domain.unit.dp
+import team.applemango.runnerbe.shared.domain.unit.domainDp
 import team.applemango.runnerbe.shared.domain.unit.toInt
 
 @AndroidEntryPoint
@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.fcv_main) as NavHostFragment
         val navController = navHostFragment.navController
         binding.bnvMenu.updateLayoutParams {
-            height = BottomNavigationBarHeight.dp.toInt()
+            height = BottomNavigationBarHeight.domainDp.toInt()
         }
         binding.bnvMenu.setupWithNavController(navController)
 

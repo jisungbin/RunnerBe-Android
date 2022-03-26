@@ -13,8 +13,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.FontTypeface
-import team.applemango.runnerbe.shared.domain.unit.em
-import team.applemango.runnerbe.shared.domain.unit.px
+import team.applemango.runnerbe.shared.domain.unit.domainEm
+import team.applemango.runnerbe.shared.domain.unit.domainPx
 import team.applemango.runnerbe.xml.superwheelpicker.integration.SuperWheelPickerColors
 import team.applemango.runnerbe.xml.superwheelpicker.integration.SuperWheelPickerTextStyle
 
@@ -31,8 +31,8 @@ object RunnerbeSuperWheelPickerDefaults {
         val context = LocalContext.current.applicationContext
         return SuperWheelPickerTextStyle(
             typeface = FontTypeface.Roboto.regular(context),
-            textSize = 24.px,
-            letterSpacing = (-0.24).em
+            textSize = 24.domainPx,
+            letterSpacing = (-0.24).domainEm
         )
     }
 }

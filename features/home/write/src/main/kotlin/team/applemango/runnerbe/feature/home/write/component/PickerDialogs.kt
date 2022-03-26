@@ -26,8 +26,8 @@ import team.applemango.runnerbe.shared.compose.component.RunnerbeDialog
 import team.applemango.runnerbe.shared.compose.default.RunnerbeSuperWheelPickerDefaults
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.domain.extension.toRunningDateString
-import team.applemango.runnerbe.shared.domain.unit.em
-import team.applemango.runnerbe.shared.domain.unit.px
+import team.applemango.runnerbe.shared.domain.unit.domainEm
+import team.applemango.runnerbe.shared.domain.unit.domainPx
 import team.applemango.runnerbe.xml.superwheelpicker.integration.SuperWheelPicker
 import java.util.Date
 
@@ -139,8 +139,8 @@ private fun DateStringPicker(
     SuperWheelPicker(
         colors = RunnerbeSuperWheelPickerDefaults.colors(),
         textStyle = RunnerbeSuperWheelPickerDefaults.textStyle().copy(
-            textSize = 18.px,
-            letterSpacing = (-0.18).em
+            textSize = 18.domainPx,
+            letterSpacing = (-0.18).domainEm
         ),
         wheelItemCount = 5,
         range = 0..7,
@@ -163,8 +163,8 @@ private fun TimeTypePicker(
     SuperWheelPicker(
         colors = RunnerbeSuperWheelPickerDefaults.colors(),
         textStyle = RunnerbeSuperWheelPickerDefaults.textStyle().copy(
-            textSize = 18.px,
-            letterSpacing = (-0.18).em
+            textSize = 18.domainPx,
+            letterSpacing = (-0.18).domainEm
         ),
         wheelItemCount = 2,
         range = 0..1,
@@ -187,8 +187,8 @@ private fun HourPicker(
     SuperWheelPicker(
         colors = RunnerbeSuperWheelPickerDefaults.colors(),
         textStyle = RunnerbeSuperWheelPickerDefaults.textStyle().copy(
-            textSize = 18.px,
-            letterSpacing = (-0.18).em
+            textSize = 18.domainPx,
+            letterSpacing = (-0.18).domainEm
         ),
         wheelItemCount = 5,
         range = hourRange,
@@ -207,8 +207,8 @@ private fun MinutePicker(
     SuperWheelPicker(
         colors = RunnerbeSuperWheelPickerDefaults.colors(),
         textStyle = RunnerbeSuperWheelPickerDefaults.textStyle().copy(
-            textSize = 18.px,
-            letterSpacing = (-0.18).em
+            textSize = 18.domainPx,
+            letterSpacing = (-0.18).domainEm
         ),
         wheelItemCount = 5,
         range = 0..12,
