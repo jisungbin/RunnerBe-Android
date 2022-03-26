@@ -41,7 +41,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import io.github.jisungbin.logeukes.logeukes
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 import team.applemango.runnerbe.feature.home.board.R
@@ -180,13 +179,15 @@ internal fun MainBoardComposable(
                 .padding(bottom = BottomNavigationBarHeight.dp),
             targetState = isLoading
         ) { loading ->
-            logeukes { loading }
             when (loading) {
                 true -> {
                     LazyColumn(
                         modifier = Modifier.fillMaxSize(),
                         verticalArrangement = Arrangement.spacedBy(12.dp),
-                        contentPadding = PaddingValues(vertical = 16.dp)
+                        contentPadding = PaddingValues(
+                            top = 30.dp,
+                            bottom = 16.dp
+                        )
                     ) {
                         items(count = 10) {
                             RunningItemScreenDummy(placeholderEnabled = isLoading)
