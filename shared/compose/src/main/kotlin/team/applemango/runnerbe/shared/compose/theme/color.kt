@@ -37,9 +37,10 @@ object ColorAsset {
 }
 
 object GradientAsset {
-    val BlackStartColor = Color(18, 18, 18)
-    val BlackEndColor = Color(27, 26, 23)
-    val BlackGradientBrush = Brush.linearGradient(listOf(BlackStartColor, BlackEndColor))
+    val BlackTopColor = Color(18, 18, 18)
+    val BlackTopHalfColor = Color(21, 21, 20)
+    val BlackBottomColor = Color(27, 26, 23)
+    val BlackGradientBrush = Brush.linearGradient(listOf(BlackTopColor, BlackBottomColor))
 }
 
 @Composable
