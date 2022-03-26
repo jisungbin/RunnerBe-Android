@@ -9,6 +9,7 @@
 
 package team.applemango.runnerbe.feature.home.board.component
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -46,18 +47,15 @@ import team.applemango.runnerbe.shared.android.constant.BottomNavigationBarHeigh
 import team.applemango.runnerbe.shared.compose.component.RunningItemTypeToggleBar
 import team.applemango.runnerbe.shared.compose.default.RunnerbeCheckBoxDefaults
 import team.applemango.runnerbe.shared.compose.extension.noRippleClickable
-import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 
-@OptIn(
-    ExperimentalFoundationApi::class, // Modifier.animateItemPlacement()
-    LocalActivityUsageApi::class // activityViewModel()
-)
+@OptIn(ExperimentalFoundationApi::class) // Modifier.animateItemPlacement()
 @Composable
 internal fun MainBoardComposable(
     modifier: Modifier = Modifier,
     runningItems: List<RunningItem>,
+    isLoading: Boolean = false,
     isBookmarkPage: Boolean = false,
     isEmptyState: Boolean = false,
 ) {
@@ -162,43 +160,50 @@ internal fun MainBoardComposable(
                 )
             }
         }
-        if (!isEmptyState) {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .navigationBarsPadding(),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-                contentPadding = PaddingValues(
-                    top = 8.dp,
-                    bottom = BottomNavigationBarHeight.dp
-                )
-            ) {
-                items(
-                    items = runningItems.filter { item ->
-                        item.runningType == selectedRunningItemTypeState &&
-                            item.bookmarked == isBookmarkPage
-                    },
-                    key = { it.itemId }
-                ) { item ->
-                    RunningItem(
-                        modifier = Modifier.animateItemPlacement(),
-                        item = item,
-                        bookmarkState = false,
-                        requestToggleBookmarkState = {
-                            // TODO
+        Crossfade(targetState = isEmptyState) { isEmpty ->
+            when (isEmpty) {
+                true -> {
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .navigationBarsPadding(),
+                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                        contentPadding = PaddingValues(
+                            top = 8.dp,
+                            bottom = BottomNavigationBarHeight.dp
+                        )
+                    ) {
+                        items(
+                            items = runningItems.filter { item ->
+                                item.runningType == selectedRunningItemTypeState &&
+                                    item.bookmarked == isBookmarkPage
+                            },
+                            key = { it.itemId }
+                        ) { item ->
+                            RunningItem(
+                                modifier = Modifier.animateItemPlacement(),
+                                item = item,
+                                bookmarkState = false,
+                                requestToggleBookmarkState = {
+                                    // TODO
+                                }
+                            )
                         }
-                    )
+                    }
                 }
-            }
-        } else {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = stringResource(R.string.mainboard_running_item_empty),
-                    style = Typography.Title18R.copy(color = ColorAsset.G4)
-                )
+                else -> {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .navigationBarsPadding(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = stringResource(R.string.mainboard_running_item_empty),
+                            style = Typography.Title18R.copy(color = ColorAsset.G4)
+                        )
+                    }
+                }
             }
         }
     }
