@@ -38,7 +38,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -185,22 +184,10 @@ internal fun MainBoardComposable(
                     LazyColumn(
                         modifier = Modifier.fillMaxSize(),
                         verticalArrangement = Arrangement.spacedBy(12.dp),
-                        contentPadding = PaddingValues(
-                            top = 8.dp,
-                            bottom = BottomNavigationBarHeight.dp
-                        )
+                        contentPadding = PaddingValues(vertical = 16.dp)
                     ) {
-                        items(
-                            items = runningItemsState,
-                            key = { it.itemId }
-                        ) { item ->
-                            RunningItemScreen(
-                                modifier = Modifier.animateItemPlacement(),
-                                item = item,
-                                requestToggleBookmarkState = {
-                                    // TODO
-                                }
-                            )
+                        items(count = 10) {
+                            RunningItemScreenDummy(placeholderEnabled = isLoading)
                         }
                     }
                 }
@@ -221,8 +208,13 @@ internal fun MainBoardComposable(
                             FadingEdgeLazyColumn(
                                 modifier = Modifier.fillMaxSize(),
                                 verticalArrangement = Arrangement.spacedBy(12.dp),
-                                contentPadding = PaddingValues(vertical = 8.dp),
-                                gradients = setOf(Gradient.Top(color = GradientAsset.BlackTopHalfColor.toArgb()))
+                                contentPadding = PaddingValues(
+                                    top = 30.dp,
+                                    bottom = 16.dp
+                                ),
+                                gradients = setOf(
+                                    Gradient.Top(color = GradientAsset.BlackTopHalfColor)
+                                )
                             ) {
                                 items(
                                     items = runningItemsState,
