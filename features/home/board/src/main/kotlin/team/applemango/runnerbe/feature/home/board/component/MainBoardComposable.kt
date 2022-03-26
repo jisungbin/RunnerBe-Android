@@ -47,6 +47,7 @@ import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 import team.applemango.runnerbe.feature.home.board.R
 import team.applemango.runnerbe.shared.android.constant.BottomNavigationBarHeight
 import team.applemango.runnerbe.shared.compose.component.FadingEdgeLazyColumn
+import team.applemango.runnerbe.shared.compose.component.Gradient
 import team.applemango.runnerbe.shared.compose.component.RunningItemTypeToggleBar
 import team.applemango.runnerbe.shared.compose.default.RunnerbeCheckBoxDefaults
 import team.applemango.runnerbe.shared.compose.extension.noRippleClickable
@@ -175,22 +176,31 @@ internal fun MainBoardComposable(
         Crossfade(
             modifier = Modifier
                 .fillMaxSize()
-                .navigationBarsPadding(),
+                .navigationBarsPadding()
+                .padding(bottom = BottomNavigationBarHeight.dp),
             targetState = isLoading
         ) { loading ->
-            when (true || loading) {
+            when (loading) {
                 true -> {
-                    FadingEdgeLazyColumn(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(bottom = BottomNavigationBarHeight.dp),
-                        contentGap = 0.dp,
-                        gradientColor = GradientAsset.BlackStartColor.toArgb(),
-                        verticalArrangement = Arrangement.spacedBy(space = 12.dp),
-                        contentPadding = PaddingValues(vertical = 8.dp)
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                        contentPadding = PaddingValues(
+                            top = 8.dp,
+                            bottom = BottomNavigationBarHeight.dp
+                        )
                     ) {
-                        items(count = 10) {
-                            RunningItemScreenDummy()
+                        items(
+                            items = runningItemsState,
+                            key = { it.itemId }
+                        ) { item ->
+                            RunningItemScreen(
+                                modifier = Modifier.animateItemPlacement(),
+                                item = item,
+                                requestToggleBookmarkState = {
+                                    // TODO
+                                }
+                            )
                         }
                     }
                 }
@@ -208,13 +218,11 @@ internal fun MainBoardComposable(
                             }
                         }
                         else -> {
-                            LazyColumn(
+                            FadingEdgeLazyColumn(
                                 modifier = Modifier.fillMaxSize(),
                                 verticalArrangement = Arrangement.spacedBy(12.dp),
-                                contentPadding = PaddingValues(
-                                    top = 8.dp,
-                                    bottom = BottomNavigationBarHeight.dp
-                                )
+                                contentPadding = PaddingValues(vertical = 8.dp),
+                                gradients = setOf(Gradient.Top(color = GradientAsset.BlackTopHalfColor.toArgb()))
                             ) {
                                 items(
                                     items = runningItemsState,
