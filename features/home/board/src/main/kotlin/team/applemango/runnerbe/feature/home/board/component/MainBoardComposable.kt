@@ -41,6 +41,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import io.github.jisungbin.logeukes.logeukes
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 import team.applemango.runnerbe.feature.home.board.R
@@ -59,9 +60,9 @@ import team.applemango.runnerbe.shared.compose.theme.Typography
 internal fun MainBoardComposable(
     modifier: Modifier = Modifier,
     runningItems: List<RunningItem>,
-    isLoading: Boolean = false,
-    isBookmarkPage: Boolean = false,
-    isEmptyState: Boolean = false,
+    isLoading: Boolean,
+    isBookmarkPage: Boolean,
+    isEmptyState: Boolean,
 ) {
     val appNameText = stringResource(R.string.mainboard_title_app_name)
     val bookmarkText = stringResource(R.string.mainboard_title_bookmark_list)
@@ -179,6 +180,7 @@ internal fun MainBoardComposable(
                 .padding(bottom = BottomNavigationBarHeight.dp),
             targetState = isLoading
         ) { loading ->
+            logeukes { loading }
             when (loading) {
                 true -> {
                     LazyColumn(
