@@ -30,6 +30,7 @@ import androidx.compose.material.Checkbox
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,6 +47,7 @@ import team.applemango.runnerbe.feature.home.board.R
 import team.applemango.runnerbe.shared.android.constant.BottomNavigationBarHeight
 import team.applemango.runnerbe.shared.compose.component.RunningItemTypeToggleBar
 import team.applemango.runnerbe.shared.compose.default.RunnerbeCheckBoxDefaults
+import team.applemango.runnerbe.shared.compose.extension.defaultPlaceholder
 import team.applemango.runnerbe.shared.compose.extension.noRippleClickable
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
@@ -76,6 +78,14 @@ internal fun MainBoardComposable(
 
     var includeFinishState by remember { mutableStateOf(false) }
     var selectedRunningItemTypeState by remember { mutableStateOf(RunningItemType.Before) }
+    val runningItemsState by remember(runningItems) {
+        derivedStateOf {
+            runningItems.filter { item ->
+                item.runningType == selectedRunningItemTypeState &&
+                    item.bookmarked == isBookmarkPage
+            }
+        }
+    }
 
     Column(modifier = modifier) {
         Box( // ToolBar
@@ -160,48 +170,65 @@ internal fun MainBoardComposable(
                 )
             }
         }
-        Crossfade(targetState = isEmptyState) { isEmpty ->
-            when (isEmpty) {
+        Crossfade(
+            modifier = Modifier
+                .fillMaxSize()
+                .navigationBarsPadding(),
+            targetState = isLoading
+        ) { loading ->
+            when (true || loading) {
                 true -> {
                     LazyColumn(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .navigationBarsPadding(),
-                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.spacedBy(space = 12.dp),
                         contentPadding = PaddingValues(
                             top = 8.dp,
                             bottom = BottomNavigationBarHeight.dp
                         )
                     ) {
-                        items(
-                            items = runningItems.filter { item ->
-                                item.runningType == selectedRunningItemTypeState &&
-                                    item.bookmarked == isBookmarkPage
-                            },
-                            key = { it.itemId }
-                        ) { item ->
-                            RunningItem(
-                                modifier = Modifier.animateItemPlacement(),
-                                item = item,
-                                bookmarkState = false,
-                                requestToggleBookmarkState = {
-                                    // TODO
-                                }
+                        items(count = 10) {
+                            RunningItemScreenDummy(
+                                modifier = Modifier.defaultPlaceholder(visible = true)
                             )
                         }
                     }
                 }
                 else -> {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .navigationBarsPadding(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = stringResource(R.string.mainboard_running_item_empty),
-                            style = Typography.Title18R.copy(color = ColorAsset.G4)
-                        )
+                    when (isEmptyState) {
+                        true -> {
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.mainboard_running_item_empty),
+                                    style = Typography.Title18R.copy(color = ColorAsset.G4)
+                                )
+                            }
+                        }
+                        else -> {
+                            LazyColumn(
+                                modifier = Modifier.fillMaxSize(),
+                                verticalArrangement = Arrangement.spacedBy(12.dp),
+                                contentPadding = PaddingValues(
+                                    top = 8.dp,
+                                    bottom = BottomNavigationBarHeight.dp
+                                )
+                            ) {
+                                items(
+                                    items = runningItemsState,
+                                    key = { it.itemId }
+                                ) { item ->
+                                    RunningItemScreen(
+                                        modifier = Modifier.animateItemPlacement(),
+                                        item = item,
+                                        requestToggleBookmarkState = {
+                                            // TODO
+                                        }
+                                    )
+                                }
+                            }
+                        }
                     }
                 }
             }
