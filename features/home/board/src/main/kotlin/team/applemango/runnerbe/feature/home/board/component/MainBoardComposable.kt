@@ -28,7 +28,6 @@ import androidx.compose.material.Checkbox
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,11 +39,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
-import team.applemango.runnerbe.feature.home.board.MainBoardViewModel
+import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 import team.applemango.runnerbe.feature.home.board.R
 import team.applemango.runnerbe.shared.compose.component.RunningItemTypeToggleBar
 import team.applemango.runnerbe.shared.compose.default.RunnerbeCheckBoxDefaults
-import team.applemango.runnerbe.shared.compose.extension.activityViewModel
 import team.applemango.runnerbe.shared.compose.extension.noRippleClickable
 import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
@@ -57,12 +55,10 @@ import team.applemango.runnerbe.shared.compose.theme.Typography
 @Composable
 internal fun MainBoardComposable(
     modifier: Modifier = Modifier,
+    runningItems: List<RunningItem>,
     isBookmarkPage: Boolean = false,
-    vm: MainBoardViewModel = activityViewModel(),
     isEmptyState: Boolean = false,
 ) {
-    val runningItems by vm.runningItems.collectAsState()
-
     val appNameText = stringResource(R.string.mainboard_title_app_name)
     val bookmarkText = stringResource(R.string.mainboard_title_bookmark_list)
     val titleText = remember(isBookmarkPage) {
