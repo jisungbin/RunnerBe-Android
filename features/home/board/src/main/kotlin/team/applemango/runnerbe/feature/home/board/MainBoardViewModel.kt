@@ -10,6 +10,7 @@
 package team.applemango.runnerbe.feature.home.board
 
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import org.orbitmvi.orbit.ContainerHost
@@ -29,7 +30,6 @@ import team.applemango.runnerbe.domain.runningitem.usecase.LoadRunningItemsUseCa
 import team.applemango.runnerbe.domain.user.usecase.UpdateBookmarkItemUseCase
 import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState
 import team.applemango.runnerbe.shared.android.base.BaseViewModel
-import javax.inject.Inject
 
 @HiltViewModel
 internal class MainBoardViewModel @Inject constructor(
@@ -52,7 +52,6 @@ internal class MainBoardViewModel @Inject constructor(
         jobFilter: JobFilter,
         locate: Locate,
         keywordFilter: KeywordFilter,
-        useCaching: Boolean,
     ) = intent {
         loadRunningItemsUseCase(
             itemType = itemType,
@@ -64,7 +63,6 @@ internal class MainBoardViewModel @Inject constructor(
             jobFilter = jobFilter,
             locate = locate,
             keywordFilter = keywordFilter,
-            useCaching = useCaching
         ).onSuccess { runningItems ->
             if (runningItems.isNotEmpty()) {
                 _runningItems.value = runningItems
