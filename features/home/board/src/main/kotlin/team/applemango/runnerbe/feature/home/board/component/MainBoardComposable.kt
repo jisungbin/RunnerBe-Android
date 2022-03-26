@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
@@ -41,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 import team.applemango.runnerbe.feature.home.board.R
+import team.applemango.runnerbe.shared.android.constant.BottomNavigationBarHeight
 import team.applemango.runnerbe.shared.compose.component.RunningItemTypeToggleBar
 import team.applemango.runnerbe.shared.compose.default.RunnerbeCheckBoxDefaults
 import team.applemango.runnerbe.shared.compose.extension.noRippleClickable
@@ -162,9 +164,14 @@ internal fun MainBoardComposable(
         }
         if (!isEmptyState) {
             LazyColumn(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .navigationBarsPadding(),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
-                contentPadding = PaddingValues(vertical = 8.dp)
+                contentPadding = PaddingValues(
+                    top = 8.dp,
+                    bottom = BottomNavigationBarHeight.dp
+                )
             ) {
                 items(
                     items = runningItems.filter { item ->
