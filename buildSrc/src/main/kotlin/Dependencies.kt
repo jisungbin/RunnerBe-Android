@@ -86,7 +86,6 @@ object Dependencies {
     )
 
     object Util { // Erratum 은 :presentation 에서만 쓰임
-        const val NestEgg = "xyz.runnerbe:nestegg:${Versions.Util.NestEgg}"
         const val Erratum = "land.sungbin:erratum:${Versions.Util.Erratum}"
         const val Logeukes = "land.sungbin:logeukes:${Versions.Util.Logeukes}"
     }
