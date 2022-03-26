@@ -18,22 +18,21 @@ import androidx.annotation.Size
 import androidx.compose.foundation.gestures.FlingBehavior
 import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.core.view.updateLayoutParams
+import androidx.compose.ui.zIndex
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 
 enum class GradientLocate {
     Top,
@@ -43,10 +42,10 @@ enum class GradientLocate {
 @Composable
 fun FadingEdgeLazyColumn(
     modifier: Modifier = Modifier,
-    @ColorInt gradientTopColor: Int = Color.BLACK,
+    @ColorInt gradientColor: Int = Color.BLACK,
     gradientHeight: Dp = 30.dp,
     gradientLocate: Set<GradientLocate> = GradientLocate.values().toSet(),
-    contentGap: Dp = 15.dp,
+    contentGap: Dp = gradientHeight / 2,
     state: LazyListState = rememberLazyListState(),
     contentPadding: PaddingValues = PaddingValues(0.dp),
     reverseLayout: Boolean = false,
@@ -57,11 +56,44 @@ fun FadingEdgeLazyColumn(
     userScrollEnabled: Boolean = true,
     content: LazyListScope.() -> Unit,
 ) {
-    Box(modifier = modifier) {
-        if (gradientLocate.contains(GradientLocate.Top)) {
-        }
+    val topGradient = remember { gradientLocate.contains(GradientLocate.Top) }
+    val bottomGradient = remember { gradientLocate.contains(GradientLocate.Bottom) }
+
+    ConstraintLayout(modifier = modifier) {
+        val (top, lazyColumn, bottom) = createRefs()
+
+        GradientView(
+            modifier = Modifier
+                .constrainAs(top) {
+                    this.top.linkTo(parent.top)
+                    width = Dimension.matchParent
+                    height = Dimension.value(gradientHeight)
+                }
+                .zIndex(2f),
+            colors = intArrayOf(gradientColor, Color.TRANSPARENT),
+            visible = topGradient
+        )
         LazyColumn(
-            modifier = Modifier.padding(top = contentGap),
+            modifier = Modifier
+                .constrainAs(lazyColumn) {
+                    this.top.linkTo(
+                        anchor = top.top,
+                        margin = when (topGradient) {
+                            true -> contentGap
+                            else -> 0.dp
+                        }
+                    )
+                    this.bottom.linkTo(
+                        anchor = bottom.bottom,
+                        margin = when (bottomGradient) {
+                            true -> contentGap
+                            else -> 0.dp
+                        }
+                    )
+                    width = Dimension.matchParent
+                    height = Dimension.fillToConstraints
+                }
+                .zIndex(1f),
             state = state,
             contentPadding = contentPadding,
             reverseLayout = reverseLayout,
@@ -71,40 +103,28 @@ fun FadingEdgeLazyColumn(
             userScrollEnabled = userScrollEnabled,
             content = content
         )
-        if (gradientLocate.contains(GradientLocate.Bottom)) {
-            AndroidView(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(gradientHeight),
-                factory = { context ->
-                    val gradientBackground = GradientDrawable(
-                        GradientDrawable.Orientation.TOP_BOTTOM,
-                        intArrayOf(gradientTopColor, Color.TRANSPARENT)
-                    ).apply {
-                        cornerRadius = 0f
-                    }
-                    View(context).apply {
-                        updateLayoutParams {
-                            height = LayoutParams.MATCH_PARENT
-                            width = LayoutParams.MATCH_PARENT
-                        }
-                        background = gradientBackground
-                    }
+        GradientView(
+            modifier = Modifier
+                .constrainAs(bottom) {
+                    this.bottom.linkTo(parent.bottom)
+                    width = Dimension.matchParent
+                    height = Dimension.value(gradientHeight)
                 }
-            )
-        }
+                .zIndex(2f),
+            colors = intArrayOf(Color.TRANSPARENT, gradientColor),
+            visible = bottomGradient
+        )
     }
 }
 
 @Composable
 private fun GradientView(
-    height: Dp,
+    modifier: Modifier = Modifier,
     @Size(value = 2) colors: IntArray,
+    visible: Boolean = true,
 ) {
     AndroidView(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(height),
+        modifier = modifier,
         factory = { context ->
             val gradientBackground = GradientDrawable(
                 GradientDrawable.Orientation.TOP_BOTTOM,
@@ -113,11 +133,15 @@ private fun GradientView(
                 cornerRadius = 0f
             }
             View(context).apply {
-                updateLayoutParams {
-                    this.height = LayoutParams.MATCH_PARENT
-                    this.width = LayoutParams.MATCH_PARENT
-                }
+                layoutParams = LayoutParams(
+                    LayoutParams.MATCH_PARENT,
+                    LayoutParams.MATCH_PARENT
+                )
                 background = gradientBackground
+                visibility = when (visible) {
+                    true -> View.VISIBLE
+                    else -> View.INVISIBLE
+                }
             }
         }
     )
