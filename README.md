@@ -122,7 +122,7 @@
 
 ## 회고 중간 기록
 
-- **백엔드의 숙련도가 중요하다는걸 매우 느꼈고, 왜 백엔드 경력만 5년 이상으로 뽑는지 알 거 같다.**
+- **백엔드의 숙련도가 중요하다는걸 매우 느꼈고, 왜 백엔드 경력만 5년 이상으로 뽑는지 알 거 같다.** (백엔드 왕답답)
 - [mapper](https://github.com/runner-be/RunnerBe-Android/blob/f0855a490f90c1b0f668f9aeb2cd3b60e6c5fd75/data/src/main/kotlin/team/applemango/runnerbe/data/main/mapper/mapper.kt) 만드는게 제일 귀찮다.
 - 혼자서 이 큰 걸 개발하니까 아키텍처 설계에서 막히는 부분을 물어볼 사람이 없어서 너무 슬프다.
 - 계속 원치 않는 파일까지 커밋이 돼 버린다!! 커밋 메시지 어떡해...
