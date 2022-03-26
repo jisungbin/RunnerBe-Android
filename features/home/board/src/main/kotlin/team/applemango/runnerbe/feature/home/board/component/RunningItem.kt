@@ -109,10 +109,6 @@ internal fun RunningItemScreen(
                 bottom = 24.dp
             )
             .padding(horizontal = 16.dp)
-            .placeholder(
-                visible = placeholderEnabled,
-                color = RunnerbePlaceholderDefaults.BaseColor
-            )
     ) {
         Row(
             modifier = Modifier
@@ -175,16 +171,16 @@ internal fun RunningItemScreen(
         }
         Text(
             modifier = Modifier
+                .padding(
+                    top = 8.dp,
+                    bottom = 12.dp
+                )
                 .placeholder(
                     visible = placeholderEnabled,
                     color = RunnerbePlaceholderDefaults.BaseColor,
                     highlight = PlaceholderHighlight.fade(
                         highlightColor = RunnerbePlaceholderDefaults.HighlightColor
                     )
-                )
-                .padding(
-                    top = 8.dp,
-                    bottom = 12.dp
                 ),
             text = item.title,
             style = Typography.Title20R.copy(color = ColorAsset.G3)
