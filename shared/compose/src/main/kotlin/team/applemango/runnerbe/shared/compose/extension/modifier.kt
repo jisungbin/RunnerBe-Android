@@ -45,7 +45,7 @@ fun Modifier.defaultPlaceholder(visible: Boolean) = then(
         visible = visible,
         color = ColorAsset.G5_5,
         highlight = PlaceholderHighlight.fade(
-            highlightColor = ColorAsset.G5_5.copy(alpha = .7f)
+            highlightColor = ColorAsset.G5
         )
     )
 )
