@@ -18,13 +18,19 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.google.accompanist.placeholder.placeholder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.orbitmvi.orbit.viewmodel.observe
@@ -39,6 +45,7 @@ import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
 import team.applemango.runnerbe.shared.domain.extension.defaultCatch
+import team.applemango.runnerbe.shared.domain.unit.Em
 
 @AndroidEntryPoint
 class MainBoardFragment : Fragment() {
@@ -54,15 +61,44 @@ class MainBoardFragment : Fragment() {
     ) = ComposeView(requireActivity()).apply {
         setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
         setContent {
+            var runningItemsState by remember { mutableStateOf<RunningItemsState>(RunningItemsState.Loading) }
+            LaunchedEffect(Unit) {
+                vm.observe(
+                    lifecycleOwner = viewLifecycleOwner,
+                    state = { state ->
+                        var message = EmptyString
+                        when (state) {
+                            MainBoardState.NonRegisterUser -> {
+                                message = getString(R.string.mainboard_toast_only_see_unregister_user)
+                            }
+                            MainBoardState.RunningItemLoading -> {
+                                runningItemsState = RunningItemsState.Loading
+                            }
+                            MainBoardState.RunningItemLoadFail -> {
+                                runningItemsState.
+                            }
+                            MainBoardState.BookmarkToggleRequestFail -> EmptyString // TODO
+                        }
+                        if (message.isNotEmpty()) {
+                            toast(message)
+                        }
+                    }
+                )
+            }
+
             CompositionLocalProvider(LocalActivity provides requireActivity()) {
                 MainBoardComposable(
                     modifier = Modifier
                         .fillMaxSize()
                         .background(brush = GradientAsset.BlackGradientBrush)
                         .statusBarsPadding()
-                        .padding(16.dp),
+                        .padding(16.dp)
+                        .placeholder(
+                            visible = runningItemsFlow.collectAsState(initial = emptyList()).value.is
+                        ),
+                    runningItems = runningItemsFlow.collectAsState(initial = emptyList()).value,
                     isBookmarkPage = arguments?.getBoolean("bookmark") ?: false,
-                    isEmptyState = isEmptyState.collectAsState().value
+                    isEmptyState = isEmptyStateFlow.collectAsState(initial = false).value
                 )
             }
         }
@@ -77,24 +113,5 @@ class MainBoardFragment : Fragment() {
             }.collectWithLifecycle(lifecycleOwner = viewLifecycleOwner) { exception ->
                 requireActivity().basicExceptionHandler(exception)
             }
-        vm.observe(
-            lifecycleOwner = this.viewLifecycleOwner,
-            state = ::handleState,
-        )
-    }
-
-    private fun handleState(state: MainBoardState) {
-        val message = when (state) {
-            MainBoardState.None -> EmptyString
-            MainBoardState.NonRegisterUser -> getString(R.string.mainboard_toast_only_see_unregister_user)
-            MainBoardState.RunningItemEmpty -> {
-                isEmptyState.value = true
-                EmptyString
-            }
-            MainBoardState.BookmarkToggleRequestFail -> EmptyString // TODO
-        }
-        if (message.isNotEmpty()) {
-            toast(message)
-        }
     }
 }
