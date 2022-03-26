@@ -19,10 +19,6 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
-import com.google.accompanist.placeholder.PlaceholderHighlight
-import com.google.accompanist.placeholder.fade
-import com.google.accompanist.placeholder.placeholder
-import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 
 inline fun Modifier.noRippleClickable(crossinline onClick: () -> Unit) = composed {
     clickable(
@@ -39,13 +35,3 @@ fun Modifier.verticalInsetsPadding() = composed {
         )
     )
 }
-
-fun Modifier.defaultPlaceholder(visible: Boolean) = then(
-    placeholder(
-        visible = visible,
-        color = ColorAsset.G5_5,
-        highlight = PlaceholderHighlight.fade(
-            highlightColor = ColorAsset.G5
-        )
-    )
-)
