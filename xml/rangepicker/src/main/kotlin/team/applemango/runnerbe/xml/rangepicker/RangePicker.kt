@@ -19,7 +19,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.viewinterop.AndroidView
 import com.google.android.material.slider.RangeSlider
 import team.applemango.runnerbe.shared.domain.unit.Dp
-import team.applemango.runnerbe.shared.domain.unit.dp
+import team.applemango.runnerbe.shared.domain.unit.domainDp
 
 private typealias FloatRange = ClosedFloatingPointRange<Float>
 
@@ -27,17 +27,17 @@ private typealias FloatRange = ClosedFloatingPointRange<Float>
 data class RangePickerTrack(
     val colorActive: Color = Color.Black,
     val colorInactive: Color = Color.Gray,
-    val height: Dp = 4.dp,
+    val height: Dp = 4.domainDp,
     val step: Float = 0f,
 )
 
 @Immutable
 data class RangePickerThumb(
     val color: Color = Color.Black,
-    val radius: Dp = 10.dp,
-    val elevation: Dp = 1.dp,
+    val radius: Dp = 10.domainDp,
+    val elevation: Dp = 1.domainDp,
     val haloColor: Color = Color.Black.copy(alpha = 0.3f),
-    val haloRadius: Dp = 24.dp,
+    val haloRadius: Dp = 24.domainDp,
 )
 
 @Immutable

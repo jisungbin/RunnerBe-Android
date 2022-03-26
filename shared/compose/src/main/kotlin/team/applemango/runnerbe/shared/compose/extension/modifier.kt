@@ -7,8 +7,6 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-@file:Suppress("NOTHING_TO_INLINE")
-
 package team.applemango.runnerbe.shared.compose.extension
 
 import androidx.compose.foundation.clickable
@@ -30,7 +28,7 @@ inline fun Modifier.noRippleClickable(crossinline onClick: () -> Unit) = compose
     )
 }
 
-inline fun Modifier.verticalInsetsPadding() = composed {
+fun Modifier.verticalInsetsPadding() = composed {
     windowInsetsPadding(
         WindowInsets.systemBars.only(
             WindowInsetsSides.Vertical

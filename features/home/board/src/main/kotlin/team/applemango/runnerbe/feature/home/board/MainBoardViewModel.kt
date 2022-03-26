@@ -10,9 +10,6 @@
 package team.applemango.runnerbe.feature.home.board
 
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.reduce
@@ -25,11 +22,11 @@ import team.applemango.runnerbe.domain.runningitem.filter.JobFilter
 import team.applemango.runnerbe.domain.runningitem.filter.KeywordFilter
 import team.applemango.runnerbe.domain.runningitem.filter.RunningItemFilter
 import team.applemango.runnerbe.domain.runningitem.model.common.Locate
-import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 import team.applemango.runnerbe.domain.runningitem.usecase.LoadRunningItemsUseCase
 import team.applemango.runnerbe.domain.user.usecase.UpdateBookmarkItemUseCase
 import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState
 import team.applemango.runnerbe.shared.android.base.BaseViewModel
+import javax.inject.Inject
 
 @HiltViewModel
 internal class MainBoardViewModel @Inject constructor(
@@ -37,10 +34,7 @@ internal class MainBoardViewModel @Inject constructor(
     private val loadRunningItemsUseCase: LoadRunningItemsUseCase,
 ) : BaseViewModel(), ContainerHost<MainBoardState, Nothing> {
 
-    override val container = container<MainBoardState, Nothing>(MainBoardState.None)
-
-    private val _runningItems = MutableStateFlow<List<RunningItem>>(emptyList())
-    val runningItems = _runningItems.asStateFlow()
+    override val container = container<MainBoardState, Nothing>(MainBoardState.RunningItemLoading)
 
     fun loadRunningItems(
         itemType: RunningItemType,
@@ -53,6 +47,9 @@ internal class MainBoardViewModel @Inject constructor(
         locate: Locate,
         keywordFilter: KeywordFilter,
     ) = intent {
+        reduce {
+            MainBoardState.RunningItemLoading
+        }
         loadRunningItemsUseCase(
             itemType = itemType,
             includeEndItems = includeEndItems,
@@ -64,15 +61,14 @@ internal class MainBoardViewModel @Inject constructor(
             locate = locate,
             keywordFilter = keywordFilter,
         ).onSuccess { runningItems ->
-            if (runningItems.isNotEmpty()) {
-                _runningItems.value = runningItems
-            } else {
-                reduce {
-                    MainBoardState.RunningItemEmpty
-                }
+            reduce {
+                MainBoardState.RunningItemLoaded(runningItems)
             }
         }.onFailure { exception ->
             emitException(exception)
+            reduce {
+                MainBoardState.RunningItemLoadFail
+            }
         }
     }
 }

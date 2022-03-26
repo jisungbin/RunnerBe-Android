@@ -19,6 +19,6 @@ object RunnerbeCheckBoxDefaults {
     fun colors() = CheckboxDefaults.colors(
         checkedColor = ColorAsset.Primary, // 테두리, 내부 색상
         uncheckedColor = ColorAsset.G4, // 테두리 색상, 내부는 투명 처리
-        checkmarkColor = GradientAsset.BlackEndColor // checked 상태일때 체크 아이콘 색상
+        checkmarkColor = GradientAsset.BlackBottomColor // checked 상태일때 체크 아이콘 색상
     )
 }

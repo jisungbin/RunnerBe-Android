@@ -33,12 +33,24 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.skydoves.landscapist.coil.CoilImage
+import com.google.accompanist.placeholder.PlaceholderHighlight
+import com.google.accompanist.placeholder.fade
+import com.google.accompanist.placeholder.placeholder
+import team.applemango.runnerbe.domain.constant.Gender
+import team.applemango.runnerbe.domain.constant.Job
+import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
+import team.applemango.runnerbe.domain.runningitem.filter.AgeFilter
+import team.applemango.runnerbe.domain.runningitem.model.common.Locate
+import team.applemango.runnerbe.domain.runningitem.model.common.Time
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 import team.applemango.runnerbe.feature.home.board.R
+import team.applemango.runnerbe.shared.compose.component.RunnerbeCoil
+import team.applemango.runnerbe.shared.compose.default.RunnerbePlaceholderDefaults
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.domain.extension.format
+import java.util.Date
+import kotlin.random.Random
 
 @Immutable
 private data class DetailItem(
@@ -46,14 +58,14 @@ private data class DetailItem(
     val text: String,
 )
 
+// format constants 랑 다름
 private const val MeetingDateFormat = "M/d (E) a K:mm" // 3/31 (금) AM 6:00
-private const val RunningTimeFormat = ""
 
 @Composable
-internal fun RunningItem(
+internal fun RunningItemScreen(
     modifier: Modifier = Modifier,
     item: RunningItem,
-    bookmarkState: Boolean,
+    placeholderEnabled: Boolean = false,
     requestToggleBookmarkState: () -> Unit,
 ) {
     val detailItems = remember(item) {
@@ -75,7 +87,11 @@ internal fun RunningItem(
             DetailItem(
                 icon = R.drawable.ic_round_people_24,
                 text = with(item) {
-                    "${gender.string}만 · $ageFilter"
+                    var genderString = gender.string
+                    if (gender != Gender.All) {
+                        genderString += "만"
+                    }
+                    "$genderString · $ageFilter"
                     // ageFilter has override toString method with ${min-max}
                 }
             )
@@ -88,7 +104,11 @@ internal fun RunningItem(
             .wrapContentHeight()
             .clip(RoundedCornerShape(12.dp))
             .background(color = ColorAsset.G5_5)
-            .padding(16.dp)
+            .padding(
+                top = 16.dp,
+                bottom = 24.dp
+            )
+            .padding(horizontal = 16.dp)
     ) {
         Row(
             modifier = Modifier
@@ -102,24 +122,45 @@ internal fun RunningItem(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                CoilImage(
+                RunnerbeCoil(
                     modifier = Modifier
                         .size(15.dp)
-                        .clip(CircleShape),
-                    imageModel = item.ownerProfileImageUrl
+                        .clip(CircleShape)
+                        .placeholder(
+                            visible = placeholderEnabled,
+                            color = RunnerbePlaceholderDefaults.BaseColor,
+                            highlight = PlaceholderHighlight.fade(
+                                highlightColor = RunnerbePlaceholderDefaults.HighlightColor
+                            )
+                        ),
+                    src = item.ownerProfileImageUrl
                 )
                 Text(
-                    modifier = Modifier.padding(start = 4.dp),
+                    modifier = Modifier.placeholder(
+                        visible = placeholderEnabled,
+                        color = RunnerbePlaceholderDefaults.BaseColor,
+                        highlight = PlaceholderHighlight.fade(
+                            highlightColor = RunnerbePlaceholderDefaults.HighlightColor
+                        )
+                    ),
                     text = item.ownerNickName,
                     style = Typography.Caption10R.copy(color = ColorAsset.G3_5)
                 )
             }
             Icon( // 북마크
-                modifier = Modifier.clickable {
-                    requestToggleBookmarkState()
-                },
+                modifier = Modifier
+                    .placeholder(
+                        visible = placeholderEnabled,
+                        color = RunnerbePlaceholderDefaults.BaseColor,
+                        highlight = PlaceholderHighlight.fade(
+                            highlightColor = RunnerbePlaceholderDefaults.HighlightColor
+                        )
+                    )
+                    .clickable {
+                        requestToggleBookmarkState()
+                    },
                 painter = painterResource(
-                    when (bookmarkState) {
+                    when (item.bookmarked) {
                         true -> R.drawable.ic_round_bookmark_24
                         else -> R.drawable.ic_outlined_bookmark_24
                     }
@@ -129,14 +170,26 @@ internal fun RunningItem(
             )
         }
         Text(
-            modifier = Modifier.padding(vertical = 8.dp),
+            modifier = Modifier
+                .padding(
+                    top = 8.dp,
+                    bottom = 12.dp
+                )
+                .placeholder(
+                    visible = placeholderEnabled,
+                    color = RunnerbePlaceholderDefaults.BaseColor,
+                    highlight = PlaceholderHighlight.fade(
+                        highlightColor = RunnerbePlaceholderDefaults.HighlightColor
+                    )
+                ),
             text = item.title,
             style = Typography.Title20R.copy(color = ColorAsset.G3)
         ) // 2 (제목)
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight()
+                .wrapContentHeight(),
+            verticalArrangement = Arrangement.spacedBy(space = 4.dp)
         ) {
             detailItems.chunked(2).forEach { items ->
                 Row(
@@ -150,13 +203,29 @@ internal fun RunningItem(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(
-                                modifier = Modifier.size(18.dp),
+                                modifier = Modifier
+                                    .size(18.dp)
+                                    .placeholder(
+                                        visible = placeholderEnabled,
+                                        color = RunnerbePlaceholderDefaults.BaseColor,
+                                        highlight = PlaceholderHighlight.fade(
+                                            highlightColor = RunnerbePlaceholderDefaults.HighlightColor
+                                        )
+                                    ),
                                 painter = painterResource(item.icon),
                                 contentDescription = null,
                                 tint = Color.Unspecified
                             )
                             Text(
-                                modifier = Modifier.padding(start = 6.dp),
+                                modifier = Modifier
+                                    .padding(start = 6.dp)
+                                    .placeholder(
+                                        visible = placeholderEnabled,
+                                        color = RunnerbePlaceholderDefaults.BaseColor,
+                                        highlight = PlaceholderHighlight.fade(
+                                            highlightColor = RunnerbePlaceholderDefaults.HighlightColor
+                                        )
+                                    ),
                                 text = item.text,
                                 style = Typography.Body12M.copy(color = ColorAsset.G2)
                             )
@@ -166,4 +235,47 @@ internal fun RunningItem(
             }
         }
     }
+}
+
+// Dummy Composable for Placeholder
+@Composable
+internal fun RunningItemScreenDummy(
+    modifier: Modifier = Modifier,
+    placeholderEnabled: Boolean = true,
+) {
+    RunningItemScreen(
+        modifier = modifier,
+        item = RunningItem(
+            itemId = Random.nextInt(),
+            ownerId = Random.nextInt(),
+            ownerNickName = "ownerNickname",
+            ownerProfileImageUrl = "ownerProfileImageUrl",
+            createdAt = Date(),
+            bookmarkCount = Random.nextInt(),
+            runningType = RunningItemType.values().random(),
+            finish = Random.nextBoolean(),
+            maxRunnerCount = Random.nextInt(),
+            title = "This is Awesome Title!",
+            gender = Gender.values().random(),
+            jobs = Job.values().toList(),
+            ageFilter = AgeFilter.None,
+            runningTime = Time(
+                hour = 10,
+                minute = 10,
+                second = 10
+            ),
+            locate = Locate(
+                address = "Heaven",
+                latitude = Random.nextDouble(),
+                longitude = Random.nextDouble()
+            ),
+            distance = Random.nextFloat(),
+            meetingDate = Date(),
+            message = "This is Awesome RunningItem message!!",
+            bookmarked = Random.nextBoolean(),
+            attendance = Random.nextBoolean(),
+        ),
+        placeholderEnabled = placeholderEnabled,
+        requestToggleBookmarkState = {}
+    )
 }

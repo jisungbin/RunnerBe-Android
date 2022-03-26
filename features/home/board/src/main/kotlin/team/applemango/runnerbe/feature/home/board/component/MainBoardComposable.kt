@@ -9,6 +9,7 @@
 
 package team.applemango.runnerbe.feature.home.board.component
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,6 +21,7 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
@@ -28,7 +30,7 @@ import androidx.compose.material.Checkbox
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,29 +42,27 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
-import team.applemango.runnerbe.feature.home.board.MainBoardViewModel
+import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 import team.applemango.runnerbe.feature.home.board.R
+import team.applemango.runnerbe.shared.android.constant.BottomNavigationBarHeight
+import team.applemango.runnerbe.shared.compose.component.FadingEdgeLazyColumn
+import team.applemango.runnerbe.shared.compose.component.Gradient
 import team.applemango.runnerbe.shared.compose.component.RunningItemTypeToggleBar
 import team.applemango.runnerbe.shared.compose.default.RunnerbeCheckBoxDefaults
-import team.applemango.runnerbe.shared.compose.extension.activityViewModel
 import team.applemango.runnerbe.shared.compose.extension.noRippleClickable
-import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
+import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 
-@OptIn(
-    ExperimentalFoundationApi::class, // Modifier.animateItemPlacement()
-    LocalActivityUsageApi::class // activityViewModel()
-)
+@OptIn(ExperimentalFoundationApi::class) // Modifier.animateItemPlacement()
 @Composable
 internal fun MainBoardComposable(
     modifier: Modifier = Modifier,
-    isBookmarkPage: Boolean = false,
-    vm: MainBoardViewModel = activityViewModel(),
-    isEmptyState: Boolean = false,
+    runningItems: List<RunningItem>,
+    isLoading: Boolean,
+    isBookmarkPage: Boolean,
+    isEmptyState: Boolean,
 ) {
-    val runningItems by vm.runningItems.collectAsState()
-
     val appNameText = stringResource(R.string.mainboard_title_app_name)
     val bookmarkText = stringResource(R.string.mainboard_title_bookmark_list)
     val titleText = remember(isBookmarkPage) {
@@ -80,6 +80,14 @@ internal fun MainBoardComposable(
 
     var includeFinishState by remember { mutableStateOf(false) }
     var selectedRunningItemTypeState by remember { mutableStateOf(RunningItemType.Before) }
+    val runningItemsState by remember(runningItems) {
+        derivedStateOf {
+            runningItems.filter { item ->
+                item.runningType == selectedRunningItemTypeState &&
+                    item.bookmarked == isBookmarkPage
+            }
+        }
+    }
 
     Column(modifier = modifier) {
         Box( // ToolBar
@@ -164,38 +172,69 @@ internal fun MainBoardComposable(
                 )
             }
         }
-        if (!isEmptyState) {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-                contentPadding = PaddingValues(vertical = 8.dp)
-            ) {
-                items(
-                    items = runningItems.filter { item ->
-                        item.runningType == selectedRunningItemTypeState &&
-                            item.bookmarked == isBookmarkPage
-                    },
-                    key = { it.itemId }
-                ) { item ->
-                    RunningItem(
-                        modifier = Modifier.animateItemPlacement(),
-                        item = item,
-                        bookmarkState = false,
-                        requestToggleBookmarkState = {
-                            // TODO
+        Crossfade(
+            modifier = Modifier
+                .fillMaxSize()
+                .navigationBarsPadding()
+                .padding(bottom = BottomNavigationBarHeight.dp),
+            targetState = isLoading
+        ) { loading ->
+            when (loading) {
+                true -> {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                        contentPadding = PaddingValues(
+                            top = 30.dp,
+                            bottom = 16.dp
+                        )
+                    ) {
+                        items(count = 10) {
+                            RunningItemScreenDummy(placeholderEnabled = isLoading)
                         }
-                    )
+                    }
                 }
-            }
-        } else {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = stringResource(R.string.mainboard_running_item_empty),
-                    style = Typography.Title18R.copy(color = ColorAsset.G4)
-                )
+                else -> {
+                    when (isEmptyState) {
+                        true -> {
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.mainboard_running_item_empty),
+                                    style = Typography.Title18R.copy(color = ColorAsset.G4)
+                                )
+                            }
+                        }
+                        else -> {
+                            FadingEdgeLazyColumn(
+                                modifier = Modifier.fillMaxSize(),
+                                verticalArrangement = Arrangement.spacedBy(12.dp),
+                                contentPadding = PaddingValues(
+                                    top = 30.dp,
+                                    bottom = 16.dp
+                                ),
+                                gradients = setOf(
+                                    Gradient.Top(color = GradientAsset.BlackTopHalfColor)
+                                )
+                            ) {
+                                items(
+                                    items = runningItemsState,
+                                    key = { it.itemId }
+                                ) { item ->
+                                    RunningItemScreen(
+                                        modifier = Modifier.animateItemPlacement(),
+                                        item = item,
+                                        requestToggleBookmarkState = {
+                                            // TODO
+                                        }
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
