@@ -15,6 +15,8 @@ import team.applemango.runnerbe.domain.register.runnerbe.model.UserToken
 import team.applemango.runnerbe.domain.runningitem.model.common.Locate
 
 object Me {
+    var locateInitialized = false
+
     // 37.5284197, 126.9327389
     @Suppress("ObjectPropertyName")
     private var _locate = MutableStateFlow(
@@ -30,6 +32,7 @@ object Me {
     var token = UserToken()
 
     fun updateLocate(locate: Locate) {
+        locateInitialized = true
         _locate.value = locate
     }
 }
