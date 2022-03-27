@@ -123,7 +123,7 @@ class MainBoardFragment : Fragment() {
                         .padding(horizontal = 16.dp),
                     runningItems = (runningItemsState as? RunningItemsState.Loaded)?.items
                         ?: emptyList(),
-                    isLoading = runningItemsState is RunningItemsState.Loading,
+                    isLoading = runningItemsState == RunningItemsState.Loading,
                     isBookmarkPage = arguments?.getBoolean("bookmark") ?: false,
                     isEmptyState = runningItemsState == RunningItemsState.Empty
                 )
