@@ -172,7 +172,7 @@ internal fun MainBoardComposable(
                 )
             }
         }
-        Crossfade(
+        Crossfade( // FIXME: 너무 depth 가 깊음!!
             modifier = Modifier
                 .fillMaxSize()
                 .navigationBarsPadding()
