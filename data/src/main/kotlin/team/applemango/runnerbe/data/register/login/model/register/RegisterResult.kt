@@ -11,7 +11,7 @@ package team.applemango.runnerbe.data.register.login.model.register
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class Result(
+data class RegisterResult(
     @field:JsonProperty("insertedUserId")
     val insertedUserId: Int? = null,
 
