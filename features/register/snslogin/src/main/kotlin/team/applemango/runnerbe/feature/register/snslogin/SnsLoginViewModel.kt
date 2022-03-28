@@ -43,18 +43,27 @@ internal class SnsLoginViewModel(
                 loginUseCase(platformType = platformType, accessToken = token)
                     .onSuccess { user ->
                         if (user.isAlreadyRegisterUser) { // 이미 가입후 회원가입까지 모두 마친 유저
-                            val jwt = requireNotNull(user.jwt) {
-                                requireFieldNullMessage("jwt")
-                            }
-                            postSideEffect(LoginSideEffect.SaveJwt(jwt))
+                            postSideEffect(
+                                LoginSideEffect.SaveUserToken(
+                                    userId = requireNotNull(user.userId) {
+                                        requireNotNull("userId")
+                                    },
+                                    jwt = requireNotNull(user.jwt) {
+                                        requireFieldNullMessage("jwt")
+                                    }
+                                )
+                            )
                             reduce {
                                 LoginState.Registered
                             }
                         } else {
-                            val uuid = requireNotNull(user.uuid) {
-                                requireFieldNullMessage("uuid")
-                            }
-                            postSideEffect(LoginSideEffect.SaveUuid(uuid))
+                            postSideEffect(
+                                LoginSideEffect.SaveUuid(
+                                    uuid = requireNotNull(user.uuid) {
+                                        requireFieldNullMessage("uuid")
+                                    }
+                                )
+                            )
                             reduce {
                                 LoginState.Done
                             }
