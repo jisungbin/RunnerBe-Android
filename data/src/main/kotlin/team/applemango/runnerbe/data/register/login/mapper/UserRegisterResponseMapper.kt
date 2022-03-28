@@ -22,18 +22,16 @@ internal fun UserRegisterResponse.toDomain(): UserRegisterResult {
     }
     return when (code) {
         1005, 1006 -> {
-            checkNotNull(result) {
-                requireFieldNullMessage("result")
-            }
-            requireNotNull(result.token) {
-                requireFieldNullMessage("token")
-            }
-            requireNotNull(result.insertedUserId) {
-                requireFieldNullMessage("userId")
+            checkNotNull(registerResult) {
+                requireFieldNullMessage("registerResult")
             }
             UserRegisterResult.Success(
-                userId = result.insertedUserId,
-                jwt = result.token
+                userId = requireNotNull(registerResult.insertedUserId) {
+                    requireFieldNullMessage("userId")
+                },
+                jwt = requireNotNull(registerResult.token) {
+                    requireFieldNullMessage("token")
+                }
             )
         }
         3001 -> UserRegisterResult.DuplicateUuid
