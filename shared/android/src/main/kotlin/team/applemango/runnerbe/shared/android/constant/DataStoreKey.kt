@@ -14,6 +14,7 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import team.applemango.runnerbe.shared.android.constant.DataStoreKey.Login.Jwt
 import team.applemango.runnerbe.shared.android.constant.DataStoreKey.Login.RegisterDone
+import team.applemango.runnerbe.shared.android.constant.DataStoreKey.Login.UserId
 import team.applemango.runnerbe.shared.android.constant.DataStoreKey.Login.Uuid
 import team.applemango.runnerbe.shared.android.constant.DataStoreKey.Onboard.Email
 import team.applemango.runnerbe.shared.android.constant.DataStoreKey.Onboard.Gender
@@ -29,6 +30,7 @@ object DataStoreKey {
     /**
      * @property Jwt 유저 JWT 값 - string
      * @property Uuid 유저 UUID 값 - string
+     * @property UserId 유저 아이디 값 - int
      * @property RegisterDone 유저 회원가입 완료 여부 - boolean
      * 이메일 인증일 경우 한 번에 바로 가입이 되지만,
      * 사원증 인증일 경우 가입 승인이 필요함
@@ -36,6 +38,7 @@ object DataStoreKey {
     object Login {
         val Jwt = stringPreferencesKey("login-jwt")
         val Uuid = stringPreferencesKey("login-uuid")
+        val UserId = intPreferencesKey("login-userid")
         val RegisterDone = booleanPreferencesKey("login-register_done")
     }
 
