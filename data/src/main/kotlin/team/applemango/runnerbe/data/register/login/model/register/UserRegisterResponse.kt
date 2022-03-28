@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 data class UserRegisterResponse(
     @field:JsonProperty("result")
-    val result: Result? = null,
+    val registerResult: RegisterResult? = null,
 
     @field:JsonProperty("code")
     val code: Int? = null,
