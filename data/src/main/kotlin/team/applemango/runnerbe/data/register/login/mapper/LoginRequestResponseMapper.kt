@@ -17,26 +17,33 @@ import team.applemango.runnerbe.shared.domain.util.requireFieldNullMessage
 // 1001, 1007 - JWT (회원)
 // 1002 - UUID (비회원)
 internal fun LoginRequestResponse.toDomain(): UserToken {
-    checkNotNull(loginResult) {
-        requireFieldNullMessage("loginResult")
-    }
     checkNotNull(code) {
         requireFieldNullMessage("code")
     }
     return when (code) {
-        1001, 1007 -> UserToken( // 회원
-            jwt = requireNotNull(loginResult.jwt) {
-                requireFieldNullMessage("jwt")
-            },
-            userId = requireNotNull(loginResult.userId) {
-                requireFieldNullMessage("userId")
+        1001, 1007 -> {
+            checkNotNull(loginResult) {
+                requireFieldNullMessage("loginResult")
             }
-        )
-        1002 -> UserToken( // 비회원
-            uuid = requireNotNull(loginResult.uuid) {
-                requireFieldNullMessage("uuid")
+            UserToken( // 회원
+                userId = requireNotNull(loginResult.userId) {
+                    requireFieldNullMessage("userId")
+                },
+                jwt = requireNotNull(loginResult.jwt) {
+                    requireFieldNullMessage("jwt")
+                }
+            )
+        }
+        1002 -> {
+            checkNotNull(loginResult) {
+                requireFieldNullMessage("loginResult")
             }
-        )
+            UserToken( // 비회원
+                uuid = requireNotNull(loginResult.uuid) {
+                    requireFieldNullMessage("uuid")
+                }
+            )
+        }
         else -> throw IllegalStateException(notAllowedValueMessage(code))
     }
 }

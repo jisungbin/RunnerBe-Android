@@ -49,7 +49,7 @@ class RegisterRepositoryImpl : RegisterRepository {
             .requireSuccessfulBody(
                 requestName = "registerApi.requestRegister",
                 resultVerifyBuilder = { body ->
-                    body.jwt != null && body.code in listOf(1005, 1006, 3001, 3002, 3004)
+                    body.registerResult != null && body.code in listOf(1005, 1006, 3001, 3002, 3004)
                 }
             )
             .toDomain()

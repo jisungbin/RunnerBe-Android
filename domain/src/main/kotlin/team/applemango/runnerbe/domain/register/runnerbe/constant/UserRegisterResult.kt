@@ -16,7 +16,7 @@ package team.applemango.runnerbe.domain.register.runnerbe.constant
  * @property DuplicateNickname 중복된 닉네임 (랜덤 6자리 숫자로 자동 생성 됐지만 중복됨) (3004)
  */
 sealed class UserRegisterResult {
-    data class Success(val jwt: String) : UserRegisterResult()
+    data class Success(val userId: Int, val jwt: String) : UserRegisterResult()
     object DuplicateUuid : UserRegisterResult()
     object DuplicateEmail : UserRegisterResult()
     object DuplicateNickname : UserRegisterResult()

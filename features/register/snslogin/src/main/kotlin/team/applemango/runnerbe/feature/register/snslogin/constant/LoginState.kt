@@ -11,7 +11,7 @@ package team.applemango.runnerbe.feature.register.snslogin.constant
 
 /**
  * @property None 아무런 상태도 아닌 초기값
- * @property Done 로그인 성공
+ * @property Done 로그인 성공 -> 온보딩 필요 (추가 정보 입력 필요)
  * @property Registered 이미 가입된 유저 (회원가입 모두 완료)
  */
 internal enum class LoginState {

@@ -9,7 +9,16 @@
 
 package team.applemango.runnerbe.feature.register.snslogin.mvi
 
+import team.applemango.runnerbe.feature.register.snslogin.SnsLoginViewModel
+
+/**
+ * [SnsLoginViewModel] 에서 사용될 SideEffect 모델
+ * 각 필드들의 NonNull 을 위해 따로따로 data class 를 만들어 줌
+ */
 internal sealed class LoginSideEffect {
     data class SaveUuid(val uuid: String) : LoginSideEffect()
-    data class SaveJwt(val jwt: String) : LoginSideEffect()
+    data class SaveUserToken(
+        val userId: Int,
+        val jwt: String,
+    ) : LoginSideEffect()
 }

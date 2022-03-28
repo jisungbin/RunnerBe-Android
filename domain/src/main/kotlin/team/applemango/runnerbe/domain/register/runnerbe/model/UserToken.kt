@@ -10,9 +10,9 @@
 package team.applemango.runnerbe.domain.register.runnerbe.model
 
 data class UserToken(
+    val userId: Int? = null,
     val jwt: String? = null,
     val uuid: String? = null,
-    val userId: Int? = null,
 ) {
     val isAlreadyRegisterUser = jwt != null
 }
