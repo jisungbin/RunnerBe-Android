@@ -22,10 +22,19 @@ internal fun UserRegisterResponse.toDomain(): UserRegisterResult {
     }
     return when (code) {
         1005, 1006 -> {
-            val jwt = requireNotNull(jwt) {
-                requireFieldNullMessage("jwt")
+            checkNotNull(result) {
+                requireFieldNullMessage("result")
             }
-            UserRegisterResult.Success(jwt)
+            requireNotNull(result.token) {
+                requireFieldNullMessage("token")
+            }
+            requireNotNull(result.insertedUserId) {
+                requireFieldNullMessage("userId")
+            }
+            UserRegisterResult.Success(
+                userId = result.insertedUserId,
+                jwt = result.token
+            )
         }
         3001 -> UserRegisterResult.DuplicateUuid
         3002 -> UserRegisterResult.DuplicateEmail
