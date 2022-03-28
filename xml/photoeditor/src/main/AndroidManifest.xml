@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ RunnerBe © 2022 Team AppleMango. all rights reserved.
   ~ RunnerBe license is under the MIT.
   ~
@@ -8,7 +7,6 @@
   ~ Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
   -->
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="team.applemango.runnerbe.xml.photoeditor">
+<manifest package="team.applemango.runnerbe.xml.photoeditor">
 
 </manifest>

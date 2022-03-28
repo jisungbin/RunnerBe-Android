@@ -78,7 +78,7 @@ private val Shape = RoundedCornerShape(8.dp)
 @OptIn(FlowPreview::class) // Flow<T>.debounce
 @Composable
 internal fun EmailVerify(
-    vm: OnboardViewModel
+    vm: OnboardViewModel,
 ) {
     val context = LocalContext.current.applicationContext
     val focusManager = LocalFocusManager.current

@@ -91,7 +91,7 @@ private val takePhotoFromAlbumIntent =
 @Composable
 internal fun EmployeeIdVerify(
     photo: Bitmap?,
-    onPhotoChanged: (photo: Bitmap?) -> Unit
+    onPhotoChanged: (photo: Bitmap?) -> Unit,
 ) {
     val context = LocalContext.current.applicationContext
     var photoTakenTypeDialogVisibleState by remember { mutableStateOf(false) }

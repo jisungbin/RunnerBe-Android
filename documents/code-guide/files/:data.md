@@ -4,7 +4,8 @@
 
 ## 코루틴
 
-Login SDK(AccessTokenRepositoryImpl 참고) 에서 result 를 콜백으로 주고 있습니다. 이를 동기처럼 한 번에 return 하는 함수로 구현하기 위해 suspendCancellableCoroutine 를 사용하였습니다.
+Login SDK(AccessTokenRepositoryImpl 참고) 에서 result 를 콜백으로 주고 있습니다. 이를 동기처럼 한 번에 return 하는 함수로 구현하기 위해
+suspendCancellableCoroutine 를 사용하였습니다.
 
 ---
 

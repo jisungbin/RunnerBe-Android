@@ -1,5 +1,5 @@
 # Unit Test 방법 기록
- 
+
 1. 서버랑 연결을 아예 끊고 (retrofit 참조 XXX), **모든** response 값을 아래와 같이 각각 리턴하는 함수를 만듦
 
 ```kotlin

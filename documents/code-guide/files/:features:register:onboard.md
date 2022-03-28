@@ -1,11 +1,12 @@
 # :features:register:onboard
 
-사용자 추가 정보를 입력받는 온보딩 feature 입니다. onboard 도중에 건너뛰어서 앱 둘러보기가 가능하게 돼 있고, onboard 도중에 앱을 종료할 수 있으므로 데이터를 매 단계마다 DataStore 를 통해 저장하게 하였습니다.
-추후 다시 onboard 으로 들아올 때 마지막 단계로 돌아오고, 입력했던 정보들도 다 복원됩니다.
+사용자 추가 정보를 입력받는 온보딩 feature 입니다. onboard 도중에 건너뛰어서 앱 둘러보기가 가능하게 돼 있고, onboard 도중에 앱을 종료할 수 있으므로 데이터를
+매 단계마다 DataStore 를 통해 저장하게 하였습니다. 추후 다시 onboard 으로 들아올 때 마지막 단계로 돌아오고, 입력했던 정보들도 다 복원됩니다.
 
 # 문제
 
-DFM 에서 resource 에 접근하는 부분에서 문제가 발생하였습니다. 자세한 내용은 [#10](https://github.com/runner-be/RunnerBe-Android/issues/10) 을 확인해 주세요.
+DFM 에서 resource 에 접근하는 부분에서 문제가 발생하였습니다. 자세한
+내용은 [#10](https://github.com/runner-be/RunnerBe-Android/issues/10) 을 확인해 주세요.
 
 ---
 
@@ -131,9 +132,12 @@ internal object StringAsset {
 아키텍처를 개선하기 위해 DFM 에서 strings.xml 에 참조하는 방법을 연구하여 적용해야 함
 
 - 그 전에 이게 가능한지 먼저 공부 필요
-- reference: https://stackoverflow.com/questions/57662892/access-graphics-from-drawable-folder-of-a-dynamic-feature-module-from-main-modul/60227903#60227903
-- reference: https://stackoverflow.com/questions/57629292/unable-to-access-resources-of-dynamic-feature-module
-- reference: https://stackoverflow.com/questions/6662316/android-getidentifier-doesnt-work-for-string/23989837
+-
+reference: https://stackoverflow.com/questions/57662892/access-graphics-from-drawable-folder-of-a-dynamic-feature-module-from-main-modul/60227903#60227903
+-
+reference: https://stackoverflow.com/questions/57629292/unable-to-access-resources-of-dynamic-feature-module
+-
+reference: https://stackoverflow.com/questions/6662316/android-getidentifier-doesnt-work-for-string/23989837
 
 ### strings.xml
 

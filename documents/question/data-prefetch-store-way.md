@@ -1,5 +1,5 @@
-안녕하세요! 스플래시에서 데이터를 prefetch 해주고 있는데, 이렇게 저장한 데이터를 코틀린의 object 클래스에 저장하고 있습니다.
-이때 불러오는 데이터의 목적은 메인 화면에서 아래 사진처럼 보여질 리스트들의 데이터 입니다.
+안녕하세요! 스플래시에서 데이터를 prefetch 해주고 있는데, 이렇게 저장한 데이터를 코틀린의 object 클래스에 저장하고 있습니다. 이때 불러오는 데이터의 목적은 메인
+화면에서 아래 사진처럼 보여질 리스트들의 데이터 입니다.
 
 <img src="https://user-images.githubusercontent.com/40740128/158814398-97b76bbb-b279-49aa-bad6-1fdd6a8741b1.png" width="33%" alt="preview"/>
 
@@ -51,7 +51,9 @@ data class RunningItem(
 
 1. 데이터는 스플래시에서 retrofit api 콜을 통해 불러옵니다.
 2. 스플래시가 표시되는 모듈하고, 메인 UI 들이 표시되는 모듈하고 다릅니다.
-3. 스플래시에서 api call 하는 코드는 [여기](https://github.com/runner-be/RunnerBe-Android/blob/core/fix-running-items-load/presentation/src/main/kotlin/team/applemango/runnerbe/activity/StartActivity.kt#L67)서 확인하실 수 있습니다.
+3. 스플래시에서 api call 하는
+   코드는 [여기](https://github.com/runner-be/RunnerBe-Android/blob/core/fix-running-items-load/presentation/src/main/kotlin/team/applemango/runnerbe/activity/StartActivity.kt#L67)서
+   확인하실 수 있습니다.
 
 ---
 

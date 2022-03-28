@@ -21,7 +21,8 @@
 
 # 🥇 마지막 실력 향상 프로젝트
 
-토스/뱅샐/당근 에 지원(2022년 12월 26일)하기 전에, 마지막으로 진행하는 *엄청난* 실력 향상용 프로젝트 입니다.<br/>(엄청난 실력 향상의 변천사: 중3, 고2, 이 프로젝트 이후 예정)
+토스/뱅샐/당근 에 지원(2022년 12월 26일)하기 전에, 마지막으로 진행하는 *엄청난* 실력 향상용 프로젝트 입니다.<br/>(엄청난 실력 향상의 변천사: 중3, 고2, 이
+프로젝트 이후 예정)
 
 따라서 **아키텍처가 다소 오버하게 적용**됐으며, 아래와 같은 기술들을 처음 적용합니다.
 
@@ -57,7 +58,8 @@
 
 # 🔖 코드 설명
 
-[documents/code-guide](https://github.com/runner-be/RunnerBe-Android/tree/develop/documents/code-guide) 를 확인해 주세요.
+[documents/code-guide](https://github.com/runner-be/RunnerBe-Android/tree/develop/documents/code-guide)
+를 확인해 주세요.
 
 ---
 
@@ -108,7 +110,6 @@
   <img src="https://img.shields.io/badge/Module-Android%20Library-%2381D4FA" />
 </p>
 
-
 #### Dependency Injection Graph
 
 > TODO
@@ -124,13 +125,16 @@
 ## 회고 중간 기록
 
 - **백엔드의 숙련도가 중요하다는걸 매우 느꼈고, 왜 백엔드 경력만 5년 이상으로 뽑는지 알 거 같다.**
-- [mapper](https://github.com/runner-be/RunnerBe-Android/blob/f0855a490f90c1b0f668f9aeb2cd3b60e6c5fd75/data/src/main/kotlin/team/applemango/runnerbe/data/main/mapper/mapper.kt) 만드는게 제일 귀찮다.
+- [mapper](https://github.com/runner-be/RunnerBe-Android/blob/f0855a490f90c1b0f668f9aeb2cd3b60e6c5fd75/data/src/main/kotlin/team/applemango/runnerbe/data/main/mapper/mapper.kt)
+  만드는게 제일 귀찮다.
 - 혼자서 이 큰 걸 개발하니까 아키텍처 설계에서 막히는 부분을 물어볼 사람이 없어서 너무 슬프다.
 - 계속 원치 않는 파일까지 커밋이 돼 버린다!! 커밋 메시지 어떡해...
 - 토스 때문에 이러고 있는데, 결국 토스에 떨어지면 그동안 한 노력들이 다 똥되니 지원하기 전 까지는 어떻게든 다 하자.
 - 어떻게 해야 할 지 모르겠을땐 그냥 무작정 생각나는데로 해보자~ 시간이 낭비되더라도 결국엔 깨닫게 된다.
-- 힘들때 마다 나도 모르게 항상 생각하면서 버티고 있는 "토스 가야 돼..." 진짜 꼭 가고싶다. [**[꿈은⭐이루어진다]**](https://jisungbin.medium.com/%ED%86%A0%EC%8A%A4%ED%8C%80%EC%97%90%EC%84%9C-%EB%A8%BC%EC%A0%80-%EC%97%B0%EB%9D%BD%EC%9D%B4-%EC%99%94%EB%8B%A4-241f74d24489)
+- 힘들때 마다 나도 모르게 항상 생각하면서 버티고 있는 "토스 가야 돼..." 진짜 꼭
+  가고싶다. [**[꿈은⭐이루어진다]**](https://jisungbin.medium.com/%ED%86%A0%EC%8A%A4%ED%8C%80%EC%97%90%EC%84%9C-%EB%A8%BC%EC%A0%80-%EC%97%B0%EB%9D%BD%EC%9D%B4-%EC%99%94%EB%8B%A4-241f74d24489)
 
 ## License
 
-RunnerBe는 MIT 라이선스를 따릅니다. 자세한 내용은 [LICENSE](https://github.com/runner-be/RunnerBe-Android/blob/main/LICENSE) 파일을 확인해 주세요.
+RunnerBe는 MIT 라이선스를 따릅니다. 자세한
+내용은 [LICENSE](https://github.com/runner-be/RunnerBe-Android/blob/main/LICENSE) 파일을 확인해 주세요.

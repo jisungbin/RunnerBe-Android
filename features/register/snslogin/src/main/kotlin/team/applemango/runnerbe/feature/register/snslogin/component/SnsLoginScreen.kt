@@ -37,7 +37,7 @@ import team.applemango.runnerbe.shared.compose.theme.FontAsset
 @Composable
 internal fun SnsLoginScreen(
     modifier: Modifier = Modifier,
-    vm: SnsLoginViewModel
+    vm: SnsLoginViewModel,
 ) {
     ConstraintLayout(modifier = modifier) {
         val (logo, buttons) = createRefs()
