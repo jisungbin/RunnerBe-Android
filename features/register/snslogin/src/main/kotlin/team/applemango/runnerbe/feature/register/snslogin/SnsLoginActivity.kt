@@ -96,9 +96,10 @@ class SnsLoginActivity : ComponentActivity() {
     private fun handleSideEffect(sideEffect: LoginSideEffect) {
         launchedWhenCreated {
             when (sideEffect) {
-                is LoginSideEffect.SaveJwt -> {
+                is LoginSideEffect.SaveUserToken -> {
                     applicationContext.dataStore.edit { preferences ->
                         preferences[DataStoreKey.Login.Jwt] = sideEffect.jwt
+                        preferences[DataStoreKey.Login.UserId] = sideEffect.userId
                     }
                 }
                 is LoginSideEffect.SaveUuid -> {
