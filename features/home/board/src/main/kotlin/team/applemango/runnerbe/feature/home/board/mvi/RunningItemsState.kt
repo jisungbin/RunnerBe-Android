@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.feature.home.board
+package team.applemango.runnerbe.feature.home.board.mvi
 
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 
