@@ -15,7 +15,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -26,7 +25,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
@@ -120,8 +118,7 @@ class MainBoardFragment : Fragment() {
                     modifier = Modifier
                         .fillMaxSize()
                         .background(brush = GradientAsset.Background.Brush)
-                        .statusBarsPadding() // without navigationBar: because use BottomSheetView inner
-                        .padding(horizontal = 16.dp),
+                        .statusBarsPadding(), // without navigationBar: because use BottomSheetView inner
                     runningItems = (runningItemsState as? RunningItemsState.Loaded)?.items
                         ?: emptyList(),
                     isLoading = runningItemsState == RunningItemsState.Loading,
