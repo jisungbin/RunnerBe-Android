@@ -41,6 +41,7 @@ import team.applemango.runnerbe.domain.runningitem.filter.KeywordFilter
 import team.applemango.runnerbe.domain.runningitem.filter.RunningItemFilter
 import team.applemango.runnerbe.feature.home.board.component.MainBoardComposable
 import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState
+import team.applemango.runnerbe.feature.home.board.mvi.RunningItemsState
 import team.applemango.runnerbe.shared.android.datastore.Me
 import team.applemango.runnerbe.shared.android.extension.basicExceptionHandler
 import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
@@ -118,7 +119,7 @@ class MainBoardFragment : Fragment() {
                 MainBoardComposable(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(brush = GradientAsset.BlackGradientBrush)
+                        .background(brush = GradientAsset.Background.Brush)
                         .statusBarsPadding() // without navigationBar: because use BottomSheetView inner
                         .padding(horizontal = 16.dp),
                     runningItems = (runningItemsState as? RunningItemsState.Loaded)?.items
