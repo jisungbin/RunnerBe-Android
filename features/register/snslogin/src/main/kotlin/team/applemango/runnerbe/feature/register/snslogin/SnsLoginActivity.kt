@@ -76,7 +76,7 @@ class SnsLoginActivity : ComponentActivity() {
             SnsLoginScreen(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(brush = GradientAsset.BlackGradientBrush)
+                    .background(brush = GradientAsset.Background.Brush)
                     .verticalInsetsPadding()
                     .padding(horizontal = 16.dp),
                 vm = vm

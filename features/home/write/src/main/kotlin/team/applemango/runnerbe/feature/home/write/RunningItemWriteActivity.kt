@@ -62,7 +62,7 @@ class RunningItemWriteActivity : ComponentActivity() {
                 RunningItemWrite(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(brush = GradientAsset.BlackGradientBrush)
+                        .background(brush = GradientAsset.Background.Brush)
                         .systemBarsPadding()
                 )
             }

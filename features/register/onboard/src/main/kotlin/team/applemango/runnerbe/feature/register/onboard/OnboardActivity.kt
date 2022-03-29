@@ -171,7 +171,7 @@ class OnboardActivity : ComponentActivity() {
                     OnboardRouter(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(brush = GradientAsset.BlackGradientBrush)
+                            .background(brush = GradientAsset.Background.Brush)
                             .verticalInsetsPadding()
                             .padding(horizontal = 16.dp),
                         navController = navController,
