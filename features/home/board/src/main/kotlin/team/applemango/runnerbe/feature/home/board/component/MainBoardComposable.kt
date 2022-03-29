@@ -19,7 +19,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -50,6 +49,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemSort
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
@@ -117,7 +117,7 @@ internal fun MainBoardComposable(
     }
 
     ModalBottomSheetLayout(
-        modifier = modifier,
+        modifier = modifier.zIndex(19f),
         sheetState = bottomSheetState,
         sheetShape = RoundedCornerShape(
             topStart = 30.dp,
@@ -126,43 +126,57 @@ internal fun MainBoardComposable(
         sheetBackgroundColor = ColorAsset.G6,
         scrimColor = GradientAsset.Background.Bottom.copy(alpha = 0.32f),
         sheetContent = {
-            Spacer(modifier = Modifier.height(24.dp))
-            LazyColumn(modifier = Modifier.fillMaxWidth()) {
-                items(items = RunningItemSort.values()) { sortItem ->
-                    Text(
-                        modifier = Modifier
-                            .background(
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .zIndex(15f)
+            ) {
+                LazyColumn(
+                    modifier = Modifier
+                        .padding(vertical = 24.dp)
+                        .fillMaxWidth()
+                ) {
+                    items(items = RunningItemSort.values()) { sortItem ->
+                        Text(
+                            modifier = Modifier
+                                .background(
+                                    color = animatedColorState(
+                                        target = sortState,
+                                        selectState = sortItem,
+                                        defaultColor = ColorAsset.G6,
+                                        selectedColor = ColorAsset.G5_5
+                                    )
+                                )
+                                .padding(
+                                    vertical = 8.dp,
+                                    horizontal = 32.dp
+                                )
+                                .clickable {
+                                    sortState = sortItem
+                                },
+                            text = sortItem.string,
+                            style = Typography.Body16R.copy(
                                 color = animatedColorState(
                                     target = sortState,
                                     selectState = sortItem,
-                                    defaultColor = ColorAsset.G6,
-                                    selectedColor = ColorAsset.G5_5
+                                    defaultColor = ColorAsset.G3,
+                                    selectedColor = ColorAsset.Primary
                                 )
                             )
-                            .padding(
-                                vertical = 8.dp,
-                                horizontal = 32.dp
-                            )
-                            .clickable {
-                                sortState = sortItem
-                            },
-                        text = sortItem.string,
-                        style = Typography.Body16R.copy(
-                            color = animatedColorState(
-                                target = sortState,
-                                selectState = sortItem,
-                                defaultColor = ColorAsset.G3,
-                                selectedColor = ColorAsset.Primary
-                            )
                         )
-                    )
+                    }
                 }
             }
-            Spacer(modifier = Modifier.height(24.dp))
         },
         content = {
             Box( // content + fab
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp)
+                    .padding(top = 16.dp) // without bottom: because LazyColumn
+                    .navigationBarsPadding()
+                    .padding(bottom = BottomNavigationBarHeight.dp),
                 contentAlignment = Alignment.BottomEnd
             ) {
                 Column(modifier = Modifier.fillMaxSize()) { // content
@@ -223,7 +237,7 @@ internal fun MainBoardComposable(
                                 text = stringResource(R.string.mainboard_filter_include_finish)
                             ) {
                                 Checkbox(
-                                    modifier = Modifier.padding(start = 4.dp),
+                                    modifier = Modifier.padding(start = 2.dp),
                                     checked = includeFinishState,
                                     onCheckedChange = { includeFinishState = it },
                                     colors = RunnerbeCheckBoxDefaults.colors()
@@ -255,10 +269,7 @@ internal fun MainBoardComposable(
                         }
                     }
                     Crossfade( // LazyColumn or Empty Screen
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .navigationBarsPadding()
-                            .padding(bottom = BottomNavigationBarHeight.dp),
+                        modifier = Modifier.fillMaxSize(),
                         targetState = isLoading
                     ) { loading ->
                         @Suppress("KotlinConstantConditions") // `!isEmptyState` is always true
@@ -292,20 +303,27 @@ internal fun MainBoardComposable(
                         }
                     }
                 }
-                FloatingActionButton( // 글쓰기 FAB
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .background(brush = GradientAsset.Fab.Brush),
-                    backgroundColor = Color.Transparent,
-                    onClick = {
-                        // TODO: write running item
+                if (/*!isLoading*/ true) {
+                    FloatingActionButton( // 글쓰기 FAB
+                        modifier = Modifier.padding(bottom = 16.dp),
+                        backgroundColor = Color.Transparent,
+                        onClick = {
+                            // TODO: write running item
+                        }
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .matchParentSize()
+                                .background(brush = GradientAsset.Fab.Brush),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                painter = painterResource(R.drawable.ic_round_add_24),
+                                contentDescription = null,
+                                tint = ColorAsset.Primary
+                            )
+                        }
                     }
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_round_add_24),
-                        contentDescription = null,
-                        tint = ColorAsset.Primary
-                    )
                 }
             }
         }
