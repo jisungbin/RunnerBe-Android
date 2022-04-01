@@ -9,6 +9,7 @@
 
 package team.applemango.runnerbe.feature.home.board.component
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -124,6 +125,12 @@ internal fun MainBoardComposable(
             else -> throw IllegalStateException("Not allowed value: ${bottomSheetState.currentValue}")
         }
     )
+
+    BackHandler(enabled = bottomSheetState.currentValue == ModalBottomSheetValue.Expanded) {
+        coroutineScope.launch {
+            bottomSheetState.hide()
+        }
+    }
 
     ModalBottomSheetLayout(
         modifier = modifier,
