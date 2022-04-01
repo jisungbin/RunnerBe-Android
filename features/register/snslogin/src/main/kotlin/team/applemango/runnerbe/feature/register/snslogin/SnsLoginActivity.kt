@@ -33,7 +33,7 @@ import team.applemango.runnerbe.shared.android.extension.changeActivityWithAnima
 import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.android.extension.dataStore
 import team.applemango.runnerbe.shared.android.extension.launchedWhenCreated
-import team.applemango.runnerbe.shared.android.extension.setWindowInsets
+import team.applemango.runnerbe.shared.android.extension.setWindowInsetsUsage
 import team.applemango.runnerbe.shared.compose.extension.verticalInsetsPadding
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.domain.extension.defaultCatch
@@ -60,7 +60,7 @@ class SnsLoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setWindowInsets()
+        setWindowInsetsUsage()
         vm.observe(
             lifecycleOwner = this,
             state = ::handleState,

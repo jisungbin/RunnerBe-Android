@@ -29,7 +29,7 @@ fun Activity.finishWithAnimation() {
     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
 }
 
-fun Activity.setWindowInsets() {
+fun Activity.setWindowInsetsUsage() {
     window.setFlags( // 네비게이션바까지 영역 확장하려면 필요
         WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
         WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS

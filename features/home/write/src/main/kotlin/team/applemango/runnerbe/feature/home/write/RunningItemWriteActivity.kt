@@ -26,7 +26,7 @@ import team.applemango.runnerbe.feature.home.write.mvi.RunningItemWriteState
 import team.applemango.runnerbe.shared.android.extension.basicExceptionHandler
 import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.android.extension.finishWithAnimation
-import team.applemango.runnerbe.shared.android.extension.setWindowInsets
+import team.applemango.runnerbe.shared.android.extension.setWindowInsetsUsage
 import team.applemango.runnerbe.shared.compose.extension.LocalActivity
 import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
@@ -41,7 +41,7 @@ class RunningItemWriteActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setWindowInsets()
+        setWindowInsetsUsage()
         setContent {
             CompositionLocalProvider(LocalActivity provides this) {
                 LaunchedEffect(Unit) {
