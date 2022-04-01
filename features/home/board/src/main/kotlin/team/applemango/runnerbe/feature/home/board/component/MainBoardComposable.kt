@@ -37,6 +37,7 @@ import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -50,10 +51,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import io.github.jisungbin.logeukes.logeukes
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemSort
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
+import team.applemango.runnerbe.feature.home.board.BottomSheetStateListenerHolder
 import team.applemango.runnerbe.feature.home.board.R
 import team.applemango.runnerbe.shared.android.constant.BottomNavigationBarHeight
 import team.applemango.runnerbe.shared.compose.component.FadingEdgeLazyColumn
@@ -94,7 +97,7 @@ internal fun MainBoardComposable(
 
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
-        skipHalfExpanded = true
+        skipHalfExpanded = true,
     )
     var sortState by remember { mutableStateOf(RunningItemSort.Nearby) }
     var includeFinishState by remember { mutableStateOf(false) }
@@ -116,6 +119,18 @@ internal fun MainBoardComposable(
         }
     }
 
+    // FIXME: why not working on LaunchedEffect??
+    LaunchedEffect(Unit) {
+        logeukes { bottomSheetState.currentValue }
+    }
+
+    bottomSheetState.isAnimationRunning
+    BottomSheetStateListenerHolder.bottomSheetStateListener?.onBottomSheetStateChanged(
+        isExpended = bottomSheetState.currentValue == ModalBottomSheetValue.Expanded
+    )?.also {
+        logeukes { "Registered: ${bottomSheetState.currentValue == ModalBottomSheetValue.Expanded}" }
+    }
+
     ModalBottomSheetLayout(
         modifier = modifier.zIndex(19f),
         sheetState = bottomSheetState,
@@ -124,22 +139,26 @@ internal fun MainBoardComposable(
             topEnd = 30.dp
         ),
         sheetBackgroundColor = ColorAsset.G6,
-        scrimColor = GradientAsset.Background.Bottom.copy(alpha = 0.32f),
+        scrimColor = Color.Black.copy(alpha = 0.5f),
         sheetContent = {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
-                    .zIndex(15f)
+                    .navigationBarsPadding()
             ) {
                 LazyColumn(
                     modifier = Modifier
-                        .padding(vertical = 24.dp)
+                        .padding(
+                            top = 24.dp,
+                            bottom = 12.dp
+                        )
                         .fillMaxWidth()
                 ) {
                     items(items = RunningItemSort.values()) { sortItem ->
                         Text(
                             modifier = Modifier
+                                .fillMaxWidth()
                                 .background(
                                     color = animatedColorState(
                                         target = sortState,
@@ -148,13 +167,13 @@ internal fun MainBoardComposable(
                                         selectedColor = ColorAsset.G5_5
                                     )
                                 )
+                                .clickable {
+                                    sortState = sortItem
+                                }
                                 .padding(
                                     vertical = 8.dp,
                                     horizontal = 32.dp
-                                )
-                                .clickable {
-                                    sortState = sortItem
-                                },
+                                ),
                             text = sortItem.string,
                             style = Typography.Body16R.copy(
                                 color = animatedColorState(
