@@ -43,7 +43,6 @@ import team.applemango.runnerbe.feature.home.board.mvi.RunningItemsState
 import team.applemango.runnerbe.shared.android.datastore.Me
 import team.applemango.runnerbe.shared.android.extension.basicExceptionHandler
 import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
-import team.applemango.runnerbe.shared.android.extension.setWindowInsets
 import team.applemango.runnerbe.shared.android.extension.toast
 import team.applemango.runnerbe.shared.compose.extension.LocalActivity
 import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
@@ -131,7 +130,6 @@ class MainBoardFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().setWindowInsets()
         vm.exceptionFlow
             .defaultCatch { exception ->
                 requireActivity().basicExceptionHandler(exception)
