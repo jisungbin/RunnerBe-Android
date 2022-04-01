@@ -29,6 +29,7 @@ plugins {
 android {
     signingConfigs {
         create("release") {
+            storeFile = File(BuildConstants.StoreFilePath)
             storePassword = BuildConstants.StorePassword
             keyAlias = BuildConstants.KeyAlias
             keyPassword = BuildConstants.KeyPassword
