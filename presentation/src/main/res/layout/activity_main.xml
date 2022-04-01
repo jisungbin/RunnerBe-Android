@@ -2,15 +2,6 @@
   ~ RunnerBe © 2022 Team AppleMango. all rights reserved.
   ~ RunnerBe license is under the MIT.
   ~
-  ~ [activity_main.xml] created by Ji Sungbin on 22. 3. 20. 오후 11:11
-  ~
-  ~ Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
-  -->
-
-<!--
-  ~ RunnerBe © 2022 Team AppleMango. all rights reserved.
-  ~ RunnerBe license is under the MIT.
-  ~
   ~ [activity_main.xml] created by Ji Sungbin on 22. 3. 15. 오전 11:58
   ~
   ~ Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
@@ -50,18 +41,10 @@
             app:itemIconTint="@null"
             app:itemRippleColor="@null"
             app:labelVisibilityMode="unlabeled"
-            app:layout_constraintBottom_toTopOf="@id/view_navigation_bar_color"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:menu="@menu/main_menu"
-            tools:background="@color/G6"
-            tools:layout_height="56dp" />
-
-        <View
-            android:id="@+id/view_navigation_bar_color"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/G6"
-            app:layout_constraintBottom_toBottomOf="@+id/fcv_main"
-            tools:layout_height="50dp" />
+            app:paddingBottomSystemWindowInsets="@{true}"
+            tools:background="@color/G6" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
