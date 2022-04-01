@@ -64,7 +64,7 @@
         </activity>
 
         <activity-alias
-            android:name="team.applemango.runnerbe.util.MainActivityAlias"
+            android:name="team.applemango.runnerbe.shared.android.util.MainActivityAlias"
             android:targetActivity=".activity.MainActivity" />
 
         <meta-data

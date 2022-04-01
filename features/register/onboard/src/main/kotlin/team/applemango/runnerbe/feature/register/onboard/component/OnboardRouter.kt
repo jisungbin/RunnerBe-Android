@@ -64,6 +64,8 @@ import team.applemango.runnerbe.shared.android.constant.DataStoreKey
 import team.applemango.runnerbe.shared.android.extension.changeActivityWithAnimation
 import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.android.extension.dataStore
+import team.applemango.runnerbe.shared.android.util.DFMLoginActivityAlias
+import team.applemango.runnerbe.shared.android.util.MainActivityAlias
 import team.applemango.runnerbe.shared.compose.component.RunnerbeDialog
 import team.applemango.runnerbe.shared.compose.extension.LocalActivity
 import team.applemango.runnerbe.shared.compose.extension.presentationDrawableOf
@@ -71,8 +73,6 @@ import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.domain.extension.defaultCatch
-import team.applemango.runnerbe.util.DFMLoginActivityAlias
-import team.applemango.runnerbe.util.MainActivityAlias
 
 private var lastBackPressedTime = 0L
 
@@ -388,9 +388,7 @@ private fun UnregisterDialog(
         },
         negativeButton = {
             text = StringAsset.No
-            onClick = {
-                onDismissRequest()
-            }
+            onClick = onDismissRequest
         }
     )
 }

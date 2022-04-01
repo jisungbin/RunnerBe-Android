@@ -49,7 +49,7 @@
         </activity>
 
         <activity-alias
-            android:name="team.applemango.runnerbe.util.DFMOnboardActivityAlias"
+            android:name="team.applemango.runnerbe.shared.android.util.DFMOnboardActivityAlias"
             android:targetActivity=".OnboardActivity" />
     </application>
 

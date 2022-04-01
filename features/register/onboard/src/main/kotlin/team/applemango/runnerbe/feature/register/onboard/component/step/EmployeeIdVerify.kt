@@ -22,6 +22,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.launch
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -186,7 +187,7 @@ private fun PhotoTakenTypeDialog(
         Text(
             modifier = Modifier
                 .fillMaxWidth()
-                .noRippleClickable { fromCameraClick() }
+                .clickable(onClick = fromCameraClick)
                 .padding(vertical = 16.dp, horizontal = 24.dp),
             text = StringAsset.Dialog.FromCamera,
             style = Typography.Body16R.copy(color = ColorAsset.Primary)
@@ -195,7 +196,7 @@ private fun PhotoTakenTypeDialog(
         Text(
             modifier = Modifier
                 .fillMaxWidth()
-                .noRippleClickable { fromAlbumClick() }
+                .clickable(onClick = fromAlbumClick)
                 .padding(horizontal = 24.dp)
                 .padding(top = 16.dp, bottom = 20.dp),
             text = StringAsset.Dialog.FromAlbum,

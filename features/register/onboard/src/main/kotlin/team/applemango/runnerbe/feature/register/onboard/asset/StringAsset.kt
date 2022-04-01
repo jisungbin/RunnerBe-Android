@@ -72,7 +72,7 @@ internal object StringAsset {
         const val EmailVerifyTimeNotice = "인증 확인까지 최대 6시간 정도가\n소요될 수 있어요!"
         const val FromCamera = "촬영하기"
         const val FromAlbum = "앨범에서 선택하기"
-        const val UnregisterNotice = "정보를 입력하지 않으면\n둘러보기만 가능해요! 그만할까요?"
+        const val UnregisterNotice = "정보를 입력하지 않으면\n둘러보기만 가능해요!\n그만할까요?"
     }
 
     object Toast {

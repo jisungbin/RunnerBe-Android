@@ -24,9 +24,9 @@ import team.applemango.runnerbe.shared.android.extension.basicExceptionHandler
 import team.applemango.runnerbe.shared.android.extension.changeActivityWithAnimation
 import team.applemango.runnerbe.shared.android.extension.dataStore
 import team.applemango.runnerbe.shared.android.extension.launchedWhenCreated
+import team.applemango.runnerbe.shared.android.util.DFMLoginActivityAlias
+import team.applemango.runnerbe.shared.android.util.DFMOnboardActivityAlias
 import team.applemango.runnerbe.shared.domain.extension.defaultCatch
-import team.applemango.runnerbe.util.DFMLoginActivityAlias
-import team.applemango.runnerbe.util.DFMOnboardActivityAlias
 
 @AndroidEntryPoint
 class StartActivity : AppCompatActivity() {

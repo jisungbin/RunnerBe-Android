@@ -13,7 +13,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.CompositionLocalProvider
@@ -22,10 +27,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.compose.ui.zIndex
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,16 +44,17 @@ import team.applemango.runnerbe.domain.runningitem.filter.JobFilter
 import team.applemango.runnerbe.domain.runningitem.filter.KeywordFilter
 import team.applemango.runnerbe.domain.runningitem.filter.RunningItemFilter
 import team.applemango.runnerbe.feature.home.board.component.MainBoardComposable
+import team.applemango.runnerbe.feature.home.board.component.NonRegisterUserPopup
 import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState
 import team.applemango.runnerbe.feature.home.board.mvi.RunningItemsState
 import team.applemango.runnerbe.shared.android.datastore.Me
 import team.applemango.runnerbe.shared.android.extension.basicExceptionHandler
+import team.applemango.runnerbe.shared.android.extension.changeActivityWithAnimation
 import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
-import team.applemango.runnerbe.shared.android.extension.toast
+import team.applemango.runnerbe.shared.android.util.DFMOnboardActivityAlias
 import team.applemango.runnerbe.shared.compose.extension.LocalActivity
 import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
-import team.applemango.runnerbe.shared.domain.constant.EmptyString
 import team.applemango.runnerbe.shared.domain.extension.defaultCatch
 
 @AndroidEntryPoint
@@ -63,9 +70,20 @@ class MainBoardFragment : Fragment() {
     ) = ComposeView(requireActivity()).apply {
         setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
         setContent {
+            var nonRegisterUserPopupVisible by remember { mutableStateOf(true) }
             var runningItemsState by remember { mutableStateOf<RunningItemsState>(RunningItemsState.Loading) }
 
             LaunchedEffect(Unit) {
+                snapshotFlow { nonRegisterUserPopupVisible }
+                    .collectWithLifecycle(viewLifecycleOwner) { isVisible ->
+                        BottomSheetStateListenerHolder.bottomSheetStateListener?.onBottomSheetStateChanged(
+                            state = when (isVisible) {
+                                true -> BottomSheetState.Expanding
+                                else -> BottomSheetState.Hidden
+                            }
+                        )
+                    }
+
                 vm.loadRunningItems(
                     itemType = RunningItemType.Before,
                     includeEndItems = false,
@@ -80,11 +98,9 @@ class MainBoardFragment : Fragment() {
                 vm.observe(
                     lifecycleOwner = viewLifecycleOwner,
                     state = { state ->
-                        var message = EmptyString
                         when (state) {
                             MainBoardState.NonRegisterUser -> {
-                                message =
-                                    getString(R.string.mainboard_toast_only_see_registered_user)
+                                nonRegisterUserPopupVisible = true
                             }
                             MainBoardState.RunningItemLoading -> {
                                 runningItemsState = RunningItemsState.Loading
@@ -101,29 +117,46 @@ class MainBoardFragment : Fragment() {
                                 }
                             }
                             MainBoardState.BookmarkToggleRequestFail -> {
-                                EmptyString // TODO: 북마크 롤백 및 토스트 메시지
+                                // TODO: 북마크 롤백 및 토스트 메시지
                             }
-                        }
-                        if (message.isNotEmpty()) {
-                            toast(message)
                         }
                     }
                 )
             }
 
             CompositionLocalProvider(LocalActivity provides requireActivity()) {
-                MainBoardComposable(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(brush = GradientAsset.Background.Brush)
-                        .statusBarsPadding() // without navigationBar: because use BottomSheetView inner
-                        .zIndex(1f),
-                    runningItems = (runningItemsState as? RunningItemsState.Loaded)?.items
-                        ?: emptyList(),
-                    isLoading = runningItemsState == RunningItemsState.Loading,
-                    isBookmarkPage = arguments?.getBoolean("bookmark") ?: false,
-                    isEmptyState = runningItemsState == RunningItemsState.Empty
-                )
+                Box(modifier = Modifier.fillMaxSize()) {
+                    MainBoardComposable(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(brush = GradientAsset.Background.Brush)
+                            .statusBarsPadding(), // without navigationBar: because use BottomSheetView inner
+                        runningItems = (runningItemsState as? RunningItemsState.Loaded)?.items
+                            ?: emptyList(),
+                        isLoading = runningItemsState == RunningItemsState.Loading,
+                        isBookmarkPage = arguments?.getBoolean("bookmark") ?: false,
+                        isEmptyState = runningItemsState == RunningItemsState.Empty
+                    )
+
+                    AnimatedVisibility(
+                        modifier = Modifier.fillMaxSize(),
+                        visible = nonRegisterUserPopupVisible,
+                        enter = fadeIn(tween(durationMillis = 500)),
+                        exit = fadeOut(tween(durationMillis = 500))
+                    ) {
+                        NonRegisterUserPopup(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(color = Color.Black.copy(alpha = 0.7f)),
+                            onPositiveButtonClick = {
+                                requireActivity().changeActivityWithAnimation<DFMOnboardActivityAlias>()
+                            },
+                            onNegativeButtonClick = {
+                                nonRegisterUserPopupVisible = false
+                            }
+                        )
+                    }
+                }
             }
         }
     }

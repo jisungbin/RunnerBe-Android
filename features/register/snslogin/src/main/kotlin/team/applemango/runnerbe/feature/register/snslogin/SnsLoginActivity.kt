@@ -34,11 +34,11 @@ import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.android.extension.dataStore
 import team.applemango.runnerbe.shared.android.extension.launchedWhenCreated
 import team.applemango.runnerbe.shared.android.extension.setWindowInsetsUsage
+import team.applemango.runnerbe.shared.android.util.DFMOnboardActivityAlias
+import team.applemango.runnerbe.shared.android.util.MainActivityAlias
 import team.applemango.runnerbe.shared.compose.extension.verticalInsetsPadding
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.domain.extension.defaultCatch
-import team.applemango.runnerbe.util.DFMOnboardActivityAlias
-import team.applemango.runnerbe.util.MainActivityAlias
 
 class SnsLoginActivity : ComponentActivity() {
 
