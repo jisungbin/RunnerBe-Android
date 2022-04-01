@@ -84,6 +84,8 @@ class MainBoardFragment : Fragment() {
                         )
                     }
 
+                // TODO: data prefetch
+                // https://github.com/runner-be/RunnerBe-Android/issues/146
                 vm.loadRunningItems(
                     itemType = RunningItemType.Before,
                     includeEndItems = false,
