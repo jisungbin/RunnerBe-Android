@@ -22,6 +22,13 @@
         android:fitsSystemWindows="false"
         tools:theme="@style/Theme.RunnerBe">
 
+        <View
+            android:id="@+id/status_bar_color"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fcv_main"
             android:name="androidx.navigation.fragment.NavHostFragment"
