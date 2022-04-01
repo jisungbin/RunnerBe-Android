@@ -18,6 +18,10 @@ import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState.RunningIte
 import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState.RunningItemLoading
 
 /**
+ * MainBoard 전체 상태를 담고 있으며,
+ * RunningItem 관련 상태들은 [RunningItemsState] 로
+ * 변환됨
+ *
  * @property NonRegisterUser 비회원 유저로써 아직 특정 기능 이용이 불기능함
  * [MainBoardViewModel] 에서 UseCase 의 result 가 `아직 인증되지 않은 계정` 이라면
  * [NonRegisterUser] state 를 쏴서 UI 처리를 해주기 위함
