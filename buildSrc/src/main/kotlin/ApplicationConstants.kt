@@ -14,7 +14,7 @@ object ApplicationConstants {
     const val targetSdk = 31
     const val compileSdk = 31
     const val jvmTarget = "11"
-    const val versionCode = 9
+    const val versionCode = 10
     const val versionName = "0.1.0-dev10"
     val javaVersion = JavaVersion.VERSION_11
 }
