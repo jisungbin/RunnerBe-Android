@@ -31,19 +31,20 @@ import kotlin.math.roundToInt
 
 @Composable
 fun RunnerbeSnackbar(
+    modifier: Modifier = Modifier,
     visible: Boolean,
     autoClose: Long? = 3000,
     text: String,
     textStyle: TextStyle = Typography.Body14R,
     backgroundColor: Color = ColorAsset.G4,
-    bottomOffset: Float = 30f,
+    bottomOffset: Float = 300f,
     horizontalPadding: Dp = 16.dp
 ) {
     var visibleState by remember { mutableStateOf(visible) }
     val offset by animateOffsetAsState(
         when (visibleState) {
             true -> Offset(0f, bottomOffset)
-            else -> Offset(0f, -10f) // hide
+            else -> Offset(0f, 0f) // hide
         }
     )
     LaunchedEffect(Unit) {
@@ -54,13 +55,14 @@ fun RunnerbeSnackbar(
     }
     Row(
         modifier = Modifier
-            .offset { offset.toIntOffset() }
+            .offset(y = 30.dp)
             .fillMaxWidth()
             .wrapContentHeight()
             .clip(RoundedCornerShape(10.dp))
             .background(backgroundColor)
             .blur(10.dp)
             .padding(horizontal = horizontalPadding)
+            .then(modifier)
     ) {
         Text(style = textStyle, text = text)
     }
