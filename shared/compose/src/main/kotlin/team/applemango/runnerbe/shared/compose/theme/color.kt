@@ -11,10 +11,10 @@
 
 package team.applemango.runnerbe.shared.compose.theme
 
-import androidx.compose.ui.graphics.Brush as ComposeBrush
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Brush as ComposeBrush
 
 object ColorAsset {
     val Primary = Color(0xFFFFE082)
