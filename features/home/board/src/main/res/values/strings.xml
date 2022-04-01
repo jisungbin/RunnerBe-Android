@@ -12,8 +12,10 @@
     <string name="mainboard_title_app_name">러너비</string>
     <string name="mainboard_running_item_empty">아직 진행 중인 모임이 없어요!</string>
 
+    <string name="mainboard_unregisteruser_popup_title">나를 더 알려주면\n모임에 참여할 수 있어요!</string>
+    <string name="mainboard_unregisteruser_popup_button_let_me_introduce">나에 대해 알려주기</string>
+    <string name="mainboard_unregisteruser_popup_button_no_now"><![CDATA[<u>지금은 둘러보기만 할게요</u>]]></string>
+
     <string name="mainboard_filter_include_finish">마감 포함</string>
     <string name="mainboard_sort_nearby">거리순</string>
-
-    <string name="mainboard_toast_only_see_registered_user">아직 인증되지 않은 유저는 둘러보기만 가능해요.</string>
 </resources>
