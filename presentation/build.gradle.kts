@@ -29,7 +29,6 @@ plugins {
 android {
     signingConfigs {
         create("release") {
-            storeFile = file(BuildConstants.StoreFilePath)
             storePassword = BuildConstants.StorePassword
             keyAlias = BuildConstants.KeyAlias
             keyPassword = BuildConstants.KeyPassword
@@ -79,13 +78,12 @@ dependencies {
     implementation(Dependencies.FirebaseEachKtx.Performance)
     // implementation(Dependencies.FirebaseEachKtx.Crashlytics)
     implementation(Dependencies.FirebaseEachKtx.RemoteConfig)
-    implementation("dev.chrisbanes.insetter:insetter:0.6.1")
-    implementation("dev.chrisbanes.insetter:insetter-dbx:0.6.1")
 
     Dependencies.Ui.forEach(::implementation)
     Dependencies.Login.forEach(::implementation)
     Dependencies.Location.forEach(::implementation)
     Dependencies.Analytics.forEach(::implementation)
+    Dependencies.Util.Insetter.forEach(::implementation)
     Dependencies.Jetpack.Navigation.forEach(::implementation)
     Dependencies.PresentationOnlyKtx.forEach(::implementation)
 
