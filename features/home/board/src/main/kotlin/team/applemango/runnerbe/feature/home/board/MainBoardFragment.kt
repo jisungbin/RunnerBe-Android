@@ -70,7 +70,7 @@ class MainBoardFragment : Fragment() {
     ) = ComposeView(requireActivity()).apply {
         setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
         setContent {
-            var nonRegisterUserPopupVisible by remember { mutableStateOf(true) }
+            var nonRegisterUserPopupVisible by remember { mutableStateOf(false) }
             var runningItemsState by remember { mutableStateOf<RunningItemsState>(RunningItemsState.Loading) }
 
             LaunchedEffect(Unit) {
