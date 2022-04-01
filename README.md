@@ -53,6 +53,7 @@
 - [ktlint, detekt 으로 코드 퀄리티 향상시키기](https://sungbin.land/ktlint-detekt-%EC%9C%BC%EB%A1%9C-%EC%BD%94%EB%93%9C-%ED%80%84%EB%A6%AC%ED%8B%B0-%ED%96%A5%EC%83%81%EC%8B%9C%ED%82%A4%EA%B8%B0-a085c7eba2cd)
 - [Github Actions 으로 안드로이드 CI/CD 구축하기](https://sungbin.land/github-actions-%EC%9C%BC%EB%A1%9C-%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C-ci-cd-%EA%B5%AC%EC%B6%95%ED%95%98%EA%B8%B0-1aaaa6595c4a)
 - [gradle 멀티 모듈 프로젝트에 JaCoCo 설정하기](https://jisungbin.medium.com/gradle-%EB%A9%80%ED%8B%B0-%EB%AA%A8%EB%93%88-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EC%97%90-jacoco-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0-76e69f2afb40)
+- Jetpack Compose scaffold 에서 background brush 사용하기 [예정]
 - 러너비 안드로이드 개발 회고 [예정]
 - 테스트 커버러지 100% 까지의 여정 [예정]
 
