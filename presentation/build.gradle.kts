@@ -79,6 +79,8 @@ dependencies {
     implementation(Dependencies.FirebaseEachKtx.Performance)
     // implementation(Dependencies.FirebaseEachKtx.Crashlytics)
     implementation(Dependencies.FirebaseEachKtx.RemoteConfig)
+    implementation("dev.chrisbanes.insetter:insetter:0.6.1")
+    implementation("dev.chrisbanes.insetter:insetter-dbx:0.6.1")
 
     Dependencies.Ui.forEach(::implementation)
     Dependencies.Login.forEach(::implementation)
