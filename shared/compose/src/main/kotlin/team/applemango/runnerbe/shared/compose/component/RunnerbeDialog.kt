@@ -31,12 +31,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
+import team.applemango.runnerbe.shared.domain.constant.EmptyString
 import team.applemango.runnerbe.shared.domain.dsl.RunnerbeDsl
 
 @Immutable
 data class DialogButton(
-    var text: String = "",
-    var textBuilder: @Composable () -> String = { "" },
+    var text: String = EmptyString,
+    var textBuilder: @Composable () -> String = { EmptyString },
     var onClick: () -> Unit = {},
 )
 
