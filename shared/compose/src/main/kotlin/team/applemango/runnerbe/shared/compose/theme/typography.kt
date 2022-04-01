@@ -52,6 +52,12 @@ object Typography {
         lineHeight = 42.sp,
         letterSpacing = (-0.84).sp
     )
+    val Header28B = TextStyle(
+        fontFamily = FontAsset.NotoSans.B,
+        fontSize = 28.sp,
+        lineHeight = 42.sp,
+        letterSpacing = (-0.84).sp
+    )
     val Title20M = TextStyle(
         fontFamily = FontAsset.NotoSans.M,
         fontSize = 20.sp,
