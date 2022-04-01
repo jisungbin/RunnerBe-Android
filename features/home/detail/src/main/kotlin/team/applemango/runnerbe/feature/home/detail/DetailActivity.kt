@@ -31,7 +31,7 @@ import team.applemango.runnerbe.feature.home.detail.mvi.DetailSideEffect
 import team.applemango.runnerbe.shared.android.extension.basicExceptionHandler
 import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.android.extension.finishWithAnimation
-import team.applemango.runnerbe.shared.android.extension.setWindowInsets
+import team.applemango.runnerbe.shared.android.extension.setWindowInsetsUsage
 import team.applemango.runnerbe.shared.android.extension.toast
 import team.applemango.runnerbe.shared.compose.extension.LocalActivity
 import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
@@ -60,7 +60,7 @@ class DetailActivity : ComponentActivity() {
                 basicExceptionHandler(exception)
             }
 
-        setWindowInsets()
+        setWindowInsetsUsage()
         setContent {
             CompositionLocalProvider(LocalActivity provides this) {
                 var loadState by remember { mutableStateOf(DetailLoadState.Load) }

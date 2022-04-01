@@ -2,15 +2,6 @@
  * RunnerBe © 2022 Team AppleMango. all rights reserved.
  * RunnerBe license is under the MIT.
  *
- * [MainActivity.kt] created by Ji Sungbin on 22. 3. 20. 오후 11:08
- *
- * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
- */
-
-/*
- * RunnerBe © 2022 Team AppleMango. all rights reserved.
- * RunnerBe license is under the MIT.
- *
  * [BoardActivity.kt] created by Ji Sungbin on 22. 2. 9. 오전 1:06
  *
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
@@ -18,6 +9,7 @@
 
 package team.applemango.runnerbe.activity
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -30,11 +22,10 @@ import com.birjuvachhani.locus.Locus
 import dagger.hilt.android.AndroidEntryPoint
 import team.applemango.runnerbe.R
 import team.applemango.runnerbe.databinding.ActivityMainBinding
-import team.applemango.runnerbe.shared.android.constant.BottomNavigationBarHeight
+import team.applemango.runnerbe.feature.home.board.BottomSheetState
+import team.applemango.runnerbe.feature.home.board.BottomSheetStateListenerHolder
 import team.applemango.runnerbe.shared.android.datastore.Me
-import team.applemango.runnerbe.shared.android.extension.setWindowInsets
-import team.applemango.runnerbe.shared.domain.unit.domainDp
-import team.applemango.runnerbe.shared.domain.unit.toInt
+import team.applemango.runnerbe.shared.android.extension.setWindowInsetsUsage
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -65,24 +56,38 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        setWindowInsets()
+        setWindowInsetsUsage()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
         binding.bnvMenu.itemIconTintList = null
+        binding.statusBarColor.bringToFront()
+
+        BottomSheetStateListenerHolder.setBottomSheetStateListener { state ->
+            when (state) {
+                BottomSheetState.Hidden -> {
+                    binding.statusBarColor.setBackgroundColor(Color.TRANSPARENT)
+                    binding.bnvMenu.bringToFront()
+                }
+                BottomSheetState.Expanding -> {
+                    binding.fcvMain.bringToFront()
+                }
+                BottomSheetState.Expanded -> {
+                    binding.statusBarColor.setBackgroundColor(Color.parseColor("#80000000")) // Black 50% alpha
+                }
+            }
+            binding.statusBarColor.bringToFront()
+        }
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fcv_main) as NavHostFragment
         val navController = navHostFragment.navController
-        binding.bnvMenu.updateLayoutParams {
-            height = BottomNavigationBarHeight.domainDp.toInt()
-        }
         binding.bnvMenu.setupWithNavController(navController)
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, windowInsets ->
             val types = WindowInsetsCompat.Type.systemBars()
             val systemBarsInset = windowInsets.getInsets(types)
-            binding.viewNavigationBarColor.updateLayoutParams {
-                height = systemBarsInset.bottom
+            binding.statusBarColor.updateLayoutParams {
+                height = systemBarsInset.top
             }
             windowInsets
         }

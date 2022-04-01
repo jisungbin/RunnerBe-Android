@@ -89,6 +89,10 @@ object Dependencies {
     object Util { // Erratum 은 :presentation 에서만 쓰임
         const val Erratum = "land.sungbin:erratum:${Versions.Util.Erratum}"
         const val Logeukes = "land.sungbin:logeukes:${Versions.Util.Logeukes}"
+        val Insetter = listOf(
+            "dev.chrisbanes.insetter:insetter:${Versions.Util.Insetter}",
+            "dev.chrisbanes.insetter:insetter-dbx:${Versions.Util.Insetter}"
+        )
     }
 
     val Analytics = listOf(

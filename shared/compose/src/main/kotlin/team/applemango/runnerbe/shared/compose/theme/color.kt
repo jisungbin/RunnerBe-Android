@@ -11,9 +11,9 @@
 
 package team.applemango.runnerbe.shared.compose.theme
 
+import androidx.compose.ui.graphics.Brush as ComposeBrush
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
 object ColorAsset {
@@ -37,10 +37,18 @@ object ColorAsset {
 }
 
 object GradientAsset {
-    val BlackTopColor = Color(18, 18, 18)
-    val BlackTopHalfColor = Color(21, 21, 20)
-    val BlackBottomColor = Color(27, 26, 23)
-    val BlackGradientBrush = Brush.linearGradient(listOf(BlackTopColor, BlackBottomColor))
+    object Background {
+        val Top = Color(18, 18, 18)
+        val TopHalf = Color(21, 21, 20)
+        val Bottom = Color(27, 26, 23)
+        val Brush = ComposeBrush.linearGradient(listOf(Top, Bottom))
+    }
+
+    object Fab {
+        val Top = Color(85, 85, 85)
+        val Bottom = Color(48, 48, 48)
+        val Brush = ComposeBrush.linearGradient(listOf(Top, Bottom))
+    }
 }
 
 @Composable

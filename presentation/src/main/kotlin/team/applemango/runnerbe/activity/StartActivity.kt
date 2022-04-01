@@ -62,6 +62,18 @@ class StartActivity : AppCompatActivity() {
                 return@launchedWhenCreated
             }
             @Suppress("SENSELESS_COMPARISON") // `userUuid == null` always true
+            /**
+             ```kotlin
+             fun main() {
+             when {
+             true -> println(1)
+             true -> println(2)
+             }
+             }
+             ```
+             result: 1
+             when 은 true 를 만나면 실행하고 break 한다.
+             */
             when {
                 userJwt != null && userId != null -> { // 회원가입 완료
                     Me.token = UserToken(
@@ -69,15 +81,12 @@ class StartActivity : AppCompatActivity() {
                         jwt = userJwt
                     )
                     changeActivityWithAnimation<MainActivity>()
-                    return@launchedWhenCreated
                 }
                 userUuid != null -> { // SNS 로그인 완료 -> 온보딩 페이지로 이동
                     changeActivityWithAnimation<DFMOnboardActivityAlias>()
-                    return@launchedWhenCreated
                 }
                 userUuid == null -> { // SNS 로그인 하기 전 (앱 처음 실행)
                     changeActivityWithAnimation<DFMLoginActivityAlias>()
-                    return@launchedWhenCreated
                 }
             }
         }

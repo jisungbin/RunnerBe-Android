@@ -15,7 +15,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -26,7 +25,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,10 +39,10 @@ import team.applemango.runnerbe.domain.runningitem.filter.KeywordFilter
 import team.applemango.runnerbe.domain.runningitem.filter.RunningItemFilter
 import team.applemango.runnerbe.feature.home.board.component.MainBoardComposable
 import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState
+import team.applemango.runnerbe.feature.home.board.mvi.RunningItemsState
 import team.applemango.runnerbe.shared.android.datastore.Me
 import team.applemango.runnerbe.shared.android.extension.basicExceptionHandler
 import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
-import team.applemango.runnerbe.shared.android.extension.setWindowInsets
 import team.applemango.runnerbe.shared.android.extension.toast
 import team.applemango.runnerbe.shared.compose.extension.LocalActivity
 import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
@@ -118,9 +116,8 @@ class MainBoardFragment : Fragment() {
                 MainBoardComposable(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(brush = GradientAsset.BlackGradientBrush)
-                        .statusBarsPadding() // without navigationBar: because use BottomSheetView inner
-                        .padding(horizontal = 16.dp),
+                        .background(brush = GradientAsset.Background.Brush)
+                        .statusBarsPadding(), // without navigationBar: because use BottomSheetView inner
                     runningItems = (runningItemsState as? RunningItemsState.Loaded)?.items
                         ?: emptyList(),
                     isLoading = runningItemsState == RunningItemsState.Loading,
@@ -133,7 +130,6 @@ class MainBoardFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().setWindowInsets()
         vm.exceptionFlow
             .defaultCatch { exception ->
                 requireActivity().basicExceptionHandler(exception)

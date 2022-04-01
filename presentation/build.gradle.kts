@@ -29,7 +29,6 @@ plugins {
 android {
     signingConfigs {
         create("release") {
-            storeFile = file(BuildConstants.StoreFilePath)
             storePassword = BuildConstants.StorePassword
             keyAlias = BuildConstants.KeyAlias
             keyPassword = BuildConstants.KeyPassword
@@ -84,6 +83,7 @@ dependencies {
     Dependencies.Login.forEach(::implementation)
     Dependencies.Location.forEach(::implementation)
     Dependencies.Analytics.forEach(::implementation)
+    Dependencies.Util.Insetter.forEach(::implementation)
     Dependencies.Jetpack.Navigation.forEach(::implementation)
     Dependencies.PresentationOnlyKtx.forEach(::implementation)
 
