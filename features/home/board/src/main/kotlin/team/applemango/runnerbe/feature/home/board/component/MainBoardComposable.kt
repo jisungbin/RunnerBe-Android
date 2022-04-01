@@ -37,7 +37,6 @@ import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -50,12 +49,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
-import io.github.jisungbin.logeukes.logeukes
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemSort
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
+import team.applemango.runnerbe.feature.home.board.BottomSheetState
 import team.applemango.runnerbe.feature.home.board.BottomSheetStateListenerHolder
 import team.applemango.runnerbe.feature.home.board.R
 import team.applemango.runnerbe.shared.android.constant.BottomNavigationBarHeight
@@ -119,20 +117,16 @@ internal fun MainBoardComposable(
         }
     }
 
-    // FIXME: why not working on LaunchedEffect??
-    LaunchedEffect(Unit) {
-        logeukes { bottomSheetState.currentValue }
-    }
-
-    bottomSheetState.isAnimationRunning
     BottomSheetStateListenerHolder.bottomSheetStateListener?.onBottomSheetStateChanged(
-        isExpended = bottomSheetState.currentValue == ModalBottomSheetValue.Expanded
-    )?.also {
-        logeukes { "Registered: ${bottomSheetState.currentValue == ModalBottomSheetValue.Expanded}" }
-    }
+        state = when (bottomSheetState.currentValue) {
+            ModalBottomSheetValue.Hidden -> BottomSheetState.Hidden
+            ModalBottomSheetValue.Expanded -> BottomSheetState.Expanded
+            else -> throw IllegalStateException("Not allowed value: ${bottomSheetState.currentValue}")
+        }
+    )
 
     ModalBottomSheetLayout(
-        modifier = modifier.zIndex(19f),
+        modifier = modifier,
         sheetState = bottomSheetState,
         sheetShape = RoundedCornerShape(
             topStart = 30.dp,
@@ -265,6 +259,9 @@ internal fun MainBoardComposable(
                             ToggleTopBarSubItem(
                                 onClick = {
                                     coroutineScope.launch {
+                                        BottomSheetStateListenerHolder.bottomSheetStateListener?.onBottomSheetStateChanged(
+                                            state = BottomSheetState.Expanding
+                                        )
                                         bottomSheetState.show()
                                     }
                                 },

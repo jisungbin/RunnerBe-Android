@@ -9,8 +9,14 @@
 
 package team.applemango.runnerbe.feature.home.board
 
+enum class BottomSheetState {
+    Expanding,
+    Expanded,
+    Hidden
+}
+
 fun interface BottomSheetStateListener {
-    fun onBottomSheetStateChanged(isExpended: Boolean)
+    fun onBottomSheetStateChanged(state: BottomSheetState)
 }
 
 object BottomSheetStateListenerHolder {
