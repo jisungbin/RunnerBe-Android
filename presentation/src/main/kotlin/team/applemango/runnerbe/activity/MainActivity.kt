@@ -9,21 +9,12 @@
 
 package team.applemango.runnerbe.activity
 
-import android.graphics.Color
 import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updateLayoutParams
-import androidx.databinding.DataBindingUtil
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
+import androidx.compose.material.ModalBottomSheetLayout
 import com.birjuvachhani.locus.Locus
 import dagger.hilt.android.AndroidEntryPoint
-import team.applemango.runnerbe.R
-import team.applemango.runnerbe.databinding.ActivityMainBinding
-import team.applemango.runnerbe.feature.home.board.BottomSheetState
-import team.applemango.runnerbe.feature.home.board.BottomSheetStateListenerHolder
 import team.applemango.runnerbe.shared.android.datastore.Me
 import team.applemango.runnerbe.shared.android.extension.setWindowInsetsUsage
 
@@ -37,8 +28,6 @@ class MainActivity : AppCompatActivity() {
 
     // TODO: Firebase Crashlytics 설정
     // https://firebase.google.com/docs/crashlytics/customize-crash-reports
-
-    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,39 +46,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         setWindowInsetsUsage()
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        binding.lifecycleOwner = this
-        binding.bnvMenu.itemIconTintList = null
-        binding.statusBarColor.bringToFront()
+        setContent {
+            ModalBottomSheetLayout(
+                sheetContent = {
 
-        BottomSheetStateListenerHolder.setBottomSheetStateListener { state ->
-            when (state) {
-                BottomSheetState.Hidden -> {
-                    binding.statusBarColor.setBackgroundColor(Color.TRANSPARENT)
-                    binding.bnvMenu.bringToFront()
                 }
-                BottomSheetState.Expanding -> {
-                    binding.fcvMain.bringToFront()
-                }
-                BottomSheetState.Expanded -> {
-                    binding.statusBarColor.setBackgroundColor(Color.parseColor("#80000000")) // Black 50% alpha
-                }
-            }
-            binding.statusBarColor.bringToFront()
-        }
-
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.fcv_main) as NavHostFragment
-        val navController = navHostFragment.navController
-        binding.bnvMenu.setupWithNavController(navController)
-
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, windowInsets ->
-            val types = WindowInsetsCompat.Type.systemBars()
-            val systemBarsInset = windowInsets.getInsets(types)
-            binding.statusBarColor.updateLayoutParams {
-                height = systemBarsInset.top
-            }
-            windowInsets
+            )
         }
     }
 }
