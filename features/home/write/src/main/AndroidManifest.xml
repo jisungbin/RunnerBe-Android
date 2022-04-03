@@ -11,7 +11,9 @@
     package="team.applemango.runnerbe.feature.home.write">
 
     <application>
-        <activity android:name=".RunningItemWriteActivity" />
+        <activity
+            android:name=".RunningItemWriteActivity"
+            android:theme="@style/Theme.RunnerBe" />
     </application>
 
 </manifest>
