@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Text
@@ -69,7 +70,9 @@ fun <T> ToggleTabBar(
     @Size(min = 1) toggleTopBarItems: List<ToggleTopBarItem<T>>,
     onTabClick: (itemId: T) -> Unit,
 ) {
-    require(toggleTopBarItems.isNotEmpty()) { "topBarItems size must be not zero." }
+    require(toggleTopBarItems.isNotEmpty()) {
+        "topBarItems size must be not zero."
+    }
     var selectedItemState by remember { mutableStateOf(toggleTopBarItems.first().id) }
 
     @Stable
@@ -90,6 +93,7 @@ fun <T> ToggleTabBar(
         toggleTopBarItems.forEach { item ->
             Box(
                 modifier = Modifier
+                    .padding(2.dp)
                     .weight(1f)
                     .fillMaxSize()
                     .clip(RoundedCornerShape(radius))
