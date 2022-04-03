@@ -21,10 +21,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetLayout
-import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
@@ -38,6 +36,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.birjuvachhani.locus.Locus
 import dagger.hilt.android.AndroidEntryPoint
@@ -90,7 +89,7 @@ class MainActivity : AppCompatActivity() {
 
     @OptIn(
         ExperimentalMaterialApi::class, // rememberModalBottomSheetState
-        LocalActivityUsageApi::class // LocalActivity usage
+        LocalActivityUsageApi::class // LocalActivity
     )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -113,6 +112,7 @@ class MainActivity : AppCompatActivity() {
             CompositionLocalProvider(LocalActivity provides this) {
                 val coroutineScope = rememberCoroutineScope()
 
+                var screenState by remember { mutableStateOf(Screen.Home) }
                 val bottomSheetState = rememberModalBottomSheetState(
                     initialValue = ModalBottomSheetValue.Hidden,
                     skipHalfExpanded = true
@@ -120,7 +120,11 @@ class MainActivity : AppCompatActivity() {
                 var bottomSheetContentState by remember {
                     mutableStateOf<@Composable () -> Unit>(
                         @Composable {
-                            Box(modifier = Modifier)
+                            Box( // The initial value must have an associated anchor. (must have size)
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(100.dp)
+                            )
                         }
                     )
                 }
@@ -140,7 +144,7 @@ class MainActivity : AppCompatActivity() {
                         topStart = 30.dp,
                         topEnd = 30.dp
                     ),
-                    sheetBackgroundColor = Color.Cyan,
+                    sheetBackgroundColor = ColorAsset.G6,
                     scrimColor = Color.Black.copy(alpha = 0.5f),
                     sheetContent = {
                         bottomSheetContentState()
@@ -150,17 +154,14 @@ class MainActivity : AppCompatActivity() {
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.BottomCenter
                     ) {
-                        var screenState by remember { mutableStateOf(Screen.Home) }
-
                         Crossfade(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .background(color = Color.Green),
+                            modifier = Modifier.fillMaxSize(),
                             targetState = screenState
                         ) { screenType ->
                             when (screenType) {
                                 Screen.Home, Screen.Bookmark -> {
                                     MainBoardScreen(
+                                        bottomSheetState = bottomSheetState,
                                         updateBottomSheetContent = { content ->
                                             bottomSheetContentState = content
                                         },
@@ -172,13 +173,14 @@ class MainActivity : AppCompatActivity() {
                                 Screen.MyPage -> {
                                 }*/
                                 else -> {
-                                    Test(
-                                        state = bottomSheetState,
-                                        title = screenType.name,
-                                        updateBottomSheetContent = { content ->
-                                            bottomSheetContentState = content
-                                        }
-                                    )
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .background(color = Color.Green.copy(alpha = 0.9f)),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Text(text = stringResource(R.string.app_name))
+                                    }
                                 }
                             }
                         }
@@ -195,42 +197,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun Test(
-    state: ModalBottomSheetState,
-    title: String,
-    updateBottomSheetContent: (content: @Composable () -> Unit) -> Unit
-) {
-    val coroutineScope = rememberCoroutineScope()
-
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Button(
-            onClick = {
-                updateBottomSheetContent {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(300.dp)
-                            .background(color = Color.Cyan),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(text = title)
-                    }
-                }
-                coroutineScope.launch {
-                    state.show()
-                }
-            }
-        ) {
-            Text(text = title)
         }
     }
 }
