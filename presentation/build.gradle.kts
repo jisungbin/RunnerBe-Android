@@ -51,6 +51,14 @@ android {
         }
     }
 
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.Compose.Main
+    }
+
     dynamicFeatures.addAll(
         setOf(
             ProjectConstants.RegisterSnsLogin,
