@@ -80,7 +80,7 @@ internal class RunningDate(baseDate: Date = Date()) {
      * @param timeType AM/PM 값 (캘린더 인자는 AM - 0, PM - 1 사용)
      */
     fun setTimeType(timeType: TimeTypeModel) {
-        calendar.set(Calendar.AM_PM, TimeTypeModel.values().indexOf(timeType))
+        calendar.set(Calendar.AM_PM, timeType.ordinal)
     }
 
     /**
