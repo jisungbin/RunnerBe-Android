@@ -27,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import team.applemango.runnerbe.shared.compose.extension.noRippleClickable
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
 
 @Immutable
@@ -70,7 +71,7 @@ fun <T> BottomBar(
             Box(
                 modifier = Modifier
                     .weight(1f)
-                    .clickable {
+                    .noRippleClickable {
                         itemState = item.id
                         onItemChanged(item)
                     }
