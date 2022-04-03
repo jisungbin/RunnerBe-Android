@@ -34,7 +34,6 @@ object Versions {
         const val Activity = "1.4.0"
         const val PlayCore = "1.8.1"
         const val Lifecycle = "2.4.0"
-        const val Navigation = "2.4.1"
     }
 
     object Compose {
@@ -62,7 +61,6 @@ object Versions {
     }
 
     object Util {
-        const val Insetter = "0.6.1"
         const val Erratum = "1.0.1"
         const val Logeukes = "1.0.0"
         const val Jackson = "2.13.1"

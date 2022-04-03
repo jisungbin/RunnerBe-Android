@@ -9,7 +9,6 @@
 
 package team.applemango.runnerbe.feature.home.board.component
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -28,16 +27,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Checkbox
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
-import androidx.compose.material.ModalBottomSheetLayout
-import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.Text
-import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -54,10 +51,7 @@ import kotlinx.coroutines.launch
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemSort
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
-import team.applemango.runnerbe.feature.home.board.BottomSheetState
-import team.applemango.runnerbe.feature.home.board.BottomSheetStateListenerHolder
 import team.applemango.runnerbe.feature.home.board.R
-import team.applemango.runnerbe.shared.android.constant.BottomNavigationBarHeight
 import team.applemango.runnerbe.shared.compose.component.FadingEdgeLazyColumn
 import team.applemango.runnerbe.shared.compose.component.Gradient
 import team.applemango.runnerbe.shared.compose.component.RunningItemTypeToggleBar
@@ -68,7 +62,7 @@ import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.compose.theme.animatedColorState
 
-@OptIn(ExperimentalMaterialApi::class) // ModalBottomSheetLayout
+@OptIn(ExperimentalMaterialApi::class) // ModalBottomSheetState
 @Composable
 internal fun MainBoardComposable(
     modifier: Modifier = Modifier,
@@ -76,6 +70,8 @@ internal fun MainBoardComposable(
     isLoading: Boolean,
     isBookmarkPage: Boolean,
     isEmptyState: Boolean,
+    bottomSheetState: ModalBottomSheetState,
+    updateBottomSheetContent: (content: @Composable () -> Unit) -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
 
@@ -94,10 +90,6 @@ internal fun MainBoardComposable(
         }
     }
 
-    val bottomSheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-        skipHalfExpanded = true,
-    )
     var sortState by remember { mutableStateOf(RunningItemSort.Nearby) }
     var includeFinishState by remember { mutableStateOf(false) }
     var selectedRunningItemTypeState by remember { mutableStateOf(RunningItemType.Before) }
@@ -118,30 +110,8 @@ internal fun MainBoardComposable(
         }
     }
 
-    BottomSheetStateListenerHolder.bottomSheetStateListener?.onBottomSheetStateChanged(
-        state = when (bottomSheetState.currentValue) {
-            ModalBottomSheetValue.Hidden -> BottomSheetState.Hidden
-            ModalBottomSheetValue.Expanded -> BottomSheetState.Expanded
-            else -> throw IllegalStateException("Not allowed value: ${bottomSheetState.currentValue}")
-        }
-    )
-
-    BackHandler(enabled = bottomSheetState.currentValue == ModalBottomSheetValue.Expanded) {
-        coroutineScope.launch {
-            bottomSheetState.hide()
-        }
-    }
-
-    ModalBottomSheetLayout(
-        modifier = modifier,
-        sheetState = bottomSheetState,
-        sheetShape = RoundedCornerShape(
-            topStart = 30.dp,
-            topEnd = 30.dp
-        ),
-        sheetBackgroundColor = ColorAsset.G6,
-        scrimColor = Color.Black.copy(alpha = 0.5f),
-        sheetContent = {
+    LaunchedEffect(Unit) {
+        updateBottomSheetContent {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -188,169 +158,161 @@ internal fun MainBoardComposable(
                     }
                 }
             }
-        },
-        content = {
-            Box( // content + fab
+        }
+    }
+
+    Box( // content + fab
+        modifier = modifier,
+        contentAlignment = Alignment.BottomEnd
+    ) {
+        Column(modifier = Modifier.fillMaxSize()) { // content
+            Box( // ToolBar
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp)
-                    .padding(top = 16.dp) // without bottom: because LazyColumn
-                    .navigationBarsPadding()
-                    .padding(bottom = BottomNavigationBarHeight.dp),
-                contentAlignment = Alignment.BottomEnd
+                    .fillMaxWidth()
+                    .height(56.dp),
+                contentAlignment = Alignment.Center
             ) {
-                Column(modifier = Modifier.fillMaxSize()) { // content
-                    Box( // ToolBar
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(56.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = titleText,
-                            style = titleTextStyle
-                        )
-                        if (!isBookmarkPage) { // 타이틀 오른쪽 검색, 알림 아이템들
-                            Row(
-                                modifier = Modifier.fillMaxSize(),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(
-                                    space = 16.dp,
-                                    alignment = Alignment.End
-                                )
-                            ) {
-                                Icon(
-                                    painter = painterResource(R.drawable.ic_outlined_search_24),
-                                    contentDescription = null,
-                                    tint = Color.Unspecified
-                                )
-                                Icon(
-                                    painter = painterResource(R.drawable.ic_outlined_bell_24),
-                                    contentDescription = null,
-                                    tint = Color.Unspecified
-                                )
-                            }
-                        }
-                    }
-                    RunningItemTypeToggleBar(
-                        modifier = Modifier.padding(top = 4.dp),
-                        onTabClick = { runningItemType ->
-                            selectedRunningItemTypeState = runningItemType
-                        }
-                    )
-                    if (!isBookmarkPage) { // ToggleTopBar 아래 마감 포함, 거리순, 필터 아이템들
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .wrapContentHeight()
-                                .padding(top = 12.dp),
-                            horizontalArrangement = Arrangement.spacedBy(
-                                space = 16.dp,
-                                alignment = Alignment.End
-                            ),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            ToggleTopBarSubItem(
-                                onClick = {
-                                    includeFinishState = !includeFinishState
-                                },
-                                text = stringResource(R.string.mainboard_filter_include_finish)
-                            ) {
-                                Checkbox(
-                                    modifier = Modifier.padding(start = 2.dp),
-                                    checked = includeFinishState,
-                                    onCheckedChange = { includeFinishState = it },
-                                    colors = RunnerbeCheckBoxDefaults.colors()
-                                )
-                            }
-                            ToggleTopBarSubItem(
-                                onClick = {
-                                    coroutineScope.launch {
-                                        BottomSheetStateListenerHolder.bottomSheetStateListener?.onBottomSheetStateChanged(
-                                            state = BottomSheetState.Expanding
-                                        )
-                                        bottomSheetState.show()
-                                    }
-                                },
-                                text = stringResource(R.string.mainboard_sort_nearby)
-                            ) {
-                                Icon(
-                                    modifier = Modifier.padding(start = 2.dp),
-                                    painter = painterResource(R.drawable.ic_round_chevron_down),
-                                    contentDescription = null,
-                                    tint = Color.Unspecified
-                                )
-                            }
-                            Icon(
-                                modifier = Modifier.clickable {
-                                    // TODO: filter activity
-                                },
-                                painter = painterResource(R.drawable.ic_round_filter_24),
-                                contentDescription = null,
-                                tint = Color.Unspecified
-                            )
-                        }
-                    }
-                    Crossfade( // LazyColumn or Empty Screen
+                Text(
+                    text = titleText,
+                    style = titleTextStyle
+                )
+                if (!isBookmarkPage) { // 타이틀 오른쪽 검색, 알림 아이템들
+                    Row(
                         modifier = Modifier.fillMaxSize(),
-                        targetState = isLoading
-                    ) { loading ->
-                        @Suppress("KotlinConstantConditions") // `!isEmptyState` is always true
-                        /**
-                         ```kotlin
-                         fun main() {
-                         when {
-                         true -> println(1)
-                         true -> println(2)
-                         }
-                         }
-                         ```
-                         result: 1
-                         when 은 true 를 만나면 실행하고 break 한다.
-                         */
-                        when {
-                            loading -> {
-                                PlaceholderLazyColumn(enabled = isLoading)
-                            }
-                            isEmptyState -> {
-                                RunningItemsEmpty()
-                            }
-                            !isEmptyState -> {
-                                RunningItemsLazyColumn(
-                                    runningItems = runningItemsState,
-                                    requestToggleBookmarkState = { runningItem ->
-                                        // TODO: requestToggleBookmarkState
-                                    }
-                                )
-                            }
-                        }
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(
+                            space = 16.dp,
+                            alignment = Alignment.End
+                        )
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_outlined_search_24),
+                            contentDescription = null,
+                            tint = Color.Unspecified
+                        )
+                        Icon(
+                            painter = painterResource(R.drawable.ic_outlined_bell_24),
+                            contentDescription = null,
+                            tint = Color.Unspecified
+                        )
                     }
                 }
-                if (/*!isLoading*/ true) {
-                    FloatingActionButton( // 글쓰기 FAB
-                        modifier = Modifier.padding(bottom = 16.dp),
-                        backgroundColor = Color.Transparent,
+            }
+            RunningItemTypeToggleBar(
+                modifier = Modifier.padding(top = 4.dp),
+                onTabClick = { runningItemType ->
+                    selectedRunningItemTypeState = runningItemType
+                }
+            )
+            if (!isBookmarkPage) { // ToggleTopBar 아래 마감 포함, 거리순, 필터 아이템들
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                        .padding(top = 12.dp),
+                    horizontalArrangement = Arrangement.spacedBy(
+                        space = 16.dp,
+                        alignment = Alignment.End
+                    ),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    ToggleTopBarSubItem(
                         onClick = {
-                            // TODO: write running item
-                        }
+                            includeFinishState = !includeFinishState
+                        },
+                        text = stringResource(R.string.mainboard_filter_include_finish)
                     ) {
-                        Box(
-                            modifier = Modifier
-                                .matchParentSize()
-                                .background(brush = GradientAsset.Fab.Brush),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                painter = painterResource(R.drawable.ic_round_add_24),
-                                contentDescription = null,
-                                tint = ColorAsset.Primary
-                            )
-                        }
+                        Checkbox(
+                            modifier = Modifier.padding(start = 2.dp),
+                            checked = includeFinishState,
+                            onCheckedChange = { includeFinishState = it },
+                            colors = RunnerbeCheckBoxDefaults.colors()
+                        )
+                    }
+                    ToggleTopBarSubItem(
+                        onClick = {
+                            coroutineScope.launch {
+                                bottomSheetState.show()
+                            }
+                        },
+                        text = stringResource(R.string.mainboard_sort_nearby)
+                    ) {
+                        Icon(
+                            modifier = Modifier.padding(start = 2.dp),
+                            painter = painterResource(R.drawable.ic_round_chevron_down),
+                            contentDescription = null,
+                            tint = Color.Unspecified
+                        )
+                    }
+                    Icon(
+                        modifier = Modifier.clickable {
+                            // TODO: filter activity
+                        },
+                        painter = painterResource(R.drawable.ic_round_filter_24),
+                        contentDescription = null,
+                        tint = Color.Unspecified
+                    )
+                }
+            }
+            Crossfade( // LazyColumn or Empty Screen
+                modifier = Modifier.fillMaxSize(),
+                targetState = isLoading
+            ) { loading ->
+                @Suppress("KotlinConstantConditions") // `!isEmptyState` is always true
+                /**
+                 ```kotlin
+                 fun main() {
+                 when {
+                 true -> println(1)
+                 true -> println(2)
+                 }
+                 }
+                 ```
+                 result: 1
+                 when 은 true 를 만나면 실행하고 break 한다.
+                 */
+                // TODO: 북마크 상태일 때 empty state 는 메시지를 다르게 해야 함
+                when {
+                    loading -> {
+                        PlaceholderLazyColumn(enabled = isLoading)
+                    }
+                    isEmptyState -> {
+                        RunningItemsEmpty()
+                    }
+                    !isEmptyState -> {
+                        RunningItemsLazyColumn(
+                            runningItems = runningItemsState,
+                            requestToggleBookmarkState = { runningItem ->
+                                // TODO: requestToggleBookmarkState
+                            }
+                        )
                     }
                 }
             }
         }
-    )
+        if (/*!isLoading*/ true) {
+            FloatingActionButton( // 글쓰기 FAB
+                modifier = Modifier.padding(bottom = 16.dp),
+                backgroundColor = Color.Transparent,
+                onClick = {
+                    // TODO: write running item
+                }
+            ) {
+                Box(
+                    modifier = Modifier
+                        .matchParentSize()
+                        .background(brush = GradientAsset.Fab.Brush),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_round_add_24),
+                        contentDescription = null,
+                        tint = ColorAsset.Primary
+                    )
+                }
+            }
+        }
+    }
 }
 
 @Composable

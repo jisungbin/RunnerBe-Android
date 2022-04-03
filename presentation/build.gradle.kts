@@ -29,7 +29,7 @@ plugins {
 android {
     signingConfigs {
         create("release") {
-            storeFile = File(BuildConstants.StoreFilePath)
+            storeFile = file(BuildConstants.StoreFilePath)
             storePassword = BuildConstants.StorePassword
             keyAlias = BuildConstants.KeyAlias
             keyPassword = BuildConstants.KeyPassword
@@ -52,7 +52,11 @@ android {
     }
 
     buildFeatures {
-        dataBinding = true
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.Compose.Main
     }
 
     dynamicFeatures.addAll(
@@ -84,10 +88,8 @@ dependencies {
     Dependencies.Login.forEach(::implementation)
     Dependencies.Location.forEach(::implementation)
     Dependencies.Analytics.forEach(::implementation)
-    Dependencies.Util.Insetter.forEach(::implementation)
-    Dependencies.Jetpack.Navigation.forEach(::implementation)
     Dependencies.PresentationOnlyKtx.forEach(::implementation)
 
     debugImplementation(Dependencies.Debug.LeakCanary)
-    installSharedComposeOrbitHiltTest(excludeCompose = true)
+    installSharedComposeOrbitHiltTest()
 }

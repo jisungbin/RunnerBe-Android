@@ -68,7 +68,7 @@ private data class InformationItem(
 
 // TODO: 신청자 관리 (BottomSheet or LazyColumn 결정 필요)
 
-@OptIn(LocalActivityUsageApi::class) // LocalActivity.current, activityViewModel
+@OptIn(LocalActivityUsageApi::class) // LocalActivity, activityViewModel
 @Composable
 internal fun BoardDetail(
     modifier: Modifier = Modifier,

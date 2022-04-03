@@ -138,6 +138,7 @@ internal fun OnboardRouter(
             coroutineScope {
                 launch {
                     lastBackPressedTime = nowBackPressedTime
+                    // SnackbarDuration.Short: 4000L
                     scaffoldState.snackbarHostState.showSnackbar(StringAsset.Snackbar.ConfirmFinish)
                 }
                 // snackbarHostState.showSnackbar keeps the coroutine scope in the suspended state until the snackbar is dismissed.

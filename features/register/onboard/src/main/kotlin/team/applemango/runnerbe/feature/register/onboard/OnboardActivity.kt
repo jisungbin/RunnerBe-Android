@@ -75,7 +75,7 @@ class OnboardActivity : ComponentActivity() {
 
     @OptIn(
         ExperimentalAnimationApi::class, // rememberAnimatedNavController
-        LocalActivityUsageApi::class // LocalActivity usage
+        LocalActivityUsageApi::class // LocalActivity
     )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

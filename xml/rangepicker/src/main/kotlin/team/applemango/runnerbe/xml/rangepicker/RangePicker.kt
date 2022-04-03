@@ -50,7 +50,7 @@ fun RangePicker(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     range: FloatRange,
-    value: FloatRange,
+    value: FloatRange = range,
     trackOption: RangePickerTrack = RangePickerTrack(),
     thumbOption: RangePickerThumb = RangePickerThumb(),
     tickOption: RangePickerTick = RangePickerTick(),
@@ -90,12 +90,12 @@ private fun RangeSlider(
     stepSize = trackOption.step
     trackActiveTintList = ColorStateList.valueOf(trackOption.colorActive.toArgb())
     trackInactiveTintList = ColorStateList.valueOf(trackOption.colorInactive.toArgb())
-    trackHeight = trackOption.height.value.toInt()
+    trackHeight = trackOption.height.toInt()
     thumbTintList = ColorStateList.valueOf(thumbOption.color.toArgb())
-    thumbRadius = thumbOption.radius.value.toInt()
+    thumbRadius = thumbOption.radius.toInt()
     thumbElevation = thumbOption.elevation.value
     haloTintList = ColorStateList.valueOf(thumbOption.haloColor.toArgb())
-    haloRadius = thumbOption.haloRadius.value.toInt()
+    haloRadius = thumbOption.haloRadius.toInt()
     tickTintList = ColorStateList.valueOf(tickOption.color.toArgb())
     addOnSliderTouchListener(object : RangeSlider.OnSliderTouchListener {
         override fun onStartTrackingTouch(slider: RangeSlider) {}
