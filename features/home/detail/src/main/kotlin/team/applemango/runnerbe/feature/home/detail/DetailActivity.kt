@@ -43,7 +43,7 @@ class DetailActivity : ComponentActivity() {
 
     private val vm: DetailViewModel by viewModels()
 
-    @OptIn(LocalActivityUsageApi::class) // LocalActivity usage
+    @OptIn(LocalActivityUsageApi::class) // LocalActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

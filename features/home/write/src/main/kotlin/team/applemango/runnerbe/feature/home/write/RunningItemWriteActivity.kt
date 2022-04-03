@@ -37,7 +37,7 @@ class RunningItemWriteActivity : ComponentActivity() {
 
     private val vm: RunningItemWriteViewModel by viewModels()
 
-    @OptIn(LocalActivityUsageApi::class) // LocalActivity usage
+    @OptIn(LocalActivityUsageApi::class) // LocalActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
