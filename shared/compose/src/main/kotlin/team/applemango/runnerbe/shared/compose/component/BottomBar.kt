@@ -86,12 +86,12 @@ fun <T> BottomBar(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    if (item.activateIcon != null || item.inactivateIcon != null) {
+                    if (item.activateIcon != null && item.inactivateIcon != null) {
                         Icon(
                             painter = painterResource(
                                 when (itemState == item.id) {
-                                    true -> item.activateIcon!!
-                                    else -> item.inactivateIcon!!
+                                    true -> item.activateIcon
+                                    else -> item.inactivateIcon
                                 }
                             ),
                             contentDescription = null,
