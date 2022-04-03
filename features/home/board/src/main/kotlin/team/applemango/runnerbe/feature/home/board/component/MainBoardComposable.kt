@@ -298,7 +298,7 @@ internal fun MainBoardComposable(
                 }
             }
         }
-        if (!isLoading) {
+        if (/*!isLoading*/ true) {
             FloatingActionButton( // 글쓰기 FAB
                 modifier = Modifier.padding(bottom = 16.dp),
                 backgroundColor = Color.Transparent,
