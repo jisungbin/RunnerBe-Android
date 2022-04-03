@@ -208,6 +208,7 @@ internal fun MainBoardComposable(
             }
             RunningItemTypeToggleBar(
                 modifier = Modifier.padding(top = 4.dp),
+                selectedItemState = selectedRunningItemTypeState,
                 onTabClick = { runningItemType ->
                     selectedRunningItemTypeState = runningItemType
                 }
