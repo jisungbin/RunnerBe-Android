@@ -26,15 +26,18 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
@@ -57,6 +60,7 @@ import team.applemango.runnerbe.feature.home.write.util.extension.bitmapDescript
 import team.applemango.runnerbe.feature.home.write.util.extension.toAddress
 import team.applemango.runnerbe.feature.home.write.util.extension.toLatLng
 import team.applemango.runnerbe.shared.android.datastore.Me
+import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.compose.extension.activityViewModel
 import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
@@ -75,16 +79,17 @@ internal fun RunningItemWriteLevelOne(
     inputStateChanged: (state: Boolean) -> Unit,
 ) {
     val context = LocalContext.current.applicationContext
-
-    var titleFieldState by remember { mutableStateOf(TextFieldValue()) }
-    val runningDateState by remember { mutableStateOf(RunningDate.getDefault(runningItemType)) }
-    var runningTimeState by remember { mutableStateOf(RunningTime(hour = 0, minute = 20)) }
-
-    var runningDatePickerDialogVisible by remember { mutableStateOf(false) }
-    var runningTimePickerDialogVisible by remember { mutableStateOf(false) }
-    var titleErrorVisible by remember { mutableStateOf(false) }
+    val lifecycleOwner = LocalLifecycleOwner.current
 
     val myLocate = remember { Me.locate.value.toLatLng() }
+
+    var titleFieldState by remember { mutableStateOf(TextFieldValue()) }
+    var isRunningDateEdited by remember { mutableStateOf(false) }
+    var runningDateState by remember { mutableStateOf(RunningDate.getDefault(runningItemType)) }
+    var runningTimeState by remember { mutableStateOf(RunningTime(hour = 0, minute = 20)) }
+    var runningDatePickerDialogVisibleState by remember { mutableStateOf(false) }
+    var runningTimePickerDialogVisibleState by remember { mutableStateOf(false) }
+    var titleErrorVisibleState by remember { mutableStateOf(false) }
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(
             myLocate,
@@ -92,16 +97,26 @@ internal fun RunningItemWriteLevelOne(
         )
     }
 
+    LaunchedEffect(runningItemType) {
+        snapshotFlow { runningItemType }
+            .collectWithLifecycle(lifecycleOwner = lifecycleOwner) { type ->
+                if (!isRunningDateEdited) {
+                    runningDateState = RunningDate.getDefault(type)
+                }
+            }
+    }
+
     RunningDatePickerDialog(
-        visible = runningDatePickerDialogVisible,
+        visible = runningDatePickerDialogVisibleState,
         onDismissRequest = {
-            runningDatePickerDialogVisible = false
+            runningDatePickerDialogVisibleState = false
         },
         startDateIndex = DateCache.getCachedIndexFromDay(day = runningDateState.getDay()),
         startTimeType = runningDateState.getTimeType(),
         startHour = runningDateState.getHour(),
         startMinute = runningDateState.getMinute(),
         onRunningDateChange = { field ->
+            isRunningDateEdited = true
             with(runningDateState) {
                 when (field) {
                     is RunningDate.Companion.Field.Date -> {
@@ -122,8 +137,8 @@ internal fun RunningItemWriteLevelOne(
     )
 
     RunningTimePickerDialog(
-        visible = runningTimePickerDialogVisible,
-        onDismissRequest = { runningTimePickerDialogVisible = false },
+        visible = runningTimePickerDialogVisibleState,
+        onDismissRequest = { runningTimePickerDialogVisibleState = false },
         startHour = runningTimeState.hour,
         startMinute = runningTimeState.minute,
         runningTime = runningTimeState,
@@ -158,9 +173,9 @@ internal fun RunningItemWriteLevelOne(
                 }
                 if (newTitleValue.text.length <= 30) {
                     titleFieldState = newTitleValue
-                    titleErrorVisible = false
+                    titleErrorVisibleState = false
                 } else {
-                    titleErrorVisible = true
+                    titleErrorVisibleState = true
                 }
             },
             placeholder = {
@@ -173,7 +188,7 @@ internal fun RunningItemWriteLevelOne(
         )
         AnimatedVisibility(
             modifier = Modifier.padding(top = 8.dp),
-            visible = titleErrorVisible
+            visible = titleErrorVisibleState
         ) {
             Text(
                 text = stringResource(R.string.runningitemwrite_error_max_title_length),
@@ -196,7 +211,7 @@ internal fun RunningItemWriteLevelOne(
                 .clip(DefaultFieldShape)
                 .background(color = ColorAsset.G5_5)
                 .clickable {
-                    runningDatePickerDialogVisible = true
+                    runningDatePickerDialogVisibleState = true
                 }
                 .padding(horizontal = 16.dp)
         ) {
@@ -254,7 +269,7 @@ internal fun RunningItemWriteLevelOne(
                 .clip(DefaultFieldShape)
                 .background(color = ColorAsset.G5_5)
                 .clickable {
-                    runningTimePickerDialogVisible = true
+                    runningTimePickerDialogVisibleState = true
                 }
                 .padding(horizontal = 16.dp)
         ) {
