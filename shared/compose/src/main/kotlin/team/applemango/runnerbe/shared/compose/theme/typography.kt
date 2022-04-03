@@ -23,6 +23,7 @@ private typealias font = R.font
 
 private fun Int.toFontFamily() = FontFamily(Font(this))
 
+// 굵기: R < M < B
 object FontAsset {
     val Aggro = font.aggro_l.toFontFamily()
 
