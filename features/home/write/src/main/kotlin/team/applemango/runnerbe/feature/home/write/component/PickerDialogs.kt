@@ -15,8 +15,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -59,6 +60,7 @@ internal fun RunningDatePickerDialog(
         content = {
             Row(
                 modifier = Modifier
+                    .padding(horizontal = 30.dp)
                     .fillMaxWidth()
                     .height(200.dp),
                 verticalAlignment = Alignment.CenterVertically,
@@ -134,7 +136,10 @@ internal fun RunningTimePickerDialog(
                 horizontalArrangement = Arrangement.SpaceAround,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(modifier = Modifier.wrapContentWidth()) {
+                Row(
+                    modifier = Modifier.wrapContentSize(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     HourPicker(
                         modifier = Modifier
                             .fillMaxHeight()
@@ -149,7 +154,10 @@ internal fun RunningTimePickerDialog(
                         style = Typography.Custom.SuperWheelPickerRegular
                     )
                 }
-                Row {
+                Row(
+                    modifier = Modifier.wrapContentSize(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     MinutePicker(
                         modifier = Modifier
                             .fillMaxHeight()
@@ -201,7 +209,6 @@ private fun TimeTypePicker(
         modifier = modifier,
         colors = RunnerbeSuperWheelPickerDefaults.colors(),
         textStyle = RunnerbeSuperWheelPickerDefaults.textStyle(),
-        wrapSelectorWheel = false,
         wheelItemCount = 2,
         range = 0..1,
         value = startTimeType.ordinal,
