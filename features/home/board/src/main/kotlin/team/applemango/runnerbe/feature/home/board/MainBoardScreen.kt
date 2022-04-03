@@ -18,6 +18,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -52,12 +54,16 @@ import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.domain.extension.defaultCatch
 
-@OptIn(LocalActivityUsageApi::class) // LocalActivity usage
+@OptIn(
+    LocalActivityUsageApi::class, // LocalActivity
+    ExperimentalMaterialApi::class // ModalBottomSheetState
+)
 @Composable
 fun MainBoardScreen(
+    bottomSheetState: ModalBottomSheetState,
     updateBottomSheetContent: (content: @Composable () -> Unit) -> Unit,
-    vm: MainBoardViewModel = activityViewModel(),
     isBookmarkPage: Boolean,
+    vm: MainBoardViewModel = activityViewModel(),
 ) {
     val activity = LocalActivity.current
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -119,19 +125,18 @@ fun MainBoardScreen(
         MainBoardComposable(
             modifier = Modifier
                 .fillMaxSize()
-                .background(brush = GradientAsset.Background.Brush)
                 .navigationBarsPadding()
-                .padding(
-                    top = 16.dp,
-                    bottom = RunnerbeBottomBarDefaults.height // without +16: because LazyColumn
-                )
+                .padding(bottom = RunnerbeBottomBarDefaults.height) // without +16: because LazyColumn
+                .background(brush = GradientAsset.Background.Brush)
+                .padding(top = 16.dp)
                 .padding(horizontal = 16.dp),
             runningItems = (runningItemsState as? RunningItemsState.Loaded)?.items
                 ?: emptyList(),
             isLoading = runningItemsState == RunningItemsState.Loading,
             isBookmarkPage = isBookmarkPage,
             isEmptyState = runningItemsState == RunningItemsState.Empty,
-            updateBottomSheetContent = updateBottomSheetContent
+            bottomSheetState = bottomSheetState,
+            updateBottomSheetContent = updateBottomSheetContent,
         )
 
         AnimatedVisibility(
