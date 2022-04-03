@@ -40,6 +40,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
@@ -53,7 +54,9 @@ import team.applemango.runnerbe.domain.constant.Gender
 import team.applemango.runnerbe.feature.home.write.R
 import team.applemango.runnerbe.feature.home.write.RunningItemWriteViewModel
 import team.applemango.runnerbe.feature.home.write.constant.PeopleCountErrorType
+import team.applemango.runnerbe.feature.home.write.util.extension.toAddress
 import team.applemango.runnerbe.feature.home.write.util.extension.toLatLng
+import team.applemango.runnerbe.shared.android.datastore.Me
 import team.applemango.runnerbe.shared.compose.component.BorderOption
 import team.applemango.runnerbe.shared.compose.component.CircleBorderText
 import team.applemango.runnerbe.shared.compose.component.IconText
@@ -78,6 +81,7 @@ internal fun RunningItemWriteLevelTwo(
     modifier: Modifier = Modifier,
     vm: RunningItemWriteViewModel = activityViewModel(),
 ) {
+    val context = LocalContext.current
     var ageRange = remember { 30f..40f }
 
     var genderSelectState by remember { mutableStateOf<Gender?>(null) }
@@ -86,6 +90,7 @@ internal fun RunningItemWriteLevelTwo(
     var peopleCountErrorTypeState by remember { mutableStateOf(PeopleCountErrorType.None) }
     var messageFieldState by remember { mutableStateOf(TextFieldValue()) }
 
+    val locate = remember { Me.locate.value.toLatLng() }
     val circleBorderTextColorState = animatedColorState(
         target = peopleCountErrorTypeState,
         selectState = PeopleCountErrorType.None,
@@ -94,7 +99,7 @@ internal fun RunningItemWriteLevelTwo(
     )
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(
-            vm.locate.toLatLng(),
+            locate,
             DefaultMapCameraZoom
         )
     }
@@ -106,6 +111,7 @@ internal fun RunningItemWriteLevelTwo(
                 .wrapContentHeight()
         ) {
             val (map, runningItemType, title, information) = createRefs()
+
             GoogleMap(
                 modifier = Modifier
                     .constrainAs(map) {
@@ -150,7 +156,7 @@ internal fun RunningItemWriteLevelTwo(
                             tint = Color.Unspecified
                         )
                         Text(
-                            text = vm.locate.address.split(" ").take(2).joinToString(""),
+                            text = locate.toAddress(context).split(" ").take(2).joinToString(""),
                             style = Typography.Body12R.copy(color = ColorAsset.G3)
                         )
                     }
