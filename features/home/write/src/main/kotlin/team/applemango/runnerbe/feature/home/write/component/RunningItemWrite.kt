@@ -82,7 +82,7 @@ internal fun RunningItemWrite(
                 Text(
                     modifier = Modifier
                         .padding(16.dp)
-                        .runIf(fieldsAllInputState[writingLevel.index]) {
+                        .runIf(fieldsAllInputState[writingLevel.ordinal]) {
                             clickable {
                                 @Suppress("UNUSED_EXPRESSION") // vm
                                 when (writingLevel) {
@@ -103,7 +103,7 @@ internal fun RunningItemWrite(
                     style = Typography.Body16R.copy(
                         color = animatedColorState(
                             target = true,
-                            selectState = fieldsAllInputState[writingLevel.index],
+                            selectState = fieldsAllInputState[writingLevel.ordinal],
                             defaultColor = ColorAsset.G4,
                             selectedColor = ColorAsset.Primary
                         )
@@ -132,8 +132,8 @@ internal fun RunningItemWrite(
                             .fillMaxSize()
                             .verticalScroll(rememberScrollState()),
                         runningItemType = selectedRunningItemType,
-                        fieldsAllInputStateChange = { state ->
-                            fieldsAllInputState[writingLevel.index] = state
+                        inputStateChanged = { isFilled ->
+                            fieldsAllInputState[writingLevel.ordinal] = isFilled
                         }
                     )
                 }
