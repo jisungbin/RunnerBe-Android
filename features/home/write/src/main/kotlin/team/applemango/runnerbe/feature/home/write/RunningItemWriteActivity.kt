@@ -41,19 +41,19 @@ class RunningItemWriteActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        actionBar?.hide()
         setWindowInsetsUsage()
+        vm.exceptionFlow
+            .defaultCatch(action = ::basicExceptionHandler)
+            .collectWithLifecycle(
+                lifecycleOwner = this@RunningItemWriteActivity,
+                action = { exception ->
+                    basicExceptionHandler(exception)
+                }
+            )
+
         setContent {
             CompositionLocalProvider(LocalActivity provides this) {
                 LaunchedEffect(Unit) {
-                    vm.exceptionFlow
-                        .defaultCatch(action = ::basicExceptionHandler)
-                        .collectWithLifecycle(
-                            lifecycleOwner = this@RunningItemWriteActivity,
-                            action = { exception ->
-                                basicExceptionHandler(exception)
-                            }
-                        )
                     vm.observe(
                         lifecycleOwner = this@RunningItemWriteActivity,
                         state = ::handleState,
