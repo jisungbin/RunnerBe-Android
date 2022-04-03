@@ -46,6 +46,7 @@ import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.compose.theme.animatedColorState
 import team.applemango.runnerbe.shared.domain.extension.runIf
 
+// TODO: 글쓰기 데이터 저장 및 복원 처리
 @OptIn(LocalActivityUsageApi::class) // activityViewModel()
 @Composable
 internal fun RunningItemWrite(
@@ -53,7 +54,7 @@ internal fun RunningItemWrite(
     vm: RunningItemWriteViewModel = activityViewModel(),
 ) {
     val activity = LocalActivity.current
-    var selectedRunningItemType = remember { RunningItemType.Before }
+    var selectedRunningItemType by remember { mutableStateOf(RunningItemType.Before) }
     val fieldsAllInputState = remember { mutableStateListOf(false, false) }
     var writingLevel by remember { mutableStateOf(WritingLevel.One) }
 
@@ -115,8 +116,10 @@ internal fun RunningItemWrite(
             modifier = Modifier
                 .padding(top = 8.dp)
                 .padding(horizontal = 16.dp),
+            selectedItemState = selectedRunningItemType,
             onTabClick = { type ->
                 selectedRunningItemType = type
+                vm.updateRunningItemType(type)
             }
         )
         Crossfade(
@@ -130,7 +133,7 @@ internal fun RunningItemWrite(
                     RunningItemWriteLevelOne(
                         modifier = Modifier
                             .fillMaxSize()
-                            .verticalScroll(rememberScrollState()),
+                        /*.verticalScroll(rememberScrollState())*/, // 지도 세로 스크롤이 안됨
                         runningItemType = selectedRunningItemType,
                         inputStateChanged = { isFilled ->
                             fieldsAllInputState[writingLevel.ordinal] = isFilled
