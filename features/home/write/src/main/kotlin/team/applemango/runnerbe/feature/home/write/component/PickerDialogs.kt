@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Text
@@ -60,7 +59,6 @@ internal fun RunningDatePickerDialog(
         content = {
             Row(
                 modifier = Modifier
-                    .padding(horizontal = 30.dp)
                     .fillMaxWidth()
                     .height(200.dp),
                 verticalAlignment = Alignment.CenterVertically,
@@ -245,7 +243,7 @@ private fun HourPicker(
 private fun MinutePicker(
     modifier: Modifier,
     @IntRange(from = 0, to = 60) startMinute: Int,
-    onMinuteSelectChange: (hour: Int) -> Unit,
+    onMinuteSelectChange: (minute: Int) -> Unit,
 ) {
     SuperWheelPicker(
         modifier = modifier,
@@ -254,7 +252,8 @@ private fun MinutePicker(
         wheelItemCount = 5,
         range = 0..12,
         value = startMinute / 5,
-        onValueChange = { _, minute ->
+        onValueChange = { _, value ->
+            val minute = value * 5
             onMinuteSelectChange(minute)
         },
         onTextRender = { value ->
