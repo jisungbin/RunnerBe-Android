@@ -17,13 +17,12 @@ import team.applemango.runnerbe.domain.runningitem.model.common.Locate
 object Me {
     var locateInitialized = false
 
-    // 37.5284197, 126.9327389
     @Suppress("ObjectPropertyName")
     private var _locate = MutableStateFlow(
         Locate(
             address = "여의도 한강공원",
-            latitude = 126.9327389,
-            longitude = 37.5284197
+            latitude = 37.5284197,
+            longitude = 126.9327389
         )
     )
     val locate = _locate.asStateFlow()
