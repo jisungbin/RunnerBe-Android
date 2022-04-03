@@ -190,6 +190,7 @@ class MainActivity : AppCompatActivity() {
                                 .navigationBarsPadding(),
                             colors = RunnerbeBottomBarDefaults.colors(),
                             items = bottomBarItems,
+                            selectedItemState = screenState,
                             barHeight = RunnerbeBottomBarDefaults.height,
                         ) { selectedItem ->
                             screenState = selectedItem.id
