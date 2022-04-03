@@ -1,6 +1,6 @@
 package team.applemango.runnerbe.constant
 
-enum class Screen {
+enum class ScreenType {
     Home,
     Bookmark,
     Mail,
