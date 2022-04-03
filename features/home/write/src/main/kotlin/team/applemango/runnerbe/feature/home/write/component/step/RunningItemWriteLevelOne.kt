@@ -26,19 +26,15 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
@@ -61,7 +57,6 @@ import team.applemango.runnerbe.feature.home.write.util.extension.bitmapDescript
 import team.applemango.runnerbe.feature.home.write.util.extension.toAddress
 import team.applemango.runnerbe.feature.home.write.util.extension.toLatLng
 import team.applemango.runnerbe.shared.android.datastore.Me
-import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.compose.extension.activityViewModel
 import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
@@ -77,15 +72,13 @@ internal fun RunningItemWriteLevelOne(
     modifier: Modifier = Modifier,
     runningItemType: RunningItemType,
     vm: RunningItemWriteViewModel = activityViewModel(),
-    fieldsAllInputStateChange: (state: Boolean) -> Unit,
+    inputStateChanged: (state: Boolean) -> Unit,
 ) {
     val context = LocalContext.current.applicationContext
-    val lifecycleOwner = LocalLifecycleOwner.current
 
     var titleFieldState by remember { mutableStateOf(TextFieldValue()) }
     val runningDateState by remember { mutableStateOf(RunningDate.getDefault(runningItemType)) }
     var runningTimeState by remember { mutableStateOf(RunningTime(hour = 0, minute = 20)) }
-    val fieldsFillState = remember { mutableStateListOf(false, false, false) }
 
     var runningDatePickerDialogVisible by remember { mutableStateOf(false) }
     var runningTimePickerDialogVisible by remember { mutableStateOf(false) }
@@ -97,13 +90,6 @@ internal fun RunningItemWriteLevelOne(
             myLocate,
             DefaultMapCameraZoom
         )
-    }
-
-    LaunchedEffect(fieldsFillState) {
-        snapshotFlow { fieldsFillState }
-            .collectWithLifecycle(lifecycleOwner) {
-                fieldsAllInputStateChange(fieldsFillState.all { true })
-            }
     }
 
     RunningDatePickerDialog(
@@ -166,7 +152,9 @@ internal fun RunningItemWriteLevelOne(
             ),
             onValueChange = { newTitleValue ->
                 if (newTitleValue.text.isNotEmpty()) {
-                    fieldsFillState[0] = true
+                    inputStateChanged(true)
+                } else {
+                    inputStateChanged(false)
                 }
                 if (newTitleValue.text.length <= 30) {
                     titleFieldState = newTitleValue
