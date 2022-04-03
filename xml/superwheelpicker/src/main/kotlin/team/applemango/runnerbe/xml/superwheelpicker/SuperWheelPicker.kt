@@ -1,3 +1,5 @@
+@file:Suppress("unused", "MemberVisibilityCanBePrivate")
+
 package team.applemango.runnerbe.xml.superwheelpicker
 
 import android.annotation.SuppressLint
@@ -538,11 +540,7 @@ class SuperWheelPicker @JvmOverloads constructor(
     }
 
     fun setTextSize(textSize: Float) {
-        textPaint.textSize = textSize
-    }
-
-    fun setTextLetterSpacing(letterSpacing: Float) {
-        textPaint.letterSpacing = letterSpacing
+        this.textSize = textSize
     }
 
     fun setTextRenderListener(onTextRenderListener: OnTextRenderListener) {
@@ -550,8 +548,7 @@ class SuperWheelPicker @JvmOverloads constructor(
     }
 
     fun scrollTo(position: Int) {
-        if (curSelectedItemIndex == position)
-            return
+        if (curSelectedItemIndex == position) return
 
         curSelectedItemIndex = position
         selectorItemIndices.clear()
@@ -583,7 +580,6 @@ class SuperWheelPicker @JvmOverloads constructor(
         smoothScrollTo(getPosition(value))
     }
 
-    @Suppress("MemberVisibilityCanBePrivate")
     fun scrollToValue(value: Int) {
         scrollTo(getPosition(value))
     }
@@ -592,47 +588,17 @@ class SuperWheelPicker @JvmOverloads constructor(
         unSelectedTextColor = color
     }
 
-    /**
-     * Set a custom typeface object for the text
-     *
-     * @param typeface the custom typeface object
-     */
     fun setTypeface(typeface: Typeface?) {
         if (typeface != null) {
             textPaint.typeface = typeface
         }
     }
 
-    /**
-     * Sets whether the selector wheel shown during flinging/scrolling should
-     * wrap around the {@link NumberPicker#getMinValue()} and
-     * {@link NumberPicker#getMaxValue()} values.
-     * <p>
-     * By default if the range (max - min) is more than the number of items shown
-     * on the selector wheel the selector wheel wrapping is enabled.
-     * </p>
-     * <p>
-     * <strong>Note:</strong> If the number of items, i.e. the range (
-     * {@link #getMaxValue()} - {@link #getMinValue()}) is less than
-     * the number of items shown on the selector wheel, the selector wheel will
-     * not wrap. Hence, in such a case calling this method is a NOP.
-     * </p>
-     *
-     * @param wrapSelectorWheel Whether to wrap.
-     */
     fun setWrapSelectorWheel(wrap: Boolean) {
         wrapSelectorWheelPreferred = wrap
         invalidate()
     }
 
-    /**
-     * Gets whether the selector wheel wraps when reaching the min/max value.
-     *
-     * @return True if the selector wheel wraps.
-     *
-     * @see .getMinValue
-     * @see .getMaxValue
-     */
     fun getWrapSelectorWheel(): Boolean {
         return wrapSelectorWheelPreferred
     }
@@ -642,9 +608,6 @@ class SuperWheelPicker @JvmOverloads constructor(
         maxIndex = range.last
     }
 
-    /**
-     * Set how many visible item show in the picker
-     */
     fun setWheelItemCount(count: Int) {
         selectorItemCount = count + 2
         wheelMiddleItemIndex = (selectorItemCount - 1) / 2
@@ -656,9 +619,6 @@ class SuperWheelPicker @JvmOverloads constructor(
         invalidate()
     }
 
-    /**
-     * Set color for current selected item
-     */
     fun setSelectedTextColor(@ColorInt color: Int) {
         selectedTextColor = color
         invalidate()
