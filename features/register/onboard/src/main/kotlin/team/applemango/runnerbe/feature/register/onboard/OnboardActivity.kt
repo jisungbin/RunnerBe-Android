@@ -167,7 +167,7 @@ class OnboardActivity : ComponentActivity() {
                             }
                         }
                     }
-                ) { // Scaffold 는 backgroundColor 로 Brush 가 안되서 이렇게 함
+                ) { // Scaffold 는 backgroundColor 로 brush 가 안되서 이렇게 함
                     OnboardRouter(
                         modifier = Modifier
                             .fillMaxSize()

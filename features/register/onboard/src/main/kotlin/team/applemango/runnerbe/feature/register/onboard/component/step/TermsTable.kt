@@ -27,6 +27,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -69,9 +70,11 @@ internal fun TermsTable(
 ) {
     val context = LocalContext.current.applicationContext
     val coroutineScope = rememberCoroutineScope()
+
     var isAllTermsCheckedState by remember { mutableStateOf(false) }
     val termsCheckState = remember { mutableStateListOf(false, false, false) }
 
+    @Stable
     fun saveTermsAllCheckState() {
         coroutineScope.launch {
             context.dataStore.edit { preferences ->
@@ -80,6 +83,7 @@ internal fun TermsTable(
         }
     }
 
+    @Stable
     fun toggleAllTermsCheck(nowState: Boolean = isAllTermsCheckedState) { // 전체 동의 버튼 토글
         isAllTermsCheckedState = if (nowState) { // true -> false
             repeat(3) { index ->
@@ -96,6 +100,7 @@ internal fun TermsTable(
         saveTermsAllCheckState()
     }
 
+    @Stable
     fun checkAllChecked() { // 개별 동의 버튼 토글 후, 전체 동의 됐는지 체크
         isAllTermsCheckedState = termsCheckState.all { it }
         onAllTermsCheckStateChanged(isAllTermsCheckedState)

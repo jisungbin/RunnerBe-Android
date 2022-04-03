@@ -37,6 +37,15 @@ import team.applemango.runnerbe.shared.compose.component.ToggleButton
 import team.applemango.runnerbe.shared.compose.default.RunnerbeToggleButtonDefaults
 import team.applemango.runnerbe.shared.domain.extension.defaultCatch
 
+// FlowLayout 은 디자인이 안이쁘게 되서 직접 작성 함
+private val jobLists = listOf(
+    listOf(Job.PSV, Job.EDU, Job.DEV),
+    listOf(Job.PSM, Job.DES),
+    listOf(Job.MPR, Job.SER, Job.PRO),
+    listOf(Job.RES, Job.SAF, Job.MED),
+    listOf(Job.HUR, Job.ACC, Job.CUS)
+)
+
 // `vm: OnboardViewModel = activityViewModels()` 안한 이유:
 // DFM 는 의존성이 반대로 되서 hilt 를 사용하지 못함
 // 따라서 직접 factory 로 인자를 주입해 줘야 함
@@ -63,15 +72,6 @@ internal fun JobPicker(
             jobSelectState = Job.values().first { it.name == restoreJobCode }
         } ?: jobSelectChanged(false)
     }
-
-    // FlowLayout 은 디자인이 안이쁘게 되서 직접 작성 함
-    val jobLists = listOf(
-        listOf(Job.PSV, Job.EDU, Job.DEV),
-        listOf(Job.PSM, Job.DES),
-        listOf(Job.MPR, Job.SER, Job.PRO),
-        listOf(Job.RES, Job.SAF, Job.MED),
-        listOf(Job.HUR, Job.ACC, Job.CUS)
-    )
 
     LazyColumn(
         modifier = Modifier

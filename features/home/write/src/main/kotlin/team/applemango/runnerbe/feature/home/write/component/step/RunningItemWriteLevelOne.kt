@@ -97,15 +97,6 @@ internal fun RunningItemWriteLevelOne(
         )
     }
 
-    LaunchedEffect(runningItemType) {
-        snapshotFlow { runningItemType }
-            .collectWithLifecycle(lifecycleOwner = lifecycleOwner) { type ->
-                if (!isRunningDateEdited) {
-                    runningDateState = RunningDate.getDefault(type)
-                }
-            }
-    }
-
     RunningDatePickerDialog(
         visible = runningDatePickerDialogVisibleState,
         onDismissRequest = {
@@ -146,6 +137,15 @@ internal fun RunningItemWriteLevelOne(
             runningTimeState = runningTime
         }
     )
+
+    LaunchedEffect(runningItemType) {
+        snapshotFlow { runningItemType }
+            .collectWithLifecycle(lifecycleOwner = lifecycleOwner) { type ->
+                if (!isRunningDateEdited) {
+                    runningDateState = RunningDate.getDefault(type)
+                }
+            }
+    }
 
     Column(modifier = modifier) {
         Text(

@@ -91,19 +91,12 @@ internal fun EmailVerify(
             .defaultCatch(action = vm::emitException)
             .flowWithLifecycle(lifecycle = lifecycleOwner.lifecycle)
     }
-    val emailInputStateWithLifecycle by emailInputFlowWithLifecycle.collectAsState(TextFieldValue())
 
+    val emailInputStateWithLifecycle by emailInputFlowWithLifecycle.collectAsState(TextFieldValue())
     var emailSentState by remember { mutableStateOf(false) }
     var emailVerifyState by remember { mutableStateOf<EmailVerifyState>(EmailVerifyState.None) }
     var emailSendButtonEnabledState by remember { mutableStateOf(false) }
     var emailVerifyNoticeDialogVisibleState by remember { mutableStateOf(true) }
-
-    EmailVerifyLinkNoticeDialog(
-        visible = emailVerifyNoticeDialogVisibleState,
-        onDismissRequest = {
-            emailVerifyNoticeDialogVisibleState = false
-        }
-    )
 
     val emailSendButtonBackgroundColor by animateColorAsState(
         when (emailSendButtonEnabledState) {
@@ -115,6 +108,13 @@ internal fun EmailVerify(
         when (emailSendButtonEnabledState) {
             true -> ColorAsset.G6
             else -> ColorAsset.G4_5
+        }
+    )
+
+    EmailVerifyLinkNoticeDialog(
+        visible = emailVerifyNoticeDialogVisibleState,
+        onDismissRequest = {
+            emailVerifyNoticeDialogVisibleState = false
         }
     )
 
