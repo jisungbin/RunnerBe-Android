@@ -20,14 +20,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -35,6 +41,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.birjuvachhani.locus.Locus
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import team.applemango.runnerbe.R
 import team.applemango.runnerbe.constant.Screen
 import team.applemango.runnerbe.shared.android.datastore.Me
@@ -98,9 +105,15 @@ class MainActivity : AppCompatActivity() {
         setWindowInsetsUsage()
         setContent {
             val modalBottomSheetState = rememberModalBottomSheetState(
-                initialValue = ModalBottomSheetValue.Expanded,
+                initialValue = ModalBottomSheetValue.Hidden,
                 skipHalfExpanded = true
             )
+
+            var bottomSheetContent by remember {
+                mutableStateOf<@Composable () -> Unit>(
+                    @Composable { Box(modifier = Modifier.fillMaxSize()) }
+                )
+            }
 
             ModalBottomSheetLayout(
                 modifier = Modifier
@@ -114,7 +127,7 @@ class MainActivity : AppCompatActivity() {
                 sheetBackgroundColor = Color.Cyan,
                 scrimColor = Color.Black.copy(alpha = 0.5f),
                 sheetContent = {
-                    Box(modifier = Modifier.fillMaxWidth().height(300.dp))
+                    bottomSheetContent()
                 },
             ) {
                 ConstraintLayout(modifier = Modifier.fillMaxSize()) {
@@ -133,10 +146,10 @@ class MainActivity : AppCompatActivity() {
                                 width = Dimension.matchParent
                                 height = Dimension.fillToConstraints
                             }
-                            .background(color = Color.Red),
+                            .background(color = Color.Green),
                         targetState = screenState
                     ) { screenType ->
-                        when (screenType) {
+                        /*when (screenType) {
                             Screen.Home -> {
                             }
                             Screen.Bookmark -> {
@@ -145,7 +158,14 @@ class MainActivity : AppCompatActivity() {
                             }
                             Screen.MyPage -> {
                             }
-                        }
+                        }*/
+                        Test(
+                            state = modalBottomSheetState,
+                            title = screenType.name,
+                            updateBottomSheetContent = { content ->
+                                bottomSheetContent = content
+                            }
+                        )
                     }
                     BottomBar(
                         modifier = Modifier
@@ -161,6 +181,42 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun Test(
+    state: ModalBottomSheetState,
+    title: String,
+    updateBottomSheetContent: (content: @Composable () -> Unit) -> Unit
+) {
+    val coroutineScope = rememberCoroutineScope()
+
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Button(
+            onClick = {
+                updateBottomSheetContent {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(300.dp)
+                            .background(color = Color.Cyan),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(text = title)
+                    }
+                }
+                coroutineScope.launch {
+                    state.show()
+                }
+            }
+        ) {
+            Text(text = title)
         }
     }
 }
