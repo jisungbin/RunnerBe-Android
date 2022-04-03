@@ -83,7 +83,7 @@ internal fun RunningItemWriteLevelOne(
     val lifecycleOwner = LocalLifecycleOwner.current
 
     var titleFieldState by remember { mutableStateOf(TextFieldValue()) }
-    var runningDateState by remember { mutableStateOf(RunningDate.getDefault(runningItemType)) }
+    val runningDateState by remember { mutableStateOf(RunningDate.getDefault(runningItemType)) }
     var runningTimeState by remember { mutableStateOf(RunningTime(hour = 0, minute = 20)) }
     val fieldsFillState = remember { mutableStateListOf(false, false, false) }
 
@@ -109,7 +109,6 @@ internal fun RunningItemWriteLevelOne(
     RunningDatePickerDialog(
         visible = runningDatePickerDialogVisible,
         onDismissRequest = {
-            runningDateState = runningDateState.newInstance()
             runningDatePickerDialogVisible = false
         },
         startDateIndex = DateCache.getCachedIndexFromDay(day = runningDateState.getDay()),
@@ -345,7 +344,7 @@ internal fun RunningItemWriteLevelOne(
             ) { marker ->
                 Text(
                     modifier = Modifier
-                        .padding(start = 120.dp)
+                        .padding(start = 150.dp)
                         .clip(
                             RoundedCornerShape(
                                 topStart = 5.dp,
@@ -355,8 +354,8 @@ internal fun RunningItemWriteLevelOne(
                         )
                         .background(color = ColorAsset.G6)
                         .padding(
-                            horizontal = 4.dp,
-                            vertical = 2.dp
+                            horizontal = 8.dp,
+                            vertical = 4.dp
                         ),
                     text = marker.position.toAddress(context),
                     style = Typography.Custom.MapMarker
