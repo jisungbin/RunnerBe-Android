@@ -14,8 +14,6 @@ import androidx.compose.runtime.Stable
 import androidx.compose.ui.platform.LocalContext
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.FontTypeface
-import team.applemango.runnerbe.shared.domain.unit.domainEm
-import team.applemango.runnerbe.shared.domain.unit.domainPx
 import team.applemango.runnerbe.xml.superwheelpicker.integration.SuperWheelPickerColors
 import team.applemango.runnerbe.xml.superwheelpicker.integration.SuperWheelPickerTextStyle
 
@@ -33,9 +31,8 @@ object RunnerbeSuperWheelPickerDefaults {
         // See: https://medium.com/@joaofoltran/what-really-is-context-in-android-2034561fff39
         val context = LocalContext.current.applicationContext
         return SuperWheelPickerTextStyle(
-            typeface = FontTypeface.Roboto.regular(context),
-            textSize = 24.domainPx,
-            letterSpacing = (-0.24).domainEm
+            typeface = FontTypeface.Roboto.medium(context),
+            textSize = 50f,
         )
     }
 }
