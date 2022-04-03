@@ -10,6 +10,7 @@
 package team.applemango.runnerbe.activity
 
 import android.os.Bundle
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.Crossfade
@@ -28,6 +29,7 @@ import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,18 +39,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.Dimension
 import com.birjuvachhani.locus.Locus
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.R
 import team.applemango.runnerbe.constant.Screen
+import team.applemango.runnerbe.feature.home.board.MainBoardScreen
 import team.applemango.runnerbe.shared.android.datastore.Me
 import team.applemango.runnerbe.shared.android.extension.setWindowInsetsUsage
 import team.applemango.runnerbe.shared.compose.component.BottomBar
 import team.applemango.runnerbe.shared.compose.component.BottomBarItem
 import team.applemango.runnerbe.shared.compose.default.RunnerbeBottomBarDefaults
+import team.applemango.runnerbe.shared.compose.extension.LocalActivity
+import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 
 @AndroidEntryPoint
@@ -85,7 +88,10 @@ class MainActivity : AppCompatActivity() {
         ),
     )
 
-    @OptIn(ExperimentalMaterialApi::class) // rememberModalBottomSheetState
+    @OptIn(
+        ExperimentalMaterialApi::class, // rememberModalBottomSheetState
+        LocalActivityUsageApi::class // LocalActivity usage
+    )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -104,86 +110,88 @@ class MainActivity : AppCompatActivity() {
 
         setWindowInsetsUsage()
         setContent {
-            val modalBottomSheetState = rememberModalBottomSheetState(
-                initialValue = ModalBottomSheetValue.Hidden,
-                skipHalfExpanded = true
-            )
+            CompositionLocalProvider(LocalActivity provides this) {
+                val coroutineScope = rememberCoroutineScope()
 
-            var bottomSheetContent by remember {
-                mutableStateOf<@Composable () -> Unit>(
-                    @Composable {
-                        Box(
+                val bottomSheetState = rememberModalBottomSheetState(
+                    initialValue = ModalBottomSheetValue.Hidden,
+                    skipHalfExpanded = true
+                )
+                var bottomSheetContentState by remember {
+                    mutableStateOf<@Composable () -> Unit>(
+                        @Composable {
+                            Box(modifier = Modifier)
+                        }
+                    )
+                }
+
+                BackHandler(enabled = bottomSheetState.currentValue == ModalBottomSheetValue.Expanded) {
+                    coroutineScope.launch {
+                        bottomSheetState.hide()
+                    }
+                }
+
+                ModalBottomSheetLayout(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(color = ColorAsset.G6),
+                    sheetState = bottomSheetState,
+                    sheetShape = RoundedCornerShape(
+                        topStart = 30.dp,
+                        topEnd = 30.dp
+                    ),
+                    sheetBackgroundColor = Color.Cyan,
+                    scrimColor = Color.Black.copy(alpha = 0.5f),
+                    sheetContent = {
+                        bottomSheetContentState()
+                    },
+                ) {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.BottomCenter
+                    ) {
+                        var screenState by remember { mutableStateOf(Screen.Home) }
+
+                        Crossfade(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(color = Color.Green),
+                            targetState = screenState
+                        ) { screenType ->
+                            when (screenType) {
+                                Screen.Home, Screen.Bookmark -> {
+                                    MainBoardScreen(
+                                        updateBottomSheetContent = { content ->
+                                            bottomSheetContentState = content
+                                        },
+                                        isBookmarkPage = screenType == Screen.Bookmark
+                                    )
+                                }
+                                /*Screen.Mail -> {
+                                }
+                                Screen.MyPage -> {
+                                }*/
+                                else -> {
+                                    Test(
+                                        state = bottomSheetState,
+                                        title = screenType.name,
+                                        updateBottomSheetContent = { content ->
+                                            bottomSheetContentState = content
+                                        }
+                                    )
+                                }
+                            }
+                        }
+                        BottomBar(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(300.dp)
-                        )
-                    }
-                )
-            }
-
-            ModalBottomSheetLayout(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(color = ColorAsset.G6),
-                sheetState = modalBottomSheetState,
-                sheetShape = RoundedCornerShape(
-                    topStart = 30.dp,
-                    topEnd = 30.dp
-                ),
-                sheetBackgroundColor = Color.Cyan,
-                scrimColor = Color.Black.copy(alpha = 0.5f),
-                sheetContent = {
-                    bottomSheetContent()
-                },
-            ) {
-                ConstraintLayout(modifier = Modifier.fillMaxSize()) {
-                    val (contentRef, bottomBarRef) = createRefs()
-                    var screenState by remember { mutableStateOf(Screen.Home) }
-
-                    Crossfade(
-                        modifier = Modifier
-                            .constrainAs(contentRef) {
-                                top.linkTo(anchor = parent.top)
-                                bottom.linkTo(
-                                    anchor = bottomBarRef.top,
-                                    margin = 16.dp
-                                )
-
-                                width = Dimension.matchParent
-                                height = Dimension.fillToConstraints
-                            }
-                            .background(color = Color.Green),
-                        targetState = screenState
-                    ) { screenType ->
-                        /*when (screenType) {
-                            Screen.Home -> {
-                            }
-                            Screen.Bookmark -> {
-                            }
-                            Screen.Mail -> {
-                            }
-                            Screen.MyPage -> {
-                            }
-                        }*/
-                        Test(
-                            state = modalBottomSheetState,
-                            title = screenType.name,
-                            updateBottomSheetContent = { content ->
-                                bottomSheetContent = content
-                            }
-                        )
-                    }
-                    BottomBar(
-                        modifier = Modifier
-                            .navigationBarsPadding()
-                            .constrainAs(bottomBarRef) {
-                                bottom.linkTo(anchor = parent.bottom)
-                                width = Dimension.matchParent
-                            },
-                        colors = RunnerbeBottomBarDefaults.colors(),
-                        items = bottomBarItems
-                    ) { selectedItem ->
-                        screenState = selectedItem.id
+                                .navigationBarsPadding(),
+                            colors = RunnerbeBottomBarDefaults.colors(),
+                            items = bottomBarItems,
+                            barHeight = RunnerbeBottomBarDefaults.height,
+                        ) { selectedItem ->
+                            screenState = selectedItem.id
+                        }
                     }
                 }
             }
