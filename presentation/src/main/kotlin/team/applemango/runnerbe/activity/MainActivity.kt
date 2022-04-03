@@ -111,7 +111,13 @@ class MainActivity : AppCompatActivity() {
 
             var bottomSheetContent by remember {
                 mutableStateOf<@Composable () -> Unit>(
-                    @Composable { Box(modifier = Modifier.fillMaxSize()) }
+                    @Composable {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(300.dp)
+                        )
+                    }
                 )
             }
 
