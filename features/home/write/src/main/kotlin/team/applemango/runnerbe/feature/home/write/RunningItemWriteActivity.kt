@@ -41,6 +41,7 @@ class RunningItemWriteActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        actionBar?.hide()
         setWindowInsetsUsage()
         setContent {
             CompositionLocalProvider(LocalActivity provides this) {
