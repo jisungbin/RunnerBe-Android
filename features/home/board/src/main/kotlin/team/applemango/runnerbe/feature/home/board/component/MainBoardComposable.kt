@@ -54,8 +54,6 @@ import kotlinx.coroutines.launch
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemSort
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
-import team.applemango.runnerbe.feature.home.board.BottomSheetState
-import team.applemango.runnerbe.feature.home.board.BottomSheetStateListenerHolder
 import team.applemango.runnerbe.feature.home.board.R
 import team.applemango.runnerbe.shared.android.constant.BottomNavigationBarHeight
 import team.applemango.runnerbe.shared.compose.component.FadingEdgeLazyColumn
@@ -117,14 +115,6 @@ internal fun MainBoardComposable(
             }
         }
     }
-
-    BottomSheetStateListenerHolder.bottomSheetStateListener?.onBottomSheetStateChanged(
-        state = when (bottomSheetState.currentValue) {
-            ModalBottomSheetValue.Hidden -> BottomSheetState.Hidden
-            ModalBottomSheetValue.Expanded -> BottomSheetState.Expanded
-            else -> throw IllegalStateException("Not allowed value: ${bottomSheetState.currentValue}")
-        }
-    )
 
     BackHandler(enabled = bottomSheetState.currentValue == ModalBottomSheetValue.Expanded) {
         coroutineScope.launch {
@@ -266,9 +256,6 @@ internal fun MainBoardComposable(
                             ToggleTopBarSubItem(
                                 onClick = {
                                     coroutineScope.launch {
-                                        BottomSheetStateListenerHolder.bottomSheetStateListener?.onBottomSheetStateChanged(
-                                            state = BottomSheetState.Expanding
-                                        )
                                         bottomSheetState.show()
                                     }
                                 },
