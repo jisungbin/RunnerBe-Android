@@ -16,16 +16,18 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.unit.dp
 import org.orbitmvi.orbit.viewmodel.observe
 import team.applemango.runnerbe.domain.constant.Gender
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
@@ -43,6 +45,7 @@ import team.applemango.runnerbe.shared.android.extension.basicExceptionHandler
 import team.applemango.runnerbe.shared.android.extension.changeActivityWithAnimation
 import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.android.util.DFMOnboardActivityAlias
+import team.applemango.runnerbe.shared.compose.default.RunnerbeBottomBarDefaults
 import team.applemango.runnerbe.shared.compose.extension.LocalActivity
 import team.applemango.runnerbe.shared.compose.extension.activityViewModel
 import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
@@ -51,7 +54,8 @@ import team.applemango.runnerbe.shared.domain.extension.defaultCatch
 
 @OptIn(LocalActivityUsageApi::class) // LocalActivity usage
 @Composable
-fun MainBoard(
+fun MainBoardScreen(
+    updateBottomSheetContent: (content: @Composable () -> Unit) -> Unit,
     vm: MainBoardViewModel = activityViewModel(),
     isBookmarkPage: Boolean,
 ) {
@@ -62,16 +66,6 @@ fun MainBoard(
     var runningItemsState by remember { mutableStateOf<RunningItemsState>(RunningItemsState.Loading) }
 
     LaunchedEffect(Unit) {
-        snapshotFlow { nonRegisterUserPopupVisible }
-        /*.collectWithLifecycle(viewLifecycleOwner) { isVisible ->
-            BottomSheetStateListenerHolder.bottomSheetStateListener?.onBottomSheetStateChanged(
-                state = when (isVisible) {
-                    true -> BottomSheetState.Expanding
-                    else -> BottomSheetState.Hidden
-                }
-            )
-        }*/
-
         vm.exceptionFlow
             .defaultCatch { exception ->
                 activity.basicExceptionHandler(exception)
@@ -125,12 +119,19 @@ fun MainBoard(
         MainBoardComposable(
             modifier = Modifier
                 .fillMaxSize()
-                .background(brush = GradientAsset.Background.Brush),
+                .background(brush = GradientAsset.Background.Brush)
+                .navigationBarsPadding()
+                .padding(
+                    top = 16.dp,
+                    bottom = RunnerbeBottomBarDefaults.height // without +16: because LazyColumn
+                )
+                .padding(horizontal = 16.dp),
             runningItems = (runningItemsState as? RunningItemsState.Loaded)?.items
                 ?: emptyList(),
             isLoading = runningItemsState == RunningItemsState.Loading,
             isBookmarkPage = isBookmarkPage,
-            isEmptyState = runningItemsState == RunningItemsState.Empty
+            isEmptyState = runningItemsState == RunningItemsState.Empty,
+            updateBottomSheetContent = updateBottomSheetContent
         )
 
         AnimatedVisibility(
