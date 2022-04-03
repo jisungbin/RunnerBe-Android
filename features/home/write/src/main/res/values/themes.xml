@@ -9,5 +9,5 @@
 
 <resources>
 
-    <style name="Theme.RunnerBe" parent="Theme.MaterialComponents.Light.NoActionBar" />
+    <style name="Theme.RunnerBe" parent="Theme.AppCompat.Light.NoActionBar" />
 </resources>
