@@ -29,7 +29,7 @@ import team.applemango.runnerbe.shared.android.base.BaseViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-internal class MainBoardViewModel @Inject constructor(
+class MainBoardViewModel @Inject internal constructor(
     private val updateBookmarkItemUseCase: UpdateBookmarkItemUseCase,
     private val loadRunningItemsUseCase: LoadRunningItemsUseCase,
 ) : BaseViewModel(), ContainerHost<MainBoardState, Nothing> {

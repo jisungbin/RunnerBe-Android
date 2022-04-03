@@ -32,7 +32,7 @@ import team.applemango.runnerbe.feature.home.board.mvi.MainBoardState.RunningIte
  * [BookmarkToggleRequestFail] state 를 쏴서 북마크 아이콘 composable toggle 을
  * rollback 해주기 위함
  */
-internal sealed class MainBoardState {
+sealed class MainBoardState {
     object NonRegisterUser : MainBoardState()
     object RunningItemLoading : MainBoardState()
     object RunningItemLoadFail : MainBoardState()
