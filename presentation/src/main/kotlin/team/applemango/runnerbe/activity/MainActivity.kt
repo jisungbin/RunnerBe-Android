@@ -42,7 +42,7 @@ import com.birjuvachhani.locus.Locus
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.R
-import team.applemango.runnerbe.constant.Screen
+import team.applemango.runnerbe.constant.ScreenType
 import team.applemango.runnerbe.feature.home.board.MainBoardScreen
 import team.applemango.runnerbe.shared.android.datastore.Me
 import team.applemango.runnerbe.shared.android.extension.setWindowInsetsUsage
@@ -66,22 +66,22 @@ class MainActivity : AppCompatActivity() {
 
     private val bottomBarItems = listOf(
         BottomBarItem(
-            id = Screen.Home,
+            id = ScreenType.Home,
             activateIcon = R.drawable.ic_round_home_24,
             inactivateIcon = R.drawable.ic_outlined_home_24
         ),
         BottomBarItem(
-            id = Screen.Bookmark,
+            id = ScreenType.Bookmark,
             activateIcon = R.drawable.ic_round_bookmark_24,
             inactivateIcon = R.drawable.ic_outlined_bookmark_24
         ),
         BottomBarItem(
-            id = Screen.Mail,
+            id = ScreenType.Mail,
             activateIcon = R.drawable.ic_round_mail_24,
             inactivateIcon = R.drawable.ic_outlined_mail_24
         ),
         BottomBarItem(
-            id = Screen.MyPage,
+            id = ScreenType.MyPage,
             activateIcon = R.drawable.ic_round_me_24,
             inactivateIcon = R.drawable.ic_outlined_me_24
         ),
@@ -112,7 +112,7 @@ class MainActivity : AppCompatActivity() {
             CompositionLocalProvider(LocalActivity provides this) {
                 val coroutineScope = rememberCoroutineScope()
 
-                var screenState by remember { mutableStateOf(Screen.Home) }
+                var screenTypeState by remember { mutableStateOf(ScreenType.Home) }
                 val bottomSheetState = rememberModalBottomSheetState(
                     initialValue = ModalBottomSheetValue.Hidden,
                     skipHalfExpanded = true
@@ -156,16 +156,16 @@ class MainActivity : AppCompatActivity() {
                     ) {
                         Crossfade(
                             modifier = Modifier.fillMaxSize(),
-                            targetState = screenState
+                            targetState = screenTypeState
                         ) { screenType ->
                             when (screenType) {
-                                Screen.Home, Screen.Bookmark -> {
+                                ScreenType.Home, ScreenType.Bookmark -> {
                                     MainBoardScreen(
                                         bottomSheetState = bottomSheetState,
                                         updateBottomSheetContent = { content ->
                                             bottomSheetContentState = content
                                         },
-                                        isBookmarkPage = screenType == Screen.Bookmark
+                                        isBookmarkPage = screenType == ScreenType.Bookmark
                                     )
                                 }
                                 /*Screen.Mail -> {
@@ -190,10 +190,10 @@ class MainActivity : AppCompatActivity() {
                                 .navigationBarsPadding(),
                             colors = RunnerbeBottomBarDefaults.colors(),
                             items = bottomBarItems,
-                            selectedItemState = screenState,
+                            selectedItemState = screenTypeState,
                             barHeight = RunnerbeBottomBarDefaults.height,
                         ) { selectedItem ->
-                            screenState = selectedItem.id
+                            screenTypeState = selectedItem.id
                         }
                     }
                 }
