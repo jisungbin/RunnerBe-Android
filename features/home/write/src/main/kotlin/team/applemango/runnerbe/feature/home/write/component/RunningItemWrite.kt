@@ -12,8 +12,11 @@ package team.applemango.runnerbe.feature.home.write.component
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -125,6 +128,9 @@ internal fun RunningItemWrite(
             when (level) {
                 WritingLevel.One -> {
                     RunningItemWriteLevelOne(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .verticalScroll(rememberScrollState()),
                         runningItemType = selectedRunningItemType,
                         fieldsAllInputStateChange = { state ->
                             fieldsAllInputState[writingLevel.index] = state
@@ -133,7 +139,10 @@ internal fun RunningItemWrite(
                 }
                 WritingLevel.Two -> {
                     RunningItemWriteLevelTwo(
-                        modifier = Modifier.imePadding() // include TextField at bottom
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .imePadding() // include TextField at bottom
+                            .verticalScroll(rememberScrollState())
                     )
                 }
             }
