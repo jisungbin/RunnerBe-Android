@@ -43,8 +43,8 @@ internal class RunningDate(baseDate: Date = Date()) {
          * 출근 전 - 06:00 AM, 퇴근 후 06:00 PM, 휴일 - 12:00 PM
          */
         fun getDefault(runningItemType: RunningItemType): RunningDate {
-            val instance = RunningDate()
-            with(instance) {
+            return RunningDate().apply {
+                setMinute(0)
                 when (runningItemType) {
                     RunningItemType.Before -> {
                         setTimeType(TimeType.AM)
@@ -60,7 +60,6 @@ internal class RunningDate(baseDate: Date = Date()) {
                     }
                 }
             }
-            return instance
         }
     }
 
