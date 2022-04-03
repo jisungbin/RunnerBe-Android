@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.Flow
 
 fun <T> Flow<T>.collectWithLifecycle(
     lifecycleOwner: LifecycleOwner,
+    minActiveState: Lifecycle.State = Lifecycle.State.CREATED,
     builder: Flow<T>.() -> Flow<T> = { this },
     action: suspend CoroutineScope.(T) -> Unit,
 ) {
@@ -25,7 +26,7 @@ fun <T> Flow<T>.collectWithLifecycle(
         builder()
             .flowWithLifecycle(
                 lifecycle = lifecycleOwner.lifecycle,
-                minActiveState = Lifecycle.State.CREATED
+                minActiveState = minActiveState
             ).collect { value ->
                 action(value)
             }
