@@ -31,9 +31,8 @@ import androidx.compose.material.Checkbox
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
-import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.Text
-import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -63,7 +62,7 @@ import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.compose.theme.animatedColorState
 
-@OptIn(ExperimentalMaterialApi::class) // ModalBottomSheetLayout
+@OptIn(ExperimentalMaterialApi::class) // ModalBottomSheetState
 @Composable
 internal fun MainBoardComposable(
     modifier: Modifier = Modifier,
@@ -71,6 +70,7 @@ internal fun MainBoardComposable(
     isLoading: Boolean,
     isBookmarkPage: Boolean,
     isEmptyState: Boolean,
+    bottomSheetState: ModalBottomSheetState,
     updateBottomSheetContent: (content: @Composable () -> Unit) -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -90,10 +90,6 @@ internal fun MainBoardComposable(
         }
     }
 
-    val bottomSheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-        skipHalfExpanded = true,
-    )
     var sortState by remember { mutableStateOf(RunningItemSort.Nearby) }
     var includeFinishState by remember { mutableStateOf(false) }
     var selectedRunningItemTypeState by remember { mutableStateOf(RunningItemType.Before) }
@@ -275,6 +271,7 @@ internal fun MainBoardComposable(
                  result: 1
                  when 은 true 를 만나면 실행하고 break 한다.
                  */
+                // TODO: 북마크 상태일 때 empty state 는 메시지를 다르게 해야 함
                 when {
                     loading -> {
                         PlaceholderLazyColumn(enabled = isLoading)
