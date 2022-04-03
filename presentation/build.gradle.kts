@@ -51,10 +51,6 @@ android {
         }
     }
 
-    buildFeatures {
-        dataBinding = true
-    }
-
     dynamicFeatures.addAll(
         setOf(
             ProjectConstants.RegisterSnsLogin,
@@ -84,10 +80,8 @@ dependencies {
     Dependencies.Login.forEach(::implementation)
     Dependencies.Location.forEach(::implementation)
     Dependencies.Analytics.forEach(::implementation)
-    Dependencies.Util.Insetter.forEach(::implementation)
-    Dependencies.Jetpack.Navigation.forEach(::implementation)
     Dependencies.PresentationOnlyKtx.forEach(::implementation)
 
     debugImplementation(Dependencies.Debug.LeakCanary)
-    installSharedComposeOrbitHiltTest(excludeCompose = true)
+    installSharedComposeOrbitHiltTest()
 }

@@ -89,10 +89,6 @@ object Dependencies {
     object Util { // Erratum 은 :presentation 에서만 쓰임
         const val Erratum = "land.sungbin:erratum:${Versions.Util.Erratum}"
         const val Logeukes = "land.sungbin:logeukes:${Versions.Util.Logeukes}"
-        val Insetter = listOf(
-            "dev.chrisbanes.insetter:insetter:${Versions.Util.Insetter}",
-            "dev.chrisbanes.insetter:insetter-dbx:${Versions.Util.Insetter}"
-        )
     }
 
     val Analytics = listOf(
@@ -114,10 +110,6 @@ object Dependencies {
         const val Hilt = "com.google.dagger:hilt-android:${Versions.Jetpack.Hilt}"
         const val DataStore =
             "androidx.datastore:datastore-preferences:${Versions.Jetpack.DataStore}"
-        val Navigation = listOf(
-            "androidx.navigation:navigation-ui-ktx:${Versions.Jetpack.Navigation}",
-            "androidx.navigation:navigation-fragment-ktx:${Versions.Jetpack.Navigation}"
-        )
     }
 
     object Compiler {
