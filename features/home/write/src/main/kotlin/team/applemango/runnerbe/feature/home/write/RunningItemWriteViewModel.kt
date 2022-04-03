@@ -13,8 +13,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.viewmodel.container
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
-import team.applemango.runnerbe.domain.runningitem.model.common.DefaultLocate
-import team.applemango.runnerbe.domain.runningitem.model.common.Locate
 import team.applemango.runnerbe.domain.runningitem.usecase.WriteRunningItemUseCase
 import team.applemango.runnerbe.feature.home.write.model.DefaultRunningTime
 import team.applemango.runnerbe.feature.home.write.model.RunningDate
@@ -31,9 +29,6 @@ internal class RunningItemWriteViewModel @Inject constructor(
 
     override val container = container<RunningItemWriteState, Nothing>(RunningItemWriteState.None)
 
-    var locate = DefaultLocate
-        private set
-
     var runningItemType = RunningItemType.Before
         private set
 
@@ -45,10 +40,6 @@ internal class RunningItemWriteViewModel @Inject constructor(
 
     var runningTime = DefaultRunningTime
         private set
-
-    fun updateAddress(address: Locate) {
-        this.locate = address
-    }
 
     fun updateRunningItemType(runningItemType: RunningItemType) {
         this.runningItemType = runningItemType
