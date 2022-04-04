@@ -14,7 +14,9 @@ import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.LocalOverScrollConfiguration
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -89,7 +91,8 @@ class MainActivity : AppCompatActivity() {
 
     @OptIn(
         ExperimentalMaterialApi::class, // rememberModalBottomSheetState
-        LocalActivityUsageApi::class // LocalActivity
+        LocalActivityUsageApi::class, // LocalActivity
+        ExperimentalFoundationApi::class // LocalOverScrollConfiguration
     )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -109,7 +112,10 @@ class MainActivity : AppCompatActivity() {
 
         setWindowInsetsUsage()
         setContent {
-            CompositionLocalProvider(LocalActivity provides this) {
+            CompositionLocalProvider(
+                LocalActivity provides this,
+                LocalOverScrollConfiguration provides null
+            ) {
                 val coroutineScope = rememberCoroutineScope()
 
                 var screenTypeState by remember { mutableStateOf(ScreenType.Home) }
