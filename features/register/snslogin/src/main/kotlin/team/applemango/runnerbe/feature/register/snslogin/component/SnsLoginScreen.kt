@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -29,6 +30,7 @@ import androidx.constraintlayout.compose.Dimension
 import com.skydoves.landscapist.rememberDrawablePainter
 import team.applemango.runnerbe.domain.register.runnerbe.constant.PlatformType
 import team.applemango.runnerbe.feature.register.snslogin.SnsLoginViewModel
+import team.applemango.runnerbe.shared.android.extension.toast
 import team.applemango.runnerbe.shared.compose.extension.presentationDrawableOf
 import team.applemango.runnerbe.shared.compose.extension.presentationStringOf
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
@@ -39,6 +41,8 @@ internal fun SnsLoginScreen(
     modifier: Modifier = Modifier,
     vm: SnsLoginViewModel,
 ) {
+    val context = LocalContext.current
+
     ConstraintLayout(modifier = modifier) {
         val (logo, buttons) = createRefs()
 
@@ -101,7 +105,8 @@ internal fun SnsLoginScreen(
                     .fillMaxWidth()
                     .height(48.dp)
                     .clickable {
-                        vm.login(PlatformType.Apple)
+                        // TODO: vm.login(PlatformType.Apple)
+                        toast(context, "아직 애플 로그인은 지원하지 않아요.")
                     },
                 painter = rememberDrawablePainter(presentationDrawableOf("login_apple")),
                 contentDescription = null,
