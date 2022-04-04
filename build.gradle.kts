@@ -9,10 +9,13 @@
 
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.owasp.dependencycheck.gradle.extension.DependencyCheckExtension
+import org.owasp.dependencycheck.reporting.ReportGenerator
 
 plugins {
     id("io.gitlab.arturbosch.detekt") version Versions.BuildUtil.Detekt
     id("org.jlleitschuh.gradle.ktlint") version Versions.BuildUtil.KtlintPlugin
+    id("org.owasp.dependencycheck") version "7.0.4.1" apply false
 }
 
 buildscript {
@@ -74,6 +77,7 @@ allprojects {
     apply {
         plugin("io.gitlab.arturbosch.detekt")
         plugin("org.jlleitschuh.gradle.ktlint")
+        plugin("org.owasp.dependencycheck")
     }
 
     /*configurations.all {
@@ -84,6 +88,10 @@ allprojects {
             }
         }
     }*/
+}
+
+configure<DependencyCheckExtension> {
+    format = ReportGenerator.Format.ALL
 }
 
 subprojects {
