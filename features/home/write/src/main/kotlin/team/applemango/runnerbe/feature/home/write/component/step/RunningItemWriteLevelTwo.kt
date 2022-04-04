@@ -81,7 +81,7 @@ internal fun RunningItemWriteLevelTwo(
     modifier: Modifier = Modifier,
     vm: RunningItemWriteViewModel = activityViewModel(),
 ) {
-    val context = LocalContext.current
+    val context = LocalContext.current.applicationContext
     var ageRange = remember { 30f..40f }
 
     var genderSelectState by remember { mutableStateOf<Gender?>(null) }
