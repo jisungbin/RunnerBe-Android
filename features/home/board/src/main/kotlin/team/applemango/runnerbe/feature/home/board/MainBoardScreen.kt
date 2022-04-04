@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -128,6 +129,7 @@ fun MainBoardScreen(
                 .navigationBarsPadding()
                 .padding(bottom = RunnerbeBottomBarDefaults.height) // without +16: because LazyColumn
                 .background(brush = GradientAsset.Background.Brush)
+                .statusBarsPadding()
                 .padding(top = 16.dp)
                 .padding(horizontal = 16.dp),
             runningItems = (runningItemsState as? RunningItemsState.Loaded)?.items
