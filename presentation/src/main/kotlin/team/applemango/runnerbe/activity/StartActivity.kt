@@ -19,6 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import team.applemango.runnerbe.domain.register.runnerbe.model.UserToken
 import team.applemango.runnerbe.shared.android.constant.DataStoreKey
+import team.applemango.runnerbe.shared.android.constant.IntentKey
 import team.applemango.runnerbe.shared.android.datastore.Me
 import team.applemango.runnerbe.shared.android.extension.basicExceptionHandler
 import team.applemango.runnerbe.shared.android.extension.changeActivityWithAnimation
@@ -26,6 +27,7 @@ import team.applemango.runnerbe.shared.android.extension.dataStore
 import team.applemango.runnerbe.shared.android.extension.launchedWhenCreated
 import team.applemango.runnerbe.shared.android.util.DFMLoginActivityAlias
 import team.applemango.runnerbe.shared.android.util.DFMOnboardActivityAlias
+import team.applemango.runnerbe.shared.android.util.NetworkUtil
 import team.applemango.runnerbe.shared.domain.extension.defaultCatch
 
 @AndroidEntryPoint
@@ -45,6 +47,13 @@ class StartActivity : AppCompatActivity() {
                 LinearLayout.LayoutParams.MATCH_PARENT
             )
         )
+
+        if (!NetworkUtil.isNetworkAvailable(applicationContext)) {
+            changeActivityWithAnimation<ErrorActivity> {
+                putExtra(IntentKey.ErrorType.Key, IntentKey.ErrorType.NoInternet)
+            }
+            return
+        }
 
         launchedWhenCreated {
             val preferences = applicationContext
