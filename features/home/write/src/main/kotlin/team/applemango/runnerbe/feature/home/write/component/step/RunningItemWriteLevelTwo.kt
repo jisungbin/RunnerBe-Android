@@ -11,12 +11,10 @@ package team.applemango.runnerbe.feature.home.write.component.step
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -30,6 +28,7 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -39,21 +38,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapUiSettings
+import com.google.maps.android.compose.MarkerInfoWindow
 import com.google.maps.android.compose.rememberCameraPositionState
 import team.applemango.runnerbe.domain.constant.Gender
 import team.applemango.runnerbe.feature.home.write.R
 import team.applemango.runnerbe.feature.home.write.RunningItemWriteViewModel
 import team.applemango.runnerbe.feature.home.write.constant.PeopleCountErrorType
+import team.applemango.runnerbe.feature.home.write.util.extension.bitmapDescriptorFromVector
 import team.applemango.runnerbe.feature.home.write.util.extension.toAddress
 import team.applemango.runnerbe.feature.home.write.util.extension.toLatLng
 import team.applemango.runnerbe.shared.android.datastore.Me
@@ -61,17 +63,17 @@ import team.applemango.runnerbe.shared.compose.component.BorderOption
 import team.applemango.runnerbe.shared.compose.component.CircleBorderText
 import team.applemango.runnerbe.shared.compose.component.IconText
 import team.applemango.runnerbe.shared.compose.component.LabelCheckbox
+import team.applemango.runnerbe.shared.compose.component.RoundBorderText
 import team.applemango.runnerbe.shared.compose.component.ToggleButton
 import team.applemango.runnerbe.shared.compose.default.RunnerbeCheckBoxDefaults
-import team.applemango.runnerbe.shared.compose.default.RunnerbeRangePickerDefaults
 import team.applemango.runnerbe.shared.compose.default.RunnerbeToggleButtonDefaults
 import team.applemango.runnerbe.shared.compose.extension.activityViewModel
 import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.compose.theme.animatedColorState
+import team.applemango.runnerbe.shared.domain.constant.CenterDot
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
-import team.applemango.runnerbe.xml.rangepicker.RangePicker
 
 private const val DefaultMapCameraZoom = 7f
 
@@ -110,10 +112,11 @@ internal fun RunningItemWriteLevelTwo(
                 .fillMaxWidth()
                 .wrapContentHeight()
         ) {
-            val (map, runningItemType, title, information) = createRefs()
+            val (map, mapCover, runningItemType, title, information) = createRefs()
 
             GoogleMap(
                 modifier = Modifier
+                    .padding(horizontal = 16.dp)
                     .constrainAs(map) {
                         start.linkTo(parent.start)
                         top.linkTo(parent.top)
@@ -121,72 +124,116 @@ internal fun RunningItemWriteLevelTwo(
                     }
                     .clip(RoundedCornerShape(8.dp))
                     .size(
-                        width = 110.dp,
-                        height = 60.dp
+                        width = 150.dp,
+                        height = 100.dp
                     ),
                 cameraPositionState = cameraPositionState,
                 uiSettings = MapUiSettings(
                     indoorLevelPickerEnabled = false,
                     mapToolbarEnabled = false,
                     myLocationButtonEnabled = false,
-                    rotationGesturesEnabled = false,
-                    scrollGesturesEnabled = false,
-                    scrollGesturesEnabledDuringRotateOrZoom = false,
-                    tiltGesturesEnabled = false,
+                    rotationGesturesEnabled = true,
+                    scrollGesturesEnabled = true,
+                    scrollGesturesEnabledDuringRotateOrZoom = true,
+                    tiltGesturesEnabled = true,
                     zoomControlsEnabled = false,
-                    zoomGesturesEnabled = false,
+                    zoomGesturesEnabled = true,
+                ),
+                properties = MapProperties(
+                    maxZoomPreference = 15f,
+                    minZoomPreference = 5f
                 )
             ) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.BottomCenter
-                ) {
-                    Row(
+                MarkerInfoWindow(
+                    position = locate,
+                    icon = context.bitmapDescriptorFromVector(R.drawable.ic_round_map_marker_24)
+                ) { marker ->
+                    Text(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .background(color = ColorAsset.G5_5)
-                            .padding(vertical = 5.dp),
-                        horizontalArrangement = Arrangement.SpaceEvenly,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            modifier = Modifier.size(18.dp),
-                            painter = painterResource(R.drawable.ic_round_place_24),
-                            contentDescription = null,
-                            tint = Color.Unspecified
-                        )
-                        Text(
-                            text = locate.toAddress(context).split(" ").take(2).joinToString(""),
-                            style = Typography.Body12R.copy(color = ColorAsset.G3)
-                        )
-                    }
+                            .padding(start = 150.dp)
+                            .clip(
+                                RoundedCornerShape(
+                                    topStart = 5.dp,
+                                    topEnd = 5.dp,
+                                    bottomEnd = 5.dp
+                                )
+                            )
+                            .background(color = ColorAsset.G6)
+                            .padding(
+                                horizontal = 8.dp,
+                                vertical = 4.dp
+                            ),
+                        text = marker.position.toAddress(context),
+                        style = Typography.Custom.MapMarker
+                    )
                 }
             }
-            Text(
+            Row(
+                modifier = Modifier
+                    .constrainAs(mapCover) {
+                        start.linkTo(map.start, 16.dp)
+                        end.linkTo(map.end, 16.dp)
+                        bottom.linkTo(map.bottom)
+                        width = Dimension.fillToConstraints
+                        height = Dimension.wrapContent
+                    }
+                    .clip(
+                        RoundedCornerShape(
+                            bottomStart = 8.dp,
+                            bottomEnd = 8.dp
+                        )
+                    )
+                    .background(color = ColorAsset.G5_5)
+                    .padding(
+                        vertical = 2.dp,
+                        horizontal = 4.dp
+                    ),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    modifier = Modifier.size(16.dp),
+                    painter = painterResource(R.drawable.ic_round_place_24),
+                    contentDescription = null,
+                    tint = Color.Unspecified
+                )
+                Text(
+                    text = locate.toAddress(context).split(" ").take(2).joinToString(""),
+                    style = Typography.Body12R.copy(color = ColorAsset.G3)
+                )
+            }
+            RoundBorderText(
                 modifier = Modifier
                     .constrainAs(runningItemType) {
-                        start.linkTo(map.end, 18.dp)
+                        start.linkTo(map.end)
                         top.linkTo(map.top)
-                    }
-                    .clip(RoundedCornerShape(8.dp))
-                    .border(width = 1.dp, color = ColorAsset.PrimaryDarker)
-                    .padding(horizontal = 4.dp, vertical = 2.dp),
+                    },
                 text = vm.runningItemType.toString(),
-                style = Typography.Custom.WriteRunningItemType
+                style = Typography.Custom.WriteRunningItemType,
+                innerPadding = PaddingValues(
+                    horizontal = 8.dp,
+                    vertical = 4.dp
+                ),
+                borderOption = BorderOption(color = ColorAsset.PrimaryDarker)
             )
             Text(
-                modifier = Modifier.constrainAs(title) {
-                    start.linkTo(runningItemType.start)
-                    top.linkTo(runningItemType.bottom, 4.dp)
-                },
+                modifier = Modifier
+                    .constrainAs(title) {
+                        start.linkTo(runningItemType.start)
+                        top.linkTo(runningItemType.bottom)
+                        bottom.linkTo(information.top)
+                    },
                 text = vm.title,
                 style = Typography.Body16R.copy(color = ColorAsset.PrimaryDarker)
             )
             Row(
-                modifier = Modifier.constrainAs(information) {
-                    start.linkTo(runningItemType.start)
-                    bottom.linkTo(map.bottom)
-                },
+                modifier = Modifier
+                    .constrainAs(information) {
+                        start.linkTo(runningItemType.start)
+                        end.linkTo(parent.end, 16.dp)
+                        bottom.linkTo(map.bottom)
+                        width = Dimension.fillToConstraints
+                    },
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -195,6 +242,10 @@ internal fun RunningItemWriteLevelTwo(
                     iconSize = 18.dp,
                     text = vm.runningDate.toString(),
                     textStyle = Typography.Body12R.copy(color = ColorAsset.G3)
+                )
+                Text(
+                    text = CenterDot,
+                    style = Typography.Body12R.copy(color = ColorAsset.G3)
                 )
                 IconText(
                     iconRes = R.drawable.ic_round_time_24,
@@ -206,26 +257,29 @@ internal fun RunningItemWriteLevelTwo(
         }
         Divider(
             modifier = Modifier
-                .graphicsLayer(clip = false)
                 .fillMaxWidth()
                 .padding(vertical = 20.dp),
             color = ColorAsset.G6,
             thickness = 10.dp
         )
         Text(
+            modifier = Modifier.padding(horizontal = 16.dp),
             text = stringResource(R.string.runningitemwrite_label_gender),
             style = Typography.Body14R.copy(color = ColorAsset.G3_5)
         )
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 12.dp),
+                .padding(
+                    vertical = 12.dp,
+                    horizontal = 16.dp
+                ),
             horizontalArrangement = Arrangement.spacedBy(
                 space = 16.dp,
                 alignment = Alignment.CenterHorizontally
             )
         ) {
-            items(Gender.values()) { gender ->
+            items(items = Gender.values()) { gender ->
                 ToggleButton(
                     colors = RunnerbeToggleButtonDefaults.colors(),
                     target = gender,
@@ -241,7 +295,9 @@ internal fun RunningItemWriteLevelTwo(
             color = ColorAsset.G6
         )
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -250,7 +306,6 @@ internal fun RunningItemWriteLevelTwo(
                 style = Typography.Body14R.copy(color = ColorAsset.G3_5)
             )
             LabelCheckbox(
-                modifier = Modifier.fillMaxWidth(),
                 label = stringResource(R.string.runningitemwrite_label_all_age_range),
                 labelStyle = Typography.Body12R.copy(color = ColorAsset.G3_5),
                 checkboxState = allAgeCheckState,
@@ -260,7 +315,7 @@ internal fun RunningItemWriteLevelTwo(
                 checkboxColors = RunnerbeCheckBoxDefaults.colors(),
             )
         }
-        RangePicker( // TODO: default colors
+        /*RangePicker( // TODO: default colors
             modifier = Modifier.padding(top = 12.dp),
             enabled = !allAgeCheckState,
             range = 20f..65f,
@@ -271,18 +326,20 @@ internal fun RunningItemWriteLevelTwo(
             onValueChange = { newAgeRange ->
                 ageRange = newAgeRange
             }
-        )
+        )*/
         Divider(
             modifier = Modifier.padding(vertical = 20.dp),
             color = ColorAsset.G6
         )
         Text(
+            modifier = Modifier.padding(horizontal = 16.dp),
             text = stringResource(R.string.runningitemwrite_label_people_count),
             style = Typography.Body14R.copy(color = ColorAsset.G3_5)
         )
         Column(
             modifier = Modifier
                 .padding(top = 12.dp)
+                .padding(horizontal = 16.dp)
                 .fillMaxWidth()
                 .wrapContentHeight(),
             verticalArrangement = Arrangement.Center,
@@ -296,7 +353,7 @@ internal fun RunningItemWriteLevelTwo(
                 CircleBorderText(
                     enabled = peopleCountErrorTypeState != PeopleCountErrorType.Min,
                     text = "-",
-                    style = Typography.Title18R.copy(color = circleBorderTextColorState),
+                    style = Typography.Title20R.copy(color = circleBorderTextColorState),
                     borderOption = BorderOption(color = circleBorderTextColorState),
                     onClick = {
                         peopleCountErrorTypeState = if (peopleCountState > 2) {
@@ -309,12 +366,12 @@ internal fun RunningItemWriteLevelTwo(
                 )
                 Text(
                     text = peopleCountState.toString(),
-                    style = Typography.EngBody16R.copy(color = ColorAsset.Primary)
+                    style = Typography.Title18R.copy(color = ColorAsset.Primary)
                 )
                 CircleBorderText(
                     enabled = peopleCountErrorTypeState != PeopleCountErrorType.Max,
                     text = "+",
-                    style = Typography.Title18R.copy(color = circleBorderTextColorState),
+                    style = Typography.Title20R.copy(color = circleBorderTextColorState),
                     borderOption = BorderOption(color = circleBorderTextColorState),
                     onClick = {
                         peopleCountErrorTypeState = if (peopleCountState < 8) {
@@ -345,7 +402,9 @@ internal fun RunningItemWriteLevelTwo(
             color = ColorAsset.G6
         )
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -365,10 +424,20 @@ internal fun RunningItemWriteLevelTwo(
         }
         TextField(
             modifier = Modifier
-                .padding(top = 12.dp)
+                .padding(
+                    top = 12.dp,
+                    bottom = 16.dp
+                )
+                .padding(horizontal = 16.dp)
                 .fillMaxWidth()
                 .height(160.dp),
             shape = RoundedCornerShape(8.dp),
+            colors = TextFieldDefaults.textFieldColors(
+                cursorColor = ColorAsset.G1,
+                backgroundColor = ColorAsset.G5_5,
+                unfocusedIndicatorColor = Color.Transparent,
+                focusedIndicatorColor = Color.Transparent
+            ),
             value = messageFieldState,
             onValueChange = { message ->
                 if (message.text.length <= 500) {
