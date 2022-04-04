@@ -48,6 +48,7 @@ import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MarkerInfoWindow
 import com.google.maps.android.compose.rememberCameraPositionState
+import com.google.maps.android.compose.rememberMarkerState
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.feature.home.write.R
 import team.applemango.runnerbe.feature.home.write.RunningItemWriteViewModel
@@ -342,7 +343,7 @@ internal fun RunningItemWriteLevelOne(
             )
         ) {
             MarkerInfoWindow(
-                position = myLocate,
+                state = rememberMarkerState(position = myLocate),
                 draggable = true,
                 icon = context.bitmapDescriptorFromVector(R.drawable.ic_round_map_marker_24)
             ) { marker ->

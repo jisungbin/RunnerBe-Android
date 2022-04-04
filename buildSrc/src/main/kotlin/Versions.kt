@@ -78,7 +78,7 @@ object Versions {
         const val Locus = "4.0.1"
         const val GmsMap = "18.0.2"
         const val GmsLocation = "19.0.1"
-        const val GoogleMapCompose = "1.3.1"
+        const val GoogleMapCompose = "2.1.0"
     }
 
     object Jetpack {
