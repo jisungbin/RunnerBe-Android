@@ -40,6 +40,10 @@
             android:theme="@style/Theme.RunnerBe" />
 
         <activity
+            android:name=".activity.ErrorActivity"
+            android:theme="@style/Theme.RunnerBe" />
+
+        <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
             android:theme="@style/Theme.RunnerBe" />
 
