@@ -123,9 +123,7 @@ internal fun RunningItemWrite(
             }
         )
         Crossfade(
-            modifier = Modifier
-                .padding(top = 12.dp)
-                .padding(horizontal = 16.dp),
+            modifier = Modifier.padding(top = 12.dp),
             targetState = writingLevel
         ) { level ->
             when (level) {
@@ -133,6 +131,7 @@ internal fun RunningItemWrite(
                     RunningItemWriteLevelOne(
                         modifier = Modifier
                             .fillMaxSize()
+                            .padding(horizontal = 16.dp)
                         /*.verticalScroll(rememberScrollState())*/, // 지도 세로 스크롤이 안됨
                         runningItemType = selectedRunningItemType,
                         inputStateChanged = { isFilled ->
@@ -142,7 +141,7 @@ internal fun RunningItemWrite(
                 }
                 WritingLevel.Two -> {
                     RunningItemWriteLevelTwo(
-                        modifier = Modifier
+                        modifier = Modifier // 내부에 구분선 있어서 광역 패딩 X
                             .fillMaxSize()
                             .imePadding() // include TextField at bottom
                             .verticalScroll(rememberScrollState())
