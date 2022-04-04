@@ -53,7 +53,6 @@ object Dependencies {
 
     val Compose = listOf(
         "androidx.compose.material:material:${Versions.Compose.Main}",
-        "com.airbnb.android:lottie-compose:${Versions.Compose.Lottie}",
         "androidx.activity:activity-compose:${Versions.Compose.Activity}",
         "com.github.skydoves:landscapist-coil:${Versions.Compose.Landscapist}",
         "com.google.accompanist:accompanist-placeholder:${Versions.Compose.Accompanist}",
