@@ -18,8 +18,10 @@ import io.github.jisungbin.logeukes.LoggerType
 import io.github.jisungbin.logeukes.logeukes
 import team.applemango.runnerbe.shared.domain.extension.toMessage
 
-inline fun <reified T : Activity> Activity.changeActivityWithAnimation() {
-    startActivity(Intent(this, T::class.java))
+inline fun <reified T : Activity> Activity.changeActivityWithAnimation(
+    intentBuilder: Intent.() -> Intent = { this }
+) {
+    startActivity(intentBuilder(Intent(this, T::class.java)))
     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     finish()
 }
