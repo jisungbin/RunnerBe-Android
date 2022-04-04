@@ -48,8 +48,8 @@ import team.applemango.runnerbe.feature.home.detail.DetailViewModel
 import team.applemango.runnerbe.feature.home.detail.R
 import team.applemango.runnerbe.shared.android.extension.finishWithAnimation
 import team.applemango.runnerbe.shared.compose.component.BorderOption
-import team.applemango.runnerbe.shared.compose.component.CircleBorderText
 import team.applemango.runnerbe.shared.compose.component.IconText
+import team.applemango.runnerbe.shared.compose.component.RoundBorderText
 import team.applemango.runnerbe.shared.compose.component.TopBar
 import team.applemango.runnerbe.shared.compose.extension.LocalActivity
 import team.applemango.runnerbe.shared.compose.extension.activityViewModel
@@ -66,7 +66,7 @@ private data class InformationItem(
     val text: String,
 )
 
-// TODO: 신청자 관리 (BottomSheet or LazyColumn 결정 필요)
+// TODO: 신청자 관리
 
 @OptIn(LocalActivityUsageApi::class) // LocalActivity, activityViewModel
 @Composable
@@ -185,7 +185,7 @@ internal fun BoardDetail(
             ) {
                 // TODO: Marker, Circle
             }
-            CircleBorderText(
+            RoundBorderText(
                 modifier = Modifier.padding(
                     top = 24.dp,
                     bottom = 8.dp
