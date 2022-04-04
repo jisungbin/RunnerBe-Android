@@ -13,6 +13,7 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.Icon
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Text
@@ -36,7 +37,7 @@ fun IconText(
     labelStartPadding: Dp = 4.dp,
 ) {
     Row(
-        modifier = modifier,
+        modifier = modifier.wrapContentHeight(),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
