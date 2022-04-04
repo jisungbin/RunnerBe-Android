@@ -10,7 +10,7 @@
 object Versions {
     const val Orbit = "4.3.2"
     const val Ksp = "1.6.10-1.0.4"
-    const val FirebaseBom = "29.2.0"
+    const val FirebaseBom = "29.3.0"
 
     object BuildUtil {
         const val Ruler = "1.0.0"
@@ -37,10 +37,9 @@ object Versions {
     }
 
     object Compose {
-        const val Main = "1.2.0-alpha05"
-        const val Lottie = "5.0.3"
+        const val Main = "1.2.0-alpha06"
         const val Activity = "1.4.0"
-        const val Landscapist = "1.4.9"
+        const val Landscapist = "1.5.0"
         const val ConstraintLayout = "1.0.0"
         const val LifecycleViewModel = "2.4.1"
         const val Accompanist = "0.24.4-alpha"
@@ -51,7 +50,7 @@ object Versions {
         const val Material = "1.6.0-alpha03"
         const val AppCompat = "1.4.1"
         const val PhotoEditor = "2.0.0"
-        const val Splash = "1.0.0-beta01"
+        const val Splash = "1.0.0-beta02"
         const val ConstraintLayout = "2.1.3"
     }
 
@@ -86,12 +85,11 @@ object Versions {
         const val Hilt = "2.41"
         const val Room = "2.4.2"
         const val DataStore = "1.0.0"
-        const val Navigation = "2.4.1"
     }
 
     object Login {
-        const val Kakao = "2.8.6"
-        const val Naver = "5.0.1"
+        const val Kakao = "2.9.0"
+        const val Naver = "5.1.0"
     }
 
     object OssLicense {
