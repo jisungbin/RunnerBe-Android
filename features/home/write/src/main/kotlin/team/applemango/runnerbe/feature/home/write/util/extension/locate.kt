@@ -16,6 +16,7 @@ import team.applemango.runnerbe.domain.runningitem.model.common.Locate
 import java.util.Locale
 
 internal fun Locate.toLatLng() = LatLng(latitude, longitude)
+
 internal fun LatLng.toAddress(context: Context): String {
     val geoCoder = Geocoder(context, Locale.KOREA)
     val addressList = geoCoder.getFromLocation(latitude, longitude, 2)

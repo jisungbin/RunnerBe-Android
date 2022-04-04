@@ -11,6 +11,7 @@ package team.applemango.runnerbe.xml.rangepicker
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.view.ContextThemeWrapper
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
@@ -83,7 +84,7 @@ private fun RangeSlider(
     thumbOption: RangePickerThumb = RangePickerThumb(),
     tickOption: RangePickerTick = RangePickerTick(),
     onValueChange: (range: FloatRange) -> Unit,
-) = RangeSlider(context).apply {
+) = RangeSlider(ContextThemeWrapper(context, R.style.SliderStyle)).apply {
     valueFrom = range.start
     valueTo = range.endInclusive
     values = listOf(value.start, value.endInclusive)

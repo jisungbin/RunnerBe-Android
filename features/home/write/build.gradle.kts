@@ -22,6 +22,8 @@ android {
 }
 
 dependencies {
+    implementation(Dependencies.EachUi.Material)
+    implementation(Dependencies.EachUi.AppCompat)
     Dependencies.GoogleMap.forEach(::implementation)
     implementationProject(ProjectConstants.XmlRangePicker)
     implementationProject(ProjectConstants.XmlSuperWheelPicker)

@@ -7,12 +7,15 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
+@file:Suppress("unused")
+
 package team.applemango.runnerbe.feature.home.write.model
 
 import androidx.annotation.IntRange
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.feature.home.write.constant.TimeType
 import team.applemango.runnerbe.shared.domain.constant.FullDateFormat
+import team.applemango.runnerbe.shared.domain.extension.toCalendar
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -40,8 +43,8 @@ internal class RunningDate(baseDate: Date = Date()) {
          * 출근 전 - 06:00 AM, 퇴근 후 06:00 PM, 휴일 - 12:00 PM
          */
         fun getDefault(runningItemType: RunningItemType): RunningDate {
-            val instance = RunningDate()
-            with(instance) {
+            return RunningDate().apply {
+                setMinute(0)
                 when (runningItemType) {
                     RunningItemType.Before -> {
                         setTimeType(TimeType.AM)
@@ -57,7 +60,6 @@ internal class RunningDate(baseDate: Date = Date()) {
                     }
                 }
             }
-            return instance
         }
     }
 
@@ -80,7 +82,7 @@ internal class RunningDate(baseDate: Date = Date()) {
      * @param timeType AM/PM 값 (캘린더 인자는 AM - 0, PM - 1 사용)
      */
     fun setTimeType(timeType: TimeTypeModel) {
-        calendar.set(Calendar.AM_PM, TimeTypeModel.values().indexOf(timeType))
+        calendar.set(Calendar.AM_PM, timeType.ordinal)
     }
 
     /**
@@ -118,8 +120,10 @@ internal class RunningDate(baseDate: Date = Date()) {
 
     /**
      * 설정된 시(hour) 조회
+     *
+     * @return 캘린더는 0-11 시간대를 사용하므로 +1 해서 리턴
      */
-    fun getHour() = calendar.get(Calendar.HOUR)
+    fun getHour() = calendar.get(Calendar.HOUR) + 1
 
     /**
      * 설정된 분(minute) 조회
@@ -129,15 +133,21 @@ internal class RunningDate(baseDate: Date = Date()) {
     /**
      * Date 객체 변환
      */
-    fun toDate() = calendar.time ?: throw NullPointerException("Can't get time from calendar.")
-
-    /**
-     * Jetpack Compose 용 새로운 인스턴스 생성
-     */
-    fun newInstance() = RunningDate(toDate())
+    fun toDate(increaseHour: Boolean = false): Date {
+        return when (increaseHour) {
+            true -> {
+                val newCalender = calendar.time.toCalendar().apply {
+                    add(Calendar.HOUR, 1)
+                }
+                newCalender.time
+            }
+            else -> calendar.time
+        } ?: throw NullPointerException("Can't get time from calendar.")
+    }
 
     override fun toString(): String {
-        val dateString = SimpleDateFormat(FullDateFormat, Locale.KOREA).format(toDate())
+        val dateString =
+            SimpleDateFormat(FullDateFormat, Locale.KOREA).format(toDate(increaseHour = true))
         dateString ?: throw NullPointerException("Failed date formatting.")
         return dateString
     }

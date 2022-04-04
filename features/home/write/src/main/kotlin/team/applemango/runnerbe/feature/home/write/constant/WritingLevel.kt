@@ -9,7 +9,7 @@
 
 package team.applemango.runnerbe.feature.home.write.constant
 
-internal enum class WritingLevel(val index: Int) {
-    One(0),
-    Two(1)
+internal enum class WritingLevel {
+    One,
+    Two
 }

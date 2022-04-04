@@ -15,7 +15,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -29,7 +28,6 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -45,31 +43,33 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MarkerInfoWindow
 import com.google.maps.android.compose.rememberCameraPositionState
+import com.google.maps.android.compose.rememberMarkerState
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.feature.home.write.R
 import team.applemango.runnerbe.feature.home.write.RunningItemWriteViewModel
 import team.applemango.runnerbe.feature.home.write.component.RunningDatePickerDialog
 import team.applemango.runnerbe.feature.home.write.component.RunningTimePickerDialog
-import team.applemango.runnerbe.feature.home.write.datastore.DataStore
 import team.applemango.runnerbe.feature.home.write.model.RunningDate
 import team.applemango.runnerbe.feature.home.write.model.RunningTime
 import team.applemango.runnerbe.feature.home.write.util.DateCache
+import team.applemango.runnerbe.feature.home.write.util.extension.bitmapDescriptorFromVector
 import team.applemango.runnerbe.feature.home.write.util.extension.toAddress
 import team.applemango.runnerbe.feature.home.write.util.extension.toLatLng
+import team.applemango.runnerbe.shared.android.datastore.Me
 import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.compose.extension.activityViewModel
 import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 
-private const val DefaultMapCameraZoom = 7f
-private val DefaultFieldShape = RoundedCornerShape(6.dp)
+private const val DefaultMapCameraZoom = 10f
+private val DefaultFieldShape = RoundedCornerShape(8.dp)
+private val DefaultFieldHeight = 58.dp
 
 @OptIn(LocalActivityUsageApi::class) // activityViewModel()
 @Composable
@@ -77,21 +77,20 @@ internal fun RunningItemWriteLevelOne(
     modifier: Modifier = Modifier,
     runningItemType: RunningItemType,
     vm: RunningItemWriteViewModel = activityViewModel(),
-    fieldsAllInputStateChange: (state: Boolean) -> Unit,
+    inputStateChanged: (state: Boolean) -> Unit,
 ) {
     val context = LocalContext.current.applicationContext
     val lifecycleOwner = LocalLifecycleOwner.current
 
-    var titleField by remember { mutableStateOf(TextFieldValue()) }
+    val myLocate = remember { Me.locate.value.toLatLng() }
+
+    var titleFieldState by remember { mutableStateOf(TextFieldValue()) }
+    var isRunningDateEdited by remember { mutableStateOf(false) }
     var runningDateState by remember { mutableStateOf(RunningDate.getDefault(runningItemType)) }
     var runningTimeState by remember { mutableStateOf(RunningTime(hour = 0, minute = 20)) }
-    val fieldsFillState = remember { mutableStateListOf(false, false, false) }
-
-    var runningDatePickerDialogVisible by remember { mutableStateOf(false) }
-    var runningTimePickerDialogVisible by remember { mutableStateOf(false) }
-    var titleErrorVisible by remember { mutableStateOf(false) }
-
-    val myLocate = remember { DataStore.lastLocate.toLatLng() }
+    var runningDatePickerDialogVisibleState by remember { mutableStateOf(false) }
+    var runningTimePickerDialogVisibleState by remember { mutableStateOf(false) }
+    var titleErrorVisibleState by remember { mutableStateOf(false) }
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(
             myLocate,
@@ -99,24 +98,17 @@ internal fun RunningItemWriteLevelOne(
         )
     }
 
-    LaunchedEffect(fieldsFillState) {
-        snapshotFlow { fieldsFillState }
-            .collectWithLifecycle(lifecycleOwner) {
-                fieldsAllInputStateChange(fieldsFillState.all { true })
-            }
-    }
-
     RunningDatePickerDialog(
-        visible = runningDatePickerDialogVisible,
+        visible = runningDatePickerDialogVisibleState,
         onDismissRequest = {
-            runningDateState = runningDateState.newInstance()
-            runningDatePickerDialogVisible = false
+            runningDatePickerDialogVisibleState = false
         },
         startDateIndex = DateCache.getCachedIndexFromDay(day = runningDateState.getDay()),
         startTimeType = runningDateState.getTimeType(),
         startHour = runningDateState.getHour(),
         startMinute = runningDateState.getMinute(),
         onRunningDateChange = { field ->
+            isRunningDateEdited = true
             with(runningDateState) {
                 when (field) {
                     is RunningDate.Companion.Field.Date -> {
@@ -137,8 +129,8 @@ internal fun RunningItemWriteLevelOne(
     )
 
     RunningTimePickerDialog(
-        visible = runningTimePickerDialogVisible,
-        onDismissRequest = { runningTimePickerDialogVisible = false },
+        visible = runningTimePickerDialogVisibleState,
+        onDismissRequest = { runningTimePickerDialogVisibleState = false },
         startHour = runningTimeState.hour,
         startMinute = runningTimeState.minute,
         runningTime = runningTimeState,
@@ -147,25 +139,45 @@ internal fun RunningItemWriteLevelOne(
         }
     )
 
+    LaunchedEffect(runningItemType) {
+        snapshotFlow { runningItemType }
+            .collectWithLifecycle(lifecycleOwner = lifecycleOwner) { type ->
+                if (!isRunningDateEdited) {
+                    runningDateState = RunningDate.getDefault(type)
+                }
+            }
+    }
+
     Column(modifier = modifier) {
         Text(
             text = stringResource(R.string.runningitemwrite_label_title),
             style = Typography.Body14R.copy(color = ColorAsset.G3_5)
         )
         TextField(
-            modifier = Modifier.padding(top = 12.dp),
-            value = titleField,
+            modifier = Modifier
+                .padding(top = 12.dp)
+                .fillMaxWidth()
+                .height(DefaultFieldHeight),
+            value = titleFieldState,
             shape = DefaultFieldShape,
-            colors = TextFieldDefaults.textFieldColors(backgroundColor = ColorAsset.G5_5),
+            colors = TextFieldDefaults.textFieldColors(
+                cursorColor = ColorAsset.G1,
+                backgroundColor = ColorAsset.G5_5,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent
+            ),
             onValueChange = { newTitleValue ->
                 if (newTitleValue.text.isNotEmpty()) {
-                    fieldsFillState[0] = true
+                    inputStateChanged(true)
+                } else {
+                    inputStateChanged(false)
                 }
                 if (newTitleValue.text.length <= 30) {
-                    titleField = newTitleValue
-                    titleErrorVisible = false
+                    titleFieldState = newTitleValue
+                    vm.updateTitle(newTitleValue.text)
+                    titleErrorVisibleState = false
                 } else {
-                    titleErrorVisible = true
+                    titleErrorVisibleState = true
                 }
             },
             placeholder = {
@@ -178,7 +190,7 @@ internal fun RunningItemWriteLevelOne(
         )
         AnimatedVisibility(
             modifier = Modifier.padding(top = 8.dp),
-            visible = titleErrorVisible
+            visible = titleErrorVisibleState
         ) {
             Text(
                 text = stringResource(R.string.runningitemwrite_error_max_title_length),
@@ -196,15 +208,17 @@ internal fun RunningItemWriteLevelOne(
         ConstraintLayout(
             modifier = Modifier
                 .padding(top = 12.dp)
-                .fillMaxSize()
+                .fillMaxWidth()
+                .height(DefaultFieldHeight)
                 .clip(DefaultFieldShape)
                 .background(color = ColorAsset.G5_5)
                 .clickable {
-                    runningDatePickerDialogVisible = true
+                    runningDatePickerDialogVisibleState = true
                 }
-                .padding(horizontal = 32.dp)
+                .padding(horizontal = 16.dp)
         ) {
             val (calendarIcon, dateString, arrowIcon) = createRefs()
+
             Icon(
                 modifier = Modifier
                     .size(18.dp)
@@ -230,9 +244,9 @@ internal fun RunningItemWriteLevelOne(
             )
             Icon(
                 modifier = Modifier
-                    .size(18.dp)
+                    .size(16.dp)
                     .constrainAs(arrowIcon) {
-                        start.linkTo(parent.end)
+                        end.linkTo(parent.end)
                         top.linkTo(parent.top)
                         bottom.linkTo(parent.bottom)
                     },
@@ -252,15 +266,17 @@ internal fun RunningItemWriteLevelOne(
         ConstraintLayout(
             modifier = Modifier
                 .padding(top = 12.dp)
-                .fillMaxSize()
+                .fillMaxWidth()
+                .height(DefaultFieldHeight)
                 .clip(DefaultFieldShape)
                 .background(color = ColorAsset.G5_5)
                 .clickable {
-                    runningTimePickerDialogVisible = true
+                    runningTimePickerDialogVisibleState = true
                 }
-                .padding(horizontal = 32.dp)
+                .padding(horizontal = 16.dp)
         ) {
             val (clockIcon, dateString, arrowIcon) = createRefs()
+
             Icon(
                 modifier = Modifier
                     .size(18.dp)
@@ -286,9 +302,9 @@ internal fun RunningItemWriteLevelOne(
             )
             Icon(
                 modifier = Modifier
-                    .size(18.dp)
+                    .size(16.dp)
                     .constrainAs(arrowIcon) {
-                        start.linkTo(parent.end)
+                        end.linkTo(parent.end)
                         top.linkTo(parent.top)
                         bottom.linkTo(parent.bottom)
                     },
@@ -318,7 +334,8 @@ internal fun RunningItemWriteLevelOne(
             modifier = Modifier
                 .padding(top = 12.dp)
                 .fillMaxWidth()
-                .height(220.dp),
+                .height(220.dp)
+                .clip(DefaultFieldShape),
             cameraPositionState = cameraPositionState,
             properties = MapProperties(
                 maxZoomPreference = 15f,
@@ -326,13 +343,13 @@ internal fun RunningItemWriteLevelOne(
             )
         ) {
             MarkerInfoWindow(
-                position = myLocate,
+                state = rememberMarkerState(position = myLocate),
                 draggable = true,
-                icon = BitmapDescriptorFactory.fromResource(R.drawable.ic_round_map_marker_24)
+                icon = context.bitmapDescriptorFromVector(R.drawable.ic_round_map_marker_24)
             ) { marker ->
                 Text(
                     modifier = Modifier
-                        .padding(start = 120.dp)
+                        .padding(start = 150.dp)
                         .clip(
                             RoundedCornerShape(
                                 topStart = 5.dp,
@@ -340,7 +357,11 @@ internal fun RunningItemWriteLevelOne(
                                 bottomEnd = 5.dp
                             )
                         )
-                        .background(color = ColorAsset.G6),
+                        .background(color = ColorAsset.G6)
+                        .padding(
+                            horizontal = 8.dp,
+                            vertical = 4.dp
+                        ),
                     text = marker.position.toAddress(context),
                     style = Typography.Custom.MapMarker
                 )

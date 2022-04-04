@@ -12,8 +12,11 @@ package team.applemango.runnerbe.feature.home.write.component
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -43,6 +46,7 @@ import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.compose.theme.animatedColorState
 import team.applemango.runnerbe.shared.domain.extension.runIf
 
+// TODO: 글쓰기 데이터 저장 및 복원 처리
 @OptIn(LocalActivityUsageApi::class) // activityViewModel()
 @Composable
 internal fun RunningItemWrite(
@@ -50,7 +54,7 @@ internal fun RunningItemWrite(
     vm: RunningItemWriteViewModel = activityViewModel(),
 ) {
     val activity = LocalActivity.current
-    var selectedRunningItemType = remember { RunningItemType.Before }
+    var selectedRunningItemType by remember { mutableStateOf(RunningItemType.Before) }
     val fieldsAllInputState = remember { mutableStateListOf(false, false) }
     var writingLevel by remember { mutableStateOf(WritingLevel.One) }
 
@@ -79,7 +83,7 @@ internal fun RunningItemWrite(
                 Text(
                     modifier = Modifier
                         .padding(16.dp)
-                        .runIf(fieldsAllInputState[writingLevel.index]) {
+                        .runIf(fieldsAllInputState[writingLevel.ordinal]) {
                             clickable {
                                 @Suppress("UNUSED_EXPRESSION") // vm
                                 when (writingLevel) {
@@ -100,7 +104,7 @@ internal fun RunningItemWrite(
                     style = Typography.Body16R.copy(
                         color = animatedColorState(
                             target = true,
-                            selectState = fieldsAllInputState[writingLevel.index],
+                            selectState = fieldsAllInputState[writingLevel.ordinal],
                             defaultColor = ColorAsset.G4,
                             selectedColor = ColorAsset.Primary
                         )
@@ -112,28 +116,35 @@ internal fun RunningItemWrite(
             modifier = Modifier
                 .padding(top = 8.dp)
                 .padding(horizontal = 16.dp),
+            selectedItemState = selectedRunningItemType,
             onTabClick = { type ->
                 selectedRunningItemType = type
+                vm.updateRunningItemType(type)
             }
         )
         Crossfade(
-            modifier = Modifier
-                .padding(top = 12.dp)
-                .padding(horizontal = 16.dp),
+            modifier = Modifier.padding(top = 12.dp),
             targetState = writingLevel
         ) { level ->
             when (level) {
                 WritingLevel.One -> {
                     RunningItemWriteLevelOne(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(horizontal = 16.dp)
+                        /*.verticalScroll(rememberScrollState())*/, // 지도 세로 스크롤이 안됨
                         runningItemType = selectedRunningItemType,
-                        fieldsAllInputStateChange = { state ->
-                            fieldsAllInputState[writingLevel.index] = state
+                        inputStateChanged = { isFilled ->
+                            fieldsAllInputState[writingLevel.ordinal] = isFilled
                         }
                     )
                 }
                 WritingLevel.Two -> {
                     RunningItemWriteLevelTwo(
-                        modifier = Modifier.imePadding() // include TextField at bottom
+                        modifier = Modifier // 내부에 구분선 있어서 광역 패딩 X
+                            .fillMaxSize()
+                            .imePadding() // include TextField at bottom
+                            .verticalScroll(rememberScrollState())
                     )
                 }
             }

@@ -17,8 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.viewinterop.AndroidView
-import team.applemango.runnerbe.shared.domain.unit.Em
-import team.applemango.runnerbe.shared.domain.unit.Px
 import team.applemango.runnerbe.xml.superwheelpicker.OnTextRenderListener
 import team.applemango.runnerbe.xml.superwheelpicker.OnValueChangeListener
 
@@ -33,8 +31,7 @@ data class SuperWheelPickerColors(
 @Immutable
 data class SuperWheelPickerTextStyle(
     val typeface: Typeface? = Typeface.DEFAULT,
-    val textSize: Px = Px(SuperWheelPickerXml.DEFAULT_TEXT_SIZE),
-    val letterSpacing: Em = Em(0f),
+    val textSize: Float = SuperWheelPickerXml.DEFAULT_TEXT_SIZE,
 )
 
 @Composable
@@ -83,8 +80,7 @@ private fun SuperWheelPicker(
     setSelectedTextColor(colors.selectedTextColor.toArgb())
     setUnselectedTextColor(colors.unselectedTextColor.toArgb())
     setTypeface(textStyle.typeface) // nullable
-    setTextSize(textStyle.textSize.value)
-    setTextLetterSpacing(textStyle.letterSpacing.value)
+    setTextSize(textStyle.textSize)
     setWrapSelectorWheel(wrapSelectorWheel)
     setWheelItemCount(wheelItemCount)
     setRange(range)

@@ -98,7 +98,6 @@ internal fun OnboardContent(
             }
         }
     )
-
     // Do NOT remember: if remember, color change not immediately. (maybe state issue)
     val bottomCTAButtonBackgroundColor = when (step) {
         Step.VerifyWithEmail -> Color.Transparent

@@ -9,18 +9,6 @@
 
 package team.applemango.runnerbe.domain.runningitem.model.common
 
-import team.applemango.runnerbe.shared.domain.constant.EmptyString
-
-private const val DefaultAddress = EmptyString
-private const val DefaultLatitude = Double.NaN
-private const val DefaultLongitude = Double.NaN
-
-val DefaultLocate = Locate(
-    address = DefaultAddress,
-    latitude = DefaultLatitude,
-    longitude = DefaultLongitude
-)
-
 /**
  * @property address 주소 (ex_석림1로 20)
  * @property latitude 위도

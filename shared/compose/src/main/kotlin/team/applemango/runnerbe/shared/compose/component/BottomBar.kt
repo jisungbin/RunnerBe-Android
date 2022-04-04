@@ -15,10 +15,6 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -55,10 +51,9 @@ fun <T> BottomBar(
     barHeight: Dp = 60.dp,
     titleTopPadding: Dp = 4.dp,
     items: List<BottomBarItem<T>>,
-    onItemChanged: (item: BottomBarItem<T>) -> Unit
+    selectedItemState: T,
+    onItemSelected: (item: BottomBarItem<T>) -> Unit
 ) {
-    var itemState by remember { mutableStateOf(items.first().id) }
-
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -71,8 +66,7 @@ fun <T> BottomBar(
                 modifier = Modifier
                     .weight(1f)
                     .noRippleClickable {
-                        itemState = item.id
-                        onItemChanged(item)
+                        onItemSelected(item)
                     }
             ) {
                 Spacer(
@@ -89,13 +83,13 @@ fun <T> BottomBar(
                     if (item.activateIcon != null && item.inactivateIcon != null) {
                         Icon(
                             painter = painterResource(
-                                when (itemState == item.id) {
+                                when (selectedItemState == item.id) {
                                     true -> item.activateIcon
                                     else -> item.inactivateIcon
                                 }
                             ),
                             contentDescription = null,
-                            tint = when (itemState == item.id) {
+                            tint = when (selectedItemState == item.id) {
                                 true -> colors.activateIconTint
                                 else -> colors.inactivateIconTint
                             }

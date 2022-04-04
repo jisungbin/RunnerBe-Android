@@ -16,16 +16,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -67,10 +64,12 @@ fun <T> ToggleTabBar(
     height: Dp = DefaultToggleTopBarHeight.dp,
     radius: Dp = DefaultToggleTopBarRadius.dp,
     @Size(min = 1) toggleTopBarItems: List<ToggleTopBarItem<T>>,
+    selectedItemState: T,
     onTabClick: (itemId: T) -> Unit,
 ) {
-    require(toggleTopBarItems.isNotEmpty()) { "topBarItems size must be not zero." }
-    var selectedItemState by remember { mutableStateOf(toggleTopBarItems.first().id) }
+    require(toggleTopBarItems.isNotEmpty()) {
+        "topBarItems size must be not zero."
+    }
 
     @Stable
     @Composable
@@ -90,6 +89,7 @@ fun <T> ToggleTabBar(
         toggleTopBarItems.forEach { item ->
             Box(
                 modifier = Modifier
+                    .padding(2.dp)
                     .weight(1f)
                     .fillMaxSize()
                     .clip(RoundedCornerShape(radius))
@@ -103,7 +103,6 @@ fun <T> ToggleTabBar(
                     )
                     .noRippleClickable {
                         onTabClick(item.id)
-                        selectedItemState = item.id
                     },
                 contentAlignment = Alignment.Center
             ) {
@@ -126,6 +125,7 @@ fun <T> ToggleTabBar(
 @Composable
 fun RunningItemTypeToggleBar(
     modifier: Modifier = Modifier,
+    selectedItemState: RunningItemType,
     onTabClick: (type: RunningItemType) -> Unit,
 ) {
     ToggleTabBar(
@@ -134,6 +134,7 @@ fun RunningItemTypeToggleBar(
         activateTextStyle = Typography.Body14M,
         inactivateTextStyle = Typography.Body14R,
         toggleTopBarItems = RunnerbeToggleTabBarDefaults.items(),
+        selectedItemState = selectedItemState,
         onTabClick = { runningItemType ->
             onTabClick(runningItemType)
         }

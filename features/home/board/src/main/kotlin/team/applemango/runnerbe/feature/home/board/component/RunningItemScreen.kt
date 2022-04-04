@@ -11,7 +11,6 @@ package team.applemango.runnerbe.feature.home.board.component
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -46,6 +45,7 @@ import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 import team.applemango.runnerbe.feature.home.board.R
 import team.applemango.runnerbe.shared.compose.component.RunnerbeCoil
 import team.applemango.runnerbe.shared.compose.default.RunnerbePlaceholderDefaults
+import team.applemango.runnerbe.shared.compose.extension.noRippleClickable
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.domain.extension.format
@@ -156,7 +156,7 @@ internal fun RunningItemScreen(
                             highlightColor = RunnerbePlaceholderDefaults.HighlightColor
                         )
                     )
-                    .clickable {
+                    .noRippleClickable {
                         requestToggleBookmarkState()
                     },
                 painter = painterResource(

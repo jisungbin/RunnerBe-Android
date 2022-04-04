@@ -30,6 +30,7 @@ import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -130,6 +131,7 @@ internal fun OnboardRouter(
         }
     )
 
+    @Stable
     suspend fun confirmFinish() {
         val nowBackPressedTime = System.currentTimeMillis()
         if (nowBackPressedTime - lastBackPressedTime <= 2000) { // 2로 내에 다시 누름

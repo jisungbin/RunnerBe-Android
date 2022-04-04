@@ -43,8 +43,10 @@ import team.applemango.runnerbe.shared.android.constant.DataStoreKey
 import team.applemango.runnerbe.shared.android.extension.dataStore
 import team.applemango.runnerbe.shared.compose.default.RunnerbeSuperWheelPickerDefaults
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
+import team.applemango.runnerbe.shared.compose.theme.FontTypeface
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.domain.extension.defaultCatch
+import team.applemango.runnerbe.xml.superwheelpicker.SuperWheelPicker
 import team.applemango.runnerbe.xml.superwheelpicker.integration.SuperWheelPicker
 import java.util.Calendar
 
@@ -71,8 +73,8 @@ internal fun YearPicker(
             .defaultCatch(action = vm::emitException)
             .flowWithLifecycle(lifecycle = lifecycleOwner.lifecycle)
     }
-    val yearSelectStateWithLifecycle by yearSelectFlowWithLifecycle.collectAsState(nowYear)
 
+    val yearSelectStateWithLifecycle by yearSelectFlowWithLifecycle.collectAsState(nowYear)
     var nowYearState by remember { mutableStateOf(nowYear) }
 
     LaunchedEffect(Unit) {
@@ -87,9 +89,7 @@ internal fun YearPicker(
             yearSelectFlow.emit(restoreYear)
             selectedYearChanged(nowYear - restoreYear > 19)
         } ?: selectedYearChanged(false) // default year: ${nowYear} -> always isAdult: false
-    }
 
-    LaunchedEffect(Unit) {
         yearSelectFlowWithLifecycle
             .debounce(300L)
             .collect { year ->
@@ -113,7 +113,10 @@ internal fun YearPicker(
         SuperWheelPicker(
             modifier = Modifier.height(250.dp),
             colors = RunnerbeSuperWheelPickerDefaults.colors(),
-            textStyle = RunnerbeSuperWheelPickerDefaults.textStyle(),
+            textStyle = RunnerbeSuperWheelPickerDefaults.textStyle().copy(
+                typeface = FontTypeface.Roboto.regular(context),
+                textSize = SuperWheelPicker.DEFAULT_TEXT_SIZE
+            ),
             wheelItemCount = 5,
             range = nowYear - 80..nowYear,
             value = nowYearState,

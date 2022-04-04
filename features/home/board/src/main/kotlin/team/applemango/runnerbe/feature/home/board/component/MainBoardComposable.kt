@@ -9,6 +9,7 @@
 
 package team.applemango.runnerbe.feature.home.board.component
 
+import android.content.Intent
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -52,17 +53,23 @@ import team.applemango.runnerbe.domain.runningitem.common.RunningItemSort
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 import team.applemango.runnerbe.feature.home.board.R
+import team.applemango.runnerbe.feature.home.write.RunningItemWriteActivity
 import team.applemango.runnerbe.shared.compose.component.FadingEdgeLazyColumn
 import team.applemango.runnerbe.shared.compose.component.Gradient
 import team.applemango.runnerbe.shared.compose.component.RunningItemTypeToggleBar
 import team.applemango.runnerbe.shared.compose.default.RunnerbeCheckBoxDefaults
+import team.applemango.runnerbe.shared.compose.extension.LocalActivity
 import team.applemango.runnerbe.shared.compose.extension.noRippleClickable
+import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.compose.theme.animatedColorState
 
-@OptIn(ExperimentalMaterialApi::class) // ModalBottomSheetState
+@OptIn(
+    ExperimentalMaterialApi::class, // ModalBottomSheetState
+    LocalActivityUsageApi::class // LocalActivity
+)
 @Composable
 internal fun MainBoardComposable(
     modifier: Modifier = Modifier,
@@ -73,6 +80,7 @@ internal fun MainBoardComposable(
     bottomSheetState: ModalBottomSheetState,
     updateBottomSheetContent: (content: @Composable () -> Unit) -> Unit,
 ) {
+    val activity = LocalActivity.current
     val coroutineScope = rememberCoroutineScope()
 
     val appNameText = stringResource(R.string.mainboard_title_app_name)
@@ -200,6 +208,7 @@ internal fun MainBoardComposable(
             }
             RunningItemTypeToggleBar(
                 modifier = Modifier.padding(top = 4.dp),
+                selectedItemState = selectedRunningItemTypeState,
                 onTabClick = { runningItemType ->
                     selectedRunningItemTypeState = runningItemType
                 }
@@ -295,7 +304,7 @@ internal fun MainBoardComposable(
                 modifier = Modifier.padding(bottom = 16.dp),
                 backgroundColor = Color.Transparent,
                 onClick = {
-                    // TODO: write running item
+                    activity.startActivity(Intent(activity, RunningItemWriteActivity::class.java))
                 }
             ) {
                 Box(
