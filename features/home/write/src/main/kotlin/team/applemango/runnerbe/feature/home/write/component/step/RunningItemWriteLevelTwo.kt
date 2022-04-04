@@ -25,7 +25,10 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
+import androidx.compose.material.RangeSlider
+import androidx.compose.material.SliderDefaults
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
@@ -42,6 +45,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
@@ -75,29 +79,34 @@ import team.applemango.runnerbe.shared.compose.theme.animatedColorState
 import team.applemango.runnerbe.shared.domain.constant.CenterDot
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
 
-private const val DefaultMapCameraZoom = 7f
+private const val DefaultMapCameraZoom = 12f
 
-@OptIn(LocalActivityUsageApi::class) // activityViewModel()
+@OptIn(LocalActivityUsageApi::class, ExperimentalMaterialApi::class) // activityViewModel()
 @Composable
 internal fun RunningItemWriteLevelTwo(
     modifier: Modifier = Modifier,
     vm: RunningItemWriteViewModel = activityViewModel(),
 ) {
+    val locate = remember { Me.locate.value.toLatLng() }
     val context = LocalContext.current.applicationContext
-    var ageRange = remember { 30f..40f }
 
+    var ageRangeState by remember { mutableStateOf(30f..40f) }
     var genderSelectState by remember { mutableStateOf<Gender?>(null) }
     var allAgeCheckState by remember { mutableStateOf(false) }
     var peopleCountState by remember { mutableStateOf(4) }
     var peopleCountErrorTypeState by remember { mutableStateOf(PeopleCountErrorType.None) }
     var messageFieldState by remember { mutableStateOf(TextFieldValue()) }
-
-    val locate = remember { Me.locate.value.toLatLng() }
-    val circleBorderTextColorState = animatedColorState(
+    val peopleCountMinusColorState = animatedColorState(
         target = peopleCountErrorTypeState,
-        selectState = PeopleCountErrorType.None,
-        defaultColor = ColorAsset.G4_5,
-        selectedColor = ColorAsset.G3_5
+        selectState = PeopleCountErrorType.Min,
+        defaultColor = ColorAsset.G3_5,
+        selectedColor = ColorAsset.G4_5
+    )
+    val peopleCountPlusColorState = animatedColorState(
+        target = peopleCountErrorTypeState,
+        selectState = PeopleCountErrorType.Max,
+        defaultColor = ColorAsset.G3_5,
+        selectedColor = ColorAsset.G4_5
     )
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(
@@ -281,10 +290,11 @@ internal fun RunningItemWriteLevelTwo(
         ) {
             items(items = Gender.values()) { gender ->
                 ToggleButton(
-                    colors = RunnerbeToggleButtonDefaults.colors(),
                     target = gender,
                     selectState = genderSelectState,
-                    targetStringBuilder = { gender.string }
+                    targetStringBuilder = { gender.string },
+                    colors = RunnerbeToggleButtonDefaults.colors(),
+                    textStyle = RunnerbeToggleButtonDefaults.textStyle(),
                 ) {
                     genderSelectState = gender
                 }
@@ -315,18 +325,53 @@ internal fun RunningItemWriteLevelTwo(
                 checkboxColors = RunnerbeCheckBoxDefaults.colors(),
             )
         }
-        /*RangePicker( // TODO: default colors
+        /*RangePicker(
             modifier = Modifier.padding(top = 12.dp),
             enabled = !allAgeCheckState,
             range = 20f..65f,
-            value = ageRange,
+            value = ageRangeState,
             trackOption = RunnerbeRangePickerDefaults.track(),
             thumbOption = RunnerbeRangePickerDefaults.thumb(),
             tickOption = RunnerbeRangePickerDefaults.tick(),
             onValueChange = { newAgeRange ->
-                ageRange = newAgeRange
+                ageRangeState = newAgeRange
             }
         )*/
+        RangeSlider(
+            modifier = Modifier
+                .padding(top = 12.dp)
+                .padding(horizontal = 30.dp)
+                .fillMaxWidth(),
+            enabled = !allAgeCheckState,
+            values = ageRangeState,
+            valueRange = 20f..65f,
+            // steps = 5,
+            onValueChange = { ageRange ->
+                ageRangeState = ageRange
+            },
+            colors = SliderDefaults.colors(
+                thumbColor = ColorAsset.PrimaryDarker,
+                disabledThumbColor = ColorAsset.G4,
+                activeTrackColor = ColorAsset.Primary,
+                inactiveTrackColor = ColorAsset.G5_5,
+                disabledActiveTrackColor = ColorAsset.G4_5,
+                disabledInactiveTrackColor = ColorAsset.G5_5,
+                activeTickColor = Color.Transparent,
+                inactiveTickColor = ColorAsset.G6,
+                disabledActiveTickColor = Color.Transparent,
+                disabledInactiveTickColor = ColorAsset.G6,
+            )
+        )
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 10.dp),
+            text = "${ageRangeState.start.toInt()}세 ~ ${ageRangeState.endInclusive.toInt()}세",
+            style = Typography.Body14R.copy(
+                color = ColorAsset.G3_5,
+                textAlign = TextAlign.Center
+            )
+        )
         Divider(
             modifier = Modifier.padding(vertical = 20.dp),
             color = ColorAsset.G6
@@ -353,8 +398,8 @@ internal fun RunningItemWriteLevelTwo(
                 CircleBorderText(
                     enabled = peopleCountErrorTypeState != PeopleCountErrorType.Min,
                     text = "-",
-                    style = Typography.Title20R.copy(color = circleBorderTextColorState),
-                    borderOption = BorderOption(color = circleBorderTextColorState),
+                    style = Typography.Title20R.copy(color = peopleCountMinusColorState),
+                    borderOption = BorderOption(color = peopleCountMinusColorState),
                     onClick = {
                         peopleCountErrorTypeState = if (peopleCountState > 2) {
                             peopleCountState--
@@ -371,8 +416,8 @@ internal fun RunningItemWriteLevelTwo(
                 CircleBorderText(
                     enabled = peopleCountErrorTypeState != PeopleCountErrorType.Max,
                     text = "+",
-                    style = Typography.Title20R.copy(color = circleBorderTextColorState),
-                    borderOption = BorderOption(color = circleBorderTextColorState),
+                    style = Typography.Title20R.copy(color = peopleCountPlusColorState),
+                    borderOption = BorderOption(color = peopleCountPlusColorState),
                     onClick = {
                         peopleCountErrorTypeState = if (peopleCountState < 8) {
                             peopleCountState++
