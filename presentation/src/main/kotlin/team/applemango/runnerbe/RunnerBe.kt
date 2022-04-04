@@ -10,6 +10,7 @@
 package team.applemango.runnerbe
 
 import android.app.Application
+import android.content.Intent
 import androidx.appcompat.app.AppCompatDelegate
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.ktx.remoteConfig
@@ -18,7 +19,10 @@ import com.kakao.sdk.common.KakaoSdk
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.log.NidLog
 import dagger.hilt.android.HiltAndroidApp
+import io.github.jisungbin.erratum.Erratum
 import io.github.jisungbin.logeukes.Logeukes
+import team.applemango.runnerbe.activity.ErrorActivity
+import team.applemango.runnerbe.shared.android.constant.IntentKey
 
 @HiltAndroidApp
 class RunnerBe : Application() {
@@ -56,21 +60,22 @@ class RunnerBe : Application() {
                 minimumFetchIntervalInSeconds = 60 * 10 // 10분
             }
             Firebase.remoteConfig.setConfigSettingsAsync(configSettings)
+        } else { // release mode
+            Erratum.setup(
+                application = this,
+                registerExceptionActivityIntent = { _, _, lastActivity ->
+                    // Firebase.crashlytics.recordException(throwable)
+                    Intent(
+                        lastActivity,
+                        ErrorActivity::class.java
+                    ).apply {
+                        putExtra(IntentKey.ErrorType.Key, IntentKey.ErrorType.Exception)
+                    }
+                }
+            )
         }
 
-        /*Erratum.setup(
-            application = this,
-            registerExceptionActivityIntent = { thread, throwable, lastActivity ->
-                Firebase.crashlytics.recordException(throwable)
-                logeukes(type = LoggerType.E) { throwable }
-                Intent(
-                    lastActivity,
-                    DefaultErratumExceptionActivity::class.java
-                )
-            }
-        )
-
-        Firebase.remoteConfig
+        /*Firebase.remoteConfig
             .fetchAndActivate()
             .addOnSuccessListener {
                 remoteConfigReady = true
