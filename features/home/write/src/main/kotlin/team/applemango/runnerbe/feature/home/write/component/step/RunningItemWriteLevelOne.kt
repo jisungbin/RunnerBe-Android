@@ -173,6 +173,7 @@ internal fun RunningItemWriteLevelOne(
                 }
                 if (newTitleValue.text.length <= 30) {
                     titleFieldState = newTitleValue
+                    vm.updateTitle(newTitleValue.text)
                     titleErrorVisibleState = false
                 } else {
                     titleErrorVisibleState = true
