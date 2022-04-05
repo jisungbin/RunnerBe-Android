@@ -7,7 +7,7 @@
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
-package team.applemango.runnerbe.feature.home.write.util.extension
+package team.applemango.runnerbe.feature.home.filter.extension
 
 import android.content.Context
 import android.graphics.Bitmap
