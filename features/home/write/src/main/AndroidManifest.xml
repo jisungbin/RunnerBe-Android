@@ -13,7 +13,6 @@
     <application>
         <activity
             android:name=".RunningItemWriteActivity"
-            android:theme="@style/Theme.RunnerBe"
             android:windowSoftInputMode="adjustNothing" />
     </application>
 
