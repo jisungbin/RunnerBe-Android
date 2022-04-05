@@ -45,7 +45,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.maps.android.compose.GoogleMap
-import com.google.maps.android.compose.MapProperties
+import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.MarkerInfoWindow
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
@@ -57,11 +57,11 @@ import team.applemango.runnerbe.feature.home.write.component.RunningTimePickerDi
 import team.applemango.runnerbe.feature.home.write.model.RunningDate
 import team.applemango.runnerbe.feature.home.write.model.RunningTime
 import team.applemango.runnerbe.feature.home.write.util.DateCache
-import team.applemango.runnerbe.feature.home.write.util.extension.bitmapDescriptorFromVector
-import team.applemango.runnerbe.feature.home.write.util.extension.toAddress
-import team.applemango.runnerbe.feature.home.write.util.extension.toLatLng
 import team.applemango.runnerbe.shared.android.datastore.Me
+import team.applemango.runnerbe.shared.android.extension.bitmapDescriptorFromVector
 import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
+import team.applemango.runnerbe.shared.android.extension.toAddress
+import team.applemango.runnerbe.shared.android.extension.toLatLng
 import team.applemango.runnerbe.shared.compose.extension.activityViewModel
 import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
@@ -336,10 +336,17 @@ internal fun RunningItemWriteLevelOne(
                 .height(220.dp)
                 .clip(DefaultFieldShape),
             cameraPositionState = cameraPositionState,
-            properties = MapProperties(
-                maxZoomPreference = 15f,
-                minZoomPreference = 5f
-            )
+            uiSettings = MapUiSettings(
+                indoorLevelPickerEnabled = false,
+                mapToolbarEnabled = false,
+                myLocationButtonEnabled = true,
+                rotationGesturesEnabled = true,
+                scrollGesturesEnabled = true,
+                scrollGesturesEnabledDuringRotateOrZoom = true,
+                tiltGesturesEnabled = true,
+                zoomControlsEnabled = true,
+                zoomGesturesEnabled = true,
+            ),
         ) {
             MarkerInfoWindow(
                 state = rememberMarkerState(position = locate),

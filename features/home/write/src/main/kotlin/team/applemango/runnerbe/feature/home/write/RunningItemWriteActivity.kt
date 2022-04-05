@@ -13,7 +13,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.LocalOverScrollConfiguration
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.runtime.CompositionLocalProvider
@@ -37,10 +39,14 @@ class RunningItemWriteActivity : ComponentActivity() {
 
     private val vm: RunningItemWriteViewModel by viewModels()
 
-    @OptIn(LocalActivityUsageApi::class) // LocalActivity
+    @OptIn(
+        LocalActivityUsageApi::class, // LocalActivity
+        ExperimentalFoundationApi::class // LocalOverScrollConfiguration
+    )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        actionBar?.hide()
         setWindowInsetsUsage()
         vm.exceptionFlow
             .defaultCatch(action = ::basicExceptionHandler)
@@ -52,7 +58,10 @@ class RunningItemWriteActivity : ComponentActivity() {
             )
 
         setContent {
-            CompositionLocalProvider(LocalActivity provides this) {
+            CompositionLocalProvider(
+                LocalActivity provides this,
+                LocalOverScrollConfiguration provides null
+            ) {
                 LaunchedEffect(Unit) {
                     vm.observe(
                         lifecycleOwner = this@RunningItemWriteActivity,
