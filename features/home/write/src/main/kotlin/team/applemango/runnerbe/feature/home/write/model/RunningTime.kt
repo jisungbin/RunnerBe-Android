@@ -19,8 +19,21 @@ val DefaultRunningTime = RunningTime(
 
 data class RunningTime(val hour: Int, val minute: Int) {
     override fun toString() = toString(withWhitespace = true)
+
     fun toString(withWhitespace: Boolean = true) = when (withWhitespace) {
         true -> "$hour 시간 $minute 분"
         else -> "${hour}시간 ${minute}분"
+    }
+
+    // for DataStore save
+    fun toKey() = "$hour:$minute"
+
+    companion object {
+        fun fromKey(key: String) = key.split(":").map(String::toInt).run {
+            RunningTime(
+                hour = first(),
+                minute = last()
+            )
+        }
     }
 }
