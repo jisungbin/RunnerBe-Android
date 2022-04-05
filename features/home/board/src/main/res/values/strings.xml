@@ -17,5 +17,4 @@
     <string name="mainboard_unregisteruser_popup_button_no_now"><![CDATA[<u>지금은 둘러보기만 할게요</u>]]></string>
 
     <string name="mainboard_filter_include_finish">마감 포함</string>
-    <string name="mainboard_sort_nearby">거리순</string>
 </resources>
