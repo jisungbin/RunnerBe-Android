@@ -14,5 +14,5 @@ data class UserToken(
     val jwt: String? = null,
     val uuid: String? = null,
 ) {
-    val isAlreadyRegisterUser = jwt != null
+    val isRegisteredUser = jwt != null
 }
