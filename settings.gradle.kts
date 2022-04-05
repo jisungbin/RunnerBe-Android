@@ -24,6 +24,7 @@ include(
     ":features:home:write",
     ":features:home:board",
     ":features:home:detail",
+    ":features:home:filter",
     ":features:home:notification",
     ":features:register:snslogin",
     ":features:register:onboard"
