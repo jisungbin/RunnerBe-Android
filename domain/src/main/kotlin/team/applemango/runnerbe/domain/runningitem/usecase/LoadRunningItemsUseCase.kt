@@ -38,7 +38,7 @@ class LoadRunningItemsUseCase(private val repo: RunningItemRepository) {
                 else -> "N"
             },
             itemFilter = itemFilter.code,
-            distance = distanceFilter.code,
+            distance = distanceFilter.value,
             gender = genderFilter.code,
             minAge = ageFilter.getCode { min },
             maxAge = ageFilter.getCode { max },
