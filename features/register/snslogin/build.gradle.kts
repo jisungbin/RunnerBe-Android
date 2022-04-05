@@ -23,6 +23,5 @@ android {
 
 dependencies {
     implementationProject(ProjectConstants.Data)
-    implementationProject(ProjectConstants.Presentation)
     installSharedComposeOrbitHiltTest(excludeHilt = true)
 }
