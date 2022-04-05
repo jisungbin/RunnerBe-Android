@@ -27,5 +27,11 @@ data class AgeFilter(val min: Int?, val max: Int?) {
     }
 
     override fun toString() = "$min-$max"
+
     fun getCode(ageBuilder: AgeFilter.() -> Int?) = ageBuilder(this)?.toString() ?: "N"
+
+    fun toFloatRange(
+        defaultMin: Float,
+        defaultMax: Float
+    ) = (min ?: defaultMin).toFloat()..(max ?: defaultMax).toFloat()
 }
