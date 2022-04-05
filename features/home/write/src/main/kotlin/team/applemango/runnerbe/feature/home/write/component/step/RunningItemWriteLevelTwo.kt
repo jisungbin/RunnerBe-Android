@@ -119,7 +119,7 @@ internal fun RunningItemWriteLevelTwo(
                 .fillMaxWidth()
                 .wrapContentHeight()
         ) {
-            val (map, mapCover, title, information) = createRefs()
+            val (map, mapCover, information) = createRefs()
 
             GoogleMap(
                 modifier = Modifier
@@ -209,43 +209,37 @@ internal fun RunningItemWriteLevelTwo(
                     style = Typography.Body12R.copy(color = ColorAsset.G3)
                 )
             }
-            Text(
-                modifier = Modifier
-                    .constrainAs(title) {
-                        start.linkTo(map.end)
-                        top.linkTo(map.top)
-                        end.linkTo(parent.end, 16.dp)
-
-                        width = Dimension.fillToConstraints
-                    },
-                text = vm.title,
-                style = Typography.Body16R.copy(color = ColorAsset.PrimaryDarker)
-            )
             Column(
                 modifier = Modifier
                     .constrainAs(information) {
-                        start.linkTo(title.start)
-                        end.linkTo(title.end)
-                        top.linkTo(title.bottom)
+                        top.linkTo(map.top)
                         bottom.linkTo(map.bottom)
+                        start.linkTo(map.end)
+                        end.linkTo(parent.end, 16.dp)
 
-                        height = Dimension.fillToConstraints
                         width = Dimension.fillToConstraints
+                        height = Dimension.fillToConstraints
                     },
-                verticalArrangement = Arrangement.spacedBy(4.dp)
+                verticalArrangement = Arrangement.SpaceAround
             ) {
-                IconText(
-                    iconRes = R.drawable.ic_round_schedule_24,
-                    iconSize = 18.dp,
-                    text = vm.runningDate.toString(),
-                    textStyle = Typography.Body12R.copy(color = ColorAsset.G3)
+                Text(
+                    text = vm.title,
+                    style = Typography.Title18R.copy(color = ColorAsset.G2_5)
                 )
-                IconText(
-                    iconRes = R.drawable.ic_round_time_24,
-                    iconSize = 18.dp,
-                    text = vm.runningTime.toString(withWhitespace = false),
-                    textStyle = Typography.Body12R.copy(color = ColorAsset.G3)
-                )
+                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    IconText(
+                        iconRes = R.drawable.ic_round_schedule_24,
+                        iconSize = 18.dp,
+                        text = vm.runningDate.toString(),
+                        textStyle = Typography.Body12R.copy(color = ColorAsset.G3)
+                    )
+                    IconText(
+                        iconRes = R.drawable.ic_round_time_24,
+                        iconSize = 18.dp,
+                        text = vm.runningTime.toString(withWhitespace = false),
+                        textStyle = Typography.Body12R.copy(color = ColorAsset.G3)
+                    )
+                }
             }
         }
         Divider(
