@@ -24,6 +24,10 @@ data class AgeFilter(val min: Int?, val max: Int?) {
             min = null,
             max = null
         )
+
+        fun fromString(string: String) = string.split("-").run {
+            AgeFilter(first().toIntOrNull(), last().toIntOrNull())
+        }
     }
 
     override fun toString() = "$min-$max"
