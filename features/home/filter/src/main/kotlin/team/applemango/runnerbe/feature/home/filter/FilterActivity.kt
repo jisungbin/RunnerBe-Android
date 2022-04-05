@@ -22,7 +22,6 @@ import androidx.compose.ui.Modifier
 import team.applemango.runnerbe.feature.home.filter.component.FilterScreen
 import team.applemango.runnerbe.shared.android.extension.setWindowInsetsUsage
 import team.applemango.runnerbe.shared.compose.extension.LocalActivity
-import team.applemango.runnerbe.shared.compose.extension.verticalInsetsPadding
 import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 
