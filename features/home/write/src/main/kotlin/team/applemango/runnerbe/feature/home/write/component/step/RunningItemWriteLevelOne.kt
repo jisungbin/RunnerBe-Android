@@ -81,8 +81,7 @@ internal fun RunningItemWriteLevelOne(
 ) {
     val context = LocalContext.current.applicationContext
     val lifecycleOwner = LocalLifecycleOwner.current
-
-    val myLocate = remember { Me.locate.value.toLatLng() }
+    val locate = remember { Me.locate.value.toLatLng() }
 
     var titleFieldState by remember { mutableStateOf(TextFieldValue()) }
     var isRunningDateEdited by remember { mutableStateOf(false) }
@@ -93,7 +92,7 @@ internal fun RunningItemWriteLevelOne(
     var titleErrorVisibleState by remember { mutableStateOf(false) }
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(
-            myLocate,
+            locate,
             DefaultMapCameraZoom
         )
     }
@@ -343,7 +342,7 @@ internal fun RunningItemWriteLevelOne(
             )
         ) {
             MarkerInfoWindow(
-                state = rememberMarkerState(position = myLocate),
+                state = rememberMarkerState(position = locate),
                 draggable = true,
                 icon = context.bitmapDescriptorFromVector(R.drawable.ic_round_map_marker_24)
             ) { marker ->

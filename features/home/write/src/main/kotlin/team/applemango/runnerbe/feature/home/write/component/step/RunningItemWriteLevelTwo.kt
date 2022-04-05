@@ -280,10 +280,7 @@ internal fun RunningItemWriteLevelTwo(
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(
-                    vertical = 12.dp,
-                    horizontal = 16.dp
-                ),
+                .padding(vertical = 12.dp),
             horizontalArrangement = Arrangement.spacedBy(
                 space = 16.dp,
                 alignment = Alignment.CenterHorizontally
@@ -302,7 +299,10 @@ internal fun RunningItemWriteLevelTwo(
             }
         }
         Divider(
-            modifier = Modifier.padding(vertical = 20.dp),
+            modifier = Modifier.padding(
+                horizontal = 16.dp,
+                vertical = 20.dp
+            ),
             color = ColorAsset.G6
         )
         Row(
@@ -374,7 +374,10 @@ internal fun RunningItemWriteLevelTwo(
             )
         )
         Divider(
-            modifier = Modifier.padding(vertical = 20.dp),
+            modifier = Modifier.padding(
+                horizontal = 16.dp,
+                vertical = 20.dp
+            ),
             color = ColorAsset.G6
         )
         Text(
@@ -444,7 +447,10 @@ internal fun RunningItemWriteLevelTwo(
             }
         }
         Divider(
-            modifier = Modifier.padding(vertical = 20.dp),
+            modifier = Modifier.padding(
+                horizontal = 16.dp,
+                vertical = 20.dp
+            ),
             color = ColorAsset.G6
         )
         Row(
