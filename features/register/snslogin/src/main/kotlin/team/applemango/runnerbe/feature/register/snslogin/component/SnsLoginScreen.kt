@@ -41,7 +41,7 @@ internal fun SnsLoginScreen(
     modifier: Modifier = Modifier,
     vm: SnsLoginViewModel,
 ) {
-    val context = LocalContext.current
+    val context = LocalContext.current.applicationContext
 
     ConstraintLayout(modifier = modifier) {
         val (logo, buttons) = createRefs()
