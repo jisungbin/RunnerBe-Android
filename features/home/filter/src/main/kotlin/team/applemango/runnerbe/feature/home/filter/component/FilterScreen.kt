@@ -16,12 +16,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
@@ -47,7 +47,6 @@ import androidx.compose.ui.unit.dp
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.maps.android.compose.Circle
 import com.google.maps.android.compose.GoogleMap
-import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.rememberCameraPositionState
@@ -58,10 +57,10 @@ import team.applemango.runnerbe.domain.runningitem.filter.AgeFilter
 import team.applemango.runnerbe.domain.runningitem.filter.DistanceFilter
 import team.applemango.runnerbe.domain.runningitem.filter.JobFilter
 import team.applemango.runnerbe.feature.home.filter.R
-import team.applemango.runnerbe.feature.home.filter.extension.bitmapDescriptorFromVector
-import team.applemango.runnerbe.feature.home.filter.extension.toLatLng
 import team.applemango.runnerbe.shared.android.datastore.Me
+import team.applemango.runnerbe.shared.android.extension.bitmapDescriptorFromVector
 import team.applemango.runnerbe.shared.android.extension.finishWithAnimation
+import team.applemango.runnerbe.shared.android.extension.toLatLng
 import team.applemango.runnerbe.shared.compose.component.LabelCheckbox
 import team.applemango.runnerbe.shared.compose.component.ToggleButton
 import team.applemango.runnerbe.shared.compose.component.TopBar
@@ -71,6 +70,7 @@ import team.applemango.runnerbe.shared.compose.extension.LocalActivity
 import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
+import team.applemango.runnerbe.shared.domain.extension.runIfBuilder
 
 // FlowLayout 은 디자인이 안이쁘게 되서 직접 작성 함
 private val jobLists = listOf(
@@ -80,7 +80,7 @@ private val jobLists = listOf(
     listOf(Job.RES, Job.SAF, Job.MED),
     listOf(Job.HUR, Job.ACC, Job.CUS)
 )
-private const val DefaultMapCameraZoom = 10f
+private const val DefaultMapCameraZoom = 18f
 
 @OptIn(
     LocalActivityUsageApi::class, // LocalActivity
@@ -178,194 +178,190 @@ internal fun FilterScreen(
                 )
             }
         )
-        Text(
-            modifier = Modifier
-                .padding(top = 8.dp)
-                .padding(horizontal = 16.dp),
-            text = stringResource(R.string.filter_label_gender),
-            style = Typography.Body14R.copy(color = ColorAsset.G3_5)
-        )
-        LazyRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 12.dp),
-            horizontalArrangement = Arrangement.spacedBy(
-                space = 16.dp,
-                alignment = Alignment.CenterHorizontally
-            )
-        ) {
-            items(items = Gender.values()) { gender ->
-                ToggleButton(
-                    target = gender,
-                    selectState = genderSelectState,
-                    targetStringBuilder = { gender.string },
-                    colors = RunnerbeToggleButtonDefaults.colors(),
-                    textStyle = RunnerbeToggleButtonDefaults.textStyle(),
-                ) {
-                    genderSelectState = gender
-                    Me.genderFilter = gender
-                }
-            }
-        }
-        Divider(
-            modifier = Modifier.padding(
-                horizontal = 16.dp,
-                vertical = 20.dp
-            ),
-            color = ColorAsset.G6
-        )
-        Row(
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = stringResource(R.string.filter_label_age_range),
-                style = Typography.Body14R.copy(color = ColorAsset.G3_5)
-            )
-            LabelCheckbox(
-                label = stringResource(R.string.filter_label_all_age_range),
-                labelStyle = Typography.Body12R.copy(color = ColorAsset.G3_5),
-                checkboxState = allAgeCheckState,
-                checkboxStateChange = { isAllAgeAllow ->
-                    allAgeCheckState = isAllAgeAllow
-                    if (isAllAgeAllow) {
-                        Me.ageFilter = AgeFilter.None
-                    } else {
-                        Me.ageFilter = AgeFilter(
-                            min = ageRangeState.start.toInt(),
-                            max = ageRangeState.endInclusive.toInt()
-                        )
-                    }
-                },
-                checkboxColors = RunnerbeCheckBoxDefaults.colors(),
-            )
-        }
-        RangeSlider(
-            modifier = Modifier
-                .padding(
-                    vertical = 12.dp,
-                    horizontal = 30.dp
-                )
-                .fillMaxWidth(),
-            enabled = !allAgeCheckState,
-            values = ageRangeState,
-            valueRange = 20f..65f,
-            // steps = 5,
-            onValueChange = { ageRange ->
-                ageRangeState = ageRange
-                Me.ageFilter = AgeFilter(
-                    min = ageRange.start.toInt(),
-                    max = ageRange.endInclusive.toInt()
-                )
-            },
-            colors = SliderDefaults.colors(
-                thumbColor = ColorAsset.PrimaryDarker,
-                disabledThumbColor = ColorAsset.G4,
-                activeTrackColor = ColorAsset.Primary,
-                inactiveTrackColor = ColorAsset.G5_5,
-                disabledActiveTrackColor = ColorAsset.G4_5,
-                disabledInactiveTrackColor = ColorAsset.G5_5,
-                activeTickColor = Color.Transparent,
-                inactiveTickColor = ColorAsset.G6,
-                disabledActiveTickColor = Color.Transparent,
-                disabledInactiveTickColor = ColorAsset.G6,
-            )
-        )
-        Text(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 10.dp),
-            text = "${ageRangeState.start.toInt()}세 ~ ${ageRangeState.endInclusive.toInt()}세",
-            style = Typography.Body14R.copy(
-                color = ColorAsset.G3_5,
-                textAlign = TextAlign.Center
-            )
-        )
-        Divider(
-            modifier = Modifier.padding(
-                horizontal = 16.dp,
-                vertical = 20.dp
-            ),
-            color = ColorAsset.G6
-        )
-        Text(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            text = stringResource(R.string.filter_label_job),
-            style = Typography.Body14R.copy(color = ColorAsset.G3_5)
-        )
-        LazyColumn(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(vertical = 12.dp),
-            verticalArrangement = Arrangement.spacedBy(space = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(horizontal = 16.dp)
+                .verticalScroll(rememberScrollState())
+                .navigationBarsPadding()
         ) {
-            items(items = jobLists) { jobList ->
-                LazyRow(horizontalArrangement = Arrangement.spacedBy(space = 12.dp)) {
-                    items(items = jobList) { job ->
-                        ToggleButton(
-                            colors = RunnerbeToggleButtonDefaults.colors(),
-                            target = job,
-                            selectState = jobSelectState,
-                            targetStringBuilder = { job.string }
-                        ) {
-                            if (jobSelectState == job) {
-                                jobSelectState = null
-                                Me.jobFilter = JobFilter.None
-                            } else {
-                                jobSelectState = job
-                                Me.jobFilter = JobFilter.Create(job)
+            Text(
+                modifier = Modifier
+                    .padding(top = 8.dp),
+                text = stringResource(R.string.filter_label_gender),
+                style = Typography.Body14R.copy(color = ColorAsset.G3_5)
+            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 12.dp),
+                horizontalArrangement = Arrangement.spacedBy(
+                    space = 16.dp,
+                    alignment = Alignment.CenterHorizontally
+                )
+            ) {
+                Gender.values().forEach { gender ->
+                    ToggleButton(
+                        target = gender,
+                        selectState = genderSelectState,
+                        targetStringBuilder = { gender.string },
+                        colors = RunnerbeToggleButtonDefaults.colors(),
+                        textStyle = RunnerbeToggleButtonDefaults.textStyle(),
+                    ) {
+                        genderSelectState = gender
+                        Me.genderFilter = gender
+                    }
+                }
+            }
+            Divider(
+                modifier = Modifier.padding(vertical = 20.dp),
+                color = ColorAsset.G6
+            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = stringResource(R.string.filter_label_age_range),
+                    style = Typography.Body14R.copy(color = ColorAsset.G3_5)
+                )
+                LabelCheckbox(
+                    label = stringResource(R.string.filter_label_all_age_range),
+                    labelStyle = Typography.Body12R.copy(color = ColorAsset.G3_5),
+                    checkboxState = allAgeCheckState,
+                    checkboxStateChange = { isAllAgeAllow ->
+                        allAgeCheckState = isAllAgeAllow
+                        if (isAllAgeAllow) {
+                            Me.ageFilter = AgeFilter.None
+                        } else {
+                            Me.ageFilter = AgeFilter(
+                                min = ageRangeState.start.toInt(),
+                                max = ageRangeState.endInclusive.toInt()
+                            )
+                        }
+                    },
+                    checkboxColors = RunnerbeCheckBoxDefaults.colors(),
+                )
+            }
+            RangeSlider(
+                modifier = Modifier
+                    .padding(
+                        vertical = 12.dp,
+                        horizontal = (30 - 16).dp
+                    )
+                    .fillMaxWidth(),
+                enabled = !allAgeCheckState,
+                values = ageRangeState,
+                valueRange = 20f..65f,
+                // steps = 5,
+                onValueChange = { ageRange ->
+                    ageRangeState = ageRange
+                    Me.ageFilter = AgeFilter(
+                        min = ageRange.start.toInt(),
+                        max = ageRange.endInclusive.toInt()
+                    )
+                },
+                colors = SliderDefaults.colors(
+                    thumbColor = ColorAsset.PrimaryDarker,
+                    disabledThumbColor = ColorAsset.G4,
+                    activeTrackColor = ColorAsset.Primary,
+                    inactiveTrackColor = ColorAsset.G5_5,
+                    disabledActiveTrackColor = ColorAsset.G4_5,
+                    disabledInactiveTrackColor = ColorAsset.G5_5,
+                    activeTickColor = Color.Transparent,
+                    inactiveTickColor = ColorAsset.G6,
+                    disabledActiveTickColor = Color.Transparent,
+                    disabledInactiveTickColor = ColorAsset.G6,
+                )
+            )
+            AnimatedVisibility(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 10.dp),
+                visible = !allAgeCheckState
+            ) {
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "${ageRangeState.start.toInt()}세 ~ ${ageRangeState.endInclusive.toInt()}세",
+                    style = Typography.Body14R.copy(
+                        color = ColorAsset.G3_5,
+                        textAlign = TextAlign.Center
+                    )
+                )
+            }
+            Divider(
+                modifier = Modifier.padding(vertical = 20.dp),
+                color = ColorAsset.G6
+            )
+            Text(
+                text = stringResource(R.string.filter_label_job),
+                style = Typography.Body14R.copy(color = ColorAsset.G3_5)
+            )
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(vertical = 12.dp),
+                verticalArrangement = Arrangement.spacedBy(space = 6.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                jobLists.forEach { jobList ->
+                    Row(horizontalArrangement = Arrangement.spacedBy(space = 12.dp)) {
+                        jobList.forEach { job ->
+                            ToggleButton(
+                                colors = RunnerbeToggleButtonDefaults.colors(),
+                                target = job,
+                                selectState = jobSelectState,
+                                targetStringBuilder = { job.string }
+                            ) {
+                                if (jobSelectState == job) {
+                                    jobSelectState = null
+                                    Me.jobFilter = JobFilter.None
+                                } else {
+                                    jobSelectState = job
+                                    Me.jobFilter = JobFilter.Create(job)
+                                }
                             }
                         }
                     }
                 }
             }
-        }
-        Divider(
-            modifier = Modifier.padding(
-                horizontal = 16.dp,
-                vertical = 20.dp
-            ),
-            color = ColorAsset.G6
-        )
-        Row(
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = stringResource(R.string.filter_label_meet_place),
-                style = Typography.Body14R.copy(color = ColorAsset.G3_5)
+            Divider(
+                modifier = Modifier.padding(vertical = 20.dp),
+                color = ColorAsset.G6
             )
-            LabelCheckbox(
-                label = stringResource(R.string.filter_label_all_distance),
-                labelStyle = Typography.Body12R.copy(color = ColorAsset.G3_5),
-                checkboxState = allMeetDistanceCheckState,
-                checkboxStateChange = { isAllDistanceAllow ->
-                    allMeetDistanceCheckState = isAllDistanceAllow
-                    if (isAllDistanceAllow) {
-                        Me.distanceFilter = DistanceFilter.None
-                    } else {
-                        Me.distanceFilter = DistanceFilter.Create(meetDistanceState.toInt())
-                    }
-                },
-                checkboxColors = RunnerbeCheckBoxDefaults.colors(),
-            )
-        }
-        AnimatedVisibility(
-            modifier = Modifier
-                .padding(top = 12.dp)
-                .padding(horizontal = 16.dp),
-            visible = !allMeetDistanceCheckState
-        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = stringResource(R.string.filter_label_meet_place),
+                    style = Typography.Body14R.copy(color = ColorAsset.G3_5)
+                )
+                LabelCheckbox(
+                    label = stringResource(R.string.filter_label_all_distance),
+                    labelStyle = Typography.Body12R.copy(color = ColorAsset.G3_5),
+                    checkboxState = allMeetDistanceCheckState,
+                    checkboxStateChange = { isAllDistanceAllow ->
+                        allMeetDistanceCheckState = isAllDistanceAllow
+                        if (isAllDistanceAllow) {
+                            Me.distanceFilter = DistanceFilter.None
+                        } else {
+                            Me.distanceFilter = DistanceFilter.Create(meetDistanceState.toInt())
+                        }
+                    },
+                    checkboxColors = RunnerbeCheckBoxDefaults.colors(),
+                )
+            }
             Column(
                 modifier = Modifier
+                    .padding(
+                        top = 12.dp,
+                        bottom = 16.dp
+                    )
                     .fillMaxWidth()
                     .wrapContentHeight()
             ) {
@@ -375,19 +371,15 @@ internal fun FilterScreen(
                         .height(220.dp)
                         .clip(RoundedCornerShape(8.dp)),
                     cameraPositionState = cameraPositionState,
-                    properties = MapProperties(
-                        maxZoomPreference = 15f,
-                        minZoomPreference = 5f
-                    ),
                     uiSettings = MapUiSettings(
                         indoorLevelPickerEnabled = false,
                         mapToolbarEnabled = false,
-                        myLocationButtonEnabled = false,
+                        myLocationButtonEnabled = true,
                         rotationGesturesEnabled = true,
                         scrollGesturesEnabled = true,
                         scrollGesturesEnabledDuringRotateOrZoom = true,
                         tiltGesturesEnabled = true,
-                        zoomControlsEnabled = false,
+                        zoomControlsEnabled = true,
                         zoomGesturesEnabled = true,
                     ),
                 ) {
@@ -397,18 +389,20 @@ internal fun FilterScreen(
                     )
                     Circle(
                         center = locate,
-                        fillColor = ColorAsset.Primary.copy(alpha = 55f),
-                        strokeColor = Color.Transparent,
-                        radius = (meetDistanceState / 1000).toDouble() // 단위: meter
+                        fillColor = ColorAsset.Primary.copy(alpha = 0.5f),
+                        strokeColor = ColorAsset.Primary,
+                        visible = !allMeetDistanceCheckState,
+                        radius = meetDistanceState * 1000.0, // 단위: meter
                     )
                 }
                 Slider(
                     modifier = Modifier
                         .padding(top = 10.dp)
                         .fillMaxWidth(),
+                    enabled = !allMeetDistanceCheckState,
                     value = meetDistanceState,
-                    valueRange = 0.5f..3f,
-                    // steps = 5,
+                    valueRange = 0.5f..5f,
+                    steps = 4,
                     onValueChange = { meetDistance ->
                         meetDistanceState = meetDistance
                         Me.distanceFilter = DistanceFilter.Create(meetDistance.toInt())
@@ -426,16 +420,29 @@ internal fun FilterScreen(
                         disabledInactiveTickColor = ColorAsset.G6,
                     )
                 )
-                Text(
+                AnimatedVisibility(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 10.dp),
-                    text = "${meetDistanceState.toInt()}km 까지",
-                    style = Typography.Body14R.copy(
-                        color = ColorAsset.G3_5,
-                        textAlign = TextAlign.Center
+                    visible = !allMeetDistanceCheckState
+                ) {
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = "${
+                        meetDistanceState
+                            .toInt()
+                            .toString()
+                            .runIfBuilder(
+                                condition = { it == "0" },
+                                run = { "0.5" }
+                            )
+                        }km 까지",
+                        style = Typography.Body14R.copy(
+                            color = ColorAsset.G3_5,
+                            textAlign = TextAlign.Center
+                        )
                     )
-                )
+                }
             }
         }
     }

@@ -1,5 +1,3 @@
-package team.applemango.runnerbe.feature.home.filter
-
 /*
  * RunnerBe © 2022 Team AppleMango. all rights reserved.
  * RunnerBe license is under the MIT.
@@ -9,35 +7,46 @@ package team.applemango.runnerbe.feature.home.filter
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
+package team.applemango.runnerbe.feature.home.filter
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.LocalOverScrollConfiguration
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import team.applemango.runnerbe.feature.home.filter.component.FilterScreen
 import team.applemango.runnerbe.shared.android.extension.setWindowInsetsUsage
 import team.applemango.runnerbe.shared.compose.extension.LocalActivity
+import team.applemango.runnerbe.shared.compose.extension.verticalInsetsPadding
 import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 
 class FilterActivity : ComponentActivity() {
 
-    @OptIn(LocalActivityUsageApi::class) // LocalActivity
+    @OptIn(
+        LocalActivityUsageApi::class, // LocalActivity
+        ExperimentalFoundationApi::class // LocalOverScrollConfiguration
+    )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        actionBar?.hide()
         setWindowInsetsUsage()
         setContent {
-            CompositionLocalProvider(LocalActivity provides this) {
+            CompositionLocalProvider(
+                LocalActivity provides this,
+                LocalOverScrollConfiguration provides null
+            ) {
                 FilterScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .background(brush = GradientAsset.Background.Brush)
-                        .verticalScroll(rememberScrollState())
+                        .statusBarsPadding()
                 )
             }
         }
