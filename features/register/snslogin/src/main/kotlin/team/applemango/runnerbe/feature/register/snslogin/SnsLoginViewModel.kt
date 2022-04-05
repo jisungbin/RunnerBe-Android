@@ -42,7 +42,7 @@ internal class SnsLoginViewModel(
             }.onSuccess { token ->
                 loginUseCase(platformType = platformType, accessToken = token)
                     .onSuccess { user ->
-                        if (user.isAlreadyRegisterUser) { // 이미 가입후 회원가입까지 모두 마친 유저
+                        if (user.isRegisteredUser) { // 이미 가입후 회원가입까지 모두 마친 유저
                             postSideEffect(
                                 LoginSideEffect.SaveUserToken(
                                     userId = requireNotNull(user.userId) {
