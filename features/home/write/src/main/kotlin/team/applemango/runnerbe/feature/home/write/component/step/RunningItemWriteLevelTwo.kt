@@ -13,7 +13,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -28,7 +27,6 @@ import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.RangeSlider
-import androidx.compose.material.SliderDefaults
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
@@ -68,16 +66,15 @@ import team.applemango.runnerbe.shared.compose.component.BorderOption
 import team.applemango.runnerbe.shared.compose.component.CircleBorderText
 import team.applemango.runnerbe.shared.compose.component.IconText
 import team.applemango.runnerbe.shared.compose.component.LabelCheckbox
-import team.applemango.runnerbe.shared.compose.component.RoundBorderText
 import team.applemango.runnerbe.shared.compose.component.ToggleButton
 import team.applemango.runnerbe.shared.compose.default.RunnerbeCheckBoxDefaults
+import team.applemango.runnerbe.shared.compose.default.RunnerbeSliderDefaults
 import team.applemango.runnerbe.shared.compose.default.RunnerbeToggleButtonDefaults
 import team.applemango.runnerbe.shared.compose.extension.activityViewModel
 import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.compose.theme.animatedColorState
-import team.applemango.runnerbe.shared.domain.constant.CenterDot
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
 
 private const val DefaultMapCameraZoom = 12f
@@ -122,7 +119,7 @@ internal fun RunningItemWriteLevelTwo(
                 .fillMaxWidth()
                 .wrapContentHeight()
         ) {
-            val (map, mapCover, runningItemType, title, information) = createRefs()
+            val (map, mapCover, title, information) = createRefs()
 
             GoogleMap(
                 modifier = Modifier
@@ -212,50 +209,36 @@ internal fun RunningItemWriteLevelTwo(
                     style = Typography.Body12R.copy(color = ColorAsset.G3)
                 )
             }
-            RoundBorderText(
-                modifier = Modifier
-                    .constrainAs(runningItemType) {
-                        start.linkTo(map.end)
-                        top.linkTo(map.top)
-                    },
-                text = vm.runningItemType.toString(),
-                style = Typography.Custom.WriteRunningItemType,
-                innerPadding = PaddingValues(
-                    horizontal = 8.dp,
-                    vertical = 4.dp
-                ),
-                borderOption = BorderOption(color = ColorAsset.PrimaryDarker)
-            )
             Text(
                 modifier = Modifier
                     .constrainAs(title) {
-                        start.linkTo(runningItemType.start)
-                        top.linkTo(runningItemType.bottom)
-                        bottom.linkTo(information.top)
+                        start.linkTo(map.end)
+                        top.linkTo(map.top)
+                        end.linkTo(parent.end, 16.dp)
+
+                        width = Dimension.fillToConstraints
                     },
                 text = vm.title,
                 style = Typography.Body16R.copy(color = ColorAsset.PrimaryDarker)
             )
-            Row(
+            Column(
                 modifier = Modifier
                     .constrainAs(information) {
-                        start.linkTo(runningItemType.start)
-                        end.linkTo(parent.end, 16.dp)
+                        start.linkTo(title.start)
+                        end.linkTo(title.end)
+                        top.linkTo(title.bottom)
                         bottom.linkTo(map.bottom)
+
+                        height = Dimension.fillToConstraints
                         width = Dimension.fillToConstraints
                     },
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+                verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 IconText(
                     iconRes = R.drawable.ic_round_schedule_24,
                     iconSize = 18.dp,
                     text = vm.runningDate.toString(),
                     textStyle = Typography.Body12R.copy(color = ColorAsset.G3)
-                )
-                Text(
-                    text = CenterDot,
-                    style = Typography.Body12R.copy(color = ColorAsset.G3)
                 )
                 IconText(
                     iconRes = R.drawable.ic_round_time_24,
@@ -320,7 +303,7 @@ internal fun RunningItemWriteLevelTwo(
                 label = stringResource(R.string.runningitemwrite_label_all_age_range),
                 labelStyle = Typography.Body12R.copy(color = ColorAsset.G3_5),
                 checkboxState = allAgeCheckState,
-                checkboxStateChange = { state ->
+                checkboxCheckedChange = { state ->
                     allAgeCheckState = state
                 },
                 checkboxColors = RunnerbeCheckBoxDefaults.colors(),
@@ -350,18 +333,7 @@ internal fun RunningItemWriteLevelTwo(
             onValueChange = { ageRange ->
                 ageRangeState = ageRange
             },
-            colors = SliderDefaults.colors(
-                thumbColor = ColorAsset.PrimaryDarker,
-                disabledThumbColor = ColorAsset.G4,
-                activeTrackColor = ColorAsset.Primary,
-                inactiveTrackColor = ColorAsset.G5_5,
-                disabledActiveTrackColor = ColorAsset.G4_5,
-                disabledInactiveTrackColor = ColorAsset.G5_5,
-                activeTickColor = Color.Transparent,
-                inactiveTickColor = ColorAsset.G6,
-                disabledActiveTickColor = Color.Transparent,
-                disabledInactiveTickColor = ColorAsset.G6,
-            )
+            colors = RunnerbeSliderDefaults.colors(),
         )
         AnimatedVisibility(
             modifier = Modifier
