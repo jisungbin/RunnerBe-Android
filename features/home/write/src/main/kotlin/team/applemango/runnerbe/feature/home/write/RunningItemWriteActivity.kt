@@ -67,56 +67,60 @@ class RunningItemWriteActivity : ComponentActivity() {
             )
 
         setContent {
-            var restoreLastDataState by remember { mutableStateOf(false) }
-            var restoreLastDataDialogVisibleState by remember { mutableStateOf(false) }
-
-            LaunchedEffect(Unit) {
-                val preference = applicationContext
-                    .dataStore
-                    .data
-                    .defaultCatch(action = vm::emitException)
-                    .first()
-
-                if (
-                    listOf(
-                        preference[DataStoreKey.Write.Title],
-                        preference[DataStoreKey.Write.Message],
-                        preference[DataStoreKey.Write.Gender],
-                        preference[DataStoreKey.Write.MaxPeopleCount],
-                        preference[DataStoreKey.Write.AgeFilter],
-                        preference[DataStoreKey.Write.ItemType],
-                        preference[DataStoreKey.Write.RunningDate],
-                        preference[DataStoreKey.Write.RunningTime],
-                        preference[DataStoreKey.Write.Locate]
-                    ).filterNot { it == null }.isNotEmpty()
-                ) {
-                    restoreLastDataDialogVisibleState = true
-                }
-            }
-
-            RunnerbeDialog(
-                visible = restoreLastDataDialogVisibleState,
-                onDismissRequest = { restoreLastDataDialogVisibleState = false },
-                content = stringResource(R.string.runningitemwrite_dialog_can_restore_last_data),
-                positiveButton = {
-                    textBuilder = {
-                        stringResource(R.string.runningitemwrite_dialog_button_yes)
-                    }
-                    onClick = {
-                        restoreLastDataState = true
-                    }
-                },
-                negativeButton = {
-                    textBuilder = {
-                        stringResource(R.string.runningitemwrite_dialog_button_no)
-                    }
-                }
-            )
-
             CompositionLocalProvider(
                 LocalActivity provides this,
                 LocalOverScrollConfiguration provides null
             ) {
+                var restoreLastDataState by remember { mutableStateOf(false) }
+                var restoreLastDataDialogVisibleState by remember { mutableStateOf(false) }
+
+                LaunchedEffect(Unit) {
+                    val preference = applicationContext
+                        .dataStore
+                        .data
+                        .defaultCatch(action = vm::emitException)
+                        .first()
+
+                    if (
+                        listOf(
+                            preference[DataStoreKey.Write.Title],
+                            preference[DataStoreKey.Write.Message],
+                            preference[DataStoreKey.Write.Gender],
+                            preference[DataStoreKey.Write.MaxPeopleCount],
+                            preference[DataStoreKey.Write.AgeFilter],
+                            preference[DataStoreKey.Write.ItemType],
+                            preference[DataStoreKey.Write.RunningDate],
+                            preference[DataStoreKey.Write.RunningTime],
+                            preference[DataStoreKey.Write.Locate]
+                        ).filterNot { it == null }.isNotEmpty()
+                    ) {
+                        restoreLastDataDialogVisibleState = true
+                    }
+                }
+
+                RunnerbeDialog(
+                    visible = restoreLastDataDialogVisibleState,
+                    onDismissRequest = { restoreLastDataDialogVisibleState = false },
+                    content = stringResource(R.string.runningitemwrite_dialog_can_restore_last_data),
+                    positiveButton = {
+                        textBuilder = {
+                            stringResource(R.string.runningitemwrite_dialog_button_yes)
+                        }
+                        onClick = {
+                            restoreLastDataState = true
+                            restoreLastDataDialogVisibleState = false
+                        }
+                    },
+                    negativeButton = {
+                        textBuilder = {
+                            stringResource(R.string.runningitemwrite_dialog_button_no)
+                        }
+                        onClick = {
+                            restoreLastDataDialogVisibleState = false
+                        }
+                    }
+                )
+
                 LaunchedEffect(Unit) {
                     vm.observe(
                         lifecycleOwner = this@RunningItemWriteActivity,
