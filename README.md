@@ -83,7 +83,7 @@
 #### Jetpack
 
 - Hilt
-- Room
+- ~~Room~~
 - Compose
 - DataStore
 
