@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetLayout
@@ -53,8 +54,10 @@ import team.applemango.runnerbe.shared.compose.component.BottomBar
 import team.applemango.runnerbe.shared.compose.component.BottomBarItem
 import team.applemango.runnerbe.shared.compose.default.RunnerbeBottomBarDefaults
 import team.applemango.runnerbe.shared.compose.extension.LocalActivity
+import team.applemango.runnerbe.shared.compose.extension.verticalInsetsPadding
 import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
+import team.applemango.runnerbe.shared.compose.theme.Typography
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -185,10 +188,14 @@ class MainActivity : AppCompatActivity() {
                                     Box(
                                         modifier = Modifier
                                             .fillMaxSize()
-                                            .background(color = Color.Green.copy(alpha = 0.9f)),
+                                            .verticalInsetsPadding()
+                                            .padding(bottom = RunnerbeBottomBarDefaults.height),
                                         contentAlignment = Alignment.Center
                                     ) {
-                                        Text(text = stringResource(R.string.app_name))
+                                        Text(
+                                            text = stringResource(R.string.app_name),
+                                            style = Typography.Header28M.copy(color = ColorAsset.Primary)
+                                        )
                                     }
                                 }
                             }
