@@ -140,6 +140,9 @@ fun MainBoardScreen(
             isEmptyState = runningItemsState == RunningItemsState.Empty,
             bottomSheetState = bottomSheetState,
             updateBottomSheetContent = updateBottomSheetContent,
+            updateNonRegisterUserPopupVisible = { visible ->
+                nonRegisterUserPopupVisible = visible
+            }
         )
 
         AnimatedVisibility(
