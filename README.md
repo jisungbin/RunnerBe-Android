@@ -19,6 +19,7 @@
 
 ---
 
+<!--
 # 🥇 마지막 실력 향상 프로젝트
 
 토스/뱅샐/당근 에 지원(2022년 12월 26일)하기 전에, 마지막으로 진행하는 *엄청난* 실력 향상용 프로젝트 입니다.<br/>(엄청난 실력 향상의 변천사: 중3, 고2, 이
@@ -29,6 +30,7 @@
 - DFM
 - ~~TDD~~
 - Test + [Test Coverage 100% 목표](https://github.com/runner-be/RunnerBe-Android/issues/35)
+-->
 
 # 🐛 아키텍처 이슈
 
@@ -71,7 +73,7 @@
 - ~~TDD~~
 - MVI Pattern
 - Layered Architecture
-- Dynamic Feature Module (:features:register)
+- ~~Dynamic Feature Module (:features:register)!!
 
 #### CI/CD
 
