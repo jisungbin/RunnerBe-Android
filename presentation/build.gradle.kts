@@ -72,7 +72,9 @@ dependencies {
         ProjectConstants.Mail,
         ProjectConstants.SharedAndroid,
         ProjectConstants.MyPage,
-        ProjectConstants.HomeBoard
+        ProjectConstants.HomeBoard,
+        ProjectConstants.RegisterSnsLogin,
+        ProjectConstants.RegisterOnboard
     )
     features.forEach(::implementationProject)
 
