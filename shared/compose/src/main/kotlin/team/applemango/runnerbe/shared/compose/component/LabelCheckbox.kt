@@ -31,7 +31,7 @@ fun LabelCheckbox(
     checkboxStartPadding: Dp = 4.dp,
     checkboxColors: CheckboxColors = CheckboxDefaults.colors(),
     checkboxState: Boolean,
-    checkboxStateChange: ((checked: Boolean) -> Unit)? = null,
+    checkboxCheckedChange: ((checked: Boolean) -> Unit)? = null,
 ) {
     Row(
         modifier = modifier,
@@ -44,7 +44,7 @@ fun LabelCheckbox(
         Checkbox(
             modifier = Modifier.padding(start = checkboxStartPadding),
             checked = checkboxState,
-            onCheckedChange = checkboxStateChange,
+            onCheckedChange = checkboxCheckedChange,
             colors = checkboxColors
         )
     }
