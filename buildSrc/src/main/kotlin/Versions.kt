@@ -39,7 +39,7 @@ object Versions {
     object Compose {
         const val Main = "1.2.0-alpha06"
         const val Activity = "1.4.0"
-        const val Landscapist = "1.5.0"
+        const val Landscapist = "1.5.1"
         const val ConstraintLayout = "1.0.0"
         const val LifecycleViewModel = "2.4.1"
         const val Accompanist = "0.24.4-alpha"
