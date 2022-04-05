@@ -8,11 +8,9 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:dist="http://schemas.android.com/apk/distribution"
-    xmlns:tools="http://schemas.android.com/tools"
     package="team.applemango.runnerbe.feature.register.snslogin">
 
-    <dist:module
+    <!--<dist:module
         dist:instant="false"
         dist:title="@string/dist_dfm_register_snslogin">
         <dist:fusing dist:include="true" />
@@ -20,12 +18,10 @@
             <dist:install-time />
         </dist:delivery>
         <dist:removable value="true" />
-    </dist:module>
+    </dist:module>-->
 
-    <application tools:ignore="MissingApplicationIcon">
-        <activity
-            android:name=".SnsLoginActivity"
-            android:theme="@style/Theme.RunnerBe" />
+    <application>
+        <activity android:name=".SnsLoginActivity" />
 
         <activity-alias
             android:name="team.applemango.runnerbe.shared.android.util.DFMLoginActivityAlias"

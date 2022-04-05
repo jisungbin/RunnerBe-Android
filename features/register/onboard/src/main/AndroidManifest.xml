@@ -8,11 +8,9 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:dist="http://schemas.android.com/apk/distribution"
-    xmlns:tools="http://schemas.android.com/tools"
     package="team.applemango.runnerbe.feature.register.onboard">
 
-    <dist:module
+    <!--<dist:module
         dist:instant="false"
         dist:title="@string/dist_dfm_register_onboard">
         <dist:fusing dist:include="true" />
@@ -20,17 +18,16 @@
             <dist:install-time />
         </dist:delivery>
         <dist:removable value="true" />
-    </dist:module>
+    </dist:module>-->
 
     <!-- https://github.com/applemango-runnerbe/RunnerBe-Android/issues/19 -->
-    <application tools:ignore="MissingApplicationIcon">
+    <application>
         <activity
             android:name=".OnboardActivity"
             android:exported="true"
-            android:launchMode="singleTask"
-            android:theme="@style/Theme.RunnerBe">
+            android:launchMode="singleTask">
 
-            <intent-filter android:autoVerify="true">
+            <!--<intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -45,12 +42,13 @@
                     android:host="runnerbe-auth.shop"
                     android:path="/verify"
                     android:scheme="welcome" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
 
         <activity-alias
             android:name="team.applemango.runnerbe.shared.android.util.DFMOnboardActivityAlias"
             android:targetActivity=".OnboardActivity" />
+
     </application>
 
 </manifest>
