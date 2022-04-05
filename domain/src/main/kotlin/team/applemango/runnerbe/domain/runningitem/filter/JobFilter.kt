@@ -22,4 +22,6 @@ import team.applemango.runnerbe.domain.runningitem.filter.JobFilter.None
 sealed class JobFilter(val code: String) {
     object None : JobFilter("N")
     data class Create(val job: Job) : JobFilter(job.name)
+
+    fun toJob() = Job.values().first { it.name == code }
 }
