@@ -86,6 +86,7 @@ internal fun MainBoardComposable(
     isBookmarkPage: Boolean,
     isEmptyState: Boolean,
     bottomSheetState: ModalBottomSheetState,
+    updateNonRegisterUserPopupVisible: (visible: Boolean) -> Unit,
     updateBottomSheetContent: (content: @Composable () -> Unit) -> Unit,
 ) {
     val activity = LocalActivity.current
@@ -341,7 +342,16 @@ internal fun MainBoardComposable(
                 modifier = Modifier.padding(bottom = 16.dp),
                 backgroundColor = Color.Transparent,
                 onClick = {
-                    activity.startActivity(Intent(activity, RunningItemWriteActivity::class.java))
+                    if (/*Me.token.isRegisteredUser*/ true) {
+                        activity.startActivity(
+                            Intent(
+                                activity,
+                                RunningItemWriteActivity::class.java
+                            )
+                        )
+                    } else {
+                        updateNonRegisterUserPopupVisible(true)
+                    }
                 }
             ) {
                 Box(
