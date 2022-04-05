@@ -54,7 +54,6 @@ import team.applemango.runnerbe.shared.compose.theme.animatedColorState
 import team.applemango.runnerbe.shared.domain.extension.defaultCatch
 import team.applemango.runnerbe.shared.domain.extension.runIf
 
-// TODO: 글쓰기 데이터 저장 및 복원 처리
 @OptIn(LocalActivityUsageApi::class) // activityViewModel()
 @Composable
 internal fun RunningItemWrite(
