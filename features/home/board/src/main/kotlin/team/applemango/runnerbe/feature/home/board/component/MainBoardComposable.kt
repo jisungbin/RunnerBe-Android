@@ -50,6 +50,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
+import team.applemango.runnerbe.domain.constant.Gender
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemSort
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.domain.runningitem.filter.AgeFilter
@@ -118,13 +119,17 @@ internal fun MainBoardComposable(
             runningItems
                 .filter { item ->
                     item.runningType == selectedRunningItemTypeState &&
-                        item.bookmarked == isBookmarkPage &&
-                        item.gender == genderFilterState
+                        item.bookmarked == isBookmarkPage
                 }
                 .sortedBy { item ->
                     when (sortState) {
                         RunningItemSort.Nearby -> item.distance.toLong()
                         RunningItemSort.Newest -> item.createdAt.time
+                    }
+                }
+                .runIf(genderFilterState != Gender.All) {
+                    filter { item ->
+                        item.gender == genderFilterState
                     }
                 }
                 .runIf(ageFilterState != AgeFilter.None) {
