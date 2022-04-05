@@ -92,7 +92,7 @@ internal fun FilterScreen(
     modifier: Modifier = Modifier
 ) {
     val activity = LocalActivity.current
-    val context = LocalContext.current
+    val context = activity.applicationContext
     val locate = remember { Me.locate.value.toLatLng() }
 
     val ageFilterState by Me.ageFilter.collectAsState()

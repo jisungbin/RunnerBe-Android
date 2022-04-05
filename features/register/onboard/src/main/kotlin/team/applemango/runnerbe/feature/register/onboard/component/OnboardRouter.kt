@@ -93,8 +93,8 @@ internal fun OnboardRouter(
     scaffoldState: ScaffoldState,
     vm: OnboardViewModel,
 ) {
-    val context = LocalContext.current.applicationContext
     val activity = LocalActivity.current
+    val context = activity.applicationContext
     val lifecycleOwner = LocalLifecycleOwner.current
     val coroutineScope = rememberCoroutineScope()
 
@@ -370,8 +370,8 @@ private fun UnregisterDialog(
     visible: Boolean,
     onDismissRequest: () -> Unit,
 ) {
-    val context = LocalContext.current.applicationContext
     val activity = LocalActivity.current
+    val context = activity.applicationContext
     val coroutineScope = rememberCoroutineScope()
 
     RunnerbeDialog(
