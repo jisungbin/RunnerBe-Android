@@ -84,8 +84,6 @@
 - Room
 - Compose
 - DataStore
-- Navigation
-- DataBinding
 
 #### Test
 
