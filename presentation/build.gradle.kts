@@ -9,7 +9,10 @@
 
 plugins {
     // id("com.spotify.ruler")
-    installLibraryDfmHiltTest(isPresentation = true)
+    installLibraryDfmHiltTest(
+        isPresentation = true,
+        excludeHilt = true
+    )
     id("com.android.application")
     id("com.google.gms.google-services")
     // id("com.google.firebase.crashlytics")
@@ -59,12 +62,12 @@ android {
         kotlinCompilerExtensionVersion = Versions.Compose.Main
     }
 
-    dynamicFeatures.addAll(
+    /*dynamicFeatures.addAll(
         setOf(
             ProjectConstants.RegisterSnsLogin,
             ProjectConstants.RegisterOnboard
         )
-    )
+    )*/
 }
 
 dependencies {
@@ -91,5 +94,5 @@ dependencies {
     Dependencies.PresentationOnlyKtx.forEach(::implementation)
 
     debugImplementation(Dependencies.Debug.LeakCanary)
-    installSharedComposeOrbitHiltTest()
+    installSharedComposeOrbitHiltTest(excludeHilt = true)
 }

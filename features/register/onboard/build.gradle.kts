@@ -8,7 +8,7 @@
  */
 
 plugins {
-    installLibraryDfmHiltTest(isDFM = true)
+    installLibraryDfmHiltTest(excludeHilt = true)
 }
 
 android {
