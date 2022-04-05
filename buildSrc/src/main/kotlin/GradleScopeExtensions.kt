@@ -16,6 +16,7 @@ fun PluginDependenciesSpec.installLibraryDfmHiltTest(
     isPresentation: Boolean = false,
     isDFM: Boolean = false,
     testNeeded: Boolean = false,
+    excludeHilt: Boolean = false,
 ) {
     if (!isPresentation && !isDFM) {
         id("com.android.library")
@@ -25,7 +26,7 @@ fun PluginDependenciesSpec.installLibraryDfmHiltTest(
     }
     id("kotlin-android")
     id("kotlin-kapt")
-    if (!isDFM) {
+    if (!isDFM && !excludeHilt) {
         id("dagger.hilt.android.plugin")
     }
     if (testNeeded) {
@@ -55,11 +56,11 @@ fun DependencyHandler.installSharedComposeOrbitHiltTest(
         implementationProject(ProjectConstants.SharedCompose)
     }
     if (testNeeded) {
+        add("testImplementation", Dependencies.Orbit.Test)
         add("testImplementation", Dependencies.Test.JunitApi)
         add("testRuntimeOnly", Dependencies.Test.JunitEngine)
         add("testImplementation", Dependencies.Test.Hamcrest)
         add("testImplementation", Dependencies.Test.Coroutine)
-        // add("testDebugImplementation", Dependencies.Orbit.Test) (https://github.com/applemango-runnerbe/RunnerBe-Android/issues/84)
     }
 }
 
