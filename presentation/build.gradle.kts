@@ -9,10 +9,7 @@
 
 plugins {
     // id("com.spotify.ruler")
-    installLibraryDfmHiltTest(
-        isPresentation = true,
-        excludeHilt = true
-    )
+    installLibraryDfmHiltTest(isPresentation = true)
     id("com.android.application")
     id("com.google.gms.google-services")
     // id("com.google.firebase.crashlytics")
@@ -94,5 +91,5 @@ dependencies {
     Dependencies.PresentationOnlyKtx.forEach(::implementation)
 
     debugImplementation(Dependencies.Debug.LeakCanary)
-    installSharedComposeOrbitHiltTest(excludeHilt = true)
+    installSharedComposeOrbitHiltTest()
 }
