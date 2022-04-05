@@ -31,15 +31,18 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
@@ -47,6 +50,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.datastore.preferences.core.edit
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
@@ -54,12 +58,18 @@ import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.MarkerInfoWindow
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.first
 import team.applemango.runnerbe.domain.constant.Gender
+import team.applemango.runnerbe.domain.runningitem.filter.AgeFilter
 import team.applemango.runnerbe.feature.home.write.R
 import team.applemango.runnerbe.feature.home.write.RunningItemWriteViewModel
 import team.applemango.runnerbe.feature.home.write.constant.PeopleCountErrorType
-import team.applemango.runnerbe.shared.android.datastore.Me
+import team.applemango.runnerbe.shared.android.constant.DataStoreKey
 import team.applemango.runnerbe.shared.android.extension.bitmapDescriptorFromVector
+import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
+import team.applemango.runnerbe.shared.android.extension.dataStore
 import team.applemango.runnerbe.shared.android.extension.toAddress
 import team.applemango.runnerbe.shared.android.extension.toLatLng
 import team.applemango.runnerbe.shared.compose.component.BorderOption
@@ -76,20 +86,27 @@ import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.compose.theme.animatedColorState
 import team.applemango.runnerbe.shared.domain.constant.EmptyString
+import team.applemango.runnerbe.shared.domain.extension.defaultCatch
 
 private const val DefaultMapCameraZoom = 12f
 
-@OptIn(LocalActivityUsageApi::class, ExperimentalMaterialApi::class) // activityViewModel()
+@OptIn(
+    LocalActivityUsageApi::class, // activityViewModel()
+    ExperimentalMaterialApi::class, // RangeSlider
+    FlowPreview::class // Flow<T>.debounce
+)
 @Composable
 internal fun RunningItemWriteLevelTwo(
     modifier: Modifier = Modifier,
+    restoreLastData: Boolean,
     vm: RunningItemWriteViewModel = activityViewModel(),
 ) {
-    val locate = remember { Me.locate.value.toLatLng() }
+    val locate = remember { vm.locate.toLatLng() }
     val context = LocalContext.current.applicationContext
+    val lifecycleOwner = LocalLifecycleOwner.current
 
     var ageRangeState by remember { mutableStateOf(30f..40f) }
-    var genderSelectState by remember { mutableStateOf<Gender?>(null) }
+    var genderSelectState by remember { mutableStateOf(Gender.All) }
     var allAgeCheckState by remember { mutableStateOf(false) }
     var peopleCountState by remember { mutableStateOf(4) }
     var peopleCountErrorTypeState by remember { mutableStateOf(PeopleCountErrorType.None) }
@@ -111,6 +128,71 @@ internal fun RunningItemWriteLevelTwo(
             locate,
             DefaultMapCameraZoom
         )
+    }
+
+    LaunchedEffect(Unit) {
+        snapshotFlow { ageRangeState }
+            .defaultCatch(action = vm::emitException)
+            .debounce(300)
+            .collectWithLifecycle(lifecycleOwner = lifecycleOwner) { ageRange ->
+                context.dataStore.edit { preference ->
+                    preference[DataStoreKey.Write.AgeFilter] = ageRange.toString()
+                }
+            }
+
+        snapshotFlow { genderSelectState }
+            .defaultCatch(action = vm::emitException)
+            .debounce(300)
+            .collectWithLifecycle(lifecycleOwner = lifecycleOwner) { gender ->
+                context.dataStore.edit { preference ->
+                    preference[DataStoreKey.Write.Gender] = gender.code
+                }
+            }
+
+        snapshotFlow { peopleCountState }
+            .defaultCatch(action = vm::emitException)
+            .debounce(300)
+            .collectWithLifecycle(lifecycleOwner = lifecycleOwner) { maxPeopleCount ->
+                vm.maxPeopleCount = maxPeopleCount
+                context.dataStore.edit { preference ->
+                    preference[DataStoreKey.Write.MaxPeopleCount] = maxPeopleCount
+                }
+            }
+
+        snapshotFlow { messageFieldState }
+            .defaultCatch(action = vm::emitException)
+            .debounce(300)
+            .collectWithLifecycle(lifecycleOwner = lifecycleOwner) { messageHolder ->
+                context.dataStore.edit { preference ->
+                    preference[DataStoreKey.Write.Message] = messageHolder.text
+                }
+            }
+    }
+
+    LaunchedEffect(restoreLastData) {
+        if (restoreLastData) {
+            val preference = context
+                .dataStore
+                .data
+                .defaultCatch(action = vm::emitException)
+                .first()
+
+            preference[DataStoreKey.Write.AgeFilter]?.let { restoreAgeFilterString ->
+                ageRangeState = AgeFilter.fromString(restoreAgeFilterString).toFloatRange(
+                    defaultMin = 30f,
+                    defaultMax = 40f
+                )
+            }
+            preference[DataStoreKey.Write.Gender]?.let { restoreGenderCode ->
+                genderSelectState = Gender.values().first { it.code == restoreGenderCode }
+            }
+            preference[DataStoreKey.Write.MaxPeopleCount]?.let { restoreMaxPeopleCount ->
+                peopleCountState = restoreMaxPeopleCount
+            }
+            preference[DataStoreKey.Write.Message]?.let { restoreMessage ->
+                messageFieldState = TextFieldValue(restoreMessage)
+            }
+        }
     }
 
     Column(modifier = modifier) {
@@ -272,6 +354,7 @@ internal fun RunningItemWriteLevelTwo(
                     textStyle = RunnerbeToggleButtonDefaults.textStyle(),
                 ) {
                     genderSelectState = gender
+                    vm.gender = gender
                 }
             }
         }
@@ -298,6 +381,7 @@ internal fun RunningItemWriteLevelTwo(
                 labelStyle = Typography.Body12R.copy(color = ColorAsset.G3_5),
                 checkboxState = allAgeCheckState,
                 checkboxCheckedChange = { state ->
+                    vm.ageFilter = AgeFilter.None
                     allAgeCheckState = state
                 },
                 checkboxColors = RunnerbeCheckBoxDefaults.colors(),
@@ -325,6 +409,10 @@ internal fun RunningItemWriteLevelTwo(
             valueRange = 20f..65f,
             // steps = 5,
             onValueChange = { ageRange ->
+                vm.ageFilter = AgeFilter(
+                    min = ageRange.start.toInt(),
+                    max = ageRange.endInclusive.toInt()
+                )
                 ageRangeState = ageRange
             },
             colors = RunnerbeSliderDefaults.colors(),
@@ -465,6 +553,7 @@ internal fun RunningItemWriteLevelTwo(
             onValueChange = { message ->
                 if (message.text.length <= 500) {
                     messageFieldState = message
+                    vm.message = messageFieldState.text
                 }
             },
             placeholder = {

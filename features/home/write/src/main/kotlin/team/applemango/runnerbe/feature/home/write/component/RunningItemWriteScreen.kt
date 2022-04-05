@@ -20,10 +20,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,12 +32,17 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.datastore.preferences.core.edit
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.feature.home.write.R
 import team.applemango.runnerbe.feature.home.write.RunningItemWriteViewModel
 import team.applemango.runnerbe.feature.home.write.component.step.RunningItemWriteLevelOne
 import team.applemango.runnerbe.feature.home.write.component.step.RunningItemWriteLevelTwo
 import team.applemango.runnerbe.feature.home.write.constant.WritingLevel
+import team.applemango.runnerbe.shared.android.constant.DataStoreKey
+import team.applemango.runnerbe.shared.android.extension.dataStore
 import team.applemango.runnerbe.shared.compose.component.RunningItemTypeToggleBar
 import team.applemango.runnerbe.shared.compose.component.TopBar
 import team.applemango.runnerbe.shared.compose.extension.LocalActivity
@@ -45,6 +51,7 @@ import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.compose.theme.animatedColorState
+import team.applemango.runnerbe.shared.domain.extension.defaultCatch
 import team.applemango.runnerbe.shared.domain.extension.runIf
 
 // TODO: 글쓰기 데이터 저장 및 복원 처리
@@ -53,13 +60,32 @@ import team.applemango.runnerbe.shared.domain.extension.runIf
 internal fun RunningItemWrite(
     modifier: Modifier = Modifier,
     vm: RunningItemWriteViewModel = activityViewModel(),
+    restoreLastData: Boolean
 ) {
     val activity = LocalActivity.current
+    val context = activity.applicationContext
     val focusManager = LocalFocusManager.current
+    val coroutineScope = rememberCoroutineScope()
 
     var selectedRunningItemTypeState by remember { mutableStateOf(RunningItemType.Before) }
-    val fieldsAllInputState = remember { mutableStateListOf(false, false) }
+    var fieldsAllInputState by remember { mutableStateOf(false) }
     var writingLevelState by remember { mutableStateOf(WritingLevel.One) }
+
+    LaunchedEffect(restoreLastData) {
+        if (restoreLastData) {
+            val preference = context
+                .dataStore
+                .data
+                .defaultCatch(action = vm::emitException)
+                .first()
+
+            preference[DataStoreKey.Write.ItemType]?.let { itemTypeCode ->
+                selectedRunningItemTypeState = RunningItemType.values().first {
+                    it.code == itemTypeCode
+                }
+            }
+        }
+    }
 
     Column(modifier = modifier) {
         TopBar(
@@ -86,17 +112,15 @@ internal fun RunningItemWrite(
                 Text(
                     modifier = Modifier
                         .padding(16.dp)
-                        .runIf(fieldsAllInputState[writingLevelState.ordinal]) {
+                        .runIf(fieldsAllInputState) {
                             clickable {
                                 focusManager.clearFocus()
-                                @Suppress("UNUSED_EXPRESSION") // vm
                                 when (writingLevelState) {
-                                    WritingLevel.One ->
-                                        writingLevelState =
-                                            WritingLevel.Two // 다음 단계
+                                    WritingLevel.One -> { // 다음 단계
+                                        writingLevelState = WritingLevel.Two
+                                    }
                                     WritingLevel.Two -> { // 등록
-                                        // TODO
-                                        vm
+                                        vm.writeRunningItem()
                                     }
                                 }
                             }
@@ -110,7 +134,7 @@ internal fun RunningItemWrite(
                     style = Typography.Body16R.copy(
                         color = animatedColorState(
                             target = true,
-                            selectState = fieldsAllInputState[writingLevelState.ordinal],
+                            selectState = fieldsAllInputState,
                             defaultColor = ColorAsset.G4,
                             selectedColor = ColorAsset.Primary
                         )
@@ -125,7 +149,12 @@ internal fun RunningItemWrite(
             selectedItemState = selectedRunningItemTypeState,
             onTabClick = { type ->
                 selectedRunningItemTypeState = type
-                vm.updateRunningItemType(type)
+                vm.itemType = type
+                coroutineScope.launch {
+                    context.dataStore.edit { preferences ->
+                        preferences[DataStoreKey.Write.ItemType] = type.code
+                    }
+                }
             }
         )
         Crossfade(
@@ -140,8 +169,9 @@ internal fun RunningItemWrite(
                             .padding(horizontal = 16.dp)
                         /*.verticalScroll(rememberScrollState())*/, // 지도 세로 스크롤이 안됨
                         runningItemType = selectedRunningItemTypeState,
-                        inputStateChanged = { isFilled ->
-                            fieldsAllInputState[writingLevelState.ordinal] = isFilled
+                        restoreLastData = restoreLastData,
+                        inputStateChanged = { isInputted ->
+                            fieldsAllInputState = isInputted
                         }
                     )
                 }
@@ -150,7 +180,8 @@ internal fun RunningItemWrite(
                         modifier = Modifier // 내부에 구분선 있어서 광역 패딩 X
                             .fillMaxSize()
                             .imePadding() // include TextField at bottom
-                            .verticalScroll(rememberScrollState())
+                            .verticalScroll(rememberScrollState()),
+                        restoreLastData = restoreLastData
                     )
                 }
             }

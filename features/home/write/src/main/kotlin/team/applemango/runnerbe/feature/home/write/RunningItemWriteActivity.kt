@@ -20,15 +20,24 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
 import org.orbitmvi.orbit.viewmodel.observe
 import team.applemango.runnerbe.feature.home.write.component.RunningItemWrite
 import team.applemango.runnerbe.feature.home.write.mvi.RunningItemWriteState
+import team.applemango.runnerbe.shared.android.constant.DataStoreKey
 import team.applemango.runnerbe.shared.android.extension.basicExceptionHandler
 import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
+import team.applemango.runnerbe.shared.android.extension.dataStore
 import team.applemango.runnerbe.shared.android.extension.finishWithAnimation
 import team.applemango.runnerbe.shared.android.extension.setWindowInsetsUsage
+import team.applemango.runnerbe.shared.compose.component.RunnerbeDialog
 import team.applemango.runnerbe.shared.compose.extension.LocalActivity
 import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
@@ -58,6 +67,52 @@ class RunningItemWriteActivity : ComponentActivity() {
             )
 
         setContent {
+            var restoreLastDataState by remember { mutableStateOf(false) }
+            var restoreLastDataDialogVisibleState by remember { mutableStateOf(false) }
+
+            LaunchedEffect(Unit) {
+                val preference = applicationContext
+                    .dataStore
+                    .data
+                    .defaultCatch(action = vm::emitException)
+                    .first()
+
+                if (
+                    listOf(
+                        preference[DataStoreKey.Write.Title],
+                        preference[DataStoreKey.Write.Message],
+                        preference[DataStoreKey.Write.Gender],
+                        preference[DataStoreKey.Write.MaxPeopleCount],
+                        preference[DataStoreKey.Write.AgeFilter],
+                        preference[DataStoreKey.Write.ItemType],
+                        preference[DataStoreKey.Write.RunningDate],
+                        preference[DataStoreKey.Write.RunningTime],
+                        preference[DataStoreKey.Write.Locate]
+                    ).filterNot { it == null }.isNotEmpty()
+                ) {
+                    restoreLastDataDialogVisibleState = true
+                }
+            }
+
+            RunnerbeDialog(
+                visible = restoreLastDataDialogVisibleState,
+                onDismissRequest = { restoreLastDataDialogVisibleState = false },
+                content = stringResource(R.string.runningitemwrite_dialog_can_restore_last_data),
+                positiveButton = {
+                    textBuilder = {
+                        stringResource(R.string.runningitemwrite_dialog_button_yes)
+                    }
+                    onClick = {
+                        restoreLastDataState = true
+                    }
+                },
+                negativeButton = {
+                    textBuilder = {
+                        stringResource(R.string.runningitemwrite_dialog_button_no)
+                    }
+                }
+            )
+
             CompositionLocalProvider(
                 LocalActivity provides this,
                 LocalOverScrollConfiguration provides null
@@ -73,7 +128,8 @@ class RunningItemWriteActivity : ComponentActivity() {
                     modifier = Modifier
                         .fillMaxSize()
                         .background(brush = GradientAsset.Background.Brush)
-                        .systemBarsPadding()
+                        .systemBarsPadding(),
+                    restoreLastData = restoreLastDataState
                 )
             }
         }

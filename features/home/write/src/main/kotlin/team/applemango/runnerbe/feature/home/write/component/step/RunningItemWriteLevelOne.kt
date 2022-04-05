@@ -43,13 +43,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.datastore.preferences.core.edit
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.MarkerInfoWindow
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.first
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
+import team.applemango.runnerbe.domain.runningitem.model.common.Locate
 import team.applemango.runnerbe.feature.home.write.R
 import team.applemango.runnerbe.feature.home.write.RunningItemWriteViewModel
 import team.applemango.runnerbe.feature.home.write.component.RunningDatePickerDialog
@@ -57,42 +62,54 @@ import team.applemango.runnerbe.feature.home.write.component.RunningTimePickerDi
 import team.applemango.runnerbe.feature.home.write.model.RunningDate
 import team.applemango.runnerbe.feature.home.write.model.RunningTime
 import team.applemango.runnerbe.feature.home.write.util.DateCache
+import team.applemango.runnerbe.shared.android.constant.DataStoreKey
 import team.applemango.runnerbe.shared.android.datastore.Me
 import team.applemango.runnerbe.shared.android.extension.bitmapDescriptorFromVector
 import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
+import team.applemango.runnerbe.shared.android.extension.dataStore
+import team.applemango.runnerbe.shared.android.extension.latLngFromKey
 import team.applemango.runnerbe.shared.android.extension.toAddress
+import team.applemango.runnerbe.shared.android.extension.toKey
 import team.applemango.runnerbe.shared.android.extension.toLatLng
 import team.applemango.runnerbe.shared.compose.extension.activityViewModel
 import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
+import team.applemango.runnerbe.shared.domain.extension.defaultCatch
+import java.util.Date
 
 private const val DefaultMapCameraZoom = 10f
 private val DefaultFieldShape = RoundedCornerShape(8.dp)
 private val DefaultFieldHeight = 58.dp
 
-@OptIn(LocalActivityUsageApi::class) // activityViewModel()
+@OptIn(
+    LocalActivityUsageApi::class, // activityViewModel()
+    FlowPreview::class // Flow<T>.debounce
+)
 @Composable
 internal fun RunningItemWriteLevelOne(
     modifier: Modifier = Modifier,
     runningItemType: RunningItemType,
+    restoreLastData: Boolean,
     vm: RunningItemWriteViewModel = activityViewModel(),
     inputStateChanged: (state: Boolean) -> Unit,
 ) {
     val context = LocalContext.current.applicationContext
     val lifecycleOwner = LocalLifecycleOwner.current
-    val locate = remember { Me.locate.value.toLatLng() }
 
+    var locateState by remember { mutableStateOf(Me.locate.value.toLatLng()) }
     var titleFieldState by remember { mutableStateOf(TextFieldValue()) }
     var isRunningDateEdited by remember { mutableStateOf(false) }
     var runningDateState by remember { mutableStateOf(RunningDate.getDefault(runningItemType)) }
+    var runningDateStateForSaving by remember { mutableStateOf(RunningDate()) }
     var runningTimeState by remember { mutableStateOf(RunningTime(hour = 0, minute = 20)) }
     var runningDatePickerDialogVisibleState by remember { mutableStateOf(false) }
     var runningTimePickerDialogVisibleState by remember { mutableStateOf(false) }
     var titleErrorVisibleState by remember { mutableStateOf(false) }
+    val locateMarkerState = rememberMarkerState(position = locateState)
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(
-            locate,
+            locateState,
             DefaultMapCameraZoom
         )
     }
@@ -108,7 +125,7 @@ internal fun RunningItemWriteLevelOne(
         startMinute = runningDateState.getMinute(),
         onRunningDateChange = { field ->
             isRunningDateEdited = true
-            with(runningDateState) {
+            runningDateStateForSaving = with(runningDateState) {
                 when (field) {
                     is RunningDate.Companion.Field.Date -> {
                         setDate(field.value)
@@ -123,7 +140,9 @@ internal fun RunningItemWriteLevelOne(
                         setMinute(field.value)
                     }
                 }
+                this
             }
+            vm.runningDate = runningDateState
         }
     )
 
@@ -135,16 +154,84 @@ internal fun RunningItemWriteLevelOne(
         runningTime = runningTimeState,
         onRunningTimeChange = { runningTime ->
             runningTimeState = runningTime
+            vm.runningTime = runningTimeState
         }
     )
 
+    LaunchedEffect(Unit) {
+        snapshotFlow { titleFieldState }
+            .defaultCatch(action = vm::emitException)
+            .debounce(300)
+            .collectWithLifecycle(lifecycleOwner = lifecycleOwner) { title ->
+                context.dataStore.edit { preference ->
+                    preference[DataStoreKey.Write.Title] = title.text
+                }
+            }
+
+        snapshotFlow { runningDateStateForSaving }
+            .defaultCatch(action = vm::emitException)
+            .debounce(300)
+            .collectWithLifecycle(lifecycleOwner = lifecycleOwner) { runningDate ->
+                context.dataStore.edit { preference ->
+                    preference[DataStoreKey.Write.RunningDate] = runningDate.toDate().time
+                }
+            }
+
+        snapshotFlow { runningTimeState }
+            .defaultCatch(action = vm::emitException)
+            .debounce(300)
+            .collectWithLifecycle(lifecycleOwner = lifecycleOwner) { runningTime ->
+                context.dataStore.edit { preference ->
+                    preference[DataStoreKey.Write.RunningTime] = runningTime.toKey()
+                }
+            }
+
+        snapshotFlow { locateMarkerState.position }
+            .defaultCatch(action = vm::emitException)
+            .debounce(300)
+            .collectWithLifecycle(lifecycleOwner = lifecycleOwner) { locate ->
+                context.dataStore.edit { preference ->
+                    preference[DataStoreKey.Write.RunningTime] = locate.toKey()
+                }
+                vm.locate = Locate(
+                    address = locate.toAddress(context),
+                    latitude = locate.latitude,
+                    longitude = locate.longitude
+                )
+            }
+    }
+
     LaunchedEffect(runningItemType) {
         snapshotFlow { runningItemType }
+            .defaultCatch(action = vm::emitException)
             .collectWithLifecycle(lifecycleOwner = lifecycleOwner) { type ->
                 if (!isRunningDateEdited) {
                     runningDateState = RunningDate.getDefault(type)
                 }
             }
+    }
+
+    LaunchedEffect(restoreLastData) {
+        if (restoreLastData) {
+            val preference = context
+                .dataStore
+                .data
+                .defaultCatch(action = vm::emitException)
+                .first()
+
+            preference[DataStoreKey.Write.Title]?.let { restoreTitle ->
+                titleFieldState = TextFieldValue(restoreTitle)
+            }
+            preference[DataStoreKey.Write.RunningDate]?.let { restoreRunningDateTime ->
+                runningDateState = RunningDate(Date().apply { time = restoreRunningDateTime })
+            }
+            preference[DataStoreKey.Write.RunningTime]?.let { restoreRunningTimeKey ->
+                runningTimeState = RunningTime.fromKey(restoreRunningTimeKey)
+            }
+            preference[DataStoreKey.Write.Locate]?.let { restoreLocateKey ->
+                locateState = latLngFromKey(restoreLocateKey)
+            }
+        }
     }
 
     Column(modifier = modifier) {
@@ -173,7 +260,7 @@ internal fun RunningItemWriteLevelOne(
                 }
                 if (newTitleValue.text.length <= 30) {
                     titleFieldState = newTitleValue
-                    vm.updateTitle(newTitleValue.text)
+                    vm.title = newTitleValue.text
                     titleErrorVisibleState = false
                 } else {
                     titleErrorVisibleState = true
@@ -349,7 +436,7 @@ internal fun RunningItemWriteLevelOne(
             ),
         ) {
             MarkerInfoWindow(
-                state = rememberMarkerState(position = locate),
+                state = locateMarkerState,
                 draggable = true,
                 icon = context.bitmapDescriptorFromVector(R.drawable.ic_round_map_marker_24)
             ) { marker ->
