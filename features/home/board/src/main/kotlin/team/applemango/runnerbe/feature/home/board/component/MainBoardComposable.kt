@@ -36,6 +36,7 @@ import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -51,10 +52,14 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemSort
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
+import team.applemango.runnerbe.domain.runningitem.filter.AgeFilter
+import team.applemango.runnerbe.domain.runningitem.filter.DistanceFilter
+import team.applemango.runnerbe.domain.runningitem.filter.JobFilter
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 import team.applemango.runnerbe.feature.home.board.R
 import team.applemango.runnerbe.feature.home.filter.FilterActivity
 import team.applemango.runnerbe.feature.home.write.RunningItemWriteActivity
+import team.applemango.runnerbe.shared.android.datastore.Me
 import team.applemango.runnerbe.shared.compose.component.FadingEdgeLazyColumn
 import team.applemango.runnerbe.shared.compose.component.Gradient
 import team.applemango.runnerbe.shared.compose.component.RunningItemTypeToggleBar
@@ -66,6 +71,7 @@ import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.compose.theme.animatedColorState
+import team.applemango.runnerbe.shared.domain.extension.runIf
 
 @OptIn(
     ExperimentalMaterialApi::class, // ModalBottomSheetState
@@ -100,22 +106,47 @@ internal fun MainBoardComposable(
     }
 
     var sortState by remember { mutableStateOf(RunningItemSort.Nearby) }
+    val genderFilterState by Me.genderFilter.collectAsState()
+    val ageFilterState by Me.ageFilter.collectAsState()
+    val jobFilterState by Me.jobFilter.collectAsState()
+    val distanceFilterState by Me.distanceFilter.collectAsState()
+
     var includeFinishState by remember { mutableStateOf(false) }
     var selectedRunningItemTypeState by remember { mutableStateOf(RunningItemType.Before) }
     val runningItemsState by remember(runningItems) {
         derivedStateOf {
-            runningItems.apply {
-                filter { item ->
+            runningItems
+                .filter { item ->
                     item.runningType == selectedRunningItemTypeState &&
-                        item.bookmarked == isBookmarkPage
+                        item.bookmarked == isBookmarkPage &&
+                        item.gender == genderFilterState
                 }
-                sortedBy { item ->
+                .sortedBy { item ->
                     when (sortState) {
                         RunningItemSort.Nearby -> item.distance.toLong()
                         RunningItemSort.Newest -> item.createdAt.time
                     }
                 }
-            }
+                .runIf(ageFilterState != AgeFilter.None) {
+                    filter { item ->
+                        item.ageFilter.min?.let { minAge ->
+                            minAge >= (ageFilterState.min ?: minAge)
+                        } ?: true &&
+                            item.ageFilter.max?.let { maxAge ->
+                                maxAge <= (ageFilterState.max ?: maxAge)
+                            } ?: true
+                    }
+                }
+                .runIf(jobFilterState != JobFilter.None) {
+                    filter { item ->
+                        item.jobs.contains(jobFilterState.toJob())
+                    }
+                }
+                .runIf(distanceFilterState != DistanceFilter.None) {
+                    filter { item ->
+                        item.distance <= distanceFilterState.value.toFloat()
+                    }
+                }
         }
     }
 
@@ -245,7 +276,7 @@ internal fun MainBoardComposable(
                                 bottomSheetState.show()
                             }
                         },
-                        text = stringResource(R.string.mainboard_sort_nearby)
+                        text = sortState.string
                     ) {
                         Icon(
                             modifier = Modifier.padding(start = 2.dp),
