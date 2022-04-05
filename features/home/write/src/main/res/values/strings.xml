@@ -10,6 +10,10 @@
 <resources>
     <string name="runningitemwrite_title">게시글 작성</string>
 
+    <string name="runningitemwrite_dialog_can_restore_last_data">작성 중이던 글이 있네요!\n불러올까요?</string>
+    <string name="runningitemwrite_dialog_button_yes">네</string>
+    <string name="runningitemwrite_dialog_button_no">아니오</string>
+
     <string name="runningitemwrite_button_next">다음</string>
     <string name="runningitemwrite_button_publish">등록</string>
 
