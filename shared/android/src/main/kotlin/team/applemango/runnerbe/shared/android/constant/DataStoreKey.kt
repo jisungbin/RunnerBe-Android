@@ -11,6 +11,7 @@ package team.applemango.runnerbe.shared.android.constant
 
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import team.applemango.runnerbe.shared.android.constant.DataStoreKey.Login.Jwt
 import team.applemango.runnerbe.shared.android.constant.DataStoreKey.Login.RegisterDone
@@ -22,6 +23,15 @@ import team.applemango.runnerbe.shared.android.constant.DataStoreKey.Onboard.Job
 import team.applemango.runnerbe.shared.android.constant.DataStoreKey.Onboard.TermsAllCheck
 import team.applemango.runnerbe.shared.android.constant.DataStoreKey.Onboard.Unregister
 import team.applemango.runnerbe.shared.android.constant.DataStoreKey.Onboard.Year
+import team.applemango.runnerbe.shared.android.constant.DataStoreKey.Write.AgeFilter
+import team.applemango.runnerbe.shared.android.constant.DataStoreKey.Write.Gender
+import team.applemango.runnerbe.shared.android.constant.DataStoreKey.Write.ItemType
+import team.applemango.runnerbe.shared.android.constant.DataStoreKey.Write.Locate
+import team.applemango.runnerbe.shared.android.constant.DataStoreKey.Write.MaxPeopleCount
+import team.applemango.runnerbe.shared.android.constant.DataStoreKey.Write.RunningDate
+import team.applemango.runnerbe.shared.android.constant.DataStoreKey.Write.Message
+import team.applemango.runnerbe.shared.android.constant.DataStoreKey.Write.RunningTime
+import team.applemango.runnerbe.shared.android.constant.DataStoreKey.Write.Title
 
 /**
  * DataStore Key 모음
@@ -61,5 +71,28 @@ object DataStoreKey {
         val Gender = stringPreferencesKey("onboard-gender") // Gender enum class string value
         val Job = stringPreferencesKey("onboard-job") // Job enum class name
         val Email = stringPreferencesKey("onboard-email") // 입력한 이메일
+    }
+
+    /**
+     * @property Title 게시글 제목 - string
+     * @property Message 게시글 메시지 - string
+     * @property Gender 참여 가능 성별 - string
+     * @property MaxPeopleCount 참여 가능 최대 인원 수 - int
+     * @property AgeFilter 참여 가능 연령대 - string
+     * @property ItemType 게시글 타입 - string
+     * @property RunningDate 모임 시간 - long
+     * @property RunningTime 예상 달리기 소요 시간 - string
+     * @property Locate 모임 위치 - string
+     */
+    object Write {
+        val Title = stringPreferencesKey("write-title")
+        val Message = stringPreferencesKey("write-message")
+        val Gender = stringPreferencesKey("write-gender")
+        val MaxPeopleCount = intPreferencesKey("write-max_people_count")
+        val AgeFilter = stringPreferencesKey("write-age_filter")
+        val ItemType = stringPreferencesKey("write-item_type")
+        val RunningDate = longPreferencesKey("write-meeting_date")
+        val RunningTime = stringPreferencesKey("write-running_time")
+        val Locate = stringPreferencesKey("write-running_locate")
     }
 }
