@@ -80,6 +80,7 @@ class OnboardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        actionBar?.hide()
         setWindowInsetsUsage()
         vm.exceptionFlow
             .defaultCatch(action = ::basicExceptionHandler)

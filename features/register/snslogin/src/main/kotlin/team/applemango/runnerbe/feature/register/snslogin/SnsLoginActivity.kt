@@ -60,6 +60,7 @@ class SnsLoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        actionBar?.hide()
         setWindowInsetsUsage()
         vm.observe(
             lifecycleOwner = this,
