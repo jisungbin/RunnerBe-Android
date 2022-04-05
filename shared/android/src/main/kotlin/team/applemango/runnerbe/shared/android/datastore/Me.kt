@@ -18,9 +18,9 @@ import team.applemango.runnerbe.domain.runningitem.filter.DistanceFilter
 import team.applemango.runnerbe.domain.runningitem.filter.JobFilter
 import team.applemango.runnerbe.domain.runningitem.model.common.Locate
 
+@Suppress("ObjectPropertyName")
 object Me {
-    @Suppress("ObjectPropertyName")
-    private var _locate = MutableStateFlow(
+    private val _locate = MutableStateFlow(
         Locate(
             address = "여의도 한강공원",
             latitude = 37.5284197,
@@ -32,13 +32,36 @@ object Me {
 
     var token = UserToken()
 
-    var genderFilter = Gender.All
-    var ageFilter: AgeFilter = AgeFilter.None
-    var jobFilter: JobFilter = JobFilter.None
-    var distanceFilter: DistanceFilter = DistanceFilter.None
+    private val _genderFilter = MutableStateFlow(Gender.All)
+    val genderFilter = _genderFilter.asStateFlow()
+
+    private val _ageFilter = MutableStateFlow(AgeFilter.None)
+    val ageFilter = _ageFilter.asStateFlow()
+
+    private val _jobFilter = MutableStateFlow<JobFilter>(JobFilter.None)
+    val jobFilter = _jobFilter.asStateFlow()
+
+    private val _distanceFilter = MutableStateFlow<DistanceFilter>(DistanceFilter.None)
+    val distanceFilter = _distanceFilter.asStateFlow()
 
     fun updateLocate(locate: Locate) {
         locateInitialized = true
         _locate.value = locate
+    }
+
+    fun updateGenderFilter(gender: Gender) {
+        _genderFilter.value = gender
+    }
+
+    fun updateAgeFilter(ageFilter: AgeFilter) {
+        _ageFilter.value = ageFilter
+    }
+
+    fun updateJobFilter(jobFilter: JobFilter) {
+        _jobFilter.value = jobFilter
+    }
+
+    fun updateDistanceFilter(distanceFilter: DistanceFilter) {
+        _distanceFilter.value = distanceFilter
     }
 }
