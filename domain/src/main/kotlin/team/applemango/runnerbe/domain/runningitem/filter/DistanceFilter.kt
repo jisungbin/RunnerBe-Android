@@ -15,7 +15,7 @@ package team.applemango.runnerbe.domain.runningitem.filter
  * @property None 전체
  * @property Create [Create.km] 킬로미터 안에 있는 아이템만 조회
  */
-sealed class DistanceFilter(val code: String) {
+sealed class DistanceFilter(val value: String) {
     object None : DistanceFilter("N")
     data class Create(val km: Int) : DistanceFilter(km.toString())
 }

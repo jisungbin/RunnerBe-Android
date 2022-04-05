@@ -20,6 +20,7 @@ dependencies {
     api(project(ProjectConstants.SharedDomain))
     implementation(Dependencies.EachKtx.Activity)
     implementation(Dependencies.EachKtx.Fragment)
+    implementation(Dependencies.GoogleMap.first())
 
     Dependencies.SharedKtx.forEach(::api)
 }

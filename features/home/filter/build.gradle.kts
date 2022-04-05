@@ -2,13 +2,13 @@
  * RunnerBe © 2022 Team AppleMango. all rights reserved.
  * RunnerBe license is under the MIT.
  *
- * [build.gradle.kts] created by Ji Sungbin on 22. 1. 31. 오후 9:40
+ * [build.gradle.kts] created by Ji Sungbin on 22. 4. 5. 오후 4:07
  *
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
 
 plugins {
-    installLibraryDfmHiltTest(testNeeded = true)
+    installLibraryDfmHiltTest()
 }
 
 android {
@@ -23,6 +23,5 @@ android {
 
 dependencies {
     Dependencies.GoogleMap.forEach(::implementation)
-    implementationProject(ProjectConstants.XmlSuperWheelPicker)
-    installSharedComposeOrbitHiltTest(testNeeded = true)
+    installSharedComposeOrbitHiltTest()
 }

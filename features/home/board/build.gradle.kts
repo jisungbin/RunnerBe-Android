@@ -26,5 +26,6 @@ dependencies {
     implementation(Dependencies.EachKtx.Fragment)
     implementationProject(ProjectConstants.HomeWrite)
     implementationProject(ProjectConstants.HomeDetail)
+    implementationProject(ProjectConstants.HomeFilter)
     implementationProject(ProjectConstants.HomeNotification)
 }

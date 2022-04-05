@@ -22,6 +22,7 @@ object ProjectConstants {
     const val HomeWrite = ":features:home:write"
     const val HomeBoard = ":features:home:board"
     const val HomeDetail = ":features:home:detail"
+    const val HomeFilter = ":features:home:filter"
     const val HomeNotification = ":features:home:notification"
     const val RegisterSnsLogin = ":features:register:snslogin"
     const val RegisterOnboard = ":features:register:onboard"

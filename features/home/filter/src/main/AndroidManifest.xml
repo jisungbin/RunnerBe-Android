@@ -2,18 +2,15 @@
   ~ RunnerBe © 2022 Team AppleMango. all rights reserved.
   ~ RunnerBe license is under the MIT.
   ~
-  ~ [AndroidManifest.xml] created by Ji Sungbin on 22. 1. 31. 오후 9:32
+  ~ [AndroidManifest.xml] created by Ji Sungbin on 22. 4. 5. 오후 4:06
   ~
   ~ Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="team.applemango.runnerbe.feature.home.write">
+    package="team.applemango.runnerbe.feature.home.filter">
 
     <application>
-        <activity
-            android:name=".RunningItemWriteActivity"
-            android:windowSoftInputMode="adjustNothing" />
+        <activity android:name=".FilterActivity" />
     </application>
-
 </manifest>

@@ -53,6 +53,7 @@ import team.applemango.runnerbe.domain.runningitem.common.RunningItemSort
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 import team.applemango.runnerbe.feature.home.board.R
+import team.applemango.runnerbe.feature.home.filter.FilterActivity
 import team.applemango.runnerbe.feature.home.write.RunningItemWriteActivity
 import team.applemango.runnerbe.shared.compose.component.FadingEdgeLazyColumn
 import team.applemango.runnerbe.shared.compose.component.Gradient
@@ -255,7 +256,7 @@ internal fun MainBoardComposable(
                     }
                     Icon(
                         modifier = Modifier.clickable {
-                            // TODO: filter activity
+                            activity.startActivity(Intent(activity, FilterActivity::class.java))
                         },
                         painter = painterResource(R.drawable.ic_round_filter_24),
                         contentDescription = null,
@@ -299,7 +300,7 @@ internal fun MainBoardComposable(
                 }
             }
         }
-        if (/*!isLoading*/ true) {
+        if (!isLoading) {
             FloatingActionButton( // 글쓰기 FAB
                 modifier = Modifier.padding(bottom = 16.dp),
                 backgroundColor = Color.Transparent,

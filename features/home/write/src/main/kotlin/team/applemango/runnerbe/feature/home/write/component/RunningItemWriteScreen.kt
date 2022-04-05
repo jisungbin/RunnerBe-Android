@@ -2,7 +2,7 @@
  * RunnerBe © 2022 Team AppleMango. all rights reserved.
  * RunnerBe license is under the MIT.
  *
- * [RunningItemWrite.kt] created by Ji Sungbin on 22. 3. 18. 오전 6:41
+ * [RunningItemWriteScreen.kt] created by Ji Sungbin on 22. 3. 18. 오전 6:41
  *
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
@@ -27,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -54,9 +55,11 @@ internal fun RunningItemWrite(
     vm: RunningItemWriteViewModel = activityViewModel(),
 ) {
     val activity = LocalActivity.current
-    var selectedRunningItemType by remember { mutableStateOf(RunningItemType.Before) }
+    val focusManager = LocalFocusManager.current
+
+    var selectedRunningItemTypeState by remember { mutableStateOf(RunningItemType.Before) }
     val fieldsAllInputState = remember { mutableStateListOf(false, false) }
-    var writingLevel by remember { mutableStateOf(WritingLevel.One) }
+    var writingLevelState by remember { mutableStateOf(WritingLevel.One) }
 
     Column(modifier = modifier) {
         TopBar(
@@ -83,11 +86,14 @@ internal fun RunningItemWrite(
                 Text(
                     modifier = Modifier
                         .padding(16.dp)
-                        .runIf(fieldsAllInputState[writingLevel.ordinal]) {
+                        .runIf(fieldsAllInputState[writingLevelState.ordinal]) {
                             clickable {
+                                focusManager.clearFocus()
                                 @Suppress("UNUSED_EXPRESSION") // vm
-                                when (writingLevel) {
-                                    WritingLevel.One -> writingLevel = WritingLevel.Two // 다음 단계
+                                when (writingLevelState) {
+                                    WritingLevel.One ->
+                                        writingLevelState =
+                                            WritingLevel.Two // 다음 단계
                                     WritingLevel.Two -> { // 등록
                                         // TODO
                                         vm
@@ -96,7 +102,7 @@ internal fun RunningItemWrite(
                             }
                         },
                     text = stringResource(
-                        when (writingLevel) {
+                        when (writingLevelState) {
                             WritingLevel.One -> R.string.runningitemwrite_button_next
                             WritingLevel.Two -> R.string.runningitemwrite_button_publish
                         }
@@ -104,7 +110,7 @@ internal fun RunningItemWrite(
                     style = Typography.Body16R.copy(
                         color = animatedColorState(
                             target = true,
-                            selectState = fieldsAllInputState[writingLevel.ordinal],
+                            selectState = fieldsAllInputState[writingLevelState.ordinal],
                             defaultColor = ColorAsset.G4,
                             selectedColor = ColorAsset.Primary
                         )
@@ -116,15 +122,15 @@ internal fun RunningItemWrite(
             modifier = Modifier
                 .padding(top = 8.dp)
                 .padding(horizontal = 16.dp),
-            selectedItemState = selectedRunningItemType,
+            selectedItemState = selectedRunningItemTypeState,
             onTabClick = { type ->
-                selectedRunningItemType = type
+                selectedRunningItemTypeState = type
                 vm.updateRunningItemType(type)
             }
         )
         Crossfade(
             modifier = Modifier.padding(top = 12.dp),
-            targetState = writingLevel
+            targetState = writingLevelState
         ) { level ->
             when (level) {
                 WritingLevel.One -> {
@@ -133,9 +139,9 @@ internal fun RunningItemWrite(
                             .fillMaxSize()
                             .padding(horizontal = 16.dp)
                         /*.verticalScroll(rememberScrollState())*/, // 지도 세로 스크롤이 안됨
-                        runningItemType = selectedRunningItemType,
+                        runningItemType = selectedRunningItemTypeState,
                         inputStateChanged = { isFilled ->
-                            fieldsAllInputState[writingLevel.ordinal] = isFilled
+                            fieldsAllInputState[writingLevelState.ordinal] = isFilled
                         }
                     )
                 }

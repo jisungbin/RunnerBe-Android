@@ -51,6 +51,7 @@ import team.applemango.runnerbe.shared.android.util.DFMOnboardActivityAlias
 import team.applemango.runnerbe.shared.compose.default.RunnerbeBottomBarDefaults
 import team.applemango.runnerbe.shared.compose.extension.LocalActivity
 import team.applemango.runnerbe.shared.compose.extension.activityViewModel
+import team.applemango.runnerbe.shared.compose.extension.noRippleClickable
 import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 import team.applemango.runnerbe.shared.compose.theme.GradientAsset
 import team.applemango.runnerbe.shared.domain.extension.defaultCatch
@@ -150,6 +151,7 @@ fun MainBoardScreen(
             NonRegisterUserPopup(
                 modifier = Modifier
                     .fillMaxSize()
+                    .noRippleClickable { } // prevent BottomBar click event
                     .background(color = Color.Black.copy(alpha = 0.7f)),
                 onPositiveButtonClick = {
                     activity.changeActivityWithAnimation<DFMOnboardActivityAlias>()

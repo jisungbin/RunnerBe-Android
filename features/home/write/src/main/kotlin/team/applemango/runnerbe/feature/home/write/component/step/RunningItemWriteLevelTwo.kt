@@ -60,10 +60,10 @@ import team.applemango.runnerbe.domain.constant.Gender
 import team.applemango.runnerbe.feature.home.write.R
 import team.applemango.runnerbe.feature.home.write.RunningItemWriteViewModel
 import team.applemango.runnerbe.feature.home.write.constant.PeopleCountErrorType
-import team.applemango.runnerbe.feature.home.write.util.extension.bitmapDescriptorFromVector
-import team.applemango.runnerbe.feature.home.write.util.extension.toAddress
-import team.applemango.runnerbe.feature.home.write.util.extension.toLatLng
 import team.applemango.runnerbe.shared.android.datastore.Me
+import team.applemango.runnerbe.shared.android.extension.bitmapDescriptorFromVector
+import team.applemango.runnerbe.shared.android.extension.toAddress
+import team.applemango.runnerbe.shared.android.extension.toLatLng
 import team.applemango.runnerbe.shared.compose.component.BorderOption
 import team.applemango.runnerbe.shared.compose.component.CircleBorderText
 import team.applemango.runnerbe.shared.compose.component.IconText
@@ -280,10 +280,7 @@ internal fun RunningItemWriteLevelTwo(
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(
-                    vertical = 12.dp,
-                    horizontal = 16.dp
-                ),
+                .padding(vertical = 12.dp),
             horizontalArrangement = Arrangement.spacedBy(
                 space = 16.dp,
                 alignment = Alignment.CenterHorizontally
@@ -302,7 +299,10 @@ internal fun RunningItemWriteLevelTwo(
             }
         }
         Divider(
-            modifier = Modifier.padding(vertical = 20.dp),
+            modifier = Modifier.padding(
+                horizontal = 16.dp,
+                vertical = 20.dp
+            ),
             color = ColorAsset.G6
         )
         Row(
@@ -363,18 +363,26 @@ internal fun RunningItemWriteLevelTwo(
                 disabledInactiveTickColor = ColorAsset.G6,
             )
         )
-        Text(
+        AnimatedVisibility(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 10.dp),
-            text = "${ageRangeState.start.toInt()}세 ~ ${ageRangeState.endInclusive.toInt()}세",
-            style = Typography.Body14R.copy(
-                color = ColorAsset.G3_5,
-                textAlign = TextAlign.Center
+            visible = !allAgeCheckState
+        ) {
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = "${ageRangeState.start.toInt()}세 ~ ${ageRangeState.endInclusive.toInt()}세",
+                style = Typography.Body14R.copy(
+                    color = ColorAsset.G3_5,
+                    textAlign = TextAlign.Center
+                )
             )
-        )
+        }
         Divider(
-            modifier = Modifier.padding(vertical = 20.dp),
+            modifier = Modifier.padding(
+                horizontal = 16.dp,
+                vertical = 20.dp
+            ),
             color = ColorAsset.G6
         )
         Text(
@@ -444,7 +452,10 @@ internal fun RunningItemWriteLevelTwo(
             }
         }
         Divider(
-            modifier = Modifier.padding(vertical = 20.dp),
+            modifier = Modifier.padding(
+                horizontal = 16.dp,
+                vertical = 20.dp
+            ),
             color = ColorAsset.G6
         )
         Row(

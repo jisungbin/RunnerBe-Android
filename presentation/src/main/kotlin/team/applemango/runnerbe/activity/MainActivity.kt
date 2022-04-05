@@ -40,6 +40,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import com.birjuvachhani.locus.Locus
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -161,7 +162,9 @@ class MainActivity : AppCompatActivity() {
                         contentAlignment = Alignment.BottomCenter
                     ) {
                         Crossfade(
-                            modifier = Modifier.fillMaxSize(),
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .zIndex(2f),
                             targetState = screenTypeState
                         ) { screenType ->
                             when (screenType) {
@@ -193,7 +196,8 @@ class MainActivity : AppCompatActivity() {
                         BottomBar(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .navigationBarsPadding(),
+                                .navigationBarsPadding()
+                                .zIndex(1f),
                             colors = RunnerbeBottomBarDefaults.colors(),
                             items = bottomBarItems,
                             selectedItemState = screenTypeState,
