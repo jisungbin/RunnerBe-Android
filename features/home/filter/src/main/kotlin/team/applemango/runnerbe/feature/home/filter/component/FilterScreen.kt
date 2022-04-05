@@ -94,21 +94,21 @@ internal fun FilterScreen(
     val context = LocalContext.current
     val locate = remember { Me.locate.value.toLatLng() }
 
-    var genderSelectState by remember { mutableStateOf(Me.genderFilter) }
+    var genderSelectState by remember { mutableStateOf(Me.genderFilter.value) }
     var ageRangeState by remember {
         mutableStateOf(
-            Me.ageFilter.toFloatRange(
+            Me.ageFilter.value.toFloatRange(
                 defaultMin = 30f,
                 defaultMax = 40f
             )
         )
     }
     var allAgeCheckState by remember {
-        mutableStateOf(Me.ageFilter == AgeFilter.None)
+        mutableStateOf(Me.ageFilter.value == AgeFilter.None)
     }
     var jobSelectState by remember {
         mutableStateOf(
-            when (val jobFilter = Me.jobFilter) {
+            when (val jobFilter = Me.jobFilter.value) {
                 JobFilter.None -> null
                 else -> Job.values().first { it.name == jobFilter.code }
             }
@@ -123,7 +123,7 @@ internal fun FilterScreen(
     var allMeetDistanceCheckState by remember { mutableStateOf(true) }
     var meetDistanceState by remember {
         mutableStateOf(
-            when (val distanceFilter = Me.distanceFilter) {
+            when (val distanceFilter = Me.distanceFilter.value) {
                 DistanceFilter.None -> 0.5f
                 else -> distanceFilter.value.toFloat()
             }
@@ -139,10 +139,10 @@ internal fun FilterScreen(
         allMeetDistanceCheckState = true
         meetDistanceState = 0.5f
 
-        Me.genderFilter = Gender.All
-        Me.ageFilter = AgeFilter.None
-        Me.jobFilter = JobFilter.None
-        Me.distanceFilter = DistanceFilter.None
+        Me.updateGenderFilter(Gender.All)
+        Me.updateAgeFilter(AgeFilter.None)
+        Me.updateJobFilter(JobFilter.None)
+        Me.updateDistanceFilter(DistanceFilter.None)
     }
 
     Column(modifier = modifier) {
@@ -210,7 +210,7 @@ internal fun FilterScreen(
                         textStyle = RunnerbeToggleButtonDefaults.textStyle(),
                     ) {
                         genderSelectState = gender
-                        Me.genderFilter = gender
+                        Me.updateGenderFilter(gender)
                     }
                 }
             }
@@ -234,11 +234,13 @@ internal fun FilterScreen(
                     checkboxStateChange = { isAllAgeAllow ->
                         allAgeCheckState = isAllAgeAllow
                         if (isAllAgeAllow) {
-                            Me.ageFilter = AgeFilter.None
+                            Me.updateAgeFilter(AgeFilter.None)
                         } else {
-                            Me.ageFilter = AgeFilter(
-                                min = ageRangeState.start.toInt(),
-                                max = ageRangeState.endInclusive.toInt()
+                            Me.updateAgeFilter(
+                                AgeFilter(
+                                    min = ageRangeState.start.toInt(),
+                                    max = ageRangeState.endInclusive.toInt()
+                                )
                             )
                         }
                     },
@@ -258,9 +260,11 @@ internal fun FilterScreen(
                 // steps = 5,
                 onValueChange = { ageRange ->
                     ageRangeState = ageRange
-                    Me.ageFilter = AgeFilter(
-                        min = ageRange.start.toInt(),
-                        max = ageRange.endInclusive.toInt()
+                    Me.updateAgeFilter(
+                        AgeFilter(
+                            min = ageRange.start.toInt(),
+                            max = ageRange.endInclusive.toInt()
+                        )
                     )
                 },
                 colors = SliderDefaults.colors(
@@ -318,10 +322,10 @@ internal fun FilterScreen(
                             ) {
                                 if (jobSelectState == job) {
                                     jobSelectState = null
-                                    Me.jobFilter = JobFilter.None
+                                    Me.updateJobFilter(JobFilter.None)
                                 } else {
                                     jobSelectState = job
-                                    Me.jobFilter = JobFilter.Create(job)
+                                    Me.updateJobFilter(JobFilter.Create(job))
                                 }
                             }
                         }
@@ -348,9 +352,9 @@ internal fun FilterScreen(
                     checkboxStateChange = { isAllDistanceAllow ->
                         allMeetDistanceCheckState = isAllDistanceAllow
                         if (isAllDistanceAllow) {
-                            Me.distanceFilter = DistanceFilter.None
+                            Me.updateDistanceFilter(DistanceFilter.None)
                         } else {
-                            Me.distanceFilter = DistanceFilter.Create(meetDistanceState.toInt())
+                            Me.updateDistanceFilter(DistanceFilter.Create(meetDistanceState.toInt()))
                         }
                     },
                     checkboxColors = RunnerbeCheckBoxDefaults.colors(),
@@ -405,7 +409,7 @@ internal fun FilterScreen(
                     steps = 4,
                     onValueChange = { meetDistance ->
                         meetDistanceState = meetDistance
-                        Me.distanceFilter = DistanceFilter.Create(meetDistance.toInt())
+                        Me.updateDistanceFilter(DistanceFilter.Create(meetDistance.toInt()))
                     },
                     colors = SliderDefaults.colors(
                         thumbColor = ColorAsset.PrimaryDarker,
