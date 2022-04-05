@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ RunnerBe © 2022 Team AppleMango. all rights reserved.
+  ~ RunnerBe license is under the MIT.
+  ~
+  ~ [strings.xml] created by Ji Sungbin on 22. 4. 5. 오후 4:14
+  ~
+  ~ Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
+  -->
+
+<resources>
+    <string name="filter_title">필터</string>
+
+    <string name="filter_label_gender">성별</string>
+    <string name="filter_label_age_range">연령</string>
+    <string name="filter_label_all_age_range">모든 연령</string>
+    <string name="filter_label_job">직군</string>
+    <string name="filter_label_meet_place">모임 장소</string>
+    <string name="filter_label_all_distance">모든 거리</string>
+</resources>
