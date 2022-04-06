@@ -12,6 +12,7 @@ package team.applemango.runnerbe.feature.home.board.component
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,7 +32,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.fade
 import com.google.accompanist.placeholder.placeholder
@@ -98,137 +101,159 @@ internal fun RunningItemScreen(
         )
     }
 
-    Column(
+    Box(
         modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight()
             .clip(RoundedCornerShape(12.dp))
             .background(color = ColorAsset.G5_5)
-            .padding(
-                top = 16.dp,
-                bottom = 24.dp
-            )
-            .padding(horizontal = 16.dp)
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) { // 1 (프사, 닉네임 + 북마크)
-            Row( // 프사, 닉네임
-                modifier = Modifier.wrapContentSize(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(4.dp)
+        if (item.finish) {
+            Box(
+                modifier = Modifier
+                    .matchParentSize()
+                    .background(color = ColorAsset.G5_5.copy(alpha = 0.4f))
+                    .zIndex(2f),
+                contentAlignment = Alignment.Center
             ) {
-                RunnerbeCoil(
-                    modifier = Modifier
-                        .size(15.dp)
-                        .clip(CircleShape)
-                        .placeholder(
+                Text(
+                    text = stringResource(R.string.mainboard_runningitem_finished),
+                    style = Typography.Body14R.copy(color = ColorAsset.G3_5)
+                )
+            }
+        }
+        Column(
+            modifier = modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .background(color = ColorAsset.G5_5)
+                .padding(
+                    top = 16.dp,
+                    bottom = 24.dp
+                )
+                .padding(horizontal = 16.dp)
+                .zIndex(1f)
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) { // 1 (프사, 닉네임 + 북마크)
+                Row( // 프사, 닉네임
+                    modifier = Modifier.wrapContentSize(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    RunnerbeCoil(
+                        modifier = Modifier
+                            .size(15.dp)
+                            .clip(CircleShape)
+                            .placeholder(
+                                visible = placeholderEnabled,
+                                color = RunnerbePlaceholderDefaults.BaseColor,
+                                highlight = PlaceholderHighlight.fade(
+                                    highlightColor = RunnerbePlaceholderDefaults.HighlightColor
+                                )
+                            ),
+                        src = item.ownerProfileImageUrl
+                    )
+                    Text(
+                        modifier = Modifier.placeholder(
                             visible = placeholderEnabled,
                             color = RunnerbePlaceholderDefaults.BaseColor,
                             highlight = PlaceholderHighlight.fade(
                                 highlightColor = RunnerbePlaceholderDefaults.HighlightColor
                             )
                         ),
-                    src = item.ownerProfileImageUrl
-                )
-                Text(
-                    modifier = Modifier.placeholder(
-                        visible = placeholderEnabled,
-                        color = RunnerbePlaceholderDefaults.BaseColor,
-                        highlight = PlaceholderHighlight.fade(
-                            highlightColor = RunnerbePlaceholderDefaults.HighlightColor
+                        text = item.ownerNickName,
+                        style = Typography.Caption10R.copy(color = ColorAsset.G3_5)
+                    )
+                }
+                Icon( // 북마크
+                    modifier = Modifier
+                        .placeholder(
+                            visible = placeholderEnabled,
+                            color = RunnerbePlaceholderDefaults.BaseColor,
+                            highlight = PlaceholderHighlight.fade(
+                                highlightColor = RunnerbePlaceholderDefaults.HighlightColor
+                            )
                         )
+                        .noRippleClickable {
+                            requestToggleBookmarkState()
+                        },
+                    painter = painterResource(
+                        when (item.bookmarked) {
+                            true -> R.drawable.ic_round_bookmark_24
+                            else -> R.drawable.ic_outlined_bookmark_24
+                        }
                     ),
-                    text = item.ownerNickName,
-                    style = Typography.Caption10R.copy(color = ColorAsset.G3_5)
+                    contentDescription = null,
+                    tint = Color.Unspecified
                 )
             }
-            Icon( // 북마크
+            Text(
                 modifier = Modifier
+                    .padding(
+                        top = 8.dp,
+                        bottom = 12.dp
+                    )
                     .placeholder(
                         visible = placeholderEnabled,
                         color = RunnerbePlaceholderDefaults.BaseColor,
                         highlight = PlaceholderHighlight.fade(
                             highlightColor = RunnerbePlaceholderDefaults.HighlightColor
                         )
-                    )
-                    .noRippleClickable {
-                        requestToggleBookmarkState()
-                    },
-                painter = painterResource(
-                    when (item.bookmarked) {
-                        true -> R.drawable.ic_round_bookmark_24
-                        else -> R.drawable.ic_outlined_bookmark_24
-                    }
-                ),
-                contentDescription = null,
-                tint = Color.Unspecified
-            )
-        }
-        Text(
-            modifier = Modifier
-                .padding(
-                    top = 8.dp,
-                    bottom = 12.dp
-                )
-                .placeholder(
-                    visible = placeholderEnabled,
-                    color = RunnerbePlaceholderDefaults.BaseColor,
-                    highlight = PlaceholderHighlight.fade(
-                        highlightColor = RunnerbePlaceholderDefaults.HighlightColor
-                    )
-                ),
-            text = item.title,
-            style = Typography.Title20R.copy(color = ColorAsset.G3)
-        ) // 2 (제목)
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight(),
-            verticalArrangement = Arrangement.spacedBy(space = 4.dp)
-        ) {
-            detailItems.chunked(2).forEach { items ->
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight()
-                ) {
-                    items.forEach { item ->
-                        Row(
-                            modifier = Modifier.weight(1f),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(
-                                modifier = Modifier
-                                    .size(18.dp)
-                                    .placeholder(
-                                        visible = placeholderEnabled,
-                                        color = RunnerbePlaceholderDefaults.BaseColor,
-                                        highlight = PlaceholderHighlight.fade(
-                                            highlightColor = RunnerbePlaceholderDefaults.HighlightColor
-                                        )
-                                    ),
-                                painter = painterResource(item.icon),
-                                contentDescription = null,
-                                tint = Color.Unspecified
-                            )
-                            Text(
-                                modifier = Modifier
-                                    .padding(start = 6.dp)
-                                    .placeholder(
-                                        visible = placeholderEnabled,
-                                        color = RunnerbePlaceholderDefaults.BaseColor,
-                                        highlight = PlaceholderHighlight.fade(
-                                            highlightColor = RunnerbePlaceholderDefaults.HighlightColor
-                                        )
-                                    ),
-                                text = item.text,
-                                style = Typography.Body12M.copy(color = ColorAsset.G2)
-                            )
+                    ),
+                text = item.title,
+                style = Typography.Title20R.copy(color = ColorAsset.G3)
+            ) // 2 (제목)
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight(),
+                verticalArrangement = Arrangement.spacedBy(space = 4.dp)
+            ) {
+                detailItems.chunked(2).forEach { items ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentHeight()
+                    ) {
+                        items.forEach { item ->
+                            Row(
+                                modifier = Modifier.weight(1f),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Icon(
+                                    modifier = Modifier
+                                        .size(18.dp)
+                                        .placeholder(
+                                            visible = placeholderEnabled,
+                                            color = RunnerbePlaceholderDefaults.BaseColor,
+                                            highlight = PlaceholderHighlight.fade(
+                                                highlightColor = RunnerbePlaceholderDefaults.HighlightColor
+                                            )
+                                        ),
+                                    painter = painterResource(item.icon),
+                                    contentDescription = null,
+                                    tint = Color.Unspecified
+                                )
+                                Text(
+                                    modifier = Modifier
+                                        .padding(start = 6.dp)
+                                        .placeholder(
+                                            visible = placeholderEnabled,
+                                            color = RunnerbePlaceholderDefaults.BaseColor,
+                                            highlight = PlaceholderHighlight.fade(
+                                                highlightColor = RunnerbePlaceholderDefaults.HighlightColor
+                                            )
+                                        ),
+                                    text = item.text,
+                                    style = Typography.Body12M.copy(color = ColorAsset.G2)
+                                )
+                            }
                         }
                     }
                 }
@@ -253,7 +278,7 @@ internal fun RunningItemScreenDummy(
             createdAt = Date(),
             bookmarkCount = Random.nextInt(),
             runningType = RunningItemType.values().random(),
-            finish = Random.nextBoolean(),
+            finish = false,
             maxRunnerCount = Random.nextInt(),
             title = " ".repeat(10),
             gender = Gender.values().random(),
