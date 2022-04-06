@@ -32,7 +32,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.google.accompanist.placeholder.PlaceholderHighlight
@@ -109,15 +108,15 @@ internal fun RunningItemScreen(
             .background(color = ColorAsset.G5_5)
     ) {
         if (item.finish) {
-            Box(
+            Box( // TODO: 디자인 변경
                 modifier = Modifier
                     .matchParentSize()
-                    .background(color = ColorAsset.G5_5.copy(alpha = 0.4f))
+                    .background(color = ColorAsset.G5_5)
                     .zIndex(2f),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = stringResource(R.string.mainboard_runningitem_finished),
+                    text = "mainboard_runningitem_finished",
                     style = Typography.Body14R.copy(color = ColorAsset.G3_5)
                 )
             }
