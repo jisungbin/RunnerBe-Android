@@ -79,7 +79,7 @@ class RunningItemRepositoryImpl : RunningItemRepository {
         jwt: String,
         postId: Int,
         userId: Int,
-    ): RunningItemInformation? {
+    ): RunningItemInformation {
         val request = runningItemApi.loadInformation(
             jwt = jwt,
             postId = postId,
