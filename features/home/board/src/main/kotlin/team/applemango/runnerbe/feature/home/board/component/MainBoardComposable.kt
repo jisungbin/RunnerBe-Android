@@ -342,7 +342,7 @@ internal fun MainBoardComposable(
                 modifier = Modifier.padding(bottom = 16.dp),
                 backgroundColor = Color.Transparent,
                 onClick = {
-                    if (/*Me.token.isRegisteredUser*/ true) {
+                    if (Me.token.isRegisteredUser) {
                         activity.startActivity(
                             Intent(
                                 activity,
