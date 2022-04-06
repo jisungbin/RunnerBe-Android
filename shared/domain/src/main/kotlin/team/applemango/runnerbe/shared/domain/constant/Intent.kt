@@ -10,7 +10,7 @@
 package team.applemango.runnerbe.shared.domain.constant
 
 object Intent {
-    object Home {
+    object MainBoard {
         const val RunningItemId = "intent-home-runningitemid"
     }
 }
