@@ -12,41 +12,35 @@ package team.applemango.runnerbe.feature.home.detail
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
-import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import team.applemango.runnerbe.domain.runningitem.usecase.LoadRunningItemDetailUseCase
 import team.applemango.runnerbe.feature.home.detail.mvi.DetailLoadState
-import team.applemango.runnerbe.feature.home.detail.mvi.DetailSideEffect
 import team.applemango.runnerbe.shared.android.base.BaseViewModel
+import team.applemango.runnerbe.shared.android.datastore.Me
 import javax.inject.Inject
 
 @HiltViewModel
 internal class DetailViewModel @Inject constructor(
     private val loadRunningItemDetailUseCase: LoadRunningItemDetailUseCase,
-) : BaseViewModel(), ContainerHost<DetailLoadState, DetailSideEffect> {
+) : BaseViewModel(), ContainerHost<DetailLoadState, Nothing> {
 
-    override val container = container<DetailLoadState, DetailSideEffect>(DetailLoadState.Load)
+    override val container = container<DetailLoadState, Nothing>(DetailLoadState.Loading)
 
-    fun loadItemDetail(
-        jwt: String,
-        postId: Int,
-        userId: Int,
-    ) = intent {
+    fun loadItemDetail(postId: Int) = intent {
+        val jwt = checkNotNull(Me.token.jwt) {
+            "User must be registered."
+        }
+        val userId = checkNotNull(Me.token.userId) {
+            "User must be registered."
+        }
         loadRunningItemDetailUseCase(
             jwt = jwt,
             postId = postId,
             userId = userId,
         ).onSuccess { detail ->
-            if (detail == null) {
-                reduce {
-                    DetailLoadState.NotVerified
-                }
-            } else {
-                reduce {
-                    DetailLoadState.Done
-                }
-                postSideEffect(DetailSideEffect.LoadDone(detail))
+            reduce {
+                DetailLoadState.Loaded(detail)
             }
         }.onFailure { exception ->
             emitException(exception)
