@@ -2,7 +2,7 @@
  * RunnerBe © 2022 Team AppleMango. all rights reserved.
  * RunnerBe license is under the MIT.
  *
- * [RunningItemWrtieActivity.kt] created by Ji Sungbin on 22. 3. 18. 오전 6:10
+ * [RunningItemWriteActivity.kt] created by Ji Sungbin on 22. 3. 18. 오전 6:10
  *
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
@@ -89,9 +89,9 @@ class RunningItemWriteActivity : ComponentActivity() {
                             preference[DataStoreKey.Write.MaxPeopleCount],
                             preference[DataStoreKey.Write.AgeFilter],
                             preference[DataStoreKey.Write.ItemType],
-                            preference[DataStoreKey.Write.RunningDate],
+                            /*preference[DataStoreKey.Write.RunningDate],
                             preference[DataStoreKey.Write.RunningTime],
-                            preference[DataStoreKey.Write.Locate]
+                            preference[DataStoreKey.Write.Locate]*/
                         ).filterNot { it == null }.isNotEmpty()
                     ) {
                         restoreLastDataDialogVisibleState = true

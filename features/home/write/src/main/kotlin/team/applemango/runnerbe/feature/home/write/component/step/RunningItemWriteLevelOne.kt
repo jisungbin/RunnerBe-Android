@@ -54,7 +54,6 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.first
 import team.applemango.runnerbe.domain.runningitem.common.RunningItemType
-import team.applemango.runnerbe.domain.runningitem.model.common.Locate
 import team.applemango.runnerbe.feature.home.write.R
 import team.applemango.runnerbe.feature.home.write.RunningItemWriteViewModel
 import team.applemango.runnerbe.feature.home.write.component.RunningDatePickerDialog
@@ -67,21 +66,19 @@ import team.applemango.runnerbe.shared.android.datastore.Me
 import team.applemango.runnerbe.shared.android.extension.bitmapDescriptorFromVector
 import team.applemango.runnerbe.shared.android.extension.collectWithLifecycle
 import team.applemango.runnerbe.shared.android.extension.dataStore
-import team.applemango.runnerbe.shared.android.extension.latLngFromKey
 import team.applemango.runnerbe.shared.android.extension.toAddress
-import team.applemango.runnerbe.shared.android.extension.toKey
 import team.applemango.runnerbe.shared.android.extension.toLatLng
 import team.applemango.runnerbe.shared.compose.extension.activityViewModel
 import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
 import team.applemango.runnerbe.shared.domain.extension.defaultCatch
-import java.util.Date
 
 private const val DefaultMapCameraZoom = 10f
 private val DefaultFieldShape = RoundedCornerShape(8.dp)
 private val DefaultFieldHeight = 58.dp
 
+// TODO: Date, Time 데이터 저장
 @OptIn(
     LocalActivityUsageApi::class, // activityViewModel()
     FlowPreview::class // Flow<T>.debounce
@@ -97,11 +94,12 @@ internal fun RunningItemWriteLevelOne(
     val context = LocalContext.current.applicationContext
     val lifecycleOwner = LocalLifecycleOwner.current
 
-    var locateState by remember { mutableStateOf(Me.locate.value.toLatLng()) }
+    /*var*/
+    val locateState by remember { mutableStateOf(Me.locate.value.toLatLng()) }
     var titleFieldState by remember { mutableStateOf(TextFieldValue()) }
     var isRunningDateEdited by remember { mutableStateOf(false) }
     var runningDateState by remember { mutableStateOf(RunningDate.getDefault(runningItemType)) }
-    var runningDateStateForSaving by remember { mutableStateOf(RunningDate()) }
+    // var runningDateStateForSaving by remember { mutableStateOf(RunningDate()) }
     var runningTimeState by remember { mutableStateOf(RunningTime(hour = 0, minute = 20)) }
     var runningDatePickerDialogVisibleState by remember { mutableStateOf(false) }
     var runningTimePickerDialogVisibleState by remember { mutableStateOf(false) }
@@ -125,7 +123,7 @@ internal fun RunningItemWriteLevelOne(
         startMinute = runningDateState.getMinute(),
         onRunningDateChange = { field ->
             isRunningDateEdited = true
-            runningDateStateForSaving = with(runningDateState) {
+            /*runningDateStateForSaving = */with(runningDateState) {
                 when (field) {
                     is RunningDate.Companion.Field.Date -> {
                         setDate(field.value)
@@ -168,7 +166,7 @@ internal fun RunningItemWriteLevelOne(
                 }
             }
 
-        snapshotFlow { runningDateStateForSaving }
+        /*snapshotFlow { runningDateStateForSaving }
             .defaultCatch(action = vm::emitException)
             .debounce(300)
             .collectWithLifecycle(lifecycleOwner = lifecycleOwner) { runningDate ->
@@ -198,7 +196,7 @@ internal fun RunningItemWriteLevelOne(
                     latitude = locate.latitude,
                     longitude = locate.longitude
                 )
-            }
+            }*/
     }
 
     LaunchedEffect(runningItemType) {
@@ -222,7 +220,7 @@ internal fun RunningItemWriteLevelOne(
             preference[DataStoreKey.Write.Title]?.let { restoreTitle ->
                 titleFieldState = TextFieldValue(restoreTitle)
             }
-            preference[DataStoreKey.Write.RunningDate]?.let { restoreRunningDateTime ->
+            /*preference[DataStoreKey.Write.RunningDate]?.let { restoreRunningDateTime ->
                 runningDateState = RunningDate(Date().apply { time = restoreRunningDateTime })
             }
             preference[DataStoreKey.Write.RunningTime]?.let { restoreRunningTimeKey ->
@@ -230,7 +228,7 @@ internal fun RunningItemWriteLevelOne(
             }
             preference[DataStoreKey.Write.Locate]?.let { restoreLocateKey ->
                 locateState = latLngFromKey(restoreLocateKey)
-            }
+            }*/
         }
     }
 
