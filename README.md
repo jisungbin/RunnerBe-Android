@@ -32,6 +32,12 @@
 - Test + [Test Coverage 100% 목표](https://github.com/runner-be/RunnerBe-Android/issues/35)
 -->
 
+# ⚠️ Deprecated
+
+이 프로젝트는 아래와 같은 사유로 더 이상 진행되지 않습니다.
+
+> **실력 부족**
+
 # 🐛 아키텍처 이슈
 
 현재 아키텍처에 다양한 이슈들이 존재합니다. 이슈 해결을 포함한 모든 이슈나 PR 은 항상 환영입니다.
