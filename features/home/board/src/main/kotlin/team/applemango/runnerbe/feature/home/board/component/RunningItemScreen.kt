@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.google.accompanist.placeholder.PlaceholderHighlight
@@ -116,7 +117,7 @@ internal fun RunningItemScreen(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "mainboard_runningitem_finished",
+                    text = stringResource(R.string.mainboard_runningitem_finished),
                     style = Typography.Body14R.copy(color = ColorAsset.G3_5)
                 )
             }
