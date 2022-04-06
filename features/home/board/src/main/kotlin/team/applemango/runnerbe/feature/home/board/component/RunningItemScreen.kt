@@ -46,12 +46,19 @@ import team.applemango.runnerbe.domain.runningitem.model.common.Locate
 import team.applemango.runnerbe.domain.runningitem.model.common.Time
 import team.applemango.runnerbe.domain.runningitem.model.runningitem.RunningItem
 import team.applemango.runnerbe.feature.home.board.R
+import team.applemango.runnerbe.feature.home.detail.DetailActivity
+import team.applemango.runnerbe.shared.android.datastore.Me
+import team.applemango.runnerbe.shared.android.extension.startActivityWithAnimation
 import team.applemango.runnerbe.shared.compose.component.RunnerbeCoil
 import team.applemango.runnerbe.shared.compose.default.RunnerbePlaceholderDefaults
+import team.applemango.runnerbe.shared.compose.extension.LocalActivity
 import team.applemango.runnerbe.shared.compose.extension.noRippleClickable
+import team.applemango.runnerbe.shared.compose.optin.LocalActivityUsageApi
 import team.applemango.runnerbe.shared.compose.theme.ColorAsset
 import team.applemango.runnerbe.shared.compose.theme.Typography
+import team.applemango.runnerbe.shared.domain.constant.Intent
 import team.applemango.runnerbe.shared.domain.extension.format
+import team.applemango.runnerbe.shared.domain.extension.runIf
 import java.util.Date
 import kotlin.random.Random
 
@@ -64,13 +71,16 @@ private data class DetailItem(
 // format constants 랑 다름
 private const val MeetingDateFormat = "M/d (E) a K:mm" // 3/31 (금) AM 6:00
 
+@OptIn(LocalActivityUsageApi::class) // LocalActivity
 @Composable
 internal fun RunningItemScreen(
     modifier: Modifier = Modifier,
     item: RunningItem,
     placeholderEnabled: Boolean = false,
     requestToggleBookmarkState: () -> Unit,
+    updateNonRegisterUserPopupVisible: (visible: Boolean) -> Unit,
 ) {
+    val activity = LocalActivity.current
     val detailItems = remember(item) {
         listOf(
             DetailItem(
@@ -127,6 +137,17 @@ internal fun RunningItemScreen(
                 .fillMaxWidth()
                 .wrapContentHeight()
                 .background(color = ColorAsset.G5_5)
+                .runIf(!placeholderEnabled) {
+                    noRippleClickable {
+                        if (Me.token.isRegisteredUser) {
+                            activity.startActivityWithAnimation<DetailActivity>(intentBuilder = {
+                                putExtra(Intent.MainBoard.RunningItemId, item.itemId)
+                            })
+                        } else {
+                            updateNonRegisterUserPopupVisible(true)
+                        }
+                    }
+                }
                 .padding(
                     top = 16.dp,
                     bottom = 24.dp
@@ -273,14 +294,14 @@ internal fun RunningItemScreenDummy(
         item = RunningItem(
             itemId = Random.nextInt(),
             ownerId = Random.nextInt(),
-            ownerNickName = " ".repeat(5),
+            ownerNickName = " ".repeat(25),
             ownerProfileImageUrl = "null",
             createdAt = Date(),
             bookmarkCount = Random.nextInt(),
             runningType = RunningItemType.values().random(),
             finish = false,
             maxRunnerCount = Random.nextInt(),
-            title = " ".repeat(10),
+            title = " ".repeat(60),
             gender = Gender.values().random(),
             jobs = Job.values().toList(),
             ageFilter = AgeFilter.None,
@@ -296,11 +317,12 @@ internal fun RunningItemScreenDummy(
             ),
             distance = Random.nextFloat(),
             meetingDate = Date(),
-            message = " ".repeat(20),
+            message = " ".repeat(100),
             bookmarked = Random.nextBoolean(),
             attendance = Random.nextBoolean(),
         ),
         placeholderEnabled = placeholderEnabled,
-        requestToggleBookmarkState = {}
+        requestToggleBookmarkState = {},
+        updateNonRegisterUserPopupVisible = {}
     )
 }
