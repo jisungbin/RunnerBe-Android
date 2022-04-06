@@ -2,7 +2,7 @@
  * RunnerBe © 2022 Team AppleMango. all rights reserved.
  * RunnerBe license is under the MIT.
  *
- * [BorderText.kt] created by Ji Sungbin on 22. 3. 19. 오후 10:13
+ * [BorderComposable.kt] created by Ji Sungbin on 22. 3. 19. 오후 10:13
  *
  * Please see: https://github.com/applemango-runnerbe/RunnerBe-Android/blob/main/LICENSE.
  */
@@ -89,6 +89,32 @@ fun CircleBorderText(
     textOption: TextOption = TextOption(),
     onClick: (() -> Unit)? = null,
 ) {
+    CircleBorderContent(
+        modifier = modifier,
+        enabled = enabled,
+        size = size,
+        borderOption = borderOption,
+        onClick = onClick
+    ) {
+        Text(
+            text = text,
+            style = style.copy(textAlign = TextAlign.Center),
+            overflow = textOption.overflow,
+            softWrap = textOption.softWrap,
+            maxLines = textOption.maxLines
+        )
+    }
+}
+
+@Composable
+fun CircleBorderContent(
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    size: Dp = 40.dp,
+    borderOption: BorderOption = BorderOption(),
+    onClick: (() -> Unit)? = null,
+    content: @Composable () -> Unit,
+) {
     Box(
         modifier = modifier
             .size(size)
@@ -106,12 +132,6 @@ fun CircleBorderText(
             },
         contentAlignment = Alignment.Center
     ) {
-        Text(
-            text = text,
-            style = style.copy(textAlign = TextAlign.Center),
-            overflow = textOption.overflow,
-            softWrap = textOption.softWrap,
-            maxLines = textOption.maxLines
-        )
+        content()
     }
 }
