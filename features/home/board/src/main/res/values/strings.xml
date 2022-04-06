@@ -10,7 +10,10 @@
 <resources>
     <string name="mainboard_title_bookmark_list">찜 목록</string>
     <string name="mainboard_title_app_name">러너비</string>
-    <string name="mainboard_running_item_empty">아직 진행 중인 모임이 없어요!</string>
+
+    <string name="mainboard_runningitem_empty">아직 진행 중인 모임이 없어요!</string>
+
+    <string name="mainboard_runningitem_finished">모집을 마감했어요</string>
 
     <string name="mainboard_unregisteruser_popup_title">나를 더 알려주면\n모임에 참여할 수 있어요!</string>
     <string name="mainboard_unregisteruser_popup_button_let_me_introduce">나에 대해 알려주기</string>
