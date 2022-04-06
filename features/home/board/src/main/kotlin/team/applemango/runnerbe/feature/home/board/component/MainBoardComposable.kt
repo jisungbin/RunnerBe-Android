@@ -61,6 +61,7 @@ import team.applemango.runnerbe.feature.home.board.R
 import team.applemango.runnerbe.feature.home.filter.FilterActivity
 import team.applemango.runnerbe.feature.home.write.RunningItemWriteActivity
 import team.applemango.runnerbe.shared.android.datastore.Me
+import team.applemango.runnerbe.shared.android.extension.startActivityWithAnimation
 import team.applemango.runnerbe.shared.compose.component.FadingEdgeLazyColumn
 import team.applemango.runnerbe.shared.compose.component.Gradient
 import team.applemango.runnerbe.shared.compose.component.RunningItemTypeToggleBar
@@ -335,7 +336,8 @@ internal fun MainBoardComposable(
                             runningItems = runningItemsState,
                             requestToggleBookmarkState = { runningItem ->
                                 // TODO: requestToggleBookmarkState
-                            }
+                            },
+                            updateNonRegisterUserPopupVisible = updateNonRegisterUserPopupVisible
                         )
                     }
                 }
@@ -347,12 +349,7 @@ internal fun MainBoardComposable(
                 backgroundColor = Color.Transparent,
                 onClick = {
                     if (Me.token.isRegisteredUser) {
-                        activity.startActivity(
-                            Intent(
-                                activity,
-                                RunningItemWriteActivity::class.java
-                            )
-                        )
+                        activity.startActivityWithAnimation<RunningItemWriteActivity>()
                     } else {
                         updateNonRegisterUserPopupVisible(true)
                     }
@@ -428,6 +425,7 @@ private fun RunningItemsEmpty() {
 private fun RunningItemsLazyColumn(
     runningItems: List<RunningItem>,
     requestToggleBookmarkState: (runningItem: RunningItem) -> Unit,
+    updateNonRegisterUserPopupVisible: (visible: Boolean) -> Unit,
 ) {
     FadingEdgeLazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -449,7 +447,8 @@ private fun RunningItemsLazyColumn(
                 item = runningItem,
                 requestToggleBookmarkState = {
                     requestToggleBookmarkState(runningItem)
-                }
+                },
+                updateNonRegisterUserPopupVisible = updateNonRegisterUserPopupVisible
             )
         }
     }
