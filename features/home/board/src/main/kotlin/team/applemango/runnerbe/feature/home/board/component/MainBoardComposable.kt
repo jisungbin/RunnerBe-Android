@@ -112,7 +112,6 @@ internal fun MainBoardComposable(
     val ageFilterState by Me.ageFilter.collectAsState()
     val jobFilterState by Me.jobFilter.collectAsState()
     val distanceFilterState by Me.distanceFilter.collectAsState()
-
     var includeFinishState by remember { mutableStateOf(false) }
     var selectedRunningItemTypeState by remember { mutableStateOf(RunningItemType.Before) }
     val runningItemsState by remember(runningItems) {
@@ -126,6 +125,11 @@ internal fun MainBoardComposable(
                     when (sortState) {
                         RunningItemSort.Nearby -> item.distance.toLong()
                         RunningItemSort.Newest -> item.createdAt.time
+                    }
+                }
+                .runIf(!includeFinishState) {
+                    filter { item ->
+                        !item.finish
                     }
                 }
                 .runIf(genderFilterState != Gender.All) {
@@ -413,7 +417,7 @@ private fun RunningItemsEmpty() {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = stringResource(R.string.mainboard_running_item_empty),
+            text = stringResource(R.string.mainboard_runningitem_empty),
             style = Typography.Title18R.copy(color = ColorAsset.G4)
         )
     }
