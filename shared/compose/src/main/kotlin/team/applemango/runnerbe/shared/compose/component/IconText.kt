@@ -34,7 +34,7 @@ fun IconText(
     iconSize: Dp = 24.dp,
     text: String,
     textStyle: TextStyle = LocalTextStyle.current,
-    labelStartPadding: Dp = 4.dp,
+    textStartPadding: Dp = 4.dp,
 ) {
     Row(
         modifier = modifier.wrapContentHeight(),
@@ -47,7 +47,7 @@ fun IconText(
             tint = iconTint
         )
         Text(
-            modifier = Modifier.padding(start = labelStartPadding),
+            modifier = Modifier.padding(start = textStartPadding),
             text = text,
             style = textStyle
         )
