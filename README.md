@@ -1,7 +1,8 @@
 <p align="center">
   <img src="https://github.com/runner-be/.github/blob/main/art/logo/signature_transparent.png?raw=true" width="15%" />
 </p>
-<p align="center">직장인 타겟 러닝 모임 O2O 플랫폼 🐝</p>
+<h3 align="center">직장인 타겟 러닝 모임 O2O 플랫폼 🐝</h3>
+<h5 align="center">CMC 9기 프로젝트</h5>
 <p align="center">
   <a href="https://github.com/runner-be/RunnerBe-Android/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/badge/License-MIT-blue"/></a>
   <a href="https://developer.android.com/about/versions/lollipop"><img alt="API 21+" src="https://img.shields.io/badge/API-21%2B-brightgreen.svg"/></a>
@@ -38,7 +39,9 @@
 
 > **실력 부족**
 >
-> [[2,000 커밋한 프로젝트를 개발 중단했다.]](https://jisungbin.medium.com/2-000-%EC%BB%A4%EB%B0%8B%ED%95%9C-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EB%A5%BC-%EA%B0%9C%EB%B0%9C-%EC%A4%91%EB%8B%A8%ED%96%88%EB%8B%A4-a17bf631753d)
+> [[2,000 커밋한 프로젝트를 개발 중단했다]](https://jisungbin.medium.com/2-000-%EC%BB%A4%EB%B0%8B%ED%95%9C-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EB%A5%BC-%EA%B0%9C%EB%B0%9C-%EC%A4%91%EB%8B%A8%ED%96%88%EB%8B%A4-a17bf631753d)
+> 
+> [[뒤늦게 작성해보는 CMC 9기 회고]](https://jisungbin.medium.com/%EB%92%A4%EB%8A%A6%EA%B2%8C-%EC%9E%91%EC%84%B1%ED%95%B4%EB%B3%B4%EB%8A%94-cmc-9%EA%B8%B0-%ED%9A%8C%EA%B3%A0-e88ccfe4a433)
 
 # 🐛 아키텍처 이슈
 
