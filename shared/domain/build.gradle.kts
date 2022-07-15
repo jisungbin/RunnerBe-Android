@@ -12,6 +12,10 @@ plugins {
     id("kotlin-android")
 }
 
+android {
+    namespace = "team.applemango.runnerbe.shared.domain"
+}
+
 dependencies {
     api(Dependencies.Coroutine)
     api(Dependencies.Util.Logeukes)

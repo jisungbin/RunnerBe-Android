@@ -12,6 +12,8 @@ plugins {
 }
 
 android {
+    namespace = "team.applemango.runnerbe.feature.mypage"
+
     buildFeatures {
         compose = true
     }

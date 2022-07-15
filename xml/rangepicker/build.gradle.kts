@@ -13,6 +13,8 @@ plugins {
 }
 
 android {
+    namespace = "team.applemango.runnerbe.xml.rangepicker"
+
     buildFeatures {
         compose = true
     }

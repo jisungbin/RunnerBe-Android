@@ -13,6 +13,10 @@ plugins {
     id("com.google.devtools.ksp") version Versions.Ksp
 }
 
+android {
+    namespace = "team.applemango.runnerbe.data"
+}
+
 kotlin {
     sourceSets.main {
         kotlin.srcDir("build/generated/ksp/main/kotlin")
