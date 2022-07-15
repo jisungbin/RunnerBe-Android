@@ -45,4 +45,3 @@ dependencies {
     testImplementation(Dependencies.Test.Hamcrest)
     testImplementation(Dependencies.Test.Coroutine)
 }
-
