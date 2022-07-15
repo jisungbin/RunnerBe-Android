@@ -8,8 +8,7 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="team.applemango.runnerbe.feature.home.detail">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <application tools:ignore="MissingApplicationIcon">
         <activity android:name=".DetailActivity" />

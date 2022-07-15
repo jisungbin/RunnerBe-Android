@@ -13,6 +13,8 @@ plugins {
 }
 
 android {
+    namespace = "team.applemango.runnerbe.shared.compose"
+
     buildFeatures {
         compose = true
     }

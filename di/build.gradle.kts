@@ -14,6 +14,10 @@ plugins {
     id("dagger.hilt.android.plugin")
 }
 
+android {
+    namespace = "team.applemango.runnerbe.di"
+}
+
 dependencies {
     implementationProject(ProjectConstants.Data)
     implementationProject(ProjectConstants.Domain)

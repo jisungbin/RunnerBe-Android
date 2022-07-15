@@ -12,6 +12,8 @@ plugins {
 }
 
 android {
+    namespace = "team.applemango.runnerbe.feature.home.notification"
+
     buildFeatures {
         compose = true
     }

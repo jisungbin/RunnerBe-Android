@@ -12,6 +12,10 @@ plugins {
     id("kotlin-android")
 }
 
+android {
+    namespace = "team.applemango.runnerbe.xml.photoeditor"
+}
+
 dependencies {
     implementation(Dependencies.EachKtx.Core)
     implementation(Dependencies.EachUi.PhotoEditor)

@@ -12,6 +12,10 @@ plugins {
     id("kotlin-android")
 }
 
+android {
+    namespace = "team.applemango.runnerbe.shared.android"
+}
+
 dependencies {
     api(Dependencies.EachKtx.Core)
     api(project(ProjectConstants.Di))

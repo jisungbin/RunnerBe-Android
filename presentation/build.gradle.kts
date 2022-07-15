@@ -27,6 +27,8 @@ plugins {
 }*/
 
 android {
+    namespace = "team.applemango.runnerbe"
+
     signingConfigs {
         create("release") {
             storeFile = file(BuildConstants.StoreFilePath)

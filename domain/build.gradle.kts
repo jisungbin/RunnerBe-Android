@@ -15,6 +15,10 @@ plugins {
     jacoco
 }
 
+android {
+    namespace = "team.applemango.runnerbe.domain"
+}
+
 jacoco {
     toolVersion = Versions.Test.JaCoCo
 }
@@ -41,3 +45,4 @@ dependencies {
     testImplementation(Dependencies.Test.Hamcrest)
     testImplementation(Dependencies.Test.Coroutine)
 }
+
