@@ -12,6 +12,7 @@ include(
     ":di",
     ":data",
     ":domain",
+    ":benchmark",
     ":shared:domain",
     ":shared:compose",
     ":shared:android",
