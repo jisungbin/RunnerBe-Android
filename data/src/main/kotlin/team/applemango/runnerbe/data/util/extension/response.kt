@@ -12,9 +12,6 @@ package team.applemango.runnerbe.data.util.extension
 import retrofit2.Response
 import team.applemango.runnerbe.data.common.BaseResponse
 
-private const val REQUEST_EXCEPTION =
-    "The request is a success, but the server execution is failed. (or result field is null)"
-
 internal fun <T : BaseResponse> Response<T>.requireSuccessfulBody(
     requestName: String,
     resultVerifyBuilder: (body: T) -> Boolean,
@@ -23,7 +20,7 @@ internal fun <T : BaseResponse> Response<T>.requireSuccessfulBody(
     return if (isSuccessful && body != null && resultVerifyBuilder(body)) {
         body
     } else {
-        throw Exception(
+        throw IllegalStateException(
             """
             Request $requestName is fail.
             Http message: ${errorBody()?.use { it.string() }}
@@ -41,7 +38,7 @@ internal fun <T> Response<T>.requireSuccessfulBody(
     return if (isSuccessful && body != null && resultVerifyBuilder(body)) {
         body
     } else {
-        throw Exception(
+        throw IllegalStateException(
             """
             Request $requestName is fail.
             Http message: ${errorBody()?.use { it.string() }}
