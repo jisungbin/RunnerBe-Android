@@ -14,9 +14,7 @@ class BaselineProfileGenerator {
     val baselineProfileRule = BaselineProfileRule()
 
     @Test
-    fun startup() = baselineProfileRule.collectBaselineProfile(
-        packageName = AppPackageName
-    ) {
+    fun startup() = baselineProfileRule.collectBaselineProfile(packageName = AppPackageName) {
         pressHome()
         startActivityAndWait()
     }
