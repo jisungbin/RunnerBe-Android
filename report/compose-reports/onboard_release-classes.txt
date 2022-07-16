@@ -1,0 +1,109 @@
+unstable class OnboardActivity {
+  unstable val vm$delegate: Lazy<OnboardViewModel>
+  <runtime stability> = Unstable
+}
+stable class Title {
+  stable val ReadTerms: String
+  stable val InputYear: String
+  stable val SelectGender: String
+  stable val WhatsJob: String
+  stable val VerifyWithEmail: String
+  stable val VerifyWitheEmployeeId: String
+  stable val EmailVerifyDone: String
+  stable val EmployeeIdVerifyRequestDone: String
+  <runtime stability> = Stable
+}
+stable class Subtitle {
+  stable val AgeVisibleDescription: String
+  stable val JobCanEditOnMypage: String
+  stable val VerifyWithEmail: String
+  stable val VerifyWithEmployeeId: String
+  stable val EmailVerifyDone: String
+  stable val EmployeeIdVerifyRequestDone: String
+  <runtime stability> = Stable
+}
+stable class Button {
+  stable val Next: String
+  stable val NoEmail: String
+  stable val Verify: String
+  stable val ReVerify: String
+  stable val Start: String
+  stable val GotoMain: String
+  <runtime stability> = Stable
+}
+stable class Content {
+  stable val CheckAllTerms: String
+  stable val CheckServiceTerm: String
+  stable val CheckPersonalInformationTerm: String
+  stable val CheckLocateTerm: String
+  <runtime stability> = Stable
+}
+stable class Hint {
+  stable val AgeNotice: String
+  stable val PlaceholderEmail: String
+  stable val EmailSendingRequest: String
+  stable val SentVerifyLink: String
+  stable val DuplicateEmail: String
+  stable val ErrorUuid: String
+  stable val RequireFieldJob: String
+  stable val RequireFieldInformation: String
+  stable val RequireFieldProtect: String
+  <runtime stability> = Stable
+}
+stable class Dialog {
+  stable val EmailVerifyLinkNotice: String
+  stable val EmailVerifyTimeNotice: String
+  stable val FromCamera: String
+  stable val FromAlbum: String
+  stable val UnregisterNotice: String
+  <runtime stability> = Stable
+}
+stable class Toast {
+  stable val VerifyEmailFailure: String
+  stable val ErrorTakenPhoto: String
+  stable val NonInstallBrowser: String
+  stable val ImageUploading: String
+  stable val ImageUploadError: String
+  stable val EmployeeIdRegisterRequestDone: String
+  stable val RegisterSuccess: String
+  stable val DuplicateUuid: String
+  stable val DuplicateEmail: String
+  stable val DuplicateNickname: String
+  stable val DatabaseError: String
+  stable val RegisterNullInformation: String
+  <runtime stability> = Stable
+}
+stable class Snackbar {
+  stable val ConfirmFinish: String
+  <runtime stability> = Stable
+}
+stable class None {
+  <runtime stability> = Stable
+}
+stable class Sent {
+  <runtime stability> = Stable
+}
+stable class Loading {
+  <runtime stability> = Stable
+}
+stable class Duplicate {
+  <runtime stability> = Stable
+}
+stable class ErrorUuid {
+  <runtime stability> = Stable
+}
+unstable class Exception {
+  unstable val throwable: Throwable
+  <runtime stability> = Unstable
+}
+stable class SaveUserJwt {
+  stable val jwt: String
+  <runtime stability> = Stable
+}
+stable class NavigateToNextStep {
+  stable val nextStep: Step
+  <runtime stability> = Stable
+}
+stable class ResetStep {
+  <runtime stability> = Stable
+}

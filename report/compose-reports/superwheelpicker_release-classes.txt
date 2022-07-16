@@ -1,0 +1,47 @@
+unstable class SuperWheelPicker {
+  unstable val configuration: @[FlexibleNullability] ViewConfiguration?
+  runtime var onValueChangeListener: OnValueChangeListener?
+  runtime var onScrollListener: OnScrollListener?
+  runtime var onTextRenderListener: OnTextRenderListener?
+  stable var selectorItemCount: Int
+  stable var selectorVisibleItemCount: Int
+  stable var minIndex: Int
+  stable var maxIndex: Int
+  stable var wheelMiddleItemIndex: Int
+  stable var wheelVisibleItemMiddleIndex: Int
+  unstable var selectorItemIndices: ArrayList<Int>{ kotlin.collections.TypeAliasesKt.ArrayList<Int> }
+  unstable var selectorItemValidStatus: ArrayList<Boolean>{ kotlin.collections.TypeAliasesKt.ArrayList<Boolean> }
+  stable var curSelectedItemIndex: Int
+  stable var wrapSelectorWheelPreferred: Boolean
+  stable var selectedTextColor: Int
+  stable var unSelectedTextColor: Int
+  stable var textSize: Float
+  stable var textAlign: Align
+  stable var letterSpacing: Float
+  unstable var textPaint: Paint
+  unstable var overScroller: OverScroller
+  unstable var velocityTracker: VelocityTracker?
+  stable val touchSlop: Int
+  stable val maximumVelocity: Int
+  stable val minimumVelocity: Int
+  stable var lastY: Float
+  stable var isDragging: Boolean
+  stable var currentFirstItemOffset: Int
+  stable var initialFirstItemOffset: Int
+  stable var textGapHeight: Int
+  stable var itemHeight: Int
+  stable var textHeight: Int
+  stable var previousScrollerY: Int
+  stable var fadingEdgeEnabled: Boolean
+  stable var selectedTextScale: Float
+  stable var scrollState: Int
+  <runtime stability> = Unstable
+}
+stable class SuperWheelPickerColors {
+  stable val selectedTextColor: Color
+  stable val unselectedTextColor: Color
+}
+stable class SuperWheelPickerTextStyle {
+  unstable val typeface: Typeface?
+  stable val textSize: Float
+}

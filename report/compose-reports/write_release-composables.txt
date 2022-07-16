@@ -1,0 +1,55 @@
+restartable skippable fun RunningDatePickerDialog(
+  stable visible: Boolean
+  stable startDateIndex: Int
+  stable startTimeType: TimeType
+  stable startHour: Int
+  stable startMinute: Int
+  stable onDismissRequest: Function0<Unit>
+  stable onRunningDateChange: Function1<@[ParameterName(name = 'field')] Field, Unit>
+)
+restartable skippable fun RunningTimePickerDialog(
+  stable visible: Boolean
+  stable startHour: Int
+  stable startMinute: Int
+  stable onDismissRequest: Function0<Unit>
+  stable runningTime: RunningTime
+  stable onRunningTimeChange: Function1<@[ParameterName(name = 'time')] RunningTime, Unit>
+)
+restartable skippable fun DateStringPicker(
+  stable modifier: Modifier
+  stable startDateIndex: Int
+  stable onDateStringSelectChange: Function1<@[ParameterName(name = 'dateString')] String, Unit>
+)
+restartable skippable fun TimeTypePicker(
+  stable modifier: Modifier
+  stable startTimeType: TimeType
+  stable onTimeTypeSelectChange: Function1<@[ParameterName(name = 'timeType')] TimeType, Unit>
+)
+restartable fun HourPicker(
+  stable modifier: Modifier
+  stable startHour: Int
+  unstable hourRange: IntRange
+  stable onHourSelectChange: Function1<@[ParameterName(name = 'hour')] Int, Unit>
+)
+restartable skippable fun MinutePicker(
+  stable modifier: Modifier
+  stable startMinute: Int
+  stable onMinuteSelectChange: Function1<@[ParameterName(name = 'minute')] Int, Unit>
+)
+restartable skippable fun RunningItemWrite(
+  stable modifier: Modifier? = @static Companion
+  unstable vm: RunningItemWriteViewModel? = @dynamic activityViewModel(null, null, $composer, 0, 0b0011)
+  stable restoreLastData: Boolean
+)
+restartable skippable fun RunningItemWriteLevelOne(
+  stable modifier: Modifier? = @static Companion
+  stable runningItemType: RunningItemType
+  stable restoreLastData: Boolean
+  unstable vm: RunningItemWriteViewModel? = @dynamic activityViewModel(null, null, $composer, 0, 0b0011)
+  stable inputStateChanged: Function1<@[ParameterName(name = 'state')] Boolean, Unit>
+)
+restartable skippable fun RunningItemWriteLevelTwo(
+  stable modifier: Modifier? = @static Companion
+  stable restoreLastData: Boolean
+  unstable vm: RunningItemWriteViewModel? = @dynamic activityViewModel(null, null, $composer, 0, 0b0011)
+)

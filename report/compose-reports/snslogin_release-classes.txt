@@ -1,0 +1,13 @@
+unstable class SnsLoginActivity {
+  unstable val vm$delegate: Lazy<SnsLoginViewModel>
+  <runtime stability> = Unstable
+}
+stable class SaveUuid {
+  stable val uuid: String
+  <runtime stability> = Stable
+}
+stable class SaveUserToken {
+  stable val userId: Int
+  stable val jwt: String
+  <runtime stability> = Stable
+}

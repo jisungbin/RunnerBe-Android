@@ -1,0 +1,16 @@
+restartable fun SuperWheelPicker(
+  stable modifier: Modifier? = @static Companion
+  stable enabled: Boolean = @static true
+  stable colors: SuperWheelPickerColors? = @dynamic SuperWheelPickerColors(
+
+)
+  stable textStyle: SuperWheelPickerTextStyle? = @dynamic SuperWheelPickerTextStyle(
+
+)
+  stable wrapSelectorWheel: Boolean = @static true
+  stable wheelItemCount: Int = @static Companion.DEFAULT_ITEM_COUNT
+  unstable range: IntRange
+  stable value: Int = @dynamic range.last / 2
+  onValueChange: OnValueChangeListener? = @static null
+  onTextRender: OnTextRenderListener? = @static null
+)

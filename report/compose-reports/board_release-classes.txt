@@ -1,0 +1,41 @@
+unstable class MainBoardViewModel {
+  unstable val updateBookmarkItemUseCase: UpdateBookmarkItemUseCase
+  unstable val loadRunningItemsUseCase: LoadRunningItemsUseCase
+  unstable val container: Container<MainBoardState, Nothing>
+  <runtime stability> = Unstable
+}
+stable class NonRegisterUser {
+  <runtime stability> = Stable
+}
+stable class RunningItemLoading {
+  <runtime stability> = Stable
+}
+stable class RunningItemLoadFail {
+  <runtime stability> = Stable
+}
+unstable class RunningItemLoaded {
+  unstable val items: List<RunningItem>
+  <runtime stability> = Unstable
+}
+stable class BookmarkToggleRequestFail {
+  <runtime stability> = Stable
+}
+stable class MainBoardState {
+  <runtime stability> = Stable
+}
+stable class Loading {
+  <runtime stability> = Stable
+}
+stable class LoadFail {
+  <runtime stability> = Stable
+}
+stable class Empty {
+  <runtime stability> = Stable
+}
+unstable class Loaded {
+  unstable val items: List<RunningItem>
+  <runtime stability> = Unstable
+}
+stable class RunningItemsState {
+  <runtime stability> = Stable
+}

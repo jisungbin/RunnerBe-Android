@@ -1,0 +1,37 @@
+unstable class RunningItemWriteActivity {
+  unstable val vm$delegate: Lazy<RunningItemWriteViewModel>
+  <runtime stability> = Unstable
+}
+stable class Date {
+  stable val value: String
+  <runtime stability> = Stable
+}
+stable class TimeType {
+  stable val value: TimeType{ team.applemango.runnerbe.feature.home.write.model.TimeTypeModel }
+  <runtime stability> = Stable
+}
+stable class Hour {
+  stable val value: Int
+  <runtime stability> = Stable
+}
+stable class Minute {
+  stable val value: Int
+  <runtime stability> = Stable
+}
+stable class Field {
+  <runtime stability> = Stable
+}
+stable class RunningTime {
+  stable val hour: Int
+  stable val minute: Int
+  <runtime stability> = Stable
+}
+stable class None {
+  <runtime stability> = Stable
+}
+stable class Done {
+  <runtime stability> = Stable
+}
+stable class RunningItemWriteState {
+  <runtime stability> = Stable
+}

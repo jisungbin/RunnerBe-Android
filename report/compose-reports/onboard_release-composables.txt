@@ -1,0 +1,56 @@
+restartable skippable fun OnboardContent(
+  stable step: Step
+  stable bottomCTAButtonEnabled: Boolean
+  stable onBottomCTAButtonAction: Function0<Unit>
+  stable content: @[ExtensionFunctionType] Function3<BoxScope, Composer, Int, Unit>
+)
+restartable fun OnboardRouter(
+  stable modifier: Modifier? = @static Companion
+  unstable navController: NavHostController
+  stable scaffoldState: ScaffoldState
+  unstable vm: OnboardViewModel
+)
+restartable skippable fun UnregisterDialog(
+  stable visible: Boolean
+  stable onDismissRequest: Function0<Unit>
+)
+restartable fun EmailVerify(
+  unstable vm: OnboardViewModel
+)
+restartable skippable fun EmailVerifyLinkNoticeDialog(
+  stable visible: Boolean
+  stable onDismissRequest: Function0<Unit>
+)
+restartable fun EmployeeIdVerify(
+  unstable photo: Bitmap?
+  stable onPhotoChanged: Function1<@[ParameterName(name = 'photo')] Bitmap?, Unit>
+)
+restartable skippable fun PhotoTakenTypeDialog(
+  stable visible: Boolean
+  stable onDismissRequest: Function0<Unit>
+  stable fromCameraClick: Function0<Unit>
+  stable fromAlbumClick: Function0<Unit>
+)
+restartable fun PhotoScreen(
+  unstable photo: Bitmap?
+  stable onPhotoChanged: Function1<@[ParameterName(name = 'photo')] Bitmap?, Unit>
+)
+restartable skippable fun PhotoPickScreen(
+  stable photoPickFabClickAction: Function0<Unit>
+)
+restartable fun GenderPicker(
+  unstable vm: OnboardViewModel
+  stable genderSelectChanged: Function1<@[ParameterName(name = 'isSelected')] Boolean, Unit>
+)
+restartable fun JobPicker(
+  unstable vm: OnboardViewModel
+  stable jobSelectChanged: Function1<@[ParameterName(name = 'isSelected')] Boolean, Unit>
+)
+restartable fun TermsTable(
+  unstable vm: OnboardViewModel
+  stable onAllTermsCheckStateChanged: Function1<@[ParameterName(name = 'allChecked')] Boolean, Unit>
+)
+restartable fun YearPicker(
+  unstable vm: OnboardViewModel
+  stable selectedYearChanged: Function1<@[ParameterName(name = 'isAdult')] Boolean, Unit>
+)
