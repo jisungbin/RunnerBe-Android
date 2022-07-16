@@ -39,6 +39,7 @@ buildscript {
 
 allprojects {
     val detektExcludePath = "**/xml/**"
+    val projectPath = rootProject.file(".").absolutePath
 
     repositories {
         google()
@@ -66,6 +67,14 @@ allprojects {
                 freeCompilerArgs = freeCompilerArgs + listOf(
                     "-Xopt-in=kotlin.OptIn",
                     "-Xopt-in=kotlin.RequiresOptIn"
+                )
+                freeCompilerArgs = freeCompilerArgs + listOf(
+                    "-P",
+                    "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=$projectPath/report/compose-metrics"
+                )
+                freeCompilerArgs = freeCompilerArgs + listOf(
+                    "-P",
+                    "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=$projectPath/report/compose-reports"
                 )
             }
         }

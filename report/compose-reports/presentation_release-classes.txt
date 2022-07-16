@@ -1,0 +1,13 @@
+stable class RunnerBe {
+  <runtime stability> = Stable
+}
+stable class ErrorActivity {
+  <runtime stability> = Stable
+}
+unstable class MainActivity {
+  unstable val bottomBarItems: List<BottomBarItem<ScreenType>>
+  <runtime stability> = Unstable
+}
+stable class StartActivity {
+  <runtime stability> = Stable
+}

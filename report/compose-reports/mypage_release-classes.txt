@@ -1,0 +1,3 @@
+stable class MypageFragment {
+  <runtime stability> = Stable
+}

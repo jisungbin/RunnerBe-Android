@@ -1,0 +1,16 @@
+restartable skippable fun RangePicker(
+  stable modifier: Modifier? = @static Companion
+  stable enabled: Boolean = @static true
+  stable range: ClosedFloatingPointRange<Float>
+  stable value: ClosedFloatingPointRange<Float>? = @dynamic range
+  stable trackOption: RangePickerTrack? = @dynamic RangePickerTrack(
+
+)
+  stable thumbOption: RangePickerThumb? = @dynamic RangePickerThumb(
+
+)
+  stable tickOption: RangePickerTick? = @dynamic RangePickerTick(
+
+)
+  stable onValueChange: Function1<@[ParameterName(name = 'range')] ClosedFloatingPointRange<Float>, Unit>
+)

@@ -1,0 +1,3 @@
+stable class MailFragment {
+  <runtime stability> = Stable
+}

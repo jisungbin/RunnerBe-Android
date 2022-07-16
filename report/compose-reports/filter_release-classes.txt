@@ -1,0 +1,3 @@
+stable class FilterActivity {
+  <runtime stability> = Stable
+}

@@ -1,0 +1,10 @@
+restartable fun BoardDetail(
+  stable modifier: Modifier? = @static Companion
+  unstable runningItemInformation: RunningItemInformation
+  stable placeholderEnabled: Boolean = @static false
+  unused unstable vm: DetailViewModel? = @dynamic activityViewModel(null, null, $composer, 0, 0b0011)
+)
+restartable skippable fun BoardDetailDummy(
+  stable modifier: Modifier? = @static Companion
+  stable placeholderEnabled: Boolean = @static true
+)

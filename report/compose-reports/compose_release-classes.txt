@@ -1,0 +1,175 @@
+stable class BorderOption {
+  stable val width: Dp
+  stable val color: Color
+}
+stable class TextOption {
+  stable val overflow: TextOverflow
+  stable val softWrap: Boolean
+  stable val maxLines: Int
+}
+stable class BottomBarColors {
+  stable val background: Color
+  stable val indicatorBackground: Color
+  stable val primary: Color
+  stable val activateIconTint: Color
+  stable val inactivateIconTint: Color
+}
+stable class BottomBarItem {
+  runtime val id: T
+  stable val title: String
+  stable val activateIcon: Int?
+  stable val inactivateIcon: Int?
+}
+stable class GradientDefaults {
+  stable val Color: Color
+  stable val Height: Dp
+}
+stable class Top {
+  stable val color: Color
+  stable val height: Dp
+}
+stable class Bottom {
+  stable val color: Color
+  stable val height: Dp
+}
+stable class Gradient {
+}
+stable class DialogButton {
+  stable var text: String
+  stable var textBuilder: @[Composable] Function0<String>
+  stable var onClick: Function0<Unit>
+}
+stable class ToggleButtonColors {
+  stable val backgroundDefaultColor: Color
+  stable val backgroundSelectedColor: Color
+  stable val borderDefaultColor: Color
+  stable val borderSelectedColor: Color
+}
+stable class ToggleButtonTextStyle {
+  stable val defaultColor: Color
+  stable val selectedColor: Color
+}
+stable class ToggleTopBarItem {
+  runtime val id: T
+  stable val text: String
+}
+stable class ToggleTopBarColors {
+  stable val baseBackground: Color
+  stable val activateBackground: Color
+  stable val inactivateBackground: Color
+  stable val activateText: Color
+  stable val inactivateText: Color
+}
+stable class RunnerbeBottomBarDefaults {
+  stable val height: Dp
+  <runtime stability> = Stable
+}
+stable class RunnerbeCheckBoxDefaults {
+  <runtime stability> = Stable
+}
+stable class RunnerbePlaceholderDefaults {
+  stable val BaseColor: Color
+  stable val HighlightColor: Color
+  <runtime stability> = Stable
+}
+stable class RunnerbeRangePickerDefaults {
+  <runtime stability> = Stable
+}
+stable class RunnerbeSliderDefaults {
+  <runtime stability> = Stable
+}
+stable class RunnerbeSuperWheelPickerDefaults {
+  <runtime stability> = Stable
+}
+stable class RunnerbeToggleButtonDefaults {
+  <runtime stability> = Stable
+}
+stable class RunnerbeToggleTabBarDefaults {
+  <runtime stability> = Stable
+}
+stable class ColorAsset {
+  stable val Primary: Color
+  stable val PrimaryDark: Color
+  stable val PrimaryDarker: Color
+  stable val ErrorLight: Color
+  stable val Error: Color
+  stable val G6: Color
+  stable val G5_5: Color
+  stable val G5: Color
+  stable val G4_5: Color
+  stable val G4: Color
+  stable val G3_5: Color
+  stable val G3: Color
+  stable val G2_5: Color
+  stable val G2: Color
+  stable val G1: Color
+  <runtime stability> = Stable
+}
+stable class Background {
+  stable val Top: Color
+  stable val TopHalf: Color
+  stable val Bottom: Color
+  stable val Brush: Brush
+  <runtime stability> = Stable
+}
+stable class Fab {
+  stable val Top: Color
+  stable val Bottom: Color
+  stable val Brush: Brush
+  <runtime stability> = Stable
+}
+stable class GradientAsset {
+  <runtime stability> = Stable
+}
+stable class NotoSans {
+  stable val R: FontFamily
+  stable val M: FontFamily
+  stable val B: FontFamily
+  <runtime stability> = Stable
+}
+stable class Roboto {
+  stable val R: FontFamily
+  stable val M: FontFamily
+  <runtime stability> = Stable
+}
+stable class FontAsset {
+  stable val Aggro: FontFamily
+  <runtime stability> = Stable
+}
+stable class Roboto {
+  <runtime stability> = Stable
+}
+stable class FontTypeface {
+  <runtime stability> = Stable
+}
+stable class Custom {
+  stable val MainBoardTitle: TextStyle
+  stable val SuperWheelPickerBold: TextStyle
+  stable val SuperWheelPickerRegular: TextStyle
+  stable val MapMarker: TextStyle
+  stable val WriteRunningItemType: TextStyle
+  stable val RunningItemDetailTitle: TextStyle
+  <runtime stability> = Stable
+}
+stable class Typography {
+  stable val Header28M: TextStyle
+  stable val Header28B: TextStyle
+  stable val Header26B: TextStyle
+  stable val Title20M: TextStyle
+  stable val Title20R: TextStyle
+  stable val Title18R: TextStyle
+  stable val Title16M: TextStyle
+  stable val Body16R: TextStyle
+  stable val EngBody16R: TextStyle
+  stable val Body14B: TextStyle
+  stable val Body14M: TextStyle
+  stable val Body14R: TextStyle
+  stable val EngBody14R: TextStyle
+  stable val Body12B: TextStyle
+  stable val Body12M: TextStyle
+  stable val EngBody12M: TextStyle
+  stable val Body12R: TextStyle
+  stable val Caption10B: TextStyle
+  stable val Caption10R: TextStyle
+  <runtime stability> = Stable
+}

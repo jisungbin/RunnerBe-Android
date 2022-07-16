@@ -1,0 +1,47 @@
+restartable skippable fun MainBoardScreen(
+  stable bottomSheetState: ModalBottomSheetState
+  stable updateBottomSheetContent: Function1<@[ParameterName(name = 'content')] Function2<Composer, Int, Unit>, Unit>
+  stable isBookmarkPage: Boolean
+  unstable vm: MainBoardViewModel? = @dynamic activityViewModel(null, null, $composer, 0, 0b0011)
+)
+restartable fun MainBoardComposable(
+  stable modifier: Modifier? = @static Companion
+  unstable runningItems: List<RunningItem>
+  stable isLoading: Boolean
+  stable isBookmarkPage: Boolean
+  stable isEmptyState: Boolean
+  stable bottomSheetState: ModalBottomSheetState
+  stable updateNonRegisterUserPopupVisible: Function1<@[ParameterName(name = 'visible')] Boolean, Unit>
+  stable updateBottomSheetContent: Function1<@[ParameterName(name = 'content')] Function2<Composer, Int, Unit>, Unit>
+)
+restartable skippable fun ToggleTopBarSubItem(
+  stable modifier: Modifier? = @static Companion
+  stable onClick: Function0<Unit>
+  stable text: String
+  stable content: @[ExtensionFunctionType] Function3<RowScope, Composer, Int, Unit>
+)
+restartable skippable fun PlaceholderLazyColumn(
+  stable enabled: Boolean
+)
+restartable skippable fun RunningItemsEmpty()
+restartable fun RunningItemsLazyColumn(
+  unstable runningItems: List<RunningItem>
+  stable requestToggleBookmarkState: Function1<@[ParameterName(name = 'runningItem')] RunningItem, Unit>
+  stable updateNonRegisterUserPopupVisible: Function1<@[ParameterName(name = 'visible')] Boolean, Unit>
+)
+restartable skippable fun NonRegisterUserPopup(
+  stable modifier: Modifier? = @static Companion
+  stable onPositiveButtonClick: Function0<Unit>
+  stable onNegativeButtonClick: Function0<Unit>
+)
+restartable fun RunningItemScreen(
+  stable modifier: Modifier? = @static Companion
+  unstable item: RunningItem
+  stable placeholderEnabled: Boolean = @static false
+  stable requestToggleBookmarkState: Function0<Unit>
+  stable updateNonRegisterUserPopupVisible: Function1<@[ParameterName(name = 'visible')] Boolean, Unit>
+)
+restartable skippable fun RunningItemScreenDummy(
+  stable modifier: Modifier? = @static Companion
+  stable placeholderEnabled: Boolean = @static true
+)

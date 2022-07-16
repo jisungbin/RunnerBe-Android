@@ -1,0 +1,16 @@
+stable class RangePickerTrack {
+  stable val colorActive: Color
+  stable val colorInactive: Color
+  stable val height: Dp
+  stable val step: Float
+}
+stable class RangePickerThumb {
+  stable val color: Color
+  stable val radius: Dp
+  stable val elevation: Dp
+  stable val haloColor: Color
+  stable val haloRadius: Dp
+}
+stable class RangePickerTick {
+  stable val color: Color
+}

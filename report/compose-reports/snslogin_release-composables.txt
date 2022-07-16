@@ -1,0 +1,4 @@
+restartable fun SnsLoginScreen(
+  stable modifier: Modifier? = @static Companion
+  unstable vm: SnsLoginViewModel
+)
